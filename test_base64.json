@@ -1,0 +1,12 @@
+{
+  "modelName": "PointerMeterInferModel",
+  "inferData": "data/KZT_HD_20260616150323688.jpg",
+  "dataType": "filepath",
+  "cameraTimeout": 10,
+  "inferConfig": {
+    "scaleStart": 0,
+    "scaleEnd": 1.6,
+    "result_pointer_image": true,
+    "result_mask_image": true
+  }
+}

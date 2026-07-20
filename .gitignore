@@ -1,0 +1,37 @@
+/log/
+/.idea/
+/.agents/
+/.claude/
+*.pt
+
+# Model weights are intentionally not redistributed. Their provenance,
+# expected locations, and SHA-256 values are documented in
+# THIRD_PARTY_NOTICES.md.
+
+# Local reproducible environment and tool bootstrap.
+/.venv/
+/.tools/
+
+# Public datasets are downloaded locally and must never enter Git.
+/datasets/
+
+# Experiment caches, fitted models, tables, and runtime logs.
+/artifacts/
+/runs/
+/.cache/
+/data/
+/data-717/
+/reading_backend_comparison_results*/
+/test_results/
+/u2net_comparison_results/
+*.log
+*.whl
+*.aria2
+*.xlsx
+
+# Python/editor generated files.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.vscode/
