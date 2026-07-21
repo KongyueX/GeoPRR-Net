@@ -212,16 +212,29 @@ def _front_end_signature(signature: dict[str, Any] | None) -> dict[str, Any] | N
     if signature is None:
         return None
     # The manifest and hardware may differ between train/test; the actual
-    # front-end weights, source, and inference protocol must not.
-    return {
+    # front-end weights, model source, and inference protocol must not.  The
+    # controlled input degradation is intentionally a test-set property.  The
+    # collector only serializes predictions, so its own hash is excluded while
+    # hashes for every model component remain checked.
+    normalized = {
         key: value
         for key, value in signature.items()
         if key not in {
             "manifest_sha256",
             "manifest_protocol_sha256",
             "device",
+            "input_degradation",
+            "input_degradation_source_sha256",
         }
     }
+    source_hashes = normalized.get("source_sha256")
+    if isinstance(source_hashes, dict):
+        normalized["source_sha256"] = {
+            key: value
+            for key, value in source_hashes.items()
+            if key != "collector"
+        }
+    return normalized
 
 
 def _method_prediction(row: dict[str, Any], method: str) -> float | None:
@@ -862,6 +875,7 @@ def _prediction_table(
                 "scale_start": row.get("scale_start"),
                 "scale_end": row.get("scale_end"),
                 "metadata": row.get("metadata"),
+                "degradation": row.get("degradation"),
                 "predictions": predictions,
                 "gate_probability": gate_value,
                 "residual_normalized": residual_value,

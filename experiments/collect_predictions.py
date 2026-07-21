@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import math
@@ -15,6 +16,7 @@ from typing import Any
 import cv2
 import numpy as np
 import torch
+from loguru import logger
 
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
@@ -24,6 +26,11 @@ if str(ANGLE_DIR) not in sys.path:
 
 from zeroShotMeter import meterZeroShot  # noqa: E402
 from residual_calibrator import make_calibrator_row  # noqa: E402
+from experiments.robustness_degradations import (  # noqa: E402
+    ROBUSTNESS_PROTOCOL,
+    apply_degradation,
+    degradation_names,
+)
 
 
 DEFAULT_WEIGHTS = {
@@ -203,6 +210,32 @@ def _manifest_protocol_path(manifest: Path) -> Path:
     return manifest.with_name(manifest.name + ".protocol.json")
 
 
+def _legacy_clean_resume_compatible(
+    previous_signature: Any,
+    current_signature: Any,
+) -> bool:
+    """Accept caches from before degradations existed only for clean inputs."""
+
+    if previous_signature == current_signature:
+        return True
+    if not isinstance(previous_signature, dict) or not isinstance(current_signature, dict):
+        return False
+    if "input_degradation" in previous_signature:
+        return False
+    degradation = current_signature.get("input_degradation")
+    if not isinstance(degradation, dict) or degradation.get("condition") != "clean":
+        return False
+    previous = copy.deepcopy(previous_signature)
+    current = copy.deepcopy(current_signature)
+    current.pop("input_degradation", None)
+    current.pop("input_degradation_source_sha256", None)
+    for signature in (previous, current):
+        sources = signature.get("source_sha256")
+        if isinstance(sources, dict):
+            sources.pop("collector", None)
+    return previous == current
+
+
 def _prepare_run_metadata(args: argparse.Namespace) -> dict[str, Any]:
     weight_paths = {
         "segmentation": args.segmentation_weights.resolve(),
@@ -263,6 +296,14 @@ def _prepare_run_metadata(args: argparse.Namespace) -> dict[str, Any]:
             if args.skip_transformer
             else "compare"
         ),
+        "input_degradation": {
+            "protocol": ROBUSTNESS_PROTOCOL,
+            "condition": str(args.degradation),
+            "seed": int(args.degradation_seed),
+        },
+        "input_degradation_source_sha256": _sha256(
+            PROJECT_DIR / "experiments" / "robustness_degradations.py"
+        ),
     }
     return {
         "schema_version": 1,
@@ -290,6 +331,19 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--device", default="cpu")
     parser.add_argument("--correction-mode", default="off")
     parser.add_argument("--confidence", type=float)
+    parser.add_argument(
+        "--log-level",
+        choices=("DEBUG", "INFO", "WARNING", "ERROR"),
+        default="INFO",
+        help="direct-model console verbosity; does not affect predictions",
+    )
+    parser.add_argument(
+        "--degradation",
+        choices=degradation_names(),
+        default="clean",
+        help="frozen evaluation-only blur/perspective condition",
+    )
+    parser.add_argument("--degradation-seed", type=int, default=20260720)
     parser.add_argument("--limit", type=int)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--overwrite", action="store_true")
@@ -314,6 +368,9 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
+    if args.log_level != "INFO":
+        logger.remove()
+        logger.add(sys.stderr, level=args.log_level)
     if args.resume and args.overwrite:
         raise ValueError("--resume and --overwrite are mutually exclusive")
     if args.output.exists() and not args.resume and not args.overwrite:
@@ -337,7 +394,10 @@ def main() -> None:
                 f"{metadata_path} is missing; cannot verify a safe resume"
             )
         previous_metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
-        if previous_metadata.get("signature") != run_metadata.get("signature"):
+        if not _legacy_clean_resume_compatible(
+            previous_metadata.get("signature"),
+            run_metadata.get("signature"),
+        ):
             raise ValueError(
                 "resume signature mismatch: manifest, weights, or inference options changed"
             )
@@ -352,6 +412,21 @@ def main() -> None:
     if args.limit is not None:
         rows = rows[: max(0, args.limit)]
     completed_ids = _load_completed_ids(args.output) if args.resume else set()
+    pending = [
+        (index, sample)
+        for index, sample in enumerate(rows, 1)
+        if (
+            f"{sample.get('dataset')}::{sample.get('split')}::"
+            f"{sample.get('sample_id')}"
+        )
+        not in completed_ids
+    ]
+    if not pending:
+        print(
+            f"finished: wrote=0, failures=0, seconds=0.0, "
+            f"output={args.output.resolve()}"
+        )
+        return
     mode = "a" if args.resume else "w"
     args.output.parent.mkdir(parents=True, exist_ok=True)
 
@@ -369,12 +444,7 @@ def main() -> None:
     started = time.perf_counter()
     try:
         with args.output.open(mode, encoding="utf-8", newline="\n") as output_handle:
-            for index, sample in enumerate(rows, 1):
-                sample_key = (
-                    f"{sample.get('dataset')}::{sample.get('split')}::{sample.get('sample_id')}"
-                )
-                if sample_key in completed_ids:
-                    continue
+            for pending_index, (index, sample) in enumerate(pending, 1):
                 result: dict[str, Any] = {
                     key: sample.get(key)
                     for key in (
@@ -397,6 +467,13 @@ def main() -> None:
                 sample_started = time.perf_counter()
                 try:
                     image = media_reader.read(sample)
+                    image, degradation_metadata = apply_degradation(
+                        image,
+                        args.degradation,
+                        sample_id=str(sample.get("sample_id") or index),
+                        seed=args.degradation_seed,
+                    )
+                    result["degradation"] = degradation_metadata
                     if args.use_manifest_crop:
                         image = _crop_from_manifest(image, sample, args.bbox_format)
                     model.Inference(
@@ -470,7 +547,7 @@ def main() -> None:
                 )
                 output_handle.flush()
                 processed += 1
-                if processed % 25 == 0 or index == len(rows):
+                if processed % 25 == 0 or pending_index == len(pending):
                     elapsed = time.perf_counter() - started
                     print(
                         f"[{index}/{len(rows)}] wrote={processed} failures={failures} "

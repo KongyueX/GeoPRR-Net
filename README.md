@@ -2,8 +2,10 @@
 
 > 论文版的算法定义、可主张贡献与止损规则见
 > [`docs/PAPER_PLAN_CN.md`](docs/PAPER_PLAN_CN.md)，两数据集可复现实验见
-> [`experiments/README.md`](experiments/README.md)，2026-07-20 正式运行的结果与
-> 统计结论见 [`docs/FORMAL_RESULTS_CN.md`](docs/FORMAL_RESULTS_CN.md)。
+> [`experiments/README.md`](experiments/README.md)，2026-07-21 正式运行（含模糊/透视
+> 控制退化）的结果与统计结论见
+> [`docs/FORMAL_RESULTS_CN.md`](docs/FORMAL_RESULTS_CN.md)，外部同类方法能否公平复现见
+> [`docs/BASELINE_AUDIT_CN.md`](docs/BASELINE_AUDIT_CN.md)。
 > 下方原有 30+8 张内部数据结果仅作工程回归记录，不进入公开论文主表。
 > 模型与数据再分发边界见
 > [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)；仓库尚未选择项目级许可证。

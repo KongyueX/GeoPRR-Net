@@ -1,6 +1,6 @@
 # 务实的论文实验方案
 
-2026-07-20 的完整正式运行已经结束。聚合结果、置信区间与可安全主张的
+2026-07-21 的主实验与六组控制退化正式运行已经结束。聚合结果、置信区间与可安全主张的
 结论见 [`../docs/FORMAL_RESULTS_CN.md`](../docs/FORMAL_RESULTS_CN.md)；
 本文件继续作为复现实验协议和命令说明。
 
@@ -13,7 +13,10 @@
 
 官方下载入口：[SyncG 代码与数据说明](https://github.com/SKYWOWDYH/SyncG)、[SyncG 数据](https://huggingface.co/datasets/YihengDeng/syncG)、[RPM-10K / DialBench](https://github.com/Event-AHU/DialBench)。固定提交中的 SyncG 数据卡标注为 CC BY 4.0，使用及论文中应保留数据集归属；RPM-10K 仓库当前把数据许可标为 TBD，投稿或再分发前必须再次核对。本仓库只提供下载脚本，不分发数据。
 
-## 七个主表方法
+外部同类模型不能由内部变体替代；VDN 等方法的可复现性和公平接入规则见
+[`../docs/BASELINE_AUDIT_CN.md`](../docs/BASELINE_AUDIT_CN.md)。
+
+## 七个内部方法（消融表）
 
 所有读数方法共享同一次前端推理缓存。分割网络只允许在 SyncG `train` 内微调；进入读数实验后，检测、校正、分割和起终点网络全部冻结。
 
@@ -216,7 +219,64 @@ python -m experiments.make_paper_table `
 它与主指标使用相同的全样本分母，不会触发第二次视觉推理。
 此外，`frontend_transfer_table.md` 使用 fine-tuned 与 released 两份 RPM 缓存量化合成到真实的分割迁移；这仍是同一个外测数据集，不增加第三套数据协议。
 
-## 6. 最小消融
+## 6. 模糊与透视鲁棒性协议
+
+论文主张进一步收敛为“在模糊和非常规拍摄视角下保持稳定读数”。该主张不能只依赖
+RPM-10K 的人工环境标签，而采用一套固定的 **SyncG test 控制退化 + RPM-10K 真实困难子集**
+协议：
+
+- `clean`：原始图像；
+- `blur_moderate` / `blur_severe`：高斯模糊标准差固定为图像短边的 0.15% / 0.30%；
+- `perspective_moderate` / `perspective_severe`：虚拟平面分别作 25° / 45° 的俯仰或偏航投影；
+- `combined_severe`：45° 透视与重度模糊叠加。
+
+俯仰/偏航方向由 `seed + sample_id` 的 SHA-256 确定，同一样本在不同强度下保持相同方向，
+所有方法读取完全相同的退化图像。退化只用于冻结测试；分割网络、残差模型和门控仍只在干净的
+SyncG train 上训练，不能用退化 test 或 RPM-10K 回调参数。先运行 24 张端到端烟雾测试：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File `
+  .\experiments\run_robustness_experiments.ps1 `
+  -Limit 24 -BootstrapIterations 20
+```
+
+正式运行六个固定条件（每个条件均为完整 4000 张，默认 2000 次分组 bootstrap）：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File `
+  .\experiments\run_robustness_experiments.ps1
+```
+
+输出位于 `artifacts/runs/robustness/`：Markdown/CSV/JSON 主表、PNG/PDF 退化曲线，以及每个
+条件的冻结指标。报告生成器强制检查六个条件样本数相同、退化源码/种子相同、校准器相同且
+前端签名验证成功，并从六份同样本预测计算相对 clean 的成对 ΔΔNMAE 及分组 bootstrap 区间。
+RPM-10K 的 `blur` 和 `tilted` 是多标签子集，样本可以重叠；报告另列二者交集，只作真实图像
+支持证据，不应写成独立数据集。
+
+两个主指标按样本 (i) 的量程归一化误差定义：
+
+```text
+e_i = |prediction_i - ground_truth_i| / |scale_end_i - scale_start_i|
+NMAE = mean(e_i)
+Acc@2% = mean(success_i and e_i <= 0.02)
+```
+
+例如量程为 0–100、真值为 60、预测为 63，则该样本的归一化误差为 0.03。`NMAE=0.10`
+表示平均误差相当于量程的 10%，并不表示“准确率为 90%”；`Acc@2%=0.43` 表示 43% 的样本
+误差不超过各自量程的 2%。端到端主指标对无输出样本赋 NMAE 惩罚 1.0，并在 Acc@2% 中
+直接计错，同时单独报告 coverage，避免失败样本被静默删除。
+
+报告中的 `ΔΔNMAE` 定义为：
+
+```text
+(Ours_degraded - Ours_clean) - (Transformer_degraded - Transformer_clean)
+```
+
+它回答的是“谁相对 clean 退化得更少”，与困难条件下谁的绝对 NMAE 更低是两个不同问题。
+负值表示 Ours 相对退化更小；正值表示 Ours 仍可能绝对更好，但领先幅度在收窄。论文必须同时
+报告绝对差值和该成对相对退化统计。
+
+## 7. 最小消融
 
 不再增加数据集，只重复快速的离线拟合。前端预测缓存无需重跑：
 
@@ -229,7 +289,7 @@ python -m experiments.selective_experiment fit --train-predictions artifacts\pre
 
 建议正文只留三项：无质量权重、无选择门控、完整方法。其余特征消融放附录。
 
-## 7. 接回服务
+## 8. 接回服务
 
 服务启动前指定同一个分割检查点和推理设备；不设置时仍使用仓库自带权重和 CPU：
 

@@ -1,26 +1,28 @@
 # Robust Pointer Meter Reading 论文方案（冻结版）
 
-> 2026-07-20 的正式实验已经完成。精确数值、分组 bootstrap 区间、
+> 2026-07-21 的正式实验与六组控制退化实验已经完成。精确数值、分组 bootstrap 区间、
 > 失败归因和消融结论见
 > [`FORMAL_RESULTS_CN.md`](FORMAL_RESULTS_CN.md)。正式结果表明残差校正
 > 是主要读数增益来源；学习门控改善 Acc@2% 并降低负迁移，但不改善
-> 平均 NMAE，因此门控应定位为风险控制模块，而不是精度主贡献。
+> clean 平均 NMAE，因此门控应定位为风险控制模块，而不是精度主贡献。在模糊和
+> 大视角下，本方法保持显著的绝对 NMAE 优势，但相对 clean 的退化不小于 Transformer。
 
 ## 一句话问题定义
 
-现有指针表读数流水线在理想合成图上可以工作，但分割噪声、两种针尖估计分歧和合成到真实的域偏移会造成不可预测的大误差。本文研究的不是重新堆叠一个更大的视觉模型，而是：**如何利用运行时几何质量与不确定性，在保持可解释性的同时修正读数，并在不可信时主动回退。**
+现有指针表读数流水线在清晰正视图上可以工作，但模糊、倾斜拍摄、分割噪声、两种针尖估计分歧和合成到真实的域偏移会造成不可预测的大误差。本文研究的不是重新堆叠一个更大的视觉模型，而是：**如何利用运行时几何质量与不确定性，在模糊和大视角条件下修正读数，并在校正可能产生负迁移时主动回退。**
 
 ## 建议题目
 
 中文：
 
-> 面向跨域指针表读数的质量感知几何融合与选择性残差校正
+> 面向模糊与大视角退化的质量感知几何融合与选择性残差校正
 
 英文：
 
-> Quality-Aware Geometry Fusion with Selective Residual Calibration for Robust Pointer Meter Reading
+> Quality-Aware Geometry Fusion and Selective Residual Calibration for Pointer Meter Reading under Blur and Perspective Distortion
 
-标题暂时不要写 “state-of-the-art” 或 “zero-shot”。只有 RPM-10K 冻结外测完成后，才可根据结果决定是否在摘要中使用 “cross-domain” 或 “zero-shot transfer”。
+标题不要写 “state-of-the-art”。RPM-10K 冻结外测只能支持“跨域诊断”，主标题使用可复现的
+模糊/透视问题定义更稳妥；在 VDN 等外部同类基线真正完成以前，摘要也不要声称领先现有方法。
 
 ## 可作为论文贡献的部分
 
@@ -65,6 +67,14 @@ r = (y - y_geometry) / (scale_end - scale_start)
 
 这是可信实验设计的一部分，也可写成方法贡献；不要把普通随机 K-fold 描述成同等方案。
 
+### 5. 成对控制退化与端到端失败计分
+
+对同一批 SyncG test 图像施加由 `seed + sample_id` 固定的高斯模糊和 25°/45° 虚拟平面
+透视，所有方法共享完全相同的退化输入和冻结校准器。除困难条件下的绝对方法差值外，额外
+报告相对 clean 的成对 ΔΔNMAE；无输出按 NMAE=1、Acc@2%=失败计入并单报 coverage。
+这是一项评测协议贡献，而不是新网络模块。正式结果支持“困难条件下仍保留绝对优势和风险
+控制”，不支持“相对退化幅度总是更小”。
+
 ## 支撑性改进，不宜包装为核心创新
 
 - 修复 U2NetP Letterbox 输出恢复时未移除补边的坐标错误。
@@ -85,7 +95,8 @@ r = (y - y_geometry) / (scale_end - scale_start)
 - 不能声称在 RPM-10K 上训练或微调；正式协议完全不使用其 8730 张训练图。
 - 不能只在成功样本上报告准确率并忽略失败。
 - 不能把仓库原有 30+8 张内部图称为两个独立公开数据集。
-- 在正式结果出来前，不能声称质量加权、残差或分割微调必然优于基线。
+- 不能只凭内部消融声称优于同类型公开模型或达到 state of the art。
+- 不能声称本方法在所有模糊/透视强度下相对 clean 的退化小于 Transformer。
 
 ## 两数据集的最小实验协议
 
@@ -106,17 +117,23 @@ r = (y - y_geometry) / (scale_end - scale_start)
 - 官方 `range` 作为已知量程元数据，因此结果不等同于从原始图像同时推断量程的官方 VLM 设置。
 - 数据许可当前为 TBD，仓库不得再分发图像。
 
-## 主表（只保留七行）
+## 外部对比主表与内部消融必须分开
 
-| 方法 | 作用 |
+论文主对比至少保留四类同任务方法；没有 VDN 等外部复现结果时，不应投稿时声称完整的
+同类模型比较。可复现性状态与公平适配规则见
+[`BASELINE_AUDIT_CN.md`](BASELINE_AUDIT_CN.md)。
+
+| 主对比方法 | 公平设置 |
 |---|---|
-| Original Transformer | 原项目读数基线 |
-| Geometry-v1 | 第一几何估计 |
-| Geometry-v2 | 稳健方向投票 |
-| Mean Fusion | 无质量权重消融 |
-| Quality-weighted Fusion | 无学习残差的基础方法 |
-| Residual without Gate | 无选择机制消融 |
+| Classical geometry (Geometry-v1) | 相同表盘框、起终点与已知量程，不使用学习残差 |
+| Original Transformer | 原项目同任务模型 |
+| VDN (our retraining) | 在相同 SyncG train 重训，共享量程适配器；同时报告角度误差与读数指标 |
 | Ours | 质量融合 + 归一化残差 + 不确定性/学习门控 |
+
+其中 `Geometry-v1` 可作为传统几何实现；若篇幅有限，可只保留 Classical geometry、
+Original Transformer、VDN retraining、Ours 四行。下面七个内部变体属于消融表，不能冒充
+外部方法：Original Transformer、Geometry-v1、Geometry-v2、Mean Fusion、
+Quality-weighted Fusion、Residual without Gate、Ours。
 
 每个数据集至少报告端到端 NMAE、Acc@阈值和 coverage。失败读数在 NMAE 中按 `1.0` 量程误差计，在 Acc 中算错；同时保留 `successful_nmae` 作为诊断，不能作为主结论。
 
@@ -131,12 +148,13 @@ RPM-10K 额外报告：
 
 正文只需要：
 
-1. 主表七方法（包含原项目 Transformer 基线）；
-2. 分割组件消融：released vs SyncG-finetuned（两者使用同一 train-validation 校准阈值；真值表盘框，明确标注非端到端）；
-3. RPM-10K 上 released vs SyncG-finetuned 分割的冻结迁移诊断，只比较共享的 Transformer / 质量几何读数头，禁止据此选前端；
-4. risk–coverage 曲线和负迁移率；
-5. 三个关键配对的分组 bootstrap 95% 区间；
-6. 从同一冻结缓存统计的端到端失败归因表，不额外运行模型。
+1. 四行外部主对比：传统几何、Original Transformer、VDN 重训、Ours；
+2. 七方法内部消融表；
+3. clean、两级模糊、两级透视、严重组合退化的鲁棒性表与退化曲线；
+4. 分割组件消融：released vs SyncG-finetuned（同一 train-validation 校准阈值；真值表盘框，明确标注非端到端）；
+5. RPM-10K 上 released vs SyncG-finetuned 分割的冻结迁移诊断，禁止据此选前端；
+6. risk–coverage 曲线、负迁移率和关键配对的分组 bootstrap 95% 区间；
+7. 从同一冻结缓存统计的端到端失败归因表，不额外运行模型。
 
 附录可加入：
 
@@ -161,6 +179,7 @@ RPM-10K 额外报告：
 .\experiments\download_syncg.ps1 -Extract
 python -m experiments.download_rpm10k_test
 .\experiments\run_paper_experiments.ps1
+.\experiments\run_robustness_experiments.ps1
 ```
 
 正式数值只允许从 `artifacts/runs/` 自动生成；文档和论文中不得手工填写未经脚本复核的结果。
