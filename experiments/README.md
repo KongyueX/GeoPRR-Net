@@ -1,22 +1,24 @@
 # 务实的论文实验方案
 
-2026-07-21 的主实验与六组控制退化正式运行已经结束。聚合结果、置信区间与可安全主张的
-结论见 [`../docs/FORMAL_RESULTS_CN.md`](../docs/FORMAL_RESULTS_CN.md)；
+2026-07-22 的主实验、六组控制退化、VDN 对比、独立方向回退和训练侧质量路由已经结束。聚合结果、
+置信区间与可安全主张的结论见 [`../docs/FORMAL_RESULTS_CN.md`](../docs/FORMAL_RESULTS_CN.md)；
 本文件继续作为复现实验协议和命令说明。
 
 本目录只使用两个正式数据集：
 
-- **SyncG**：只用官方 `train` 微调指针分割、训练选择性残差校正器，并使用官方 `test` 做同域测试。
+- **SyncG**：只用官方 `train` 微调指针分割、训练选择性残差校正器与独立方向头，并使用官方 `test` 做同域测试。
 - **RPM-10K**：只做冻结模型的零微调真实图像外部测试，不用于选特征、阈值或超参数。
 
-仓库原有的 30+8 张图只适合作为补充案例，不并入主表，也不作为“独立数据集”反复调参。这样既避免五套数据集雨露均沾，也能把核心论点讲清楚：质量加权融合是否有效，以及学习残差在跨域时能否通过门控避免负迁移。
+仓库原有的 30+8 张图只适合作为补充案例，不并入主表，也不作为“独立数据集”反复调参。
+这样既避免五套数据集雨露均沾，也能把核心论点讲清楚：精确但易失败的掩码表示和高覆盖率
+方向表示能否通过选择性路由互补，以及残差校正在退化场景中能否控制负迁移。
 
 官方下载入口：[SyncG 代码与数据说明](https://github.com/SKYWOWDYH/SyncG)、[SyncG 数据](https://huggingface.co/datasets/YihengDeng/syncG)、[RPM-10K / DialBench](https://github.com/Event-AHU/DialBench)。固定提交中的 SyncG 数据卡标注为 CC BY 4.0，使用及论文中应保留数据集归属；RPM-10K 仓库当前把数据许可标为 TBD，投稿或再分发前必须再次核对。本仓库只提供下载脚本，不分发数据。
 
 外部同类模型不能由内部变体替代；VDN 等方法的可复现性和公平接入规则见
 [`../docs/BASELINE_AUDIT_CN.md`](../docs/BASELINE_AUDIT_CN.md)。
 
-## 七个内部方法（消融表）
+## 内部方法（消融表）
 
 所有读数方法共享同一次前端推理缓存。分割网络只允许在 SyncG `train` 内微调；进入读数实验后，检测、校正、分割和起终点网络全部冻结。
 
@@ -28,7 +30,13 @@
 | Mean Fusion | v1/v2 简单平均，保留为消融 |
 | Quality-weighted Fusion | 使用轴线一致性、针尖支持、方向投票集中度与正反侧分离度估计质量并加权 |
 | Residual without Gate | 在质量加权结果上无条件加残差 |
-| Ours | 质量加权 + 归一化残差 + 不确定性/学习门控 |
+| Ours-mask | 质量加权 + 归一化残差 + 不确定性/学习门控 |
+| Direction only | 独立支点热图 + 全局方向向量，不使用指针分割 |
+| Ours-hard | Ours-mask 有输出时保留，仅在硬失败时调用 Direction only |
+| Ours-final | Ours-hard + 只在 SyncG train 跨模型 OOF 上学习的质量切换 |
+
+历史 JSON 中字段名 `Ours` 对应这里的 `Ours-mask`；保留字段名是为了不改写已经冻结并签名的
+预测缓存。
 
 残差目标为 `(GT - weighted_fusion) / (scale_end - scale_start)`，因此不同量程可以共用模型。残差与门控采用按 `group_id` 划分的**嵌套交叉拟合**：外层测试组既不会进入残差模型，也不会参与残差裁剪分位数、门控模型及其训练标签的构造；内层残差裁剪同样只由对应内层训练组确定。最终部署模型的裁剪值才由完整 SyncG train 冻结，门控阈值只在其外层 OOF 结果上确定。
 
@@ -289,7 +297,154 @@ python -m experiments.selective_experiment fit --train-predictions artifacts\pre
 
 建议正文只留三项：无质量权重、无选择门控、完整方法。其余特征消融放附录。
 
-## 8. 接回服务
+## 8. 外部 VDN 对比与三随机种子
+
+VDN 官方仓库提供架构和训练代码但没有可用的官方权重。为避免许可证混入，本项目不复制其
+GPL-3.0 源码，而是校验并动态加载独立、被 Git 忽略的固定提交：
+
+```powershell
+git clone https://github.com/DrawZeroPoint/VectorDetectionNetwork.git `
+  artifacts\vendor\VectorDetectionNetwork
+git -C artifacts\vendor\VectorDetectionNetwork checkout `
+  68afe1efbdb35d3196d9a6243bfac8e5c9de5ceb
+```
+
+使用与本文相同的 SyncG train、分组 train-validation 和官方配置指定的
+`resnet18-5c106cde.pth` 初始化重训 ResNet-18 + 三层反卷积双头架构。正式配置固定为
+100 epoch，把官方 200 epoch 配置的 140/190 里程碑按比例缩放至 70/95，并按验证方向 MAE
+选择检查点；SyncG test 和 RPM 不参与选择。注意固定提交的 `get_optimizer` 没有把 YAML 中的
+`WD=0.0001` 传给 Adam，因此忠实运行的有效 weight decay 是 0：
+
+```powershell
+python -m experiments.train_vdn_syncg `
+  --epochs 100 --batch-size 8 --workers 4 --seed 20260720 `
+  --output-dir artifacts\runs\vdn_syncg\seed_20260720
+
+# 训练完成后先做签名/逐轮/检查点审计，再依次跑 clean、五种退化和 RPM，
+# 最后生成配对分组 bootstrap 表。
+powershell -NoProfile -ExecutionPolicy Bypass -File `
+  .\experiments\run_vdn_evaluations.ps1
+```
+
+VDN 只替换指针方向估计；表盘检测、起终点、已知量程换算、失败惩罚和退化图像均与主方法
+共享。论文中必须写作 `VDN architecture, retrained on SyncG`，不能冒充官方预训练端到端
+结果。评估同时输出 VDN 原生方向 MAE 和适配后的 NMAE/Acc@2%。正式验证器会重新构造
+652/73 个训练/验证场景组，核对零交集、样本 ID 哈希、学习率、损失权重、优化器步数、源码
+与权重哈希；共享缓存还必须具有完全相同的退化协议、退化源码和检测器权重签名。
+
+三随机种子只重复新增残差/门控拟合，复用同一份冻结图像预测，避免无意义地重复 24,000 次
+视觉推理：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File `
+  .\experiments\run_seed_stability.ps1
+```
+
+输出为 `artifacts/runs/seed_stability/seed_stability.{json,md}`；正式三种子固定为
+`20260720/20260721/20260722`。汇总器逐条件核对预测 JSONL 的 SHA-256 和完整前端签名，
+并核对每份指标实际引用的校准器，保证变化只来自残差/门控拟合种子。
+
+正式结果位于 `artifacts/runs/vdn_syncg/seed_20260720/vdn_comparison.{json,md}` 和上述
+三种子目录。原掩码分支相对 VDN 在 clean、两档模糊和中度透视上取得显著更低的 NMAE；
+重度透视统计持平，组合重度退化和 RPM 则由 VDN 显著领先。RPM 差距主要来自原分支
+72.73% 对 VDN 98.78% 的端到端 coverage；这一冻结诊断驱动了第 9 节的分割无关方向回退，
+而没有使用外测标签继续调残差或门控阈值。
+
+## 9. 独立支点—方向头与双表示路由
+
+RPM 失败归因显示，原掩码分支的主要问题是指针分割/中心线校验无输出。为此新增一个与
+分割无关的 torchvision ResNet-18：同一编码器同时预测 `64×64` 支点热图与全局二维单位
+方向。该实现不导入或复制 VDN 的 GPL 源码；VDN 仍是独立外部基线。
+
+正式训练只使用 SyncG train，并按 `meter type + scene` 分组留出验证集：
+
+```powershell
+python -m experiments.train_pivot_direction_syncg `
+  --output-dir artifacts\runs\pivot_direction_syncg\seed_20260722 `
+  --epochs 30 --batch-size 48 --workers 4 --seed 20260722
+
+python -m experiments.verify_pivot_direction_run `
+  --run-dir artifacts\runs\pivot_direction_syncg\seed_20260722 `
+  --expected-epochs 30 --expected-batch-size 48 --expected-seed 20260722
+
+# 对 clean、五种控制退化和 RPM 做冻结评测，并生成硬失败路由的配对统计。
+powershell -NoProfile -ExecutionPolicy Bypass -File `
+  .\experiments\run_pivot_direction_experiments.ps1
+```
+
+正式硬路由没有可调阈值：原掩码/残差方法有输出时保留原值，只有无输出才调用方向头；两者
+都失败才保留失败。RPM 标签不用于训练、模型选择或路由。评估器复用 VDN 评测中已冻结的
+表盘框与起终参考，只读取这些共享前端几何，不读取 VDN 的方向或读数。
+
+主种子最佳验证方向 MAE 为 1.6873°，支点误差为输入宽度的 0.00559。RPM 上方向头恢复
+468/490 次原分支失败，最终 coverage 从 0.7273 提高到 0.9878，NMAE 从 0.4973 降到
+0.3346；相对 VDN 的 0.3813，配对 `ΔNMAE=-0.0467`，95% CI 为
+`[-0.0889, -0.0199]`。但最终 Acc@2% 为 0.0484，低于 VDN 的 0.0595；严重组合退化的
+NMAE 0.2510 也仍差于 VDN 0.2364。论文不得省略这两个边界。
+
+三次完整训练只重复方向头，clean/RPM 共享同一冻结前端：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File `
+  .\experiments\run_pivot_direction_replicates.ps1
+
+python -m experiments.summarize_pivot_direction_replicates
+```
+
+汇总器核对每个检查点、训练验证器、评测输出、源码签名、共享前端哈希和逐样本 ID，输出
+`artifacts/runs/pivot_direction_syncg/replicate_stability.{json,md}`。主种子的七条件结果位于
+`seed_20260722/dual_route_comparison.{json,md}`。
+
+正式三种子结果：验证方向 MAE `1.7099 ± 0.1726°`；RPM 方向分支 NMAE
+`0.3439 ± 0.0029`，Ours-hard 双表示 NMAE `0.3317 ± 0.0039`、Acc@2%
+`0.0482 ± 0.0003`、coverage `0.9878 ± 0.0000`。三个种子都恢复 468/490 次原分支
+硬失败；双表示相对固定 VDN 的 NMAE 差为 `-0.0496 ± 0.0039`。
+
+## 10. 训练侧跨模型 OOF 质量路由
+
+硬回退只解决“无输出”，不能处理掩码分支已有有限读数但误差很大的情况。质量路由训练集由
+三个方向头验证集并集构成：每个样本的方向预测来自从未训练过该仪表组的检查点，掩码读数
+来自原残差模型的 grouped-OOF 预测。最终得到 4,380 张、197 组，组泄漏和测试样本使用均为
+0。RPM 和 SyncG test 不支持作为本脚本的训练输入。
+
+```powershell
+# 约 2 分钟：重跑检测和三个 held-out 方向检查点，生成跨模型 OOF 配对。
+python -m experiments.collect_quality_router_oof --overwrite
+
+# 约数秒：五折 grouped OOF 拟合 ExtraTrees 收益回归器并冻结阈值。
+python -m experiments.train_quality_router --overwrite
+
+# 只用上述训练侧 OOF 做特征消融。
+python -m experiments.ablate_quality_router_features --overwrite
+```
+
+路由第一层保持硬失败规则不变；共同成功时，才在预测收益大于训练侧阈值 `0.0056015` 时切换
+到方向分支。运行时特征包括分支读数/角度分歧、支点热图峰值、掩码质量、残差不确定性与
+表盘检测置信度，不读取真值、样本 ID、数据集名或环境标签。
+
+七组冻结评测可分别调用 `experiments.evaluate_quality_router`；已有全部方向/VDN 缓存时，
+以下入口会连同三个方向种子的 clean/RPM 稳定性、汇总和审计一起执行：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File `
+  .\experiments\run_quality_router_experiments.ps1
+
+# 若训练侧 OOF 与路由模型已冻结，只重做评测：
+powershell -NoProfile -ExecutionPolicy Bypass -File `
+  .\experiments\run_quality_router_experiments.ps1 -SkipTraining
+```
+
+正式主种子 NMAE：clean `0.1071`、severe blur `0.1260`、severe perspective `0.1622`、
+combined severe `0.2316`、RPM `0.3241`。六个 SyncG 条件相对硬回退的配对区间均低于 0；
+RPM 相对硬回退只有点估计改善、区间跨 0，但相对 VDN 的 NMAE 仍显著更低。三个方向种子的
+clean/RPM 最终 NMAE 为 `0.1075 ± 0.0005` / `0.3238 ± 0.0037`。
+
+完整结果位于 `artifacts/runs/quality_router_syncg/quality_router_comparison.{json,md}`，训练
+消融位于 `feature_ablation.{json,md}`，`verification.json` 逐行重算七组路由和指标。方法构想
+受此前 test 失败分析启发，所以当前复评不冒充全流程盲测；任何后续修改都必须另设未使用
+测试集。
+
+## 11. 接回服务
 
 服务启动前指定同一个分割检查点和推理设备；不设置时仍使用仓库自带权重和 CPU：
 
@@ -324,5 +479,5 @@ python main.py
 算法组件的快速单测：
 
 ```powershell
-python -m unittest test.test_selective_geometry
+python -m unittest discover -s test -p "test_*.py"
 ```

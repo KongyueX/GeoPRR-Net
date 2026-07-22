@@ -18,6 +18,35 @@ The SyncG-fine-tuned segmentation checkpoint is derived from the first
 artifact. Do not publish that derived checkpoint until the base artifact's
 license and training-data provenance have been established.
 
+## External VDN comparison (not tracked by Git)
+
+The reproducible comparison adapter expects an independent checkout of
+`DrawZeroPoint/VectorDetectionNetwork` fixed at commit
+`68afe1efbdb35d3196d9a6243bfac8e5c9de5ceb`. The upstream checkout declares
+GPL-3.0. Its source is loaded at runtime from `artifacts/vendor/` and is neither
+copied into nor redistributed by this repository. Any public artifact that
+bundles that source must satisfy its license separately.
+
+VDN backbone initialization uses PyTorch's official
+`resnet18-5c106cde.pth` download named by the pinned VDN configuration
+(SHA-256
+`5c106cde386e87d4033832f2996f5493238eda96ccf559d1d62760c4de0613f8`).
+The downloaded initialization and the SyncG-retrained VDN checkpoint remain
+ignored local artifacts. Before redistributing either weight file, review the
+applicable PyTorch/torchvision and ImageNet terms in addition to the VDN and
+SyncG notices.
+
+## Independent pivot-direction model (not tracked by Git)
+
+The local pivot-direction fallback is implemented in this repository with a
+torchvision ResNet-18 encoder, a pivot heatmap decoder, and a global direction
+head. It does not copy or load the external VDN source. Its ImageNet
+initialization is torchvision's `resnet18-f37072fd.pth` (SHA-256
+`f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec`).
+The initialization and all SyncG-trained checkpoints are ignored local
+artifacts. Review the applicable PyTorch/torchvision, ImageNet, and SyncG terms
+before redistributing any derived checkpoint.
+
 ## Public datasets
 
 - SyncG is downloaded from the pinned Hugging Face commit recorded by the

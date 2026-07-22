@@ -1,32 +1,74 @@
-# Robust Pointer Meter Reading 论文方案（冻结版）
+# Robust Pointer Meter Reading 论文方案（双表示实验版）
 
-> 2026-07-21 的正式实验与六组控制退化实验已经完成。精确数值、分组 bootstrap 区间、
+> 2026-07-22 的正式实验、六组控制退化及分割无关方向回退实验已经完成。精确数值、
+> 分组 bootstrap 区间、
 > 失败归因和消融结论见
-> [`FORMAL_RESULTS_CN.md`](FORMAL_RESULTS_CN.md)。正式结果表明残差校正
-> 是主要读数增益来源；学习门控改善 Acc@2% 并降低负迁移，但不改善
-> clean 平均 NMAE，因此门控应定位为风险控制模块，而不是精度主贡献。在模糊和
-> 大视角下，本方法保持显著的绝对 NMAE 优势，但相对 clean 的退化不小于 Transformer。
+> [`FORMAL_RESULTS_CN.md`](FORMAL_RESULTS_CN.md)。正式结果表明：掩码/残差分支在
+> clean 与单一退化上精度高，但真实域覆盖率低；独立支点—方向头恢复 RPM 中 95.51%
+> 的硬失败。进一步只用 SyncG train 跨模型 OOF 学习质量路由，把 clean/组合重度/RPM
+> NMAE 分别降到 0.1071/0.2316/0.3241，并在 NMAE 上优于重训 VDN 的
+> 0.1482/0.2364/0.3813。RPM Acc@2% 仍略低于 VDN，质量路由相对 RPM 硬回退的区间跨 0，
+> 必须如实报告。三个方向种子的最终 RPM NMAE 为 `0.3238 ± 0.0037`。
 
 ## 一句话问题定义
 
-现有指针表读数流水线在清晰正视图上可以工作，但模糊、倾斜拍摄、分割噪声、两种针尖估计分歧和合成到真实的域偏移会造成不可预测的大误差。本文研究的不是重新堆叠一个更大的视觉模型，而是：**如何利用运行时几何质量与不确定性，在模糊和大视角条件下修正读数，并在校正可能产生负迁移时主动回退。**
+现有指针表读数流水线在清晰正视图上可以工作，但模糊、倾斜拍摄、分割噪声和合成到真实的
+域偏移会同时造成错误读数与无输出。本文研究：**如何联合精确但易失败的指针掩码表示与覆盖率
+更高的支点—方向向量表示，并用可审计的选择性路由在退化条件下兼顾精度、覆盖率与负迁移。**
 
 ## 建议题目
 
 中文：
 
-> 面向模糊与大视角退化的质量感知几何融合与选择性残差校正
+> 面向真实退化的掩码—向量双表示选择性指针表读数
 
 英文：
 
-> Quality-Aware Geometry Fusion and Selective Residual Calibration for Pointer Meter Reading under Blur and Perspective Distortion
+> Quality-Aware Mask–Vector Dual-Representation Routing for Robust Pointer Meter Reading
 
 标题不要写 “state-of-the-art”。RPM-10K 冻结外测只能支持“跨域诊断”，主标题使用可复现的
-模糊/透视问题定义更稳妥；在 VDN 等外部同类基线真正完成以前，摘要也不要声称领先现有方法。
+模糊/透视问题定义更稳妥。摘要应明确：最终方法在 RPM 和严重组合退化的 NMAE 上优于
+VDN、coverage 达到同等水平，但 Acc@2% 仍较低；不能笼统声称所有指标全面优于现有方法。
 
 ## 可作为论文贡献的部分
 
-### 1. 双几何估计与质量感知融合
+### 1. 掩码—向量双表示与选择性路由
+
+- 掩码分支由 SyncG 微调分割、双几何融合、归一化残差和选择性门控组成，在 clean、模糊和
+  中度透视上提供较高条件精度，但依赖分割与中心线校验。
+- 向量分支使用独立 torchvision ResNet-18，共享编码特征后预测支点热图与全局单位方向；
+  不依赖指针分割，也不复制或加载 VDN 源码。
+- 硬路由基线只在掩码分支无输出时调用向量分支，不使用真值、表型标签或置信度阈值。
+- 两个表示的失败模式互补：RPM 上恢复 468/490 次请求，coverage 从 72.73% 提至 98.78%。
+- 最终质量路由在硬失败规则之上，仅对两个分支都成功的样本预测切换收益。4,380 张训练
+  样本来自三个方向头组外验证集并集，掩码侧也使用 grouped OOF 预测；197 个组零泄漏。
+- 质量路由只读取运行时分支分歧、支点/掩码质量和残差不确定性；五折组外选择阈值，
+  SyncG test 与 RPM 不进入拟合。六个 SyncG 条件都显著优于硬路由。
+- 冻结 RPM 标签只用于事后分层：`blur` 与 `tilted` 子集相对 VDN 的 NMAE 差值区间均低于
+  0，二者交集区间跨 0；这支持有限的真实退化优势，不支持所有困难组合全面领先。
+- 最终贡献应表述为“互补表示 + 防泄漏选择性路由 + 全分母失败计分”，而不是把普通
+  ResNet-18 或热图回归本身称为首创。
+
+最终两层路由可直接写为：
+
+```text
+y_final = y_vector, if mask fails and vector succeeds       # hard fallback
+        = failure,  if both fail
+        = y_vector, if both succeed and predicted_gain > τ  # quality switch
+        = y_mask,   otherwise
+```
+
+其中 `succeeds` 只表示分支是否产生有限合法读数；`predicted_gain` 和阈值 `τ=0.0056015`
+均由 SyncG train grouped OOF 得到，不读取 GT，也没有在 RPM 上校准。向量分支仍共享冻结
+表盘框、起终参考和已知量程，因此应称为“分割无关方向分支”，不能写成完全不依赖任何
+前端的端到端模型。
+
+正文消融 `mask only / vector only / hard-failure dual route / quality route / oracle`，并加入
+单分歧特征、去掉跨分支分歧、去掉残差不确定性、去掉掩码质量等训练侧组外消融。方法方向
+由此前 test 失败分析启发，因此当前 test 结果是无标签调参泄漏的支持性验证，不冒充方法
+构想前完全不可见的盲测；严格 confirmatory 版本需要另留未使用现场测试集。
+
+### 2. 双几何估计与质量感知融合
 
 - Geometry-v1：拟合指针主轴并从表盘中心选择最远针尖。
 - Geometry-v2：在外侧候选点上进行稳健方向投票，降低单像素毛刺和高光的影响。
@@ -35,7 +77,7 @@
 
 需要通过 “Quality-weighted Fusion vs Mean Fusion” 的配对误差及分组 bootstrap 区间验证。若正式结果没有显著改善，应把它写成稳健融合组件，而不是单独声称性能提升。
 
-### 2. 跨量程归一化残差
+### 3. 跨量程归一化残差
 
 学习目标为：
 
@@ -45,7 +87,7 @@ r = (y - y_geometry) / (scale_end - scale_start)
 
 不同量程的表可以共享同一个残差模型。运行时残差重新乘以量程，并裁剪回合法读数区间。该设计比直接回归绝对读数误差更适合混合量程训练。
 
-### 3. 不确定性与学习门控的选择性校正
+### 4. 不确定性与学习门控的选择性校正
 
 - ExtraTrees 的树间方差作为残差不确定性。
 - 门控输入只包含运行时特征：两几何分支分歧/置信度、mask 轴线统计、分割概率统计、起终点分支和椭圆代理。
@@ -57,23 +99,24 @@ r = (y - y_geometry) / (scale_end - scale_start)
 
 - 修正覆盖率；
 - 负迁移率；
-- Ours vs Residual without Gate；
+- Ours-mask vs Residual without Gate；
 - risk–coverage 曲线；
 - 门控 Brier、ECE 和 AUROC。
 
-### 4. 无泄漏的嵌套分组交叉拟合
+### 5. 无泄漏的嵌套分组交叉拟合
 
 外层测试组既不进入残差模型，也不进入残差裁剪分位数、门控模型或门控标签构造。外层训练部分再次进行内层分组 OOF，每个内层残差模型的裁剪值也只由对应内层训练组确定，再用无泄漏残差构造门控标签。最终部署模型的裁剪值使用完整 SyncG train，门控阈值只从其外层 OOF 预测确定。
 
 这是可信实验设计的一部分，也可写成方法贡献；不要把普通随机 K-fold 描述成同等方案。
 
-### 5. 成对控制退化与端到端失败计分
+### 6. 成对控制退化与端到端失败计分
 
 对同一批 SyncG test 图像施加由 `seed + sample_id` 固定的高斯模糊和 25°/45° 虚拟平面
 透视，所有方法共享完全相同的退化输入和冻结校准器。除困难条件下的绝对方法差值外，额外
 报告相对 clean 的成对 ΔΔNMAE；无输出按 NMAE=1、Acc@2%=失败计入并单报 coverage。
-这是一项评测协议贡献，而不是新网络模块。正式结果支持“困难条件下仍保留绝对优势和风险
-控制”，不支持“相对退化幅度总是更小”。
+这是一项评测协议贡献，而不是新网络模块。正式结果支持“相对原始 Transformer，在困难
+条件下仍保留绝对优势和风险控制”，不支持“相对退化幅度总是更小”，也不支持在所有困难
+条件下优于 VDN。
 
 ## 支撑性改进，不宜包装为核心创新
 
@@ -97,6 +140,11 @@ r = (y - y_geometry) / (scale_end - scale_start)
 - 不能把仓库原有 30+8 张内部图称为两个独立公开数据集。
 - 不能只凭内部消融声称优于同类型公开模型或达到 state of the art。
 - 不能声称本方法在所有模糊/透视强度下相对 clean 的退化小于 Transformer。
+- 不能声称本方法在重度透视、组合退化或 RPM 的所有指标上全面优于 VDN；最终质量路由的
+  NMAE 更低，但这些条件的 Acc@2% 仍不都领先。
+- 不能把独立方向分支描述为 VDN 改进版；二者训练协议可比，但本文实现不依赖 VDN 源码。
+- 不能声称质量路由在 RPM 上显著优于硬回退；主种子区间跨 0，且一个方向种子点估计持平。
+- 不能声称每个质量特征都是必要创新；训练侧消融显示单个分支分歧已能取得大部分收益。
 
 ## 两数据集的最小实验协议
 
@@ -119,8 +167,8 @@ r = (y - y_geometry) / (scale_end - scale_start)
 
 ## 外部对比主表与内部消融必须分开
 
-论文主对比至少保留四类同任务方法；没有 VDN 等外部复现结果时，不应投稿时声称完整的
-同类模型比较。可复现性状态与公平适配规则见
+论文主对比保留五行同任务方法。VDN 的公平重训与七组冻结评测已经完成，但另外两项公开
+工作因缺少可用权重/代码或协议不同，不填入推测成绩。可复现性状态与公平适配规则见
 [`BASELINE_AUDIT_CN.md`](BASELINE_AUDIT_CN.md)。
 
 | 主对比方法 | 公平设置 |
@@ -128,12 +176,12 @@ r = (y - y_geometry) / (scale_end - scale_start)
 | Classical geometry (Geometry-v1) | 相同表盘框、起终点与已知量程，不使用学习残差 |
 | Original Transformer | 原项目同任务模型 |
 | VDN (our retraining) | 在相同 SyncG train 重训，共享量程适配器；同时报告角度误差与读数指标 |
-| Ours | 质量融合 + 归一化残差 + 不确定性/学习门控 |
+| Ours-mask | 质量融合 + 归一化残差 + 不确定性/学习门控 |
+| Ours-final | Ours-hard + SyncG-train-only grouped-OOF 质量切换 |
 
-其中 `Geometry-v1` 可作为传统几何实现；若篇幅有限，可只保留 Classical geometry、
-Original Transformer、VDN retraining、Ours 四行。下面七个内部变体属于消融表，不能冒充
-外部方法：Original Transformer、Geometry-v1、Geometry-v2、Mean Fusion、
-Quality-weighted Fusion、Residual without Gate、Ours。
+其中 `Geometry-v1` 可作为传统几何实现；若篇幅有限，正文保留 Classical geometry、
+Original Transformer、VDN retraining、Ours-mask、Ours-final 五行。Ours-hard、原七个读数
+变体以及 `vector only / oracle` 属于内部消融，不能冒充外部方法。
 
 每个数据集至少报告端到端 NMAE、Acc@阈值和 coverage。失败读数在 NMAE 中按 `1.0` 量程误差计，在 Acc 中算错；同时保留 `successful_nmae` 作为诊断，不能作为主结论。
 
@@ -148,13 +196,17 @@ RPM-10K 额外报告：
 
 正文只需要：
 
-1. 四行外部主对比：传统几何、Original Transformer、VDN 重训、Ours；
-2. 七方法内部消融表；
+1. 五行外部主对比：传统几何、Original Transformer、VDN 重训、Ours-mask、Ours-final；
+2. 七方法原分支消融，以及 `mask only / vector only / hard-failure dual route`；
 3. clean、两级模糊、两级透视、严重组合退化的鲁棒性表与退化曲线；
 4. 分割组件消融：released vs SyncG-finetuned（同一 train-validation 校准阈值；真值表盘框，明确标注非端到端）；
 5. RPM-10K 上 released vs SyncG-finetuned 分割的冻结迁移诊断，禁止据此选前端；
 6. risk–coverage 曲线、负迁移率和关键配对的分组 bootstrap 95% 区间；
-7. 从同一冻结缓存统计的端到端失败归因表，不额外运行模型。
+7. 从同一冻结缓存统计的端到端失败归因表，不额外运行模型；
+8. 三随机种子的残差/门控稳定性汇总；视觉预测保持冻结，只重复该学习模块；
+9. 独立支点—方向头的三次完整训练，并在 clean 与 RPM 上汇总均值 ± 样本标准差。
+10. 质量路由的 grouped-OOF、特征消融、七条件冻结复评，以及固定路由下三个方向种子的
+    clean/RPM 稳定性。
 
 附录可加入：
 
@@ -167,11 +219,12 @@ RPM-10K 额外报告：
 
 ## 结果判定与止损规则
 
-- 如果 SyncG test 上 Ours 不优于 Quality-weighted Fusion：检查残差裁剪、组划分和门控覆盖率；不改 RPM 参数。
-- 如果 Residual without Gate 改善但 Ours 无改善：门控目标或阈值过保守，应只用 SyncG train OOF 诊断。
+- 如果 SyncG test 上 Ours-mask 不优于 Quality-weighted Fusion：检查残差裁剪、组划分和门控覆盖率；不改 RPM 参数。
+- 如果 Residual without Gate 改善但 Ours-mask 无改善：门控目标或阈值过保守，应只用 SyncG train OOF 诊断。
 - 如果 RPM coverage 很低：首先检查表盘检测/指针分割失败占比；不能只汇报成功子集 NMAE。
 - 如果 SyncG 微调分割降低 RPM 性能：如实报告合成域微调的负迁移，保留 released 前端作为预声明对照，不能根据 RPM 标签反向选择阈值。
-- 只有当中心无关方向 fallback 在 SyncG train-validation 上满足预先固定的线性度、方向唯一性和负迁移约束时才加入；当前 10 张 RPM 诊断不足以授权该算法进入主表。
+- 当前质量路由已解决大部分“有输出但低质量”问题。不得根据七组冻结结果继续改特征或阈值；
+  若再改模型，必须另设未使用的最终测试集，并把当前结果降级为开发集诊断。
 
 ## 复现入口
 
@@ -180,6 +233,16 @@ RPM-10K 额外报告：
 python -m experiments.download_rpm10k_test
 .\experiments\run_paper_experiments.ps1
 .\experiments\run_robustness_experiments.ps1
+.\experiments\run_seed_stability.ps1
+.\experiments\run_vdn_evaluations.ps1
+.\experiments\run_pivot_direction_experiments.ps1
+.\experiments\run_pivot_direction_replicates.ps1
+python -m experiments.summarize_pivot_direction_replicates
+python -m experiments.collect_quality_router_oof --overwrite
+python -m experiments.train_quality_router --overwrite
+python -m experiments.ablate_quality_router_features --overwrite
+python -m experiments.summarize_quality_router --overwrite
+python -m experiments.verify_quality_router_run
 ```
 
 正式数值只允许从 `artifacts/runs/` 自动生成；文档和论文中不得手工填写未经脚本复核的结果。
