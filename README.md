@@ -6,10 +6,16 @@
 > VDN 对比、独立方向回退与训练侧质量路由）的结果与统计结论见
 > [`docs/FORMAL_RESULTS_CN.md`](docs/FORMAL_RESULTS_CN.md)，外部同类方法能否公平复现见
 > [`docs/BASELINE_AUDIT_CN.md`](docs/BASELINE_AUDIT_CN.md)。
+> 概率圆周方向、透视等变训练与不确定性软融合的算法/复现实验见
+> [`docs/PROBABILISTIC_FUSION_METHOD_CN.md`](docs/PROBABILISTIC_FUSION_METHOD_CN.md)。
+> 截至 2026-07-23 的全部模型修改、消融结果、GPU 利用率解释和阶段结论见
+> [`docs/MODEL_PROGRESS_REPORT_CN_20260723.txt`](docs/MODEL_PROGRESS_REPORT_CN_20260723.txt)。
 > 下方原有 30+8 张内部数据结果仅作工程回归记录，不进入公开论文主表。
 > 模型与数据再分发边界见
 > [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)；仓库尚未选择项目级许可证。
-> 新增掩码—向量双表示及质量路由目前属于论文实验路径，尚未接入下方生产 API。
+> 新增概率方向、透视感知进度校准及 mask/calibrated-vector 路由目前属于论文实验路径，尚未
+> 接入下方生产 API。冻结主种子结果为 clean NMAE `0.0890`、severe perspective `0.1454`、
+> severe combined `0.2184`、RPM-10K `0.2842`；RPM 只有六个仪表组，点估计改善但不显著。
 
 ## 推荐基础方案（测试请使用这个）
 

@@ -177,7 +177,7 @@ r = (y - y_geometry) / (scale_end - scale_start)
 | Original Transformer | 原项目同任务模型 |
 | VDN (our retraining) | 在相同 SyncG train 重训，共享量程适配器；同时报告角度误差与读数指标 |
 | Ours-mask | 质量融合 + 归一化残差 + 不确定性/学习门控 |
-| Ours-final | Ours-hard + SyncG-train-only grouped-OOF 质量切换 |
+| Ours-final | 概率方向 + 透视感知进度校准 + SyncG-train-only grouped-OOF 安全切换 |
 
 其中 `Geometry-v1` 可作为传统几何实现；若篇幅有限，正文保留 Classical geometry、
 Original Transformer、VDN retraining、Ours-mask、Ours-final 五行。Ours-hard、原七个读数
@@ -243,6 +243,36 @@ python -m experiments.train_quality_router --overwrite
 python -m experiments.ablate_quality_router_features --overwrite
 python -m experiments.summarize_quality_router --overwrite
 python -m experiments.verify_quality_router_run
+.\experiments\run_probabilistic_direction_training.ps1
+.\experiments\run_probabilistic_direction_evaluations.ps1
+.\experiments\run_probabilistic_direction_ablations.ps1
+.\experiments\run_calibrated_progress_experiments.ps1
 ```
 
 正式数值只允许从 `artifacts/runs/` 自动生成；文档和论文中不得手工填写未经脚本复核的结果。
+
+## 2026-07-23 技术路线更新
+
+方向分支已由单一单位向量升级为“直接向量 + 72-bin 圆周分布 + 可学习角度方差”的概率方向头，
+并用严格成对的单应投影视图和等变损失训练。三种子验证角度 MAE 为
+`0.7787° ± 0.1279°`；在 severe perspective / severe combined 上，冻结角度 MAE 从旧版的
+`3.603° / 4.997°` 降到 `1.089° / 1.624°`。
+
+更重要的是，新增的透视感知进度校准器把方向角改进传递到了最终读数。它只使用 SyncG train
+grouped-OOF 样本学习归一化 angle-to-progress 残差，再由第二层安全路由在 base mask 与
+calibrated vector 之间选择。最终 clean / severe blur / severe perspective / severe combined /
+RPM NMAE 分别为 `0.0890 / 0.1082 / 0.1454 / 0.2184 / 0.2842`；旧质量路由对应为
+`0.1071 / 0.1260 / 0.1622 / 0.2316 / 0.3241`。
+
+正文方法主线因此应更新为：
+
+```text
+概率圆周方向估计
+-> 精确投影配对监督与等变正则
+-> 透视感知的 angle-to-progress 残差校准
+-> mask/calibrated-vector 防泄漏选择路由
+-> 全分母失败计分与分组 bootstrap
+```
+
+论文中仍需明确：树模型本身不是创新；严重透视和严重组合下 calibrated vector 单路由略优于
+最终路由；RPM 改善的 95% CI 跨 0；当前测试集已参与支持性诊断，严格确认性投稿应另留现场测试集。

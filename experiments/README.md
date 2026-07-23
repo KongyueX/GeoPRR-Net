@@ -444,7 +444,78 @@ clean/RPM 最终 NMAE 为 `0.1075 ± 0.0005` / `0.3238 ± 0.0037`。
 受此前 test 失败分析启发，所以当前复评不冒充全流程盲测；任何后续修改都必须另设未使用
 测试集。
 
-## 11. 接回服务
+## 11. 概率圆周方向、透视等变训练与软融合
+
+在 v1 独立方向头和质量路由之上，论文候选 v2 同时预测支点热图、直接二维方向、72-bin
+圆周分布与角方差。训练视图包含精确单应变换后的支点/射线标签，并对两个视图的预测增加
+可微等变一致性。最终方向由直接向量和圆周 resultant vector 联合解码。
+
+```powershell
+# 单个或三个完整种子；默认 30 epochs、batch 24。
+powershell -NoProfile -ExecutionPolicy Bypass -File `
+  .\experiments\run_probabilistic_direction_training.ps1
+
+# 主种子七条件冻结评测。
+powershell -NoProfile -ExecutionPolicy Bypass -File `
+  .\experiments\run_probabilistic_direction_evaluations.ps1
+
+# 同权重 direct/circular/fused 解码消融，以及重新训练的等变/投影消融。
+powershell -NoProfile -ExecutionPolicy Bypass -File `
+  .\experiments\run_probabilistic_decoder_ablations.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File `
+  .\experiments\run_probabilistic_direction_ablations.ps1
+```
+
+融合器不再只做二选一路由，而从两个专家的条件对数误差方差计算逆方差权重。mask/vector
+任一失败时仍保留确定性硬失败规则。训练数据仍只有 SyncG train：三个方向模型验证集的并集
+提供 group-held-out vector 预测，mask 使用原 grouped-OOF 预测；融合器内部再做五折
+GroupKFold。SyncG test、控制退化与 RPM 均不进入拟合。
+
+```powershell
+# 跨模型 OOF、融合拟合、原生不确定性特征消融、七条件评测、逐行复核。
+powershell -NoProfile -ExecutionPolicy Bypass -File `
+  .\experiments\run_uncertainty_fusion_experiments.ps1
+```
+
+完整算法、损失、无泄漏协议与创新性边界见
+[`../docs/PROBABILISTIC_FUSION_METHOD_CN.md`](../docs/PROBABILISTIC_FUSION_METHOD_CN.md)。方向 MAE
+与端到端 NMAE 必须分开报告：强透视下像平面方向更准，不等于角度到刻度进度的投影非线性
+已经被完全消除。
+
+## 12. 透视感知进度校准与最终选择路由
+
+概率方向模型显著降低了方向角 MAE，但冻结参考点的 `start_angle/range_angle` 仍限制最终读数。
+新增校准器只在 4,380 条 SyncG/train grouped-OOF 行上拟合归一化 progress residual，并输出
+ExtraTrees 树间标准差。第二层路由在 mask 与 calibrated vector 之间选择，硬失败回退优先级
+保持不变；SyncG test、控制退化和 RPM 均不进入拟合或阈值选择。
+
+```powershell
+# 已有概率 OOF 与冻结七条件预测时，约数分钟完成训练、评测、汇总和逐行审计。
+powershell -NoProfile -ExecutionPolicy Bypass -File `
+  .\experiments\run_calibrated_progress_experiments.ps1
+
+# 只重做冻结评测和复核。
+powershell -NoProfile -ExecutionPolicy Bypass -File `
+  .\experiments\run_calibrated_progress_experiments.ps1 -SkipTraining
+```
+
+训练侧 nested-OOF：raw vector / calibrated vector / final router NMAE 分别为
+`0.14872 / 0.09651 / 0.08985`，最终 Acc@2% 为 `0.46370`。冻结最终路由结果：clean
+`0.08901`、severe blur `0.10815`、severe perspective `0.14539`、combined severe
+`0.21837`、RPM `0.28420`。六个 SyncG 条件相对旧质量路由的 95% 区间均低于 0；RPM
+只有六个组，区间跨 0。
+
+自动生成：
+
+- `artifacts/runs/calibrated_progress_router_syncg/calibrated_progress_comparison.{json,md}`；
+- `artifacts/runs/calibrated_progress_router_syncg/verification.json`；
+- 校准器与路由器各自的训练 summary、grouped-OOF 诊断和七条件逐样本预测。
+
+算法定义、边界和方向/进度消融见
+[`../docs/PROBABILISTIC_FUSION_METHOD_CN.md`](../docs/PROBABILISTIC_FUSION_METHOD_CN.md)，阶段总报告见
+[`../docs/MODEL_PROGRESS_REPORT_CN_20260723.txt`](../docs/MODEL_PROGRESS_REPORT_CN_20260723.txt)。
+
+## 13. 接回服务
 
 服务启动前指定同一个分割检查点和推理设备；不设置时仍使用仓库自带权重和 CPU：
 
