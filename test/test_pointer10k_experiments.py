@@ -25,6 +25,7 @@ from experiments.extract_pointer10k_test import (
 )
 from experiments.summarize_pointer10k_direction import (
     _load_run,
+    _training_source,
     aggregate_runs,
     build_pairwise_comparisons,
     paired_bootstrap_comparison,
@@ -221,6 +222,30 @@ class Pointer10KExperimentTest(unittest.TestCase):
                 "delta_mean_angle_degrees_method_minus_baseline"
             ],
             -10.0,
+        )
+
+    def test_training_source_distinguishes_released_harr_from_syncg_runs(self):
+        self.assertEqual(
+            _training_source(
+                [
+                    {
+                        "model_kind": "harr",
+                        "checkpoint_training_signature": {
+                            "training_data": "HARR authors' released data"
+                        },
+                    }
+                ]
+            ),
+            "HARR authors' released data",
+        )
+        self.assertEqual(
+            _training_source(
+                [
+                    {"model_kind": "vdn"},
+                    {"model_kind": "probabilistic"},
+                ]
+            ),
+            "SyncG train",
         )
 
     def test_pinned_archive_hash_is_sha256(self):

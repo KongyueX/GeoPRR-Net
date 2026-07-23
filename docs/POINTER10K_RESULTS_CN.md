@@ -66,6 +66,25 @@ VDN 与本文模型均只在相同的 SyncG train 上重训，Pointer-10K 使用
 LQPI 子集**；PIN 论文没有发布可核验的 LQPI 图像 ID。因此这里只能称为本文预定义的
 prediction-independent natural low-quality stratum。
 
+### 4.1 HARR 官方权重的跨协议补充结果
+
+另使用 HARR `v2` 官方发布的 epoch-100 VGG 权重直接评测其 pointer branch。该模型没有在
+SyncG 上重训，训练来源是 HARR 作者发布数据，故只作“现成同类模型直接迁移”的补充表，
+不能与上一节的同 SyncG 训练主表混为一个公平排名。
+
+| 方法 | 训练来源 | 角度 MAE↓ | Acc@5°↑ | Acc@10°↑ | coverage↑ | 自然低质量组 MAE↓ |
+|---|---|---:|---:|---:|---:|---:|
+| HARR official v2 pointer branch | HARR 作者数据 | 118.917 | 28.082% | 30.137% | 45.662% | 150.874 |
+| VDN architecture, retrained | SyncG train | 50.843 | 28.995% | 41.324% | 100.000% | 56.840 |
+| Ours | SyncG train，三种子 | **22.022±5.485** | **52.588±1.652%** | **61.111±2.900%** | 100.000% | **20.081±1.757** |
+
+HARR 的检查点 SHA-256 为
+`6f5bcfd5f57c535dbc4da827ba7538e1c305f33d3da84d43215b125500a4300a`，
+完整网络严格加载无缺失键；评测复现其 0.5 掩膜阈值、骨架化、Hough 线和中心—远端方向
+规则。238 张失败仍按 180° 进入全分母，成功的 200 张方向 MAE 为 46.228°。结果说明
+HARR 官方权重直接迁移到 Pointer-10K 时有明显域失配；不能据此声称本文在“相同训练数据”
+下优于 HARR，也不能把它写成 HARR 完整检测/OCR/标量读数成绩。
+
 ## 5. 同种子训练消融
 
 三个变体都使用种子 `20260722`、相同 SyncG train 划分和相同测试协议：

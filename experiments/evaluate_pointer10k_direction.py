@@ -31,6 +31,14 @@ from experiments.extract_pointer10k_test import (
     POINTER10K_TEST_ANNOTATION_SHA256,
     POINTER10K_TEST_SINGLE_POINTER_IMAGES,
 )
+from experiments.harr_baseline import (
+    HARR_CROP_EXPANSION,
+    HARR_IMAGE_SIZE,
+    HARR_POINTER_PROTOCOL,
+    build_harr_pointer_model,
+    decode_harr_pointer_direction,
+    harr_tensor_from_bbox,
+)
 from experiments.probabilistic_pivot_direction import (
     PROBABILISTIC_PIVOT_DIRECTION_PROTOCOL,
     build_probabilistic_pivot_direction_model,
@@ -51,6 +59,9 @@ EVALUATION_PROTOCOL = "pointer10k_zero_shot_single_pointer_direction_v1"
 POINTER10K_MANIFEST_PROTOCOL = "pointer10k_official_test_single_pointer_v1"
 VDN_TRAINING_PROTOCOL = "vdn_architecture_syncg_retraining_v1"
 DEFAULT_VDN_SOURCE = PROJECT_DIR / "artifacts" / "vendor" / "VectorDetectionNetwork"
+DEFAULT_HARR_SOURCE = (
+    PROJECT_DIR / "artifacts" / "vendor" / "Detect-and-read-meters"
+)
 ANGLE_THRESHOLDS = (2.0, 5.0, 10.0, 15.0, 20.0)
 
 
@@ -161,6 +172,13 @@ class Pointer10KDirectionDataset(Dataset):
         bbox = _dial_bbox(row)
         if self.model_kind == "probabilistic":
             tensor = tensor_from_bbox(
+                image,
+                bbox,
+                image_size=self.image_size,
+                expansion=self.expansion,
+            )
+        elif self.model_kind == "harr":
+            tensor = harr_tensor_from_bbox(
                 image,
                 bbox,
                 image_size=self.image_size,
@@ -375,6 +393,21 @@ def _load_model(
     args: argparse.Namespace,
     checkpoint: dict[str, Any],
 ) -> tuple[torch.nn.Module, dict[str, Any]]:
+    if args.model_kind == "harr":
+        model, release_signature = build_harr_pointer_model(
+            args.harr_source,
+            args.checkpoint,
+            checkpoint=checkpoint,
+        )
+        if release_signature.get("protocol") != HARR_POINTER_PROTOCOL:
+            raise ValueError("HARR adapter returned an unexpected release protocol")
+        return model, {
+            "training_signature": release_signature,
+            "image_size": HARR_IMAGE_SIZE,
+            "angle_bins": None,
+            "expansion": HARR_CROP_EXPANSION,
+        }
+
     signature = checkpoint.get("signature")
     if not isinstance(signature, dict):
         raise ValueError("checkpoint lacks a signed training signature")
@@ -425,6 +458,9 @@ def _source_hashes() -> dict[str, str]:
         "vdn_adapter": sha256_file(
             PROJECT_DIR / "experiments" / "vdn_baseline.py"
         ),
+        "harr_adapter": sha256_file(
+            PROJECT_DIR / "experiments" / "harr_baseline.py"
+        ),
     }
 
 
@@ -441,7 +477,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--checkpoint", type=Path, required=True)
     parser.add_argument(
         "--model-kind",
-        choices=("probabilistic", "vdn"),
+        choices=("probabilistic", "vdn", "harr"),
         required=True,
     )
     parser.add_argument("--model-label")
@@ -455,6 +491,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--no-amp", action="store_true")
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--vdn-source", type=Path, default=DEFAULT_VDN_SOURCE)
+    parser.add_argument("--harr-source", type=Path, default=DEFAULT_HARR_SOURCE)
     return parser.parse_args()
 
 
@@ -464,6 +501,7 @@ def main() -> None:
     args.checkpoint = args.checkpoint.resolve()
     args.output = args.output.resolve()
     args.vdn_source = args.vdn_source.resolve()
+    args.harr_source = args.harr_source.resolve()
     if args.batch_size <= 0 or args.workers < 0:
         raise ValueError("batch size must be positive and workers non-negative")
     if args.bootstrap_iterations < 0:
@@ -538,9 +576,18 @@ def main() -> None:
                     "bin_resultant_length": prediction.bin_resultant_length,
                     "pivot_peak": prediction.pivot_peak,
                 }
+                failure_reasons: Sequence[str | None] = (None,) * len(images)
+            elif args.model_kind == "harr":
+                prediction = decode_harr_pointer_direction(outputs)
+                directions = prediction.direction
+                valid = prediction.valid
+                confidence = prediction.confidence
+                uncertainty = {}
+                failure_reasons = prediction.failure_reason
             else:
                 directions, confidence, valid = predict_directions(*outputs)
                 uncertainty = {}
+                failure_reasons = (None,) * len(images)
             if device.type == "cuda":
                 torch.cuda.synchronize(device)
             inference_seconds += time.perf_counter() - started
@@ -574,6 +621,9 @@ def main() -> None:
                     "model_kind": args.model_kind,
                     "model_label": args.model_label or args.model_kind,
                     "status": is_valid,
+                    "failure_reason": (
+                        None if is_valid else failure_reasons[batch_index]
+                    ),
                     "direction": (
                         arrays["directions"][batch_index].tolist()
                         if is_valid
@@ -674,8 +724,15 @@ def main() -> None:
         ),
         "signature": signature,
         "interpretation": (
-            "zero-shot single-pointer direction result; not official full-test "
-            "multi-pointer OKS/VDS and not a scalar-reading score"
+            (
+                "released HARR pointer branch under the common ground-truth "
+                "dial-crop protocol; excludes HARR detector/OCR/scalar reading"
+            )
+            if args.model_kind == "harr"
+            else (
+                "zero-shot single-pointer direction result; not official full-test "
+                "multi-pointer OKS/VDS and not a scalar-reading score"
+            )
         ),
     }
     _metadata_path(args.output).write_text(

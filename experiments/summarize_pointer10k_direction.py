@@ -265,6 +265,25 @@ def _format_interval(value: Sequence[float] | None) -> str:
     return f"[{float(value[0]):+.3f}, {float(value[1]):+.3f}]"
 
 
+def _training_source(signatures: Sequence[dict[str, Any]]) -> str:
+    kinds = {str(signature.get("model_kind") or "") for signature in signatures}
+    training = {
+        str(
+            (signature.get("checkpoint_training_signature") or {}).get(
+                "training_data"
+            )
+            or ""
+        )
+        for signature in signatures
+    }
+    training.discard("")
+    if kinds == {"harr"}:
+        return next(iter(training), "HARR authors' released data")
+    if kinds and kinds <= {"vdn", "probabilistic"}:
+        return "SyncG train"
+    return " / ".join(sorted(training)) if training else "unknown"
+
+
 def _markdown_report(
     aggregates: Sequence[dict[str, Any]],
     comparisons: dict[str, dict[str, Any]],
@@ -275,11 +294,12 @@ def _markdown_report(
         "# Pointer-10K 零样本单指针方向对比",
         "",
         "固定协议：官方 test 中预先筛出的 438 张单指针图像；使用官方表盘框；"
-        "所有模型仅在 SyncG train 训练，Pointer-10K 训练样本使用量为 0。",
+        "所有方法的 Pointer-10K 训练样本使用量均为 0；训练来源逐项列出，"
+        "不同训练来源的官方发布权重只作跨协议补充对比。",
         "",
-        "| 方法 | 独立训练数 | 角度 MAE↓ | Acc@5°↑ | Acc@10°↑ | 覆盖率↑ | 自然低质量组 MAE↓ | "
+        "| 方法 | 训练来源 | 独立训练数 | 角度 MAE↓ | Acc@5°↑ | Acc@10°↑ | 覆盖率↑ | 自然低质量组 MAE↓ | "
         f"相对 {baseline_label} 的 ΔMAE（95% CI） |",
-        "|---|---:|---:|---:|---:|---:|---:|---:|",
+        "|---|---|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for aggregate in aggregates:
         label = aggregate["label"]
@@ -302,6 +322,7 @@ def _markdown_report(
             + " | ".join(
                 (
                     label,
+                    aggregate.get("training_source", "unknown"),
                     str(aggregate["runs"]),
                     _format_mean_std(metrics["mean_angle_error_degrees"]),
                     _format_mean_std(metrics["acc_5deg"], percent=True) + "%",
@@ -365,7 +386,9 @@ def main() -> None:
                 raise ValueError("Pointer-10K methods use different manifests")
             runs.append(rows)
             signatures[label].append(signature)
-        aggregates.append(aggregate_runs(label, runs))
+        aggregate = aggregate_runs(label, runs)
+        aggregate["training_source"] = _training_source(signatures[label])
+        aggregates.append(aggregate)
 
     by_label = {item["label"]: item for item in aggregates}
     if args.baseline_label not in by_label:

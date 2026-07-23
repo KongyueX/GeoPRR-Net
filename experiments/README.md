@@ -650,6 +650,19 @@ python -m experiments.evaluate_pointer10k_direction `
   --model-kind probabilistic --model-label Ours `
   --output artifacts\runs\pointer10k\formal\ours_seed20260722.jsonl `
   --device cuda --batch-size 64 --workers 4
+
+# HARR 官方发布权重：不同训练来源，只作跨协议 pointer-branch 补充对比。
+powershell -NoProfile -ExecutionPolicy Bypass -File `
+  .\experiments\setup_harr_baseline.ps1 `
+  -Proxy http://127.0.0.1:7890
+
+python -m experiments.evaluate_pointer10k_direction `
+  --manifest artifacts\manifests\pointer10k_single_pointer_test.jsonl `
+  --checkpoint artifacts\vendor\Detect-and-read-meters\model\meter_data\textgraph_vgg_100.pth `
+  --model-kind harr --model-label HARR-official-v2 `
+  --output artifacts\runs\pointer10k\formal\harr_official.jsonl `
+  --harr-source artifacts\vendor\Detect-and-read-meters `
+  --device cpu --batch-size 4 --workers 0
 ```
 
 `summarize_pointer10k_direction` 支持把三个独立训练种子写成同一个
@@ -659,6 +672,29 @@ python -m experiments.evaluate_pointer10k_direction `
 组由模糊、低照度、低对比、小表盘四个预测无关统计的底四分位中至少命中两项构成，它不是
 Pointer-10K 官方 LQPI 标签。完整结果与论文表述边界见
 [`../docs/POINTER10K_RESULTS_CN.md`](../docs/POINTER10K_RESULTS_CN.md)。
+
+## 16. batch=1 端到端延迟与失败分解
+
+正式预测缓存由 `collect_predictions` 逐图串行生成，因此每行的 `runtime_seconds` 是
+batch=1 墙钟时间：从图像读取开始，到完整读数 payload 生成结束；不含模型初始化和 JSON
+写盘。以下命令不重复推理，只对冻结缓存汇总全部样本，失败和提前退出不从分母删除：
+
+```powershell
+python -m experiments.make_latency_table `
+  --dataset "SyncG=artifacts\predictions\syncg_test.jsonl" `
+  --dataset "RPM-10K single-pointer=artifacts\predictions\rpm10k_single_pointer_test.jsonl" `
+  --output artifacts\runs\latency_table.md
+
+python -m experiments.make_failure_table `
+  --dataset "SyncG=artifacts\predictions\syncg_test.jsonl" `
+  --dataset "RPM-10K single-pointer=artifacts\predictions\rpm10k_single_pointer_test.jsonl" `
+  --output artifacts\runs\failure_table.md
+```
+
+当前 RTX 4060 冻结缓存的全部样本结果：SyncG 平均/中位/P95 为
+`129.74/128.15/163.99 ms`（串行 `7.71 FPS`）；RPM-10K single-pointer 为
+`179.45/133.05/592.64 ms`（`5.57 FPS`）。RPM 长尾包含高分辨率真实图像和完整成功路径；
+未检出表盘或指针的样本会提前退出，延迟更短，所以不能只报告成功子集或只报告失败子集。
 
 ## 实验纪律
 

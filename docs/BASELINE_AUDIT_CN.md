@@ -8,7 +8,7 @@
 |---|---|---|---|
 | VDN / Pointer-10K | `DrawZeroPoint/VectorDetectionNetwork@68afe1e` | 代码 GPL-3.0、数据 CC BY-NC-SA 4.0；有训练、推理和数据格式，README 权重链接为空 | 已在 SyncG train 完成重训，并在 Pointer-10K 官方 test 单指针域完成零样本方向对比；写作 `VDN architecture, retrained on SyncG` |
 | Learning to Read Analog Gauges from Synthetic Data (WACV 2024) | `fuankarion/automatic-gauge-reading@a7d5956` | 声明的仓库仍近乎为空，无可执行实现和权重 | 只放相关工作，不伪造复现成绩 |
-| Human-like Alignment and Reading (2023) | `shuyansy/Detect-and-read-meters@e5e1680` | MIT；有训练/测试代码、数据和检测/读数/对齐权重；`v2` 移除了论文中的耗时 STN 对齐模块 | 原论文 MC1296 协议不同；可作下一项复现，不把论文原数值混入 SyncG 主表 |
+| Human-like Alignment and Reading (2023) | `shuyansy/Detect-and-read-meters@e5e1680` | MIT；已核验并下载官方 epoch-100 VGG 读数权重；`v2` 移除了论文中的耗时 STN 对齐模块 | 已完成官方指针分支的 Pointer-10K 零样本补充对比；训练来源不同，不混入 SyncG 同协议主表 |
 | Human-like Keypoint Sequence (Measurement 2025) | `paopao6777/det-read-pointer-meter@a79bdea` | 有代码说明；仓库无许可证，README 说明数据不能公开 | 只列论文原协议；当前无法做同数据重训 |
 | TransUNet meter reading (2024) | 期刊官方页面 | 自采 Simple/Complex 数据不公开 | 只列相关工作及其原协议结果 |
 | DialBench / MRLM | `Event-AHU/DialBench@707bcdc` | LICENSE 为 MIT、README 却称 BSD-3-Clause；2026-07-21 公告新增百度模型权重链接，但 Model Zoo 仍标 `TBD`，数据/模型许可说明仍不完整 | 单独报告完整 RPM-10K VLM 协议；不能与本文已知量程的 1,797 张子集直接排名 |
@@ -156,6 +156,39 @@ SyncG train grouped-OOF 拟合 angle-to-progress 校准器与 mask/vector 安全
 “全部指标全面领先”：severe perspective 与 RPM 的 Acc@2% 仍由 VDN 略高。自动生成的
 机器可读结果位于
 `artifacts/runs/calibrated_progress_router_syncg/calibrated_progress_comparison.{json,md}`。
+
+## HARR 官方发布模型的跨协议补充对比
+
+为增加第二个可执行同类模型，本仓库还固定并审计了 HARR `v2`：
+
+- 源码提交：
+  `e5e16803de2c06b3dfb248df16ee91c05879cd61`，MIT；
+- 官方 `textgraph_vgg_100.pth` SHA-256：
+  `6f5bcfd5f57c535dbc4da827ba7538e1c305f33d3da84d43215b125500a4300a`；
+- 检查点 epoch 为 100，103 个模型张量与完整 VGG-FPN、三通道分割头和 OCR 网络严格匹配；
+- Pointer-10K 评测只保留实际需要的指针分割支路，使用共同的 1.25 倍真值表盘框；
+- 后处理复现发布代码的 `sigmoid>0.5`、骨架化、`HoughLinesP` 和中心到远端方向规则；
+- Pointer-10K train/validation 使用量为 0，失败仍按 180° 进入角度 MAE。
+
+正式 438 张结果如下：
+
+| 方法 | 训练来源 | 角度 MAE↓ | Acc@5°↑ | Acc@10°↑ | coverage↑ | 自然低质量组 MAE↓ |
+|---|---|---:|---:|---:|---:|---:|
+| HARR official v2 pointer branch | HARR 作者发布训练集 | 118.917° | 28.082% | 30.137% | 45.662% | 150.874° |
+| VDN architecture, retrained | SyncG train | 50.843° | 28.995% | 41.324% | 100.000% | 56.840° |
+| Ours | SyncG train，三种子 | **22.022±5.485°** | **52.588±1.652%** | **61.111±2.900%** | 100.000% | **20.081±1.757°** |
+
+HARR 的 238/438 张失败由空指针掩膜或无法形成 Hough 线造成；成功子集角度 MAE 为
+46.228°。上游 demo 图上的高置信指针响应已单独验证，因此低 coverage 是明显的跨数据域
+失配，而不是权重未加载。Ours 相对 HARR 的逐图全分母差为 `-96.895°`，95% CI
+`[-104.519°, -88.868°]`；但由于两者训练来源不同，这只能作为“官方发布模型直接迁移”
+的补充证据，不能写成同训练预算的公平主排名。正文同协议主基线仍是 VDN；HARR 放在附表
+或跨协议表中。
+
+HARR 的完整 OCR/标量读数网络不能在 SyncG 上忠实重训：其损失还需要刻度区域、文本区域、
+OCR 框和转录，而 SyncG 只提供指针掩膜及关键点。若只监督 HARR 的 pointer channel，必须
+命名为 `HARR-VAM pointer architecture adapted to SyncG`，不能冒充原 HARR。考虑实验成本
+和论文可解释性，本轮不再启动这一弱化版训练。
 
 ## Pointer-10K 官方 test 零样本方向对比
 

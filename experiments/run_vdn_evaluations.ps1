@@ -1,6 +1,7 @@
 param(
     [string]$Python = ".\.venv\Scripts\python.exe",
     [string]$RunRoot = "artifacts\runs\vdn_syncg\seed_20260720",
+    [int]$ExpectedSeed = 20260720,
     [int]$PollSeconds = 30,
     [double]$WaitTimeoutHours = 8.0
 )
@@ -93,7 +94,7 @@ try {
         "--run-dir", $RunRootPath,
         "--expected-epochs", "100",
         "--expected-batch-size", "8",
-        "--expected-seed", "20260720"
+        "--expected-seed", "$ExpectedSeed"
     )
     foreach ($Evaluation in $Evaluations) {
         $Name = $Evaluation[0]
