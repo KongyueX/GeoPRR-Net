@@ -1,19 +1,25 @@
-# 同类方法可复现性审计（2026-07-22）
+# 同类方法可复现性审计（截至 2026-07-23）
 
 本文必须区分“内部消融”和“外部同类方法”。Geometry-v1/v2、融合、残差及门控
 都属于本文内部变体，不能代替外部模型对比。下面记录提交论文前实际核验过的公开资源，
 避免把论文中声称“将发布”的代码或权重误写成已复现结果。
 
-| 方法 | 核验提交 | 公开代码 | 官方权重 | 当前处理 |
-|---|---|---|---|---|
-| VDN / Pointer-10K | `DrawZeroPoint/VectorDetectionNetwork@68afe1e` | 有，包含训练、推理和数据格式 | 无；README 的模型下载链接为空 | 已在 SyncG train 完成重训；写作 `VDN architecture, retrained on SyncG` |
-| Learning to Read Analog Gauges from Synthetic Data (WACV 2024) | `fuankarion/automatic-gauge-reading@a7d5956` | 无；仓库只有 25 字节 README | 无 | 只放相关工作，不伪造复现成绩 |
-| DialBench / MRLM | `Event-AHU/DialBench@f97093c` | 有训练/benchmark 框架，但多处配置仍是作者私有绝对路径 | README 明确为 `TBD / coming soon` | 作为单独 VLM 协议；不能和本文已知量程的 RPM 子集主表直接混比 |
+| 方法 | 核验提交/来源 | 代码与权重状态 | 当前处理 |
+|---|---|---|---|
+| VDN / Pointer-10K | `DrawZeroPoint/VectorDetectionNetwork@68afe1e` | GPL-3.0；有训练、推理和数据格式，README 权重链接为空 | 已在 SyncG train 完成重训；写作 `VDN architecture, retrained on SyncG` |
+| Learning to Read Analog Gauges from Synthetic Data (WACV 2024) | `fuankarion/automatic-gauge-reading@a7d5956` | 声明的仓库仍近乎为空，无可执行实现和权重 | 只放相关工作，不伪造复现成绩 |
+| Human-like Alignment and Reading (2023) | `shuyansy/Detect-and-read-meters@e5e1680` | MIT；有训练/测试代码、数据和检测/读数/对齐权重；`v2` 移除了论文中的耗时 STN 对齐模块 | 原论文 MC1296 协议不同；可作下一项复现，不把论文原数值混入 SyncG 主表 |
+| Human-like Keypoint Sequence (Measurement 2025) | `paopao6777/det-read-pointer-meter@a79bdea` | 有代码说明；仓库无许可证，README 说明数据不能公开 | 只列论文原协议；当前无法做同数据重训 |
+| TransUNet meter reading (2024) | 期刊官方页面 | 自采 Simple/Complex 数据不公开 | 只列相关工作及其原协议结果 |
+| DialBench / MRLM | `Event-AHU/DialBench@707bcdc` | LICENSE 为 MIT、README 却称 BSD-3-Clause；2026-07-21 公告新增百度模型权重链接，但 Model Zoo 仍标 `TBD`，数据/模型许可说明仍不完整 | 单独报告完整 RPM-10K VLM 协议；不能与本文已知量程的 1,797 张子集直接排名 |
 
 公开入口：
 
 - [VDN 官方仓库](https://github.com/DrawZeroPoint/VectorDetectionNetwork)
 - [WACV 2024 方法声明的官方仓库](https://github.com/fuankarion/automatic-gauge-reading)
+- [Human-like Alignment and Reading 官方仓库](https://github.com/shuyansy/Detect-and-read-meters)
+- [Human-like Keypoint Sequence 官方仓库](https://github.com/paopao6777/det-read-pointer-meter)
+- [TransUNet 表计读数论文](https://www.mdpi.com/2079-9292/13/13/2436)
 - [DialBench 官方仓库](https://github.com/Event-AHU/DialBench)
 
 ## 最小可发表比较方案
@@ -72,7 +78,7 @@ AMP 跳步之和等于预期的 179,700 个批次。检查点、训练摘要和�
 VDN 的端到端 coverage 为 98.78%，原掩码分支仅为 72.73%。这一诊断直接驱动了下节的
 分割无关方向回退实验，而不是继续用 RPM 标签微调残差回归器。
 
-## 独立方向头、硬回退基线与最终质量路由审计
+## 第一代独立方向头、硬回退与质量路由审计（历史消融）
 
 上述失败分析之后，本文新增了本地独立实现的支点—方向头。它采用 torchvision ResNet-18
 编码器、三层上采样热图解码器和全局二维单位向量头，输入/热图尺寸为 256/64。实现只复用
@@ -111,23 +117,67 @@ OOF 残差模型，方向读数来自从未见过该仪表组的方向检查点�
 样本使用数和正式测试样本 ID 交集均为 0。运行时 ExtraTrees 路由器及阈值完全由该集合拟合；
 RPM、SyncG test 和五种退化不参与特征或阈值选择。
 
-最终 `Ours-final quality route` 的结果为：
+第一代 `quality route-v1` 的结果为：
 
 | 方法 | Clean NMAE ↓ | Combined-severe NMAE ↓ | RPM NMAE ↓ | RPM Acc@2% ↑ | RPM coverage ↑ |
 |---|---:|---:|---:|---:|---:|
 | Ours-hard | 0.1146 | 0.2510 | 0.3346 | 0.0484 | 0.9878 |
-| Ours-final quality | **0.1071** | **0.2316** | **0.3241** | 0.0562 | 0.9878 |
+| Quality route-v1 | **0.1071** | **0.2316** | **0.3241** | 0.0562 | 0.9878 |
 | VDN retrained | 0.1482 | 0.2364 | 0.3813 | **0.0595** | 0.9878 |
 
-六个 SyncG 条件中，Ours-final 相对 Ours-hard 的配对区间都低于 0；相对 VDN 也全部低于
+六个 SyncG 条件中，Quality route-v1 相对 Ours-hard 的配对区间都低于 0；相对 VDN 也全部低于
 0。RPM 上相对 VDN 的 `ΔNMAE=-0.0572`，95% CI `[-0.1101,-0.0206]`；但相对 Ours-hard
-的 `ΔNMAE=-0.0105` 区间 `[-0.0294,+0.0063]` 跨 0。因此论文可把 quality route 作为
-最终方法，并把 hard route 保留为关键消融；不能写成它在 RPM 上显著优于 hard route。
+的 `ΔNMAE=-0.0105` 区间 `[-0.0294,+0.0063]` 跨 0。该结果现在保留为关键历史消融，
+不能再称为最终方法，也不能写成它在 RPM 上显著优于 hard route。
 
-质量路由的模型哈希为
+第一代质量路由的模型哈希为
 `679200b26ca414c53504002c83434c7655830aac383a1dda428ee283b422260d`。七组输出已逐行重算
 route、NMAE、Acc@2% 和 coverage，0 个决策或预测不一致。还需披露：该路由虽没有标签/阈值
 泄漏，但方法构想受前一轮 test 失败分析启发，故不是严格意义上的全流程盲测。
+
+## 当前主对比：概率方向 + 进度校准路由 vs VDN
+
+当前最终方法在第一代方向头上增加概率圆周方向、精确单应投影配对和等变约束，再只用
+SyncG train grouped-OOF 拟合 angle-to-progress 校准器与 mask/vector 安全路由。VDN 与本文
+方法共享输入、表盘框、起终参考、已知量程适配器、退化样本和失败惩罚，因此下表是当前唯一
+可以放进同一数值主表的外部架构比较：
+
+| 条件 | VDN NMAE | Ours-final NMAE | Ours−VDN 95% CI | VDN / Ours Acc@2% |
+|---|---:|---:|---:|---:|
+| Clean | 0.1482 | **0.0890** | [-0.0626, -0.0560] | 0.3058 / **0.4818** |
+| Moderate blur | 0.1481 | **0.0905** | [-0.0608, -0.0544] | 0.3080 / **0.4810** |
+| Severe blur | 0.1554 | **0.1082** | [-0.0503, -0.0442] | 0.2730 / **0.4088** |
+| Moderate perspective | 0.1486 | **0.1149** | [-0.0370, -0.0303] | 0.2823 / **0.3190** |
+| Severe perspective | 0.1712 | **0.1454** | [-0.0290, -0.0227] | **0.1873** / 0.1848 |
+| Severe blur + perspective | 0.2364 | **0.2184** | [-0.0219, -0.0143] | 0.1525 / **0.1708** |
+| RPM single-pointer | 0.3813 | **0.2842** | [-0.1154, -0.0712] | **0.0595** / 0.0551 |
+
+因此可以主张“在统一协议的七个条件上，最终方法 NMAE 显著低于重训 VDN”。不能扩写为
+“全部指标全面领先”：severe perspective 与 RPM 的 Acc@2% 仍由 VDN 略高。自动生成的
+机器可读结果位于
+`artifacts/runs/calibrated_progress_router_syncg/calibrated_progress_comparison.{json,md}`。
+
+## 跨协议论文如何比较
+
+HARR、WACV 2024、TransUNet、2025 keypoint sequence 和 DialBench/MRLM 的输入、量程信息、
+数据划分、失败处理和指标均与本文不同。论文中应另设“原论文协议与资源状态”表，引用其原文
+数值但标注 `not directly comparable`，不能与上表按大小排序。例如 DialBench 的完整
+RPM-10K 任务还要求从原图推断量程/刻度文本，而本文 RPM 子集把官方 range 当作已知元数据；
+这两个任务不相同。
+
+为避免“没有提到现有方法”，相关工作表可以列原论文数值，但必须保留协议栏：
+
+| 论文方法与原协议 | 原论文报告 | 为什么不能与本文主表直接排序 |
+|---|---|---|
+| [Human-like Alignment and Reading](https://arxiv.org/abs/2302.14323)，MC1296 | Ref `0.26%`、Rel `1.70%`、约 `25 FPS` | 专用 MC1296、对齐/STN 流程和成功样本指标不同 |
+| [Human-like Keypoint Sequence](https://www.sciencedirect.com/science/article/pii/S0263224125003537)，自建实验室/真实集 | 示值误差 `0.039% / 0.733%`，CPU `3.61 FPS` | 数据不可公开，示值误差不是本文全分母 NMAE |
+| [TransUNet meter reading](https://www.mdpi.com/2079-9292/13/13/2436)，Simple/Complex | accuracy `97.81% / 93.39%` | 自采数据不公开，accuracy 容差定义与 Acc@2% 不同 |
+| [DialBench / MRLM](https://arxiv.org/abs/2511.21982)，完整 RPM-10K | Accε `62.4%`、Accθ `70.9%`、Ref `0.063`、Rel `0.535` | 8.7B VLM、完整 2,000 张协议并同时识别量程/文本 |
+| [Learning from Synthetic Data](https://openaccess.thecvf.com/content/WACV2024/html/Leon-Alcazar_Learning_to_Read_Analog_Gauges_from_Synthetic_Data_WACV_2024_paper.html) | 论文报告平均误差减少 `4.55`（相对 `52%`） | 4,813 张自建真实图、实现和权重当前不可得 |
+
+这些数值用于定位工作，不是本文的复现实验结果。正文的可执行外部数值主表仍以 VDN 为准；
+若投稿审稿人要求第二个同协议可执行基线，优先复现 HARR，但必须固定其版本、重新适配
+SyncG/RPM，并在运行前预声明训练轮数和量程转换规则。
 
 ## 数据和训练约束
 

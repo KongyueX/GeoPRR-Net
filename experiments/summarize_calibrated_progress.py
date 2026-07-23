@@ -101,7 +101,7 @@ def main() -> None:
         }
     payload = {
         "schema_version": 1,
-        "protocol": "calibrated_progress_paper_summary_v1",
+        "protocol": "calibrated_progress_paper_summary_v2",
         "calibrator_training": {
             "metrics": calibrator_training["metrics"],
             "paired_vs_raw_vector": calibrator_training["paired_vs_raw_vector"],
@@ -140,6 +140,17 @@ def main() -> None:
                 "rpm10k"
             ]["router_comparisons"]["router_vs_quality_router_v1"]
             ["group_bootstrap_95ci"][1] < 0.0,
+            "all_conditions_router_improves_vdn_nmae": all(
+                evaluations[name]["router_comparisons"]["router_vs_vdn"]
+                ["group_bootstrap_95ci"][1] < 0.0
+                for name in CONDITIONS
+            ),
+            "conditions_router_acc2_below_vdn": [
+                name
+                for name in CONDITIONS
+                if evaluations[name]["metrics"]["calibrated_progress_router"]
+                ["acc_2pct"] < evaluations[name]["metrics"]["vdn"]["acc_2pct"]
+            ],
         },
     }
     _atomic_write(
@@ -185,6 +196,37 @@ def main() -> None:
             "",
             "A negative delta means the final router improves over the previous train-only quality router. "
             "RPM-10K has only six groups, so its interval must be reported with the point estimate.",
+            "",
+            "## External architecture under the same protocol",
+            "",
+            "VDN is the published Vector Detection Network architecture retrained on the same SyncG/train split. "
+            "It shares the frozen meter crop, start/end references, known-range adapter, degraded inputs, and "
+            "full-denominator failure scoring with the final method.",
+            "",
+            "| Condition | Samples | VDN NMAE | Final NMAE | VDN Acc@2% | Final Acc@2% | Final vs VDN ΔNMAE (95% CI) |",
+            "|---|---:|---:|---:|---:|---:|---:|",
+        ]
+    )
+    for condition in CONDITIONS:
+        result = evaluations[condition]
+        metrics = result["metrics"]
+        comparison = result["router_comparisons"]["router_vs_vdn"]
+        interval = comparison["group_bootstrap_95ci"]
+        lines.append(
+            f"| {labels[condition]} | {result['samples']} | "
+            f"{metrics['vdn']['nmae']:.4f} | "
+            f"{metrics['calibrated_progress_router']['nmae']:.4f} | "
+            f"{metrics['vdn']['acc_2pct']:.4f} | "
+            f"{metrics['calibrated_progress_router']['acc_2pct']:.4f} | "
+            f"{comparison['delta_nmae']:+.4f} "
+            f"[{interval[0]:+.4f}, {interval[1]:+.4f}] |"
+        )
+    lines.extend(
+        [
+            "",
+            "The final method has a lower NMAE with a below-zero grouped-bootstrap interval in all seven "
+            "conditions. This does not imply metric-wide dominance: VDN has the higher Acc@2% on severe "
+            "perspective and RPM-10K.",
         ]
     )
     _atomic_write(markdown, "\n".join(lines) + "\n")

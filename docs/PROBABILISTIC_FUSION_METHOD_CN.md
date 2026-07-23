@@ -127,7 +127,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
 
 - 同任务外部基线：`VDN architecture, retrained on SyncG`；
 - 内部强基线：mask、v1 独立方向头、硬失败回退、v1 质量路由；
-- 最终候选：概率方向头与不确定性软融合；
+- 中间负面消融：概率方向头与不确定性软融合；
+- 最终候选：概率方向头 + angle-to-progress 校准 + mask/calibrated-vector 安全路由；
 - 上界诊断：逐样本 mask/vector oracle，只作分析；
 - 解码消融：同一冻结权重的 direct-only、circular-only 和 fused decoder；
 - 训练消融：去掉等变一致性、去掉整个 projective pair；

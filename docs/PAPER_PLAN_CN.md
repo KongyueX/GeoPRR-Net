@@ -1,14 +1,12 @@
-# Robust Pointer Meter Reading 论文方案（双表示实验版）
+# Robust Pointer Meter Reading 论文方案（概率方向—进度校准版）
 
-> 2026-07-22 的正式实验、六组控制退化及分割无关方向回退实验已经完成。精确数值、
-> 分组 bootstrap 区间、
-> 失败归因和消融结论见
-> [`FORMAL_RESULTS_CN.md`](FORMAL_RESULTS_CN.md)。正式结果表明：掩码/残差分支在
-> clean 与单一退化上精度高，但真实域覆盖率低；独立支点—方向头恢复 RPM 中 95.51%
-> 的硬失败。进一步只用 SyncG train 跨模型 OOF 学习质量路由，把 clean/组合重度/RPM
-> NMAE 分别降到 0.1071/0.2316/0.3241，并在 NMAE 上优于重训 VDN 的
-> 0.1482/0.2364/0.3813。RPM Acc@2% 仍略低于 VDN，质量路由相对 RPM 硬回退的区间跨 0，
-> 必须如实报告。三个方向种子的最终 RPM NMAE 为 `0.3238 ± 0.0037`。
+> 截至 2026-07-23，六组控制退化、RPM 外测、VDN 公平重训、概率方向消融、进度校准和
+> 最终选择路由均已完成。最终方法在 clean / severe perspective / severe combined / RPM
+> 上的 NMAE 为 `0.0890 / 0.1454 / 0.2184 / 0.2842`，同协议重训 VDN 为
+> `0.1482 / 0.1712 / 0.2364 / 0.3813`。七个条件的 NMAE 配对区间均低于 0，但 severe
+> perspective 与 RPM 的 Acc@2% 仍略低于 VDN。RPM 只有六个表盘组；凡是与旧质量路由的
+> 区间跨 0 的改善只能写作点估计。三个概率方向种子的验证角度 MAE 为
+> `0.7787° ± 0.1279°`。精确数值见 [`FORMAL_RESULTS_CN.md`](FORMAL_RESULTS_CN.md)。
 
 ## 一句话问题定义
 
@@ -20,11 +18,11 @@
 
 中文：
 
-> 面向真实退化的掩码—向量双表示选择性指针表读数
+> 面向模糊与透视退化的概率方向—进度校准双表示指针表读数
 
 英文：
 
-> Quality-Aware Mask–Vector Dual-Representation Routing for Robust Pointer Meter Reading
+> Perspective-Equivariant Probabilistic Direction and Progress-Calibrated Routing for Robust Pointer Meter Reading
 
 标题不要写 “state-of-the-art”。RPM-10K 冻结外测只能支持“跨域诊断”，主标题使用可复现的
 模糊/透视问题定义更稳妥。摘要应明确：最终方法在 RPM 和严重组合退化的 NMAE 上优于
@@ -32,41 +30,37 @@ VDN、coverage 达到同等水平，但 Acc@2% 仍较低；不能笼统声称所
 
 ## 可作为论文贡献的部分
 
-### 1. 掩码—向量双表示与选择性路由
+### 1. 概率方向—进度校准双表示路由
 
-- 掩码分支由 SyncG 微调分割、双几何融合、归一化残差和选择性门控组成，在 clean、模糊和
-  中度透视上提供较高条件精度，但依赖分割与中心线校验。
-- 向量分支使用独立 torchvision ResNet-18，共享编码特征后预测支点热图与全局单位方向；
-  不依赖指针分割，也不复制或加载 VDN 源码。
-- 硬路由基线只在掩码分支无输出时调用向量分支，不使用真值、表型标签或置信度阈值。
-- 两个表示的失败模式互补：RPM 上恢复 468/490 次请求，coverage 从 72.73% 提至 98.78%。
-- 最终质量路由在硬失败规则之上，仅对两个分支都成功的样本预测切换收益。4,380 张训练
-  样本来自三个方向头组外验证集并集，掩码侧也使用 grouped OOF 预测；197 个组零泄漏。
-- 质量路由只读取运行时分支分歧、支点/掩码质量和残差不确定性；五折组外选择阈值，
-  SyncG test 与 RPM 不进入拟合。六个 SyncG 条件都显著优于硬路由。
-- 冻结 RPM 标签只用于事后分层：`blur` 与 `tilted` 子集相对 VDN 的 NMAE 差值区间均低于
-  0，二者交集区间跨 0；这支持有限的真实退化优势，不支持所有困难组合全面领先。
-- 最终贡献应表述为“互补表示 + 防泄漏选择性路由 + 全分母失败计分”，而不是把普通
-  ResNet-18 或热图回归本身称为首创。
+- 掩码分支由 SyncG 微调分割、双几何融合、归一化残差和选择门控组成，精度较高但会受
+  分割缺失与中心线校验影响。
+- 方向分支共享一个 ResNet-18 编码器，同时预测支点热图、直接二维方向、72-bin 圆周分布
+  和样本相关角方差；连续向量与周期分布联合解码。
+- 训练时严格投影支点和射线标签，并约束原图/单应视图预测等变。去掉投影配对后，severe
+  perspective / combined 的角度 MAE 从 `1.089° / 1.624°` 恶化到
+  `1.826° / 2.630°`，这是“大视角优势”的核心消融证据。
+- 原始方向角先通过仅用 SyncG train grouped-OOF 拟合的 angle-to-progress 残差校准器，
+  再映射为量程读数；这一步解决“角度更准但刻度进度仍有投影偏差”的问题。
+- 最终路由保留硬失败规则；两分支都成功时，才根据运行时可得的分支分歧、不确定性、支点/
+  掩码质量和参考几何预测切换收益。4,380 张、197 组训练样本零组泄漏，测试标签不参与拟合。
+- RPM coverage 为 `0.9878`；最终方法在七条件 NMAE 上均显著优于同协议重训 VDN，但
+  severe perspective 与 RPM 的 Acc@2% 不领先。
 
-最终两层路由可直接写为：
+最终决策可写为：
 
 ```text
-y_final = y_vector, if mask fails and vector succeeds       # hard fallback
-        = failure,  if both fail
-        = y_vector, if both succeed and predicted_gain > τ  # quality switch
-        = y_mask,   otherwise
+p_cal = clip(p_raw + clip(delta_hat, -0.30, 0.30), 0, 1)
+y_final = y_cal_vector, if mask fails and vector succeeds
+        = failure,      if both fail
+        = y_cal_vector, if both succeed and predicted_gain > tau
+        = y_mask,       otherwise
 ```
 
-其中 `succeeds` 只表示分支是否产生有限合法读数；`predicted_gain` 和阈值 `τ=0.0056015`
-均由 SyncG train grouped OOF 得到，不读取 GT，也没有在 RPM 上校准。向量分支仍共享冻结
-表盘框、起终参考和已知量程，因此应称为“分割无关方向分支”，不能写成完全不依赖任何
-前端的端到端模型。
-
-正文消融 `mask only / vector only / hard-failure dual route / quality route / oracle`，并加入
-单分歧特征、去掉跨分支分歧、去掉残差不确定性、去掉掩码质量等训练侧组外消融。方法方向
-由此前 test 失败分析启发，因此当前 test 结果是无标签调参泄漏的支持性验证，不冒充方法
-构想前完全不可见的盲测；严格 confirmatory 版本需要另留未使用现场测试集。
+`delta_hat`、`predicted_gain` 和 `tau` 都只从 SyncG train grouped-OOF 得到。方向分支仍共享
+冻结表盘框、起终参考和已知量程，因此只能称为“分割无关方向分支”，不能称为完全无前端的
+端到端模型。正文消融应包含 `mask / raw vector / calibrated vector / hard route /
+quality route-v1 / final route / oracle`、投影配对与等变损失，以及 direct/circular/fused
+解码。当前测试集参与过支持性诊断，严格 confirmatory 版本仍需另留现场测试集。
 
 ### 2. 双几何估计与质量感知融合
 
@@ -140,10 +134,12 @@ r = (y - y_geometry) / (scale_end - scale_start)
 - 不能把仓库原有 30+8 张内部图称为两个独立公开数据集。
 - 不能只凭内部消融声称优于同类型公开模型或达到 state of the art。
 - 不能声称本方法在所有模糊/透视强度下相对 clean 的退化小于 Transformer。
-- 不能声称本方法在重度透视、组合退化或 RPM 的所有指标上全面优于 VDN；最终质量路由的
+- 不能声称本方法在重度透视、组合退化或 RPM 的所有指标上全面优于 VDN；最终校准路由的
   NMAE 更低，但这些条件的 Acc@2% 仍不都领先。
 - 不能把独立方向分支描述为 VDN 改进版；二者训练协议可比，但本文实现不依赖 VDN 源码。
-- 不能声称质量路由在 RPM 上显著优于硬回退；主种子区间跨 0，且一个方向种子点估计持平。
+- 不能声称最终路由在每个条件都优于 calibrated vector；重度透视和组合退化下后者分别低
+  `0.00024 / 0.00057`。
+- 不能声称 RPM 相对旧质量路由的改善显著；该比较只有六组且区间跨 0。
 - 不能声称每个质量特征都是必要创新；训练侧消融显示单个分支分歧已能取得大部分收益。
 
 ## 两数据集的最小实验协议
@@ -205,8 +201,9 @@ RPM-10K 额外报告：
 7. 从同一冻结缓存统计的端到端失败归因表，不额外运行模型；
 8. 三随机种子的残差/门控稳定性汇总；视觉预测保持冻结，只重复该学习模块；
 9. 独立支点—方向头的三次完整训练，并在 clean 与 RPM 上汇总均值 ± 样本标准差。
-10. 质量路由的 grouped-OOF、特征消融、七条件冻结复评，以及固定路由下三个方向种子的
-    clean/RPM 稳定性。
+10. 概率方向三种子、direct/circular/fused 解码、投影配对/等变损失消融；
+11. angle-to-progress 校准和最终 grouped-OOF 路由的七条件冻结复评；
+12. 与同协议重训 VDN 的独立外部主表；其他论文只进入跨协议相关工作表。
 
 附录可加入：
 
@@ -223,7 +220,7 @@ RPM-10K 额外报告：
 - 如果 Residual without Gate 改善但 Ours-mask 无改善：门控目标或阈值过保守，应只用 SyncG train OOF 诊断。
 - 如果 RPM coverage 很低：首先检查表盘检测/指针分割失败占比；不能只汇报成功子集 NMAE。
 - 如果 SyncG 微调分割降低 RPM 性能：如实报告合成域微调的负迁移，保留 released 前端作为预声明对照，不能根据 RPM 标签反向选择阈值。
-- 当前质量路由已解决大部分“有输出但低质量”问题。不得根据七组冻结结果继续改特征或阈值；
+- 当前进度校准路由已解决大部分“有输出但低质量”问题。不得根据七组冻结结果继续改特征或阈值；
   若再改模型，必须另设未使用的最终测试集，并把当前结果降级为开发集诊断。
 
 ## 复现入口

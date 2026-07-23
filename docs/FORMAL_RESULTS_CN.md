@@ -1,10 +1,10 @@
-# 正式实验结果快照（2026-07-22）
+# 正式实验结果快照（截至 2026-07-23）
 
 本文件只固化由 `experiments/run_paper_experiments.ps1`、
 `experiments/run_robustness_experiments.ps1`、`experiments/run_seed_stability.ps1` 与
 `experiments/run_vdn_evaluations.ps1`、`experiments/run_pivot_direction_experiments.ps1` 与
-`experiments/run_pivot_direction_replicates.ps1`，以及训练侧质量路由脚本自动生成并经脚本
-复核的聚合结果。
+`experiments/run_pivot_direction_replicates.ps1`、概率方向与进度校准流水线，以及训练侧
+质量路由脚本自动生成并经脚本复核的聚合结果。
 原始数据、逐样本预测、模型权重和拟合后的校准器均不进入 Git。完整本地产物
 位于 `artifacts/runs/`。
 
@@ -25,7 +25,8 @@
 - 正式随机种子为 `20260720`，图像校正固定为 `off`。
 - 鲁棒性测试只对 SyncG test 施加确定性的模糊/虚拟平面透视；模型、分割阈值、
   残差和门控均冻结自干净 SyncG train，不使用退化 test 重新训练或选阈值。
-- 最终质量路由的特征、ExtraTrees 回归器和阈值也只从 SyncG train 的跨模型组外预测选择；
+- 第一代质量路由及最终进度校准路由的特征、ExtraTrees 回归器和阈值都只从 SyncG train
+  的跨模型组外预测选择；
   SyncG test、其退化版本和 RPM-10K 均不进入拟合或阈值搜索。
 
 ## 2. 训练环境与检查点
@@ -446,13 +447,17 @@ RPM-10K 真实困难子集提供支持性证据：`blur`、`tilted`、二者交�
 - `artifacts/runs/quality_router_syncg/feature_ablation.{json,md}`
 - `artifacts/runs/quality_router_syncg/quality_router_comparison.{json,md}` 与
   `verification.json`
+- `artifacts/runs/probabilistic_direction_syncg/` 下的三种子训练、消融与七条件冻结评测
+- `artifacts/runs/progress_calibrator_syncg/` 与
+  `artifacts/runs/calibrated_progress_router_syncg/` 下的训练、逐样本评测、主表和验证结果
 
-最终审计：自动测试 50/50 通过；三份正式 manifest、四份主实验冻结缓存、
+最终审计：当前代码回归测试 71/71 通过；三份正式 manifest、四份主实验冻结缓存、
 六份各 4,000 行的鲁棒性冻结缓存、三组残差/门控种子、七组 VDN 冻结评测，以及三次
 完整方向头训练和十一组方向头冻结评测均通过数据身份、源码/权重签名、样本 ID、数量与
 存在性校验。质量路由额外验证 4,380 个训练侧 OOF 样本的方向训练组交集为 0、正式测试
 样本 ID 交集为 0、七组路由决策/指标可逐行重算且模型哈希一致。三种子汇总还强制验证
-Base Ours 与 VDN 使用逐字节相同的共享预测缓存。
+Base Ours 与 VDN 使用逐字节相同的共享预测缓存。进度校准 v2 验证器再次确认七条件
+训练样本交集、校准预测和路由决策均为 0 个不一致。
 
 ## 11. 2026-07-23 概率方向与进度校准补充结果
 
@@ -508,22 +513,26 @@ progress_cal = clip(raw_vector_progress + clip(delta_hat, -0.30, 0.30), 0, 1)
 `0.115905 / 0.096511 / 0.089850 / 0.080705`，最终路由相对 hard fallback 的 95% CI 为
 `[-0.028294, -0.023050]`。
 
-冻结测试结果如下。旧质量路由与最终方法使用相同测试样本和全分母失败计分：
+冻结测试结果如下。旧质量路由、最终方法与 VDN 使用相同测试样本和全分母失败计分：
 
-| 条件 | 旧质量路由 NMAE | 校准 vector NMAE | 最终校准路由 NMAE | 最终 Acc@2% |
-|---|---:|---:|---:|---:|
-| Clean | 0.107090 | 0.095622 | **0.089007** | 0.48175 |
-| Moderate blur | 0.107626 | 0.096834 | **0.090467** | 0.48100 |
-| Severe blur | 0.126027 | 0.113045 | **0.108152** | 0.40875 |
-| Moderate perspective | 0.128489 | 0.120506 | **0.114907** | 0.31900 |
-| Severe perspective | 0.162187 | **0.145154** | 0.145392 | 0.18475 |
-| Severe blur + perspective | 0.231603 | **0.217801** | 0.218369 | 0.17075 |
-| RPM-10K single-pointer | 0.324086 | 0.285212 | **0.284205** | 0.05509 |
+| 条件 | 旧质量路由 NMAE | 校准 vector NMAE | 最终 NMAE | VDN NMAE | 最终 / VDN Acc@2% |
+|---|---:|---:|---:|---:|---:|
+| Clean | 0.107090 | 0.095622 | **0.089007** | 0.148231 | **0.48175** / 0.30575 |
+| Moderate blur | 0.107626 | 0.096834 | **0.090467** | 0.148109 | **0.48100** / 0.30800 |
+| Severe blur | 0.126027 | 0.113045 | **0.108152** | 0.155425 | **0.40875** / 0.27300 |
+| Moderate perspective | 0.128489 | 0.120506 | **0.114907** | 0.148574 | **0.31900** / 0.28225 |
+| Severe perspective | 0.162187 | **0.145154** | 0.145392 | 0.171203 | 0.18475 / **0.18725** |
+| Severe blur + perspective | 0.231603 | **0.217801** | 0.218369 | 0.236361 | **0.17075** / 0.15250 |
+| RPM-10K single-pointer | 0.324086 | 0.285212 | **0.284205** | 0.381276 | 0.05509 / **0.05954** |
 
 六个 SyncG 条件中，最终路由相对旧质量路由的配对分组 bootstrap 95% CI 均完全低于 0。
 RPM 只有 6 个表盘组，差值区间为 `[-0.065380, +0.011072]`，只能报告点估计改善，不能声称
 统计显著。严重透视和严重组合条件下，单独 calibrated vector 分别比最终路由低
 `0.00024/0.00057`，说明路由仍有很小的改进空间，也应在消融中如实保留。
+
+最终方法相对同协议重训 VDN 的 NMAE 差值区间在七个条件下均完全低于 0；RPM 的差值为
+`-0.097072`，95% CI 为 `[-0.115388, -0.071176]`。这支持 NMAE 优势，不支持所有指标全面
+领先：VDN 在 severe perspective 与 RPM 的 Acc@2% 更高。
 
 ### 11.4 论文主张更新
 

@@ -354,7 +354,7 @@ def main() -> None:
 
     comparison_path = router_root / "calibrated_progress_comparison.json"
     comparison = _load(comparison_path)
-    if comparison.get("protocol") != "calibrated_progress_paper_summary_v1":
+    if comparison.get("protocol") != "calibrated_progress_paper_summary_v2":
         errors.append("paper summary protocol mismatch")
     for condition in CONDITIONS:
         calibration_hash = sha256_file(
@@ -371,7 +371,7 @@ def main() -> None:
 
     result = {
         "schema_version": 1,
-        "protocol": "calibrated_progress_verification_v1",
+        "protocol": "calibrated_progress_verification_v2",
         "verified": not errors,
         "errors": errors,
         "checks": {

@@ -1,7 +1,8 @@
 # 务实的论文实验方案
 
-2026-07-22 的主实验、六组控制退化、VDN 对比、独立方向回退和训练侧质量路由已经结束。聚合结果、
-置信区间与可安全主张的结论见 [`../docs/FORMAL_RESULTS_CN.md`](../docs/FORMAL_RESULTS_CN.md)；
+截至 2026-07-23，主实验、六组控制退化、VDN 对比、概率方向、进度校准和最终选择路由均已
+完成。聚合结果、置信区间与可安全主张的结论见
+[`../docs/FORMAL_RESULTS_CN.md`](../docs/FORMAL_RESULTS_CN.md)；
 本文件继续作为复现实验协议和命令说明。
 
 本目录只使用两个正式数据集：
@@ -31,9 +32,12 @@
 | Quality-weighted Fusion | 使用轴线一致性、针尖支持、方向投票集中度与正反侧分离度估计质量并加权 |
 | Residual without Gate | 在质量加权结果上无条件加残差 |
 | Ours-mask | 质量加权 + 归一化残差 + 不确定性/学习门控 |
-| Direction only | 独立支点热图 + 全局方向向量，不使用指针分割 |
-| Ours-hard | Ours-mask 有输出时保留，仅在硬失败时调用 Direction only |
-| Ours-final | Ours-hard + 只在 SyncG train 跨模型 OOF 上学习的质量切换 |
+| Direction-v1 | 独立支点热图 + 全局方向向量，不使用指针分割 |
+| Hard route-v1 | Ours-mask 有输出时保留，仅在硬失败时调用 Direction-v1 |
+| Quality route-v1 | 只在 SyncG train 跨模型 OOF 上学习的第一代质量切换 |
+| Probabilistic vector | 支点热图 + 直接方向 + 72-bin 圆周分布 + 角方差 |
+| Calibrated vector | 在 Probabilistic vector 上增加透视感知 angle-to-progress 残差校准 |
+| Ours-final | mask / Calibrated vector 的 grouped-OOF 安全选择路由，保留硬失败规则 |
 
 历史 JSON 中字段名 `Ours` 对应这里的 `Ours-mask`；保留字段名是为了不改写已经冻结并签名的
 预测缓存。
@@ -350,7 +354,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
 72.73% 对 VDN 98.78% 的端到端 coverage；这一冻结诊断驱动了第 9 节的分割无关方向回退，
 而没有使用外测标签继续调残差或门控阈值。
 
-## 9. 独立支点—方向头与双表示路由
+## 9. 第一代独立支点—方向头与双表示路由（历史消融）
 
 RPM 失败归因显示，原掩码分支的主要问题是指针分割/中心线校验无输出。为此新增一个与
 分割无关的 torchvision ResNet-18：同一编码器同时预测 `64×64` 支点热图与全局二维单位
@@ -400,7 +404,7 @@ python -m experiments.summarize_pivot_direction_replicates
 `0.0482 ± 0.0003`、coverage `0.9878 ± 0.0000`。三个种子都恢复 468/490 次原分支
 硬失败；双表示相对固定 VDN 的 NMAE 差为 `-0.0496 ± 0.0039`。
 
-## 10. 训练侧跨模型 OOF 质量路由
+## 10. 第一代训练侧跨模型 OOF 质量路由（历史消融）
 
 硬回退只解决“无输出”，不能处理掩码分支已有有限读数但误差很大的情况。质量路由训练集由
 三个方向头验证集并集构成：每个样本的方向预测来自从未训练过该仪表组的检查点，掩码读数
@@ -444,9 +448,9 @@ clean/RPM 最终 NMAE 为 `0.1075 ± 0.0005` / `0.3238 ± 0.0037`。
 受此前 test 失败分析启发，所以当前复评不冒充全流程盲测；任何后续修改都必须另设未使用
 测试集。
 
-## 11. 概率圆周方向、透视等变训练与软融合
+## 11. 概率圆周方向、透视等变训练与不确定性融合（中间消融）
 
-在 v1 独立方向头和质量路由之上，论文候选 v2 同时预测支点热图、直接二维方向、72-bin
+在 v1 独立方向头和质量路由之上，第二阶段模型同时预测支点热图、直接二维方向、72-bin
 圆周分布与角方差。训练视图包含精确单应变换后的支点/射线标签，并对两个视图的预测增加
 可微等变一致性。最终方向由直接向量和圆周 resultant vector 联合解码。
 
@@ -466,7 +470,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
   .\experiments\run_probabilistic_direction_ablations.ps1
 ```
 
-融合器不再只做二选一路由，而从两个专家的条件对数误差方差计算逆方差权重。mask/vector
+这一阶段还评估了根据两个专家条件对数误差方差进行逆方差加权的软融合。mask/vector
 任一失败时仍保留确定性硬失败规则。训练数据仍只有 SyncG train：三个方向模型验证集的并集
 提供 group-held-out vector 预测，mask 使用原 grouped-OOF 预测；融合器内部再做五折
 GroupKFold。SyncG test、控制退化与 RPM 均不进入拟合。
@@ -480,7 +484,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
 完整算法、损失、无泄漏协议与创新性边界见
 [`../docs/PROBABILISTIC_FUSION_METHOD_CN.md`](../docs/PROBABILISTIC_FUSION_METHOD_CN.md)。方向 MAE
 与端到端 NMAE 必须分开报告：强透视下像平面方向更准，不等于角度到刻度进度的投影非线性
-已经被完全消除。
+已经被完全消除。软融合是负面/中间消融，不是当前最终方法。
 
 ## 12. 透视感知进度校准与最终选择路由
 
@@ -504,6 +508,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
 `0.08901`、severe blur `0.10815`、severe perspective `0.14539`、combined severe
 `0.21837`、RPM `0.28420`。六个 SyncG 条件相对旧质量路由的 95% 区间均低于 0；RPM
 只有六个组，区间跨 0。
+
+同协议外部对比使用公开 VDN 架构在相同 SyncG train 上重训，并共享表盘框、起终参考、
+已知量程适配、退化输入和全分母失败计分。最终方法在七个条件的 NMAE 均更低，配对分组
+bootstrap 区间也均低于 0；但 severe perspective 和 RPM 的 Acc@2% 仍低于 VDN，不能写成
+所有指标全面领先。自动汇总中的第二张表专门给出 VDN 与最终方法，避免把内部消融当作外部
+模型对比。
 
 自动生成：
 

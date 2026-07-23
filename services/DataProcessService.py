@@ -1,15 +1,11 @@
 # services/DataProcessService.py
 import base64
-import os
 import time
 from pathlib import Path
 
 import cv2
 from loguru import logger
 import numpy as np
-
-# 延迟导入，避免在模块加载时初始化CameraProcessService
-# from services.CameraProcessService import CameraProcessService
 
 
 class DataProcessService:
@@ -19,7 +15,7 @@ class DataProcessService:
 
     @property
     def cameraProcessService(self):
-        # 延迟初始化CameraProcessService
+        # 相机服务含多进程资源，首次收到相机请求时再初始化。
         if self._cameraProcessService is None:
             from services.CameraProcessService import CameraProcessService
             self._cameraProcessService = CameraProcessService()
@@ -97,9 +93,9 @@ class DataProcessService:
             if len(byte_data) == 0:
                 return False, "Error: Empty image data"
 
-            encode_image = np.asarray(bytearray(byte_data), dtype="uint8")# 二进制转换为一维数组
-            img_array = cv2.imdecode(encode_image, cv2.IMREAD_COLOR)# 用cv2解码为三通道矩阵
-            # img_array = cv2.cvtColor(img_array, cv2.COLOR_BGR2RGB)# BGR2RGB
+            encode_image = np.frombuffer(byte_data, dtype=np.uint8)
+            # OpenCV 在整个服务中统一使用 BGR，不在输入层转换为 RGB。
+            img_array = cv2.imdecode(encode_image, cv2.IMREAD_COLOR)
 
             if img_array is None:
                 return False, "Error: Failed to decode image"
@@ -110,7 +106,7 @@ class DataProcessService:
             return False, "Error: Invalid base64 encoding"
         except Exception as e:
             return False, f"Error: {str(e)}"
-    # services/DataProcessService.py
+
     def endCapture(self, *args, **kwargs):
         cameraTimeout = kwargs.get('cameraTimeout', 10)
         cameraId = kwargs.get('cameraId', None)

@@ -5,7 +5,6 @@ import torch
 from loguru import logger
 import base64
 import cv2
-from ultralytics import YOLO
 
 from models.BaseInferModel import BaseInferModel
 
@@ -14,33 +13,23 @@ from utils.angleDetect.zeroShotMeter import meterZeroShot
 
 class PointerMeterInferModel(BaseInferModel):
     """
-    继承BaseInferModel的子类，用于实现具体的模型推理逻辑。
-    这是一个模板，可以用来参考
-    子类需要实现以下方法:
-    - load_model: 加载模型。
-    - preprocess: 预处理。
-    - infer: 模型推理。
-    - postprocess: 后处理。
+    指针表生产推理适配器。
+
+    负责加载表盘检测、指针分割、读数和起终参考模型，将 API 配置别名规范化，
+    并把 ``meterZeroShot`` 的图像结果序列化为 HTTP 响应所需的 Base64 字符串。
     """
+
     def __init__(self):
         super().__init__()
 
     def init(self, *args, **kwargs):
         logger.info("初始化模型")
-        self.isCapture = False
-        self.model = None  # 模型对象，用于存储模型实例
+        self.ZeroShotM = None
         self._infer_lock = threading.Lock()
-        self.load_model()  # 加载模型
-
-        # fire_detect_model = self.model
-        self.ahead_fires_img = []
-        self.ahead_fires_ROI = []
-        self.fire_judgement_standard = []
-        self.fires_similarity = []
+        self.load_model()
     
-    @logger.catch(reraise=True)  # 捕获异常并记录日志，reraise=True表示继续抛出异常，否则会被catch捕获，导致程序退出，这里可以根据需要设置为False，也可以不设置，默认是False，即不抛出异常，程序会继续执行，不会退出，但是会记录日志，方便调试
+    @logger.catch(reraise=True)
     def load_model(self):
-        # 子类实现具体的模型加载逻辑
         logger.info("加载模型")
 
         filePath = os.path.dirname(os.path.abspath(__file__))
@@ -107,18 +96,14 @@ class PointerMeterInferModel(BaseInferModel):
         Returns:
             result (json): 模型推理的结果。
         """
-        # 先检测模型是否加载成功
         if self.ZeroShotM is None:
             logger.error("模型未加载成功")
             self.load_model()
-        # 前处理
-        image_data = kwargs.get('image', None)  # 获取输入图像数据，根据实际情况修改参数名和类型
-        config = kwargs.get('config', {}) or {}  # 获取输入图像数据，根据实际情况修改参数名和类型
+        image_data = kwargs.get('image', None)
+        config = kwargs.get('config', {}) or {}
         if image_data is None:
             return {"status":False, "message": "image_data is None", "result": [],
                     "result_image": None}
-        # image_data = self.preprocess(imageData=image_data, config=config)  # 调用子类实现的前处理方法，返回处理后的图像数据，或者其他需要的参数
-        # 模型推理
         infer_mode = config.get('infer_mode', 'infer')
         if infer_mode == 'infer':
             with self._infer_lock:
@@ -128,16 +113,9 @@ class PointerMeterInferModel(BaseInferModel):
                     "message": "config:infer_mode is not exist, please choose in [infer]",
                     "result": [],
                     "result_image": None}
-        logger.info(f"推理成功")
+        logger.info("推理成功")
         return result
-        # result = self.infer_image_data(image_data)  # 调用子类实现的模型推理方法，返回模型推理的结果，或者其他需要的参数
-        # # 返回检测结果
-        # _, buffer = cv2.imencode(".jpg", image_data)  # 转换为字节流
-        # # 进行 base64 编码
-        # image_base64 = base64.b64encode(buffer).decode("utf-8")
-        # return {"result": "infer result",
-        #         "preprcoess": image_base64,  # TODO: 这里需要返回前处理的结果，用于调试，实际使用时可以删除这行代码，或者根据需要修改返回的结果，比如返回图片的base64编码，或者返回图片的路径，或者返回图片的numpy数组，或者返回图片的tensor，或者返回图片的shape，或者返回图片的dtype，或者返回图片的nu
-        #         }
+
     @staticmethod
     def _get_optional_float_config(config, *keys):
         for key in keys:
@@ -312,10 +290,8 @@ class PointerMeterInferModel(BaseInferModel):
                                                                      residual_hybrid_model_path=residual_hybrid_model_path,
                                                                      residual_hybrid_max_abs_delta=residual_hybrid_max_abs_delta)
 
-        '''endNum：代表归一化的旋转角度
-             resultNum：代表最终表的读数
-             segPointer：指针掩码
-             corpImg：表盘图像'''
+        # endNum 是 0–100 的归一化圆周位置索引，并非角度制数值。
+        # resultNum 是量程换算后的读数；segPointer/corpImg 分别是指针掩码和表盘图像。
         if corpImg is None:
             message = getattr(self.ZeroShotM, "last_error_message", None) or "未检测到表盘"
             logger.info(message)
@@ -337,14 +313,10 @@ class PointerMeterInferModel(BaseInferModel):
         pointer_image_base64 = None
         mask_image_base64 = None
         if config.get("result_pointer_image", False) and show_pointer_image is not None:
-            # 返回检测结果
-            _, buffer = cv2.imencode(".jpg", show_pointer_image)  # 转换为字节流
-            # 进行 base64 编码
+            _, buffer = cv2.imencode(".jpg", show_pointer_image)
             pointer_image_base64 = base64.b64encode(buffer).decode("utf-8")
         if config.get("result_mask_image", False) and show_mask_image is not None:
-            # 返回检测结果
-            _, buffer = cv2.imencode(".jpg", show_mask_image)  # 转换为字节流
-            # 进行 base64 编码
+            _, buffer = cv2.imencode(".jpg", show_mask_image)
             mask_image_base64 = base64.b64encode(buffer).decode("utf-8")
 
         selected_backend = reading_backend
@@ -352,10 +324,7 @@ class PointerMeterInferModel(BaseInferModel):
         if reading_details.get("selected_backend"):
             selected_backend = reading_details.get("selected_backend")
 
-        # 构建返回消息
-        message = f"旋转角度为{endNum}，表盘读数是{resultNum:.2f}"
-
-        # 构建返回结果
+        message = f"归一化指针位置为{endNum}，表盘读数是{resultNum:.2f}"
         result = {
             "status": True,
             "message": message,
@@ -391,30 +360,19 @@ class PointerMeterInferModel(BaseInferModel):
             else:
                 result["reading_details"] = None
 
-        # 如果需要返回digital图像，则添加到结果中
-        # if config.get("result_digital_image", False) and digital_images_base64:
-        #     result["result_digital_image"] = digital_images_base64
-        # else:
-        #     result["result_digital_image"] = None
-
         return result
-
 
     def infer_withCapturing(self, *args, **kwargs):
         return self.infer(*args, **kwargs)
 
-    
     def preprocess(self, *args, **kwargs):
-        # 子类实现预处理逻辑
+        """兼容基础接口；当前生产管线在 ``meterZeroShot`` 内完成预处理。"""
         imageData = kwargs.get('imageData', None)
-        config = kwargs.get('config', None)
-        # TODO: 实现模型前处理逻辑
         logger.info("preprocess finished")
-
-        return imageData  # 返回处理后的图像数据，或者其他需要的参数
+        return imageData
 
     def postprocess(self):
-        # 子类实现后处理逻辑
+        """兼容基础接口；响应组装已在 ``infer_image_data_one_pic`` 中完成。"""
         pass
 
 

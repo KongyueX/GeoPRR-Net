@@ -2,14 +2,16 @@
 
 > 论文版的算法定义、可主张贡献与止损规则见
 > [`docs/PAPER_PLAN_CN.md`](docs/PAPER_PLAN_CN.md)，两数据集可复现实验见
-> [`experiments/README.md`](experiments/README.md)，2026-07-22 正式运行（含模糊/透视、
-> VDN 对比、独立方向回退与训练侧质量路由）的结果与统计结论见
+> [`experiments/README.md`](experiments/README.md)，截至 2026-07-23 的正式运行（含模糊/
+> 透视、VDN 对比、概率方向、进度校准与选择路由）的结果与统计结论见
 > [`docs/FORMAL_RESULTS_CN.md`](docs/FORMAL_RESULTS_CN.md)，外部同类方法能否公平复现见
 > [`docs/BASELINE_AUDIT_CN.md`](docs/BASELINE_AUDIT_CN.md)。
-> 概率圆周方向、透视等变训练与不确定性软融合的算法/复现实验见
+> 概率圆周方向、透视等变训练与进度校准路由的算法/复现实验见
 > [`docs/PROBABILISTIC_FUSION_METHOD_CN.md`](docs/PROBABILISTIC_FUSION_METHOD_CN.md)。
 > 截至 2026-07-23 的全部模型修改、消融结果、GPU 利用率解释和阶段结论见
 > [`docs/MODEL_PROGRESS_REPORT_CN_20260723.txt`](docs/MODEL_PROGRESS_REPORT_CN_20260723.txt)。
+> 注释修正、生产死代码与待归档文件清单见
+> [`docs/CODE_REDUNDANCY_AUDIT_CN.md`](docs/CODE_REDUNDANCY_AUDIT_CN.md)。
 > 下方原有 30+8 张内部数据结果仅作工程回归记录，不进入公开论文主表。
 > 模型与数据再分发边界见
 > [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)；仓库尚未选择项目级许可证。
@@ -287,7 +289,7 @@ python utils\angleDetect\quick_browse_results.py <image_root> --config <config_j
 ```json
 {
   "status": true,
-  "message": "旋转角度为..., 表盘读数是...",
+  "message": "归一化指针位置为..., 表盘读数是...",
   "result": 1.23,
   "result_pointer_image": "base64或null",
   "result_mask_image": "base64或null"

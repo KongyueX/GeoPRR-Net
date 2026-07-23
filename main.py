@@ -1,11 +1,10 @@
-# main.py
 import hashlib
 import importlib
 import os
 import queue
 import threading
 import time
-from typing import Annotated, Union, Optional
+from typing import Union, Optional
 
 from fastapi import FastAPI, Request
 from starlette.concurrency import run_in_threadpool
@@ -16,9 +15,6 @@ import yaml
 
 from config.log import Loggers, log
 from models.BaseInferModel import BaseInferModel
-
-# 延迟导入DataProcessService，避免在模块加载时初始化
-# from services.DataProcessService import DataProcessService
 
 class ModelListUtil:
     _config_cache = None
@@ -107,16 +103,42 @@ class ConfigMonitor(threading.Thread):
     def stop(self):
         self.running = False
 
-# 使用全局字典缓存已加载模型的单例实例
+# API 路由和连续采集线程共享同一模型实例。
 model_instances = {}
-# fastapi_model_instance = None
-# 创建一个FastAPI实例
+_model_instances_lock = threading.Lock()
+
+
+def get_model_instance(model_name: str) -> BaseInferModel:
+    """按 ``model_list.yaml`` 动态加载并缓存模型实例。"""
+    model_list_config = ModelListUtil.get_config()
+    if not model_list_config:
+        raise ValueError("model_list.yaml not found")
+    if model_name not in model_list_config:
+        raise ValueError("model not found")
+
+    model_config = model_list_config[model_name]
+    module_name = f"models.{model_config['class_file']}"
+    class_name = model_config["class_name"]
+    with _model_instances_lock:
+        if model_name in model_instances:
+            return model_instances[model_name]
+        try:
+            module = importlib.import_module(module_name)
+            model_class = getattr(module, class_name)
+            model_instances[model_name] = model_class()
+        except (ModuleNotFoundError, AttributeError) as exc:
+            message = f"加载 {module_name}.{class_name} 失败: {exc}"
+            log.error(message)
+            raise RuntimeError(message) from exc
+    return model_instances[model_name]
+
+
 app = FastAPI()
-# 挂载静态文件路径
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# 延迟初始化DataProcessService
+
 def get_data_process_service():
+    """首次处理图像请求时再初始化相机相关服务。"""
     global dataProcessService
     if 'dataProcessService' not in globals():
         from services.DataProcessService import DataProcessService
@@ -134,17 +156,15 @@ class InferDataModel(BaseModel):
     )
     cameraTimeout: int = Field(10, description="相机超时时间", ge=0, le=1000)
     inferConfig: Optional[dict] = Field(None, description="推理配置")
+
+
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
     start_time = time.time()
-    # 获取客户端IP地址和端口号
     client_host = request.client.host if request.client else "unknown"
     client_port = request.client.port if request.client else "unknown"
     client_info = f"{client_host}:{client_port}"
     log.info(f"收到请求: {request.method} {request.url} 来自 {client_info}")
-    # 如果只想记录 POST，可以加判断
-    # if request.method == "POST":
-    #     log.info(f"收到 POST 请求: {request.url} 来自 {client_info}")
 
     response = await call_next(request)
     process_time = (time.time() - start_time) * 1000
@@ -152,14 +172,12 @@ async def log_requests(request: Request, call_next):
     return response
 
 
-# 定义一个根路径的GET请求处理函数
 @app.get("/")
 @log.catch(reraise=True)
 async def root():
     log.info("Hello World")
     return {"message": "Hello World"}
 
-# 定义一个带有路径参数的GET请求处理函数
 @app.get("/items/{item_id}")
 async def read_item(item_id: int):
     log.info(f"get item_id: {item_id}")
@@ -167,41 +185,26 @@ async def read_item(item_id: int):
 
 @app.get("/infer_test/{modelName}/{inferData}")
 async def infer_test(modelName: str,inferData: str):
-    """
-    测试模型推理
-    """
+    """用于 ``MyInferModel`` 的轻量模型加载与接口联调。"""
     log.info("infer_test")
-    model_list_config = ModelListUtil.get_config()
-    if model_list_config is None:
-        return {"message": "model_list.yaml not found"}
-    if modelName not in model_list_config:
-        return {"message": "model not found"}
-    # 动态加载类
-    module_name = f"models.{model_list_config[modelName]['class_file']}"  # 获取模块名
-    class_name = model_list_config[modelName]["class_name"]  # 获取类名
-    if modelName not in model_instances:
-        try:
-            module = importlib.import_module(module_name)  # 动态导入模块
-            cls = getattr(module, class_name)  # 获取类
-            model_instances[modelName] = cls()  # 创建单例并缓存
-        except (ModuleNotFoundError, AttributeError) as e:
-            log.error(f"加载 {module_name}.{class_name} 失败: {e}")
-            return {"status": False, "message": f"加载 {module_name}.{class_name} 失败: {e}"}
-    # 调用模型推理
-    fastapi_model_instance:BaseInferModel = model_instances[modelName]  # 获取缓存实例
+    try:
+        fastapi_model_instance = get_model_instance(modelName)
+    except ValueError as exc:
+        return {"message": str(exc)}
+    except RuntimeError as exc:
+        return {"status": False, "message": str(exc)}
     result = fastapi_model_instance.infer(image="test",dataType='base64')
     return result
+
 
 @app.post("/infer")
 async def infer(inferDataModel: InferDataModel):
     return await run_in_threadpool(sync_infer, inferDataModel)
 
+
 def sync_infer(inferDataModel: InferDataModel):
-    """
-    测试模型推理
-    """
+    """执行 ``POST /infer`` 的同步图像读取与模型推理。"""
     log.info("接收到推理请求")
-    # 尝试获取图像数据
     dataProcessService = get_data_process_service()
     ret,image = dataProcessService.get_image(imageType=inferDataModel.dataType,
                                              inferData=inferDataModel.inferData,
@@ -210,28 +213,13 @@ def sync_infer(inferDataModel: InferDataModel):
     if not ret:
         return {"status": ret, "message": image}
 
-    # 读取模型加载配置文件
-    model_list_config = ModelListUtil.get_config()
-    if model_list_config is None:
-        return {"status": False, "message": "model_list.yaml not found"}
-    if inferDataModel.modelName not in model_list_config:
-        return {"status": False, "message": "model not found"}
-    # 动态加载类
-    module_name = f"models.{model_list_config[inferDataModel.modelName]['class_file']}"  # 获取模块名
-    class_name = model_list_config[inferDataModel.modelName]["class_name"]  # 获取类名
-    # 在/infer路由处理函数中：
-    if inferDataModel.modelName not in model_instances:
-        try:
-            module = importlib.import_module(module_name)  # 动态导入模块
-            cls = getattr(module, class_name)  # 获取类
-            model_instances[inferDataModel.modelName] = cls()  # 创建单例并缓存
-        except (ModuleNotFoundError, AttributeError) as e:
-            log.error(f"加载 {module_name}.{class_name} 失败: {e}")
-            return {"status": False, "message": f"加载 {module_name}.{class_name} 失败: {e}"}
-    # 调用模型推理
-    fastapi_model_instance: BaseInferModel = model_instances[inferDataModel.modelName]  # 获取缓存实例
+    try:
+        fastapi_model_instance = get_model_instance(inferDataModel.modelName)
+    except (ValueError, RuntimeError) as exc:
+        return {"status": False, "message": str(exc)}
     result = fastapi_model_instance.infer(image=image,config=inferDataModel.inferConfig)
     return result
+
 
 class beginCaptureWithInfer(threading.Thread):
     """
@@ -245,27 +233,7 @@ class beginCaptureWithInfer(threading.Thread):
         self.config = config
         self.resultQueue = queue.Queue(config.get("result_queue_maxsize",3))
 
-        # 初始化模型实例
-        model_list_config = ModelListUtil.get_config()
-        if not model_list_config:
-            raise ValueError("model_list.yaml not found")
-        if modelName not in model_list_config:
-            raise ValueError(f"Model {modelName} not found in config")
-
-        # 动态加载类
-        module_name = f"models.{model_list_config[modelName]['class_file']}"  # 获取模块名
-        class_name = model_list_config[modelName]["class_name"]  # 获取类名
-        # 在/infer路由处理函数中：
-        if modelName not in model_instances:
-            try:
-                module = importlib.import_module(module_name)  # 动态导入模块
-                cls = getattr(module, class_name)  # 获取类
-                model_instances[modelName] = cls()  # 创建单例并缓存
-            except (ModuleNotFoundError, AttributeError) as e:
-                log.error(f"加载 {module_name}.{class_name} 失败: {e}")
-                raise RuntimeError(f"加载失败: {e}")
-        # 调用模型推理
-        self.fastapi_model_instance: BaseInferModel = model_instances[modelName]  # 获取缓存实例
+        self.fastapi_model_instance = get_model_instance(modelName)
 
     def run(self) -> None:
         dataProcessService = get_data_process_service()
@@ -357,7 +325,6 @@ async def inferWithCapturing(inferDataModel: InferDataModel):
         except Exception as e:
             return {"status": False, "message": str(e)}
 
-# main.py
 @app.post("/endCapture")
 async def endCapture_cameraId(inferDataModel: InferDataModel):
     """
@@ -400,4 +367,3 @@ if __name__ == "__main__":
     # 将uvicorn输出的全部让loguru管理
     Loggers.init_config()
     server.run()
-

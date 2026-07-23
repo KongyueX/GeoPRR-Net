@@ -59,7 +59,7 @@ if __name__ == '__main__':
         args.scale_end,
     )
 
-    '''endNum：代表归一化的旋转角度
+    '''endNum：代表 0–100 的归一化圆周位置索引（不是角度值）
          resultNum：代表最终表的读数
          segPointer：指针掩码
          corpImg：表盘图像'''
@@ -74,4 +74,4 @@ if __name__ == '__main__':
     cv2.imshow("origin_crop", origin_crop)
     cv2.waitKey(0)
     # 构建返回消息
-    # message = f"旋转角度为{endNum}，表盘读数是{resultNum:.2f}"
+    # message = f"归一化指针位置为{endNum}，表盘读数是{resultNum:.2f}"
