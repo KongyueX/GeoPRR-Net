@@ -6,7 +6,7 @@
 
 | 方法 | 核验提交/来源 | 代码与权重状态 | 当前处理 |
 |---|---|---|---|
-| VDN / Pointer-10K | `DrawZeroPoint/VectorDetectionNetwork@68afe1e` | GPL-3.0；有训练、推理和数据格式，README 权重链接为空 | 已在 SyncG train 完成重训；写作 `VDN architecture, retrained on SyncG` |
+| VDN / Pointer-10K | `DrawZeroPoint/VectorDetectionNetwork@68afe1e` | 代码 GPL-3.0、数据 CC BY-NC-SA 4.0；有训练、推理和数据格式，README 权重链接为空 | 已在 SyncG train 完成重训，并在 Pointer-10K 官方 test 单指针域完成零样本方向对比；写作 `VDN architecture, retrained on SyncG` |
 | Learning to Read Analog Gauges from Synthetic Data (WACV 2024) | `fuankarion/automatic-gauge-reading@a7d5956` | 声明的仓库仍近乎为空，无可执行实现和权重 | 只放相关工作，不伪造复现成绩 |
 | Human-like Alignment and Reading (2023) | `shuyansy/Detect-and-read-meters@e5e1680` | MIT；有训练/测试代码、数据和检测/读数/对齐权重；`v2` 移除了论文中的耗时 STN 对齐模块 | 原论文 MC1296 协议不同；可作下一项复现，不把论文原数值混入 SyncG 主表 |
 | Human-like Keypoint Sequence (Measurement 2025) | `paopao6777/det-read-pointer-meter@a79bdea` | 有代码说明；仓库无许可证，README 说明数据不能公开 | 只列论文原协议；当前无法做同数据重训 |
@@ -157,6 +157,19 @@ SyncG train grouped-OOF 拟合 angle-to-progress 校准器与 mask/vector 安全
 机器可读结果位于
 `artifacts/runs/calibrated_progress_router_syncg/calibrated_progress_comparison.{json,md}`。
 
+## Pointer-10K 官方 test 零样本方向对比
+
+官方压缩包及 test 标注已分别通过固定 SHA-256 核验。官方 test 的 539 张图中，按标注数量
+预先保留 438 张单指针图，Pointer-10K train/validation 使用量为 0。所有方法共享官方表盘框，
+所以这是隔离后的方向部件对比，不是端到端或完整多指针榜单。
+
+本文三个 SyncG 训练种子的角度 MAE 为 `22.022 ± 5.485°`，同协议重训 VDN 为
+`50.843°`；逐图配对差为 `-28.821°`，95% CI `[-33.776°, -24.002°]`。预定义自然
+低质量组上的差为 `-36.759°`，区间 `[-47.153°, -26.497°]`。这为真实低质量图像上的
+方向泛化提供了第二套公开数据证据，但 Pointer-10K 没有透视角或标量读数标签，不能据此
+声称真实异常视角全面领先或报告 NMAE/Acc@2%。详见
+[`POINTER10K_RESULTS_CN.md`](POINTER10K_RESULTS_CN.md)。
+
 ## 跨协议论文如何比较
 
 HARR、WACV 2024、TransUNet、2025 keypoint sequence 和 DialBench/MRLM 的输入、量程信息、
@@ -181,11 +194,11 @@ SyncG/RPM，并在运行前预声明训练轮数和量程转换规则。
 
 ## 数据和训练约束
 
-- Pointer-10K 官方入口目前是百度网盘，许可为 CC BY-NC-SA 4.0；Hugging Face Hub
-  检索未发现可核验的同名镜像。若使用第三方镜像，必须先用官方文件清单或哈希核验内容。
+- Pointer-10K 官方百度网盘压缩包已下载并核验，许可为 CC BY-NC-SA 4.0。正式评测只解压
+  test，压缩包与 test 标注的 SHA-256 已写入固定协议；不使用未核验的第三方镜像。
 - VDN 用 SyncG train 重训，主表应写 `VDN architecture, retrained on SyncG`，并与本文使用
   完全相同的SyncG train/test以及控制退化图像。
 - 若VDN用Pointer-10K重训，则写 `VDN, retrained on Pointer-10K`，结果属于跨域迁移设置；
   不可和同域SyncG训练方法含混表述。
-- 当前已完成的 VDN 对比仍不足以支持 SOTA；其他方法因无公开权重、无可执行代码或评测
+- 当前已完成的 VDN 对比（含 Pointer-10K 单指针部件外测）仍不足以支持 SOTA；其他方法因无公开权重、无可执行代码或评测
   协议不同，只能列入相关工作与可复现性限制，不能填入推测成绩。

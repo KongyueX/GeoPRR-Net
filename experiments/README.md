@@ -5,16 +5,21 @@
 [`../docs/FORMAL_RESULTS_CN.md`](../docs/FORMAL_RESULTS_CN.md)；
 本文件继续作为复现实验协议和命令说明。
 
-本目录只使用两个正式数据集：
+标量读数主实验只使用两个正式数据集：
 
 - **SyncG**：只用官方 `train` 微调指针分割、训练选择性残差校正器与独立方向头，并使用官方 `test` 做同域测试。
 - **RPM-10K**：只做冻结模型的零微调真实图像外部测试，不用于选特征、阈值或超参数。
+
+此外只增加一个**辅助部件外测**：Pointer-10K 官方 test 用于比较真实图像上的单指针方向，
+不训练、不微调、不标量读数，也不与 RPM-10K 重复承担最终读数结论。这样仍然是
+“SyncG 训练/同域测试 + RPM-10K 最终读数外测 + Pointer-10K 方向部件外测”，不是让三套
+模型在五套数据库上雨露均沾。
 
 仓库原有的 30+8 张图只适合作为补充案例，不并入主表，也不作为“独立数据集”反复调参。
 这样既避免五套数据集雨露均沾，也能把核心论点讲清楚：精确但易失败的掩码表示和高覆盖率
 方向表示能否通过选择性路由互补，以及残差校正在退化场景中能否控制负迁移。
 
-官方下载入口：[SyncG 代码与数据说明](https://github.com/SKYWOWDYH/SyncG)、[SyncG 数据](https://huggingface.co/datasets/YihengDeng/syncG)、[RPM-10K / DialBench](https://github.com/Event-AHU/DialBench)。固定提交中的 SyncG 数据卡标注为 CC BY 4.0，使用及论文中应保留数据集归属；RPM-10K 仓库当前把数据许可标为 TBD，投稿或再分发前必须再次核对。本仓库只提供下载脚本，不分发数据。
+官方下载入口：[SyncG 代码与数据说明](https://github.com/SKYWOWDYH/SyncG)、[SyncG 数据](https://huggingface.co/datasets/YihengDeng/syncG)、[RPM-10K / DialBench](https://github.com/Event-AHU/DialBench)、[Pointer-10K / VDN](https://github.com/DrawZeroPoint/VectorDetectionNetwork)。固定提交中的 SyncG 数据卡标注为 CC BY 4.0，Pointer-10K 数据标注为 CC BY-NC-SA 4.0，使用及论文中应保留数据集归属；RPM-10K 仓库当前把数据许可标为 TBD，投稿或再分发前必须再次核对。本仓库只提供下载/解包脚本，不分发数据。
 
 外部同类模型不能由内部变体替代；VDN 等方法的可复现性和公平接入规则见
 [`../docs/BASELINE_AUDIT_CN.md`](../docs/BASELINE_AUDIT_CN.md)。
@@ -615,10 +620,51 @@ python main.py
 
 若模型缺失、门控拒绝或不确定性过高，服务返回质量加权几何基线；不会把外部测试标签带入运行时。
 
+## 15. Pointer-10K 零样本方向部件外测
+
+Pointer-10K 不进入标量读数主表。固定协议只解压官方 test，验证外层 ZIP、标注文件、539 个
+test 图像和 685 个指针实例的身份；再按标注数量预先保留 438 张单指针图像，排除 101 张
+多指针图像。筛选规则不读取模型预测，Pointer-10K train/validation 不解压、不训练、
+不校准。官方表盘框用于隔离“方向估计”部件能力，因此结果不能表述为端到端检测成绩。
+
+```powershell
+python -m experiments.extract_pointer10k_test `
+  --archive D:\BaiduNetdiskDownload\Pointer-10K.zip `
+  --output datasets\Pointer10K_official\pointer_10k
+
+python -m experiments.datasets pointer10k `
+  --root datasets\Pointer10K_official\pointer_10k `
+  --output artifacts\manifests\pointer10k_single_pointer_test.jsonl
+
+python -m experiments.evaluate_pointer10k_direction `
+  --manifest artifacts\manifests\pointer10k_single_pointer_test.jsonl `
+  --checkpoint artifacts\runs\vdn_syncg\seed_20260720\best.pt `
+  --model-kind vdn --model-label VDN `
+  --output artifacts\runs\pointer10k\formal\vdn.jsonl `
+  --vdn-source datasets\Pointer10K_official\reference-vdn `
+  --device cuda --batch-size 64 --workers 4
+
+python -m experiments.evaluate_pointer10k_direction `
+  --manifest artifacts\manifests\pointer10k_single_pointer_test.jsonl `
+  --checkpoint artifacts\runs\probabilistic_pivot_direction_syncg\seed_20260722\best.pt `
+  --model-kind probabilistic --model-label Ours `
+  --output artifacts\runs\pointer10k\formal\ours_seed20260722.jsonl `
+  --device cuda --batch-size 64 --workers 4
+```
+
+`summarize_pointer10k_direction` 支持把三个独立训练种子写成同一个
+`LABEL=run1,run2,run3`，同时输出逐图配对 bootstrap 和全方法两两比较。
+角度 MAE 是针尾到针尖方向的最小圆周夹角均值；`Acc@5°`/`Acc@10°` 是误差不超过相应
+角度的全体样本比例；失败按 180° 计入 MAE 且在准确率中计错，coverage 另报。自然低质量
+组由模糊、低照度、低对比、小表盘四个预测无关统计的底四分位中至少命中两项构成，它不是
+Pointer-10K 官方 LQPI 标签。完整结果与论文表述边界见
+[`../docs/POINTER10K_RESULTS_CN.md`](../docs/POINTER10K_RESULTS_CN.md)。
+
 ## 实验纪律
 
 - SyncG 官方 train/test 不互换；OOF 分组默认来自场景与表型组合。
 - RPM-10K 从第一次运行开始就使用冻结的特征、模型、残差截断、不确定性阈值和门控阈值；不使用其训练集。
+- Pointer-10K 仅作官方 test 单指针方向外测，train/validation 使用量为 0，不能回看其结果选择模型或阈值。
 - 所有方法使用同一个预测缓存，失败样本计入 coverage，不能只在成功子集上宣称更优。
 - 主表报告 NMAE 与 coverage；MAE 只在量程一致的子集内有直接可比性。
 - 公开数据与实验产物均被 Git 忽略；脚本不会生成或伪造论文数值，只有完整下载和冻结评测完成后才写主表。
