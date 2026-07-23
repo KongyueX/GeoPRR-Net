@@ -91,6 +91,37 @@ grouped-OOF 选择。
 六个 SyncG 条件相对旧质量路由的 group-bootstrap 区间均完全低于 0。RPM 只有六个仪表组，
 点估计改善但区间跨 0，不能声称统计显著。
 
+### 参考分支感知的安全残差校准
+
+进一步的训练 OOF 分层显示，全局校准器会过度扰动已经很准的 `start_and_end` 分支，而
+`start_only/end_only/default_start_end` 仍需要较大修正。新测试集准备前冻结的新候选改为：
+
+```text
+b = normalize(reference_branch)
+r_hat = f_b(runtime_features)
+a_b = 0,                                      if |r_hat| < deadband_b
+      clip(r_hat, -correction_clip_b, clip_b), otherwise
+progress_safe = clip(progress_vector + a_b, 0, 1)
+```
+
+四个分支各自拟合残差回归器；全局模型仅作未知或样本不足分支的回退。`clip_b` 和
+`deadband_b` 不是测试侧经验参数，而是在每个外层 GroupKFold 的训练部分内部再次做五折
+grouped-OOF 选择。安全死区的含义是允许系统拒绝一次预期收益不足的校正，不是拒绝输出。
+
+同一外层折的训练侧消融为：
+
+| 方法 | NMAE | Acc@2% |
+|---|---:|---:|
+| 严格嵌套全局 residual | 0.094198 | 0.39018 |
+| 分支 residual、无 deadband | 0.093348 | 0.40685 |
+| 分支 residual、共享 deadband | 0.092946 | 0.41553 |
+| 分支 residual、分支 deadband | **0.091401** | **0.44680** |
+| 加 mask/vector 路由 | **0.088271** | **0.48767** |
+
+完整校准相对严格全局 residual 的 197 组 bootstrap 95% CI 为
+`[-0.003579, -0.002020]`，相对无 deadband 为 `[-0.002347, -0.001528]`。这些数字只证明
+训练侧分组泛化和模块贡献；新现场留出集尚未运行，所以不能把它们写成新的独立测试结论。
+
 ## 无泄漏训练协议
 
 1. 三个方向模型只使用 SyncG train，并按 `meter type + scene` 分组留出验证集。
@@ -121,6 +152,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
 # 进度校准、mask/calibrated-vector 路由、七条件评测与逐行复核。
 powershell -NoProfile -ExecutionPolicy Bypass -File `
   .\experiments\run_calibrated_progress_experiments.ps1
+
+# 新测试集前冻结：参考分支模型、安全死区和最终路由的 5×5 训练侧 OOF。
+powershell -NoProfile -ExecutionPolicy Bypass -File `
+  .\experiments\run_reference_conditioned_training.ps1
 ```
 
 ## 必需对比和消融
@@ -128,7 +163,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
 - 同任务外部基线：`VDN architecture, retrained on SyncG`；
 - 内部强基线：mask、v1 独立方向头、硬失败回退、v1 质量路由；
 - 中间负面消融：概率方向头与不确定性软融合；
-- 最终候选：概率方向头 + angle-to-progress 校准 + mask/calibrated-vector 安全路由；
+- 最终候选：概率方向头 + 参考分支感知的安全 angle-to-progress 校准 +
+  mask/calibrated-vector 安全路由；
 - 上界诊断：逐样本 mask/vector oracle，只作分析；
 - 解码消融：同一冻结权重的 direct-only、circular-only 和 fused decoder；
 - 训练消融：去掉等变一致性、去掉整个 projective pair；
@@ -143,5 +179,6 @@ Acc@2% 中算错。`NMAE=0.10` 表示平均误差相当于量程的 10%，不等
 
 圆周分类、异方差回归、单应增强、ExtraTrees 和 inverse-variance fusion 分别都不是首次提出。
 论文可主张的是面向指针仪表的组合：精确投影标签下的支点—射线等变学习、圆周分布与角方差
-联合解码、角度到归一化进度的无泄漏残差校准，以及 mask/calibrated-vector 安全选择路由。
+联合解码、参考几何状态条件化且可拒绝不必要修正的归一化进度残差校准，以及
+mask/calibrated-vector 安全选择路由。
 是否形成有效论文贡献由冻结端到端结果、配对区间和消融决定，不能仅凭模块名称声称 SOTA。

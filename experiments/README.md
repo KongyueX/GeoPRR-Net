@@ -525,7 +525,73 @@ bootstrap 区间也均低于 0；但 severe perspective 和 RPM 的 Acc@2% 仍�
 [`../docs/PROBABILISTIC_FUSION_METHOD_CN.md`](../docs/PROBABILISTIC_FUSION_METHOD_CN.md)，阶段总报告见
 [`../docs/MODEL_PROGRESS_REPORT_CN_20260723.txt`](../docs/MODEL_PROGRESS_REPORT_CN_20260723.txt)。
 
-## 13. 接回服务
+## 13. 参考分支感知的安全校准（新测试集前冻结）
+
+旧进度校准器对所有参考点状态使用同一个残差回归器。训练 OOF 误差分层显示：
+`start_and_end` 分支的原始 vector 已有很高的精细精度，而 `start_only`、`end_only` 和
+默认参考范围仍需要较大校正。全局回归会在修复大误差的同时扰动一部分本来准确的双参考点
+样本。
+
+新候选方法因此增加两层约束：
+
+1. 按 `default_start_end / start_only / end_only / start_and_end` 分别拟合残差回归器；
+2. 每个分支分别选择校正幅度上限和安全死区。只有预测残差绝对值越过死区才执行校正，
+   否则保留原始 vector progress。
+
+外层每个仪表组的预测只来自未见过该组的模型；校正幅度、死区和路由阈值均在该外层训练
+部分内部再做 5 折 GroupKFold 选择。SyncG test、控制退化、RPM 和后续现场新测试集均未
+参与本轮拟合或选型。树预测按固定 estimator 顺序聚合，避免并行浮点求和在路由阈值附近
+产生跨机器末位漂移；固定种子的重复运行会生成相同的逐样本 OOF 文件。
+
+```powershell
+# 复现校准器和最终路由的 5×5 嵌套训练侧 OOF；约 2 分钟。
+powershell -NoProfile -ExecutionPolicy Bypass -File `
+  .\experiments\run_reference_conditioned_training.ps1
+```
+
+同一外层折和同一全分母计分下的训练侧消融：
+
+| 方法 | NMAE | Acc@2% |
+|---|---:|---:|
+| Raw probabilistic vector | 0.148718 | 0.30571 |
+| 旧全局校准器 v1 | 0.096511 | 0.37900 |
+| 严格嵌套全局残差 | 0.094198 | 0.39018 |
+| 分支残差、无安全死区 | 0.093348 | 0.40685 |
+| 分支残差、共享死区 | 0.092946 | 0.41553 |
+| 分支残差、分支死区（完整） | **0.091401** | **0.44680** |
+| mask/完整校准 vector 最终路由 | **0.088271** | **0.48767** |
+
+完整校准相对严格嵌套全局残差的 NMAE 差为 `-0.002797`，197 组 bootstrap 95% CI
+`[-0.003579, -0.002020]`；相对“分支残差、无死区”为 `-0.001947`
+`[-0.002347, -0.001528]`。最终路由相对旧全局校准最终路由的差为 `-0.001579`
+`[-0.002303, -0.000850]`，Acc@2% 从 `0.46370` 提高到 `0.48767`。
+
+双参考点分支只对约 8.5% 的成功样本执行校正；其 NMAE 从原始 `0.06420` 降到
+`0.04830`，同时 Acc@2% 保持为 `0.86411`，而不是像旧全局校准那样大范围扰动高精度
+样本。这里的 ExtraTrees 不是创新点；可写的算法贡献是“参考几何状态条件化 +
+训练侧选择的安全拒绝校正 + 嵌套分组协议”。
+
+本轮不运行已经多次查看过的 SyncG test 或 RPM，以免继续按旧测试反馈调参。新现场测试集
+准备好后，只执行一次冻结入口：
+
+```powershell
+python -m experiments.evaluate_reference_conditioned_pipeline `
+  --raw-predictions <raw.jsonl> `
+  --base-predictions <base.jsonl> `
+  --vector-predictions <vector.jsonl> `
+  --reference-predictions <vdn_and_reference.jsonl> `
+  --output-dir artifacts\runs\reference_conditioned_router_syncg\evaluations\field_holdout `
+  --condition field_holdout `
+  --overwrite
+```
+
+评估器会校验校准器、路由器、训练来源和源码 SHA-256，并输出逐样本分支、死区是否触发、
+路由结果、全分母 NMAE/Acc@1%/2%/5%、coverage 和分组 bootstrap。训练产物位于
+`artifacts/runs/reference_conditioned_progress_calibrator_syncg/model/` 与
+`artifacts/runs/reference_conditioned_router_syncg/model/`；训练入口最后还会逐行重算校正、
+路由和指标，写入 `artifacts/runs/reference_conditioned_router_syncg/verification.json`。
+
+## 14. 接回服务
 
 服务启动前指定同一个分割检查点和推理设备；不设置时仍使用仓库自带权重和 CPU：
 
