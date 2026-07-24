@@ -1,6 +1,7 @@
 # 务实的论文实验方案
 
-截至 2026-07-23，主实验、六组控制退化、VDN 对比、概率方向、进度校准和最终选择路由均已
+截至 2026-07-24，主实验、六组控制退化、VDN 三种子对比、概率方向、进度校准、最终选择
+路由和统一复杂度基准均已
 完成。聚合结果、置信区间与可安全主张的结论见
 [`../docs/FORMAL_RESULTS_CN.md`](../docs/FORMAL_RESULTS_CN.md)；
 本文件继续作为复现实验协议和命令说明。
@@ -333,6 +334,15 @@ python -m experiments.train_vdn_syncg `
 # 最后生成配对分组 bootstrap 表。
 powershell -NoProfile -ExecutionPolicy Bypass -File `
   .\experiments\run_vdn_evaluations.ps1
+
+# 再完整训练、验证并评测另外两个独立种子。
+powershell -NoProfile -ExecutionPolicy Bypass -File `
+  .\experiments\run_vdn_baseline_replicates.ps1
+
+# 核对三次训练和 21 组逐样本评测，并生成当前论文主表。
+python -m experiments.summarize_vdn_replicates `
+  --bootstrap-iterations 5000 `
+  --output artifacts\runs\vdn_syncg\vdn_replicate_summary.json
 ```
 
 VDN 只替换指针方向估计；表盘检测、起终点、已知量程换算、失败惩罚和退化图像均与主方法
@@ -353,8 +363,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
 `20260720/20260721/20260722`。汇总器逐条件核对预测 JSONL 的 SHA-256 和完整前端签名，
 并核对每份指标实际引用的校准器，保证变化只来自残差/门控拟合种子。
 
-正式结果位于 `artifacts/runs/vdn_syncg/seed_20260720/vdn_comparison.{json,md}` 和上述
-三种子目录。原掩码分支相对 VDN 在 clean、两档模糊和中度透视上取得显著更低的 NMAE；
+正式结果位于三个 `artifacts/runs/vdn_syncg/seed_*` 目录及
+`vdn_replicate_summary.{json,md}`。三次 VDN 的验证方向 MAE 为
+`0.6743°±0.0300°`。原掩码分支相对首个 VDN 诊断种子在 clean、两档模糊和中度透视上
+取得显著更低的 NMAE；
 重度透视统计持平，组合重度退化和 RPM 则由 VDN 显著领先。RPM 差距主要来自原分支
 72.73% 对 VDN 98.78% 的端到端 coverage；这一冻结诊断驱动了第 9 节的分割无关方向回退，
 而没有使用外测标签继续调残差或门控阈值。
@@ -644,6 +656,16 @@ python -m experiments.evaluate_pointer10k_direction `
   --vdn-source datasets\Pointer10K_official\reference-vdn `
   --device cuda --batch-size 64 --workers 4
 
+foreach ($seed in 20260721,20260722) {
+  python -m experiments.evaluate_pointer10k_direction `
+    --manifest artifacts\manifests\pointer10k_single_pointer_test.jsonl `
+    --checkpoint "artifacts\runs\vdn_syncg\seed_$seed\best.pt" `
+    --model-kind vdn --model-label "VDN-seed$seed" `
+    --output "artifacts\runs\pointer10k\formal\vdn_seed$seed.jsonl" `
+    --vdn-source datasets\Pointer10K_official\reference-vdn `
+    --device cuda --batch-size 64 --workers 4
+}
+
 python -m experiments.evaluate_pointer10k_direction `
   --manifest artifacts\manifests\pointer10k_single_pointer_test.jsonl `
   --checkpoint artifacts\runs\probabilistic_pivot_direction_syncg\seed_20260722\best.pt `
@@ -663,6 +685,14 @@ python -m experiments.evaluate_pointer10k_direction `
   --output artifacts\runs\pointer10k\formal\harr_official.jsonl `
   --harr-source artifacts\vendor\Detect-and-read-meters `
   --device cpu --batch-size 4 --workers 0
+
+python -m experiments.summarize_pointer10k_direction `
+  --method "VDN=artifacts\runs\pointer10k\formal\vdn.jsonl,artifacts\runs\pointer10k\formal\vdn_seed20260721.jsonl,artifacts\runs\pointer10k\formal\vdn_seed20260722.jsonl" `
+  --method "HARR-official-v2=artifacts\runs\pointer10k\formal\harr_official.jsonl" `
+  --method "Ours=artifacts\runs\pointer10k\formal\ours_seed20260720.jsonl,artifacts\runs\pointer10k\formal\ours_seed20260721.jsonl,artifacts\runs\pointer10k\formal\ours_seed20260722.jsonl" `
+  --baseline-label VDN `
+  --output-json artifacts\runs\pointer10k\pointer10k_extended_comparison.json `
+  --output-md artifacts\runs\pointer10k\pointer10k_extended_comparison.md
 ```
 
 `summarize_pointer10k_direction` 支持把三个独立训练种子写成同一个
@@ -673,7 +703,30 @@ python -m experiments.evaluate_pointer10k_direction `
 Pointer-10K 官方 LQPI 标签。完整结果与论文表述边界见
 [`../docs/POINTER10K_RESULTS_CN.md`](../docs/POINTER10K_RESULTS_CN.md)。
 
-## 16. batch=1 端到端延迟与失败分解
+## 16. 统一复杂度、batch=1 延迟与失败分解
+
+同一设备上的方法比较使用活动模型栈基准：一次表盘检测、当前实现中的两次参考点检测，以及
+各方法实际需要的读数模块。FLOPs 采用实际输入分辨率、一次乘加计两次操作；Ours 的总时间
+还包含两个冻结 ExtraTrees 的 CPU 单样本预测：
+
+```powershell
+python -m experiments.benchmark_model_complexity `
+  --device cuda --precision amp_fp16 `
+  --warmup 30 --iterations 100 --tree-n-jobs 1 `
+  --output artifacts\runs\efficiency\model_stack_efficiency.json
+```
+
+RTX 4060 正式结果：
+
+| 方法 | 参数量 M | FLOPs G | 峰值显存 MiB | 神经栈 ms | CPU 后处理 ms | 总均值/中位/P95 ms |
+|---|---:|---:|---:|---:|---:|---:|
+| Original Transformer | 138.47 | 110.44 | 700.99 | 42.51 | 0.00 | 43.67 / 41.24 / 51.78 |
+| VDN | 34.23 | 81.66 | 198.63 | 20.66 | 0.00 | 20.81 / 20.38 / 23.59 |
+| Ours-final | 34.07 | 95.10 | 304.78 | 34.36 | 61.61 | 99.55 / 97.18 / 101.75 |
+
+该统一表排除图像解码、resize/normalize、YOLO NMS、裁剪、渲染和 JSON；用于比较活动模型
+复杂度，不替代下述真实逐图缓存的端到端时间。Ours 的 CPU 后处理含两个各 600 棵树的模型，
+batch=1 固定为单线程以避免并行调度改变硬件口径，预测值不变。
 
 正式预测缓存由 `collect_predictions` 逐图串行生成，因此每行的 `runtime_seconds` 是
 batch=1 墙钟时间：从图像读取开始，到完整读数 payload 生成结束；不含模型初始化和 JSON

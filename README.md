@@ -2,13 +2,13 @@
 
 > 论文版的算法定义、可主张贡献与止损规则见
 > [`docs/PAPER_PLAN_CN.md`](docs/PAPER_PLAN_CN.md)，两数据集可复现实验见
-> [`experiments/README.md`](experiments/README.md)，截至 2026-07-23 的正式运行（含模糊/
+> [`experiments/README.md`](experiments/README.md)，截至 2026-07-24 的正式运行（含模糊/
 > 透视、VDN 对比、概率方向、进度校准与选择路由）的结果与统计结论见
 > [`docs/FORMAL_RESULTS_CN.md`](docs/FORMAL_RESULTS_CN.md)，外部同类方法能否公平复现见
 > [`docs/BASELINE_AUDIT_CN.md`](docs/BASELINE_AUDIT_CN.md)。
 > 概率圆周方向、透视等变训练与进度校准路由的算法/复现实验见
 > [`docs/PROBABILISTIC_FUSION_METHOD_CN.md`](docs/PROBABILISTIC_FUSION_METHOD_CN.md)。
-> 截至 2026-07-23 的全部模型修改、消融结果、GPU 利用率解释和阶段结论见
+> 截至 2026-07-24 的全部模型修改、消融结果、GPU 利用率解释和阶段结论见
 > [`docs/MODEL_PROGRESS_REPORT_CN_20260723.txt`](docs/MODEL_PROGRESS_REPORT_CN_20260723.txt)。
 > 注释修正、生产死代码与待归档文件清单见
 > [`docs/CODE_REDUNDANCY_AUDIT_CN.md`](docs/CODE_REDUNDANCY_AUDIT_CN.md)。

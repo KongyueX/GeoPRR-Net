@@ -85,6 +85,12 @@ try {
             throw "VDN seed $Seed evaluation failed with exit code $LASTEXITCODE"
         }
     }
+    & $PythonPath -m experiments.summarize_vdn_replicates `
+        --bootstrap-iterations 5000 `
+        --output "artifacts\runs\vdn_syncg\vdn_replicate_summary.json"
+    if ($LASTEXITCODE -ne 0) {
+        throw "VDN replicate summary failed with exit code $LASTEXITCODE"
+    }
 }
 finally {
     Pop-Location
