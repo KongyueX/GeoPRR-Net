@@ -36,10 +36,15 @@ from experiments.reference_conditioned_progress_calibrator import (
     normalize_reference_branch,
 )
 from experiments.uncertainty_fusion import UNCERTAINTY_FUSION_OOF_PROTOCOL
-from experiments.vdn_baseline import PROJECT_DIR, sha256_file
+from experiments.vdn_baseline import (
+    PROJECT_DIR,
+    SOURCE_TEXT_SHA256_PROTOCOL,
+    sha256_file,
+    sha256_source_file,
+)
 
 
-TRAINING_PROTOCOL = "syncg_strict_nested_reference_safe_calibrator_v1"
+TRAINING_PROTOCOL = "syncg_strict_nested_reference_safe_calibrator_v2"
 CLIP_CANDIDATES = (0.05, 0.075, 0.10, 0.15, 0.20, 0.30, 0.40, 0.50)
 DEADBAND_CANDIDATES = (
     0.0,
@@ -88,6 +93,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--min-branch-groups", type=int, default=10)
     parser.add_argument("--bootstrap-iterations", type=int, default=5000)
     parser.add_argument("--seed", type=int, default=20260722)
+    parser.add_argument(
+        "--expected-oof-protocol",
+        default=UNCERTAINTY_FUSION_OOF_PROTOCOL,
+        help=(
+            "Exact protocol required in both the OOF metadata signature and "
+            "OOF summary. Defaults to the legacy v1 contract; formal FADR v2 "
+            "launchers must pass their frozen v2 protocol explicitly."
+        ),
+    )
     parser.add_argument("--overwrite", action="store_true")
     return parser.parse_args()
 
@@ -98,6 +112,35 @@ def _metadata_path(path: Path) -> Path:
 
 def _summary_path(path: Path) -> Path:
     return path.with_name(path.stem + ".summary.json")
+
+
+def _validate_input_oof_contract(
+    oof_pairs: Path,
+    *,
+    expected_protocol: str,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    if not isinstance(expected_protocol, str) or not expected_protocol.strip():
+        raise ValueError("expected OOF protocol must be a non-empty string")
+    metadata_path = _metadata_path(oof_pairs)
+    summary_path = _summary_path(oof_pairs)
+    for path in (oof_pairs, metadata_path, summary_path):
+        if not path.is_file():
+            raise FileNotFoundError(path)
+    metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+    summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    if (metadata.get("signature") or {}).get("protocol") != expected_protocol:
+        raise ValueError("input has the wrong probabilistic OOF protocol")
+    if (
+        summary.get("protocol") != expected_protocol
+        or summary.get("status") != "complete"
+        or summary.get("output_sha256") != sha256_file(oof_pairs)
+        or int(summary.get("group_leakage_count", -1)) != 0
+        or int(summary.get("test_samples_used", -1)) != 0
+    ):
+        raise ValueError(
+            "input probabilistic OOF collection failed its train-only audit"
+        )
+    return metadata, summary
 
 
 def _atomic_json(path: Path, value: dict[str, Any]) -> None:
@@ -509,6 +552,8 @@ def main() -> None:
         or args.min_branch_samples <= 0
         or args.min_branch_groups < 3
         or args.bootstrap_iterations <= 0
+        or not isinstance(args.expected_oof_protocol, str)
+        or not args.expected_oof_protocol.strip()
     ):
         raise ValueError("invalid reference-conditioned training parameters")
     required = (
@@ -519,23 +564,10 @@ def main() -> None:
     for path in required:
         if not path.is_file():
             raise FileNotFoundError(path)
-    metadata = json.loads(_metadata_path(args.oof_pairs).read_text(encoding="utf-8"))
-    input_summary = json.loads(
-        _summary_path(args.oof_pairs).read_text(encoding="utf-8")
+    _validate_input_oof_contract(
+        args.oof_pairs,
+        expected_protocol=args.expected_oof_protocol,
     )
-    if (metadata.get("signature") or {}).get(
-        "protocol"
-    ) != UNCERTAINTY_FUSION_OOF_PROTOCOL:
-        raise ValueError("input has the wrong probabilistic OOF protocol")
-    if (
-        input_summary.get("status") != "complete"
-        or input_summary.get("output_sha256") != sha256_file(args.oof_pairs)
-        or int(input_summary.get("group_leakage_count", -1)) != 0
-        or int(input_summary.get("test_samples_used", -1)) != 0
-    ):
-        raise ValueError(
-            "input probabilistic OOF collection failed its train-only audit"
-        )
 
     rows = read_jsonl(args.oof_pairs)
     if any(
@@ -829,11 +861,24 @@ def main() -> None:
         if path.exists() and not args.overwrite:
             raise FileExistsError(f"{path} exists; pass --overwrite")
     source_hashes = {
-        "features": sha256_file(PROJECT_DIR / "experiments" / "progress_calibrator.py"),
-        "reference_policy": sha256_file(
+        "features": sha256_source_file(
+            PROJECT_DIR / "experiments" / "progress_calibrator.py"
+        ),
+        "reference_policy": sha256_source_file(
             PROJECT_DIR / "experiments" / "reference_conditioned_progress_calibrator.py"
         ),
-        "trainer": sha256_file(Path(__file__).resolve()),
+        "trainer": sha256_source_file(Path(__file__).resolve()),
+    }
+    training_parameters = {
+        "folds": args.folds,
+        "inner_folds": args.inner_folds,
+        "trees": args.trees,
+        "max_depth": args.max_depth,
+        "min_samples_leaf": args.min_samples_leaf,
+        "max_features": args.max_features,
+        "min_branch_samples": args.min_branch_samples,
+        "min_branch_groups": args.min_branch_groups,
+        "bootstrap_iterations": args.bootstrap_iterations,
     }
     artifact = {
         "protocol": REFERENCE_CONDITIONED_CALIBRATOR_PROTOCOL,
@@ -850,10 +895,13 @@ def main() -> None:
         "deadband_candidates": list(DEADBAND_CANDIDATES),
         "fallback_estimator": final_bundle["fallback_estimator"],
         "branch_estimators": final_bundle["branch_estimators"],
+        "input_oof_protocol": args.expected_oof_protocol,
         "training_oof_pairs_sha256": sha256_file(args.oof_pairs),
         "test_sets_used": [],
         "seed": args.seed,
+        "training_parameters": training_parameters,
         "source_sha256": source_hashes,
+        "source_hash_protocol": SOURCE_TEXT_SHA256_PROTOCOL,
     }
     _atomic_joblib(model_path, artifact)
     diagnostics_path.parent.mkdir(parents=True, exist_ok=True)
@@ -1017,14 +1065,17 @@ def main() -> None:
         "protocol": TRAINING_PROTOCOL,
         "created_utc": datetime.now(timezone.utc).isoformat(),
         "status": "complete",
+        "seed": args.seed,
         "input": str(args.oof_pairs),
         "input_sha256": sha256_file(args.oof_pairs),
+        "input_oof_protocol": args.expected_oof_protocol,
         "samples": len(rows),
         "successful_training_samples": int(np.sum(successful)),
         "groups": len(set(groups_all.tolist())),
         "reference_branch_counts": dict(sorted(Counter(branches_all).items())),
         "folds": args.folds,
         "inner_folds": args.inner_folds,
+        "training_parameters": training_parameters,
         "strict_nested_oof": True,
         "fold_summaries": fold_summaries,
         "group_leakage_count": 0,
@@ -1086,6 +1137,7 @@ def main() -> None:
         "diagnostics": str(diagnostics_path),
         "diagnostics_sha256": sha256_file(diagnostics_path),
         "source_sha256": source_hashes,
+        "source_hash_protocol": SOURCE_TEXT_SHA256_PROTOCOL,
         "environment": {
             "python": platform.python_version(),
             "numpy": np.__version__,

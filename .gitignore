@@ -3,6 +3,11 @@
 /.agents/
 /.claude/
 *.pt
+*.pth
+*.onnx
+*.safetensors
+*.joblib
+*.pkl
 
 # Model weights are intentionally not redistributed. Their provenance,
 # expected locations, and SHA-256 values are documented in
@@ -35,3 +40,7 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 .vscode/
+
+# The manuscript, figures, publisher template, and submission package remain
+# local and are intentionally excluded from the public code repository.
+/paper/

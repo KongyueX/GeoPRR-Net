@@ -27,6 +27,7 @@ from experiments.probabilistic_pivot_direction import (
 )
 from experiments.vdn_baseline import (
     PROJECT_DIR,
+    SOURCE_TEXT_SHA256_PROTOCOL,
     angular_error_degrees,
     grouped_train_val_split,
     load_syncg_manifest,
@@ -34,6 +35,7 @@ from experiments.vdn_baseline import (
     seed_worker,
     set_random_seed,
     sha256_file,
+    sha256_source_file,
 )
 
 
@@ -118,10 +120,11 @@ def _signature(args: argparse.Namespace, train_samples, validation_samples) -> d
         "validation_sample_ids_sha256": sample_ids_hash(validation_samples),
         "train_samples": len(train_samples),
         "validation_samples": len(validation_samples),
-        "model_source_sha256": sha256_file(
+        "model_source_sha256": sha256_source_file(
             PROJECT_DIR / "experiments" / "probabilistic_pivot_direction.py"
         ),
-        "trainer_source_sha256": sha256_file(Path(__file__).resolve()),
+        "trainer_source_sha256": sha256_source_file(Path(__file__).resolve()),
+        "source_hash_protocol": SOURCE_TEXT_SHA256_PROTOCOL,
         "architecture": (
             "torchvision ResNet-18 + pivot heatmap + circular distribution + "
             "heteroscedastic direction"

@@ -5,6 +5,7 @@ import argparse
 import json
 import os
 import platform
+import tempfile
 import time
 from collections import Counter
 from datetime import datetime, timezone
@@ -18,7 +19,6 @@ from tqdm import tqdm
 
 from experiments.evaluate_vdn_baseline import (
     _append_rows,
-    _atomic_json,
     _base_result,
     _component_summary,
     _dialbench_summary,
@@ -50,6 +50,35 @@ from experiments.vdn_baseline import (
 
 
 EVALUATION_PROTOCOL = "pivot_direction_fallback_e2e_v1"
+
+
+def _atomic_json(path: Path, value: dict[str, Any]) -> None:
+    """Atomically replace a mutable legacy evaluation JSON artifact."""
+
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, temporary_name = tempfile.mkstemp(
+        prefix=f".{path.name}.",
+        suffix=".tmp",
+        dir=path.parent,
+    )
+    temporary = Path(temporary_name)
+    try:
+        with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as handle:
+            json.dump(
+                value,
+                handle,
+                ensure_ascii=False,
+                indent=2,
+                sort_keys=True,
+                allow_nan=False,
+            )
+            handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def parse_args() -> argparse.Namespace:

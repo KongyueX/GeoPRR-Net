@@ -1,13 +1,19 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
+from unittest.mock import patch
 
 import numpy as np
 from sklearn.ensemble import ExtraTreesRegressor
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 
-from experiments.evaluate_reference_conditioned_pipeline import _route
+from experiments.evaluate_reference_conditioned_pipeline import (
+    _resolve_degradation_condition,
+    _route,
+    _validate_vector_for_evaluation,
+)
 from experiments.reference_conditioned_progress_calibrator import (
     apply_safe_residual,
     apply_safe_residual_array,
@@ -38,6 +44,42 @@ def _constant_forest(value: float, seed: int) -> Pipeline:
 
 
 class ReferenceConditionedProgressCalibratorTest(unittest.TestCase):
+    def test_field_holdout_label_resolves_to_clean_degradation(self) -> None:
+        self.assertEqual(
+            _resolve_degradation_condition("field_holdout", None),
+            "clean",
+        )
+        self.assertEqual(
+            _resolve_degradation_condition("field_holdout", "clean"),
+            "clean",
+        )
+        self.assertEqual(
+            _resolve_degradation_condition("perspective_severe", None),
+            "perspective_severe",
+        )
+        with self.assertRaises(ValueError):
+            _resolve_degradation_condition("new_external_dataset", None)
+        with self.assertRaises(ValueError):
+            _resolve_degradation_condition("field_holdout", "unknown")
+
+    def test_field_holdout_vector_audit_uses_clean_component_condition(self) -> None:
+        with patch(
+            "experiments.evaluate_reference_conditioned_pipeline."
+            "_validate_vector_evaluation",
+            return_value={"summary_sha256": "signed"},
+        ) as validate:
+            audit = _validate_vector_for_evaluation(
+                Path("field_vector.jsonl"),
+                evaluation_label="field_holdout",
+                degradation_condition=_resolve_degradation_condition(
+                    "field_holdout",
+                    None,
+                ),
+            )
+        validate.assert_called_once_with(Path("field_vector.jsonl"), "clean")
+        self.assertEqual(audit["evaluation_label"], "field_holdout")
+        self.assertEqual(audit["degradation_condition"], "clean")
+
     def test_reference_branch_normalization_is_finite(self) -> None:
         self.assertEqual(
             normalize_reference_branch(

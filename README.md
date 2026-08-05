@@ -1,23 +1,85 @@
 # PointerMeterReaderFastAPI
 
-> 论文版的算法定义、可主张贡献与止损规则见
-> [`docs/PAPER_PLAN_CN.md`](docs/PAPER_PLAN_CN.md)，两数据集可复现实验见
-> [`experiments/README.md`](experiments/README.md)，截至 2026-07-24 的正式运行（含模糊/
-> 透视、VDN 对比、概率方向、进度校准与选择路由）的结果与统计结论见
-> [`docs/FORMAL_RESULTS_CN.md`](docs/FORMAL_RESULTS_CN.md)，外部同类方法能否公平复现见
-> [`docs/BASELINE_AUDIT_CN.md`](docs/BASELINE_AUDIT_CN.md)。
-> 概率圆周方向、透视等变训练与进度校准路由的算法/复现实验见
-> [`docs/PROBABILISTIC_FUSION_METHOD_CN.md`](docs/PROBABILISTIC_FUSION_METHOD_CN.md)。
-> 截至 2026-07-24 的全部模型修改、消融结果、GPU 利用率解释和阶段结论见
-> [`docs/MODEL_PROGRESS_REPORT_CN_20260723.txt`](docs/MODEL_PROGRESS_REPORT_CN_20260723.txt)。
-> 注释修正、生产死代码与待归档文件清单见
-> [`docs/CODE_REDUNDANCY_AUDIT_CN.md`](docs/CODE_REDUNDANCY_AUDIT_CN.md)。
-> 下方原有 30+8 张内部数据结果仅作工程回归记录，不进入公开论文主表。
-> 模型与数据再分发边界见
-> [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)；仓库尚未选择项目级许可证。
-> 新增概率方向、透视感知进度校准及 mask/calibrated-vector 路由目前属于论文实验路径，尚未
-> 接入下方生产 API。冻结主种子结果为 clean NMAE `0.0890`、severe perspective `0.1454`、
-> severe combined `0.2184`、RPM-10K `0.2842`；RPM 只有六个仪表组，点估计改善但不显著。
+## Research release: PEPD
+
+The research method is **pivot estimation and probabilistic direction (PEPD)**.
+It predicts a pivot, fuses a direct direction vector with a circular posterior,
+estimates angular uncertainty, and uses projectively paired ray supervision during
+training. The failure-aware dual-representation router (FADR) is retained as a
+pre-specified transfer audit, not as part of the final PEPD deployment method.
+
+### Main aggregate results
+
+All reading failures remain in the denominator with normalized error 1. The
+training comparison uses the same 4,380-row/197-group SyncG-training grouped OOF
+union. The field row is a prediction-independent sensitivity analysis retaining
+725 images/18 groups after two complete groups linked to development-set physical
+meters were excluded.
+
+| Method | SyncG-train OOF NMAE | Field sensitivity NMAE |
+| --- | ---: | ---: |
+| PEPD | 0.148497 | **0.025465** |
+| VDN official-200 reproduction | **0.148212** | 0.126295 |
+| Original Transformer | 0.209035 | 0.230224 |
+| Base-mask geometry | 0.115905 | 0.117155 |
+| PEPD + FADR | **0.088168** | 0.065463 |
+
+PEPD and VDN are statistically tied on the partial grouped SyncG-training OOF
+union. On the retained field sensitivity set, VDN minus PEPD NMAE is 0.100829
+(95% group-bootstrap CI 0.059141--0.147008), and PEPD reaches 96.83% Acc@5%.
+Because the physical-entity exclusion and PEPD-only deployment decision were made
+after the original one-shot execution, this is descriptive sensitivity evidence;
+a new prospectively entity-disjoint field cohort is still required for strict
+confirmation.
+
+The three-seed mechanism audit supports fused decoding and projective pairing,
+especially under severe perspective degradation. It does not show an independent
+angle-accuracy gain from the explicit equivariance term. FADR's three-seed,
+five-variant feature-family ablation stayed in a narrow 0.088088--0.089510
+source-domain NMAE range, yet the frozen router degraded in the field. This
+negative transfer is the reason FADR remains an audit rather than the final model.
+
+### Research code map
+
+- PEPD model and objectives:
+  [`experiments/probabilistic_pivot_direction.py`](experiments/probabilistic_pivot_direction.py),
+  [`experiments/pepd_uncertainty_objectives.py`](experiments/pepd_uncertainty_objectives.py), and
+  [`experiments/projective_circular_transport.py`](experiments/projective_circular_transport.py).
+- PEPD training and mechanism audit:
+  [`experiments/train_pepd_convergence_syncg.py`](experiments/train_pepd_convergence_syncg.py),
+  [`experiments/train_pepd_mechanism_continuation_syncg.py`](experiments/train_pepd_mechanism_continuation_syncg.py), and
+  [`experiments/summarize_pepd_mechanism_evaluations.py`](experiments/summarize_pepd_mechanism_evaluations.py).
+- VDN reproduction:
+  [`experiments/train_vdn_official200.py`](experiments/train_vdn_official200.py),
+  [`experiments/evaluate_vdn_official200_train_oof.py`](experiments/evaluate_vdn_official200_train_oof.py), and
+  [`experiments/vdn_baseline.py`](experiments/vdn_baseline.py).
+- FADR audit:
+  [`experiments/train_joint_nested_fadr.py`](experiments/train_joint_nested_fadr.py),
+  [`experiments/fadr_feature_sets.py`](experiments/fadr_feature_sets.py), and
+  [`experiments/verify_fadr_multiseed_cohort.py`](experiments/verify_fadr_multiseed_cohort.py).
+- Aggregate evaluation and resource scripts:
+  [`experiments/summarize_field_physical_entity_leakage_sensitivity.py`](experiments/summarize_field_physical_entity_leakage_sensitivity.py),
+  [`experiments/benchmark_final_model_stack_resources_v3.py`](experiments/benchmark_final_model_stack_resources_v3.py), and
+  [`experiments/build_paper_figures.py`](experiments/build_paper_figures.py).
+
+Create the pinned Python 3.11 environment and run the data-free checks with:
+
+```powershell
+uv venv --python 3.11 .venv
+uv pip install --python .venv/Scripts/python.exe -r experiments/requirements-training.lock.txt
+.venv/Scripts/python.exe -m unittest `
+  test.test_probabilistic_pivot_direction `
+  test.test_pepd_convergence_protocol `
+  test.test_projective_circular_transport `
+  test.test_vdn_official200
+```
+
+Datasets, field records, per-sample predictions, fitted weights, private
+configuration, and the manuscript are not distributed in this repository. Formal
+commands fail closed unless their local protocols and artifact hashes match. See
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) for provenance and
+redistribution boundaries. The repository does not yet grant a project-level
+software license; source visibility is not permission to reuse or redistribute.
 
 ## 推荐基础方案（测试请使用这个）
 
@@ -124,6 +186,19 @@
 - `geometry_fusion_weighted`：根据两种针尖估计的轴线一致性和 mask 支持度做质量加权；保留 `geometry_fusion` 作为简单均值消融。
 - `geometry_fusion_weighted_calibrated`：在质量加权结果上应用归一化残差和选择性门控。训练与公开数据评测见 [`experiments/README.md`](experiments/README.md)。
 
+论文最终方法现已通过显式后端 `reference_conditioned_final` 接入生产 API。它不会改变
+原有默认后端，且要求显式 artifact manifest、冻结 SyncG 分割权重以及严格的制品/源码
+哈希审计；配置、返回字段和失败规则见
+[`docs/REFERENCE_CONDITIONED_PRODUCTION_CN.md`](docs/REFERENCE_CONDITIONED_PRODUCTION_CN.md)。
+
+如需获取与论文最终方法完全相同的概率方向专家原始输出，可显式选择
+`reading_backend="probabilistic_vector"`（别名 `raw_probabilistic_vector`）。该后端复用
+同一次表盘框、置信度、起始角、量程角和参考分支，只调用冻结方向模型，不运行 base
+calibrator、reference-conditioned calibrator 或 router 参与读数计算（完整 bundle
+仍会加载并审计）。响应直接给出 `prediction`、
+`progress`、`direction`、`pointer_angle`、`uncertainty` 和 `artifact_audit`；为保持原始
+数值，`auto_zero` 必须为 `false`。它与最终后端共用显式 manifest 和源码/权重哈希审计。
+
 这是一个基于 FastAPI 的指针式表计读数识别服务。接口通过 `PointerMeterInferModel` 完成表盘检测、可选图像校正、指针分割、读数推理和结果图返回。
 
 ## 启动与接口
@@ -159,7 +234,7 @@ python main.py
 | `use_origin_when_no_meter` | bool | `false` | 未检测到表盘时是否使用原图继续推理。 |
 | `auto_zero` / `auto_zero_reading` | bool | `true` | 是否启用自动归零。开启后，当最终读数小于阈值时返回 `0.0`。 |
 | `auto_zero_threshold` / `zero_threshold` | number | `0.025` | 自动归零阈值。当 `result < auto_zero_threshold` 时置为 `0.0`。 |
-| `reading_backend` / `reading_method` / `meter_reading_backend` | string | `transformer` | 读数后端。可选 `transformer`、`geometry`、`geometry_direct`、`geometry_direct_v2`、`geometry_fusion`、`geometry_fusion_weighted`、`geometry_fusion_calibrated`、`geometry_fusion_weighted_calibrated`、`geometry_hybrid`、`geometry_hybrid_gate`、`geometry_legacy`、`compare`。`geometry_fusion` 是简单均值；`geometry_fusion_weighted` 是质量加权；两个 calibrated 后端需要与其基线匹配的 residual 校准器路径。公开数据上的可复现实验见 `experiments/README.md`。 |
+| `reading_backend` / `reading_method` / `meter_reading_backend` | string | `transformer` | 读数后端。除原有 transformer/geometry 系列外，论文生产后端包括 `reference_conditioned_final` 和只返回未经校准、未经路由方向输出的 `probabilistic_vector`（别名 `raw_probabilistic_vector`）。两者均需显式冻结 manifest；完整配置见生产接入文档。 |
 | `residual_calibrator_path` / `geometry_calibrator_path` / `calibration_model_path` | string | 不传 | 树模型 residual 校准器 joblib 路径。旧 `geometry_fusion_calibrated` 只查找旧工程产物；论文后端 `geometry_fusion_weighted_calibrated` 只查找正式流水线生成的 `artifacts/runs/syncg_full/calibrator.joblib`，避免把基于不同融合基线训练的残差模型混用。传空字符串 `""` 可显式禁用默认校准器。 |
 | `residual_hybrid_model_path` / `geometry_hybrid_model_path` / `hybrid_model_path` | string | 不传 | 方案 B（`reading_backend="geometry_hybrid"` 或 `geometry_hybrid_gate`）使用的 CNN 残差模型权重路径（`.pt`）。公开仓库不包含旧 `best_model.pt`，复现时需显式提供。 |
 | `residual_hybrid_max_abs_delta` / `geometry_hybrid_max_abs_delta` / `hybrid_max_abs_delta` | number | `0.05` | 方案 B 的门控阈值。CNN 预测残差绝对值超过该值时不采用，自动回退到几何融合结果。 |

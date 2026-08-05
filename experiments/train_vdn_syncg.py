@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import argparse
+import copy
+import hashlib
 import json
 import math
 import os
@@ -33,6 +35,26 @@ from experiments.vdn_baseline import (
     sha256_file,
     verify_vdn_source,
 )
+
+
+TRAIN_SAMPLE_ORDER_SHA256_PROTOCOL = (
+    "sha256_length_prefixed_utf8_sample_ids_in_observed_batch_order_v1"
+)
+
+
+def sample_order_sha256(sample_ids) -> str:
+    """Hash sample IDs in their observed order with unambiguous framing."""
+
+    digest = hashlib.sha256()
+    count = 0
+    for sample_id in sample_ids:
+        encoded = str(sample_id).encode("utf-8")
+        digest.update(len(encoded).to_bytes(8, byteorder="big", signed=False))
+        digest.update(encoded)
+        count += 1
+    if count <= 0:
+        raise ValueError("cannot hash an empty VDN sample order")
+    return digest.hexdigest()
 
 
 def parse_args() -> argparse.Namespace:
@@ -158,7 +180,8 @@ def _train_epoch(
     amp_enabled: bool,
     vector_weight: float,
     epoch: int,
-) -> dict[str, float]:
+    record_scaler_trace: bool = False,
+) -> dict[str, Any]:
     model.train()
     total_loss = 0.0
     heatmap_loss_total = 0.0
@@ -166,8 +189,22 @@ def _train_epoch(
     samples = 0
     optimizer_steps = 0
     skipped_optimizer_steps = 0
+    skipped_batch_indices: list[int] = []
+    observed_sample_ids: list[str] = []
+    scaler_start_state = (
+        copy.deepcopy(scaler.state_dict()) if record_scaler_trace else None
+    )
     progress = tqdm(loader, desc=f"VDN train {epoch}", leave=False, dynamic_ncols=True)
-    for images, target_heatmaps, target_vectors, _, _ in progress:
+    for batch_index, (
+        images,
+        target_heatmaps,
+        target_vectors,
+        _,
+        sample_ids,
+    ) in enumerate(progress):
+        if len(sample_ids) != int(images.shape[0]):
+            raise RuntimeError("VDN batch sample IDs do not match the image batch")
+        observed_sample_ids.extend(str(sample_id) for sample_id in sample_ids)
         images = images.to(device, non_blocking=True)
         target_heatmaps = target_heatmaps.to(device, non_blocking=True)
         target_vectors = target_vectors.to(device, non_blocking=True)
@@ -183,6 +220,8 @@ def _train_epoch(
         scaler.update()
         if scaler.get_scale() < scale_before:
             skipped_optimizer_steps += 1
+            if record_scaler_trace:
+                skipped_batch_indices.append(batch_index)
         else:
             optimizer_steps += 1
         count = int(images.shape[0])
@@ -191,7 +230,7 @@ def _train_epoch(
         heatmap_loss_total += float(heatmap_loss.detach()) * count
         vector_loss_total += float(vector_loss.detach()) * count
         progress.set_postfix(loss=f"{total_loss / samples:.5f}")
-    return {
+    result = {
         "loss": total_loss / max(samples, 1),
         "heatmap_loss": heatmap_loss_total / max(samples, 1),
         "vector_loss": vector_loss_total / max(samples, 1),
@@ -199,7 +238,17 @@ def _train_epoch(
         "vector_weight": float(vector_weight),
         "optimizer_steps": optimizer_steps,
         "skipped_optimizer_steps": skipped_optimizer_steps,
+        "sample_order_sha256": sample_order_sha256(observed_sample_ids),
     }
+    if record_scaler_trace:
+        result.update(
+            {
+                "scaler_start_state": scaler_start_state,
+                "scaler_skipped_batch_indices": skipped_batch_indices,
+                "scaler_end_state": copy.deepcopy(scaler.state_dict()),
+            }
+        )
+    return result
 
 
 @torch.no_grad()

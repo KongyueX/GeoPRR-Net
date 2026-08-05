@@ -35,6 +35,32 @@ VDN_PROTOCOL = "vdn_architecture_syncg_retraining_v1"
 VDN_RESNET18_PRETRAINED_URL = (
     "https://download.pytorch.org/models/resnet18-5c106cde.pth"
 )
+SOURCE_TEXT_SHA256_PROTOCOL = "utf8_source_newlines_lf_v1"
+SOURCE_TEXT_SUFFIXES = frozenset(
+    {
+        ".bat",
+        ".c",
+        ".cc",
+        ".cmd",
+        ".cpp",
+        ".cxx",
+        ".go",
+        ".h",
+        ".hpp",
+        ".java",
+        ".js",
+        ".jsx",
+        ".md",
+        ".ps1",
+        ".py",
+        ".pyi",
+        ".rs",
+        ".sh",
+        ".ts",
+        ".tsx",
+        ".zsh",
+    }
+)
 IMAGENET_NORMALIZATION = (
     np.asarray([0.485, 0.456, 0.406], dtype=np.float32),
     np.asarray([0.229, 0.224, 0.225], dtype=np.float32),
@@ -58,11 +84,37 @@ class VDNSample:
 
 
 def sha256_file(path: Path) -> str:
+    """Hash the exact bytes of a model, dataset, manifest, or other artifact."""
+
     digest = hashlib.sha256()
     with path.open("rb") as handle:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def sha256_source_file(path: Path) -> str:
+    """Hash source text after canonicalizing only newline representation.
+
+    Git may materialize the same committed source with LF or CRLF depending on
+    platform settings.  Source identity must survive that checkout detail, but
+    model, dataset, manifest, and prediction identities must remain byte exact;
+    callers therefore use this deliberately separate, suffix-guarded helper.
+    """
+
+    path = Path(path)
+    if path.suffix.lower() not in SOURCE_TEXT_SUFFIXES:
+        raise ValueError(
+            f"{path} is not a recognized source-text file for "
+            f"{SOURCE_TEXT_SHA256_PROTOCOL}"
+        )
+    payload = path.read_bytes()
+    try:
+        payload.decode("utf-8-sig")
+    except UnicodeDecodeError as exc:
+        raise ValueError(f"{path} is not UTF-8 source text") from exc
+    canonical = payload.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(canonical).hexdigest()
 
 
 def verify_vdn_source(path: Path) -> str:
@@ -73,8 +125,13 @@ def verify_vdn_source(path: Path) -> str:
         raise FileNotFoundError(
             f"VDN source is incomplete at {path}; clone {VDN_REPOSITORY}"
         )
+    # The checked-out baseline may be owned by the host account while the
+    # formal runner executes in a restricted service account.  Scope Git's
+    # ownership exception to this already-resolved checkout instead of
+    # mutating the user's global safe.directory configuration.
+    git_prefix = ["git", "-c", f"safe.directory={path}", "-C", str(path)]
     completed = subprocess.run(
-        ["git", "-C", str(path), "rev-parse", "HEAD"],
+        [*git_prefix, "rev-parse", "HEAD"],
         check=True,
         capture_output=True,
         text=True,
@@ -85,7 +142,7 @@ def verify_vdn_source(path: Path) -> str:
             f"VDN source commit is {commit}, expected {VDN_PINNED_COMMIT}"
         )
     dirty = subprocess.run(
-        ["git", "-C", str(path), "status", "--porcelain", "--untracked-files=no"],
+        [*git_prefix, "status", "--porcelain", "--untracked-files=no"],
         check=True,
         capture_output=True,
         text=True,

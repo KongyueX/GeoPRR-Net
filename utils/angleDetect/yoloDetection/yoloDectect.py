@@ -1,14 +1,15 @@
 #-O 日后必定搭建属于自己的yolo模型
-import os,cv2
+import os
+
+import cv2
 import numpy as np
 from ultralytics import YOLO
 #import logging
 import math
-import os, sys
-filePath = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(filePath)
 
-from pointGet import demonstrate_intersections
+filePath = os.path.dirname(os.path.abspath(__file__))
+
+from .pointGet import demonstrate_intersections
 
 class targetDetectModel:
     def __init__(self, model_path):

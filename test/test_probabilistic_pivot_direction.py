@@ -10,6 +10,7 @@ import torch
 
 from experiments.evaluate_probabilistic_pivot_direction import (
     _select_direction_decoder,
+    _validate_training_verification_source,
 )
 
 from experiments.probabilistic_pivot_direction import (
@@ -23,6 +24,29 @@ from experiments.probabilistic_pivot_direction import (
 
 
 class ProbabilisticPivotDirectionTest(unittest.TestCase):
+    def test_legacy_lf_verifier_signature_remains_auditable_on_windows(self):
+        source = _validate_training_verification_source(
+            {
+                "protocol": "formal_probabilistic_direction_run_verification_v1",
+                "verifier_source_sha256": (
+                    "b5fadf7008bb2a8a3b202886b53d2514c0dc41db0e455719f990a590bee785a6"
+                ),
+            }
+        )
+        self.assertEqual(
+            source.name,
+            "verify_probabilistic_pivot_direction_run.py",
+        )
+        with self.assertRaises(ValueError):
+            _validate_training_verification_source(
+                {
+                    "protocol": (
+                        "formal_probabilistic_direction_run_verification_v1"
+                    ),
+                    "verifier_source_sha256": "0" * 64,
+                }
+            )
+
     def test_decoder_ablation_selects_expected_direction(self):
         pivot = torch.zeros(1, 1, 8, 8)
         direct = torch.tensor([[0.0, 1.0]])
@@ -171,6 +195,49 @@ class ProbabilisticPivotDirectionTest(unittest.TestCase):
         )
         self.assertLess(float(loss), 1e-7)
         self.assertEqual(float(components["equivariance_valid_fraction"]), 1.0)
+
+    def test_projective_transport_rejects_singular_denominators(self):
+        pivot, direction, valid = transform_pivot_direction(
+            torch.tensor([[10.0, 20.0]]),
+            torch.tensor([[1.0, 0.0]]),
+            torch.tensor(
+                [
+                    [
+                        [1.0, 0.0, 0.0],
+                        [0.0, 1.0, 0.0],
+                        [0.0, 0.0, 0.0],
+                    ]
+                ]
+            ),
+            ray_length=16.0,
+        )
+        self.assertFalse(bool(valid[0]))
+        self.assertTrue(bool(torch.isfinite(pivot).all()))
+        self.assertTrue(bool(torch.isfinite(direction).all()))
+
+    def test_projective_direction_depends_on_the_pointer_pivot(self):
+        pivots = torch.tensor([[0.0, 0.0], [40.0, 0.0]])
+        directions = torch.tensor([[1.0, 1.0], [1.0, 1.0]])
+        homography = torch.tensor(
+            [
+                [
+                    [1.0, 0.0, 0.0],
+                    [0.0, 1.0, 0.0],
+                    [0.01, 0.0, 1.0],
+                ]
+            ]
+        ).repeat(2, 1, 1)
+        _, transported, valid = transform_pivot_direction(
+            pivots,
+            directions,
+            homography,
+            ray_length=20.0,
+        )
+        self.assertTrue(bool(valid.all()))
+        self.assertGreater(
+            float(torch.linalg.vector_norm(transported[0] - transported[1])),
+            0.05,
+        )
 
 
 if __name__ == "__main__":

@@ -2,23 +2,38 @@
 from __future__ import annotations
 
 import ast
+import hashlib
 import importlib.util
 import json
+import os
+import subprocess
 import sys
 import tempfile
 import unittest
+from argparse import Namespace
 from pathlib import Path
+from unittest import mock
 
 import numpy as np
 import torch
 
+from experiments import evaluate_vdn_baseline as evaluate_vdn
 from experiments.evaluate_vdn_baseline import (
+    _authorize_checkpoint_for_evaluation,
+    _authorize_public_image_inventory,
     _dialbench_summary,
+    _exclusive_output_lock,
     _load_shared_predictions,
+    _PredictionJournal,
+    _preauthorize_checkpoint,
+    _safe_load_authorized_checkpoint,
+    _snapshot_phase2_inputs,
+    _validate_output_does_not_alias_inputs,
 )
 from experiments.robustness_degradations import ROBUSTNESS_PROTOCOL
 from experiments.vdn_baseline import (
     PROJECT_DIR,
+    SOURCE_TEXT_SHA256_PROTOCOL,
     VDNSample,
     affine_for_dial,
     angular_error_degrees,
@@ -30,11 +45,29 @@ from experiments.vdn_baseline import (
     reference_angles,
     reading_from_pointer_angle,
     sha256_file,
+    sha256_source_file,
     summarize_scalar_predictions,
     transform_point,
 )
 from experiments.summarize_vdn_comparison import _paired_comparison
+from experiments.vdn_phase2_protocol import (
+    PHASE2_CHECKPOINT_PROTOCOL,
+    PHASE2_PROTOCOL,
+)
 from experiments.verify_vdn_run import _state_health
+
+
+def _write_unsafe_sentinel(path: str) -> dict:
+    Path(path).write_text("executed", encoding="utf-8")
+    return {}
+
+
+class _UnsafeCheckpoint:
+    def __init__(self, sentinel: Path) -> None:
+        self.sentinel = sentinel
+
+    def __reduce__(self):
+        return _write_unsafe_sentinel, (str(self.sentinel),)
 
 
 def _sample(sample_id: str, group_id: str) -> VDNSample:
@@ -55,6 +88,571 @@ def _sample(sample_id: str, group_id: str) -> VDNSample:
 
 
 class VDNBaselineTest(unittest.TestCase):
+    def test_public_image_inventory_binds_bytes_and_rejects_forbidden_scope(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            first = root / "a.jpg"
+            second = root / "b.jpg"
+            first.write_bytes(b"first-image")
+            second.write_bytes(b"second-image")
+            rows = [
+                {
+                    "sample_id": "b",
+                    "image_path": str(second),
+                    "ground_truth": 0.2,
+                },
+                {
+                    "sample_id": "a",
+                    "image_path": str(first),
+                    "ground_truth": 0.1,
+                },
+            ]
+            records = [
+                {
+                    "sample_id": "a",
+                    "image_name": "a.jpg",
+                    "image_sha256": hashlib.sha256(
+                        b"first-image"
+                    ).hexdigest(),
+                    "portable_manifest_row": {
+                        "ground_truth": 0.1,
+                        "sample_id": "a",
+                    },
+                },
+                {
+                    "sample_id": "b",
+                    "image_name": "b.jpg",
+                    "image_sha256": hashlib.sha256(
+                        b"second-image"
+                    ).hexdigest(),
+                    "portable_manifest_row": {
+                        "ground_truth": 0.2,
+                        "sample_id": "b",
+                    },
+                },
+            ]
+            expected = hashlib.sha256(
+                json.dumps(
+                    records,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                    allow_nan=False,
+                ).encode("utf-8")
+            ).hexdigest()
+            with mock.patch.dict(
+                evaluate_vdn.PINNED_PUBLIC_RELEASE_INVENTORY_SHA256,
+                {"fixture": expected},
+                clear=True,
+            ):
+                digest, image_hashes = _authorize_public_image_inventory(
+                    rows,
+                    public_scope="fixture",
+                )
+                self.assertEqual(digest, expected)
+                self.assertEqual(
+                    image_hashes["a"],
+                    records[0]["image_sha256"],
+                )
+                first.write_bytes(b"changed")
+                with self.assertRaisesRegex(ValueError, "differs"):
+                    _authorize_public_image_inventory(
+                        rows,
+                        public_scope="fixture",
+                    )
+
+            forbidden = root / "field" / "image.jpg"
+            forbidden.parent.mkdir()
+            forbidden.write_bytes(b"must-not-open")
+            with (
+                mock.patch.dict(
+                    evaluate_vdn.PINNED_PUBLIC_RELEASE_INVENTORY_SHA256,
+                    {"fixture": "0" * 64},
+                    clear=True,
+                ),
+                mock.patch.object(
+                    evaluate_vdn,
+                    "sha256_file",
+                ) as hasher,
+            ):
+                with self.assertRaises(PermissionError):
+                    _authorize_public_image_inventory(
+                        [{"sample_id": "x", "image_path": str(forbidden)}],
+                        public_scope="fixture",
+                    )
+            hasher.assert_not_called()
+
+    def test_formal_legacy_root_is_project_anchored_across_cwd(self):
+        expected = evaluate_vdn.DEFAULT_LEGACY_RUN_ROOT
+        self.assertTrue(expected.is_absolute())
+        with tempfile.TemporaryDirectory() as directory:
+            previous = Path.cwd()
+            try:
+                os.chdir(directory)
+                self.assertEqual(
+                    evaluate_vdn.DEFAULT_LEGACY_RUN_ROOT.resolve(),
+                    expected,
+                )
+            finally:
+                os.chdir(previous)
+
+    def test_evaluator_import_cannot_execute_cwd_pointget(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            sentinel = root / "sentinel.txt"
+            (root / "pointGet.py").write_text(
+                (
+                    "from pathlib import Path\n"
+                    f"Path({str(sentinel)!r}).write_text('executed')\n"
+                ),
+                encoding="utf-8",
+            )
+            environment = dict(os.environ)
+            environment["PYTHONPATH"] = os.pathsep.join(
+                [
+                    str(PROJECT_DIR),
+                    environment.get("PYTHONPATH", ""),
+                ]
+            )
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    "-c",
+                    (
+                        "import experiments.evaluate_vdn_baseline as module; "
+                        "assert 'utils.angleDetect.yoloDetection."
+                        "yoloDectect' not in __import__('sys').modules"
+                    ),
+                ],
+                cwd=root,
+                env=environment,
+                capture_output=True,
+                text=True,
+                timeout=60,
+                check=False,
+            )
+            self.assertEqual(
+                result.returncode,
+                0,
+                msg=result.stdout + result.stderr,
+            )
+            self.assertFalse(sentinel.exists())
+
+    def test_detector_loader_rejects_non_distribution_ultralytics(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            sentinel = root / "sentinel.txt"
+            package = root / "ultralytics"
+            package.mkdir()
+            (package / "__init__.py").write_text(
+                (
+                    "from pathlib import Path\n"
+                    f"Path({str(sentinel)!r}).write_text('executed')\n"
+                    "class YOLO: pass\n"
+                ),
+                encoding="utf-8",
+            )
+            environment = dict(os.environ)
+            environment["PYTHONPATH"] = str(PROJECT_DIR)
+            script = (
+                "from experiments.evaluate_vdn_baseline import "
+                "_load_target_detector_class\n"
+                "try:\n"
+                "    _load_target_detector_class()\n"
+                "except ImportError:\n"
+                "    pass\n"
+                "else:\n"
+                "    raise AssertionError('unexpected detector import')\n"
+            )
+            result = subprocess.run(
+                [sys.executable, "-c", script],
+                cwd=root,
+                env=environment,
+                capture_output=True,
+                text=True,
+                timeout=60,
+                check=False,
+            )
+            self.assertEqual(
+                result.returncode,
+                0,
+                msg=result.stdout + result.stderr,
+            )
+            self.assertFalse(sentinel.exists())
+
+    def test_output_cannot_alias_any_read_only_input(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            checkpoint = (root / "best.pt").resolve()
+            args = Namespace(
+                output=checkpoint,
+                manifest=(root / "manifest.jsonl").resolve(),
+                checkpoint=checkpoint,
+                meter_detector_weights=(root / "meter.pt").resolve(),
+                keypoint_detector_weights=(root / "point.pt").resolve(),
+                shared_predictions=None,
+                phase2_cohort_authorization=None,
+                legacy_training_verification=(root / "verification.json").resolve(),
+            )
+            with self.assertRaisesRegex(PermissionError, "aliases"):
+                _validate_output_does_not_alias_inputs(args)
+
+    def test_main_authorizes_plan_before_creating_writer_lock(self):
+        args = Namespace(output=Path("field-output.jsonl"))
+        with (
+            mock.patch.object(evaluate_vdn, "parse_args", return_value=args),
+            mock.patch.object(
+                evaluate_vdn,
+                "_prepare_evaluation",
+                side_effect=PermissionError("plan rejected"),
+            ),
+            mock.patch.object(
+                evaluate_vdn,
+                "_exclusive_output_lock",
+            ) as writer_lock,
+        ):
+            with self.assertRaisesRegex(PermissionError, "plan rejected"):
+                evaluate_vdn.main()
+        writer_lock.assert_not_called()
+
+    def test_phase2_checkpoint_requires_cohort_authorization(self):
+        with self.assertRaisesRegex(PermissionError, "exactly one"):
+            _preauthorize_checkpoint(
+                checkpoint_path=Path("best.pt"),
+                phase2_cohort_authorization=None,
+                legacy_training_verification=None,
+            )
+
+    def test_external_authorization_modes_are_mutually_exclusive(self):
+        with self.assertRaisesRegex(PermissionError, "exactly one"):
+            _preauthorize_checkpoint(
+                checkpoint_path=Path("best.pt"),
+                phase2_cohort_authorization=Path("cohort.json"),
+                legacy_training_verification=Path("verification.json"),
+            )
+
+    def test_phase2_preauthorization_uses_external_cohort(self):
+        expected = {
+            "training_protocol": PHASE2_PROTOCOL,
+            "checkpoint_sha256": "a" * 64,
+        }
+        with mock.patch.object(
+            evaluate_vdn,
+            "validate_cohort_evaluation_authorization",
+            return_value=expected,
+        ) as validator:
+            result = _preauthorize_checkpoint(
+                checkpoint_path=Path("best.pt"),
+                phase2_cohort_authorization=Path("cohort.json"),
+                legacy_training_verification=None,
+            )
+        self.assertEqual(result, expected)
+        validator.assert_called_once_with(
+            Path("cohort.json"),
+            Path("best.pt"),
+        )
+
+    def test_phase2_checkpoint_consumes_exact_cohort_authorization(self):
+        checkpoint = {
+            "checkpoint_protocol": PHASE2_CHECKPOINT_PROTOCOL,
+            "signature": {"protocol": PHASE2_PROTOCOL},
+        }
+        expected = {
+            "protocol": "fixture",
+            "training_protocol": PHASE2_PROTOCOL,
+        }
+        protocol, authorization = _authorize_checkpoint_for_evaluation(
+            checkpoint,
+            external_authorization=expected,
+        )
+        self.assertEqual(protocol, PHASE2_PROTOCOL)
+        self.assertEqual(authorization, expected)
+
+    def test_phase2_missing_preflight_fails_before_public_plan_reads(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            checkpoint_path = root / "best.pt"
+            checkpoint_path.write_bytes(b"fixture")
+            cohort = root / "cohort.json"
+            args = Namespace(
+                manifest=root / "public.jsonl",
+                checkpoint=checkpoint_path,
+                phase2_cohort_authorization=cohort,
+                phase2_public_preflight=None,
+                legacy_training_verification=None,
+                vdn_source=root / "vdn",
+                shared_predictions=root / "shared.jsonl",
+                output=root / "evaluations" / "clean.jsonl",
+                device="cuda",
+                batch_size=16,
+                condition="clean",
+                degradation_seed=20260720,
+                bootstrap_iterations=2000,
+                seed=20260724,
+                limit=None,
+                resume=False,
+                overwrite=False,
+                no_amp=False,
+                meter_detector_weights=root / "meter.pt",
+                keypoint_detector_weights=root / "point.pt",
+            )
+            authorization = {
+                "training_protocol": PHASE2_PROTOCOL,
+                "checkpoint_sha256": "a" * 64,
+            }
+            checkpoint = {
+                "checkpoint_protocol": PHASE2_CHECKPOINT_PROTOCOL,
+                "signature": {
+                    "protocol": PHASE2_PROTOCOL,
+                    "vdn_source_commit": "fixture-commit",
+                },
+            }
+            with (
+                mock.patch.object(
+                    evaluate_vdn,
+                    "_preauthorize_checkpoint",
+                    return_value=authorization,
+                ),
+                mock.patch.object(
+                    evaluate_vdn,
+                    "_safe_load_authorized_checkpoint",
+                    return_value=checkpoint,
+                ),
+                mock.patch.object(
+                    evaluate_vdn,
+                    "verify_vdn_source",
+                    return_value="fixture-commit",
+                ),
+                mock.patch.object(
+                    evaluate_vdn,
+                    "validate_phase2_evaluation_plan",
+                ) as plan_validator,
+                mock.patch.object(
+                    evaluate_vdn,
+                    "_snapshot_phase2_inputs",
+                ) as snapshotter,
+            ):
+                with self.assertRaisesRegex(
+                    PermissionError,
+                    "public preflight",
+                ):
+                    evaluate_vdn._prepare_evaluation(args)
+            plan_validator.assert_not_called()
+            snapshotter.assert_not_called()
+
+    def test_checkpoint_self_label_cannot_override_external_authorization(self):
+        checkpoint = {
+            "signature": {"protocol": evaluate_vdn.VDN_PROTOCOL}
+        }
+        with self.assertRaisesRegex(ValueError, "disagrees"):
+            _authorize_checkpoint_for_evaluation(
+                checkpoint,
+                external_authorization={
+                    "training_protocol": PHASE2_PROTOCOL,
+                },
+            )
+
+    def test_phase2_main_fails_before_opening_evaluation_manifest(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            checkpoint_path = root / "best.pt"
+            checkpoint_path.write_bytes(b"fixture")
+            args = Namespace(
+                manifest=root / "test.jsonl",
+                checkpoint=checkpoint_path,
+                phase2_cohort_authorization=None,
+                legacy_training_verification=None,
+                vdn_source=root / "vdn",
+                shared_predictions=None,
+                output=root / "predictions.jsonl",
+                device="cpu",
+                batch_size=1,
+                condition="clean",
+                degradation_seed=20260720,
+                bootstrap_iterations=0,
+                seed=20260720,
+                limit=None,
+                resume=False,
+                overwrite=False,
+                no_amp=True,
+                meter_detector_weights=root / "meter.pt",
+                keypoint_detector_weights=root / "point.pt",
+            )
+            checkpoint = {
+                "checkpoint_protocol": PHASE2_CHECKPOINT_PROTOCOL,
+                "signature": {"protocol": PHASE2_PROTOCOL},
+            }
+            with (
+                mock.patch.object(evaluate_vdn, "parse_args", return_value=args),
+                mock.patch.object(
+                    evaluate_vdn.torch,
+                    "load",
+                    return_value=checkpoint,
+                ),
+                mock.patch.object(evaluate_vdn, "_read_jsonl") as reader,
+            ):
+                with self.assertRaisesRegex(
+                    PermissionError,
+                    "exactly one",
+                ):
+                    evaluate_vdn.main()
+            reader.assert_not_called()
+
+    def test_authorized_checkpoint_loader_never_executes_pickle_globals(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            checkpoint = root / "unsafe.pt"
+            sentinel = root / "sentinel.txt"
+            torch.save(
+                {"payload": _UnsafeCheckpoint(sentinel)},
+                checkpoint,
+            )
+            authorization = {
+                "checkpoint_sha256": evaluate_vdn.sha256_file(checkpoint),
+            }
+            with self.assertRaises(Exception):
+                _safe_load_authorized_checkpoint(
+                    checkpoint,
+                    authorization,
+                )
+            self.assertFalse(sentinel.exists())
+
+    def test_phase2_input_snapshot_consumes_only_pinned_bytes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            identities = {}
+            expected = {}
+            for name in (
+                "manifest",
+                "manifest_protocol",
+                "shared_predictions",
+                "shared_predictions_metadata",
+                "meter_detector_weights",
+                "keypoint_detector_weights",
+            ):
+                path = root / name
+                payload = f"authorized-{name}".encode("utf-8")
+                path.write_bytes(payload)
+                expected[name] = payload
+                identities[f"{name}_path"] = str(path)
+                identities[f"{name}_sha256"] = sha256_file(path)
+            snapshot = _snapshot_phase2_inputs(identities)
+            self.assertEqual(snapshot, expected)
+            (root / "shared_predictions").write_bytes(b"replaced")
+            self.assertEqual(
+                snapshot["shared_predictions"],
+                expected["shared_predictions"],
+            )
+            with self.assertRaisesRegex(ValueError, "changed"):
+                _snapshot_phase2_inputs(identities)
+
+    def test_output_writer_lock_is_exclusive(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "predictions.jsonl"
+            with _exclusive_output_lock(output):
+                with self.assertRaisesRegex(RuntimeError, "owns the output lock"):
+                    with _exclusive_output_lock(output):
+                        pass
+
+    def test_prediction_journal_detects_same_id_content_rewrite(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            output = root / "predictions.jsonl"
+            journal_path = root / "predictions.jsonl.journal.jsonl"
+            output.touch()
+            journal_path.touch()
+            writer = _PredictionJournal(
+                output,
+                journal_path,
+                resume=False,
+            )
+            writer.append(
+                [
+                    {"sample_id": "a", "prediction": 0.1},
+                    {"sample_id": "b", "prediction": 0.2},
+                ]
+            )
+            _PredictionJournal(output, journal_path, resume=True)
+            original = output.read_bytes()
+            output.write_bytes(original.replace(b"0.1", b"0.9"))
+            with self.assertRaisesRegex(ValueError, "prefix hash"):
+                _PredictionJournal(output, journal_path, resume=True)
+
+    def test_prediction_journal_rejects_uncommitted_tail(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            output = root / "predictions.jsonl"
+            journal_path = root / "predictions.jsonl.journal.jsonl"
+            output.touch()
+            journal_path.touch()
+            writer = _PredictionJournal(
+                output,
+                journal_path,
+                resume=False,
+            )
+            writer.append([{"sample_id": "a", "prediction": 0.1}])
+            with output.open("a", encoding="utf-8") as handle:
+                handle.write('{"sample_id":"b","prediction":0.2}\n')
+            with self.assertRaisesRegex(ValueError, "not committed"):
+                _PredictionJournal(output, journal_path, resume=True)
+
+    def test_prediction_journal_recovers_only_uncommitted_tails(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            output = root / "predictions.jsonl"
+            journal_path = root / "predictions.jsonl.journal.jsonl"
+            output.touch()
+            journal_path.touch()
+            writer = _PredictionJournal(
+                output,
+                journal_path,
+                resume=False,
+            )
+            writer.append([{"sample_id": "a", "prediction": 0.1}])
+            committed_output = output.read_bytes()
+            committed_journal = journal_path.read_bytes()
+            with output.open("ab") as handle:
+                handle.write(b'{"sample_id":"b","prediction":0.2}\n')
+            with journal_path.open("ab") as handle:
+                handle.write(b'{"protocol":"partial')
+
+            recovered = _PredictionJournal(
+                output,
+                journal_path,
+                resume=True,
+                recover_uncommitted_tail=True,
+            )
+
+            self.assertEqual(output.read_bytes(), committed_output)
+            self.assertEqual(journal_path.read_bytes(), committed_journal)
+            self.assertGreater(recovered.recovered_output_tail_bytes, 0)
+            self.assertGreater(recovered.recovered_journal_tail_bytes, 0)
+            self.assertEqual(recovered.total_rows, 1)
+
+    def test_source_hash_canonicalizes_only_newline_representation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            lf_source = root / "lf.py"
+            crlf_source = root / "crlf.py"
+            data = root / "weights.pt"
+            lf_source.write_bytes(b"first = 1\nsecond = 2\n")
+            crlf_source.write_bytes(b"first = 1\r\nsecond = 2\r\n")
+            data.write_bytes(b"first = 1\r\nsecond = 2\r\n")
+
+            self.assertEqual(
+                sha256_source_file(lf_source),
+                sha256_source_file(crlf_source),
+            )
+            self.assertNotEqual(sha256_file(lf_source), sha256_file(crlf_source))
+            with self.assertRaises(ValueError):
+                sha256_source_file(data)
+            self.assertEqual(
+                SOURCE_TEXT_SHA256_PROTOCOL,
+                "utf8_source_newlines_lf_v1",
+            )
+
     def test_affine_centers_square_crop_and_rotates_points(self):
         matrix = affine_for_dial(
             (10.0, 20.0, 110.0, 100.0),
@@ -404,6 +1002,39 @@ class VDNBaselineTest(unittest.TestCase):
                 point_weights=point_weights,
             )
             self.assertEqual(set(by_id), {"a"})
+
+            authorized_inputs = {
+                "shared_predictions": shared.read_bytes(),
+                "shared_predictions_metadata": metadata.read_bytes(),
+            }
+            plan_identity = {
+                "manifest_sha256": signature["manifest_sha256"],
+                "manifest_protocol_sha256": signature[
+                    "manifest_protocol_sha256"
+                ],
+                "meter_detector_weights_sha256": signature[
+                    "weights_sha256"
+                ]["meter_detector"],
+                "keypoint_detector_weights_sha256": signature[
+                    "weights_sha256"
+                ]["keypoint_detector"],
+            }
+            shared.write_bytes(b"replaced after authorization")
+            metadata.write_text("{}", encoding="utf-8")
+            snapshotted, _ = _load_shared_predictions(
+                shared,
+                manifest=manifest,
+                rows=[{"sample_id": "a"}],
+                condition="clean",
+                degradation_seed=20260720,
+                meter_weights=meter_weights,
+                point_weights=point_weights,
+                authorized_inputs=authorized_inputs,
+                plan_identity=plan_identity,
+            )
+            self.assertEqual(set(snapshotted), {"a"})
+
+            shared.write_text('{"sample_id":"a"}\n', encoding="utf-8")
 
             signature["input_degradation"]["protocol"] = "different"
             metadata.write_text(

@@ -44,10 +44,17 @@ from experiments.reference_conditioned_router import (
     REFERENCE_CONDITIONED_ROUTER_PROTOCOL,
     deterministic_router_prediction,
 )
-from experiments.vdn_baseline import PROJECT_DIR, sha256_file
+from experiments.robustness_degradations import degradation_names
+from experiments.vdn_baseline import (
+    PROJECT_DIR,
+    SOURCE_TEXT_SHA256_PROTOCOL,
+    sha256_file,
+    sha256_source_file,
+)
 
 
-EVALUATION_PROTOCOL = "frozen_reference_conditioned_pipeline_evaluation_v1"
+EVALUATION_PROTOCOL = "frozen_reference_conditioned_pipeline_evaluation_v2"
+KNOWN_CLEAN_DATASET_LABELS = frozenset({"field_holdout", "rpm10k"})
 
 
 def parse_args() -> argparse.Namespace:
@@ -74,7 +81,20 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     parser.add_argument("--output-dir", type=Path, required=True)
-    parser.add_argument("--condition", required=True)
+    parser.add_argument(
+        "--condition",
+        required=True,
+        help="Evaluation/dataset label written to the final report.",
+    )
+    parser.add_argument(
+        "--degradation-condition",
+        choices=degradation_names(),
+        help=(
+            "Image degradation represented by component prediction caches. "
+            "Defaults to the condition for controlled robustness runs and to "
+            "'clean' for field_holdout/RPM-10K."
+        ),
+    )
     parser.add_argument("--bootstrap-iterations", type=int, default=5000)
     parser.add_argument("--seed", type=int, default=20260722)
     parser.add_argument("--overwrite", action="store_true")
@@ -91,6 +111,51 @@ def _atomic_json(path: Path, value: dict[str, Any]) -> None:
     os.replace(temporary, path)
 
 
+def _resolve_degradation_condition(
+    evaluation_label: str,
+    explicit_condition: str | None,
+) -> str:
+    """Separate a dataset label from the image-degradation protocol."""
+
+    available = set(degradation_names())
+    if explicit_condition is not None:
+        if explicit_condition not in available:
+            raise ValueError(
+                f"unsupported degradation condition {explicit_condition!r}"
+            )
+        return explicit_condition
+    if evaluation_label in available:
+        return evaluation_label
+    if evaluation_label in KNOWN_CLEAN_DATASET_LABELS:
+        return "clean"
+    raise ValueError(
+        f"evaluation label {evaluation_label!r} is not a degradation condition; "
+        "pass --degradation-condition explicitly"
+    )
+
+
+def _validate_source_hash_protocol(
+    artifact: Mapping[str, Any],
+    *,
+    label: str,
+) -> None:
+    protocol = artifact.get("source_hash_protocol")
+    if protocol not in (None, SOURCE_TEXT_SHA256_PROTOCOL):
+        raise ValueError(f"{label} uses unsupported source hash protocol {protocol!r}")
+
+
+def _validate_vector_for_evaluation(
+    path: Path,
+    *,
+    evaluation_label: str,
+    degradation_condition: str,
+) -> dict[str, Any]:
+    audit = _validate_vector_evaluation(path, degradation_condition)
+    audit["evaluation_label"] = evaluation_label
+    audit["degradation_condition"] = degradation_condition
+    return audit
+
+
 def _validate_calibrator(path: Path) -> dict[str, Any]:
     artifact = joblib.load(path)
     if (
@@ -102,6 +167,7 @@ def _validate_calibrator(path: Path) -> dict[str, Any]:
         or artifact.get("test_sets_used") != []
     ):
         raise ValueError("reference-conditioned calibrator artifact audit failed")
+    _validate_source_hash_protocol(artifact, label="calibrator")
     sources = artifact.get("source_sha256") or {}
     source_paths = {
         "features": PROJECT_DIR / "experiments" / "progress_calibrator.py",
@@ -110,7 +176,7 @@ def _validate_calibrator(path: Path) -> dict[str, Any]:
         ),
     }
     for name, source_path in source_paths.items():
-        if sources.get(name) != sha256_file(source_path):
+        if sources.get(name) != sha256_source_file(source_path):
             raise ValueError(f"calibrator {name} source changed after fitting")
     return artifact
 
@@ -126,6 +192,7 @@ def _validate_router(path: Path, calibrator_path: Path) -> dict[str, Any]:
         or artifact.get("calibrator_sha256") != sha256_file(calibrator_path)
     ):
         raise ValueError("reference-conditioned router artifact audit failed")
+    _validate_source_hash_protocol(artifact, label="router")
     sources = artifact.get("source_sha256") or {}
     source_paths = {
         "features": PROJECT_DIR / "experiments" / "calibrated_progress_router.py",
@@ -136,7 +203,7 @@ def _validate_router(path: Path, calibrator_path: Path) -> dict[str, Any]:
         ),
     }
     for name, source_path in source_paths.items():
-        if sources.get(name) != sha256_file(source_path):
+        if sources.get(name) != sha256_source_file(source_path):
             raise ValueError(f"router {name} source changed after fitting")
     return artifact
 
@@ -194,6 +261,10 @@ def _oracle(
 
 def main() -> None:
     args = parse_args()
+    degradation_condition = _resolve_degradation_condition(
+        args.condition,
+        args.degradation_condition,
+    )
     for name in (
         "raw_predictions",
         "base_predictions",
@@ -227,9 +298,10 @@ def main() -> None:
 
     calibrator = _validate_calibrator(args.calibrator)
     router = _validate_router(args.router, args.calibrator)
-    vector_audit = _validate_vector_evaluation(
+    vector_audit = _validate_vector_for_evaluation(
         args.vector_predictions,
-        args.condition,
+        evaluation_label=args.condition,
+        degradation_condition=degradation_condition,
     )
     mappings: dict[str, dict[str, dict[str, Any]]] = {
         "raw": rows_by_id(args.raw_predictions),
@@ -419,6 +491,7 @@ def main() -> None:
                         "scale_start": rows[index].get("scale_start"),
                         "scale_end": rows[index].get("scale_end"),
                         "condition": args.condition,
+                        "degradation_condition": degradation_condition,
                         "status": routed_values[index] is not None,
                         "prediction": routed_values[index],
                         "route": routes[index],
@@ -508,6 +581,8 @@ def main() -> None:
         "created_utc": datetime.now(timezone.utc).isoformat(),
         "status": "complete",
         "condition": args.condition,
+        "evaluation_label": args.condition,
+        "degradation_condition": degradation_condition,
         "samples": len(rows),
         "groups": int(len(np.unique(groups))),
         "metrics": metrics,
@@ -561,7 +636,8 @@ def main() -> None:
         "test_labels_used_for_selection": 0,
         "predictions": str(output_predictions),
         "predictions_sha256": sha256_file(output_predictions),
-        "source_sha256": sha256_file(Path(__file__).resolve()),
+        "source_sha256": sha256_source_file(Path(__file__).resolve()),
+        "source_hash_protocol": SOURCE_TEXT_SHA256_PROTOCOL,
         "environment": {
             "python": platform.python_version(),
             "numpy": np.__version__,

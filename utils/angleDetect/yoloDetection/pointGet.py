@@ -2,10 +2,6 @@
 import numpy as np
 import math
 
-import os, sys
-filePath = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(filePath)
-
 def line_intersection(line1, line2):
     """
     计算两条直线的交点

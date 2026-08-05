@@ -18,12 +18,12 @@ import torch.nn.functional as F
 from tqdm import tqdm
 
 from experiments.evaluate_pivot_direction_fallback import (
+    _atomic_json,
     _load_reference_rows,
     _protocol_path,
 )
 from experiments.evaluate_vdn_baseline import (
     _append_rows,
-    _atomic_json,
     _base_result,
     _component_summary,
     _dialbench_summary,
@@ -47,14 +47,24 @@ from experiments.robustness_degradations import (
 )
 from experiments.vdn_baseline import (
     PROJECT_DIR,
+    SOURCE_TEXT_SHA256_PROTOCOL,
     image_angle_from_direction,
     reading_from_pointer_angle,
     sha256_file,
+    sha256_source_file,
     summarize_scalar_predictions,
 )
 
 
 EVALUATION_PROTOCOL = "probabilistic_pivot_direction_e2e_v1"
+LEGACY_VERIFIER_SOURCE_SHA256 = {
+    "formal_probabilistic_direction_run_verification_v1": (
+        "b5fadf7008bb2a8a3b202886b53d2514c0dc41db0e455719f990a590bee785a6"
+    ),
+    "formal_probabilistic_direction_ablation_verification_v1": (
+        "3e8cf11df760944c98ecaae4dcc4298f23c4b66f19a4ebe1b31346bc3f1fe542"
+    ),
+}
 
 
 def parse_args() -> argparse.Namespace:
@@ -112,12 +122,13 @@ def _evaluation_signature(
         "direction_decoder": args.direction_decoder,
         "batch_size": int(args.batch_size),
         "diagnostic_limit": args.limit,
+        "source_hash_protocol": SOURCE_TEXT_SHA256_PROTOCOL,
         "source_sha256": {
-            "model": sha256_file(
+            "model": sha256_source_file(
                 PROJECT_DIR / "experiments" / "probabilistic_pivot_direction.py"
             ),
-            "evaluation": sha256_file(Path(__file__).resolve()),
-            "degradation": sha256_file(
+            "evaluation": sha256_source_file(Path(__file__).resolve()),
+            "degradation": sha256_source_file(
                 PROJECT_DIR / "experiments" / "robustness_degradations.py"
             ),
         },
@@ -208,6 +219,57 @@ def _uncertainty_summary(rows: list[dict[str, Any]]) -> dict[str, float | int]:
     }
 
 
+def _validate_training_verification_source(
+    verification: dict[str, Any],
+) -> Path:
+    verification_protocol = str(verification.get("protocol") or "")
+    verifier_sources = {
+        "formal_probabilistic_direction_run_verification_v1": (
+            PROJECT_DIR
+            / "experiments"
+            / "verify_probabilistic_pivot_direction_run.py"
+        ),
+        "formal_probabilistic_direction_run_verification_v2": (
+            PROJECT_DIR
+            / "experiments"
+            / "verify_probabilistic_pivot_direction_run.py"
+        ),
+        "formal_probabilistic_direction_ablation_verification_v1": (
+            PROJECT_DIR
+            / "experiments"
+            / "verify_probabilistic_direction_ablation.py"
+        ),
+        "formal_probabilistic_direction_ablation_verification_v2": (
+            PROJECT_DIR
+            / "experiments"
+            / "verify_probabilistic_direction_ablation.py"
+        ),
+    }
+    verifier_source = verifier_sources.get(verification_protocol)
+    verification_source_hash_protocol = verification.get("source_hash_protocol")
+    expected_verifier_hash = LEGACY_VERIFIER_SOURCE_SHA256.get(
+        verification_protocol
+    )
+    if expected_verifier_hash is None and (
+        verification_source_hash_protocol != SOURCE_TEXT_SHA256_PROTOCOL
+    ):
+        raise ValueError(
+            "training verification uses an unsupported source hash protocol"
+        )
+    if (
+        expected_verifier_hash is not None
+        and verification_source_hash_protocol is not None
+    ):
+        raise ValueError("legacy training verification has unexpected hash metadata")
+    if expected_verifier_hash is None and verifier_source is not None:
+        expected_verifier_hash = sha256_source_file(verifier_source)
+    if verifier_source is None or verification.get(
+        "verifier_source_sha256"
+    ) != expected_verifier_hash:
+        raise ValueError("training verifier source changed or is unsupported")
+    return verifier_source
+
+
 def main() -> None:
     args = parse_args()
     args.manifest = args.manifest.resolve()
@@ -242,24 +304,7 @@ def main() -> None:
     checkpoint_hash = sha256_file(args.checkpoint)
     if verification.get("best_checkpoint_sha256") != checkpoint_hash:
         raise ValueError("verification belongs to a different checkpoint")
-    verification_protocol = str(verification.get("protocol") or "")
-    verifier_sources = {
-        "formal_probabilistic_direction_run_verification_v1": (
-            PROJECT_DIR
-            / "experiments"
-            / "verify_probabilistic_pivot_direction_run.py"
-        ),
-        "formal_probabilistic_direction_ablation_verification_v1": (
-            PROJECT_DIR
-            / "experiments"
-            / "verify_probabilistic_direction_ablation.py"
-        ),
-    }
-    verifier_source = verifier_sources.get(verification_protocol)
-    if verifier_source is None or verification.get(
-        "verifier_source_sha256"
-    ) != sha256_file(verifier_source):
-        raise ValueError("training verifier source changed or is unsupported")
+    _validate_training_verification_source(verification)
     reference, reference_metadata = _load_reference_rows(
         args.reference_predictions,
         manifest=args.manifest,

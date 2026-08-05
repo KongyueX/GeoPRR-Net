@@ -105,7 +105,12 @@ def _candidate_thresholds(scores: np.ndarray) -> np.ndarray:
     if finite.size == 0:
         raise ValueError("router scores are all non-finite")
     quantiles = np.quantile(finite, np.linspace(0.0, 1.0, 401))
-    return np.unique(np.concatenate((quantiles, np.asarray([0.0, math.inf]))))
+    # A finite value immediately above the maximum represents the exact
+    # no-switch policy without emitting non-standard JSON ``Infinity``.
+    no_switch = np.nextafter(float(np.max(finite)), math.inf)
+    if not math.isfinite(no_switch):
+        raise ValueError("router scores are too large for a finite threshold")
+    return np.unique(np.concatenate((quantiles, np.asarray([0.0, no_switch]))))
 
 
 def _choose_threshold(
