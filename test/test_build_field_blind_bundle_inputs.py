@@ -40,6 +40,14 @@ class FieldBlindBundleInputBuilderTest(unittest.TestCase):
         self.root = Path(self.temporary.name)
         self.public = self.root / "public-authorities"
         self.public.mkdir()
+        self.vdn_oof_summary = _write_json(
+            self.public / "vdn-oof-summary.json", {"status": "complete"}
+        )
+        self.vdn_oof_patch = mock.patch.object(
+            builder.vdn_factory, "OOF_SUMMARY", self.vdn_oof_summary
+        )
+        self.vdn_oof_patch.start()
+        self.addCleanup(self.vdn_oof_patch.stop)
 
     def tearDown(self) -> None:
         self.temporary.cleanup()

@@ -2,12 +2,14 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
 import tempfile
 import unittest
 import uuid
 from pathlib import Path
 
 from experiments.build_syncg_meter_detector_public import (
+    BUILDER_PATH,
     DEFAULT_OUTPUT,
     _normalized_box,
     build_corpus,
@@ -29,6 +31,20 @@ from experiments.train_syncg_meter_detector import (
 
 def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _matching_materialized_corpus_is_available() -> bool:
+    """Run the local-corpus test only for a corpus built by this checkout."""
+
+    summary_path = DEFAULT_OUTPUT / "summary.json"
+    if not summary_path.is_file():
+        return False
+    try:
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+        recorded = Path(summary["implementation"]["builder"]["path"])
+        return recorded.resolve() == BUILDER_PATH.resolve()
+    except (KeyError, OSError, TypeError, ValueError, json.JSONDecodeError):
+        return False
 
 
 class SyncGPublicMeterDetectorTests(unittest.TestCase):
@@ -171,7 +187,10 @@ class SyncGPublicMeterDetectorTests(unittest.TestCase):
     def test_production_runtime_source_exposes_expected_class(self) -> None:
         _validate_production_source(EXPECTED_DETECTOR_SOURCE)
 
-    @unittest.skipUnless(DEFAULT_OUTPUT.is_dir(), "sealed public detector corpus is absent")
+    @unittest.skipUnless(
+        _matching_materialized_corpus_is_available(),
+        "matching sealed public detector corpus is absent",
+    )
     def test_materialized_public_corpus_verifies(self) -> None:
         summary = verify_corpus(DEFAULT_OUTPUT)
         self.assertEqual(summary["inventory"]["images"], 16_000)
