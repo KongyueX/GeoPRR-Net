@@ -291,10 +291,10 @@ software license; source visibility is not permission to reuse or redistribute.
 - `geometry_fusion_weighted`：根据两种针尖估计的轴线一致性和 mask 支持度做质量加权；保留 `geometry_fusion` 作为简单均值消融。
 - `geometry_fusion_weighted_calibrated`：在质量加权结果上应用归一化残差和选择性门控。训练与公开数据评测见 [`experiments/README.md`](experiments/README.md)。
 
-论文最终方法现已通过显式后端 `reference_conditioned_final` 接入生产 API。它不会改变
-原有默认后端，且要求显式 artifact manifest、冻结 SyncG 分割权重以及严格的制品/源码
-哈希审计；配置、返回字段和失败规则见
-[`docs/REFERENCE_CONDITIONED_PRODUCTION_CN.md`](docs/REFERENCE_CONDITIONED_PRODUCTION_CN.md)。
+历史 reference-conditioned 方法已通过显式后端 `reference_conditioned_final` 接入生产
+API。它不会改变原有默认后端，且要求显式 artifact manifest、冻结 SyncG 分割权重以及
+严格的制品/源码哈希审计。该后端作为历史复现接口保留；当前投稿主线以本 README 上方
+给出的 V5 → OCR → GARC 冻结协议为准。
 
 如需获取与论文最终方法完全相同的概率方向专家原始输出，可显式选择
 `reading_backend="probabilistic_vector"`（别名 `raw_probabilistic_vector`）。该后端复用

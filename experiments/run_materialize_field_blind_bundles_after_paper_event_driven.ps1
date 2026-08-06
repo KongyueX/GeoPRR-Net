@@ -1,8 +1,8 @@
 #requires -Version 7.0
 [CmdletBinding()]
 param(
-    [string]$ProjectRoot = "D:\project\PointerMeterReaderFastAPI",
-    [string]$Python = "D:\project\PointerMeterReaderFastAPI\.venv\Scripts\python.exe",
+    [string]$ProjectRoot = (Split-Path -Parent $PSScriptRoot),
+    [string]$Python = (Join-Path (Split-Path -Parent $PSScriptRoot) ".venv\Scripts\python.exe"),
     [ValidateRange(0, 2147483647)]
     [int]$PaperWaiterProcessId = 25424,
     [string]$ExpectedPaperWaiterStartUtc = "2026-08-06T18:58:48.7736440Z",

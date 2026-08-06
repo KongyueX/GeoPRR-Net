@@ -1,8 +1,8 @@
 #requires -Version 7.0
 [CmdletBinding()]
 param(
-    [string]$ProjectRoot = "D:\project\PointerMeterReaderFastAPI",
-    [string]$Python = "D:\project\PointerMeterReaderFastAPI\.venv\Scripts\python.exe",
+    [string]$ProjectRoot = (Split-Path -Parent $PSScriptRoot),
+    [string]$Python = (Join-Path (Split-Path -Parent $PSScriptRoot) ".venv\Scripts\python.exe"),
     [ValidateRange(0, 2147483647)]
     [int]$WaitForPid = 0,
     [string]$WaitForStartedAtUtc = "",

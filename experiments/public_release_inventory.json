@@ -90,9 +90,10 @@
       "experiments/run_assemble_paper_results_event_driven.ps1"
     ],
     "release_support": [
-      "README.md",
-      ".gitignore",
-      "THIRD_PARTY_NOTICES.md",
+    "README.md",
+    ".gitignore",
+    ".gitattributes",
+    "THIRD_PARTY_NOTICES.md",
       "experiments/requirements-training.lock.txt",
       "experiments/public_release_inventory.json",
       "experiments/check_public_release.py"

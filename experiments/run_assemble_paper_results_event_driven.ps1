@@ -1,8 +1,8 @@
 #requires -Version 7.0
 [CmdletBinding()]
 param(
-    [string]$ProjectRoot = "D:\project\PointerMeterReaderFastAPI",
-    [string]$Python = "D:\project\PointerMeterReaderFastAPI\.venv\Scripts\python.exe",
+    [string]$ProjectRoot = (Split-Path -Parent $PSScriptRoot),
+    [string]$Python = (Join-Path (Split-Path -Parent $PSScriptRoot) ".venv\Scripts\python.exe"),
     [ValidateRange(0, 2147483647)]
     [int]$GarcProcessId = 26268,
     [string]$ExpectedGarcStartUtc = "2026-08-06T18:35:40.5767690Z",
@@ -11,10 +11,7 @@ param(
     ),
     [string]$ExpectedGarcSummarySha256 = "",
     [string]$GarcSummary = "C:\pointer_read\garc_full_auto_formal_v1\summary.json",
-    [string]$ExternalProtocol = (
-        "D:\project\PointerMeterReaderFastAPI\experiments\" +
-        "garc_external_progress_412_protocol.json"
-    ),
+    [string]$ExternalProtocol = (Join-Path (Split-Path -Parent $PSScriptRoot) "experiments\garc_external_progress_412_protocol.json"),
     [string]$ExternalRoot = "C:\pointer_read\garc_external_progress_412_formal_v2",
     [string]$ExternalComparison = (
         "C:\pointer_read\garc_external_progress_412_formal_v2\comparison.json"

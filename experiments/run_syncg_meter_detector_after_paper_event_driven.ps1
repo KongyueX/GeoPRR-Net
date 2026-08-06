@@ -1,7 +1,7 @@
 #requires -Version 7.0
 [CmdletBinding()]
 param(
-    [string]$ProjectRoot = "D:\project\PointerMeterReaderFastAPI",
+    [string]$ProjectRoot = (Split-Path -Parent $PSScriptRoot),
     [string]$PaperSummary = "C:\pointer_read\paper_final_results_v2\summary.json",
     [string]$Corpus = "C:\pointer_read\syncg_meter_detector_public_v1",
     [string]$OutputDir = "C:\pointer_read\syncg_meter_detector_runs",

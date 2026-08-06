@@ -1,3 +1,9 @@
-# If a maintainer later clears the redistribution rights and deliberately
-# publishes model weights, store them as Git LFS objects rather than blobs.
-*.pt filter=lfs diff=lfs merge=lfs -text
+# Frozen research protocols bind source files by raw SHA256. Keep text bytes
+# stable across Windows, Linux, and macOS checkouts.
+*.py text eol=lf
+*.ps1 text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+*.txt text eol=lf

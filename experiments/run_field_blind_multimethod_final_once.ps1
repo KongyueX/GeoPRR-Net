@@ -1,13 +1,13 @@
 #requires -Version 7.0
 [CmdletBinding()]
 param(
-    [string]$ProjectRoot = "D:\project\PointerMeterReaderFastAPI",
-    [string]$Python = "D:\project\PointerMeterReaderFastAPI\.venv\Scripts\python.exe",
+    [string]$ProjectRoot = (Split-Path -Parent $PSScriptRoot),
+    [string]$Python = (Join-Path (Split-Path -Parent $PSScriptRoot) ".venv\Scripts\python.exe"),
     [Parameter(Mandatory = $true)]
     [string]$Protocol,
     [string]$DatasetIdentity,
     [string]$PaperResults = "C:\pointer_read\paper_final_results_v2\summary.json",
-    [string]$PaperTablesRoot = "D:\project\PointerMeterReaderFastAPI\paper\submission_mdpi\official\generated_tables",
+    [string]$PaperTablesRoot = (Join-Path (Split-Path -Parent $PSScriptRoot) "paper\submission_mdpi\official\generated_tables"),
     [string]$FrontendPlan,
     [string]$MethodRoster,
     [string]$RunRoot,

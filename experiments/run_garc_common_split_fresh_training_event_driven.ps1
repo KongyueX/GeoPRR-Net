@@ -1,10 +1,10 @@
 #requires -Version 7.0
 [CmdletBinding()]
 param(
-    [string]$ProjectRoot = "D:\project\PointerMeterReaderFastAPI",
-    [string]$Python = "D:\project\PointerMeterReaderFastAPI\.venv\Scripts\python.exe",
-    [string]$Protocol = "D:\project\PointerMeterReaderFastAPI\experiments\garc_common_split_progress_protocol.json",
-    [string]$ExecutionSpec = "D:\project\PointerMeterReaderFastAPI\experiments\garc_common_split_fresh_execution_spec.json",
+    [string]$ProjectRoot = (Split-Path -Parent $PSScriptRoot),
+    [string]$Python = (Join-Path (Split-Path -Parent $PSScriptRoot) ".venv\Scripts\python.exe"),
+    [string]$Protocol = (Join-Path (Split-Path -Parent $PSScriptRoot) "experiments\garc_common_split_progress_protocol.json"),
+    [string]$ExecutionSpec = (Join-Path (Split-Path -Parent $PSScriptRoot) "experiments\garc_common_split_fresh_execution_spec.json"),
     [string]$PromotionRoot = "C:\pointer_read\garc_common_split_promotion_v1",
     [string]$OutputRoot = "C:\pointer_read\garc_common_split_fresh_training_v1",
     [string]$PreflightOutput = "C:\pointer_read\garc_common_split_fresh_training_launcher\preflight.json",

@@ -22,7 +22,11 @@ def _plan(seed: int = 20260720) -> dict:
             },
         },
         "progress_factory": {
-            "path": "D:/project/PointerMeterReaderFastAPI/experiments/garc_pepd_progress_factory.py",
+            "path": str(
+                Path(__file__).resolve().parents[1]
+                / "experiments"
+                / "garc_pepd_progress_factory.py"
+            ),
             "function": "build_progress_provider",
         },
         "joint_oof": {

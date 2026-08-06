@@ -1,8 +1,8 @@
 [CmdletBinding()]
 param(
-    [string]$ProjectRoot = "D:\project\PointerMeterReaderFastAPI",
-    [string]$Python = "D:\project\PointerMeterReaderFastAPI\.venv\Scripts\python.exe",
-    [string]$Protocol = "D:\project\PointerMeterReaderFastAPI\experiments\garc_external_progress_412_protocol.json",
+    [string]$ProjectRoot = (Split-Path -Parent $PSScriptRoot),
+    [string]$Python = (Join-Path (Split-Path -Parent $PSScriptRoot) ".venv\Scripts\python.exe"),
+    [string]$Protocol = (Join-Path (Split-Path -Parent $PSScriptRoot) "experiments\garc_external_progress_412_protocol.json"),
     [string]$GarcSummary,
     [int]$GarcProcessId = 0,
     [string]$ExpectedGarcProcessStartUtc,

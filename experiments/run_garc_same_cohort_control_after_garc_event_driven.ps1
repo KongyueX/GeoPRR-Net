@@ -2,9 +2,9 @@
 
 [CmdletBinding()]
 param(
-    [string]$ProjectRoot = "D:\project\PointerMeterReaderFastAPI",
-    [string]$Python = "D:\project\PointerMeterReaderFastAPI\.venv\Scripts\python.exe",
-    [string]$Protocol = "D:\project\PointerMeterReaderFastAPI\experiments\garc_common_split_progress_protocol.json",
+    [string]$ProjectRoot = (Split-Path -Parent $PSScriptRoot),
+    [string]$Python = (Join-Path (Split-Path -Parent $PSScriptRoot) ".venv\Scripts\python.exe"),
+    [string]$Protocol = (Join-Path (Split-Path -Parent $PSScriptRoot) "experiments\garc_common_split_progress_protocol.json"),
     [string]$GarcOutputRoot = "C:\pointer_read\garc_full_auto_formal_v1",
     [string]$GarcSummary = "C:\pointer_read\garc_full_auto_formal_v1\summary.json",
     [string]$Preregistration = "C:\pointer_read\garc_same_cohort_control_launcher\preregistration.v2.json",
