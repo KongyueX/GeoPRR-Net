@@ -7,3 +7,4 @@
 *.yml text eol=lf
 *.md text eol=lf
 *.txt text eol=lf
+experiments/requirements-training.lock.txt text eol=crlf
