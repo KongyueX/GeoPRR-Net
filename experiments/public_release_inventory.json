@@ -94,9 +94,10 @@
     ".gitignore",
     ".gitattributes",
     "THIRD_PARTY_NOTICES.md",
-      "experiments/requirements-training.lock.txt",
-      "experiments/public_release_inventory.json",
-      "experiments/check_public_release.py"
+    "experiments/requirements-training.lock.txt",
+    "experiments/public_release_inventory.json",
+    "experiments/check_public_release.py",
+    "experiments/send_feishu_progress.ps1"
     ],
     "dependency_closure": [
       "experiments/__init__.py",
