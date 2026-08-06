@@ -19,10 +19,21 @@
 
 # Public datasets are downloaded locally and must never enter Git.
 /datasets/
+/pointer_read/
+
+# Private one-shot field inputs and generated field evidence. Protocol code is
+# public, but the image/label manifests and prediction artifacts are not.
+/field_data/
+/field_artifacts/
+/test-data/
+/test_data/
+/sealed/
+/confirmatory/
 
 # Experiment caches, fitted models, tables, and runtime logs.
 /artifacts/
 /runs/
+/outputs/
 /.cache/
 /data/
 /data-717/
@@ -33,6 +44,12 @@
 *.whl
 *.aria2
 *.xlsx
+*.ckpt
+*.npy
+*.npz
+*.parquet
+*.csv
+*.jsonl
 
 # Python/editor generated files.
 __pycache__/

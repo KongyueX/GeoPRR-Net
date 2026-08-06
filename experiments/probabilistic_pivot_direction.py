@@ -225,6 +225,7 @@ class SyncGProbabilisticDirectionDataset(Dataset):
         perspective_probability: float = 0.80,
         max_perspective_degrees: float = 45.0,
         max_blur_sigma: float = 3.0,
+        return_crop_affine: bool = False,
     ) -> None:
         self.samples = list(samples)
         self.image_size = int(image_size)
@@ -238,6 +239,7 @@ class SyncGProbabilisticDirectionDataset(Dataset):
         self.perspective_probability = float(perspective_probability)
         self.max_perspective_degrees = float(max_perspective_degrees)
         self.max_blur_sigma = float(max_blur_sigma)
+        self.return_crop_affine = bool(return_crop_affine)
         if not self.samples:
             raise ValueError("probabilistic direction dataset is empty")
         if self.image_size <= 0 or self.heatmap_size <= 0:
@@ -335,6 +337,11 @@ class SyncGProbabilisticDirectionDataset(Dataset):
             "pivot": pivot_heatmap,
             "sample_id": sample.sample_id,
         }
+        if self.return_crop_affine:
+            # Optional metadata for models whose auxiliary image-space vectors
+            # must undergo the exact same sampled crop transform.  The default
+            # remains False so existing PEPD loaders keep their prior contract.
+            result["crop_affine"] = torch.from_numpy(affine.copy())
         if not self.training:
             return result
 

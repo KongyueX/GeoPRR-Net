@@ -1,83 +1,202 @@
 # PointerMeterReaderFastAPI
 
-## Research release: PEPD
+## Research release: V5 → OCR → GARC
 
-The research method is **pivot estimation and probabilistic direction (PEPD)**.
-It predicts a pivot, fuses a direct direction vector with a circular posterior,
-estimates angular uncertainty, and uses projectively paired ray supervision during
-training. The failure-aware dual-representation router (FADR) is retained as a
-pre-specified transfer audit, not as part of the final PEPD deployment method.
+The current paper pipeline is a fully automatic, image-only pointer-meter reader:
 
-### Main aggregate results
+1. **V5** combines the PEPD pointer direction posterior with a dense,
+   tick-conditioned scale-reference head and geometry-aware decoding.
+2. **OCR** detects and recognizes printed scale values. Its corpus is built only
+   from the public SyncG training partition and is aligned to the outer GARC split.
+3. **GARC** combines pointer progress, scale-mark geometry and the OCR numeric-range
+   posterior. Evaluation does not receive a manually entered or ground-truth range.
+4. A **public SyncG meter detector** supplies one automatically detected, fixed-padding
+   full-scene ROI to every final method. Its fit, threshold selection and independent
+   validation partitions are disjoint at the physical-meter-group level.
+5. The **field bundle freezer** authenticates the completed public evidence and
+   materializes the exact five-method roster before any one-shot field input is opened.
+6. The **final event handoff** authenticates the completed materialization process,
+   preflights the shared detector and all five frozen readers without dataset access,
+   then enforces prediction sealing before the separate scoring step.
 
-All reading failures remain in the denominator with normalized error 1. The
-training comparison uses the same 4,380-row/197-group SyncG-training grouped OOF
-union. The field row is a prediction-independent sensitivity analysis retaining
-725 images/18 groups after two complete groups linked to development-set physical
-meters were excluded.
+PEPD, VDN, the original Transformer, base-mask geometry and FADR remain available
+as controlled baselines or ablations; they are not interchangeable with the final
+full-auto stack.
 
-| Method | SyncG-train OOF NMAE | Field sensitivity NMAE |
-| --- | ---: | ---: |
-| PEPD | 0.148497 | **0.025465** |
-| VDN official-200 reproduction | **0.148212** | 0.126295 |
-| Original Transformer | 0.209035 | 0.230224 |
-| Base-mask geometry | 0.115905 | 0.117155 |
-| PEPD + FADR | **0.088168** | 0.065463 |
+### Completed public-development evidence
 
-PEPD and VDN are statistically tied on the partial grouped SyncG-training OOF
-union. On the retained field sensitivity set, VDN minus PEPD NMAE is 0.100829
-(95% group-bootstrap CI 0.059141--0.147008), and PEPD reaches 96.83% Acc@5%.
-Because the physical-entity exclusion and PEPD-only deployment decision were made
-after the original one-shot execution, this is descriptive sensitivity evidence;
-a new prospectively entity-disjoint field cohort is still required for strict
-confirmation.
+All failures stay in the denominator with normalized error 1. The completed V5
+run used only SyncG train data. Its 4,380-image/197-physical-group aggregate is the
+union of jointly unseen, complete-group holdouts assigned across three frozen PEPD
+seeds. It is not a disjoint three-fold CV, a full 16,000-image OOF estimate, or
+external/field evidence.
 
-The three-seed mechanism audit supports fused decoding and projective pairing,
-especially under severe perspective degradation. It does not show an independent
-angle-accuracy gain from the explicit equivariance term. FADR's three-seed,
-five-variant feature-family ablation stayed in a narrow 0.088088--0.089510
-source-domain NMAE range, yet the frozen router degraded in the field. This
-negative transfer is the reason FADR remains an audit rather than the final model.
+| Completed V5 evidence | Images / groups | NMAE ↓ | Coverage ↑ | Group-macro NMAE ↓ | P95 error ↓ |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Jointly unseen holdout union | 4,380 / 197 | **0.013917** | **99.82%** | 0.013580 | 0.032526 |
+
+On the exact 1,625-image/73-group shared validation cohort, enhanced V5 reached
+0.011908 NMAE and 99.94% coverage, versus 0.018418 NMAE and 99.71% coverage for
+the frozen three-seed V4 mean (35.35% relative NMAE reduction). This cohort was
+used in the pre-OCR development gate and is therefore validation evidence.
+
+OCR selection, full-auto GARC, external-model comparisons and the one-shot field
+evaluation are deliberately not assigned result values here until their frozen
+pipelines complete.
+
+### Split and release discipline
+
+- A SyncG physical group is the indivisible split unit; images from one meter
+  group cannot cross fit, calibration, validation or evaluation partitions.
+- The aligned OCR corpus contains the GARC `algorithm_fit` partition only
+  (12,176 public images from 551 groups). GARC calibration, development-excluded,
+  independent-validation and formal-comparison groups are excluded from OCR fit.
+- Public data is used for training and model selection. The final field protocol
+  has no default image path, seals the model/method roster before opening images,
+  performs full-scene automatic detection, and scores only after predictions are
+  sealed.
+- The shared meter detector is trained only on public SyncG train. Its corpus builder
+  accepts the pinned public manifest and annotations, while the bundle-input builder
+  accepts only hash-bound public result authorities and has no field-data argument.
+- Images, labels, field manifests, fitted weights, per-sample predictions, private
+  configuration and the manuscript are not part of this code release.
 
 ### Research code map
 
-- PEPD model and objectives:
-  [`experiments/probabilistic_pivot_direction.py`](experiments/probabilistic_pivot_direction.py),
-  [`experiments/pepd_uncertainty_objectives.py`](experiments/pepd_uncertainty_objectives.py), and
-  [`experiments/projective_circular_transport.py`](experiments/projective_circular_transport.py).
-- PEPD training and mechanism audit:
-  [`experiments/train_pepd_convergence_syncg.py`](experiments/train_pepd_convergence_syncg.py),
-  [`experiments/train_pepd_mechanism_continuation_syncg.py`](experiments/train_pepd_mechanism_continuation_syncg.py), and
-  [`experiments/summarize_pepd_mechanism_evaluations.py`](experiments/summarize_pepd_mechanism_evaluations.py).
-- VDN reproduction:
-  [`experiments/train_vdn_official200.py`](experiments/train_vdn_official200.py),
-  [`experiments/evaluate_vdn_official200_train_oof.py`](experiments/evaluate_vdn_official200_train_oof.py), and
-  [`experiments/vdn_baseline.py`](experiments/vdn_baseline.py).
-- FADR audit:
-  [`experiments/train_joint_nested_fadr.py`](experiments/train_joint_nested_fadr.py),
-  [`experiments/fadr_feature_sets.py`](experiments/fadr_feature_sets.py), and
-  [`experiments/verify_fadr_multiseed_cohort.py`](experiments/verify_fadr_multiseed_cohort.py).
-- Aggregate evaluation and resource scripts:
-  [`experiments/summarize_field_physical_entity_leakage_sensitivity.py`](experiments/summarize_field_physical_entity_leakage_sensitivity.py),
-  [`experiments/benchmark_final_model_stack_resources_v3.py`](experiments/benchmark_final_model_stack_resources_v3.py), and
-  [`experiments/build_paper_figures.py`](experiments/build_paper_figures.py).
+- V5 model, grouped OOF runner and gate:
+  [`experiments/cagh_scalemark_reference_head_v5.py`](experiments/cagh_scalemark_reference_head_v5.py),
+  [`experiments/run_cagh_v5_enhanced_oof.py`](experiments/run_cagh_v5_enhanced_oof.py), and
+  [`experiments/evaluate_cagh_v5_before_ocr_gate.py`](experiments/evaluate_cagh_v5_before_ocr_gate.py).
+- GARC-aligned OCR corpus, Tiny/Strong training and evidence verifier:
+  [`experiments/build_garc_aligned_syncg_numeric_ocr_public.py`](experiments/build_garc_aligned_syncg_numeric_ocr_public.py),
+  [`experiments/train_syncg_numeric_ocr.py`](experiments/train_syncg_numeric_ocr.py),
+  [`experiments/train_syncg_strong_numeric_ocr.py`](experiments/train_syncg_strong_numeric_ocr.py), and
+  [`experiments/verify_garc_ocr_training_evidence.py`](experiments/verify_garc_ocr_training_evidence.py).
+- GARC training/evaluation and same-cohort external comparison:
+  [`experiments/garc_full_auto_public.py`](experiments/garc_full_auto_public.py),
+  [`experiments/evaluate_garc_full_auto_public.py`](experiments/evaluate_garc_full_auto_public.py),
+  [`experiments/garc_common_split_fresh_training.py`](experiments/garc_common_split_fresh_training.py), and
+  [`experiments/garc_external_progress_412.py`](experiments/garc_external_progress_412.py).
+- Public-only full-scene meter detector and frozen shared frontend:
+  [`experiments/build_syncg_meter_detector_public.py`](experiments/build_syncg_meter_detector_public.py),
+  [`experiments/train_syncg_meter_detector.py`](experiments/train_syncg_meter_detector.py),
+  [`experiments/syncg_meter_detector_frontend.py`](experiments/syncg_meter_detector_frontend.py), and
+  [`experiments/run_syncg_meter_detector_after_paper_event_driven.ps1`](experiments/run_syncg_meter_detector_after_paper_event_driven.ps1).
+- Field bundle input, materialization and detector-to-bundle event handoff (code only):
+  [`experiments/build_field_blind_bundle_inputs.py`](experiments/build_field_blind_bundle_inputs.py),
+  [`experiments/materialize_field_blind_bundles.py`](experiments/materialize_field_blind_bundles.py), and
+  [`experiments/run_field_bundle_materialization_after_detector_event_driven.ps1`](experiments/run_field_bundle_materialization_after_detector_event_driven.ps1).
+- Fail-closed field protocol and paper result tooling (code only):
+  [`experiments/field_blind_final_chain_preflight.py`](experiments/field_blind_final_chain_preflight.py),
+  [`experiments/field_blind_multimethod.py`](experiments/field_blind_multimethod.py),
+  [`experiments/run_field_blind_multimethod_after_bundles_event_driven.ps1`](experiments/run_field_blind_multimethod_after_bundles_event_driven.ps1),
+  [`experiments/assemble_paper_results.py`](experiments/assemble_paper_results.py), and
+  [`experiments/render_paper_result_tables.py`](experiments/render_paper_result_tables.py).
+- Machine-readable release boundary and checker:
+  [`experiments/public_release_inventory.json`](experiments/public_release_inventory.json) and
+  [`experiments/check_public_release.py`](experiments/check_public_release.py).
 
-Create the pinned Python 3.11 environment and run the data-free checks with:
+### Reproduction and verification
+
+Create the pinned Python 3.11/CUDA environment:
 
 ```powershell
 uv venv --python 3.11 .venv
 uv pip install --python .venv/Scripts/python.exe -r experiments/requirements-training.lock.txt
-.venv/Scripts/python.exe -m unittest `
-  test.test_probabilistic_pivot_direction `
-  test.test_pepd_convergence_protocol `
-  test.test_projective_circular_transport `
-  test.test_vdn_official200
 ```
 
-Datasets, field records, per-sample predictions, fitted weights, private
-configuration, and the manuscript are not distributed in this repository. Formal
-commands fail closed unless their local protocols and artifact hashes match. See
-[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) for provenance and
+Run the data-free release audit and protocol tests:
+
+```powershell
+& .\.venv\Scripts\python.exe -m experiments.check_public_release --mode workspace
+& .\.venv\Scripts\python.exe -m unittest `
+  test.test_cagh_v5_before_ocr_gate `
+  test.test_syncg_ocr_garc_alignment `
+  test.test_garc_full_auto_public `
+  test.test_syncg_meter_detector_public `
+  test.test_build_field_blind_bundle_inputs `
+  test.test_materialize_field_blind_bundles `
+  test.test_run_materialize_field_blind_bundles_after_paper_event_driven `
+  test.test_run_field_bundle_materialization_after_detector_event_driven `
+  test.test_field_blind_final_chain_preflight `
+  test.test_run_field_blind_multimethod_after_bundles_event_driven `
+  test.test_field_blind_multimethod `
+  test.test_assemble_paper_results
+```
+
+The release audit reports untracked required files in workspace mode. Immediately
+before publication, run `--mode release`; it additionally requires every inventory
+file to be tracked and rejects data, weights, field artifacts, manuscript files,
+broken README links, undeclared local dependencies and obvious embedded secrets.
+
+After downloading SyncG according to [`experiments/README.md`](experiments/README.md),
+the main validation/reproduction entry points are:
+
+```powershell
+# Validate frozen V5 inputs without training.
+& .\.venv\Scripts\python.exe -m experiments.run_cagh_v5_enhanced_oof --validate-only
+
+# Verify a previously built, GARC-aligned public OCR corpus.
+& .\.venv\Scripts\python.exe -m experiments.build_garc_aligned_syncg_numeric_ocr_public `
+  verify --corpus <artifact-root>\syncg_numeric_ocr_garc_aligned_v1
+
+# Validate training inputs without launching TinyOCR.
+& .\.venv\Scripts\python.exe -m experiments.train_syncg_numeric_ocr `
+  --corpus <artifact-root>\syncg_numeric_ocr_garc_aligned_v1 --validate-only
+
+# Build or re-verify the public SyncG-train meter-detection corpus.
+& .\.venv\Scripts\python.exe -m experiments.build_syncg_meter_detector_public `
+  --output-dir <artifact-root>\syncg_meter_detector_public_v1
+& .\.venv\Scripts\python.exe -m experiments.build_syncg_meter_detector_public `
+  --output-dir <artifact-root>\syncg_meter_detector_public_v1 --verify-only
+
+# Validate a detector run without launching training, then verify its frozen frontend.
+& .\.venv\Scripts\python.exe -m experiments.train_syncg_meter_detector `
+  --corpus <artifact-root>\syncg_meter_detector_public_v1 `
+  --output-dir <artifact-root>\syncg_meter_detector_runs `
+  --pretrained <artifact-root>\public_pretrained\yolo11n-ultralytics-assets-v8.3.0.pt `
+  --validate-only
+& .\.venv\Scripts\python.exe -m experiments.syncg_meter_detector_frontend --help
+
+# Inspect the public-authority-only bundle freezer; neither CLI accepts field inputs.
+& .\.venv\Scripts\python.exe -m experiments.build_field_blind_bundle_inputs --help
+& .\.venv\Scripts\python.exe -m experiments.materialize_field_blind_bundles --help
+
+# Inspect the frozen full-auto GARC and final field protocol interfaces.
+& .\.venv\Scripts\python.exe -m experiments.garc_full_auto_public --help
+& .\.venv\Scripts\python.exe -m experiments.field_blind_final_chain_preflight --help
+& .\.venv\Scripts\python.exe -m experiments.field_blind_multimethod --help
+
+# Data-free final-chain preflight: no waiting, artifact writes, inference,
+# scoring or notification is performed.
+& 'C:\Program Files\PowerShell\7\pwsh.exe' -NoLogo -NoProfile -File `
+  experiments/run_field_blind_multimethod_after_bundles_event_driven.ps1 `
+  -ProjectRoot (Resolve-Path .).Path `
+  -Python (Resolve-Path .\.venv\Scripts\python.exe).Path `
+  -PreflightOnly
+```
+
+Large outputs are configurable and ignored by Git. The canonical local result
+layout is:
+
+| Stage | Result artifact (under `<artifact-root>`) |
+| --- | --- |
+| V5 grouped OOF | `cagh_v5_enhanced_oof/summary.json` |
+| V5 pre-OCR gate | `cagh_v5_before_ocr_gate_v1/summary.json` |
+| GARC-aligned OCR | `syncg_numeric_ocr_garc_aligned_v1/summary.json` and the selected training run `summary.json` |
+| Full-auto GARC | `garc_full_auto_formal_v1/summary.json` |
+| Same-cohort external comparison | `garc_external_progress_412_formal_v1/comparison.json` |
+| Paper result assembly | `paper_final_results_v2/summary.json` |
+| Public SyncG meter detector | `syncg_meter_detector_runs/seed_20260819/summary.json` |
+| Frozen shared meter frontend | `syncg_meter_detector_frontend_v1/frontend_plan.json` |
+| Five-method field bundle roster | `blind_bundle_materialization_v1/frozen/method_roster.json` |
+
+The event wrappers expose the orchestration chain, but the local notification
+client, webhook material, signing secrets and deduplication state are deliberately
+outside the release inventory. The core Python build, verify and materialize CLIs
+do not require that private notification integration.
+
+See [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) for provenance and
 redistribution boundaries. The repository does not yet grant a project-level
 software license; source visibility is not permission to reuse or redistribute.
 
@@ -108,7 +227,7 @@ software license; source visibility is not permission to reuse or redistribute.
 }
 ```
 
-旧的 38 样本 learned-gate 校准器属于本地工程产物，公开仓库不分发；只有该旧路径实际存在时才会自动加载。论文方法 `geometry_fusion_weighted_calibrated` 则会查找正式流水线生成的 `artifacts/runs/syncg_full/calibrator.joblib`。也可以显式指定校准器文件：
+旧版 learned-gate 校准器属于本地工程产物，公开仓库不分发；只有该旧路径实际存在时才会自动加载。历史研究后端 `geometry_fusion_weighted_calibrated` 则会查找正式流水线生成的 `artifacts/runs/syncg_full/calibrator.joblib`。也可以显式指定校准器文件：
 
 ```json
 {
@@ -121,14 +240,7 @@ software license; source visibility is not permission to reuse or redistribute.
 
 传 `"residual_calibrator_path": ""`（空字符串）可显式禁用默认校准器，行为退化为普通几何融合。
 
-验证数据（未公开的旧工程 learned-gate 树模型校准器，仅作回归记录）：
-
-| 数据集 | 后端 | MAE | RMSE | 最大误差 |
-| --- | --- | ---: | ---: | ---: |
-| `ground_truth.xlsx` 30 张复核 | `geometry_fusion_calibrated@ransacFun` | 0.008126 | 0.015969 | 0.058200 |
-| `ground_truth - val.xlsx` 8 张验证 | `geometry_fusion_calibrated@ransacFun` | 0.002017 | 0.003492 | 0.009141 |
-| 同一 8 张验证集基线 | `geometry_fusion@ransacFun` | 0.014490 | - | - |
-| 同一 8 张验证集基线 | `transformer@ransacFun` | 0.018415 | - | - |
+旧工程的私有校准数据和回归数值不属于公开研究证据，未写入本 README。
 
 ### 方案 B：CNN 残差模型 `geometry_hybrid` / `geometry_hybrid_gate`（备选，谨慎使用）
 
@@ -161,19 +273,12 @@ software license; source visibility is not permission to reuse or redistribute.
 }
 ```
 
-验证数据（38 条真实读数全量）：
-
-| 后端 | MAE | RMSE | 最大误差 |
-| --- | ---: | ---: | ---: |
-| `geometry_hybrid_gate@ransacFun` | 0.018919 | 0.025678 | 0.058200 |
-| `geometry_fusion_calibrated@ransacFun` | 0.019207 | 0.025678 | 0.058200 |
-| `geometry_hybrid@ransacFun`（无角度门控） | 0.031069 | 0.037701 | 0.066143 |
-
-注意：`geometry_hybrid` 不带角度门控，误差明显更大更不稳定，不建议直接使用；`geometry_hybrid_gate` 加了角度门控后分数和方案 A 接近，在整体 38 条数据上略好一点。
+旧工程的私有回归记录不属于公开研究证据，未写入本 README。`geometry_hybrid`
+不带角度门控，默认仍不建议直接使用。
 
 ### 如何选择
 
-- 默认建议用**方案 A（`geometry_fusion_calibrated`）**。它的训练特征是抽象的几何/mask 统计量，对分割模型预测 mask（而不是人工标注 mask）的适应性更好，已经在两批独立数据集（30 张复核 + 8 张 val）上验证过。
+- 对旧版服务兼容性测试，默认建议用**方案 A（`geometry_fusion_calibrated`）**。它的训练特征是抽象的几何/mask 统计量；其本地权重和私有验证记录不随公开代码分发。
 - **方案 B（CNN，`geometry_hybrid_gate`）** 直接吃图像和 mask 像素，训练数据主要来自人工标注 mask，线上实际用的是分割模型预测的 mask，存在训练/推理不一致的风险（团队内部验证记录里也是这么说的）。想对比效果时可以显式切换到这个后端跑一遍，但**外部测试如果只能选一个方案，请用方案 A**。
 - 两个方案可以在同一批图片上分别跑，配合 `return_reading_details: true` 对比 `resultNum` 和 `calibration` / `delta_pred` 字段，判断哪个更适合你的实际拍摄条件。
 

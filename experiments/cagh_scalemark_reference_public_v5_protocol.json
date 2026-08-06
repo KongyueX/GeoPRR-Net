@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "protocol": "cagh_scalemark_reference_public_v5_tight_roi_v1",
+  "status": "frozen_public_only",
+  "purpose": "Screen and train a ScaleMark reference head without the historical 1.25x black-padded crop.",
+  "evidence_role": "public architecture screen; not a submission result until the PEPD backbone is retrained on the same fresh fit groups",
+  "scope": {
+    "allowed_dataset": "SyncG",
+    "allowed_split": "train",
+    "public_ground_truth_bbox_allowed": true,
+    "field_detector_allowed": false,
+    "field_or_confirmatory_data_allowed": false,
+    "xiangmu1_or_xiangmu2_allowed": false
+  },
+  "inputs": {
+    "manifest_path": "artifacts/manifests/syncg_train.jsonl",
+    "manifest_sha256": "429e4bc24515b4bf7a1d6fb638210e653872d287ba1edc0c1d6e193cb99d28ca",
+    "manifest_protocol_path": "artifacts/manifests/syncg_train.jsonl.protocol.json",
+    "manifest_protocol_sha256": "315e17ac8aba46d00f84a0060dba145d7e036fa096bd26423dbd34a170600c59",
+    "backbone_checkpoint_path": "artifacts/runs/pepd_convergence_phase2/seed_20260720/best.pt",
+    "backbone_checkpoint_sha256": "6c3560f5c29f430db33721beb753ec4f5582580792fa098c4a6f1057746a01d9"
+  },
+  "split": {
+    "method": "grouped hash ordering from grouped_train_val_split",
+    "seed": 20261206,
+    "validation_fraction": 0.1,
+    "fit_samples": 14400,
+    "fit_groups": 651,
+    "validation_samples": 1600,
+    "validation_groups": 74,
+    "fit_ids_sha256": "2196ac78b7279afad20e14c1db10ccaadb3846057b5716d54762600c114f593c",
+    "validation_ids_sha256": "3bd7765f75cc954d5cc10763a21c3ab468fcecc975fd824b86731032205eaf6b",
+    "fit_groups_sha256": "dd5a79f00d3b83371be93fb5481f0c5a6473fcf4359581cb30e230bd1806ec32",
+    "validation_groups_sha256": "89a23b78155c798f9fed9f62cd22b21f41d477d7a478f424dccf85e005eed697"
+  },
+  "crop_contract_sha256": "ddb7f1aeaf81757d77b69608ac31eb38be7565716a07c69f633286d590c74bf4",
+  "augmentation": {
+    "brightness_probability": 0.8,
+    "brightness_delta": 0.16,
+    "contrast_probability": 0.8,
+    "contrast_min": 0.65,
+    "contrast_max": 1.4,
+    "gamma_probability": 0.45,
+    "gamma_min": 0.65,
+    "gamma_max": 1.55,
+    "blur_probability": 0.35,
+    "blur_sigma_max": 1.6,
+    "noise_probability": 0.3,
+    "noise_sigma_max": 10.0,
+    "jpeg_probability": 0.35,
+    "jpeg_quality_min": 50,
+    "jpeg_quality_max": 94,
+    "perspective_probability": 0.35,
+    "perspective_fraction_max": 0.035,
+    "boundary_trim_probability": 0.35,
+    "boundary_trim_fraction_max": 0.06
+  },
+  "training": {
+    "backbone": "frozen pinned PEPD seed_20260720",
+    "trainable_component": "DenseTickConditionedReferenceHead",
+    "seeds": [20261206, 20261216, 20261226],
+    "stage_a_epochs": 6,
+    "stage_b_epochs": 12,
+    "batch_size": 16,
+    "learning_rate": 0.0004,
+    "weight_decay": 0.0001,
+    "checkpoint_selection": "terminal fixed A6+B12 iterate"
+  },
+  "known_limitation": {
+    "frozen_pepd_was_trained_on_an_older_group_split": true,
+    "fresh_validation_is_guaranteed_unseen_by_v5_head": true,
+    "fresh_validation_is_guaranteed_unseen_by_frozen_pepd": false,
+    "paper_claim_allowed": false
+  },
+  "artifacts": {
+    "default_root": "C:/pointer_read/cagh_scalemark_reference_public_v5",
+    "telemetry": "per-sample endpoint, start/range arc, pointer/reference/solver validity",
+    "old_v4_artifacts_overwritten": false
+  }
+}

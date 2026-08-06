@@ -9,6 +9,7 @@ and no SyncG test or RPM-10K sample is admitted.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import os
@@ -18,6 +19,7 @@ import time
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
+from collections.abc import Mapping
 from typing import Any, Sequence
 
 import cv2
@@ -30,12 +32,29 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from experiments.pivot_direction_fallback import tensor_from_bbox
+from experiments.fadr_multiseed_protocol import (
+    PEPD_DIRECTION_SEEDS,
+    assert_train_only_path,
+)
+from experiments.pepd_convergence_extension_v2_protocol import (
+    EXTENSION_SEED,
+    PEPD_AUTHORITATIVE_COHORT_PROTOCOL,
+    PEPD_AUTHORITATIVE_COLLECTOR_CONTRACT_PROTOCOL,
+    PEPD_AUTHORITATIVE_HANDOFF_PROTOCOL,
+    PEPD_AUTHORITATIVE_OOF_PROTOCOL,
+    PEPD_EXTENSION_PROTOCOL,
+    PEPD_EXTENSION_VERIFICATION_PROTOCOL,
+)
+from experiments.pepd_convergence_protocol import (
+    PEPD_CONTINUATION_PROTOCOL,
+    PEPD_RUN_VERIFICATION_PROTOCOL,
+    PEPD_TRAINING_PROTOCOL,
+)
 from experiments.probabilistic_pivot_direction import (
     PROBABILISTIC_PIVOT_DIRECTION_PROTOCOL,
     build_probabilistic_pivot_direction_model,
     decode_probabilistic_pivot_direction,
 )
-from experiments.uncertainty_fusion import UNCERTAINTY_FUSION_OOF_PROTOCOL
 from experiments.vdn_baseline import (
     grouped_train_val_split,
     image_angle_from_direction,
@@ -43,11 +62,20 @@ from experiments.vdn_baseline import (
     reading_from_pointer_angle,
     sample_ids_hash,
     sha256_file,
+    sha256_source_file,
+)
+from experiments.strict_json import (
+    STRICT_JSON_PROTOCOL,
+    strict_json_load,
+    strict_json_source_sha256,
+    strict_jsonl_load,
 )
 
 
-DEFAULT_SEEDS = (20260720, 20260721, 20260722)
+DEFAULT_SEEDS = PEPD_DIRECTION_SEEDS
 EXPECTED_SOURCE_OOF_PROTOCOL = "syncg_quality_router_cross_model_oof_v1"
+PEPD_COHORT_PROTOCOL = PEPD_AUTHORITATIVE_COHORT_PROTOCOL
+PEPD_OOF_HANDOFF_PROTOCOL = PEPD_AUTHORITATIVE_HANDOFF_PROTOCOL
 
 
 def parse_args() -> argparse.Namespace:
@@ -55,63 +83,68 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--manifest",
         type=Path,
-        default=Path("artifacts/manifests/syncg_train.jsonl"),
+        required=True,
     )
     parser.add_argument(
         "--source-oof",
         type=Path,
-        default=Path("artifacts/runs/quality_router_syncg/oof_clean.jsonl"),
+        required=True,
     )
     parser.add_argument(
-        "--checkpoint-root",
+        "--pepd-cohort",
         type=Path,
-        default=Path("artifacts/runs/probabilistic_pivot_direction_syncg"),
+        required=True,
     )
-    parser.add_argument("--seeds", type=int, nargs="+", default=list(DEFAULT_SEEDS))
+    parser.add_argument(
+        "--pepd-oof-handoff",
+        type=Path,
+        required=True,
+    )
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path(
-            "artifacts/runs/uncertainty_fusion_syncg/probabilistic_oof_clean.jsonl"
-        ),
+        required=True,
     )
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--batch-size", type=int, default=64)
-    parser.add_argument("--validation-fraction", type=float, default=0.10)
     parser.add_argument("--resume", action="store_true")
-    parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--no-amp", action="store_true")
     return parser.parse_args()
 
 
 def _read_json(path: Path) -> dict[str, Any]:
-    value = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(value, dict):
-        raise ValueError(f"{path} is not a JSON object")
-    return value
+    return strict_json_load(path)
 
 
 def _read_jsonl(path: Path) -> list[dict[str, Any]]:
-    rows: list[dict[str, Any]] = []
-    with path.open("r", encoding="utf-8") as handle:
-        for line_number, line in enumerate(handle, start=1):
-            if not line.strip():
-                continue
-            row = json.loads(line)
-            if not isinstance(row, dict):
-                raise ValueError(f"{path}:{line_number} is not an object")
-            rows.append(row)
-    return rows
+    return strict_jsonl_load(path)
 
 
-def _atomic_json(path: Path, value: dict[str, Any]) -> None:
+def _write_json_no_clobber(path: Path, value: Mapping[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_suffix(path.suffix + ".tmp")
-    temporary.write_text(
-        json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
-    os.replace(temporary, path)
+    payload = (
+        json.dumps(
+            value,
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+            allow_nan=False,
+        )
+        + "\n"
+    ).encode("utf-8")
+    temporary = path.with_name(f".{path.name}.tmp.{os.getpid()}")
+    descriptor = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    try:
+        with os.fdopen(descriptor, "wb") as handle:
+            handle.write(payload)
+            handle.flush()
+            os.fsync(handle.fileno())
+        try:
+            os.link(temporary, path)
+        except FileExistsError as exc:
+            raise FileExistsError(f"{path} already exists; refusing to overwrite") from exc
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def _append_rows(path: Path, rows: Sequence[dict[str, Any]]) -> None:
@@ -119,7 +152,15 @@ def _append_rows(path: Path, rows: Sequence[dict[str, Any]]) -> None:
         return
     with path.open("a", encoding="utf-8") as handle:
         for row in rows:
-            handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+            handle.write(
+                json.dumps(
+                    row,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    allow_nan=False,
+                )
+                + "\n"
+            )
         handle.flush()
         os.fsync(handle.fileno())
 
@@ -140,75 +181,558 @@ def _finite(value: Any) -> float | None:
     return result if math.isfinite(result) else None
 
 
-def _load_verified_runs(
-    checkpoint_root: Path,
-    seeds: Sequence[int],
+def _mapping_sha256(value: Mapping[str, Any]) -> str:
+    return hashlib.sha256(
+        json.dumps(
+            value,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+            allow_nan=False,
+        ).encode("utf-8")
+    ).hexdigest()
+
+
+def _string_set_hash(values: Sequence[str] | set[str]) -> str:
+    digest = hashlib.sha256()
+    for value in sorted(set(map(str, values))):
+        digest.update(value.encode("utf-8"))
+        digest.update(b"\n")
+    return digest.hexdigest()
+
+
+def _declared_path(value: Any, *, label: str) -> Path:
+    if not isinstance(value, str) or not value:
+        raise ValueError(f"{label} path is missing")
+    path = Path(value)
+    if not path.is_absolute():
+        path = PROJECT_ROOT / path
+    resolved = path.resolve()
+    assert_train_only_path(resolved, label=label)
+    return resolved
+
+
+def _require_hash(path: Path, expected: Any, *, label: str) -> None:
+    if not path.is_file():
+        raise FileNotFoundError(path)
+    if not isinstance(expected, str) or sha256_file(path) != expected:
+        raise ValueError(f"{label} SHA-256 mismatch")
+
+
+def _load_authoritative_runs(
+    pepd_oof_handoff: Path,
+    pepd_cohort: Path,
     manifest: Path,
     samples: Sequence[Any],
-    validation_fraction: float,
-) -> tuple[dict[int, dict[str, Any]], dict[int, set[str]], dict[int, set[str]]]:
+) -> tuple[
+    dict[int, dict[str, Any]],
+    dict[int, set[str]],
+    dict[int, set[str]],
+    dict[int, set[str]],
+    dict[str, Any],
+    dict[str, Any],
+]:
+    handoff = _read_json(pepd_oof_handoff)
+    cohort = _read_json(pepd_cohort)
+    if (
+        handoff.get("schema_version") != 2
+        or handoff.get("protocol") != PEPD_OOF_HANDOFF_PROTOCOL
+        or handoff.get("status") != "authorized"
+        or handoff.get("formal_seeds") != list(DEFAULT_SEEDS)
+        or handoff.get("cohort_protocol") != PEPD_COHORT_PROTOCOL
+        or handoff.get("cohort_sha256") != sha256_file(pepd_cohort)
+        or handoff.get("manifest_sha256") != sha256_file(manifest)
+        or handoff.get("manifest_protocol_sha256")
+        != sha256_file(manifest.with_name(manifest.name + ".protocol.json"))
+        or handoff.get("mixed_authority")
+        != {
+            "20260720": PEPD_CONTINUATION_PROTOCOL,
+            "20260721": PEPD_EXTENSION_PROTOCOL,
+            "20260722": PEPD_CONTINUATION_PROTOCOL,
+        }
+        or handoff.get("further_epoch_extension_authorized") is not False
+        or handoff.get("public_test_field_evaluation_authorized") is not False
+    ):
+        raise ValueError("PEPD OOF handoff top-level audit failed")
+    if _declared_path(handoff.get("cohort"), label="PEPD handoff cohort") != pepd_cohort:
+        raise ValueError("PEPD OOF handoff cohort path mismatch")
+    if _declared_path(handoff.get("manifest"), label="PEPD handoff manifest") != manifest:
+        raise ValueError("PEPD OOF handoff manifest path mismatch")
+    if (
+        cohort.get("schema_version") != 2
+        or cohort.get("protocol") != PEPD_COHORT_PROTOCOL
+        or cohort.get("status") != "converged"
+        or cohort.get("seeds") != list(DEFAULT_SEEDS)
+        or cohort.get("all_runs_verified") is not True
+        or cohort.get("all_runs_converged") is not True
+        or cohort.get("mixed_authority")
+        != {
+            "20260720": "convergence_v1",
+            "20260721": "bounded_extension_v2",
+            "20260722": "convergence_v1",
+        }
+        or cohort.get("further_epoch_extension_authorized") is not False
+        or cohort.get("public_test_field_evaluation_authorized") is not False
+    ):
+        raise ValueError("PEPD convergence cohort audit failed")
+    cohort_runs = cohort.get("runs")
+    if not isinstance(cohort_runs, list) or [
+        row.get("seed") if isinstance(row, Mapping) else None for row in cohort_runs
+    ] != list(DEFAULT_SEEDS):
+        raise ValueError("PEPD convergence cohort run identities drifted")
+    cohort_by_seed = {
+        int(row["seed"]): row for row in cohort_runs if isinstance(row, Mapping)
+    }
+
+    contract = handoff.get("versioned_collector_contract")
+    expected_contract_keys = {
+        "protocol",
+        "authorized",
+        "collector",
+        "collector_source_sha256",
+        "required_cli",
+        "legacy_checkpoint_fallback_allowed",
+    }
+    if (
+        not isinstance(contract, Mapping)
+        or set(contract) != expected_contract_keys
+        or contract.get("protocol")
+        != PEPD_AUTHORITATIVE_COLLECTOR_CONTRACT_PROTOCOL
+        or contract.get("authorized") is not True
+        or contract.get("collector")
+        != "experiments/collect_uncertainty_fusion_oof.py"
+        or contract.get("collector_source_sha256")
+        != sha256_source_file(Path(__file__).resolve())
+        or contract.get("required_cli")
+        != ["--pepd-oof-handoff", "--pepd-cohort"]
+        or contract.get("legacy_checkpoint_fallback_allowed") is not False
+    ):
+        raise ValueError("PEPD handoff does not authorize this versioned collector")
+    assignment_contract = handoff.get("oof_assignment_contract")
+    if (
+        not isinstance(assignment_contract, Mapping)
+        or assignment_contract.get("source_field") != "held_out_seed"
+        or assignment_contract.get("allowed_seeds") != list(DEFAULT_SEEDS)
+        or assignment_contract.get("fallback_policy") != "none"
+        or assignment_contract.get("legacy_checkpoint_fallback_allowed") is not False
+        or assignment_contract.get("test_sets_used") != []
+    ):
+        raise ValueError("PEPD OOF assignment contract drifted")
+
     runs: dict[int, dict[str, Any]] = {}
     validation_ids: dict[int, set[str]] = {}
+    validation_groups: dict[int, set[str]] = {}
     training_groups: dict[int, set[str]] = {}
-    manifest_hash = sha256_file(manifest)
-    verifier_source = (
-        PROJECT_ROOT / "experiments" / "verify_probabilistic_pivot_direction_run.py"
-    )
-    for seed in sorted(set(map(int, seeds))):
-        run_dir = checkpoint_root / f"seed_{seed}"
-        checkpoint_path = run_dir / "best.pt"
-        verification_path = run_dir / "verification.json"
-        for path in (checkpoint_path, verification_path):
-            if not path.is_file():
-                raise FileNotFoundError(path)
-        checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
+    authoritative_runs = handoff.get("authoritative_runs")
+    if not isinstance(authoritative_runs, Mapping) or set(authoritative_runs) != {
+        str(seed) for seed in DEFAULT_SEEDS
+    }:
+        raise ValueError("PEPD handoff authoritative run set drifted")
+    for seed in DEFAULT_SEEDS:
+        declared = authoritative_runs[str(seed)]
+        if not isinstance(declared, Mapping) or declared.get("seed") != seed:
+            raise ValueError(f"PEPD handoff seed {seed} identity mismatch")
+        checkpoint_path = _declared_path(
+            declared.get("authoritative_best_checkpoint"),
+            label=f"PEPD seed {seed} checkpoint",
+        )
+        summary_path = _declared_path(
+            declared.get("summary"),
+            label=f"PEPD seed {seed} summary",
+        )
+        verification_path = _declared_path(
+            declared.get("verification"),
+            label=f"PEPD seed {seed} verification",
+        )
+        _require_hash(
+            checkpoint_path,
+            declared.get("authoritative_best_checkpoint_sha256"),
+            label=f"PEPD seed {seed} checkpoint",
+        )
+        _require_hash(
+            summary_path,
+            declared.get("summary_sha256"),
+            label=f"PEPD seed {seed} summary",
+        )
+        _require_hash(
+            verification_path,
+            declared.get("verification_sha256"),
+            label=f"PEPD seed {seed} verification",
+        )
+        checkpoint = torch.load(
+            checkpoint_path,
+            map_location="cpu",
+            weights_only=False,
+        )
         signature = checkpoint.get("signature") or {}
         verification = _read_json(verification_path)
-        if signature.get("protocol") != PROBABILISTIC_PIVOT_DIRECTION_PROTOCOL:
-            raise ValueError(f"wrong checkpoint protocol: {checkpoint_path}")
-        if int(signature.get("seed", -1)) != seed:
-            raise ValueError(f"checkpoint seed mismatch: {checkpoint_path}")
-        if signature.get("manifest_sha256") != manifest_hash:
-            raise ValueError(f"checkpoint manifest mismatch: {checkpoint_path}")
-        if not math.isclose(
-            float(signature.get("validation_fraction", math.nan)),
-            float(validation_fraction),
-            rel_tol=0.0,
-            abs_tol=1e-12,
+        summary = _read_json(summary_path)
+        expected_run_protocol = (
+            PEPD_EXTENSION_PROTOCOL
+            if seed == EXTENSION_SEED
+            else PEPD_CONTINUATION_PROTOCOL
+        )
+        expected_verification_protocol = (
+            PEPD_EXTENSION_VERIFICATION_PROTOCOL
+            if seed == EXTENSION_SEED
+            else PEPD_RUN_VERIFICATION_PROTOCOL
+        )
+        expected_source_phase = (
+            "bounded_extension_v2"
+            if seed == EXTENSION_SEED
+            else "convergence_v1"
+        )
+        changed_from_parent = declared.get(
+            "checkpoint_changed_from_legacy_parent"
+        )
+        authoritative_best_epoch = declared.get("authoritative_best_epoch")
+        if type(changed_from_parent) is not bool:
+            raise ValueError(f"PEPD seed {seed} checkpoint-change flag is malformed")
+        if (
+            type(authoritative_best_epoch) is not int
+            or authoritative_best_epoch < 1
         ):
-            raise ValueError(f"checkpoint validation fraction mismatch: {checkpoint_path}")
-        if verification.get("verified") is not True:
-            raise ValueError(f"run did not pass formal verification: {verification_path}")
-        if verification.get("best_checkpoint_sha256") != sha256_file(checkpoint_path):
-            raise ValueError(f"verification/checkpoint mismatch: {run_dir}")
-        if verification.get("verifier_source_sha256") != sha256_file(verifier_source):
-            raise ValueError("probabilistic training verifier changed after verification")
+            raise ValueError(f"PEPD seed {seed} authoritative epoch is malformed")
+        if (
+            not isinstance(signature, Mapping)
+            or signature.get("protocol") != PEPD_TRAINING_PROTOCOL
+            or declared.get("model_protocol") != PEPD_TRAINING_PROTOCOL
+            or checkpoint.get("protocol") != PEPD_TRAINING_PROTOCOL
+        ):
+            raise ValueError(f"wrong checkpoint protocol: {checkpoint_path}")
+        if type(signature.get("seed")) is not int or signature.get("seed") != seed:
+            raise ValueError(f"checkpoint seed mismatch: {checkpoint_path}")
+        if signature.get("manifest_sha256") != sha256_file(manifest):
+            raise ValueError(f"checkpoint manifest mismatch: {checkpoint_path}")
+        if _mapping_sha256(signature) != declared.get("training_signature_sha256"):
+            raise ValueError(f"PEPD seed {seed} training signature hash mismatch")
+        base_v1_signature = declared.get("base_v1_continuation_signature")
+        authoritative_signature = declared.get("authoritative_run_signature")
+        lineage_signature = declared.get("checkpoint_lineage_signature")
+        lineage_protocol = declared.get("checkpoint_lineage_protocol")
+        if (
+            declared.get("source_phase") != expected_source_phase
+            or declared.get("authoritative_run_protocol")
+            != expected_run_protocol
+            or declared.get("verification_protocol")
+            != expected_verification_protocol
+            or not isinstance(base_v1_signature, Mapping)
+            or base_v1_signature.get("protocol") != PEPD_CONTINUATION_PROTOCOL
+            or _mapping_sha256(base_v1_signature)
+            != declared.get("base_v1_continuation_signature_sha256")
+            or not isinstance(authoritative_signature, Mapping)
+            or authoritative_signature.get("protocol") != expected_run_protocol
+            or _mapping_sha256(authoritative_signature)
+            != declared.get("authoritative_run_signature_sha256")
+            or not isinstance(lineage_signature, Mapping)
+            or lineage_signature.get("protocol") != lineage_protocol
+            or _mapping_sha256(lineage_signature)
+            != declared.get("checkpoint_lineage_signature_sha256")
+        ):
+            raise ValueError(
+                f"PEPD seed {seed} explicit mixed-authority lineage failed"
+            )
+        expected_summary_signature = (
+            summary.get("extension_signature")
+            if seed == EXTENSION_SEED
+            else summary.get("continuation_signature")
+        )
+        expected_base_v1_signature = (
+            summary.get("v1_continuation_signature")
+            if seed == EXTENSION_SEED
+            else summary.get("continuation_signature")
+        )
+        if (
+            summary.get("protocol") != expected_run_protocol
+            or summary.get("status") != "complete"
+            or summary.get("seed") != seed
+            or summary.get("best_checkpoint_sha256") != sha256_file(checkpoint_path)
+            or summary.get("best_epoch") != authoritative_best_epoch
+            or summary.get("checkpoint_changed_from_frozen_parent")
+            is not changed_from_parent
+            or expected_summary_signature != authoritative_signature
+            or expected_base_v1_signature != base_v1_signature
+        ):
+            raise ValueError(
+                f"PEPD seed {seed} mixed-authority summary audit failed"
+            )
+        if checkpoint.get("epoch") != authoritative_best_epoch:
+            raise ValueError(f"PEPD seed {seed} checkpoint epoch binding failed")
+        if checkpoint.get("continuation_signature") != base_v1_signature:
+            raise ValueError(
+                f"PEPD seed {seed} base-v1 checkpoint binding failed"
+            )
+        if lineage_protocol == PEPD_EXTENSION_PROTOCOL:
+            if (
+                seed != EXTENSION_SEED
+                or authoritative_best_epoch <= 60
+                or checkpoint.get("extension_signature") != lineage_signature
+                or lineage_signature != authoritative_signature
+            ):
+                raise ValueError(
+                    f"PEPD seed {seed} extension checkpoint lineage failed"
+                )
+        elif lineage_protocol == PEPD_CONTINUATION_PROTOCOL:
+            if (
+                (seed == EXTENSION_SEED and authoritative_best_epoch > 60)
+                or checkpoint.get("extension_signature") is not None
+                or lineage_signature != base_v1_signature
+            ):
+                raise ValueError(
+                    f"PEPD seed {seed} v1 checkpoint lineage failed"
+                )
+        else:
+            raise ValueError(
+                f"PEPD seed {seed} checkpoint lineage protocol is unauthorized"
+            )
+        verifier_key = (
+            "extension_verifier" if seed == EXTENSION_SEED else "verifier"
+        )
+        verifier_path = (
+            PROJECT_ROOT
+            / "experiments"
+            / (
+                "verify_pepd_convergence_extension_v2.py"
+                if seed == EXTENSION_SEED
+                else "verify_pepd_convergence_run.py"
+            )
+        )
+        if (
+            verification.get("protocol") != expected_verification_protocol
+            or verification.get("verified") is not True
+            or verification.get("converged") is not True
+            or verification.get("seed") != seed
+            or verification.get("best_epoch") != authoritative_best_epoch
+            or verification.get("checkpoint_changed_from_frozen_parent")
+            is not changed_from_parent
+            or verification.get("summary_sha256") != sha256_file(summary_path)
+            or verification.get("best_checkpoint_sha256")
+            != sha256_file(checkpoint_path)
+            or (verification.get("source_identity") or {}).get(verifier_key)
+            != declared.get("verification_source_sha256")
+            or declared.get("verification_source_sha256")
+            != sha256_source_file(verifier_path)
+            or verification.get("public_or_field_evaluation_authorized") is not False
+        ):
+            raise ValueError(f"PEPD seed {seed} verification audit failed")
+        if seed == EXTENSION_SEED and (
+            verification.get("checkpoint_lineage_protocol")
+            != lineage_protocol
+            or verification.get("checkpoint_lineage_signature")
+            != lineage_signature
+            or verification.get("extension_budget_exhausted") is not True
+            or verification.get("further_extension_authorized") is not False
+        ):
+            raise ValueError("PEPD seed 20260721 bounded-extension gate drifted")
+
+        validation_fraction = float(signature.get("validation_fraction", math.nan))
+        if not math.isfinite(validation_fraction):
+            raise ValueError(f"PEPD seed {seed} validation fraction is non-finite")
         train, validation = grouped_train_val_split(
             samples,
             validation_fraction=validation_fraction,
             seed=seed,
         )
-        if sample_ids_hash(validation) != signature.get("validation_sample_ids_sha256"):
-            raise ValueError(f"cannot reconstruct validation split for seed {seed}")
+        train_ids_hash = sample_ids_hash(train)
+        validation_ids_hash = sample_ids_hash(validation)
+        train_group_set = {str(sample.group_id) for sample in train}
+        validation_group_set = {str(sample.group_id) for sample in validation}
+        split = declared.get("grouped_split")
+        if (
+            not isinstance(split, Mapping)
+            or split.get("split_seed") != seed
+            or not math.isclose(
+                float(split.get("validation_fraction", math.nan)),
+                validation_fraction,
+                rel_tol=0.0,
+                abs_tol=1e-12,
+            )
+            or split.get("manifest_sha256") != sha256_file(manifest)
+            or split.get("train_samples") != len(train)
+            or split.get("validation_samples") != len(validation)
+            or split.get("train_sample_ids_sha256") != train_ids_hash
+            or split.get("validation_sample_ids_sha256") != validation_ids_hash
+            or split.get("train_groups") != len(train_group_set)
+            or split.get("validation_groups") != len(validation_group_set)
+            or split.get("train_group_ids_sha256")
+            != _string_set_hash(train_group_set)
+            or split.get("validation_group_ids_sha256")
+            != _string_set_hash(validation_group_set)
+            or split.get("group_overlap") != 0
+            or train_group_set & validation_group_set
+            or signature.get("validation_sample_ids_sha256")
+            != validation_ids_hash
+        ):
+            raise ValueError(f"cannot reconstruct authoritative split for seed {seed}")
+        cohort_row = cohort_by_seed[seed]
+        if (
+            cohort_row.get("verified") is not True
+            or cohort_row.get("converged") is not True
+            or cohort_row.get("authoritative_run_protocol")
+            != expected_run_protocol
+            or cohort_row.get("verification_protocol")
+            != expected_verification_protocol
+            or cohort_row.get("source_phase") != expected_source_phase
+            or cohort_row.get("best_checkpoint_sha256")
+            != sha256_file(checkpoint_path)
+            or cohort_row.get("summary_sha256") != sha256_file(summary_path)
+            or cohort_row.get("verification_sha256")
+            != sha256_file(verification_path)
+        ):
+            raise ValueError(f"PEPD cohort/handoff seed {seed} binding mismatch")
         runs[seed] = {
             "checkpoint": checkpoint,
             "checkpoint_path": checkpoint_path,
+            "summary_path": summary_path,
             "verification_path": verification_path,
         }
         validation_ids[seed] = {sample.sample_id for sample in validation}
-        training_groups[seed] = {sample.group_id for sample in train}
-    return runs, validation_ids, training_groups
+        validation_groups[seed] = validation_group_set
+        training_groups[seed] = train_group_set
+    return (
+        runs,
+        validation_ids,
+        validation_groups,
+        training_groups,
+        handoff,
+        cohort,
+    )
+
+
+def _validate_source_assignments(
+    source_rows: Sequence[Mapping[str, Any]],
+    *,
+    sample_by_id: Mapping[str, Any],
+    runs: Mapping[int, Mapping[str, Any]],
+    validation_ids: Mapping[int, set[str]],
+    validation_groups: Mapping[int, set[str]],
+    training_groups: Mapping[int, set[str]],
+    require_all_seeds: bool = True,
+) -> dict[str, int]:
+    assignments: dict[str, int] = {}
+    group_seed: dict[str, set[int]] = {}
+    for row_index, row in enumerate(source_rows):
+        if row.get("dataset") != "SyncG" or row.get("split") != "train":
+            raise ValueError(f"source OOF row {row_index} is outside SyncG/train")
+        sample_id = row.get("sample_id")
+        group_id = row.get("group_id")
+        seed = row.get("held_out_seed")
+        if not isinstance(sample_id, str) or not sample_id:
+            raise ValueError(f"source OOF row {row_index} has an invalid sample ID")
+        if not isinstance(group_id, str) or not group_id:
+            raise ValueError(f"source OOF row {row_index} has an invalid group ID")
+        if type(seed) is not int or seed not in DEFAULT_SEEDS or seed not in runs:
+            raise ValueError(f"{sample_id}: held-out seed is not authorized")
+        sample = sample_by_id.get(sample_id)
+        if sample is None:
+            raise ValueError(f"{sample_id}: sample is outside the SyncG train manifest")
+        if str(sample.group_id) != group_id:
+            raise ValueError(f"{sample_id}: source/manifest physical group mismatch")
+        if sample_id not in validation_ids[seed]:
+            raise ValueError(
+                f"{sample_id}: held-out seed is not its authoritative validation split"
+            )
+        if group_id not in validation_groups[seed]:
+            raise ValueError(
+                f"{sample_id}: physical group is not in authoritative validation groups"
+            )
+        if group_id in training_groups[seed]:
+            raise RuntimeError(f"{sample_id}: physical group leaks into seed training")
+        assignments[sample_id] = seed
+        group_seed.setdefault(group_id, set()).add(seed)
+    if len(assignments) != len(source_rows):
+        raise ValueError("source OOF contains duplicate sample IDs")
+    leaking_group = next(
+        (group for group, seeds in group_seed.items() if len(seeds) != 1),
+        None,
+    )
+    if leaking_group is not None:
+        raise ValueError(
+            f"physical group is assigned to multiple held-out seeds: {leaking_group}"
+        )
+    if require_all_seeds:
+        expected_ids = set().union(*(validation_ids[seed] for seed in DEFAULT_SEEDS))
+        if set(assignments) != expected_ids:
+            missing = len(expected_ids - set(assignments))
+            extra = len(set(assignments) - expected_ids)
+            raise ValueError(
+                "source OOF is not the complete union of the three "
+                f"authoritative validation splits: missing={missing}, extra={extra}"
+            )
+        wrong_lowest_seed = next(
+            (
+                sample_id
+                for sample_id, seed in assignments.items()
+                if seed
+                != min(
+                    candidate
+                    for candidate in DEFAULT_SEEDS
+                    if sample_id in validation_ids[candidate]
+                )
+            ),
+            None,
+        )
+        if wrong_lowest_seed is not None:
+            raise ValueError(
+                f"{wrong_lowest_seed}: assignment is not the lowest "
+                "authoritative held-out seed"
+            )
+        if set(assignments.values()) != set(DEFAULT_SEEDS):
+            raise ValueError(
+                "source OOF does not cover all authoritative direction seeds"
+            )
+    return assignments
+
+
+def _validate_output_source_bindings(
+    output_rows: Sequence[Mapping[str, Any]],
+    *,
+    source_by_id: Mapping[str, Mapping[str, Any]],
+) -> None:
+    mutable_output_fields = {"vector", "vector_protocol", "runtime_seconds"}
+    for row in output_rows:
+        sample_id = row.get("sample_id")
+        source = source_by_id.get(str(sample_id))
+        if source is None:
+            raise ValueError(f"{sample_id}: output row is absent from source OOF")
+        frozen_output = {
+            key: value for key, value in row.items() if key not in mutable_output_fields
+        }
+        frozen_source = {
+            key: value
+            for key, value in source.items()
+            if key not in mutable_output_fields
+        }
+        if frozen_output != frozen_source:
+            raise ValueError(f"{sample_id}: frozen source OOF fields changed")
 
 
 def main() -> None:
     args = parse_args()
-    for name in ("manifest", "source_oof", "checkpoint_root", "output"):
+    for name in (
+        "manifest",
+        "source_oof",
+        "pepd_cohort",
+        "pepd_oof_handoff",
+        "output",
+    ):
         setattr(args, name, getattr(args, name).resolve())
-    if args.resume and args.overwrite:
-        raise ValueError("--resume and --overwrite are mutually exclusive")
     if args.batch_size <= 0:
         raise ValueError("batch size must be positive")
-    for path in (args.manifest, args.source_oof):
+    for label, path in {
+        "SyncG manifest": args.manifest,
+        "source OOF": args.source_oof,
+        "PEPD cohort": args.pepd_cohort,
+        "PEPD OOF handoff": args.pepd_oof_handoff,
+        "probabilistic OOF output": args.output,
+    }.items():
+        assert_train_only_path(path, label=label)
+    for path in (
+        args.manifest,
+        args.source_oof,
+        args.pepd_cohort,
+        args.pepd_oof_handoff,
+    ):
         if not path.is_file():
             raise FileNotFoundError(path)
 
@@ -221,6 +745,10 @@ def main() -> None:
         raise ValueError("source OOF has the wrong protocol")
     if source_signature.get("test_sets_used") != []:
         raise ValueError("source OOF does not certify train-only collection")
+    if source_signature.get("assignment_policy") != (
+        "lowest seed whose grouped validation contains sample"
+    ):
+        raise ValueError("source OOF assignment policy drifted")
     if (
         source_summary.get("status") != "complete"
         or int(source_summary.get("group_leakage_count", -1)) != 0
@@ -238,31 +766,45 @@ def main() -> None:
     source_by_id = {str(row.get("sample_id")): row for row in source_rows}
     if len(source_by_id) != len(source_rows):
         raise ValueError("source OOF contains duplicate sample IDs")
-    if not set(source_by_id).issubset(sample_by_id):
-        raise ValueError("source OOF contains samples outside the SyncG train manifest")
-
-    runs, validation_ids, training_groups = _load_verified_runs(
-        args.checkpoint_root,
-        args.seeds,
+    (
+        runs,
+        validation_ids,
+        validation_groups,
+        training_groups,
+        handoff,
+        cohort,
+    ) = _load_authoritative_runs(
+        args.pepd_oof_handoff,
+        args.pepd_cohort,
         args.manifest,
         samples,
-        args.validation_fraction,
     )
-    assignments: dict[str, int] = {}
-    leakage: list[str] = []
-    for row in source_rows:
-        sample_id = str(row.get("sample_id"))
-        seed = int(row.get("held_out_seed", -1))
-        if seed not in runs or sample_id not in validation_ids[seed]:
-            raise ValueError(f"{sample_id}: held-out seed is not a v2 validation member")
-        if sample_by_id[sample_id].group_id in training_groups[seed]:
-            leakage.append(sample_id)
-        assignments[sample_id] = seed
-    if leakage:
-        raise RuntimeError(f"group leakage detected for {len(leakage)} samples")
+    assignments = _validate_source_assignments(
+        source_rows,
+        sample_by_id=sample_by_id,
+        runs=runs,
+        validation_ids=validation_ids,
+        validation_groups=validation_groups,
+        training_groups=training_groups,
+    )
+    manifest_groups = {str(sample.group_id) for sample in samples}
+    assigned_groups = {str(row["group_id"]) for row in source_rows}
+    coverage = {
+        "design": (
+            "union of the three authoritative grouped validation splits "
+            "(nominally 10% each); not complete K-fold OOF"
+        ),
+        "manifest_samples": len(samples),
+        "assigned_samples": len(assignments),
+        "manifest_groups": len(manifest_groups),
+        "assigned_groups": len(assigned_groups),
+        "sample_fraction": float(len(assignments) / len(samples)),
+        "group_fraction": float(len(assigned_groups) / len(manifest_groups)),
+        "complete_manifest_oof": False,
+    }
 
     signature = {
-        "protocol": UNCERTAINTY_FUSION_OOF_PROTOCOL,
+        "protocol": PEPD_AUTHORITATIVE_OOF_PROTOCOL,
         "split": "SyncG/train only",
         "manifest_sha256": sha256_file(args.manifest),
         "manifest_protocol_sha256": sha256_file(
@@ -271,42 +813,91 @@ def main() -> None:
         "source_oof_sha256": sha256_file(args.source_oof),
         "source_oof_metadata_sha256": sha256_file(source_meta_path),
         "source_oof_summary_sha256": sha256_file(source_summary_path),
+        "pepd_cohort": str(args.pepd_cohort),
+        "pepd_cohort_sha256": sha256_file(args.pepd_cohort),
+        "pepd_cohort_protocol": PEPD_COHORT_PROTOCOL,
+        "pepd_oof_handoff": str(args.pepd_oof_handoff),
+        "pepd_oof_handoff_sha256": sha256_file(args.pepd_oof_handoff),
+        "pepd_oof_handoff_protocol": PEPD_OOF_HANDOFF_PROTOCOL,
         "direction_runs": {
             str(seed): {
                 "checkpoint_sha256": sha256_file(info["checkpoint_path"]),
+                "summary_sha256": sha256_file(info["summary_path"]),
                 "verification_sha256": sha256_file(info["verification_path"]),
+                "authoritative_run_protocol": handoff[
+                    "authoritative_runs"
+                ][str(seed)]["authoritative_run_protocol"],
+                "verification_protocol": handoff["authoritative_runs"][
+                    str(seed)
+                ]["verification_protocol"],
+                "checkpoint_lineage_protocol": handoff[
+                    "authoritative_runs"
+                ][str(seed)]["checkpoint_lineage_protocol"],
                 "validation_samples": len(validation_ids[seed]),
+                "validation_groups": len(validation_groups[seed]),
             }
             for seed, info in sorted(runs.items())
         },
-        "assignment_policy": "reuse signed v1 OOF held-out seed after exact v2 membership check",
+        "assignment_policy": (
+            "reuse only the signed mask-side row identity/front-end; rebuild "
+            "every vector prediction from the handoff-authorized checkpoint "
+            "whose grouped validation split contains the complete physical group"
+        ),
+        "legacy_checkpoint_fallback_allowed": False,
         "assigned_samples": len(assignments),
-        "assigned_groups": len({row["group_id"] for row in source_rows}),
-        "validation_fraction": float(args.validation_fraction),
+        "assigned_groups": len(assigned_groups),
+        "oof_coverage": coverage,
+        "strict_json_protocol": STRICT_JSON_PROTOCOL,
+        "strict_json_source_sha256": strict_json_source_sha256(),
         "source_sha256": sha256_file(Path(__file__).resolve()),
         "test_sets_used": [],
     }
     metadata_path = _metadata_path(args.output)
     summary_path = _summary_path(args.output)
-    if args.output.exists() and not args.resume and not args.overwrite:
-        raise FileExistsError(f"{args.output} exists; pass --resume or --overwrite")
-    if args.overwrite:
-        for path in (args.output, metadata_path, summary_path):
-            path.unlink(missing_ok=True)
     if args.resume:
         if not args.output.is_file() or not metadata_path.is_file():
             raise FileNotFoundError("resume requires output and metadata files")
+        if summary_path.exists():
+            raise FileExistsError("completed OOF output cannot be resumed")
         if (_read_json(metadata_path).get("signature") or {}) != signature:
             raise ValueError("OOF resume signature mismatch")
-        existing_rows = _read_jsonl(args.output)
+        existing_rows = (
+            [] if args.output.stat().st_size == 0 else _read_jsonl(args.output)
+        )
         completed = {str(row.get("sample_id")) for row in existing_rows}
         if len(completed) != len(existing_rows):
             raise ValueError("existing OOF output contains duplicate IDs")
+        if not completed.issubset(assignments):
+            raise ValueError("existing OOF output contains unauthorized sample IDs")
+        _validate_output_source_bindings(
+            existing_rows,
+            source_by_id=source_by_id,
+        )
+        _validate_source_assignments(
+            existing_rows,
+            sample_by_id=sample_by_id,
+            runs=runs,
+            validation_ids=validation_ids,
+            validation_groups=validation_groups,
+            training_groups=training_groups,
+            require_all_seeds=False,
+        )
     else:
+        existing = [
+            path
+            for path in (args.output, metadata_path, summary_path)
+            if path.exists()
+        ]
+        if existing:
+            raise FileExistsError(
+                "OOF output namespace already exists; refusing to overwrite: "
+                + ", ".join(map(str, existing))
+            )
         args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.touch()
+        with args.output.open("x", encoding="utf-8"):
+            pass
         completed: set[str] = set()
-        _atomic_json(
+        _write_json_no_clobber(
             metadata_path,
             {
                 "schema_version": 1,
@@ -319,6 +910,8 @@ def main() -> None:
                     "opencv": cv2.__version__,
                     "numpy": np.__version__,
                 },
+                "handoff_scope": handoff.get("scope"),
+                "cohort_scope": cohort.get("scope"),
             },
         )
 
@@ -504,6 +1097,20 @@ def main() -> None:
     output_ids = [str(row.get("sample_id")) for row in output_rows]
     if len(output_ids) != len(set(output_ids)) or set(output_ids) != set(assignments):
         raise RuntimeError("probabilistic OOF output is incomplete or duplicated")
+    output_assignments = _validate_source_assignments(
+        output_rows,
+        sample_by_id=sample_by_id,
+        runs=runs,
+        validation_ids=validation_ids,
+        validation_groups=validation_groups,
+        training_groups=training_groups,
+    )
+    if output_assignments != assignments:
+        raise RuntimeError("probabilistic OOF output assignment identity drifted")
+    _validate_output_source_bindings(
+        output_rows,
+        source_by_id=source_by_id,
+    )
     membership_counts = Counter(
         sum(sample_id in ids for ids in validation_ids.values()) for sample_id in output_ids
     )
@@ -516,15 +1123,18 @@ def main() -> None:
     )
     summary = {
         "schema_version": 1,
-        "protocol": UNCERTAINTY_FUSION_OOF_PROTOCOL,
+        "protocol": PEPD_AUTHORITATIVE_OOF_PROTOCOL,
         "status": "complete",
         "samples": len(output_rows),
         "groups": len({str(row.get("group_id")) for row in output_rows}),
+        "oof_coverage": coverage,
         "base_success": base_success,
         "vector_success": vector_success,
         "joint_success": joint_success,
         "group_leakage_count": 0,
         "test_samples_used": 0,
+        "public_samples_used": 0,
+        "field_samples_used": 0,
         "validation_membership_counts": {
             str(key): value for key, value in sorted(membership_counts.items())
         },
@@ -532,8 +1142,16 @@ def main() -> None:
         "output": str(args.output),
         "output_sha256": sha256_file(args.output),
     }
-    _atomic_json(summary_path, summary)
-    print(json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True))
+    _write_json_no_clobber(summary_path, summary)
+    print(
+        json.dumps(
+            summary,
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+            allow_nan=False,
+        )
+    )
     print(summary_path)
 
 

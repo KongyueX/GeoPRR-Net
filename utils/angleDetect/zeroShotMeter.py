@@ -111,7 +111,8 @@ class meterZeroShot():
             geometry_fallback_to_transformer=False,
             residual_calibrator_path=None,
             residual_hybrid_model_path=None,
-            residual_hybrid_max_abs_delta=0.05
+            residual_hybrid_max_abs_delta=0.05,
+            reference_conditioned_backend=None,
     ):
         self._clear_last_error()
         #-O 最近一次推理的指针射线坐标（结果图坐标系，供报告/调试显式绘制）
@@ -119,7 +120,7 @@ class meterZeroShot():
         self._last_reading_details = {}
         self._last_training_artifacts = {}
         #-O 1.得到裁剪图像
-        _,  _, all_crops, _, best_idx = self.meterDetect.image_crop(
+        all_confidences, all_boxes, all_crops, _, best_idx = self.meterDetect.image_crop(
             img,
             confidence=confidence,
             use_origin_when_no_meter=use_origin_when_no_meter
@@ -130,6 +131,16 @@ class meterZeroShot():
             return None, None, None, None, None
         
         corpImg = all_crops[best_idx]
+        meter_confidence = (
+            float(all_confidences[best_idx])
+            if best_idx < len(all_confidences)
+            else None
+        )
+        meter_bbox = (
+            np.asarray(all_boxes[best_idx], dtype=np.float32).copy()
+            if best_idx < len(all_boxes)
+            else None
+        )
         #-O 图像矫正（技术尚不成熟，不推荐使用）
         origin_cropImg = corpImg.copy()
         corpImg = self._correct_meter_image(
@@ -163,7 +174,15 @@ class meterZeroShot():
             )
 
         requested_backend = self._normalize_reading_backend(reading_backend)
-        need_transformer = requested_backend in {"transformer", "compare"} or geometry_fallback_to_transformer
+        independent_direction_backends = {
+            "reference_conditioned_final",
+            "probabilistic_vector",
+        }
+        need_transformer = requested_backend in {
+            "transformer",
+            "compare",
+            "reference_conditioned_final",
+        } or geometry_fallback_to_transformer
         resolved_residual_calibrator_path = self._resolve_residual_calibrator_path(
             residual_calibrator_path,
             requested_backend,
@@ -179,17 +198,26 @@ class meterZeroShot():
         centerY = height//2
         imgCenter = (centerX, centerY)
 
-        if validate_mask_line and not self._is_pointer_mask_line_valid(
+        mask_line_valid = self._is_pointer_mask_line_valid(
                 segImgDis,
                 imgCenter,
                 mask_center_threshold_ratio,
+        )
+        mask_validation_failed = bool(validate_mask_line and not mask_line_valid)
+        if (
+            mask_validation_failed
+            and requested_backend not in independent_direction_backends
         ):
             self._set_last_error("pointer_not_found", "无法找到指针")
             logger.info("指针掩码主轴未经过表盘中心附近，判定无法找到指针")
             return None, None, segImgDis, None, origin_cropImg
+        if mask_validation_failed:
+            logger.info(
+                "指针掩码主轴未经过表盘中心附近；审计后端保留独立概率方向分支"
+            )
 
         transformer_endNum = None
-        if need_transformer:
+        if need_transformer and not mask_validation_failed:
             preImg ,_ = self.vlmMeter.Inference(pointerImg, meterImg, self.label_text)
             imgIndex = preImg.argmax(dim=-1).detach().cpu().numpy().squeeze()
             transformer_endNum = self._apply_reading_offset(self.label_text_list[imgIndex], reading_offset)
@@ -313,6 +341,24 @@ class meterZeroShot():
             geometry_direct_reading,
             geometry_direct_v2_reading,
         )
+        if mask_validation_failed:
+            mask_failure_message = (
+                "pointer mask failed the frozen center-line validation"
+            )
+            for failed_reading in (
+                transformer_reading,
+                geometry_legacy_reading,
+                geometry_direct_reading,
+                geometry_direct_v2_reading,
+                geometry_fusion_reading,
+                geometry_fusion_weighted_reading,
+            ):
+                failed_reading.update(
+                    status=False,
+                    message=mask_failure_message,
+                    resultNum=None,
+                    progress_ratio=None,
+                )
         training_artifacts = {
             "corrected_crop_bgr": corpImgDis.copy() if corpImgDis is not None else None,
             "pointer_mask": segImgDis.copy() if segImgDis is not None else None,
@@ -326,6 +372,10 @@ class meterZeroShot():
             "endAngle": float(endAngle),
             "disAngle": float(disAngle),
             "branch": branch_name,
+            "meter_bbox": meter_bbox,
+            "meter_confidence": meter_confidence,
+            "mask_line_valid": bool(mask_line_valid),
+            "mask_validation_failed": bool(mask_validation_failed),
         }
         mean_calibrator_path = (
             resolved_residual_calibrator_path
@@ -372,18 +422,94 @@ class meterZeroShot():
                 "backend": "geometry_hybrid",
                 "message": "hybrid backend was not requested",
             }
-        selected_reading = self._select_reading_output(
-            reading_backend=requested_backend,
-            transformer_reading=transformer_reading,
-            geometry_reading=geometry_direct_reading,
-            geometry_v2_reading=geometry_direct_v2_reading,
-            geometry_legacy_reading=geometry_legacy_reading,
-            geometry_fusion_weighted_reading=geometry_fusion_weighted_reading,
-            geometry_fusion_calibrated_reading=geometry_fusion_calibrated_reading,
-            geometry_fusion_weighted_calibrated_reading=geometry_fusion_weighted_calibrated_reading,
-            geometry_hybrid_reading=geometry_hybrid_reading,
-            geometry_fallback_to_transformer=geometry_fallback_to_transformer,
-        )
+        reference_conditioned_final_reading = {
+            "status": False,
+            "backend": "reference_conditioned_final",
+            "message": "reference-conditioned backend was not requested",
+        }
+        probabilistic_vector_reading = {
+            "status": False,
+            "backend": "probabilistic_vector",
+            "message": "probabilistic-vector backend was not requested",
+        }
+        if requested_backend == "reference_conditioned_final":
+            if reference_conditioned_backend is None:
+                reference_conditioned_final_reading["message"] = (
+                    "reference-conditioned production artifacts are not configured"
+                )
+            else:
+                try:
+                    try:
+                        from .reference_conditioned_runtime import (
+                            build_front_end_payload,
+                            build_raw_payload,
+                        )
+                    except ImportError:
+                        from reference_conditioned_runtime import (  # type: ignore[no-redef]
+                            build_front_end_payload,
+                            build_raw_payload,
+                        )
+
+                    raw_payload = build_raw_payload(
+                        transformer_reading=transformer_reading,
+                        geometry_reading=geometry_direct_reading,
+                        geometry_v2_reading=geometry_direct_v2_reading,
+                        mean_fusion_reading=geometry_fusion_reading,
+                        weighted_fusion_reading=geometry_fusion_weighted_reading,
+                        training_artifacts=training_artifacts,
+                        scale_start=scaleStart,
+                        scale_end=scaleEnd,
+                    )
+                    front_end_payload = build_front_end_payload(training_artifacts)
+                    reference_conditioned_final_reading = (
+                        reference_conditioned_backend.predict(
+                            image_bgr=img,
+                            raw_row=raw_payload,
+                            front_end=front_end_payload,
+                        )
+                    )
+                except Exception as exc:
+                    logger.exception(
+                        "reference-conditioned final backend inference failed"
+                    )
+                    reference_conditioned_final_reading = {
+                        "status": False,
+                        "backend": "reference_conditioned_final",
+                        "message": (
+                            "reference-conditioned final backend failed: "
+                            f"{type(exc).__name__}: {exc}"
+                        ),
+                        "error_code": "reference_conditioned_backend_exception",
+                    }
+
+        if requested_backend == "probabilistic_vector":
+            probabilistic_vector_reading = (
+                self._run_probabilistic_vector_backend(
+                    reference_conditioned_backend=reference_conditioned_backend,
+                    image_bgr=img,
+                    training_artifacts=training_artifacts,
+                    scale_start=scaleStart,
+                    scale_end=scaleEnd,
+                )
+            )
+
+        if requested_backend == "reference_conditioned_final":
+            selected_reading = dict(reference_conditioned_final_reading)
+        elif requested_backend == "probabilistic_vector":
+            selected_reading = dict(probabilistic_vector_reading)
+        else:
+            selected_reading = self._select_reading_output(
+                reading_backend=requested_backend,
+                transformer_reading=transformer_reading,
+                geometry_reading=geometry_direct_reading,
+                geometry_v2_reading=geometry_direct_v2_reading,
+                geometry_legacy_reading=geometry_legacy_reading,
+                geometry_fusion_weighted_reading=geometry_fusion_weighted_reading,
+                geometry_fusion_calibrated_reading=geometry_fusion_calibrated_reading,
+                geometry_fusion_weighted_calibrated_reading=geometry_fusion_weighted_calibrated_reading,
+                geometry_hybrid_reading=geometry_hybrid_reading,
+                geometry_fallback_to_transformer=geometry_fallback_to_transformer,
+            )
         self._last_reading_details = {
             "requested_backend": requested_backend,
             "branch": branch_name,
@@ -397,6 +523,8 @@ class meterZeroShot():
             "geometry_fusion_weighted_calibrated": geometry_fusion_weighted_calibrated_reading,
             "geometry_hybrid": geometry_hybrid_reading,
             "geometry_legacy": geometry_legacy_reading,
+            "reference_conditioned_final": reference_conditioned_final_reading,
+            "probabilistic_vector": probabilistic_vector_reading,
             "selected": selected_reading,
             "selected_backend": selected_reading.get("backend"),
         }
@@ -415,6 +543,8 @@ class meterZeroShot():
             "geometry_fusion_calibrated",
             "geometry_fusion_weighted_calibrated",
             "geometry_hybrid",
+            "reference_conditioned_final",
+            "probabilistic_vector",
         } and selected_reading.get("pointer_angle") is not None:
             model_pointer_ray = self._get_pointer_ray_from_image_angle(
                 corpImgDis,
@@ -429,7 +559,10 @@ class meterZeroShot():
             self._draw_pointer_ray(segImgDis, model_pointer_ray)
 
         if not selected_reading.get("status"):
-            self._set_last_error("reading_backend_failed", selected_reading.get("message") or "读数失败")
+            self._set_last_error(
+                selected_reading.get("error_code") or "reading_backend_failed",
+                selected_reading.get("message") or "读数失败",
+            )
             return None, None, segImgDis, None, origin_cropImg
 
         return selected_reading.get("endNum"), selected_reading.get("resultNum"), segImgDis, corpImgDis, origin_cropImg
@@ -494,10 +627,197 @@ class meterZeroShot():
             "geometry-hybrid-gate": "geometry_hybrid_gate",
             "adaptive_hybrid": "geometry_hybrid_gate",
             "hybrid_gate": "geometry_hybrid_gate",
+            "reference-conditioned-final": "reference_conditioned_final",
+            "reference_conditioned": "reference_conditioned_final",
+            "paper_final": "reference_conditioned_final",
+            "paper-final": "reference_conditioned_final",
+            "ours_final": "reference_conditioned_final",
+            "ours-final": "reference_conditioned_final",
+            "raw_probabilistic_vector": "probabilistic_vector",
+            "raw-probabilistic-vector": "probabilistic_vector",
+            "probabilistic-vector": "probabilistic_vector",
+            "probabilistic_direction": "probabilistic_vector",
+            "probabilistic-direction": "probabilistic_vector",
             "legacy_geometry": "geometry_legacy",
             "geometry_old": "geometry_legacy",
         }
         return aliases.get(requested, requested)
+
+    @staticmethod
+    def _finite_payload_float(value):
+        try:
+            normalized = float(value)
+        except (TypeError, ValueError):
+            return None
+        return normalized if math.isfinite(normalized) else None
+
+    @classmethod
+    def _probabilistic_vector_uncertainty(cls, vector_payload):
+        return {
+            "angle_std_degrees": cls._finite_payload_float(
+                vector_payload.get("angle_std_degrees")
+            ),
+            "angle_log_variance": cls._finite_payload_float(
+                vector_payload.get("angle_log_variance")
+            ),
+            "angle_bin_entropy": cls._finite_payload_float(
+                vector_payload.get("angle_bin_entropy")
+            ),
+            "angle_bin_resultant_length": cls._finite_payload_float(
+                vector_payload.get("angle_bin_resultant_length")
+            ),
+            "pivot_peak": cls._finite_payload_float(
+                vector_payload.get("pivot_peak")
+            ),
+            "pivot_spatial_entropy": cls._finite_payload_float(
+                vector_payload.get("pivot_spatial_entropy")
+            ),
+            "pivot_top2_margin": cls._finite_payload_float(
+                vector_payload.get("pivot_top2_margin")
+            ),
+            "direction_raw_norm": cls._finite_payload_float(
+                vector_payload.get("direction_raw_norm")
+            ),
+            "coverage_claim": (
+                "diagnostic_only; angular sigma is not a calibrated interval"
+            ),
+        }
+
+    def _run_probabilistic_vector_backend(
+            self,
+            *,
+            reference_conditioned_backend,
+            image_bgr,
+            training_artifacts,
+            scale_start,
+            scale_end,
+    ):
+        """Return the frozen direction expert verbatim, without calibration/routing."""
+
+        if reference_conditioned_backend is None:
+            return {
+                "status": False,
+                "backend": "probabilistic_vector",
+                "error_code": "probabilistic_vector_artifacts_not_configured",
+                "message": (
+                    "probabilistic-vector production artifacts are not configured"
+                ),
+                "prediction": None,
+                "progress": None,
+                "direction": None,
+                "resultNum": None,
+                "calibration_applied": False,
+                "router_applied": False,
+            }
+        try:
+            try:
+                from .reference_conditioned_runtime import build_front_end_payload
+            except ImportError:
+                from reference_conditioned_runtime import (  # type: ignore[no-redef]
+                    build_front_end_payload,
+                )
+
+            front_end_payload = build_front_end_payload(training_artifacts)
+            vector_payload = reference_conditioned_backend.predict_direction(
+                image_bgr,
+                front_end_payload,
+                scale_start=float(scale_start),
+                scale_end=float(scale_end),
+            )
+        except Exception as exc:
+            logger.exception("probabilistic-vector backend inference failed")
+            return {
+                "status": False,
+                "backend": "probabilistic_vector",
+                "error_code": "probabilistic_vector_backend_exception",
+                "message": (
+                    "probabilistic-vector backend failed: "
+                    f"{type(exc).__name__}: {exc}"
+                ),
+                "prediction": None,
+                "progress": None,
+                "direction": None,
+                "resultNum": None,
+                "calibration_applied": False,
+                "router_applied": False,
+                "artifact_audit": dict(
+                    getattr(reference_conditioned_backend, "audit", {}) or {}
+                ),
+            }
+
+        reading = dict(vector_payload or {})
+        reading.update(
+            backend="probabilistic_vector",
+            calibration_applied=False,
+            router_applied=False,
+            decision_policy="raw_probabilistic_vector",
+            artifact_audit=dict(
+                getattr(reference_conditioned_backend, "audit", {}) or {}
+            ),
+        )
+        reading["uncertainty"] = self._probabilistic_vector_uncertainty(reading)
+        for key, value in reading["uncertainty"].items():
+            if key != "coverage_claim":
+                reading[key] = value
+        if reading.get("status") is not True:
+            reading.setdefault(
+                "error_code",
+                "probabilistic_vector_inference_failed",
+            )
+            reading.setdefault(
+                "message",
+                "probabilistic direction inference failed",
+            )
+            reading["prediction"] = None
+            reading["progress"] = None
+            reading["direction"] = None
+            reading["resultNum"] = None
+            reading["endNum"] = None
+            reading["endNum_float"] = None
+            return reading
+
+        try:
+            prediction = float(reading["prediction"])
+            progress = float(reading["progress"])
+            pointer_angle = float(reading["pointer_angle"])
+            direction = [float(value) for value in reading["direction"]]
+            if (
+                not math.isfinite(prediction)
+                or not math.isfinite(progress)
+                or not math.isfinite(pointer_angle)
+                or len(direction) != 2
+                or not all(math.isfinite(value) for value in direction)
+            ):
+                raise ValueError("non-finite or malformed vector values")
+        except (KeyError, TypeError, ValueError) as exc:
+            reading.update(
+                status=False,
+                error_code="invalid_probabilistic_vector_payload",
+                message=f"probabilistic direction payload is invalid: {exc}",
+                prediction=None,
+                progress=None,
+                direction=None,
+                resultNum=None,
+                endNum=None,
+                endNum_float=None,
+            )
+            return reading
+
+        reading.update(
+            prediction=prediction,
+            progress=progress,
+            pointer_angle=pointer_angle,
+            direction=direction,
+            resultNum=prediction,
+            progress_ratio=progress,
+            endNum=None,
+            endNum_float=None,
+            message=(
+                "raw probabilistic direction vector returned without "
+                "calibration or routing"
+            ),
+        )
+        return reading
 
     @staticmethod
     def _build_geometry_fusion_reading(geometry_reading, geometry_v2_reading):

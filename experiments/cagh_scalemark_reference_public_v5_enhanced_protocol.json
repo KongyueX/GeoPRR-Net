@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "protocol": "cagh_scalemark_reference_public_v5_enhanced_tight_roi_v1",
+  "status": "frozen_public_only",
+  "purpose": "Independent public screen of the multi-scale, dual-endpoint reliability-aware ScaleMark V5 head.",
+  "evidence_role": "public architecture screen; not a submission result until the PEPD backbone is retrained on the same fresh fit groups",
+  "scope": {
+    "allowed_dataset": "SyncG",
+    "allowed_split": "train",
+    "field_detector_allowed": false,
+    "field_or_confirmatory_data_allowed": false,
+    "xiangmu1_or_xiangmu2_allowed": false
+  },
+  "inputs": {
+    "manifest_sha256": "429e4bc24515b4bf7a1d6fb638210e653872d287ba1edc0c1d6e193cb99d28ca",
+    "manifest_protocol_sha256": "315e17ac8aba46d00f84a0060dba145d7e036fa096bd26423dbd34a170600c59",
+    "backbone_checkpoint_sha256": "6c3560f5c29f430db33721beb753ec4f5582580792fa098c4a6f1057746a01d9",
+    "enhanced_head_sha256": "cc2f9759d35e12dd3f4aec9a3e51c33d2aa749c04c14c1f261683c277076ef48",
+    "base_tight_roi_adapter_sha256": "ca5b838b17b2bdb609b44e579bdf8476277ee2f8e40b6fa92927b7a7b27d9a54",
+    "base_tight_roi_protocol_sha256": "2e948fbf3867dd4d61be6ab32c387b005d100988e4211dff7c22338d9d210fdf"
+  },
+  "head": {
+    "protocol": "cagh_scalemark_reference_multiscale_reliability_v5",
+    "tick_loss": "multiscale_dense_tick_loss",
+    "geometry_loss": "reliability-aware geometry_loss",
+    "deployable_endpoint": "geometric mean of direct and tick-conditioned endpoint posteriors"
+  },
+  "split": {
+    "method": "grouped hash ordering from grouped_train_val_split",
+    "seed": 20261206,
+    "validation_fraction": 0.1,
+    "fit_samples": 14400,
+    "fit_groups": 651,
+    "validation_samples": 1600,
+    "validation_groups": 74,
+    "fit_ids_sha256": "2196ac78b7279afad20e14c1db10ccaadb3846057b5716d54762600c114f593c",
+    "validation_ids_sha256": "3bd7765f75cc954d5cc10763a21c3ab468fcecc975fd824b86731032205eaf6b",
+    "fit_groups_sha256": "dd5a79f00d3b83371be93fb5481f0c5a6473fcf4359581cb30e230bd1806ec32",
+    "validation_groups_sha256": "89a23b78155c798f9fed9f62cd22b21f41d477d7a478f424dccf85e005eed697"
+  },
+  "crop_contract_sha256": "ddb7f1aeaf81757d77b69608ac31eb38be7565716a07c69f633286d590c74bf4",
+  "augmentation": {
+    "brightness_probability": 0.8,
+    "brightness_delta": 0.16,
+    "contrast_probability": 0.8,
+    "contrast_min": 0.65,
+    "contrast_max": 1.4,
+    "gamma_probability": 0.45,
+    "gamma_min": 0.65,
+    "gamma_max": 1.55,
+    "blur_probability": 0.35,
+    "blur_sigma_max": 1.6,
+    "noise_probability": 0.3,
+    "noise_sigma_max": 10.0,
+    "jpeg_probability": 0.35,
+    "jpeg_quality_min": 50,
+    "jpeg_quality_max": 94,
+    "perspective_probability": 0.35,
+    "perspective_fraction_max": 0.035,
+    "boundary_trim_probability": 0.35,
+    "boundary_trim_fraction_max": 0.06
+  },
+  "training": {
+    "backbone": "frozen pinned PEPD seed_20260720",
+    "trainable_component": "DenseTickConditionedReferenceHeadV5",
+    "seeds": [20261306, 20261316, 20261326],
+    "stage_a_epochs": 6,
+    "stage_b_epochs": 12,
+    "batch_size": 16,
+    "learning_rate": 0.0004,
+    "weight_decay": 0.0001,
+    "checkpoint_selection": "terminal fixed A6+B12 iterate"
+  },
+  "known_limitation": {
+    "frozen_pepd_was_trained_on_an_older_group_split": true,
+    "fresh_validation_is_guaranteed_unseen_by_enhanced_head": true,
+    "fresh_validation_is_guaranteed_unseen_by_frozen_pepd": false,
+    "paper_claim_allowed": false
+  },
+  "artifacts": {
+    "default_root": "C:/pointer_read/cagh_scalemark_reference_public_v5_enhanced",
+    "old_or_running_v5_artifacts_overwritten": false,
+    "telemetry": "endpoint/arc/validity plus multi-scale, branch-agreement, circle, arc-support, and reliability fields"
+  }
+}
