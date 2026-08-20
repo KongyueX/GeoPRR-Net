@@ -1,5 +1,0 @@
-# app_config.yaml
-server:
-  host: "0.0.0.0"
-  port: 30600
-  workers: 4

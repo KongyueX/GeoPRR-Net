@@ -1,20 +1,14 @@
-"""Stable public interface for the ReMSTNet-v3 paper model.
-
-The validated research implementation remains in ``experiments.remst_block_net``
-so that historical checkpoints and experiment scripts keep their original
-imports.  This package provides a small, paper-facing import surface without
-duplicating or rewriting that implementation.
-"""
+"""Stable public interface for the ReMSTNet-v3 paper model."""
 from __future__ import annotations
 
 from pathlib import Path
 from typing import Any, Final
 
-from experiments.remst_block_net import (
+from .model import (
     ADAPTIVE_REMST_NET_ARCHITECTURE,
     CoordinatedReMSTNet,
     initialize_adaptive_remst_net,
-    remst_block_parameter_counts,
+    remstnet_parameter_counts,
 )
 
 
@@ -61,5 +55,5 @@ __all__ = [
     "ReMSTNetV3",
     "build_remstnet_v3",
     "load_foundation_initialized_remstnet_v3",
-    "remst_block_parameter_counts",
+    "remstnet_parameter_counts",
 ]

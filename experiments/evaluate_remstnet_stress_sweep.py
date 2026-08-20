@@ -14,8 +14,8 @@ import torch
 from experiments import evaluate_a15_2_mett_stress_sweep as mett_stress
 from experiments.evaluate_a15_2_mett_syncg import posterior_batch_diagnostics
 from experiments.evaluate_remstnet_real_domains import _validate_full_model
-from experiments.remst_block_net import CoordinatedReMSTNet
-from experiments.train_remst_block_pilot import load_remst_block_checkpoint
+from experiments.train_remstnet import load_remstnet_checkpoint
+from remstnet.model import CoordinatedReMSTNet
 
 
 PROTOCOL: Final[str] = "remstnet_v3_syncg_stress_sweep_v1"
@@ -63,7 +63,7 @@ def evaluate_stress_sweep(
     _require(set(by_id) == set(ordered_sample_ids), "stress manifest/target rosters differ")
     ordered_manifest = tuple(by_id[sample_id] for sample_id in ordered_sample_ids)
 
-    model, metadata = load_remst_block_checkpoint(checkpoint_path, device=device)
+    model, metadata = load_remstnet_checkpoint(checkpoint_path, device=device)
     _require(isinstance(model, CoordinatedReMSTNet), "stress checkpoint is not coordinated ReMSTNet")
     source_seed = _validate_full_model(model, metadata)
     model.eval()

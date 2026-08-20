@@ -31,8 +31,8 @@ from experiments.benchmark_a15_2_fteb_efficiency import (
 from experiments.benchmark_a15_2_mett_efficiency import _endpoint_from_anchor
 from experiments.evaluate_remstnet_real_domains import _validate_full_model
 from experiments.prepare_a13_correction_scene_split import DEFAULT_CORRECTION_TRAIN_MANIFEST
-from experiments.remst_block_net import CoordinatedReMSTNet, remst_block_parameter_counts
-from experiments.train_remst_block_pilot import load_remst_block_checkpoint
+from experiments.train_remstnet import load_remstnet_checkpoint
+from remstnet.model import CoordinatedReMSTNet, remstnet_parameter_counts
 
 
 PROTOCOL: Final[str] = "remstnet_v3_matched_cuda_efficiency_v1"
@@ -85,7 +85,7 @@ def build_runtime(arm: str, checkpoint_path: Path, *, device_name: str = DEVICE_
     _require(torch.cuda.is_bf16_supported(), "formal efficiency benchmark requires BF16")
     checkpoint = Path(checkpoint_path).resolve()
     if arm == "full_remstnet":
-        model, metadata = load_remst_block_checkpoint(checkpoint, device=device)
+        model, metadata = load_remstnet_checkpoint(checkpoint, device=device)
         _require(isinstance(model, CoordinatedReMSTNet), "checkpoint is not coordinated ReMSTNet")
         _validate_full_model(model, metadata)
         model.eval()
@@ -114,7 +114,7 @@ def build_runtime(arm: str, checkpoint_path: Path, *, device_name: str = DEVICE_
 def parameter_inventory(runtime: Runtime) -> dict[str, Any]:
     if runtime.arm == "full_remstnet":
         _require(isinstance(runtime.module, CoordinatedReMSTNet), "full runtime module differs")
-        counts = remst_block_parameter_counts(runtime.module)
+        counts = remstnet_parameter_counts(runtime.module)
         return {
             "total_unique": counts["total_unique"],
             "trainable_during_remstnet_fit": counts["trainable"],

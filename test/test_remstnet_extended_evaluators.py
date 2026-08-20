@@ -12,11 +12,11 @@ from experiments.evaluate_remstnet_real_domains import (
     ReMSTNetRealDomainError,
     _validate_full_model,
 )
-from experiments.remst_block_net import (
+from remstnet.model import (
     ADAPTIVE_REMST_NET_ARCHITECTURE,
     CoordinatedReMSTNet,
 )
-from experiments.train_remst_block_pilot import ADAPTIVE_PROTOCOL
+from experiments.train_remstnet import ADAPTIVE_PROTOCOL
 import torch
 
 

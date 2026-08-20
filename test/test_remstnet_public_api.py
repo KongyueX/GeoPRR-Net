@@ -7,7 +7,7 @@ from remstnet import (
     ARCHITECTURE_ID,
     ReMSTNetV3,
     build_remstnet_v3,
-    remst_block_parameter_counts,
+    remstnet_parameter_counts,
 )
 
 
@@ -24,7 +24,7 @@ class ReMSTNetPublicApiTests(unittest.TestCase):
         self.assertTrue(model.use_progress_mixing)
         self.assertTrue(model.learnable_budget_gain)
 
-        counts = remst_block_parameter_counts(model)
+        counts = remstnet_parameter_counts(model)
         self.assertEqual(counts["component_sum"], counts["total_unique"])
         self.assertGreater(counts["trainable"], 0)
         self.assertLess(counts["trainable"], counts["total_unique"])

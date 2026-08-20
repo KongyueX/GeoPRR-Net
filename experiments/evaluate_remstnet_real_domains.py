@@ -12,8 +12,8 @@ import torch
 
 from experiments import evaluate_a15_2_mett_real_domains as mett_real
 from experiments.evaluate_a15_2_mett_syncg import posterior_batch_diagnostics
-from experiments.remst_block_net import ADAPTIVE_REMST_NET_ARCHITECTURE, CoordinatedReMSTNet
-from experiments.train_remst_block_pilot import ADAPTIVE_PROTOCOL, load_remst_block_checkpoint
+from experiments.train_remstnet import ADAPTIVE_PROTOCOL, load_remstnet_checkpoint
+from remstnet.model import ADAPTIVE_REMST_NET_ARCHITECTURE, CoordinatedReMSTNet
 
 
 PROTOCOL: Final[str] = "remstnet_v3_real_domain_frozen_evaluation_v1"
@@ -283,7 +283,7 @@ def evaluate_real_domains(
         torch.backends.cudnn.benchmark = False
         torch.backends.cudnn.deterministic = True
     torch.manual_seed(mett_real.BOOTSTRAP_SEED)
-    model, metadata = load_remst_block_checkpoint(checkpoint_path, device=device)
+    model, metadata = load_remstnet_checkpoint(checkpoint_path, device=device)
     _require(isinstance(model, CoordinatedReMSTNet), "checkpoint is not coordinated ReMSTNet")
     source_seed = _validate_full_model(model, metadata)
     model.eval()

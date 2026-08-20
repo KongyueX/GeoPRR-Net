@@ -13,9 +13,9 @@ from typing import Any, Final
 import numpy as np
 
 from experiments.evaluate_a15_2_mett_syncg import CONDITIONS
-from experiments.evaluate_remst_block_syncg import PROTOCOL as EVALUATION_PROTOCOL
-from experiments.remst_block_net import ADAPTIVE_REMST_NET_ARCHITECTURE
-from experiments.train_remst_block_pilot import ADAPTIVE_PROTOCOL
+from experiments.evaluate_remstnet_syncg import PROTOCOL as EVALUATION_PROTOCOL
+from experiments.train_remstnet import ADAPTIVE_PROTOCOL
+from remstnet.model import ADAPTIVE_REMST_NET_ARCHITECTURE
 
 
 PROTOCOL: Final[str] = "remstnet_v3_multiseed_external_comparison_v1"

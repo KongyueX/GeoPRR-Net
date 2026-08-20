@@ -7,12 +7,12 @@ from pathlib import Path
 
 from experiments import evaluate_a15_2_mett_real_domains as shared
 from experiments.evaluate_remstnet_real_domains import PROTOCOL as EVALUATION_PROTOCOL
-from experiments.remst_block_net import ADAPTIVE_REMST_NET_ARCHITECTURE
+from remstnet.model import ADAPTIVE_REMST_NET_ARCHITECTURE
 from experiments.summarize_remstnet_real_domains import (
     EXPECTED_SEEDS,
     summarize_evaluations,
 )
-from experiments.train_remst_block_pilot import ADAPTIVE_PROTOCOL
+from experiments.train_remstnet import ADAPTIVE_PROTOCOL
 
 
 def _record(target: float, error: float) -> dict[str, object]:

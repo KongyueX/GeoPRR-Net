@@ -13,8 +13,8 @@ import numpy as np
 
 from experiments import evaluate_a15_2_mett_real_domains as shared
 from experiments.evaluate_remstnet_real_domains import PROTOCOL as EVALUATION_PROTOCOL
-from experiments.remst_block_net import ADAPTIVE_REMST_NET_ARCHITECTURE
-from experiments.train_remst_block_pilot import ADAPTIVE_PROTOCOL
+from experiments.train_remstnet import ADAPTIVE_PROTOCOL
+from remstnet.model import ADAPTIVE_REMST_NET_ARCHITECTURE
 
 
 PROTOCOL: Final[str] = "remstnet_v3_real_domain_three_seed_summary_v1"

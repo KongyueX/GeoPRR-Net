@@ -8,6 +8,7 @@ import math
 import os
 import random
 import shutil
+import tempfile
 import time
 from collections import Counter
 from collections.abc import Mapping, Sequence
@@ -68,8 +69,10 @@ LEARNING_RATE = 3e-4
 WEIGHT_DECAY = 1e-4
 BOOTSTRAP_REPETITIONS = 5000
 DEFAULT_OUTPUT = PROJECT_ROOT / "artifacts/runs/cagh_scalemark_reference_head_probe_v1"
-DEFAULT_CACHE_ROOT = Path(
-    r"C:\CodexTemp\PointerMeterReaderFastAPI\cagh_scalemark_reference_head_probe_v1"
+DEFAULT_CACHE_ROOT = (
+    Path(tempfile.gettempdir())
+    / "PointerMeterReaderFastAPI"
+    / "cagh_scalemark_reference_head_probe_v1"
 )
 DEFAULT_COMPARISON = (
     PROJECT_ROOT

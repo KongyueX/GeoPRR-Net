@@ -6,14 +6,14 @@ import unittest
 from pathlib import Path
 
 from experiments.evaluate_a15_2_mett_syncg import CONDITIONS
-from experiments.evaluate_remst_block_syncg import PROTOCOL as EVALUATION_PROTOCOL
-from experiments.remst_block_net import ADAPTIVE_REMST_NET_ARCHITECTURE
+from experiments.evaluate_remstnet_syncg import PROTOCOL as EVALUATION_PROTOCOL
+from remstnet.model import ADAPTIVE_REMST_NET_ARCHITECTURE
 from experiments.summarize_remstnet_multiseed import (
     EXPECTED_SOURCE_SEEDS,
     ReMSTNetMultiseedError,
     summarize_evaluations,
 )
-from experiments.train_remst_block_pilot import ADAPTIVE_PROTOCOL
+from experiments.train_remstnet import ADAPTIVE_PROTOCOL
 
 
 class ReMSTNetMultiseedSummaryTests(unittest.TestCase):

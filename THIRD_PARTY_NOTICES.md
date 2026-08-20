@@ -57,9 +57,8 @@ before redistributing any derived checkpoint.
   ignored by Git and must not be redistributed from this repository without
   additional permission.
 
-Generated manifests, prediction caches, fitted calibrators, and raw result
-tables are also ignored by Git by default. A small, manually reviewed snapshot
-of aggregate formal results is retained in `docs/FORMAL_RESULTS_CN.md`; it
-contains no images, per-sample predictions, labels, or model parameters. Review
-the target venue's artifact policy before publishing any generated model or
-data-derived artifact.
+Generated manifests, prediction caches, fitted calibrators, checkpoints and
+per-sample result files are ignored by Git. The reviewed aggregate tables in
+`results/README.md` and `results/remstnet_v3_tables.json` contain no images,
+per-sample predictions, labels or model parameters. Review the target venue's
+artifact policy before publishing any generated model or data-derived artifact.

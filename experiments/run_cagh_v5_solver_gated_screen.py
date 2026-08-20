@@ -198,7 +198,6 @@ GPU_PROCESS_FILTER_POLICY = (
 )
 WDDM_GRAPHICS_ALLOWLIST = (
     "applicationframehost.exe",
-    "chatgpt.exe",
     "chrome.exe",
     "code.exe",
     "dwm.exe",

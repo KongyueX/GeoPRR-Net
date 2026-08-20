@@ -1,4 +1,4 @@
-"""Audit the code-only public release surface declared by its inventory.
+"""Audit the ReMSTNet-v3 code-only release declared by its inventory.
 
 Workspace mode reports files that still need to be added to Git. Release mode
 turns that report into an error. Neither mode stages, commits, or pushes files.
@@ -248,6 +248,7 @@ def run_audit(root: Path, inventory_path: Path, *, mode: str) -> Mapping[str, An
 
     tracked = set(_git_lines(root, "ls-files"))
     untracked_required = sorted(path for path in declared if path not in tracked)
+    undeclared_tracked = sorted(tracked.difference(declared))
     tracked_paths = sorted(tracked)
     forbidden_prefixes = [
         str(value) for value in inventory.get("forbidden_tracked_prefixes", [])
@@ -316,9 +317,10 @@ def run_audit(root: Path, inventory_path: Path, *, mode: str) -> Mapping[str, An
     }
     if mode == "release":
         errors["untracked_required_files"] = untracked_required
+        errors["undeclared_tracked_files"] = undeclared_tracked
     failed = {name: values for name, values in errors.items() if values}
     return {
-        "protocol": "pointer_meter_public_code_release_audit_v1",
+        "protocol": "remstnet_public_code_release_audit_v1",
         "status": "pass" if not failed else "fail",
         "mode": mode,
         "declared_files": len(declared),
@@ -326,8 +328,15 @@ def run_audit(root: Path, inventory_path: Path, *, mode: str) -> Mapping[str, An
         "external_modules": sorted(external),
         "untracked_required_files": untracked_required,
         "warnings": (
-            {"untracked_required_files": untracked_required}
-            if mode == "workspace" and untracked_required
+            {
+                name: values
+                for name, values in {
+                    "untracked_required_files": untracked_required,
+                    "undeclared_tracked_files": undeclared_tracked,
+                }.items()
+                if mode == "workspace" and values
+            }
+            if mode == "workspace"
             else {}
         ),
         "errors": failed,

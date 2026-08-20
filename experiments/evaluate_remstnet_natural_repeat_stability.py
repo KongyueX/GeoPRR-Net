@@ -13,9 +13,9 @@ import torch
 
 from experiments import evaluate_a15_2_mett_natural_repeat_stability as mett_repeat
 from experiments.evaluate_remstnet_real_domains import _validate_full_model
-from experiments.remst_block_net import CoordinatedReMSTNet
 from experiments.score_natural_repeat_stability import PredictionValue
-from experiments.train_remst_block_pilot import load_remst_block_checkpoint
+from experiments.train_remstnet import load_remstnet_checkpoint
+from remstnet.model import CoordinatedReMSTNet
 
 
 PROTOCOL: Final[str] = "remstnet_v3_natural_repeat_stability_v1"
@@ -74,7 +74,7 @@ def _run_checkpoint(
     dict[str, dict[str, bool]],
     dict[str, Any],
 ]:
-    model, metadata = load_remst_block_checkpoint(checkpoint, device=device)
+    model, metadata = load_remstnet_checkpoint(checkpoint, device=device)
     _require(isinstance(model, CoordinatedReMSTNet), "checkpoint is not coordinated ReMSTNet")
     observed_seed = _validate_full_model(model, metadata)
     _require(observed_seed == seed, "loaded ReMSTNet seed differs")

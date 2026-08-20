@@ -12,8 +12,8 @@ from typing import Any, Final
 import numpy as np
 
 from experiments.evaluate_a15_2_mett_syncg import CONDITIONS
-from experiments.evaluate_remst_block_syncg import PROTOCOL as EVALUATION_PROTOCOL
-from experiments.remst_block_net import (
+from experiments.evaluate_remstnet_syncg import PROTOCOL as EVALUATION_PROTOCOL
+from remstnet.model import (
     ADAPTIVE_BUDGET_ONLY_REMST_NET_ARCHITECTURE,
     ADAPTIVE_REMST_NET_ARCHITECTURE,
     COORDINATED_REMST_NET_ARCHITECTURE,
@@ -21,7 +21,7 @@ from experiments.remst_block_net import (
     REMST_BLOCK_NET_ARCHITECTURE,
 )
 from experiments.summarize_remstnet_multiseed import _candidate_record, _metrics
-from experiments.train_remst_block_pilot import (
+from experiments.train_remstnet import (
     ADAPTIVE_BUDGET_ABLATION_PROTOCOL,
     ADAPTIVE_PROTOCOL,
     COORDINATED_PROTOCOL,

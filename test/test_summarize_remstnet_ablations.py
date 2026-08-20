@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 from experiments.evaluate_a15_2_mett_syncg import CONDITIONS
-from experiments.evaluate_remst_block_syncg import PROTOCOL as EVALUATION_PROTOCOL
+from experiments.evaluate_remstnet_syncg import PROTOCOL as EVALUATION_PROTOCOL
 from experiments.summarize_remstnet_ablations import (
     ARM_IDENTITIES,
     FACTORIAL_LABELS,

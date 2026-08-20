@@ -18,8 +18,8 @@ ReMSTNet-Adaptive-Budget-Progress-Mixing-Relation-Moment-Backbone-v3
 > [!IMPORTANT]
 > ReMSTNet operates on cropped ROIs and predicts progress in `[0, 1]`. It is not
 > an end-to-end meter detector, printed-scale recognizer or physical-unit
-> reader. The earlier FastAPI service and V5 → OCR → GARC full-auto pipeline
-> remain available in the [historical guide](README_LEGACY.md).
+> reader. This release intentionally contains only the final ReMSTNet-v3 paper
+> model, the code required to fit and evaluate it, and the reported tables.
 
 ## Highlights
 
@@ -74,12 +74,11 @@ end-to-end field deployment.
  Missing relation geometry ───────────────────────► exact raw-posterior fallback
 ```
 
-The validated implementation is in
-[`experiments/remst_block_net.py`](experiments/remst_block_net.py). A stable,
-paper-facing import surface is provided by [`remstnet`](remstnet/__init__.py).
-Architecture notes are available in
-[`docs/REMST_BLOCK_NET_ARCHITECTURE_CN.md`](docs/REMST_BLOCK_NET_ARCHITECTURE_CN.md)
-and [`docs/REMST_ARCHITECTURE_CN.md`](docs/REMST_ARCHITECTURE_CN.md).
+The validated implementation and stable public API are in
+[`remstnet/model.py`](remstnet/model.py) and
+[`remstnet/__init__.py`](remstnet/__init__.py). Detailed architecture and
+evidence notes are available in
+[`docs/REMSTNET_ARCHITECTURE_CN.md`](docs/REMSTNET_ARCHITECTURE_CN.md).
 
 ## Main results
 
@@ -107,11 +106,11 @@ measurements are in:
 
 ```text
 remstnet/
-  __init__.py                              stable ReMSTNet-v3 public API
+  __init__.py                              stable ReMSTNet-v3 import surface
+  model.py                                 final architecture and initialization
 experiments/
-  remst_block_net.py                       final model implementation
-  train_remst_block_pilot.py               v1/v2/v3 and ablation training
-  evaluate_remst_block_syncg.py            SyncG condition evaluation
+  train_remstnet.py                         final fit and mechanism ablations
+  evaluate_remstnet_syncg.py                SyncG condition evaluation
   evaluate_remstnet_real_domains.py        real-source ROI evaluation
   evaluate_remstnet_stress_sweep.py        controlled stress sweep
   evaluate_remstnet_natural_repeat_stability.py
@@ -124,17 +123,16 @@ results/
   README.md                                publication tables and caveats
   remstnet_v3_tables.json                  machine-readable values
 test/
-  test_remst_block_net.py                  model invariants and fallback
+  test_remstnet_model.py                    model invariants and fallback
   test_remstnet_extended_evaluators.py     evaluator coverage
   test_remstnet_public_api.py              stable import surface
   test_remstnet_release_tables.py          table consistency
-README_LEGACY.md                           historical API and full-auto pipeline
 THIRD_PARTY_NOTICES.md                     dependency/data provenance notes
 ```
 
 Primary executable entrypoints are the
-[trainer](experiments/train_remst_block_pilot.py),
-[SyncG evaluator](experiments/evaluate_remst_block_syncg.py),
+[trainer](experiments/train_remstnet.py),
+[SyncG evaluator](experiments/evaluate_remstnet_syncg.py),
 [real-source evaluator](experiments/evaluate_remstnet_real_domains.py),
 [stress evaluator](experiments/evaluate_remstnet_stress_sweep.py),
 [natural-repeat evaluator](experiments/evaluate_remstnet_natural_repeat_stability.py),
@@ -165,7 +163,7 @@ This constructs the final architecture with unfitted weights; it does not
 reproduce the reported predictions.
 
 ```powershell
-.venv/Scripts/python.exe -c "from remstnet import ARCHITECTURE_ID, build_remstnet_v3, remst_block_parameter_counts; m = build_remstnet_v3(); print(ARCHITECTURE_ID); print(remst_block_parameter_counts(m))"
+.venv/Scripts/python.exe -c "from remstnet import ARCHITECTURE_ID, build_remstnet_v3, remstnet_parameter_counts; m = build_remstnet_v3(); print(ARCHITECTURE_ID); print(remstnet_parameter_counts(m))"
 ```
 
 Expected parameter inventory:
@@ -220,7 +218,7 @@ All commands are run from the repository root.
 ### 1. Fit the final architecture
 
 ```powershell
-.venv/Scripts/python.exe -m experiments.train_remst_block_pilot `
+.venv/Scripts/python.exe -m experiments.train_remstnet `
   --correction-train-manifest <correction_train_manifest.json> `
   --direct-checkpoint <direct_foundation.pt> `
   --architecture-variant adaptive_budget_progress_mixing_v3 `
@@ -237,7 +235,7 @@ ReMST initialization seeds 20262213–20262215 and sample-order seeds
 ### 2. Evaluate SyncG conditions
 
 ```powershell
-.venv/Scripts/python.exe -m experiments.evaluate_remst_block_syncg `
+.venv/Scripts/python.exe -m experiments.evaluate_remstnet_syncg `
   --checkpoint <remstnet_v3_seed1.pt> `
   --manifest <scene_holdout_manifest.json> `
   --reference <reference_evaluation.json> `
@@ -317,7 +315,7 @@ Run the focused paper-model suite:
 
 ```powershell
 .venv/Scripts/python.exe -m unittest `
-  test.test_remst_block_net `
+  test.test_remstnet_model `
   test.test_remstnet_extended_evaluators `
   test.test_summarize_remstnet_multiseed `
   test.test_summarize_remstnet_ablations `
@@ -333,7 +331,9 @@ Audit the declared public release surface without changing Git state:
 ```
 
 The release inventory is
-[`experiments/public_release_inventory.json`](experiments/public_release_inventory.json).
+[`experiments/public_release_inventory.json`](experiments/public_release_inventory.json),
+and the read-only audit implementation is
+[`experiments/check_public_release.py`](experiments/check_public_release.py).
 
 ## Statistical reporting and interpretation
 
@@ -353,30 +353,6 @@ The release inventory is
   model comparison. It is retrospective evidence, not untouched confirmation.
 - The natural-repeat result is preservation, not improvement: ReMSTNet, Raw and
   SARN are identical on that cohort.
-
-## Historical FastAPI and full-auto pipeline
-
-The original service remains runnable with `python main.py`, but it is not the
-ReMSTNet paper interface. Its request schema, camera endpoints, batch inference
-tool and model-weight layout are documented in
-[`README_LEGACY.md`](README_LEGACY.md).
-
-The earlier V5 → OCR → GARC code-only release is retained for provenance:
-
-- [V5 enhanced OOF runner](experiments/run_cagh_v5_enhanced_oof.py)
-- [GARC-aligned OCR corpus builder](experiments/build_garc_aligned_syncg_numeric_ocr_public.py)
-- [public meter-detector builder](experiments/build_syncg_meter_detector_public.py)
-  and [frontend](experiments/syncg_meter_detector_frontend.py)
-- [GARC full-auto reader](experiments/garc_full_auto_public.py)
-- [field-bundle input builder](experiments/build_field_blind_bundle_inputs.py),
-  [materializer](experiments/materialize_field_blind_bundles.py) and
-  [event-driven handoff](experiments/run_field_bundle_materialization_after_detector_event_driven.ps1)
-- [blind multimethod evaluator](experiments/field_blind_multimethod.py)
-- [paper-result assembler](experiments/assemble_paper_results.py)
-- [public release checker](experiments/check_public_release.py)
-
-These historical components are maintained as reproducibility/provenance code;
-they are not interchangeable with the final cropped-ROI ReMSTNet-v3 model.
 
 ## Citation
 
