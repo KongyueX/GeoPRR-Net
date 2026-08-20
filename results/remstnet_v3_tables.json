@@ -1,0 +1,352 @@
+{
+  "schema_version": 1,
+  "paper": {
+    "title": "ReMSTNet: Relation-Encoded Moment-Exact Transport for Pointer-Gauge Reading under Projective Distortion",
+    "status": "manuscript results release",
+    "year": 2026
+  },
+  "model": {
+    "display_name": "ReMSTNet-v3",
+    "architecture_id": "ReMSTNet-Adaptive-Budget-Progress-Mixing-Relation-Moment-Backbone-v3",
+    "total_unique_parameters": 4271638,
+    "trainable_parameters_in_remst_fit": 261528,
+    "frozen_foundation_parameters": 4010110
+  },
+  "metric": {
+    "name": "normalized mean absolute error",
+    "abbreviation": "NMAE",
+    "lower_is_better": true,
+    "prediction_domain": "normalized pointer progress in [0, 1]"
+  },
+  "dataset_inventory": [
+    {
+      "dataset": "SyncG Fit",
+      "images": 14442,
+      "groups": 131,
+      "group_unit": "scene stem",
+      "role": "foundation fitting; parent roster for correction development"
+    },
+    {
+      "dataset": "SyncG correction subset",
+      "images": 6616,
+      "groups": 60,
+      "group_unit": "scene stem",
+      "role": "ReMST-module fitting only"
+    },
+    {
+      "dataset": "SyncG Scene-Holdout",
+      "images": 1558,
+      "groups": 14,
+      "group_unit": "scene stem",
+      "role": "disjoint retrospective same-domain benchmark"
+    },
+    {
+      "dataset": "FieldGauge-ROI Test-A",
+      "images": 434,
+      "groups": 11,
+      "group_unit": "source-directory group",
+      "role": "retrospective test only"
+    },
+    {
+      "dataset": "FieldGauge-ROI Test-B",
+      "images": 814,
+      "groups": 20,
+      "group_unit": "source-directory group",
+      "role": "retrospective test only"
+    },
+    {
+      "dataset": "External-ROI",
+      "images": 147,
+      "groups": 21,
+      "group_unit": "provisional capture session",
+      "role": "retrospective test only"
+    },
+    {
+      "dataset": "RF100-derived",
+      "images": 151,
+      "groups": 35,
+      "group_unit": "conservative source/evaluation group",
+      "role": "retrospective test only"
+    },
+    {
+      "dataset": "Natural-repeat",
+      "images": 1203,
+      "groups": 31,
+      "repeat_units": 86,
+      "group_unit": "physical gauge",
+      "role": "repeat-stability audit"
+    }
+  ],
+  "syncg_scene_holdout": {
+    "sample_count": 1558,
+    "group_count": 14,
+    "model_fits": 3,
+    "summary": "arithmetic mean and sample standard deviation across three independently fitted models",
+    "conditions": [
+      "clean",
+      "blur_mild",
+      "blur_strong",
+      "perspective_25",
+      "perspective_45",
+      "perspective_45_blur",
+      "all_conditions",
+      "projective_pooled"
+    ],
+    "rows": [
+      {
+        "method": "SARN-v2 + Direct",
+        "clean": {"mean": 0.007910, "sample_sd": 0.000411},
+        "blur_mild": {"mean": 0.007932, "sample_sd": 0.000397},
+        "blur_strong": {"mean": 0.008207, "sample_sd": 0.000420},
+        "perspective_25": {"mean": 0.014422, "sample_sd": 0.000343},
+        "perspective_45": {"mean": 0.024302, "sample_sd": 0.000398},
+        "perspective_45_blur": {"mean": 0.026219, "sample_sd": 0.000564},
+        "all_conditions": {"mean": 0.014832, "sample_sd": 0.000346},
+        "projective_pooled": {"mean": 0.021648, "sample_sd": 0.000435}
+      },
+      {
+        "method": "SARN-v2 + EfficientNet-B0",
+        "clean": {"mean": 0.008099, "sample_sd": 0.000323},
+        "blur_mild": {"mean": 0.008064, "sample_sd": 0.000338},
+        "blur_strong": {"mean": 0.008282, "sample_sd": 0.000472},
+        "perspective_25": {"mean": 0.014177, "sample_sd": 0.000607},
+        "perspective_45": {"mean": 0.021578, "sample_sd": 0.000968},
+        "perspective_45_blur": {"mean": 0.023411, "sample_sd": 0.000995},
+        "all_conditions": {"mean": 0.013935, "sample_sd": 0.000606},
+        "projective_pooled": {"mean": 0.019722, "sample_sd": 0.000852}
+      },
+      {
+        "method": "SARN-v2 + MobileNetV3-Large",
+        "clean": {"mean": 0.009355, "sample_sd": 0.000435},
+        "blur_mild": {"mean": 0.009421, "sample_sd": 0.000489},
+        "blur_strong": {"mean": 0.009807, "sample_sd": 0.000385},
+        "perspective_25": {"mean": 0.016255, "sample_sd": 0.000489},
+        "perspective_45": {"mean": 0.025584, "sample_sd": 0.001962},
+        "perspective_45_blur": {"mean": 0.027589, "sample_sd": 0.001664},
+        "all_conditions": {"mean": 0.016335, "sample_sd": 0.000716},
+        "projective_pooled": {"mean": 0.023143, "sample_sd": 0.001361}
+      },
+      {
+        "method": "ReMSTNet-v3",
+        "clean": {"mean": 0.008099, "sample_sd": 0.000323},
+        "blur_mild": {"mean": 0.008064, "sample_sd": 0.000338},
+        "blur_strong": {"mean": 0.008282, "sample_sd": 0.000471},
+        "perspective_25": {"mean": 0.010330, "sample_sd": 0.000476},
+        "perspective_45": {"mean": 0.013884, "sample_sd": 0.000441},
+        "perspective_45_blur": {"mean": 0.015564, "sample_sd": 0.000299},
+        "all_conditions": {"mean": 0.010704, "sample_sd": 0.000373},
+        "projective_pooled": {"mean": 0.013259, "sample_sd": 0.000391}
+      }
+    ],
+    "relative_reduction_vs_sarn_efficientnet_b0": {
+      "all_conditions_percent": 23.19,
+      "projective_pooled_percent": 32.77
+    },
+    "interpretation": "The clean and blur-only endpoints are preserved while the main gain is concentrated in projective conditions."
+  },
+  "real_source_controlled_transformations": {
+    "model_fits": 3,
+    "conditions_per_dataset": 6,
+    "interval": "95% group-bootstrap confidence interval with 20000 replicates after rowwise averaging across three seeds",
+    "retraining_uncertainty_included": false,
+    "rows": [
+      {
+        "dataset": "FieldGauge-ROI Test-A",
+        "images": 434,
+        "groups": 11,
+        "remstnet_mean": 0.116689,
+        "remstnet_sample_sd": 0.012464,
+        "sarn_efficientnet_b0_mean": 0.116963,
+        "sarn_efficientnet_b0_sample_sd": 0.012283,
+        "paired_delta": -0.000275,
+        "ci95": [-0.000438, -0.000116]
+      },
+      {
+        "dataset": "FieldGauge-ROI Test-B",
+        "images": 814,
+        "groups": 20,
+        "remstnet_mean": 0.112915,
+        "remstnet_sample_sd": 0.015050,
+        "sarn_efficientnet_b0_mean": 0.113247,
+        "sarn_efficientnet_b0_sample_sd": 0.014806,
+        "paired_delta": -0.000332,
+        "ci95": [-0.000487, -0.000177]
+      },
+      {
+        "dataset": "External-ROI",
+        "images": 147,
+        "groups": 21,
+        "remstnet_mean": 0.201162,
+        "remstnet_sample_sd": 0.057755,
+        "sarn_efficientnet_b0_mean": 0.201135,
+        "sarn_efficientnet_b0_sample_sd": 0.057342,
+        "paired_delta": 0.000027,
+        "ci95": [-0.000106, 0.000155]
+      },
+      {
+        "dataset": "RF100-derived",
+        "images": 151,
+        "groups": 35,
+        "remstnet_mean": 0.050289,
+        "remstnet_sample_sd": 0.015948,
+        "sarn_efficientnet_b0_mean": 0.051548,
+        "sarn_efficientnet_b0_sample_sd": 0.015739,
+        "paired_delta": -0.001259,
+        "ci95": [-0.001893, -0.000530]
+      }
+    ]
+  },
+  "factorial_ablation": {
+    "source_fit_seed": 20262022,
+    "training_seed_uncertainty_included": false,
+    "rows": [
+      {
+        "progress_mixing": false,
+        "adaptive_budget": false,
+        "trainable_parameters": 252183,
+        "all_conditions_nmae": 0.010800,
+        "projective_pooled_nmae": 0.013858
+      },
+      {
+        "progress_mixing": true,
+        "adaptive_budget": false,
+        "trainable_parameters": 261527,
+        "all_conditions_nmae": 0.010682,
+        "projective_pooled_nmae": 0.013623
+      },
+      {
+        "progress_mixing": false,
+        "adaptive_budget": true,
+        "trainable_parameters": 252184,
+        "all_conditions_nmae": 0.011067,
+        "projective_pooled_nmae": 0.014394
+      },
+      {
+        "progress_mixing": true,
+        "adaptive_budget": true,
+        "trainable_parameters": 261528,
+        "all_conditions_nmae": 0.010276,
+        "projective_pooled_nmae": 0.012811,
+        "final_model": true
+      }
+    ],
+    "interaction": {
+      "estimate": -0.000674,
+      "ci95": [-0.000792, -0.000550]
+    }
+  },
+  "perspective_stress": {
+    "source_fit_seed": 20262022,
+    "rows": [
+      {
+        "angle_degrees": 0,
+        "raw_nmae": 0.007738,
+        "sarn_nmae": 0.007738,
+        "remstnet_nmae": 0.007738,
+        "relation_available_percent": 0.0
+      },
+      {
+        "angle_degrees": 15,
+        "raw_nmae": 0.012094,
+        "sarn_nmae": 0.010437,
+        "remstnet_nmae": 0.009111,
+        "relation_available_percent": 95.0
+      },
+      {
+        "angle_degrees": 30,
+        "raw_nmae": 0.019283,
+        "sarn_nmae": 0.015121,
+        "remstnet_nmae": 0.010092,
+        "relation_available_percent": 96.4
+      },
+      {
+        "angle_degrees": 45,
+        "raw_nmae": 0.041001,
+        "sarn_nmae": 0.019950,
+        "remstnet_nmae": 0.012521,
+        "relation_available_percent": 96.1
+      },
+      {
+        "angle_degrees": 60,
+        "raw_nmae": 0.141743,
+        "sarn_nmae": 0.141743,
+        "remstnet_nmae": 0.141743,
+        "relation_available_percent": 0.0,
+        "fallback_to_raw": true
+      }
+    ]
+  },
+  "efficiency": {
+    "environment": "Windows, Python 3.11, PyTorch 2.11.0+cu128, NVIDIA GeForce RTX 4060, BF16 autocast",
+    "scope": "model forward timing; image decoding and SARN materialization excluded",
+    "rows": [
+      {
+        "method": "Raw foundation",
+        "parameters_millions": 4.010,
+        "trainable_parameters_millions": 0.000,
+        "batch1_mean_ms": 7.973,
+        "batch1_p50_ms": 7.834,
+        "batch1_p95_ms": 9.635,
+        "batch8_ms_per_sample": 1.123,
+        "batch8_samples_per_second": 890.82,
+        "peak_memory_batch1_mib": 30.9,
+        "peak_memory_batch8_mib": 81.7
+      },
+      {
+        "method": "Raw + SARN twin endpoint",
+        "parameters_millions": 4.010,
+        "trainable_parameters_millions": 0.000,
+        "batch1_mean_ms": 14.551,
+        "batch1_p50_ms": 14.506,
+        "batch1_p95_ms": 15.142,
+        "batch8_ms_per_sample": 2.118,
+        "batch8_samples_per_second": 472.25,
+        "peak_memory_batch1_mib": 31.8,
+        "peak_memory_batch8_mib": 88.7
+      },
+      {
+        "method": "ReMSTNet-v3",
+        "parameters_millions": 4.272,
+        "trainable_parameters_millions": 0.262,
+        "batch1_mean_ms": 30.640,
+        "batch1_p50_ms": 30.596,
+        "batch1_p95_ms": 31.969,
+        "batch8_ms_per_sample": 4.138,
+        "batch8_samples_per_second": 241.67,
+        "peak_memory_batch1_mib": 34.2,
+        "peak_memory_batch8_mib": 94.9
+      }
+    ]
+  },
+  "natural_repeat": {
+    "samples": 1203,
+    "physical_gauge_groups": 31,
+    "repeat_units": 86,
+    "model_fits": 3,
+    "methods_identical": true,
+    "full_denominator_nmae": {
+      "mean": 0.11586695425678328,
+      "sample_sd": 0.017559495326798354
+    },
+    "mean_within_unit_prediction_range": {
+      "mean": 0.14314699541531908,
+      "sample_sd": 0.013271020680319642
+    },
+    "mean_within_unit_population_sd": {
+      "mean": 0.04079081306760173,
+      "sample_sd": 0.003271916585604262
+    },
+    "paired_differences": {
+      "remstnet_minus_raw": {"estimate": 0.0, "ci95": [0.0, 0.0]},
+      "remstnet_minus_sarn": {"estimate": 0.0, "ci95": [0.0, 0.0]}
+    },
+    "interpretation": "ReMSTNet preserves rather than improves natural-repeat stability in this cohort."
+  },
+  "reporting_notes": [
+    "SyncG Scene-Holdout is scene-disjoint from fitting but was reused during historical method comparison, so it is a retrospective benchmark rather than untouched confirmation.",
+    "Real-source experiments apply controlled transformations to real cropped ROIs; they do not establish performance under arbitrary natural camera tilt.",
+    "Real-source confidence intervals condition on rowwise three-seed averages and do not include uncertainty over retraining.",
+    "Moment-exact means feasible first-moment equality within FP32 numerical tolerance.",
+    "Near progress boundaries, clipping can shorten a requested displacement but cannot reverse its direction."
+  ]
+}
