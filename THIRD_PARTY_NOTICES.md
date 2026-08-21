@@ -47,6 +47,17 @@ The initialization and all SyncG-trained checkpoints are ignored local
 artifacts. Review the applicable PyTorch/torchvision, ImageNet, and SyncG terms
 before redistributing any derived checkpoint.
 
+## OCR deployment runtime and weights (not tracked by Git)
+
+The independent physical-reading replay uses PP-OCRv4 mobile detector and
+recognizer weights through RapidOCR and ONNX Runtime. PaddleOCR and RapidOCR
+declare Apache-2.0 licensing; ONNX Runtime declares the MIT license. The local
+runtime directories and downloaded OCR weights remain outside Git. Any public
+artifact that redistributes those packages or weights must retain the applicable
+license and notice files. The paper experiment integrates these existing models
+without fine-tuning them on the industrial photographs and does not claim an OCR
+architecture contribution.
+
 ## Public datasets
 
 - SyncG is downloaded from the pinned Hugging Face commit recorded by the
@@ -56,6 +67,11 @@ before redistributing any derived checkpoint.
   repository currently marks the dataset license as TBD. Its images are
   ignored by Git and must not be redistributed from this repository without
   additional permission.
+- The repository retains an optional legacy Pointer-10K preparation utility,
+  but Pointer-10K is not used in the current ReMSTNet manuscript or released
+  result tables. If that utility is used separately, the upstream VDN release
+  applies CC BY-NC-SA 4.0 to the dataset; images and annotations remain ignored
+  by Git and are not redistributed here.
 
 Generated manifests, prediction caches, fitted calibrators, checkpoints and
 per-sample result files are ignored by Git. The reviewed aggregate tables in

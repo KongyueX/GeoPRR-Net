@@ -296,14 +296,22 @@ class DenseTickConditionedReferenceHeadV5(nn.Module):
         )
         arc_tick_mass = torch.sum(weight * inside, dim=1).clamp(0.0, 1.0)
 
-        endpoint_grid = endpoints.float().clamp(0.0, 1.0) * 2.0 - 1.0
-        endpoint_support = F.grid_sample(
-            tick_probability.float(),
-            endpoint_grid[:, :, None, :],
-            mode="bilinear",
-            padding_mode="border",
-            align_corners=True,
-        )[:, 0, :, 0]
+        # Exact align_corners=True bilinear sampling on the registered 64x64
+        # grid.  Expressing it as triangular basis weights avoids CUDA's
+        # non-deterministic grid_sample backward while retaining gradients to
+        # both the tick map and the predicted endpoint coordinates.
+        endpoint_grid = endpoints.float().clamp(0.0, 1.0)
+        delta = torch.abs(
+            endpoint_grid[:, :, None, :] - grid[None, None, :, :]
+        )
+        basis = (
+            F.relu(1.0 - delta[..., 0] * 63.0)
+            * F.relu(1.0 - delta[..., 1] * 63.0)
+        )
+        endpoint_support = torch.sum(
+            tick_probability[:, 0].float().flatten(1)[:, None, :] * basis,
+            dim=2,
+        )
         peak = tick_probability.flatten(2).amax(2)[:, 0].clamp_min(1e-6)
         endpoint_support = (
             endpoint_support.mean(1) / peak

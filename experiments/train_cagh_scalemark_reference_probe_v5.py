@@ -613,6 +613,8 @@ class CanonicalTightROIDataset(Dataset):
         target_progress = (float(sample.ground_truth) - float(sample.scale_start)) / denominator
         return {
             "image": normalized_rgb_tensor(crop),
+            "pointer_tail": torch.from_numpy(pointer[0].astype(np.float32)),
+            "pointer_tip": torch.from_numpy(pointer[1].astype(np.float32)),
             "endpoints": torch.from_numpy(np.stack((marks[0], marks[-1])).astype(np.float32)),
             "tick_heatmap": heatmap,
             "gt_start": torch.tensor(math.radians(start_degrees), dtype=torch.float32),

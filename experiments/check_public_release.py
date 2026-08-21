@@ -62,15 +62,21 @@ def forbidden_release_paths(
     prefixes: Sequence[str],
     suffixes: Sequence[str],
     patterns: Sequence[str] = (),
+    exceptions: Sequence[str] = (),
 ) -> list[str]:
     """Return release paths that look like private data or generated artifacts."""
 
     normalised_prefixes = tuple(_normalise_relative(str(value)).rstrip("/") + "/" for value in prefixes)
     normalised_suffixes = tuple(str(value).casefold() for value in suffixes)
     compiled_patterns = [re.compile(str(value), flags=re.I) for value in patterns]
+    normalised_exceptions = {
+        _normalise_relative(str(value)) for value in exceptions
+    }
     violations: list[str] = []
     for raw in paths:
         path = _normalise_relative(str(raw))
+        if path in normalised_exceptions:
+            continue
         folded = path.casefold()
         if (
             path.startswith(normalised_prefixes)
@@ -261,17 +267,25 @@ def run_audit(root: Path, inventory_path: Path, *, mode: str) -> Mapping[str, An
         str(value)
         for value in inventory.get("forbidden_declared_path_patterns", [])
     ]
+    forbidden_path_exceptions = [
+        str(value) for value in inventory.get("forbidden_path_exceptions", [])
+    ]
+    undeclared_path_exceptions = sorted(
+        set(forbidden_path_exceptions).difference(declared)
+    )
     forbidden_declared = forbidden_release_paths(
         declared,
         prefixes=forbidden_prefixes,
         suffixes=forbidden_suffixes,
         patterns=forbidden_path_patterns,
+        exceptions=forbidden_path_exceptions,
     )
     forbidden_tracked = forbidden_release_paths(
         tracked_paths,
         prefixes=forbidden_prefixes,
         suffixes=forbidden_suffixes,
         patterns=forbidden_path_patterns,
+        exceptions=forbidden_path_exceptions,
     )
     invalid_category_suffixes = category_suffix_violations(inventory)
 
@@ -309,6 +323,7 @@ def run_audit(root: Path, inventory_path: Path, *, mode: str) -> Mapping[str, An
         "missing_locked_distributions": missing_distributions,
         "forbidden_declared_files": forbidden_declared,
         "forbidden_tracked_files": forbidden_tracked,
+        "undeclared_forbidden_path_exceptions": undeclared_path_exceptions,
         "invalid_category_suffixes": invalid_category_suffixes,
         "missing_gitignore_rules": missing_ignore_rules,
         "forbidden_content": forbidden_content,

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release_scope": "Code-only reproduction surface for the final ReMSTNet-v3 paper model and its reported aggregate tables",
+  "release_scope": "Current ReMSTNet-v3 manuscript, compile assets, reproduction code, and reported aggregate tables",
   "categories": {
     "paper_model_and_reproduction": [
       "experiments/__init__.py",
@@ -24,6 +24,7 @@
       "experiments/a8_internal_crossfold_protocol.py",
       "experiments/a8_sarn_aligned_local_residual.py",
       "experiments/automatic_numeric_range.py",
+      "experiments/automatic_numeric_range_public_protocol.py",
       "experiments/benchmark_a15_2_fteb_efficiency.py",
       "experiments/benchmark_a15_2_mett_efficiency.py",
       "experiments/benchmark_cagh_v5_paper_efficiency.py",
@@ -58,6 +59,9 @@
       "experiments/evaluate_paper_syncg_only_pgsiam.py",
       "experiments/evaluate_projective_geometry_guided_siam.py",
       "experiments/evaluate_remstnet_natural_repeat_stability.py",
+      "experiments/evaluate_remstnet_clean_external.py",
+      "experiments/evaluate_remstnet_ocr_end_to_end.py",
+      "experiments/export_remstnet_ocr_paper_assets.py",
       "experiments/evaluate_remstnet_real_domains.py",
       "experiments/evaluate_remstnet_stress_sweep.py",
       "experiments/evaluate_remstnet_syncg.py",
@@ -66,6 +70,8 @@
       "experiments/fadr_multiseed_protocol.py",
       "experiments/formal_environment.py",
       "experiments/freeze_vdn_phase2_syncg_train_inventory.py",
+      "experiments/garc_numeric_range_bridge.py",
+      "experiments/garc_posterior_consensus.py",
       "experiments/geoattn_resnet18_progress.py",
       "experiments/geopepd.py",
       "experiments/geopepd_progress.py",
@@ -75,6 +81,7 @@
       "experiments/prepare_a11_core_scene_split.py",
       "experiments/prepare_a13_correction_scene_split.py",
       "experiments/prepare_a8_physical_manifests.py",
+      "experiments/pretrained_numeric_ocr.py",
       "experiments/probabilistic_pivot_direction.py",
       "experiments/probe_vdn_phase2_determinism.py",
       "experiments/progress_calibrator.py",
@@ -102,11 +109,13 @@
       "experiments/summarize_remstnet_ablations.py",
       "experiments/summarize_remstnet_multiseed.py",
       "experiments/summarize_remstnet_real_domains.py",
+      "experiments/summarize_remstnet_vdn_intersection.py",
       "experiments/summarize_support_normalized_cbam_pilot.py",
       "experiments/support_aware_roi_normalization.py",
       "experiments/support_aware_roi_normalization_v2.py",
       "experiments/support_geometry_multiview_efficientnet.py",
       "experiments/support_quad_rectification.py",
+      "experiments/syncg_numeric_ocr.py",
       "experiments/syncg_lightweight_regression_baselines.py",
       "experiments/train_a11_scort_syncg.py",
       "experiments/train_a13_scort_s2_correction_only.py",
@@ -169,8 +178,40 @@
       "THIRD_PARTY_NOTICES.md",
       "docs/REMSTNET_ARCHITECTURE_CN.md"
     ],
+    "paper_manuscript": [
+      "paper/remstnet_electronics_overleaf/README_CN.md",
+      "paper/remstnet_electronics_overleaf/manuscript.tex",
+      "paper/remstnet_electronics_overleaf/references.bib",
+      "paper/remstnet_electronics_overleaf/remstnet_electronics_manuscript.pdf",
+      "paper/remstnet_electronics_overleaf/Definitions/journalnames.tex",
+      "paper/remstnet_electronics_overleaf/Definitions/logo-mdpi.eps",
+      "paper/remstnet_electronics_overleaf/Definitions/logo-orcid.pdf",
+      "paper/remstnet_electronics_overleaf/Definitions/logo-updates.eps",
+      "paper/remstnet_electronics_overleaf/Definitions/mdpi_apacite.bst",
+      "paper/remstnet_electronics_overleaf/Definitions/mdpi_apacite.sty",
+      "paper/remstnet_electronics_overleaf/Definitions/mdpi_chicago.bst",
+      "paper/remstnet_electronics_overleaf/Definitions/mdpi.bst",
+      "paper/remstnet_electronics_overleaf/Definitions/mdpi.cls",
+      "paper/remstnet_electronics_overleaf/figures/remstnet_architecture.pdf",
+      "paper/remstnet_electronics_overleaf/figures/remstnet_architecture.png",
+      "paper/remstnet_electronics_overleaf/figures/remstnet_core_performance.pdf",
+      "paper/remstnet_electronics_overleaf/figures/remstnet_core_performance.png",
+      "paper/remstnet_electronics_overleaf/figures/remstnet_mechanism_validity.pdf",
+      "paper/remstnet_electronics_overleaf/figures/remstnet_mechanism_validity.png",
+      "paper/remstnet_electronics_overleaf/figures/remstnet_ocr_end_to_end_deployment.pdf",
+      "paper/remstnet_electronics_overleaf/figures/remstnet_ocr_end_to_end_deployment.png",
+      "paper/remstnet_electronics_overleaf/figures/remstnet_real_transfer.pdf",
+      "paper/remstnet_electronics_overleaf/figures/remstnet_real_transfer.png",
+      "paper/remstnet_electronics_overleaf/figures/remstnet_supp_casebook.pdf",
+      "paper/remstnet_electronics_overleaf/figures/remstnet_supp_casebook.png",
+      "paper/remstnet_electronics_overleaf/figures/remstnet_supp_diagnostics.pdf",
+      "paper/remstnet_electronics_overleaf/figures/remstnet_supp_diagnostics.png",
+      "paper/remstnet_electronics_overleaf/figures/remstnet_task_scope.pdf",
+      "paper/remstnet_electronics_overleaf/figures/remstnet_task_scope.png"
+    ],
     "paper_result_tables": [
       "results/README.md",
+      "results/remstnet_ocr_end_to_end_deployment.json",
       "results/remstnet_v3_tables.json"
     ],
     "release_support": [
@@ -187,6 +228,9 @@
       "test/test_summarize_remstnet_multiseed.py",
       "test/test_summarize_remstnet_ablations.py",
       "test/test_summarize_remstnet_real_domains.py",
+      "test/test_summarize_remstnet_vdn_intersection.py",
+      "test/test_evaluate_remstnet_clean_external.py",
+      "test/test_evaluate_remstnet_ocr_end_to_end.py",
       "test/test_remstnet_public_api.py",
       "test/test_remstnet_release_tables.py"
     ]
@@ -199,9 +243,13 @@
     "experiments/evaluate_remstnet_real_domains.py",
     "experiments/evaluate_remstnet_stress_sweep.py",
     "experiments/evaluate_remstnet_natural_repeat_stability.py",
+    "experiments/evaluate_remstnet_clean_external.py",
+    "experiments/evaluate_remstnet_ocr_end_to_end.py",
+    "experiments/export_remstnet_ocr_paper_assets.py",
     "experiments/summarize_remstnet_multiseed.py",
     "experiments/summarize_remstnet_ablations.py",
     "experiments/summarize_remstnet_real_domains.py",
+    "experiments/summarize_remstnet_vdn_intersection.py",
     "experiments/benchmark_remstnet_efficiency.py"
   ],
   "local_module_roots": [
@@ -216,6 +264,7 @@
     "utils/angleDetect"
   ],
   "optional_external_modules": [
+    "paddleocr",
     "rapidocr"
   ],
   "external_modules": {
@@ -284,6 +333,37 @@
     ".codex_tmp/",
     "MDPI_template_ACS/"
   ],
+  "forbidden_path_exceptions": [
+    "paper/remstnet_electronics_overleaf/README_CN.md",
+    "paper/remstnet_electronics_overleaf/manuscript.tex",
+    "paper/remstnet_electronics_overleaf/references.bib",
+    "paper/remstnet_electronics_overleaf/remstnet_electronics_manuscript.pdf",
+    "paper/remstnet_electronics_overleaf/Definitions/journalnames.tex",
+    "paper/remstnet_electronics_overleaf/Definitions/logo-mdpi.eps",
+    "paper/remstnet_electronics_overleaf/Definitions/logo-orcid.pdf",
+    "paper/remstnet_electronics_overleaf/Definitions/logo-updates.eps",
+    "paper/remstnet_electronics_overleaf/Definitions/mdpi_apacite.bst",
+    "paper/remstnet_electronics_overleaf/Definitions/mdpi_apacite.sty",
+    "paper/remstnet_electronics_overleaf/Definitions/mdpi_chicago.bst",
+    "paper/remstnet_electronics_overleaf/Definitions/mdpi.bst",
+    "paper/remstnet_electronics_overleaf/Definitions/mdpi.cls",
+    "paper/remstnet_electronics_overleaf/figures/remstnet_architecture.pdf",
+    "paper/remstnet_electronics_overleaf/figures/remstnet_architecture.png",
+    "paper/remstnet_electronics_overleaf/figures/remstnet_core_performance.pdf",
+    "paper/remstnet_electronics_overleaf/figures/remstnet_core_performance.png",
+    "paper/remstnet_electronics_overleaf/figures/remstnet_mechanism_validity.pdf",
+    "paper/remstnet_electronics_overleaf/figures/remstnet_mechanism_validity.png",
+    "paper/remstnet_electronics_overleaf/figures/remstnet_ocr_end_to_end_deployment.pdf",
+    "paper/remstnet_electronics_overleaf/figures/remstnet_ocr_end_to_end_deployment.png",
+    "paper/remstnet_electronics_overleaf/figures/remstnet_real_transfer.pdf",
+    "paper/remstnet_electronics_overleaf/figures/remstnet_real_transfer.png",
+    "paper/remstnet_electronics_overleaf/figures/remstnet_supp_casebook.pdf",
+    "paper/remstnet_electronics_overleaf/figures/remstnet_supp_casebook.png",
+    "paper/remstnet_electronics_overleaf/figures/remstnet_supp_diagnostics.pdf",
+    "paper/remstnet_electronics_overleaf/figures/remstnet_supp_diagnostics.png",
+    "paper/remstnet_electronics_overleaf/figures/remstnet_task_scope.pdf",
+    "paper/remstnet_electronics_overleaf/figures/remstnet_task_scope.png"
+  ],
   "forbidden_tracked_suffixes": [
     ".pt",
     ".pth",
@@ -312,6 +392,17 @@
     "paper_documentation": [
       ".md"
     ],
+    "paper_manuscript": [
+      ".bib",
+      ".bst",
+      ".cls",
+      ".eps",
+      ".md",
+      ".pdf",
+      ".png",
+      ".sty",
+      ".tex"
+    ],
     "paper_result_tables": [
       ".json",
       ".md"
@@ -334,12 +425,19 @@
     "experiments/evaluate_remstnet_real_domains.py",
     "experiments/evaluate_remstnet_stress_sweep.py",
     "experiments/evaluate_remstnet_natural_repeat_stability.py",
+    "experiments/evaluate_remstnet_clean_external.py",
+    "experiments/evaluate_remstnet_ocr_end_to_end.py",
+    "experiments/export_remstnet_ocr_paper_assets.py",
     "experiments/summarize_remstnet_multiseed.py",
     "experiments/summarize_remstnet_ablations.py",
     "experiments/summarize_remstnet_real_domains.py",
+    "experiments/summarize_remstnet_vdn_intersection.py",
     "experiments/benchmark_remstnet_efficiency.py",
     "results/README.md",
+    "results/remstnet_ocr_end_to_end_deployment.json",
     "results/remstnet_v3_tables.json",
+    "paper/remstnet_electronics_overleaf/manuscript.tex",
+    "paper/remstnet_electronics_overleaf/remstnet_electronics_manuscript.pdf",
     "experiments/public_release_inventory.json",
     "experiments/check_public_release.py"
   ]

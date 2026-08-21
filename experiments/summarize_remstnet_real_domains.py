@@ -17,10 +17,15 @@ from experiments.train_remstnet import ADAPTIVE_PROTOCOL
 from remstnet.model import ADAPTIVE_REMST_NET_ARCHITECTURE
 
 
-PROTOCOL: Final[str] = "remstnet_v3_real_domain_three_seed_summary_v1"
+PROTOCOL: Final[str] = "remstnet_v3_real_domain_three_seed_summary_v2"
 EXPECTED_SEEDS: Final[tuple[int, ...]] = (20262020, 20262021, 20262022)
 DEFAULT_BOOTSTRAP_REPLICATES: Final[int] = 20_000
 DEFAULT_BOOTSTRAP_SEED: Final[int] = 20260818
+INDUSTRIAL_DATASET_KEYS: Final[tuple[str, ...]] = (
+    "field_gauge_roi_test_a",
+    "field_gauge_roi_test_b",
+    "field_gauge_external_roi",
+)
 
 
 def _require(condition: bool, message: str) -> None:
@@ -265,6 +270,117 @@ def _subset_summary(
     }
 
 
+def _pooled_subset_summary(
+    evaluations: Sequence[Mapping[str, Any]],
+    *,
+    dataset_names: Sequence[str],
+    conditions: Sequence[str],
+    bootstrap_replicates: int,
+    bootstrap_seed: int,
+) -> dict[str, Any]:
+    """Pool pre-existing real-photo ledgers on one explicit row denominator."""
+
+    reference = evaluations[0]
+    selected_conditions = set(conditions)
+    pooled_keys = tuple(
+        (dataset_name, key)
+        for dataset_name in dataset_names
+        for key in sorted(
+            reference["datasets"][dataset_name]["rows"],
+            key=lambda item: (shared.CONDITIONS.index(item[1]), item[0]),
+        )
+        if key[1] in selected_conditions
+    )
+    _require(bool(pooled_keys), "industrial baseline row set is empty")
+    groups = [
+        f"{dataset_name}::{reference['datasets'][dataset_name]['identities'][key][1]}"
+        for dataset_name, key in pooled_keys
+    ]
+    candidate_by_seed: list[list[float]] = []
+    comparator_by_seed: list[list[float]] = []
+    per_seed: dict[str, Any] = {}
+    for seed_index, evaluation in enumerate(evaluations):
+        source_seed = int(evaluation["seed"])
+        candidate = [
+            float(
+                evaluation["datasets"][dataset_name]["rows"][key]["candidate"][
+                    "mett"
+                ]["absolute_error"]
+            )
+            for dataset_name, key in pooled_keys
+        ]
+        comparator = [
+            float(
+                evaluation["datasets"][dataset_name]["rows"][key][
+                    "efficientnet_b0"
+                ]["sarn_v2"][str(source_seed)]["absolute_error"]
+            )
+            for dataset_name, key in pooled_keys
+        ]
+        candidate_by_seed.append(candidate)
+        comparator_by_seed.append(comparator)
+        per_seed[str(source_seed)] = {
+            "remstnet": shared.full_denominator_metrics(candidate),
+            "sarn_v2_efficientnet_b0_seed_matched": (
+                shared.full_denominator_metrics(comparator)
+            ),
+            "remstnet_group_macro": shared.group_macro_metrics(
+                candidate,
+                [True] * len(candidate),
+                groups,
+            )["macro"],
+            "paired": _paired(
+                candidate,
+                comparator,
+                groups,
+                replicates=bootstrap_replicates,
+                seed=bootstrap_seed + seed_index,
+            ),
+        }
+    candidate_metrics = [
+        per_seed[str(seed)]["remstnet"] for seed in EXPECTED_SEEDS
+    ]
+    comparator_metrics = [
+        per_seed[str(seed)]["sarn_v2_efficientnet_b0_seed_matched"]
+        for seed in EXPECTED_SEEDS
+    ]
+    mean_candidate_error = np.mean(
+        np.asarray(candidate_by_seed, dtype=np.float64), axis=0
+    ).tolist()
+    mean_comparator_error = np.mean(
+        np.asarray(comparator_by_seed, dtype=np.float64), axis=0
+    ).tolist()
+    return {
+        "conditions": list(conditions),
+        "rows_per_seed": len(pooled_keys),
+        "groups": len(set(groups)),
+        "per_seed": per_seed,
+        "three_seed": {
+            "remstnet_metrics_mean_sample_sd": {
+                metric: _mean_sample_sd([row[metric] for row in candidate_metrics])
+                for metric in candidate_metrics[0]
+            },
+            "comparator_metrics_mean_sample_sd": {
+                metric: _mean_sample_sd([row[metric] for row in comparator_metrics])
+                for metric in comparator_metrics[0]
+            },
+            "mean_row_error_across_independent_seeds": {
+                "remstnet": shared.full_denominator_metrics(mean_candidate_error),
+                "sarn_v2_efficientnet_b0": shared.full_denominator_metrics(
+                    mean_comparator_error
+                ),
+                "paired": _paired(
+                    mean_candidate_error,
+                    mean_comparator_error,
+                    groups,
+                    replicates=bootstrap_replicates,
+                    seed=bootstrap_seed + 10_000,
+                ),
+            },
+        },
+    }
+
+
 def summarize_evaluations(
     evaluation_paths: Sequence[Path],
     *,
@@ -319,6 +435,38 @@ def summarize_evaluations(
                 for row in evaluations
             },
         }
+    industrial_samples = sum(
+        int(reference["datasets"][name]["dataset"]["samples"])
+        for name in INDUSTRIAL_DATASET_KEYS
+    )
+    industrial_groups = sum(
+        int(reference["datasets"][name]["dataset"]["groups"])
+        for name in INDUSTRIAL_DATASET_KEYS
+    )
+    industrial_subsets = {
+        condition: _pooled_subset_summary(
+            evaluations,
+            dataset_names=INDUSTRIAL_DATASET_KEYS,
+            conditions=(condition,),
+            bootstrap_replicates=bootstrap_replicates,
+            bootstrap_seed=bootstrap_seed + 500_000 + condition_index * 1_000,
+        )
+        for condition_index, condition in enumerate(shared.CONDITIONS)
+    }
+    industrial_subsets["all_conditions"] = _pooled_subset_summary(
+        evaluations,
+        dataset_names=INDUSTRIAL_DATASET_KEYS,
+        conditions=shared.CONDITIONS,
+        bootstrap_replicates=bootstrap_replicates,
+        bootstrap_seed=bootstrap_seed + 600_000,
+    )
+    industrial_subsets["projective_pooled"] = _pooled_subset_summary(
+        evaluations,
+        dataset_names=INDUSTRIAL_DATASET_KEYS,
+        conditions=shared.PROJECTIVE_CONDITIONS,
+        bootstrap_replicates=bootstrap_replicates,
+        bootstrap_seed=bootstrap_seed + 601_000,
+    )
     return {
         "schema_version": 1,
         "protocol": PROTOCOL,
@@ -342,6 +490,17 @@ def summarize_evaluations(
             "interval": "two-sided percentile 95%",
         },
         "datasets": datasets,
+        "industrial_real_photo_baseline": {
+            "dataset": {
+                "paper_name": "Industrial Real-Photo Baseline",
+                "materialized_dataset": "unified_real_photo_progress_v1",
+                "samples": industrial_samples,
+                "groups": industrial_groups,
+                "source_datasets": list(INDUSTRIAL_DATASET_KEYS),
+                "selection_uses_model_predictions": False,
+            },
+            "subsets": industrial_subsets,
+        },
     }
 
 

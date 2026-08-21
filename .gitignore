@@ -61,9 +61,37 @@ __pycache__/
 .ruff_cache/
 .vscode/
 
-# The manuscript, figures, publisher template, and submission package remain
-# local and are intentionally excluded from the public code repository.
+# Paper workspaces remain local by default. Only the current public manuscript
+# package and its explicitly listed compile assets are tracked below.
 /paper/
+!/paper/
+/paper/*
+!/paper/remstnet_electronics_overleaf/
+/paper/remstnet_electronics_overleaf/*
+!/paper/remstnet_electronics_overleaf/README_CN.md
+!/paper/remstnet_electronics_overleaf/manuscript.tex
+!/paper/remstnet_electronics_overleaf/references.bib
+!/paper/remstnet_electronics_overleaf/remstnet_electronics_manuscript.pdf
+!/paper/remstnet_electronics_overleaf/Definitions/
+!/paper/remstnet_electronics_overleaf/Definitions/**
+!/paper/remstnet_electronics_overleaf/figures/
+/paper/remstnet_electronics_overleaf/figures/*
+!/paper/remstnet_electronics_overleaf/figures/remstnet_task_scope.pdf
+!/paper/remstnet_electronics_overleaf/figures/remstnet_task_scope.png
+!/paper/remstnet_electronics_overleaf/figures/remstnet_architecture.pdf
+!/paper/remstnet_electronics_overleaf/figures/remstnet_architecture.png
+!/paper/remstnet_electronics_overleaf/figures/remstnet_core_performance.pdf
+!/paper/remstnet_electronics_overleaf/figures/remstnet_core_performance.png
+!/paper/remstnet_electronics_overleaf/figures/remstnet_ocr_end_to_end_deployment.pdf
+!/paper/remstnet_electronics_overleaf/figures/remstnet_ocr_end_to_end_deployment.png
+!/paper/remstnet_electronics_overleaf/figures/remstnet_real_transfer.pdf
+!/paper/remstnet_electronics_overleaf/figures/remstnet_real_transfer.png
+!/paper/remstnet_electronics_overleaf/figures/remstnet_mechanism_validity.pdf
+!/paper/remstnet_electronics_overleaf/figures/remstnet_mechanism_validity.png
+!/paper/remstnet_electronics_overleaf/figures/remstnet_supp_diagnostics.pdf
+!/paper/remstnet_electronics_overleaf/figures/remstnet_supp_diagnostics.png
+!/paper/remstnet_electronics_overleaf/figures/remstnet_supp_casebook.pdf
+!/paper/remstnet_electronics_overleaf/figures/remstnet_supp_casebook.png
 /MDPI_template_ACS/
 
 # Local orchestration and notification helpers are not part of the paper API.

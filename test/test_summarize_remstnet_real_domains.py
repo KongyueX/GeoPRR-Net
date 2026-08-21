@@ -10,6 +10,7 @@ from experiments.evaluate_remstnet_real_domains import PROTOCOL as EVALUATION_PR
 from remstnet.model import ADAPTIVE_REMST_NET_ARCHITECTURE
 from experiments.summarize_remstnet_real_domains import (
     EXPECTED_SEEDS,
+    INDUSTRIAL_DATASET_KEYS,
     summarize_evaluations,
 )
 from experiments.train_remstnet import ADAPTIVE_PROTOCOL
@@ -133,6 +134,22 @@ class ReMSTNetRealDomainSummaryTests(unittest.TestCase):
         self.assertAlmostEqual(paired["delta_nmae"], -0.05)
         self.assertTrue(paired["superiority_ci95"])
         self.assertIn("clean", result["datasets"][shared.REAL_DATASET_KEYS[0]]["subsets"])
+        industrial = result["industrial_real_photo_baseline"]
+        self.assertEqual(
+            industrial["dataset"]["source_datasets"],
+            list(INDUSTRIAL_DATASET_KEYS),
+        )
+        self.assertEqual(industrial["dataset"]["samples"], 6)
+        self.assertEqual(industrial["dataset"]["groups"], 6)
+        pooled = industrial["subsets"]["projective_pooled"]
+        self.assertEqual(pooled["rows_per_seed"], 18)
+        self.assertEqual(pooled["groups"], 6)
+        self.assertAlmostEqual(
+            pooled["three_seed"]["remstnet_metrics_mean_sample_sd"]["nmae"][
+                "mean"
+            ],
+            0.05,
+        )
 
     def test_rejects_incomplete_endpoint_replay(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

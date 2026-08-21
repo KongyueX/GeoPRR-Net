@@ -4,12 +4,12 @@
 
 [![Python 3.11](https://img.shields.io/badge/Python-3.11-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.11-EE4C2C.svg?logo=pytorch&logoColor=white)](https://pytorch.org/)
-[![Release](https://img.shields.io/badge/release-code%20%2B%20tables-2E7D32.svg)](results/README.md)
+[![Release](https://img.shields.io/badge/release-paper%20%2B%20code%20%2B%20tables-2E7D32.svg)](paper/remstnet_electronics_overleaf/remstnet_electronics_manuscript.pdf)
 
-This repository contains the paper-facing implementation, evaluation code and
-reported tables for **ReMSTNet-v3**, a compact relation-moment network for
-predicting normalized pointer progress from a cropped, single-pointer gauge
-ROI. The final architecture identifier is:
+This repository contains the current manuscript, paper-facing implementation,
+evaluation code and reported tables for **ReMSTNet-v3**, a compact
+relation-moment network for predicting normalized pointer progress from a
+cropped, single-pointer gauge ROI. The final architecture identifier is:
 
 ```text
 ReMSTNet-Adaptive-Budget-Progress-Mixing-Relation-Moment-Backbone-v3
@@ -18,8 +18,10 @@ ReMSTNet-Adaptive-Budget-Progress-Mixing-Relation-Moment-Backbone-v3
 > [!IMPORTANT]
 > ReMSTNet operates on cropped ROIs and predicts progress in `[0, 1]`. It is not
 > an end-to-end meter detector, printed-scale recognizer or physical-unit
-> reader. This release intentionally contains only the final ReMSTNet-v3 paper
-> model, the code required to fit and evaluate it, and the reported tables.
+> reader. The physical-reading experiment is a separately reported diagnostic.
+> This release contains the current manuscript and its compile assets, the final
+> ReMSTNet-v3 paper model, the code required to fit and evaluate it, and the
+> reported tables.
 
 ## Highlights
 
@@ -49,11 +51,18 @@ model adds progress-aware local mixing and an adaptive correction budget while
 retaining an exact raw-posterior fallback when geometric support is missing.
 On the retrospective SyncG Scene-Holdout benchmark, three independently fitted
 models reduce all-condition NMAE by 23.19% and projective-pooled NMAE by 32.77%
-relative to the SARN-v2 + EfficientNet-B0 endpoint. Controlled real-source ROI
-experiments show small, dataset-dependent effects; the External-ROI interval
-includes zero. These results support projective robustness within the stated
-cropped-ROI protocol and should not be read as evidence for unrestricted
-end-to-end field deployment.
+relative to the SARN-v2 + EfficientNet-B0 endpoint. The organized industrial
+real-photo baseline contains 1,395 scored ROIs from 52 groups. Across its six
+controlled conditions, ReMSTNet obtains 0.123388 NMAE versus 0.123664 for B0
+(paired delta -0.000276, 95% CI [-0.000382, -0.000168]); all three projective
+condition intervals are below zero. On the full 774-row VDN intersection,
+ReMSTNet obtains 0.008582 versus 0.016444 NMAE for the annotation-assisted VDN
+reference, a 47.81% reduction. RPM-10K is retained only as a raw-foundation
+cross-domain diagnostic because that protocol disables relation inputs by
+construction. A separate replay of 153 unique industrial full frames obtains
+98.69% detector/read coverage and $0.051930\pm0.001031$ NMAE on 33 labeled
+frames. These results support selective projective transport on synthetic and
+industrial photographs while preserving the stated deployment boundary.
 
 ## Method at a glance
 
@@ -95,12 +104,72 @@ models on 1,558 images from 14 held-out SyncG scene groups.
 | **ReMSTNet-v3** | **0.008099 ± 0.000323** | **0.010330 ± 0.000476** | **0.013884 ± 0.000441** | **0.015564 ± 0.000299** | **0.010704 ± 0.000373** | **0.013259 ± 0.000391** |
 
 The clean and blur-only endpoints are preserved; the main gain is concentrated
-in projective conditions. Full condition tables, real-source results,
-factorial ablations, perspective stress results, repeat stability and runtime
-measurements are in:
+in projective conditions.
 
+### Secondary VDN annotation-assisted comparison
+
+The ReMSTNet and VDN experiments used different pre-existing holdout rosters,
+so their full-cohort aggregates cannot be placed in one denominator. The
+released comparison uses only their prediction-independent intersection: 129
+SyncG samples from 6 ReMSTNet scene groups, each under the same six condition
+pixels (774 rows). VDN's predicted direction is converted to normalized
+progress with the annotation-derived pivot and ordered scale endpoints, so all
+774 rows are retained. ReMSTNet and B0 predict progress directly and do not
+receive those annotations.
+
+| Scope | Compared rows (coverage) | ReMSTNet-v3 NMAE | SARN-v2+B0 NMAE | VDN annotation-reference NMAE | ReMSTNet−VDN Δ (95% CI) |
+|---|---:|---:|---:|---:|---:|
+| All conditions | 774 / 774 (100%) | **0.008582 ± 0.000414** | 0.011673 ± 0.000638 | 0.016444 | -0.007861 [-0.012340, -0.005530] |
+| Projective pooled | 387 / 387 (100%) | **0.010938 ± 0.000935** | 0.017119 ± 0.001396 | 0.021030 | -0.010092 [-0.014298, -0.006818] |
+
+The VDN checkpoint is a local SyncG retraining under the upstream 200-epoch
+architecture/configuration, not an official pretrained end-to-end result.
+The annotation reference makes this a full-coverage direction-component
+comparison, not an input-equivalent deployable-system comparison. The
+intersection contains only six scene groups and one VDN checkpoint, so it
+remains supporting evidence and does not replace the 1,558-sample main table.
+
+### Public external and industrial checks
+
+- **RPM-10K:** on the 1,797-image official single-pointer test subset, frozen
+  ReMSTNet has 98.78% detector/read coverage and full-denominator NMAE
+  **0.233945 ± 0.012331**. RPM-10K includes 474 blur-tagged and 993
+  tilted-tagged images (157 have both), but this evaluator supplies identical
+  raw/normalized images, unit support, an inactive relation mask and identity
+  homography. Equality with B0 is therefore imposed by the protocol; this is a
+  raw-foundation transfer diagnostic, not a relation-module comparison.
+- **Industrial Real-Photo Baseline:**
+  `C:/pointer_read/unified_real_photo_progress_v1` contains 1,395 labeled ROIs
+  from 52 groups. Its decoded-pixel set exactly equals the union of the three
+  existing FieldGauge evaluation sources. ReMSTNet beats B0 on the pooled
+  projective conditions (0.122590 vs 0.123142; paired delta -0.000552, 95% CI
+  [-0.000761, -0.000335]), and every individual projective-condition interval
+  is below zero.
+- **Industrial full-frame scalar diagnostic:** the same organized dataset
+  retains 153 unique deployment photographs derived from repository `data/` and
+  `data-717/`. Cached YOLO detections plus the frozen readers cover **151/153
+  (98.69%)**; all 33 scalar-labeled frames pass and yield NMAE **0.051930 ±
+  0.001031**. The other 120 frames contribute to coverage only. This is a
+  detector replay, not a detector recall/IoU benchmark.
+- **Independent existing-model OCR replay:** PP-OCRv4 through RapidOCR plus the
+  existing range decoder produces physical readings for **27/153 (17.65%)**
+  deployment photographs and **9/33 (27.27%)** labeled photographs. Conditional
+  NMAE on those nine is **0.036814 ± 0.004015**, versus **0.034336 ± 0.003848**
+  with the true ranges on the identical subset. Full-denominator NMAE is
+  **0.737313 ± 0.001095**, making OCR/range coverage the limiting stage. OCR
+  choice and thresholds were fixed before opening field labels; cached boxes
+  exclude live detector latency. The replay entrypoint is
+  `experiments/evaluate_remstnet_ocr_end_to_end.py`; its deterministic paper
+  asset exporter is `experiments/export_remstnet_ocr_paper_assets.py`.
+
+Full condition tables, real-source results, factorial ablations, perspective
+stress results, repeat stability and runtime measurements are in:
+
+- [current compiled manuscript](paper/remstnet_electronics_overleaf/remstnet_electronics_manuscript.pdf)
+- [LaTeX manuscript source](paper/remstnet_electronics_overleaf/manuscript.tex)
 - [human-readable paper tables](results/README.md)
 - [machine-readable paper tables](results/remstnet_v3_tables.json)
+- [OCR-complete deployment aggregate](results/remstnet_ocr_end_to_end_deployment.json)
 
 ## Repository structure
 
@@ -114,19 +183,33 @@ experiments/
   evaluate_remstnet_real_domains.py        real-source ROI evaluation
   evaluate_remstnet_stress_sweep.py        controlled stress sweep
   evaluate_remstnet_natural_repeat_stability.py
+  evaluate_remstnet_clean_external.py      RPM-10K and field full-frame replay
+  evaluate_remstnet_ocr_end_to_end.py      independent OCR-to-physical-reading replay
+  export_remstnet_ocr_paper_assets.py      OCR figure source-data exporter
   summarize_remstnet_multiseed.py          three-fit aggregation
   summarize_remstnet_ablations.py          factorial mechanism analysis
   summarize_remstnet_real_domains.py       grouped real-source analysis
+  summarize_remstnet_vdn_intersection.py   same-pixel VDN comparison
   benchmark_remstnet_efficiency.py         model-level GPU benchmark
   requirements-training.lock.txt           pinned research environment
 results/
   README.md                                publication tables and caveats
   remstnet_v3_tables.json                  machine-readable values
+  remstnet_ocr_end_to_end_deployment.json  OCR deployment aggregate
+paper/remstnet_electronics_overleaf/
+  manuscript.tex                          current LaTeX manuscript
+  remstnet_electronics_manuscript.pdf      compiled author copy
+  references.bib                          manuscript bibliography
+  Definitions/                            MDPI LaTeX dependencies
+  figures/                                referenced figures in PDF and PNG
 test/
   test_remstnet_model.py                    model invariants and fallback
   test_remstnet_extended_evaluators.py     evaluator coverage
   test_remstnet_public_api.py              stable import surface
   test_remstnet_release_tables.py          table consistency
+  test_summarize_remstnet_vdn_intersection.py
+  test_evaluate_remstnet_clean_external.py
+  test_evaluate_remstnet_ocr_end_to_end.py
 THIRD_PARTY_NOTICES.md                     dependency/data provenance notes
 ```
 
@@ -136,7 +219,9 @@ Primary executable entrypoints are the
 [real-source evaluator](experiments/evaluate_remstnet_real_domains.py),
 [stress evaluator](experiments/evaluate_remstnet_stress_sweep.py),
 [natural-repeat evaluator](experiments/evaluate_remstnet_natural_repeat_stability.py),
-[multi-fit summarizer](experiments/summarize_remstnet_multiseed.py) and
+[single-view external/full-frame diagnostic evaluator](experiments/evaluate_remstnet_clean_external.py),
+[multi-fit summarizer](experiments/summarize_remstnet_multiseed.py),
+[VDN intersection summarizer](experiments/summarize_remstnet_vdn_intersection.py) and
 [efficiency benchmark](experiments/benchmark_remstnet_efficiency.py).
 
 ## Installation
@@ -193,14 +278,26 @@ The paper protocol uses:
 | SyncG Fit | 14,442 | 131 | foundation fitting |
 | Correction subset | 6,616 | 60 | ReMST modules only |
 | Scene-Holdout | 1,558 | 14 | retrospective same-domain benchmark |
+| Industrial Real-Photo Baseline | 1,395 | 52 | retrospective in-house real-photo ROI benchmark |
+| RPM-10K single-pointer test | 1,797 | 6 meter types | public zero-shot scalar transfer |
+| Industrial Full-Frame Diagnostic | 153 | 153 unique photos | detector-to-reading replay; 33 labeled |
 
 ### Real-source cohorts
 
-FieldGauge-ROI Test-A/Test-B, External-ROI and the Natural-repeat cohort are not
-redistributed here because their ownership and consent boundaries are not
-uniformly public. RF100-derived inputs must be acquired under their source
-terms. The code accepts caller-supplied manifests and prediction roots; see the
-respective evaluator `--help` output.
+The organized industrial benchmark is
+`C:/pointer_read/unified_real_photo_progress_v1`: 1,395 labeled real-photo ROIs
+from 52 groups, plus a separate 153-photo full-frame diagnostic track. Its ROI
+pixel set exactly matches the union of FieldGauge-ROI Test-A, Test-B and
+External-ROI (434 + 814 + 147). The raw photos originate from the repository's
+`data/` and `data-717/` collections. These assets and Natural-repeat are not
+redistributed in the paper release because their ownership and consent
+boundaries are not uniformly public. RPM-10K and RF100-derived inputs must be
+acquired under their source terms. The code accepts caller-supplied manifests
+and prediction roots; see the respective evaluator `--help` output.
+
+The external source is [RPM-10K / DialBench](https://github.com/Event-AHU/DialBench),
+whose repository currently marks the dataset license as TBD. It is not
+redistributed here.
 
 ### Checkpoints
 
@@ -254,6 +351,25 @@ Repeat for all three fitted checkpoints, then aggregate:
   --output <remstnet_v3_multiseed_summary.json>
 ```
 
+To reproduce the secondary VDN table from the three ReMSTNet evaluations and
+the precomputed VDN ledgers:
+
+```powershell
+.venv/Scripts/python.exe -m experiments.summarize_remstnet_vdn_intersection `
+  --evaluation <seed1_syncg_evaluation.json> `
+  --evaluation <seed2_syncg_evaluation.json> `
+  --evaluation <seed3_syncg_evaluation.json> `
+  --vdn-automatic <vdn_automatic_reference_predictions.jsonl> `
+  --vdn-oracle <vdn_annotation_reference_predictions.jsonl> `
+  --output <remstnet_vdn_intersection.json>
+```
+
+The utility forms the complete sample-by-condition intersection and verifies
+that the existing ledgers refer to identical condition pixels. The paper-facing
+table uses the annotation-reference conversion on every fixed-intersection
+row. Automatic-reference and success-conditioned fields remain available only
+as machine-readable stage diagnostics.
+
 ### 3. Run the supporting evaluations
 
 ```powershell
@@ -288,6 +404,47 @@ Repeat for all three fitted checkpoints, then aggregate:
   --amp
 ```
 
+The two single-view diagnostic tracks use all three checkpoints together:
+
+```powershell
+# RPM-10K public scalar-reading transfer
+.venv/Scripts/python.exe -m experiments.evaluate_remstnet_clean_external `
+  --dataset rpm10k `
+  --checkpoint <remstnet_v3_seed1.pt> `
+  --checkpoint <remstnet_v3_seed2.pt> `
+  --checkpoint <remstnet_v3_seed3.pt> `
+  --rpm-manifest <rpm10k_manifest.jsonl> `
+  --rpm-materialized-manifest <rpm10k_detector_crops.jsonl> `
+  --rpm-detector-sidecar <rpm10k_detector_sidecar.jsonl> `
+  --output <rpm10k_clean_external.json> `
+  --device cuda:0
+
+# Organized industrial full-frame diagnostic
+.venv/Scripts/python.exe -m experiments.evaluate_remstnet_clean_external `
+  --dataset field_full_frame `
+  --checkpoint <remstnet_v3_seed1.pt> `
+  --checkpoint <remstnet_v3_seed2.pt> `
+  --checkpoint <remstnet_v3_seed3.pt> `
+  --field-root <deduplicated_field_root> `
+  --field-labels <full_frame_labels.jsonl> `
+  --field-labeled-detections <labeled_detector_rows.jsonl> `
+  --field-unlabeled-detections <unlabeled_detector_rows.jsonl> `
+  --output <field_full_frame_clean_external.json> `
+  --device cuda:0
+
+# Label-free OCR-to-physical-reading prediction replay
+.venv/Scripts/python.exe -m experiments.evaluate_remstnet_ocr_end_to_end predict `
+  --output-root <ocr_prediction_root> `
+  --device cuda:0 `
+  --ocr-view-mode original
+
+# Open labels only after prediction and compute the paper metrics
+.venv/Scripts/python.exe -m experiments.evaluate_remstnet_ocr_end_to_end score `
+  --prediction-root <ocr_prediction_root> `
+  --labels <full_frame_labels.jsonl> `
+  --output <ocr_score.json>
+```
+
 For every script, use `--help` to inspect the complete argument surface. The
 real-domain and ablation aggregators are
 [`experiments/summarize_remstnet_real_domains.py`](experiments/summarize_remstnet_real_domains.py)
@@ -320,6 +477,8 @@ Run the focused paper-model suite:
   test.test_summarize_remstnet_multiseed `
   test.test_summarize_remstnet_ablations `
   test.test_summarize_remstnet_real_domains `
+  test.test_summarize_remstnet_vdn_intersection `
+  test.test_evaluate_remstnet_clean_external `
   test.test_remstnet_public_api `
   test.test_remstnet_release_tables
 ```
@@ -339,6 +498,17 @@ and the read-only audit implementation is
 
 - Main SyncG entries are arithmetic mean ± sample SD across three independent
   fitted models, not confidence intervals.
+- The VDN table covers all 774 rows in the fixed intersection by using
+  annotation-derived pivot and ordered scale endpoints for offline conversion
+  of VDN direction. It is a component comparison, not an input-equivalent
+  automatic-system result, and VDN uses one terminal checkpoint.
+- RPM-10K includes blur and tilted views, but the current evaluator disables
+  relation inputs; it cannot establish either a ReMST gain or a lack of useful
+  degradation.
+- The industrial ROI benchmark contains 1,395 scored real-photo ROIs. Its
+  controlled projective results are distinct from the 153-photo full-frame
+  diagnostic, which uses cached detections and only 33 scalar labels; without
+  bounding-box truth it does not estimate detector recall or IoU.
 - Real-source paired CIs use 20,000 group-bootstrap replicates after rowwise
   averaging across the three seeds. They do not include retraining uncertainty.
 - The factorial mechanism table uses one fixed source fit (seed 20262022), so it
@@ -356,9 +526,9 @@ and the read-only audit implementation is
 
 ## Citation
 
-Author metadata and a permanent paper identifier have not yet been finalized,
-so this repository does not invent them. Until the archival record is
-available, cite the manuscript title and this repository revision:
+The current manuscript is available in this repository, but a permanent paper
+identifier has not yet been finalized. Until the archival record is available,
+cite the manuscript title and this repository revision:
 
 ```bibtex
 @misc{remstnet2026,
@@ -381,8 +551,9 @@ is compatible with all included material.
 
 ## Release status
 
-The implementation and reported tables are ready as a transparent manuscript
-code release. A final archival publication still requires the authors to add
-the definitive author/affiliation list, CRediT roles, funding and conflict
-statements, AI-assistance disclosure as applicable, a permanent repository
-identifier/DOI, and confirmed rights for any non-public FieldGauge assets.
+The current manuscript source, compiled author copy, implementation and reported
+tables are available as a transparent paper release. A final archival
+publication still requires the authors to confirm the definitive
+author/affiliation list, CRediT roles, funding and conflict statements,
+AI-assistance disclosure as applicable, a permanent repository identifier/DOI,
+and rights for any non-public FieldGauge assets.

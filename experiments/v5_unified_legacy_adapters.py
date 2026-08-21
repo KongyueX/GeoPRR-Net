@@ -10,11 +10,11 @@ The meter detector is never invoked and no second crop or correction is
 performed.  The canonical meter box is attested as ``[0, 0, width, height]``.
 
 Within that unchanged ROI both adapters run the frozen pointer segmenter.  The
-Original Transformer natively maps the ROI and mask to one of 101 normalized
-progress classes, so it neither invokes nor depends on a reference detector.
-Base Mask-Geometry additionally runs the frozen automatic start/end ScaleMark
-detector and requires both endpoints; single-endpoint and default-angle
-fallbacks are rejected.
+paper-evaluation Original Transformer adapter interprets its 101 classes as
+absolute orientation bins, then runs the frozen automatic start/end ScaleMark
+detector to convert that orientation to normalized dial progress.  Base
+Mask-Geometry uses the same automatic reference requirement.  Both reject
+single-endpoint and default-angle fallbacks.
 
 No public ``predict`` method accepts ground truth, manual ScaleMark positions,
 start/range angles, or a reference packet.  A full-scene meter-detector run or
@@ -98,8 +98,9 @@ OUTPUT_SCHEMA = {
     ),
     "crop_rule": "meter detector not invoked; no second crop/correction",
     "reference_rule": (
-        "Original Transformer uses implicit native progress; Base Mask-Geometry "
-        "requires both ScaleMark endpoints detected automatically inside ROI"
+        "paper-evaluation Original Transformer and Base Mask-Geometry require both "
+        "ScaleMark endpoints detected automatically inside ROI; the separately named "
+        "historical native-class adapter is retained for compatibility only"
     ),
     "prediction_space": "normalized_progress_0_1",
 }
@@ -382,6 +383,131 @@ class FrozenCanonicalROILegacyRuntime:
                 "mask_sha256": hashlib.sha256(mask.tobytes()).hexdigest(),
                 "mask_foreground_ratio": float(np.mean(mask > 0)),
             }
+            if reading_backend == "transformer_automatic_reference":
+                # Match zeroShotMeter's deployed path exactly: the canonical BGR
+                # crop is first converted to RGB for PIL/segmentation, then that
+                # RGB array is passed through OpenCV's BGR2GRAY conversion before
+                # the automatic start/end detector.
+                rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+                gray = cv2.cvtColor(rgb, cv2.COLOR_BGR2GRAY)
+                detector_image = np.stack((gray,) * 3, axis=-1)
+                raw_end, _ = self.runtime.pointerDetect.center_find(
+                    detector_image, classId=1, confidence=config.confidence
+                )
+                raw_start, _ = self.runtime.pointerDetect.center_find(
+                    detector_image, classId=2, confidence=config.confidence
+                )
+                raw_start = None if raw_start is None else tuple(map(float, raw_start))
+                raw_end = None if raw_end is None else tuple(map(float, raw_end))
+                if raw_start is not None and raw_end is not None:
+                    normalized_start, normalized_end = self.runtime._normalize_start_end_points(
+                        raw_start,
+                        raw_end,
+                        width,
+                        config.start_end_distance_threshold,
+                        config.start_end_position,
+                    )
+                elif raw_start is not None:
+                    normalized_start, normalized_end = raw_start, None
+                elif raw_end is not None:
+                    normalized_start, normalized_end = None, raw_end
+                else:
+                    normalized_start = normalized_end = None
+                if normalized_start is not None and normalized_end is not None:
+                    branch = "start_and_end"
+                elif normalized_start is not None:
+                    branch = "start_only"
+                elif normalized_end is not None:
+                    branch = "end_only"
+                else:
+                    branch = "default_start_end"
+
+                start_angle = (
+                    None
+                    if normalized_start is None
+                    else float(self.runtime.calculate_angle(center, normalized_start))
+                )
+                end_angle = (
+                    None
+                    if normalized_end is None
+                    else float(self.runtime.calculate_angle(center, normalized_end))
+                )
+                range_angle = (
+                    None
+                    if start_angle is None or end_angle is None
+                    else float((end_angle - start_angle) % 360.0)
+                )
+                artifacts = {
+                    **common_artifacts,
+                    "branch": branch,
+                    "reference_mode": "automatic_explicit",
+                    "reference_detector_invoked": True,
+                    "center_start": normalized_start,
+                    "center_end": normalized_end,
+                    "startAngle": start_angle,
+                    "endAngle": end_angle,
+                    "disAngle": range_angle,
+                }
+                if (
+                    branch != "start_and_end"
+                    or range_angle is None
+                    or not 0.0 < range_angle < 360.0
+                ):
+                    return RuntimeSnapshot(
+                        None, None, {}, artifacts, "automatic_reference_incomplete"
+                    )
+                if bool(config.validate_mask_line) and not mask_line_valid:
+                    return RuntimeSnapshot(
+                        None, None, {}, artifacts, "pointer_mask_line_invalid"
+                    )
+
+                pointer_image = Image.fromarray(mask).convert("L")
+                meter_image = Image.fromarray(rgb).convert("L")
+                with torch.inference_mode():
+                    result = self.runtime.vlmMeter.Inference(
+                        pointer_image, meter_image, self.runtime.label_text
+                    )
+                logits = result[0] if isinstance(result, (tuple, list)) else result
+                logits = torch.as_tensor(logits).detach().float()
+                if logits.numel() != 101 or not bool(torch.isfinite(logits).all()):
+                    raise ValueError(
+                        "Original Transformer returned invalid 101-class logits"
+                    )
+                class_index = int(
+                    torch.argmax(logits.reshape(1, 101), dim=1).item()
+                )
+                start_angle = float(start_angle)
+                range_angle = float(range_angle)
+                meter_num = (float(self.runtime.ornMeterNum) - start_angle) % 360.0
+                progress = _finite_optional(
+                    self.runtime._calculate_meter_result(
+                        float(class_index),
+                        meter_num,
+                        range_angle,
+                        0.0,
+                        1.0,
+                        bool(config.snap_out_of_range_pointer),
+                    )
+                )
+                if progress is None:
+                    raise ValueError(
+                        "Original Transformer orientation conversion returned a non-finite value"
+                    )
+                pointer_angle = (
+                    float(self.runtime.oneTempAngle) * float(class_index) + meter_num
+                ) % 360.0
+                selected = {
+                    "status": True,
+                    "backend": "transformer_automatic_reference",
+                    "resultNum": progress,
+                    "progress_ratio": progress,
+                    "endNum_float": float(class_index),
+                    "pointer_angle": pointer_angle,
+                    "reference_mode": "automatic_explicit",
+                }
+                return RuntimeSnapshot(
+                    float(class_index), progress, selected, artifacts, None
+                )
             if reading_backend == "transformer":
                 artifacts = {
                     **common_artifacts,
@@ -940,7 +1066,7 @@ class _CanonicalROIAdapter:
 
 
 class OriginalTransformerAdapter(_CanonicalROIAdapter):
-    """Original Transformer on the unchanged canonical meter ROI."""
+    """Historical native-class diagnostic retained for compatibility only."""
 
     METHOD = "original_transformer"
     BACKEND = "transformer"
@@ -956,6 +1082,13 @@ class OriginalTransformerAdapter(_CanonicalROIAdapter):
     def _progress(self, selected: Mapping[str, Any]) -> float | None:
         end_num = _finite_optional(selected.get("endNum_float"))
         return None if end_num is None else end_num / 100.0
+
+
+class OriginalTransformerAutomaticReferenceAdapter(_CanonicalROIAdapter):
+    """Original Transformer orientation converted by automatic dial references."""
+
+    METHOD = "original_transformer_auto_reference"
+    BACKEND = "transformer_automatic_reference"
 
 
 class BaseMaskGeometryAdapter(_CanonicalROIAdapter):
@@ -982,6 +1115,7 @@ __all__ = [
     "FrozenCanonicalROILegacyRuntime",
     "FrozenLegacyTaskConfig",
     "OriginalTransformerAdapter",
+    "OriginalTransformerAutomaticReferenceAdapter",
     "OUTPUT_SCHEMA",
     "OUTPUT_SCHEMA_SHA256",
     "PROTOCOL",

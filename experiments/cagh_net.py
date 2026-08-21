@@ -3,14 +3,12 @@
 CAGH-Net retains the signed PEPD ResNet and prediction heads, exposes its
 multi-scale features, and adds an internally coupled high-resolution CNN and
 global Transformer stream.  Two bidirectional feature-coupling stages exchange
-local and global representations before dense vector/Hough and keypoint
-evidence are constructed.  All evidence is processed by one 1-D refiner and a
-single final softmax; no scalar or posterior averaging is used.
-
-The final evidence residual is zero initialized.  Loading a PEPD state therefore
-makes the initial CAGH progress distribution exactly equal to PEPD's visual
-progress distribution while leaving every new branch available for supervised
-auxiliary losses and subsequent end-to-end optimization.
+local and global representations before dense vector/Hough, keypoint, and
+differentiable Base-style mask-moment evidence are constructed.  A small fixed
+geometry residual guarantees that the physical prior reaches the final reading
+from the first optimizer step; a zero-initialized 1-D refiner then learns the
+higher-order evidence interactions.  The model uses one final softmax and no
+scalar or posterior averaging.
 """
 
 from __future__ import annotations
@@ -62,6 +60,7 @@ class CAGHOutputs(NamedTuple):
     coupled_global_angle_evidence: torch.Tensor
     local_hough_angle_evidence: torch.Tensor
     keypoint_angle_evidence: torch.Tensor
+    mask_geometry_angle_evidence: torch.Tensor
     interaction_angle_evidence: torch.Tensor
     unified_angle_logits: torch.Tensor
     mask_support_logits: torch.Tensor
@@ -77,6 +76,11 @@ class CAGHOutputs(NamedTuple):
     tip_xy: torch.Tensor
     tail_xy: torch.Tensor
     keypoint_direction: torch.Tensor
+    mask_geometry_axis: torch.Tensor
+    mask_geometry_axis_score: torch.Tensor
+    mask_geometry_support: torch.Tensor
+    keypoint_solver_valid: torch.Tensor
+    mask_geometry_valid: torch.Tensor
     coupled_global_direction: torch.Tensor
     pivot_logits: torch.Tensor
     direction_raw: torch.Tensor
@@ -240,7 +244,12 @@ class BidirectionalFeatureCouplingUnit(nn.Module):
     ) -> tuple[torch.Tensor, torch.Tensor]:
         if local.ndim != 4 or tokens.ndim != 3:
             raise ValueError("FCU expects local [B,C,H,W] and tokens [B,N,D]")
-        pooled = F.adaptive_avg_pool2d(local, (8, 8))
+        if local.shape[-2:] != (64, 64):
+            raise ValueError("FCU local feature map must be 64x64")
+        # The non-overlapping 8x8 mean is exactly the 64x64 -> 8x8
+        # adaptive-average result, while avoiding CUDA's non-deterministic
+        # adaptive_avg_pool2d backward implementation.
+        pooled = F.avg_pool2d(local, kernel_size=8, stride=8)
         local_tokens = self.local_to_global(pooled).flatten(2).transpose(1, 2)
         if local_tokens.shape != tokens.shape:
             raise ValueError("FCU local/global token shapes differ")
@@ -344,9 +353,10 @@ class CAGHNet(ProbabilisticPivotDirectionNet):
         self.dense_vote_head = nn.Conv2d(local_channels, 4, 1)
         self.coupled_global_direction_head = nn.Linear(token_dim, 2)
         self.coupled_global_uncertainty_head = nn.Linear(token_dim, 1)
-        # base PEPD, coupled-global, dense-Hough, keypoint, product, difference.
+        # PEPD, coupled-global, dense-Hough, keypoint, differentiable
+        # Base-style mask-moment geometry, and three interaction terms.
         self.evidence_refiner = nn.Sequential(
-            nn.Conv1d(6, 32, 3, padding=1, bias=False),
+            nn.Conv1d(8, 32, 3, padding=1, bias=False),
             nn.GroupNorm(8, 32),
             nn.GELU(),
             nn.Conv1d(32, 1, 1),
@@ -367,9 +377,9 @@ class CAGHNet(ProbabilisticPivotDirectionNet):
                 elif isinstance(child, nn.Linear):
                     nn.init.xavier_uniform_(child.weight)
                     nn.init.zeros_(child.bias)
-        # Tail starts at the signed PEPD pivot posterior.  Most importantly,
-        # the unified geometry residual starts exactly zero, making the first
-        # final softmax identical to the signed PEPD visual softmax.
+        # Tail starts at the signed PEPD pivot posterior.  The learned
+        # higher-order residual starts at zero; the explicit low-weight
+        # keypoint/mask-moment prior remains active from the first step.
         nn.init.zeros_(self.tail_residual_head.weight)
         nn.init.zeros_(self.tail_residual_head.bias)
         final = self.evidence_refiner[-1]
@@ -444,6 +454,45 @@ class CAGHNet(ProbabilisticPivotDirectionNet):
         centered = evidence - evidence.mean(dim=1, keepdim=True)
         scale = torch.sqrt(centered.square().mean(dim=1, keepdim=True) + 1e-6)
         return centered / scale
+
+    @staticmethod
+    def _mask_moment_axis(
+        mask_probability: torch.Tensor,
+        pivot_xy: torch.Tensor,
+        orientation_direction: torch.Tensor,
+    ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+        """Differentiable counterpart of the original Base mask-line prior."""
+
+        if mask_probability.ndim != 4 or mask_probability.shape[1] != 1:
+            raise ValueError("mask probability must have shape [B,1,H,W]")
+        batch, _, height, width = mask_probability.shape
+        if height != width or pivot_xy.shape != (batch, 2):
+            raise ValueError("mask/pivot shape drift")
+        coordinate = torch.linspace(
+            0.0, 1.0, height, device=mask_probability.device, dtype=torch.float32
+        )
+        yy, xx = torch.meshgrid(coordinate, coordinate, indexing="ij")
+        weight = mask_probability[:, 0].float().clamp(0.0, 1.0)
+        weight_sum = weight.sum((1, 2)).clamp_min(1e-8)
+        dx = xx[None] - pivot_xy[:, 0, None, None].float()
+        dy = yy[None] - pivot_xy[:, 1, None, None].float()
+        cxx = (weight * dx.square()).sum((1, 2)) / weight_sum
+        cyy = (weight * dy.square()).sum((1, 2)) / weight_sum
+        cxy = (weight * dx * dy).sum((1, 2)) / weight_sum
+        angle = 0.5 * torch.atan2(2.0 * cxy, cxx - cyy)
+        axis = torch.stack((torch.cos(angle), torch.sin(angle)), dim=1)
+        orientation = F.normalize(orientation_direction.float(), dim=1, eps=1e-8)
+        sign = torch.where(
+            torch.sum(axis * orientation.detach(), dim=1, keepdim=True) >= 0.0,
+            torch.ones((batch, 1), device=axis.device),
+            -torch.ones((batch, 1), device=axis.device),
+        )
+        axis = F.normalize(axis * sign, dim=1, eps=1e-8)
+        trace = (cxx + cyy).clamp_min(1e-8)
+        eigen_gap = torch.sqrt((cxx - cyy).square() + 4.0 * cxy.square())
+        axis_score = (eigen_gap / trace).clamp(0.0, 1.0)
+        support = (weight_sum / float(height * width)).clamp(0.0, 1.0)
+        return axis, axis_score, support
 
     def configure_trainable_stage(self, stage: str) -> tuple[str, ...]:
         """Apply the frozen 3+3+2 epoch trainability schedule."""
@@ -520,10 +569,45 @@ class CAGHNet(ProbabilisticPivotDirectionNet):
         reference_range_angle: torch.Tensor | None,
         crop_affine: torch.Tensor | None = None,
         reference_available: torch.Tensor | None = None,
+        *,
+        use_pepd_evidence: bool = True,
+        use_mask_geometry_evidence: bool = True,
     ) -> CAGHOutputs:
         features = self.forward_multiscale_features(image)
-        batch_size = image.shape[0]
-        device = image.device
+        return self.forward_from_multiscale_features(
+            features,
+            reference_start_angle,
+            reference_range_angle,
+            crop_affine,
+            reference_available,
+            use_pepd_evidence=use_pepd_evidence,
+            use_mask_geometry_evidence=use_mask_geometry_evidence,
+        )
+
+    def forward_from_multiscale_features(
+        self,
+        features: CAGHMultiscaleFeatures,
+        reference_start_angle: torch.Tensor | None,
+        reference_range_angle: torch.Tensor | None,
+        crop_affine: torch.Tensor | None = None,
+        reference_available: torch.Tensor | None = None,
+        *,
+        use_pepd_evidence: bool = True,
+        use_mask_geometry_evidence: bool = True,
+    ) -> CAGHOutputs:
+        """Run CAGH heads from one authenticated encoder pass.
+
+        The evidence switches are structural ablations used by the frozen V5
+        mechanism protocol.  They alter tensors inside the model rather than
+        selecting or mixing predictions after inference.
+        """
+
+        if not isinstance(features, CAGHMultiscaleFeatures):
+            raise TypeError("features must be CAGHMultiscaleFeatures")
+        batch_size = features.c2.shape[0]
+        device = features.c2.device
+        if batch_size < 1 or any(value.shape[0] != batch_size for value in features):
+            raise ValueError("CAGH multiscale feature batch drift")
         pivot_features, pivot_logits = self._pivot_features(features.c5)
 
         def upsample(value: torch.Tensor) -> torch.Tensor:
@@ -555,7 +639,8 @@ class CAGHNet(ProbabilisticPivotDirectionNet):
 
         mask_support_logits = self.mask_support_head(local)
         tip_logits = self.tip_heatmap_head(local)
-        tail_logits = pivot_logits + self.tail_residual_head(local)
+        tail_prior = pivot_logits if bool(use_pepd_evidence) else torch.zeros_like(pivot_logits)
+        tail_logits = tail_prior + self.tail_residual_head(local)
         tip_probability, tip_xy = self._spatial_probability_and_xy(tip_logits)
         tail_probability, tail_xy = self._spatial_probability_and_xy(tail_logits)
         keypoint_delta = tip_xy - tail_xy
@@ -626,8 +711,13 @@ class CAGHNet(ProbabilisticPivotDirectionNet):
             eps=1e-8,
         )
 
-        global_evidence = visual_concentration[:, None] * torch.sum(
+        raw_global_evidence = visual_concentration[:, None] * torch.sum(
             crop_direction * visual_direction[:, None, :], dim=2
+        )
+        global_evidence = (
+            raw_global_evidence
+            if bool(use_pepd_evidence)
+            else torch.zeros_like(raw_global_evidence)
         )
         global_token = tokens.mean(dim=1)
         coupled_global_direction = F.normalize(
@@ -643,10 +733,10 @@ class CAGHNet(ProbabilisticPivotDirectionNet):
             crop_direction * coupled_global_direction[:, None, :], dim=2
         ) / coupled_scale[:, None].square()
 
-        support_log_weight = F.log_softmax(
-            (mask_support_logits.float() + dense_confidence_logits.float()).flatten(1),
-            dim=1,
-        )
+        support_logits = dense_confidence_logits.float()
+        if bool(use_mask_geometry_evidence):
+            support_logits = support_logits + mask_support_logits.float()
+        support_log_weight = F.log_softmax(support_logits.flatten(1), dim=1)
         vector_flat = dense_vector.flatten(2).transpose(1, 2)
         uncertainty_flat = dense_uncertainty.flatten(1)
         vote_similarity = torch.einsum("bnd,bkd->bnk", vector_flat, crop_direction)
@@ -667,23 +757,66 @@ class CAGHNet(ProbabilisticPivotDirectionNet):
         )
         keypoint_evidence = keypoint_solver.angle_evidence
 
+        orientation_direction = (
+            visual_direction if bool(use_pepd_evidence) else keypoint_direction
+        )
+        mask_axis, mask_axis_score, mask_support = self._mask_moment_axis(
+            mask_support_probability,
+            tail_xy,
+            orientation_direction,
+        )
+        mask_concentration = 1.0 + 49.0 * mask_axis_score * torch.clamp(
+            mask_support / 0.05, 0.0, 1.0
+        )
+        raw_mask_geometry_evidence = mask_concentration[:, None] * torch.sum(
+            crop_direction * mask_axis[:, None, :], dim=2
+        )
+        mask_geometry_available = (
+            effective_reference
+            & torch.isfinite(mask_axis).all(1)
+            & torch.isfinite(mask_axis_score)
+            & torch.isfinite(mask_support)
+            & (mask_support > 1e-5)
+        )
+        mask_geometry_evidence = (
+            torch.where(
+                mask_geometry_available[:, None],
+                raw_mask_geometry_evidence,
+                torch.zeros_like(raw_mask_geometry_evidence),
+            )
+            if bool(use_mask_geometry_evidence)
+            else torch.zeros_like(raw_mask_geometry_evidence)
+        )
+
         standardized_global = self._standardize_evidence(global_evidence)
         standardized_coupled = self._standardize_evidence(coupled_global_evidence)
         standardized_local = self._standardize_evidence(local_hough_evidence)
         standardized_keypoint = self._standardize_evidence(keypoint_evidence)
+        standardized_mask_geometry = self._standardize_evidence(
+            mask_geometry_evidence
+        )
         refiner_input = torch.stack(
             (
                 standardized_global,
                 standardized_coupled,
                 standardized_local,
                 standardized_keypoint,
+                standardized_mask_geometry,
                 standardized_coupled * standardized_local,
                 standardized_local - standardized_keypoint,
+                standardized_mask_geometry * standardized_keypoint,
             ),
             dim=1,
         )
         interaction_evidence = self.evidence_refiner(refiner_input)[:, 0, :]
-        unified_logits = global_evidence + interaction_evidence
+        geometry_prior_evidence = 0.25 * standardized_keypoint
+        if bool(use_mask_geometry_evidence):
+            geometry_prior_evidence = (
+                geometry_prior_evidence + 0.25 * standardized_mask_geometry
+            )
+        unified_logits = (
+            global_evidence + geometry_prior_evidence + interaction_evidence
+        )
         final_log_probability = F.log_softmax(unified_logits, dim=1)
         base_log_probability = F.log_softmax(global_evidence, dim=1)
         uniform = torch.full_like(
@@ -705,6 +838,18 @@ class CAGHNet(ProbabilisticPivotDirectionNet):
             torch.isfinite(visual_direction).all(dim=1)
             & (torch.linalg.vector_norm(torch.nan_to_num(visual_direction), dim=1) > 1e-8)
         )
+        geometry_valid = (
+            keypoint_solver.valid
+            & torch.isfinite(keypoint_direction).all(dim=1)
+            & torch.isfinite(local_hough_evidence).all(dim=1)
+        )
+        evidence_valid = visual_valid if bool(use_pepd_evidence) else geometry_valid
+        fusion_valid = (
+            effective_reference
+            & evidence_valid
+            & torch.isfinite(final_log_probability).all(1)
+            & torch.isfinite(expected)
+        )
         return CAGHOutputs(
             progress_log_probability=final_log_probability,
             expected_progress=expected,
@@ -714,6 +859,7 @@ class CAGHNet(ProbabilisticPivotDirectionNet):
             coupled_global_angle_evidence=coupled_global_evidence,
             local_hough_angle_evidence=local_hough_evidence,
             keypoint_angle_evidence=keypoint_evidence,
+            mask_geometry_angle_evidence=mask_geometry_evidence,
             interaction_angle_evidence=interaction_evidence,
             unified_angle_logits=unified_logits,
             mask_support_logits=mask_support_logits,
@@ -729,12 +875,21 @@ class CAGHNet(ProbabilisticPivotDirectionNet):
             tip_xy=tip_xy,
             tail_xy=tail_xy,
             keypoint_direction=keypoint_direction,
+            mask_geometry_axis=mask_axis,
+            mask_geometry_axis_score=mask_axis_score,
+            mask_geometry_support=mask_support,
+            keypoint_solver_valid=keypoint_solver.valid,
+            mask_geometry_valid=(
+                mask_geometry_available
+                if bool(use_mask_geometry_evidence)
+                else torch.zeros_like(mask_geometry_available)
+            ),
             coupled_global_direction=coupled_global_direction,
             pivot_logits=pivot_logits,
             direction_raw=direction_raw,
             visual_angle_logits=visual_angle_logits,
             visual_log_variance_raw=visual_log_variance,
-            valid=effective_reference & visual_valid,
+            valid=fusion_valid,
             reference_available=effective_reference,
         )
 
@@ -753,6 +908,7 @@ def cagh_multitask_loss(
     target_tail_xy: torch.Tensor,
     target_mask_probability: torch.Tensor | None = None,
     group_weight: torch.Tensor | None = None,
+    use_mask_geometry: bool = True,
 ) -> tuple[torch.Tensor, dict[str, torch.Tensor]]:
     """Minimal fixed multitask loss using only progress and real tip/tail labels."""
 
@@ -837,7 +993,11 @@ def cagh_multitask_loss(
     dense_cosine = torch.sum(
         outputs.dense_vector * target_direction[:, :, None, None], dim=1
     )
-    dense_weight = outputs.mask_support_probability[:, 0].detach()
+    dense_weight = (
+        outputs.mask_support_probability[:, 0].detach()
+        if bool(use_mask_geometry)
+        else outputs.dense_confidence_probability[:, 0].detach()
+    )
     dense_vector_row = (
         ((1.0 - dense_cosine) * dense_weight).sum((1, 2))
         / dense_weight.sum((1, 2)).clamp_min(1e-8)
@@ -869,6 +1029,7 @@ def cagh_multitask_loss(
         outputs.coupled_global_angle_evidence,
         outputs.local_hough_angle_evidence,
         outputs.keypoint_angle_evidence,
+        outputs.mask_geometry_angle_evidence,
     ):
         auxiliary_evidence = auxiliary_evidence + weighted(
             -(soft * F.log_softmax(evidence, dim=1)).sum(1), valid
