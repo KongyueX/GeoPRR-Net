@@ -17,7 +17,7 @@ Missing geometry still returns the Raw posterior exactly.
 from __future__ import annotations
 
 import math
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import Any, Final
 
@@ -28,6 +28,8 @@ from experiments.a11_scort import (
     DEFAULT_RELATION_CHANNELS,
     DEFAULT_TOKEN_DIM,
     EFFICIENTNET_B0_FEATURES,
+    EFFICIENTNET_B0_MIDDLE_FEATURES,
+    RAW_STRIDE8_CHANNELS,
     SCORTRawEfficientNetB0Encoder,
 )
 from experiments.a15_2_fteb import A15_2_LEARNED_RESIDUAL_SCALE
@@ -108,18 +110,23 @@ class MomentExactPosteriorHead(nn.Module):
     def __init__(
         self,
         *,
+        feature_dim: int = EFFICIENTNET_B0_FEATURES,
         progress_bins: int = DEFAULT_PROGRESS_BINS,
         initial_scale: float = DEFAULT_POSTERIOR_SCALE,
+        calibration_knots_x: Sequence[float] | None = None,
+        calibration_knots_y: Sequence[float] | None = None,
     ) -> None:
         super().__init__()
+        _require(feature_dim >= 1, "METT anchor feature width must be positive")
         _require(progress_bins >= 16, "METT needs at least 16 progress bins")
         _require(
             MIN_POSTERIOR_SCALE <= float(initial_scale) <= MAX_POSTERIOR_SCALE,
             "METT initial posterior scale is out of range",
         )
+        self.feature_dim = int(feature_dim)
         self.progress_bins = int(progress_bins)
-        self.point_projection = nn.Linear(EFFICIENTNET_B0_FEATURES, 1)
-        self.log_scale_projection = nn.Linear(EFFICIENTNET_B0_FEATURES, 1)
+        self.point_projection = nn.Linear(self.feature_dim, 1)
+        self.log_scale_projection = nn.Linear(self.feature_dim, 1)
         nn.init.zeros_(self.log_scale_projection.weight)
         nn.init.constant_(
             self.log_scale_projection.bias, math.log(float(initial_scale))
@@ -128,14 +135,87 @@ class MomentExactPosteriorHead(nn.Module):
             "progress_grid",
             torch.linspace(0.0, 1.0, self.progress_bins, dtype=torch.float32),
         )
+        self.register_buffer(
+            "calibration_knots_x", torch.empty(0, dtype=torch.float32),
+            persistent=False,
+        )
+        self.register_buffer(
+            "calibration_knots_y", torch.empty(0, dtype=torch.float32),
+            persistent=False,
+        )
+        if calibration_knots_x is not None or calibration_knots_y is not None:
+            _require(
+                calibration_knots_x is not None
+                and calibration_knots_y is not None,
+                "METT calibration needs both knot axes",
+            )
+            self.set_monotone_calibration(
+                calibration_knots_x, calibration_knots_y
+            )
+
+    def set_monotone_calibration(
+        self,
+        knots_x: Sequence[float],
+        knots_y: Sequence[float],
+    ) -> None:
+        x = torch.as_tensor(tuple(knots_x), dtype=torch.float32)
+        y = torch.as_tensor(tuple(knots_y), dtype=torch.float32)
+        _require(
+            x.ndim == y.ndim == 1
+            and x.shape == y.shape
+            and x.numel() >= 3
+            and bool(torch.isfinite(x).all())
+            and bool(torch.isfinite(y).all())
+            and bool((x[1:] > x[:-1]).all())
+            and bool((y[1:] >= y[:-1]).all())
+            and float(x[0]) >= 0.0
+            and float(x[-1]) <= 1.0
+            and float(y[0]) >= 0.0
+            and float(y[-1]) <= 1.0,
+            "METT monotone calibration knots are malformed",
+        )
+        device = self.progress_grid.device
+        self.calibration_knots_x = x.to(device)
+        self.calibration_knots_y = y.to(device)
+
+    def clear_monotone_calibration(self) -> None:
+        device = self.progress_grid.device
+        self.calibration_knots_x = torch.empty(
+            0, dtype=torch.float32, device=device
+        )
+        self.calibration_knots_y = torch.empty(
+            0, dtype=torch.float32, device=device
+        )
+
+    def _calibrate(self, point: torch.Tensor) -> torch.Tensor:
+        if self.calibration_knots_x.numel() == 0:
+            return point
+        with torch.autocast(device_type=point.device.type, enabled=False):
+            value = point.float()
+            x = self.calibration_knots_x.float()
+            y = self.calibration_knots_y.float()
+            # Keep the calibration bounds on-device.  Converting either CUDA
+            # scalar to ``float`` here forces a host synchronization on every
+            # Raw/SARN endpoint forward.
+            clipped = torch.maximum(torch.minimum(value, x[-1]), x[0])
+            upper = torch.searchsorted(x, clipped, right=True).clamp(
+                1, x.numel() - 1
+            )
+            lower = upper - 1
+            alpha = (clipped - x[lower]) / (x[upper] - x[lower])
+            calibrated = y[lower] + alpha * (y[upper] - y[lower])
+        return calibrated.clamp(0.0, 1.0)
 
     def point_progress(self, representation: torch.Tensor) -> torch.Tensor:
         _require(
             representation.ndim == 2
-            and representation.shape[1] == EFFICIENTNET_B0_FEATURES,
+            and representation.shape[1] == self.feature_dim,
             "METT anchor representation has the wrong shape",
         )
-        return torch.sigmoid(self.point_projection(representation.float()).squeeze(1))
+        point = torch.sigmoid(
+            self.point_projection(representation.float()).squeeze(1)
+        )
+        return self._calibrate(point)
 
     def posterior_parameters(
         self, representation: torch.Tensor
@@ -642,6 +722,8 @@ class A152METTCorrection(A15FTEBCorrection):
     def __init__(
         self,
         *,
+        stride8_channels: int = RAW_STRIDE8_CHANNELS,
+        stride16_channels: int = EFFICIENTNET_B0_MIDDLE_FEATURES,
         relation_channels: int = DEFAULT_RELATION_CHANNELS,
         token_dim: int = DEFAULT_TOKEN_DIM,
         attention_heads: int = 4,
@@ -654,6 +736,8 @@ class A152METTCorrection(A15FTEBCorrection):
         use_direct_scalar_residual: bool = False,
     ) -> None:
         super().__init__(
+            stride8_channels=stride8_channels,
+            stride16_channels=stride16_channels,
             relation_channels=relation_channels,
             token_dim=token_dim,
             attention_heads=attention_heads,
@@ -701,6 +785,8 @@ class ReMSTCorrection(A152METTCorrection):
     def __init__(
         self,
         *,
+        stride8_channels: int = RAW_STRIDE8_CHANNELS,
+        stride16_channels: int = EFFICIENTNET_B0_MIDDLE_FEATURES,
         relation_channels: int = DEFAULT_RELATION_CHANNELS,
         token_dim: int = DEFAULT_TOKEN_DIM,
         attention_heads: int = 4,
@@ -710,6 +796,8 @@ class ReMSTCorrection(A152METTCorrection):
         use_relation_memory: bool = True,
     ) -> None:
         super().__init__(
+            stride8_channels=stride8_channels,
+            stride16_channels=stride16_channels,
             relation_channels=relation_channels,
             token_dim=token_dim,
             attention_heads=attention_heads,

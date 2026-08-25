@@ -10,7 +10,7 @@ import argparse
 import json
 import math
 import statistics
-from collections.abc import Mapping, Sequence
+from collections.abc import Callable, Mapping, Sequence
 from pathlib import Path
 from typing import Any, Final
 
@@ -471,9 +471,14 @@ def evaluate_mett(
     residual_scale_override: float | None = None,
     allow_zero_initialized_control: bool = False,
     expected_variant: str = "full",
+    trained_checkpoint_loader: Callable[..., tuple[torch.nn.Module, torch.nn.Module, dict[str, Any]]] = load_mett_models,
+    trained_checkpoint_validator: Callable[..., dict[str, Any]] | None = validate_mett_variant_metadata,
+    publication_identity_resolver: Callable[[str], dict[str, str]] = publication_model_identity,
+    evaluation_protocol: str = PROTOCOL,
 ) -> dict[str, Any]:
     _require(workers >= 0 and batch_size >= 1, "METT evaluation sizes differ")
     _require(expected_variant in METT_VARIANTS, "unknown METT experiment variant")
+    _require(bool(evaluation_protocol.strip()), "evaluation protocol is empty")
     _require(
         (checkpoint_path is None) == bool(allow_zero_initialized_control),
         "select exactly one trained checkpoint or the explicit zero-initialized control",
@@ -556,11 +561,15 @@ def evaluate_mett(
             "source_anchor": anchor_metadata,
         }
     else:
-        anchor, correction, model_metadata = load_mett_models(
+        anchor, correction, model_metadata = trained_checkpoint_loader(
             checkpoint_path, device=device
         )
-        validated_variant_identity = validate_mett_variant_metadata(
-            model_metadata, expected_variant=expected_variant
+        validated_variant_identity = (
+            trained_checkpoint_validator(
+                model_metadata, expected_variant=expected_variant
+            )
+            if trained_checkpoint_validator is not None
+            else {"validation": "performed_by_trained_checkpoint_loader"}
         )
         model_metadata = {
             **model_metadata,
@@ -575,7 +584,11 @@ def evaluate_mett(
         residual_scale=residual_scale_override,
     )
     if sensitivity_overrides:
-        validated_base_identity = validate_mett_variant_metadata(
+        _require(
+            trained_checkpoint_validator is not None,
+            "sensitivity overrides require a checkpoint metadata validator",
+        )
+        validated_base_identity = trained_checkpoint_validator(
             model_metadata, expected_variant=expected_variant
         )
         model_metadata = {
@@ -728,11 +741,11 @@ def evaluate_mett(
     paper_identity = (
         None
         if checkpoint_path is None
-        else publication_model_identity(expected_variant)
+        else publication_identity_resolver(expected_variant)
     )
     result = {
         "schema_version": 1,
-        "protocol": PROTOCOL,
+        "protocol": evaluation_protocol,
         "status": "complete",
         "scope": {
             "development_cohort": True,

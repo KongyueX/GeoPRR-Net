@@ -1,0 +1,41 @@
+comparator,metric,metric_label,reduction_pp,ci_low_pp,ci_high_pp,bootstrap_replicates,bootstrap_unit,formal_holdout_access
+ReMST base,clean,Clean,0.0,0.0,0.0,20000,scene_stem,False
+ReMST base,blur_moderate,Blur-M,0.0,0.0,0.0,20000,scene_stem,False
+ReMST base,blur_severe,Blur-S,0.0,0.0,0.0,20000,scene_stem,False
+ReMST base,perspective_moderate,Persp.-25,0.10267324681051647,0.08173887216558731,0.12349071709418431,20000,scene_stem,False
+ReMST base,perspective_severe,Persp.-45,0.2668147932853013,0.21940823831769693,0.3133617293062886,20000,scene_stem,False
+ReMST base,combined_severe,45 + blur,0.28698017029647555,0.2345577280348008,0.3389594922429925,20000,scene_stem,False
+ReMST base,all_conditions,All six,0.10941136839871554,0.09004066553001873,0.12809243514561228,20000,scene_stem,False
+ReMST base,projective_pooled,Projective pool,0.21882273679743108,0.1810664485317874,0.2556646388313284,20000,scene_stem,False
+Mean-risk RCMT,clean,Clean,0.0,0.0,0.0,20000,scene_stem,False
+Mean-risk RCMT,blur_moderate,Blur-M,0.0,0.0,0.0,20000,scene_stem,False
+Mean-risk RCMT,blur_severe,Blur-S,0.0,0.0,0.0,20000,scene_stem,False
+Mean-risk RCMT,perspective_moderate,Persp.-25,0.005474359381748125,0.0002517003440656396,0.01069172174704181,20000,scene_stem,False
+Mean-risk RCMT,perspective_severe,Persp.-45,0.021299374920138784,0.011544618306171919,0.030960354251874378,20000,scene_stem,False
+Mean-risk RCMT,combined_severe,45 + blur,0.022139822027237226,0.011020664998062086,0.03364831836634702,20000,scene_stem,False
+Mean-risk RCMT,all_conditions,All six,0.008152259388187356,0.004527906734734392,0.011856706625003438,20000,scene_stem,False
+Mean-risk RCMT,projective_pooled,Projective pool,0.01630451877637471,0.009012407153102414,0.02357027105533428,20000,scene_stem,False
+posterior probability mixture,clean,Clean,0.0,0.0,0.0,20000,scene_stem,False
+posterior probability mixture,blur_moderate,Blur-M,0.0,0.0,0.0,20000,scene_stem,False
+posterior probability mixture,blur_severe,Blur-S,0.0,0.0,0.0,20000,scene_stem,False
+posterior probability mixture,perspective_moderate,Persp.-25,0.04733838383519585,-0.01622072095953245,0.11281187734403296,20000,scene_stem,False
+posterior probability mixture,perspective_severe,Persp.-45,0.36926745045488496,0.23379276624323347,0.520119535804402,20000,scene_stem,False
+posterior probability mixture,combined_severe,45 + blur,0.4022717155897511,0.2581471699958049,0.5746381713441501,20000,scene_stem,False
+posterior probability mixture,all_conditions,All six,0.13647959164663864,0.08413935227225441,0.1962510999793638,20000,scene_stem,False
+posterior probability mixture,projective_pooled,Projective pool,0.2729591832932773,0.1679122589018971,0.3952214181631667,20000,scene_stem,False
+w/o deep representations,clean,Clean,0.0,0.0,0.0,20000,scene_stem,False
+w/o deep representations,blur_moderate,Blur-M,0.0,0.0,0.0,20000,scene_stem,False
+w/o deep representations,blur_severe,Blur-S,0.0,0.0,0.0,20000,scene_stem,False
+w/o deep representations,perspective_moderate,Persp.-25,0.0021724728347403553,0.00014264056803022838,0.004803350612963233,20000,scene_stem,False
+w/o deep representations,perspective_severe,Persp.-45,0.0035226825113819694,0.0012380777392386453,0.0059189633572416,20000,scene_stem,False
+w/o deep representations,combined_severe,45 + blur,0.00417247223879645,0.0004806034098203708,0.007843108160458348,20000,scene_stem,False
+w/o deep representations,all_conditions,All six,0.0016446045974864622,0.0005653787566645024,0.0028314022813678134,20000,scene_stem,False
+w/o deep representations,projective_pooled,Projective pool,0.0032892091949729245,0.001133681759565706,0.005720058268893156,20000,scene_stem,False
+w/o risk-imitation loss,clean,Clean,0.0,0.0,0.0,20000,scene_stem,False
+w/o risk-imitation loss,blur_moderate,Blur-M,0.0,0.0,0.0,20000,scene_stem,False
+w/o risk-imitation loss,blur_severe,Blur-S,0.0,0.0,0.0,20000,scene_stem,False
+w/o risk-imitation loss,perspective_moderate,Persp.-25,0.0016244101711927685,-0.0011830333895636992,0.0047596602985418,20000,scene_stem,False
+w/o risk-imitation loss,perspective_severe,Persp.-45,0.0035753590893822535,-0.0014591189523644266,0.008858551126662147,20000,scene_stem,False
+w/o risk-imitation loss,combined_severe,45 + blur,0.004635387655836466,0.001209093361824668,0.007885618647110564,20000,scene_stem,False
+w/o risk-imitation loss,all_conditions,All six,0.0016391928194019146,7.149971022172495e-05,0.0032332059638161877,20000,scene_stem,False
+w/o risk-imitation loss,projective_pooled,Projective pool,0.0032783856388038293,0.0001310858051549846,0.006481096081961168,20000,scene_stem,False

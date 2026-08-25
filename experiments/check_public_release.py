@@ -1,4 +1,4 @@
-"""Audit the ReMSTNet-v3 code-only release declared by its inventory.
+"""Audit the R²MT-Net paper release declared by its inventory.
 
 Workspace mode reports files that still need to be added to Git. Release mode
 turns that report into an error. Neither mode stages, commits, or pushes files.
@@ -335,7 +335,7 @@ def run_audit(root: Path, inventory_path: Path, *, mode: str) -> Mapping[str, An
         errors["undeclared_tracked_files"] = undeclared_tracked
     failed = {name: values for name, values in errors.items() if values}
     return {
-        "protocol": "remstnet_public_code_release_audit_v1",
+        "protocol": "r2mt_net_public_release_audit_v1",
         "status": "pass" if not failed else "fail",
         "mode": mode,
         "declared_files": len(declared),

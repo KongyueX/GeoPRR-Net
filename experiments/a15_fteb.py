@@ -186,6 +186,10 @@ def _endpoint_from_anchor(
         "features": {
             "stride8": features["stride8"],
             "stride16": features["stride16"],
+            # Keep the already-computed final representation available to
+            # downstream single-backbone relation transports.  Established
+            # FTEB corrections continue to consume only stride-8/16 tensors.
+            "representation": representation,
         },
     }
 
@@ -345,11 +349,17 @@ class FTEBSharedDualScaleRelationEncoder(nn.Module):
     def __init__(
         self,
         *,
+        stride8_channels: int = RAW_STRIDE8_CHANNELS,
+        stride16_channels: int = EFFICIENTNET_B0_MIDDLE_FEATURES,
         relation_channels: int = DEFAULT_RELATION_CHANNELS,
         token_dim: int = DEFAULT_TOKEN_DIM,
         memory_grid_size: int = DEFAULT_MEMORY_GRID_SIZE,
     ) -> None:
         super().__init__()
+        _require(
+            stride8_channels >= 1 and stride16_channels >= 1,
+            "FTEB relation input channels must be positive",
+        )
         _require(
             relation_channels >= 8 and relation_channels % 8 == 0,
             "FTEB relation width must be a multiple of eight",
@@ -361,14 +371,16 @@ class FTEBSharedDualScaleRelationEncoder(nn.Module):
         _require(memory_grid_size >= 2, "FTEB memory grid is too small")
         self.token_dim = int(token_dim)
         self.memory_grid_size = int(memory_grid_size)
+        self.stride8_channels = int(stride8_channels)
+        self.stride16_channels = int(stride16_channels)
         self.stride8 = _FTEBSharedRelationScale(
-            input_channels=RAW_STRIDE8_CHANNELS,
+            input_channels=self.stride8_channels,
             relation_channels=relation_channels,
             token_dim=token_dim,
             memory_grid_size=memory_grid_size,
         )
         self.stride16 = _FTEBSharedRelationScale(
-            input_channels=EFFICIENTNET_B0_MIDDLE_FEATURES,
+            input_channels=self.stride16_channels,
             relation_channels=relation_channels,
             token_dim=token_dim,
             memory_grid_size=memory_grid_size,
@@ -799,6 +811,8 @@ class A15FTEBCorrection(nn.Module):
     def __init__(
         self,
         *,
+        stride8_channels: int = RAW_STRIDE8_CHANNELS,
+        stride16_channels: int = EFFICIENTNET_B0_MIDDLE_FEATURES,
         relation_channels: int = DEFAULT_RELATION_CHANNELS,
         token_dim: int = DEFAULT_TOKEN_DIM,
         attention_heads: int = 4,
@@ -814,6 +828,8 @@ class A15FTEBCorrection(nn.Module):
             "FTEB relation-memory switch must be boolean",
         )
         self.progress_bins = int(progress_bins)
+        self.stride8_channels = int(stride8_channels)
+        self.stride16_channels = int(stride16_channels)
         self.relation_channels = int(relation_channels)
         self.token_dim = int(token_dim)
         self.attention_heads = int(attention_heads)
@@ -827,6 +843,8 @@ class A15FTEBCorrection(nn.Module):
         self.stride8_aligner = _SCORTDifferentiableAligner(feature_stride=8)
         self.stride16_aligner = _SCORTDifferentiableAligner(feature_stride=16)
         self.shared_relation_encoder = FTEBSharedDualScaleRelationEncoder(
+            stride8_channels=self.stride8_channels,
+            stride16_channels=self.stride16_channels,
             relation_channels=self.relation_channels,
             token_dim=self.token_dim,
             memory_grid_size=self.memory_grid_size,
@@ -877,10 +895,10 @@ class A15FTEBCorrection(nn.Module):
         _require(
             raw8.ndim == sarn8.ndim == 4
             and raw8.shape == sarn8.shape
-            and raw8.shape[:2] == (batch, RAW_STRIDE8_CHANNELS)
+            and raw8.shape[:2] == (batch, self.stride8_channels)
             and raw16.ndim == sarn16.ndim == 4
             and raw16.shape == sarn16.shape
-            and raw16.shape[:2] == (batch, EFFICIENTNET_B0_MIDDLE_FEATURES),
+            and raw16.shape[:2] == (batch, self.stride16_channels),
             "FTEB frozen twin feature shapes differ",
         )
         _require(

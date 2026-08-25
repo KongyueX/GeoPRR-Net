@@ -5,7 +5,7 @@ import argparse
 import json
 import math
 import time
-from collections.abc import Mapping, Sequence
+from collections.abc import Callable, Mapping, Sequence
 from pathlib import Path
 from typing import Any, Final
 
@@ -102,6 +102,11 @@ def evaluate_remstnet_syncg(
     workers: int = 4,
     batch_size: int = 64,
     use_amp: bool = False,
+    checkpoint_loader: Callable[..., tuple[torch.nn.Module, dict[str, Any]]] = (
+        load_remstnet_checkpoint
+    ),
+    evaluation_protocol: str = PROTOCOL,
+    candidate_display_name: str | None = None,
 ) -> dict[str, Any]:
     _require(workers >= 0 and batch_size >= 1, "pilot loader sizes are invalid")
     output = Path(output_path).resolve()
@@ -116,7 +121,7 @@ def evaluate_remstnet_syncg(
     device = torch.device(device_name)
     if device.type == "cuda":
         _require(torch.cuda.is_available(), "CUDA is unavailable")
-    model, model_metadata = load_remstnet_checkpoint(
+    model, model_metadata = checkpoint_loader(
         checkpoint_path, device=device
     )
     model.eval()
@@ -250,7 +255,7 @@ def evaluate_remstnet_syncg(
     _add_remstnet_publication_aliases(summary, candidate_rows)
     result = {
         "schema_version": 1,
-        "protocol": PROTOCOL,
+        "protocol": str(evaluation_protocol),
         "status": "pilot_complete",
         "scope": {
             "development_cohort": True,
@@ -259,7 +264,8 @@ def evaluate_remstnet_syncg(
             "prediction_dependent_routing": False,
             "candidate_machine_key": "remstnet",
             "legacy_candidate_machine_key": "mett",
-            "candidate_display_name": (
+            "candidate_display_name": candidate_display_name
+            or (
                 "ReMSTNet adaptive pilot"
                 if "Adaptive" in str(model_metadata.get("architecture", ""))
                 else (

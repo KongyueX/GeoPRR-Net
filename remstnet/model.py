@@ -449,11 +449,13 @@ class CrossScaleMomentCoordinator(nn.Module):
         *,
         progress_bins: int = DEFAULT_PROGRESS_BINS,
         token_dim: int = DEFAULT_TOKEN_DIM,
+        context_channels: int = CONTEXT_CHANNELS,
         attention_heads: int = 4,
         decoder_layers: int = 2,
         memory_grid_size: int = 4,
         use_progress_mixing: bool = False,
         learnable_budget_gain: bool = False,
+        maximum_budget_gain: float | None = None,
     ) -> None:
         super().__init__()
         _require(progress_bins >= 16, "coordinator needs at least 16 bins")
@@ -465,17 +467,28 @@ class CrossScaleMomentCoordinator(nn.Module):
         )
         _require(decoder_layers >= 1, "coordinator needs a decoder layer")
         _require(memory_grid_size >= 2, "coordinator memory grid is too small")
+        _require(context_channels >= 8, "coordinator context width is too small")
+        _require(
+            maximum_budget_gain is None or maximum_budget_gain > 1.0,
+            "coordinator maximum budget gain must exceed one",
+        )
         self.progress_bins = int(progress_bins)
         self.token_dim = int(token_dim)
+        self.context_channels = int(context_channels)
         self.attention_heads = int(attention_heads)
         self.decoder_layers = int(decoder_layers)
         self.memory_grid_size = int(memory_grid_size)
         self.use_progress_mixing = bool(use_progress_mixing)
         self.learnable_budget_gain = bool(learnable_budget_gain)
+        self.maximum_budget_gain = (
+            None
+            if maximum_budget_gain is None
+            else float(maximum_budget_gain)
+        )
         self.geometry_encoder = FTEBGeometryTokenEncoder(token_dim=token_dim)
         self.context_projection = nn.Sequential(
-            nn.LayerNorm(CONTEXT_CHANNELS),
-            nn.Linear(CONTEXT_CHANNELS, token_dim, bias=False),
+            nn.LayerNorm(self.context_channels),
+            nn.Linear(self.context_channels, token_dim, bias=False),
             nn.SiLU(),
             nn.Linear(token_dim, token_dim, bias=False),
         )
@@ -551,7 +564,7 @@ class CrossScaleMomentCoordinator(nn.Module):
             == (batch,)
             and adapted_representation.shape
             == raw_representation.shape
-            == (batch, CONTEXT_CHANNELS),
+            == (batch, self.context_channels),
             "coordinator input shapes differ",
         )
         geometry = self.geometry_encoder(
@@ -627,9 +640,18 @@ class CrossScaleMomentCoordinator(nn.Module):
                 (), device=total_evidence.device, dtype=total_evidence.dtype
             )
             if self.budget_gain_parameter is not None:
-                budget_gain = 1.0 + 0.5 * torch.tanh(
-                    self.budget_gain_parameter.float()
-                )
+                if self.maximum_budget_gain is None:
+                    budget_gain = 1.0 + 0.5 * torch.tanh(
+                        self.budget_gain_parameter.float()
+                    )
+                else:
+                    # The offset gives an exact gain of one at parameter zero,
+                    # while preserving a positive bounded gain for a wider
+                    # transferred-backbone correction range.
+                    logit_offset = -math.log(self.maximum_budget_gain - 1.0)
+                    budget_gain = self.maximum_budget_gain * torch.sigmoid(
+                        self.budget_gain_parameter.float() + logit_offset
+                    )
             total_shift = (
                 TOTAL_MOMENT_BUDGET
                 * budget_gain
