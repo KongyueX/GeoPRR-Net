@@ -1,0 +1,4 @@
+method,nmae,nmae_sd,coverage,checkpoint_count,samples,rows,scenes
+GeoPRR-Net,0.007834079880394326,0.00025460503785598075,1.0,3,129,774,6
+VDN annotation-reference component,0.016443768147972382,,1.0,1,129,774,6
+VDN automatic-reference path,0.8089375832649971,,0.2041343669250646,1,129,774,6

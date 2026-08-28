@@ -1,0 +1,4 @@
+comparison,delta_nmae,ci_low,ci_high,bootstrap_unit,replicates
+GeoPRR-Net minus Raw ResNet-18,-0.046332,-0.060707,-0.035401,source_group,20000
+GeoPRR-Net minus Raw EfficientNet-B0,-0.014712,-0.021051,-0.008223,source_group,20000
+GeoPRR-Net minus Raw MobileNetV3-Large,-0.024466,-0.046833,-0.000520,source_group,20000

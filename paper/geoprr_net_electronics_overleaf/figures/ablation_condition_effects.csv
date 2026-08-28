@@ -1,0 +1,25 @@
+variant,variant_label,condition,label,penalty_mean,penalty_sd
+no_geometry_fusion,No geometry-aware fusion,clean,Clean,-1.2805941051787702e-05,1.5368050342503423e-05
+no_geometry_fusion,No geometry-aware fusion,blur_moderate,Blur moderate,-9.98927049846235e-06,1.4843442529194682e-05
+no_geometry_fusion,No geometry-aware fusion,blur_severe,Blur severe,5.546653991115105e-07,8.940874266503684e-06
+no_geometry_fusion,No geometry-aware fusion,perspective_moderate,Perspective moderate,0.0038490003333810463,0.00044210186082038234
+no_geometry_fusion,No geometry-aware fusion,perspective_severe,Perspective severe,0.012736851149533405,0.0005784415991401702
+no_geometry_fusion,No geometry-aware fusion,combined_severe,Perspective severe + blur,0.013364100211393767,0.0005682449993703056
+fixed_routing,Fixed routing,clean,Clean,0.0001228957147884254,7.474128412197286e-05
+fixed_routing,Fixed routing,blur_moderate,Blur moderate,0.00013171099999367136,9.025192606488222e-05
+fixed_routing,Fixed routing,blur_severe,Blur severe,0.00013288858905987957,9.212896007742644e-05
+fixed_routing,Fixed routing,perspective_moderate,Perspective moderate,0.0007332775982673995,0.00011210350854173473
+fixed_routing,Fixed routing,perspective_severe,Perspective severe,0.0043709240953032965,0.0006930863507350905
+fixed_routing,Fixed routing,combined_severe,Perspective severe + blur,0.004782877210285222,0.0004520306468186464
+no_relational_transport,No relational transport,clean,Clean,2.97445243991531e-06,1.2134842880184881e-05
+no_relational_transport,No relational transport,blur_moderate,Blur moderate,7.423480990737727e-06,1.3219928335306256e-05
+no_relational_transport,No relational transport,blur_severe,Blur severe,8.260052246001313e-06,7.36198682012433e-06
+no_relational_transport,No relational transport,perspective_moderate,Perspective moderate,0.000912332047207059,0.00018453009526918246
+no_relational_transport,No relational transport,perspective_severe,Perspective severe,0.0018368944029001054,0.0003833498471546193
+no_relational_transport,No relational transport,combined_severe,Perspective severe + blur,0.0018874812139020828,0.00040785918721512686
+no_polar_evidence,No polar evidence,clean,Clean,0.0003394097926901123,0.0001621677920092858
+no_polar_evidence,No polar evidence,blur_moderate,Blur moderate,0.00034778264526859624,0.000197402332731469
+no_polar_evidence,No polar evidence,blur_severe,Blur severe,0.00033555928046550475,0.0001994834738488331
+no_polar_evidence,No polar evidence,perspective_moderate,Perspective moderate,-0.00019164959479198336,8.400127994850464e-05
+no_polar_evidence,No polar evidence,perspective_severe,Perspective severe,-0.00018979575440771697,0.00015905418352453175
+no_polar_evidence,No polar evidence,combined_severe,Perspective severe + blur,-0.00018542590961881725,0.00015547377477676173

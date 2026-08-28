@@ -35,6 +35,13 @@ from experiments.vdn_baseline import (
     sha256_file,
     verify_vdn_source,
 )
+from experiments.sgca_syncg_internal_pilot import (
+    DEV_SCENES as GEOPRR_INNER_DEV_SCENES,
+    FIT_SAMPLES as GEOPRR_FIT_SAMPLES,
+    FIT_SCENES as GEOPRR_FIT_SCENES,
+    INTERNAL_DEV_SCENE_STEMS,
+    TRAIN_SCENES as GEOPRR_INNER_TRAIN_SCENES,
+)
 
 
 TRAIN_SAMPLE_ORDER_SHA256_PROTOCOL = (
@@ -93,6 +100,22 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--scale-factor", type=float, default=0.02)
     parser.add_argument("--rotation-factor", type=float, default=90.0)
     parser.add_argument("--seed", type=int, default=20260720)
+    parser.add_argument(
+        "--outer-split",
+        type=Path,
+        help=(
+            "optional scene-disjoint outer split; required with "
+            "--matched-geoprr-split"
+        ),
+    )
+    parser.add_argument(
+        "--matched-geoprr-split",
+        action="store_true",
+        help=(
+            "train only on the GeoPRR outer-fit roster and use its fixed "
+            "117/14-scene inner train/validation partition"
+        ),
+    )
     parser.add_argument("--limit", type=int)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--no-amp", action="store_true")
@@ -166,8 +189,70 @@ def _training_signature(
         "mixed_precision": str(args.device).startswith("cuda") and not args.no_amp,
         "grad_scaler_initial_scale": 512.0,
         "seed": int(args.seed),
+        "matched_geoprr_split": bool(args.matched_geoprr_split),
+        "outer_split": str(args.outer_split) if args.outer_split else None,
         "diagnostic_limit": args.limit,
     }
+
+
+def _scene_stem(sample) -> str:
+    metadata = sample.metadata
+    if not isinstance(metadata, dict):
+        raise ValueError(f"{sample.sample_id}: metadata is not a mapping")
+    scene_name = str(metadata.get("scene_name") or "")
+    if not scene_name:
+        raise ValueError(f"{sample.sample_id}: scene_name is empty")
+    return Path(scene_name).stem
+
+
+def _matched_geoprr_partition(samples, outer_split: Path):
+    payload = json.loads(outer_split.read_text(encoding="utf-8"))
+    if (
+        payload.get("protocol") != "syncg_scene_stem_disjoint_clean_v1"
+        or payload.get("scene_disjoint") is not True
+    ):
+        raise ValueError(f"not the GeoPRR scene-disjoint split: {outer_split}")
+    fit_ids = {str(value) for value in payload.get("train_sample_ids") or []}
+    holdout_ids = {
+        str(value) for value in payload.get("validation_sample_ids") or []
+    }
+    all_ids = {sample.sample_id for sample in samples}
+    if (
+        len(fit_ids) != GEOPRR_FIT_SAMPLES
+        or len(holdout_ids) != 1_558
+        or fit_ids & holdout_ids
+        or fit_ids | holdout_ids != all_ids
+    ):
+        raise ValueError("GeoPRR outer split does not partition SyncG train")
+
+    fit_samples = [sample for sample in samples if sample.sample_id in fit_ids]
+    fit_scenes = {_scene_stem(sample) for sample in fit_samples}
+    dev_scenes = set(INTERNAL_DEV_SCENE_STEMS)
+    if (
+        len(fit_samples) != GEOPRR_FIT_SAMPLES
+        or len(fit_scenes) != GEOPRR_FIT_SCENES
+        or len(dev_scenes) != GEOPRR_INNER_DEV_SCENES
+        or not dev_scenes < fit_scenes
+    ):
+        raise ValueError("GeoPRR fit or fixed inner-development roster differs")
+
+    train_samples = [
+        sample for sample in fit_samples if _scene_stem(sample) not in dev_scenes
+    ]
+    validation_samples = [
+        sample for sample in fit_samples if _scene_stem(sample) in dev_scenes
+    ]
+    train_scenes = {_scene_stem(sample) for sample in train_samples}
+    validation_scenes = {_scene_stem(sample) for sample in validation_samples}
+    if (
+        len(train_samples) != 12_866
+        or len(validation_samples) != 1_576
+        or len(train_scenes) != GEOPRR_INNER_TRAIN_SCENES
+        or len(validation_scenes) != GEOPRR_INNER_DEV_SCENES
+        or train_scenes & validation_scenes
+    ):
+        raise ValueError("GeoPRR fixed inner partition differs")
+    return train_samples, validation_samples
 
 
 def _train_epoch(
@@ -316,10 +401,16 @@ def main() -> None:
     args.manifest = args.manifest.resolve()
     args.vdn_source = args.vdn_source.resolve()
     args.output_dir = args.output_dir.resolve()
+    if args.outer_split is not None:
+        args.outer_split = args.outer_split.resolve()
     if args.epochs <= 0 or args.batch_size <= 0 or args.workers < 0:
         raise ValueError("epochs/batch-size must be positive and workers non-negative")
     if args.image_size % 32 != 0:
         raise ValueError("--image-size must be divisible by 32")
+    if args.matched_geoprr_split and args.outer_split is None:
+        raise ValueError("--matched-geoprr-split requires --outer-split")
+    if args.matched_geoprr_split and args.limit is not None:
+        raise ValueError("--limit cannot be used with --matched-geoprr-split")
     set_random_seed(args.seed)
     device = torch.device(args.device)
     if device.type == "cuda" and not torch.cuda.is_available():
@@ -331,11 +422,17 @@ def main() -> None:
         expected_split="train",
         limit=args.limit,
     )
-    train_samples, validation_samples = grouped_train_val_split(
-        samples,
-        validation_fraction=args.validation_fraction,
-        seed=args.seed,
-    )
+    if args.matched_geoprr_split:
+        train_samples, validation_samples = _matched_geoprr_partition(
+            samples,
+            args.outer_split,
+        )
+    else:
+        train_samples, validation_samples = grouped_train_val_split(
+            samples,
+            validation_fraction=args.validation_fraction,
+            seed=args.seed,
+        )
     initialization_checkpoint = None
     if not args.no_imagenet_pretrained:
         _, initialization_checkpoint = load_official_resnet18_initialization()

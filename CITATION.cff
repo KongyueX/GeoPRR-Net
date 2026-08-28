@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: >-
+  If you use this software, please cite the accompanying GeoPRR-Net article.
+  Final journal metadata will be added after publication.
+title: "GeoPRR-Net: Geometry-Aware Polar-Relational Routing for Robust Analog Gauge Reading"
+type: software
+authors:
+  - family-names: Liang
+    given-names: Xiaoyi
+repository-code: "https://github.com/KongyueX/GeoPRR-Net"
+abstract: >-
+  Reproducibility code, manuscript source, aggregate figure data, and matched
+  baseline scripts for geometry-aware analog gauge progress estimation.
+keywords:
+  - analog gauge reading
+  - pointer meter reading
+  - industrial vision
+  - projective distortion
+  - PyTorch

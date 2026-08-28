@@ -100,7 +100,30 @@ __pycache__/
 !/paper/r2mt_net_electronics_overleaf/figures/r2mt_vdn_validation.png
 !/paper/r2mt_net_electronics_overleaf/figures/r2mt_efficiency.pdf
 !/paper/r2mt_net_electronics_overleaf/figures/r2mt_efficiency.png
+
+# GeoPRR-Net Electronics manuscript and reproducibility assets. Review-only
+# DOCX/Markdown mirrors, temporary render directories, SVG/TIFF exports, raw
+# data, checkpoints, and per-sample ledgers remain local.
+!/paper/geoprr_net_electronics_overleaf/
+/paper/geoprr_net_electronics_overleaf/*
+!/paper/geoprr_net_electronics_overleaf/README_CN.md
+!/paper/geoprr_net_electronics_overleaf/manuscript.tex
+!/paper/geoprr_net_electronics_overleaf/references.bib
+!/paper/geoprr_net_electronics_overleaf/Definitions/
+!/paper/geoprr_net_electronics_overleaf/Definitions/**
+!/paper/geoprr_net_electronics_overleaf/figures/
+/paper/geoprr_net_electronics_overleaf/figures/*
+!/paper/geoprr_net_electronics_overleaf/figures/build_geoprr_figures.py
+!/paper/geoprr_net_electronics_overleaf/figures/derive_condition_summaries.py
+!/paper/geoprr_net_electronics_overleaf/figures/fig1_qa_notes.md
+!/paper/geoprr_net_electronics_overleaf/figures/*.csv
+!/paper/geoprr_net_electronics_overleaf/figures/fig*.pdf
+!/paper/geoprr_net_electronics_overleaf/figures/fig*.png
+/paper/geoprr_net_electronics_overleaf/figures/fig5_efficiency.pdf
+!/paper/geoprr_net_electronics_overleaf/figures/assets/
+!/paper/geoprr_net_electronics_overleaf/figures/assets/**
 /MDPI_template_ACS/
 
 # Local orchestration and notification helpers are not part of the paper API.
 /experiments/*.ps1
+!/experiments/run_geoprr_vdn_matched.ps1

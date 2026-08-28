@@ -30,7 +30,7 @@ import argparse
 import json
 import math
 import random
-from collections.abc import Mapping, Sequence
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Final
@@ -77,6 +77,9 @@ from experiments.support_geometry_multiview_efficientnet import (
     ArchitectureAblation,
     EfficientNetB0GeometryConsistencyReliability,
     EfficientNetB0SupportGeometryMultiView,
+)
+from experiments.syncg_lightweight_regression_baselines import (
+    PROTOCOL as LIGHTWEIGHT_BASELINE_PROTOCOL,
 )
 from experiments.train_cagh_scalemark_reference_probe_v5 import (
     PhotoAugmentation,
@@ -165,6 +168,56 @@ class LossWeights:
 
 
 DEFAULT_LOSS_WEIGHTS: Final[LossWeights] = LossWeights()
+
+
+def initialize_encoder_from_lightweight_checkpoint(
+    model: torch.nn.Module,
+    checkpoint_path: Path,
+) -> dict[str, Any]:
+    """Warm-start the shared encoder from a trained EfficientNet-B0 baseline."""
+
+    checkpoint = torch.load(
+        Path(checkpoint_path).resolve(), map_location="cpu", weights_only=False
+    )
+    _require(isinstance(checkpoint, Mapping), "initial checkpoint is not an object")
+    _require(
+        checkpoint.get("protocol") == LIGHTWEIGHT_BASELINE_PROTOCOL,
+        "initial checkpoint is not a lightweight baseline",
+    )
+    _require(
+        checkpoint.get("architecture") == "efficientnet_b0",
+        "initial checkpoint is not EfficientNet-B0",
+    )
+    state = checkpoint.get("model_state")
+    _require(isinstance(state, Mapping), "initial checkpoint state is missing")
+    base_model = (
+        model.base_model
+        if isinstance(model, EfficientNetB0GeometryConsistencyReliability)
+        else model
+    )
+    _require(
+        isinstance(base_model, EfficientNetB0SupportGeometryMultiView),
+        "initialization target is not the SGCA base model",
+    )
+    prefix = "backbone.features."
+    source_features = {
+        str(name)[len(prefix) :]: value
+        for name, value in state.items()
+        if str(name).startswith(prefix)
+    }
+    _require(bool(source_features), "initial checkpoint has no EfficientNet features")
+    target_features = torch.nn.Sequential(
+        *tuple(base_model.encoder.early.children()),
+        *tuple(base_model.encoder.late.children()),
+    )
+    target_features.load_state_dict(source_features, strict=True)
+    return {
+        "path": str(Path(checkpoint_path).resolve()),
+        "protocol": str(checkpoint["protocol"]),
+        "architecture": str(checkpoint["architecture"]),
+        "seed": int(checkpoint["seed"]),
+        "scope": "EfficientNet features only; SGCA, representation, heads, and fusion remain newly initialized",
+    }
 
 
 def resolve_pilot_arm(
@@ -1021,6 +1074,42 @@ def _forward_batch(
     )
 
 
+class ModelParameterEMA:
+    """Low-pass one training trajectory without mixing independent modes."""
+
+    def __init__(self, model: torch.nn.Module, *, decay: float) -> None:
+        _require(0.0 < decay < 1.0, "EMA decay must be between zero and one")
+        named_parameters = tuple(model.named_parameters())
+        _require(bool(named_parameters), "EMA model has no parameters")
+        self.decay = float(decay)
+        self.names = tuple(name for name, _parameter in named_parameters)
+        self.parameters = tuple(
+            parameter.detach().clone() for _name, parameter in named_parameters
+        )
+        self.updates = 0
+
+    @torch.no_grad()
+    def update(self, model: torch.nn.Module) -> None:
+        current = tuple(parameter.detach() for parameter in model.parameters())
+        _require(len(current) == len(self.parameters), "EMA parameter roster differs")
+        torch._foreach_mul_(self.parameters, self.decay)
+        torch._foreach_add_(self.parameters, current, alpha=1.0 - self.decay)
+        self.updates += 1
+
+    def state_dict(self, model: torch.nn.Module) -> dict[str, torch.Tensor]:
+        _require(self.updates > 0, "EMA received no optimizer updates")
+        output = {
+            name: value.detach().cpu() for name, value in model.state_dict().items()
+        }
+        _require(
+            all(name in output for name in self.names),
+            "EMA parameter names differ from model state",
+        )
+        for name, value in zip(self.names, self.parameters, strict=True):
+            output[name] = value.detach().cpu()
+        return output
+
+
 def run_epoch(
     model: torch.nn.Module,
     loader: DataLoader,
@@ -1029,6 +1118,7 @@ def run_epoch(
     arm: PilotArm,
     optimizer: torch.optim.Optimizer | None,
     scaler: torch.amp.GradScaler | None,
+    after_optimizer_step: Callable[[torch.nn.Module], None] | None = None,
     max_steps: int | None = None,
 ) -> dict[str, Any]:
     training = optimizer is not None
@@ -1075,6 +1165,8 @@ def run_epoch(
                 scaler.update()
                 if not scaler.is_enabled() or float(scaler.get_scale()) >= previous_scale:
                     optimizer_steps += 1
+                    if after_optimizer_step is not None:
+                        after_optimizer_step(model)
         targets = batch["target"]
         count = int(targets.numel())
         for name, value in components.items():
@@ -1135,6 +1227,8 @@ def train_pilot(
     weight_decay: float = DEFAULT_WEIGHT_DECAY,
     imagenet_pretrained: bool = True,
     use_rectified_view: bool = False,
+    initial_checkpoint_path: Path | None = None,
+    ema_decay: float | None = None,
     max_train_steps: int | None = None,
     max_dev_steps: int | None = None,
 ) -> dict[str, Any]:
@@ -1142,6 +1236,10 @@ def train_pilot(
 
     _require(epochs >= 1 and batch_size >= 1 and workers >= 0, "invalid training sizes")
     _require(learning_rate > 0.0 and weight_decay >= 0.0, "invalid optimizer values")
+    _require(
+        ema_decay is None or 0.0 < float(ema_decay) < 1.0,
+        "EMA decay must be between zero and one",
+    )
     _require(
         max_train_steps is None or max_train_steps >= 1,
         "max train steps must be positive",
@@ -1183,12 +1281,24 @@ def train_pilot(
     if arm.use_geometry_consistency_routing:
         model = EfficientNetB0GeometryConsistencyReliability(
             imagenet_pretrained=imagenet_pretrained,
-        ).to(device)
+        )
     else:
         model = EfficientNetB0SupportGeometryMultiView(
             imagenet_pretrained=imagenet_pretrained,
             default_ablation=arm.ablation,
-        ).to(device)
+        )
+    initialization = (
+        initialize_encoder_from_lightweight_checkpoint(model, initial_checkpoint_path)
+        if initial_checkpoint_path is not None
+        else {
+            "path": None,
+            "protocol": "torchvision ImageNet initialization",
+            "architecture": "efficientnet_b0",
+            "seed": None,
+            "scope": "complete encoder only; task heads are newly initialized",
+        }
+    )
+    model = model.to(device)
     for parameter in model.parameters():
         parameter.requires_grad_(True)
     total_parameters = sum(parameter.numel() for parameter in model.parameters())
@@ -1209,6 +1319,7 @@ def train_pilot(
         device.type == "cuda" and not torch.cuda.is_bf16_supported()
     )
     scaler = torch.amp.GradScaler("cuda", enabled=use_fp16_scaler)
+    ema = ModelParameterEMA(model, decay=float(ema_decay)) if ema_decay is not None else None
     history: list[dict[str, Any]] = []
     for epoch_index in range(epochs):
         train_dataset.set_epoch(epoch_index)
@@ -1229,6 +1340,7 @@ def train_pilot(
             arm=arm,
             optimizer=optimizer,
             scaler=scaler,
+            after_optimizer_step=ema.update if ema is not None else None,
             max_steps=max_train_steps,
         )
         dev_metrics: dict[str, dict[str, Any]] = {}
@@ -1282,6 +1394,7 @@ def train_pilot(
             if imagenet_pretrained
             else "none"
         ),
+        "initialization": initialization,
         "data": {
             "source": "SyncG formal fit only",
             "formal_split_protocol": formal_roster.protocol,
@@ -1323,11 +1436,23 @@ def train_pilot(
             "truncated_smoke": truncated,
             "max_train_steps": max_train_steps,
             "max_dev_steps": max_dev_steps,
+            "ema_decay": float(ema_decay) if ema_decay is not None else None,
+            "ema_scope": (
+                "all trainable parameters; terminal non-parameter buffers"
+                if ema is not None
+                else None
+            ),
+            "ema_updates": int(ema.updates) if ema is not None else 0,
         },
         "history": history,
-        "model_state": {
-            name: value.detach().cpu() for name, value in model.state_dict().items()
-        },
+        "weight_variant": "ema" if ema is not None else "terminal",
+        "model_state": (
+            ema.state_dict(model)
+            if ema is not None
+            else {
+                name: value.detach().cpu() for name, value in model.state_dict().items()
+            }
+        ),
     }
     if arm.name in ("A3G", "A5"):
         checkpoint["internal_geometry_extension"] = {
@@ -1392,6 +1517,8 @@ def build_argument_parser() -> argparse.ArgumentParser:
         action=argparse.BooleanOptionalAction,
         default=False,
     )
+    parser.add_argument("--initial-checkpoint", type=Path)
+    parser.add_argument("--ema-decay", type=float)
     parser.add_argument("--max-train-steps", type=int)
     parser.add_argument("--max-dev-steps", type=int)
     return parser
@@ -1413,6 +1540,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         weight_decay=args.weight_decay,
         imagenet_pretrained=args.imagenet_pretrained,
         use_rectified_view=args.rectified_view,
+        initial_checkpoint_path=args.initial_checkpoint,
+        ema_decay=args.ema_decay,
         max_train_steps=args.max_train_steps,
         max_dev_steps=args.max_dev_steps,
     )
@@ -1426,8 +1555,10 @@ if __name__ == "__main__":
 
 __all__ = [
     "DEFAULT_LOSS_WEIGHTS",
+    "initialize_encoder_from_lightweight_checkpoint",
     "InternalSceneSplit",
     "LossWeights",
+    "ModelParameterEMA",
     "PilotArm",
     "PilotTrainingError",
     "SyncGSupportGeometryMultiViewDataset",

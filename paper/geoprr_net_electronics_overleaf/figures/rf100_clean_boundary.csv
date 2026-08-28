@@ -1,0 +1,4 @@
+record,nmae_mean,nmae_sd,delta_nmae,ci_low,ci_high
+GeoPRR-Net,0.051330,0.020411,,,
+Raw EfficientNet-B0,0.051161,0.020631,,,
+GeoPRR-Net minus Raw EfficientNet-B0,,,0.000168,-0.000072,0.000353

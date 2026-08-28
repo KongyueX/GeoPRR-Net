@@ -1,9 +1,11 @@
 # Third-party data and model notice
 
 This repository does not currently declare a project-level software license.
-Before a public release, the maintainer must choose a license compatible with
-every redistributed dependency and model artifact. This file records observed
-metadata; it does not grant any additional rights.
+The source is publicly accessible for inspection and research reproducibility,
+but that access does not itself grant permission to reuse or redistribute it.
+Before declaring the project open source, the maintainer must choose a license
+compatible with every redistributed dependency and model artifact. This file
+records observed metadata; it does not grant any additional rights.
 
 ## Local model artifacts (not tracked by Git)
 
@@ -68,14 +70,14 @@ architecture contribution.
   ignored by Git and must not be redistributed from this repository without
   additional permission.
 - The repository retains an optional legacy Pointer-10K preparation utility,
-  but Pointer-10K is not used in the current R²MT-Net manuscript or released
-  result tables. If that utility is used separately, the upstream VDN release
+  but Pointer-10K is not used in the current GeoPRR-Net evaluation cohorts or
+  released result tables. If that utility is used separately, the upstream VDN release
   applies CC BY-NC-SA 4.0 to the dataset; images and annotations remain ignored
   by Git and are not redistributed here.
 
 Generated manifests, prediction caches, fitted calibrators, checkpoints and
-per-sample result files are ignored by Git. The reviewed aggregate tables in
-`results/README.md`, `results/r2mt_net_tables.json`, and
-`results/r2mt_industrial_multimethod.json` contain no images,
-per-sample predictions, labels or model parameters. Review the target venue's
-artifact policy before publishing any generated model or data-derived artifact.
+per-sample result files are ignored by Git. The GeoPRR-Net manuscript figure
+CSVs and the retained legacy aggregate tables under `results/` contain no raw
+field images, per-sample predictions, or model parameters. Review the target
+venue's artifact policy before publishing any generated model or data-derived
+artifact.

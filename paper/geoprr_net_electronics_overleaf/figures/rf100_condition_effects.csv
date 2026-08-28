@@ -1,0 +1,7 @@
+condition,label,delta_nmae,ci_low,ci_high,rows,source_groups,bootstrap_replicates
+clean,Clean,0.000168124,-0.000072104,0.000352611,151,35,20000
+blur_moderate,Blur moderate,0.000153265,-0.000082057,0.000324700,151,35,20000
+blur_severe,Blur severe,0.000126485,-0.000110702,0.000296788,151,35,20000
+perspective_moderate,Perspective moderate,-0.005414280,-0.015940617,0.003379138,151,35,20000
+perspective_severe,Perspective severe,-0.039315687,-0.055595612,-0.022496815,151,35,20000
+combined_severe,Combined severe,-0.043987603,-0.059685113,-0.028529908,151,35,20000

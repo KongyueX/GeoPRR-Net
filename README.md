@@ -1,140 +1,166 @@
-# R²MT-Net
+# GeoPRR-Net
 
-### An OCR-Enabled End-to-End Pointer-Gauge Reader with Multi-Risk Moment Transport
+### Geometry-Aware Polar-Relational Routing for Robust Analog Gauge Reading
 
 [![Python 3.11](https://img.shields.io/badge/Python-3.11-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.11-EE4C2C.svg?logo=pytorch&logoColor=white)](https://pytorch.org/)
-[![Evidence](https://img.shields.io/badge/evidence-retrospective-orange.svg)](paper/r2mt_net_electronics_overleaf/manuscript.tex)
+[![Manuscript](https://img.shields.io/badge/manuscript-MDPI%20Electronics-008A8A.svg)](paper/geoprr_net_electronics_overleaf/manuscript.tex)
 
-This repository contains the paper, implementation, replay code, aggregate
-results, and figure source data for **R²MT-Net** (Representation-Conditioned
-Multi-Risk Moment Transport Network). R²MT-Net is the single progress-estimation
-core in an OCR-enabled image-to-physical-reading pipeline:
+This repository contains the manuscript source, model implementation,
+experiment entry points, VDN comparison code, aggregate figure data, and
+focused tests for **GeoPRR-Net**.
 
-```text
-full image -> meter localization -> ROI -> R²MT-Net normalized progress
-                                      \-> OCR range endpoints
-normalized progress + validated range endpoints -> physical reading
-```
+GeoPRR-Net estimates normalized pointer progress from a localized, single-pointer
+analog-gauge ROI with known scale endpoints. It is not presented as a complete
+full-image detector, OCR system, or automatic scale-range discovery pipeline.
+Those modules can be connected outside the progress-estimation core and must be
+evaluated separately.
 
-The OCR branch completes the physical-reading graph but is not the paper's main
-method contribution. Its reported accuracy is conditional on the labeled frames
-accepted by the existing range-validity checks.
+## Method at a glance
 
-## Why R²MT-Net
+GeoPRR-Net uses one shared EfficientNet-B0 encoder over raw and
+support-normalized observations. It retains three candidate readings:
 
-A single projective correction is insufficient because the residual errors are
-heterogeneous: mean-error, tail-error, and severe perspective-plus-blur
-objectives emphasize different samples. R²MT-Net addresses this with four
-linked mechanisms:
+1. a geometry-aware base posterior;
+2. polar evidence aligned with dial progression; and
+3. relational moment transport between the two observations.
 
-1. A **shared dual-observation ResNet-18** processes the original and
-   support-normalized ROI without introducing a second image encoder.
-2. **Multi-scale relation transport** aligns stride-8/16 features and encodes
-   signed discrepancy, absolute discrepancy, agreement, support, and
-   homography evidence.
-3. **Three risk-specialized moment heads** model mean, tail, and combined
-   severe-condition residuals; a representation-conditioned router makes only
-   a conservative adjustment to a validated fixed prior.
-4. **One final moment-exact posterior transport** combines moment residuals
-   before probability transport. Invalid relation evidence returns the raw
-   posterior exactly.
+A conditional router assigns per-sample candidate weights. A final information
+projection returns one posterior whose first moment matches the routed estimate.
+The paper evaluates four executable interventions: removing geometry-aware
+fusion, polar evidence, or relational transport, and replacing adaptive routing
+with a fixed prior.
 
-The older `ReMST` name appears only in internal checkpoint protocols and
-low-level compatibility modules. It denotes the relation-transport foundation,
-not a second publication model.
+## Reported evidence
 
-## Main retrospective results
+NMAE is reported as percentage of full scale (%FS); lower is better.
 
-NMAE is reported as percentage of full scale (%FS), lower is better.
-
-| Evidence set | R²MT-Net | Comparator | Scope |
+| Cohort | GeoPRR-Net | Comparison | Scope |
 |---|---:|---:|---|
-| SyncG, all six conditions | **1.0517 ± 0.0415** | EfficientNet-B0: 1.3935 ± 0.0606 | 1,558 images, 14 held-out scenes, 3 fits |
-| SyncG, projective pool | **1.3099 ± 0.0501** | EfficientNet-B0: 1.9722 ± 0.0852 | same roster |
-| Industrial ROIs, all conditions | 20.2817 ± 3.1514 | Direct-ResNet18: 23.5771 ± 2.4504; EfficientNet-B0: **15.2550 ± 2.3430** | paired reduction vs Direct 3.2954 pp, 95% CI 2.0864–4.4153 |
-| Industrial ROIs, projective pool | 21.5524 ± 3.7915 | Direct-ResNet18: 28.1866 ± 2.7176; EfficientNet-B0: **18.0914 ± 2.9211** | paired reduction vs Direct 6.6342 pp, 95% CI 4.3215–8.8624 |
-| Same-pixel VDN intersection, all | **0.9054 ± 0.0392** | annotation-assisted VDN: 1.6444 | 129 samples, 774 rows |
-| Accepted OCR outputs | **Acc@5%FS: 74.07 ± 12.83%** | -- | 9 accepted labeled frames |
+| SyncG scene-disjoint holdout | **1.0013 ± 0.0382** | best tested raw CNN: 2.0530 ± 0.0294 | 1,558 images, six conditions, three fits |
+| RF100-VL public transfer | **5.0098 ± 1.5344** | best tested raw CNN: 6.4809 ± 1.2255 | 151 images, six conditions, three fits |
+| Industrial-1395 | **18.9% lower NMAE** | best tested raw CNN | 1,395 field ROIs, six conditions, three fits |
 
-Model-only RTX 4060 BF16 latency is 22.32 ms/sample at batch 1 and
-3.57 ms/sample at batch 8. Localization, support-normalization materialization,
-OCR, and image decoding are excluded from this timing.
-
-The industrial replay supports projective improvement over the matched
-Direct-ResNet18 endpoint, while EfficientNet-B0 transfers better in aggregate;
-it does not establish universal cross-backbone superiority. These are
-retrospective development results. An untouched multi-site real-photo cohort is
-required for a strong generalization claim. Backbone-controlled R²MT-Net
-variants are the next mechanism test, and a live detector-reader-OCR replay is
-required if automatic coverage or end-to-end latency is claimed.
+The manuscript currently reports a bounded, annotation-assisted VDN component
+comparison. A matched three-seed VDN run with a fixed 200-epoch budget is being
+completed; its results must replace the provisional VDN row before any broader
+comparison claim is made.
 
 ## Public code surface
 
 ```text
-r2mt/
-  model.py                              stable R²MT-Net identity and loader
+geoprr/
+  model.py                                      stable model identity and loader
 experiments/
-  r2mt_net.py                          final risk-transport architecture
-  train_r2mt_net.py                    final checkpoint training/loading
-  evaluate_r2mt_net_syncg.py           six-condition SyncG evaluation
-  run_r2mt_downstream_replays.py       field, VDN, OCR, repeat, efficiency replay
-  summarize_r2mt_ablations.py          ablation aggregation
-  r2mt_paired_statistics.py            paired cluster-bootstrap statistics
-paper/r2mt_net_electronics_overleaf/
-  manuscript.tex                       Electronics manuscript source
-  figures/                              final figures and source CSVs
-results/
-  r2mt_net_tables.json                 compact machine-readable results
-  r2mt_industrial_multimethod.json     four-model industrial summary and CIs
+  unified_pointer_reader.py                     GeoPRR-Net architecture
+  train_unified_pointer_reader.py               staged model and ablation fitting
+  evaluate_unified_pointer_reader_syncg.py       SyncG evaluation
+  evaluate_unified_pointer_reader_rf100.py       public RF100-VL transfer
+  evaluate_unified_pointer_reader_industrial.py  restricted field-cohort replay
+  benchmark_unified_pointer_reader_paper_efficiency.py
+  summarize_unified_pointer_reader_experiments.py
+  train_vdn_syncg.py                            matched VDN training core
+  evaluate_geoprr_vdn_matched.py                 same-pixel VDN evaluation
+  summarize_geoprr_vdn_matched.py                three-seed paired summary
+  run_geoprr_vdn_matched.ps1                     200-epoch run/resume wrapper
+paper/geoprr_net_electronics_overleaf/
+  manuscript.tex
+  references.bib
+  figures/                                      final figures and aggregate sources
 ```
 
-Release entrypoints and manifests are tracked at:
+The repository retains earlier research modules because the publication model
+reuses their tested low-level geometry and expert-bank implementations. The
+paper-facing API keeps those internal names behind one GeoPRR-Net identity.
 
-- `r2mt/__init__.py`
-- `r2mt/model.py`
-- `experiments/r2mt_net.py`
-- `experiments/train_r2mt_net.py`
-- `experiments/evaluate_r2mt_net_syncg.py`
-- `experiments/run_r2mt_downstream_replays.py`
-- `experiments/summarize_r2mt_ablations.py`
-- `experiments/r2mt_paired_statistics.py`
-- `results/README.md`
-- `results/r2mt_net_tables.json`
-- `results/r2mt_industrial_multimethod.json`
-- `experiments/public_release_inventory.json`
+## Environment
 
-Load a fitted publication checkpoint with the conservative settings used by the
-paper:
-
-```python
-from r2mt import load_r2mt_net
-
-anchor, model, metadata = load_r2mt_net(
-    "path/to/r2mt_checkpoint.pt",
-    device="cuda:0",
-)
-```
-
-The loader deliberately accepts legacy checkpoint keys behind the API boundary
-and returns an R²MT-Net publication identity. Model weights and private field
-images are not redistributed.
-
-## Environment and validation
-
-The research environment is pinned in
+The validated Windows/CUDA environment is pinned in
 [`experiments/requirements-training.lock.txt`](experiments/requirements-training.lock.txt).
 
 ```powershell
 uv venv --python 3.11 .venv
 uv pip install --python .venv/Scripts/python.exe -r experiments/requirements-training.lock.txt
-python -m unittest test.test_r2mt_public_api test.test_r2mt_release_tables
-python experiments/check_public_release.py --mode workspace
 ```
 
-The manuscript is intended for Overleaf; this repository does not require a
-locally compiled paper PDF. See
-[`docs/R2MT_NET_ARCHITECTURE_CN.md`](docs/R2MT_NET_ARCHITECTURE_CN.md) for the
-method boundary and
-[`paper/r2mt_net_electronics_overleaf/R2MT_EXPERIMENT_GAP_AUDIT_CN.md`](paper/r2mt_net_electronics_overleaf/R2MT_EXPERIMENT_GAP_AUDIT_CN.md)
-for the remaining experiment audit.
+Run the focused CPU-safe checks:
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest `
+  test.test_geoprr_public_api `
+  test.test_unified_pointer_reader `
+  test.test_vdn_baseline `
+  test.test_run_vdn_oracle_reference_component
+```
+
+## Loading a reproduced checkpoint
+
+Weights are not redistributed in this repository. After reproducing the model
+and its source expert-bank checkpoint:
+
+```python
+from geoprr import load_geoprr_net
+
+model, metadata = load_geoprr_net(
+    "path/to/geoprr_checkpoint.pt",
+    device="cuda:0",
+)
+```
+
+## VDN matched experiment
+
+The comparison adapter uses the public GPL-3.0 VDN source at the pinned commit
+recorded in [`experiments/vdn_baseline.py`](experiments/vdn_baseline.py). The
+external checkout is loaded at runtime and is not copied into this repository.
+
+The formal wrapper requires explicit paths to the frozen outer split, conditioned
+ROI manifest, and same-pixel reference. A fresh run uses exactly three seeds and
+defaults to 200 epochs:
+
+```powershell
+& 'C:\Program Files\PowerShell\7\pwsh.exe' -NoLogo -NoProfile `
+  -File experiments\run_geoprr_vdn_matched.ps1 `
+  -OuterSplit <path-to-outer-split.json> `
+  -RoiManifest <path-to-conditioned-roi-manifest.jsonl> `
+  -PixelReference <path-to-geoprr-pixel-reference.json>
+```
+
+Resume an interrupted seed from its validated `last.pt` epoch boundary:
+
+```powershell
+& 'C:\Program Files\PowerShell\7\pwsh.exe' -NoLogo -NoProfile `
+  -File experiments\run_geoprr_vdn_matched.ps1 `
+  -Resume `
+  -OuterSplit <path-to-outer-split.json> `
+  -RoiManifest <path-to-conditioned-roi-manifest.jsonl> `
+  -PixelReference <path-to-geoprr-pixel-reference.json>
+```
+
+Existing seed directories are resumed; missing seed directories begin fresh.
+Checkpoints, logs, per-sample ledgers, datasets, and private field images remain
+ignored by Git.
+
+## Manuscript and figures
+
+The *Electronics* LaTeX source is
+[`paper/geoprr_net_electronics_overleaf/manuscript.tex`](paper/geoprr_net_electronics_overleaf/manuscript.tex).
+Rebuild the complete figure set from the included aggregate CSV files with:
+
+```powershell
+.\.venv\Scripts\python.exe `
+  paper\geoprr_net_electronics_overleaf\figures\build_geoprr_figures.py
+```
+
+## Data and licensing boundaries
+
+- SyncG and RF100-VL are referenced through their public sources; images are
+  not redistributed here.
+- Industrial-1395 is not public because redistribution permission has not been
+  granted by the data owners.
+- Model checkpoints and third-party weights are not redistributed.
+- The repository currently has no project-level software license. Public access
+  supports inspection and reproducibility but does not itself grant reuse or
+  redistribution rights. See [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
+
+Detailed reproduction notes are available in
+[`docs/GEOPRR_REPRODUCIBILITY.md`](docs/GEOPRR_REPRODUCIBILITY.md).

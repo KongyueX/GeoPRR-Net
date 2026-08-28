@@ -73,6 +73,7 @@ def _evaluate_dataset(
     bootstrap_replicates: int,
     include_posterior_diagnostics: bool,
     dataset_index: int,
+    enforce_endpoint_replay: bool = True,
 ) -> dict[str, Any]:
     """Run one domain and numerically confirm its same-seed comparator.
 
@@ -222,13 +223,17 @@ def _evaluate_dataset(
             if internal["status"] == external["status"] == "pass":
                 deltas.append(abs(float(internal["prediction"]) - float(external["prediction"])))
     maximum = max((*raw_deltas, *sarn_deltas), default=float("inf"))
-    _require(
+    endpoint_replay_within_tolerance = (
         status_mismatches == 0
         and len(raw_deltas) == len(rows)
         and len(sarn_deltas) == len(rows)
-        and maximum <= mett_real.ENDPOINT_REPLAY_ABSOLUTE_TOLERANCE,
-        f"{dataset.slug}: paired endpoint replay differs",
+        and maximum <= mett_real.ENDPOINT_REPLAY_ABSOLUTE_TOLERANCE
     )
+    if enforce_endpoint_replay:
+        _require(
+            endpoint_replay_within_tolerance,
+            f"{dataset.slug}: paired endpoint replay differs",
+        )
     return {
         "dataset": {
             "slug": dataset.slug,
@@ -247,7 +252,8 @@ def _evaluate_dataset(
             "status_mismatch_rows": status_mismatches,
             "maximum_absolute_prediction_delta": maximum,
             "tolerance": mett_real.ENDPOINT_REPLAY_ABSOLUTE_TOLERANCE,
-            "within_tolerance": True,
+            "within_tolerance": endpoint_replay_within_tolerance,
+            "enforced": bool(enforce_endpoint_replay),
         },
         "summary": summary,
         "per_sample_condition": rows,
