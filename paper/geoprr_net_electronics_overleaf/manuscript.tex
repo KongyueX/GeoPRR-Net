@@ -27,14 +27,15 @@
 \graphicspath{{figures/}}
 
 %=================================================================
-% Front matter. Replace all bracketed author metadata before submission.
+% Front matter. The provisional UCL affiliation must be confirmed with the
+% institution or supervisor before submission.
 \Title{\modelname: Geometry-Aware Polar--Relational Routing for Robust Analog Gauge Reading}
 
-\Author{Xiaoyi Liang $^{1}$}
+\Author{Xiaoyi Liang $^{1,*}$}
 \AuthorNames{Xiaoyi Liang}
 
-\address{$^{1}$ \quad [Affiliation to be confirmed], [City], [Country]}
-\corres{Correspondence: [email address to be confirmed]}
+\address{$^{1}$ \quad University College London, London WC1E 6BT, United Kingdom; ucabx23@ucl.ac.uk}
+\corres{Correspondence: ucabx23@ucl.ac.uk}
 
 \abstract{Analog gauges remain common in legacy infrastructure, but camera retrofits must tolerate blur and oblique viewpoints that change which visual cues are reliable. We present \modelname, a dual-view network for normalized full-scale progress estimation. A shared EfficientNet-B0 encoder produces a geometry-aware 128-bin base posterior together with polar and relational moment-transport candidates. A conditional router combines their means per sample, and an information projection returns one posterior whose first moment matches the routed estimate. On the scene-disjoint SyncG evaluation (1,558 images, six conditions), three independently fitted seeds achieved $1.0013\pm0.0382$\%FS normalized mean absolute error (NMAE) and $91.11\pm0.79$\% accuracy within 2\% of full scale. The best tested raw CNN reached $2.0530\pm0.0294$\%FS, with paired scene-bootstrap intervals favoring \modelname. On a 774-row same-pixel intersection, \modelname obtained $0.7834\pm0.0255$\%FS versus 1.6444\%FS for a reproduced VDN direction component supplied with annotation-derived reference arcs. NMAE was also 22.7\% lower on RF100-VL and 18.9\% lower on Industrial-1395 than for the best tested raw CNN. These results demonstrate lower error than the tested baselines, including a published structured comparator, under the evaluated protocols; broader automatic end-to-end comparison remains necessary.}
 
@@ -585,8 +586,8 @@ On scene-disjoint SyncG, \modelname reduces NMAE to $1.0013\pm0.0382$\%FS, with 
 At 4.885 million parameters and 37.972 ms median model-pipeline latency on the tested RTX 4060, the model combines a compact parameter footprint with a practical inspection rate. Taken together, the controlled, public, field, and structured-comparator results show lower error than the tested baselines and support condition-aware evidence routing for camera-retrofitted analog gauges. Multi-site validation and additional input-matched automatic readers are still required before claiming broader state-of-the-art or deployment superiority.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Mandatory MDPI declarations. Replace bracketed statements before submission.
-\authorcontributions{[Author contribution roles are to be confirmed by the author before submission.]}
+% MDPI declarations.
+\authorcontributions{Conceptualization, X.L.; methodology, X.L.; software, X.L.; validation, X.L.; formal analysis, X.L.; investigation, X.L.; resources, X.L.; data curation, X.L.; writing---original draft preparation, X.L.; writing---review and editing, X.L.; visualization, X.L.; project administration, X.L. The author has read and agreed to the published version of the manuscript.}
 
 \funding{[Funding information is to be confirmed by the author before submission.]}
 
