@@ -19,6 +19,10 @@ The four ablations are executable interventions rather than display aliases:
 ``fixed_routing``
     Keep all candidates but use the fixed prior simplex instead of the learned
     conditional router.
+``no_geometry_fixed_routing``
+    Apply the geometry-removal intervention and the fixed-prior routing
+    intervention together.  This is an inference-only factorial cell; it has
+    no dedicated training trajectory or checkpoint parameters.
 """
 from __future__ import annotations
 
@@ -55,12 +59,20 @@ NO_GEOMETRY_FUSION: Final[str] = "no_geometry_fusion"
 NO_POLAR_EVIDENCE: Final[str] = "no_polar_evidence"
 NO_RELATIONAL_TRANSPORT: Final[str] = "no_relational_transport"
 FIXED_ROUTING: Final[str] = "fixed_routing"
+NO_GEOMETRY_FIXED_ROUTING: Final[str] = "no_geometry_fixed_routing"
 VARIANTS: Final[tuple[str, ...]] = (
     FULL,
     NO_GEOMETRY_FUSION,
     NO_POLAR_EVIDENCE,
     NO_RELATIONAL_TRANSPORT,
     FIXED_ROUTING,
+    NO_GEOMETRY_FIXED_ROUTING,
+)
+GEOMETRY_OFF_VARIANTS: Final[frozenset[str]] = frozenset(
+    {NO_GEOMETRY_FUSION, NO_GEOMETRY_FIXED_ROUTING}
+)
+FIXED_ROUTING_VARIANTS: Final[frozenset[str]] = frozenset(
+    {FIXED_ROUTING, NO_GEOMETRY_FIXED_ROUTING}
 )
 
 
@@ -79,6 +91,20 @@ def candidate_mask(variant: str, *, device: torch.device) -> torch.Tensor:
     elif variant == NO_RELATIONAL_TRANSPORT:
         active[2] = False
     return active
+
+
+def geometry_fusion_enabled(variant: str) -> bool:
+    """Return whether the geometry-aware base fusion remains executable."""
+
+    _require(variant in VARIANTS, f"unknown unified-reader variant: {variant}")
+    return variant not in GEOMETRY_OFF_VARIANTS
+
+
+def adaptive_routing_enabled(variant: str) -> bool:
+    """Return whether the learned conditional router controls the simplex."""
+
+    _require(variant in VARIANTS, f"unknown unified-reader variant: {variant}")
+    return variant not in FIXED_ROUTING_VARIANTS
 
 
 def fixed_geometry_base(
@@ -228,7 +254,7 @@ class UnifiedPointerReader(nn.Module):
 
         base_mean = original_base_mean
         base_posterior = original_base_posterior
-        if self.variant == NO_GEOMETRY_FUSION:
+        if not geometry_fusion_enabled(self.variant):
             base_mean = fixed_geometry_base(
                 raw_mean,
                 normalized_mean,
@@ -262,7 +288,7 @@ class UnifiedPointerReader(nn.Module):
 
         candidates = torch.stack((base_mean, polar_mean, relational_mean), dim=1)
         active = candidate_mask(self.variant, device=candidates.device)
-        if self.variant == FIXED_ROUTING:
+        if not adaptive_routing_enabled(self.variant):
             prior = self.regret_router.prior_weights.to(candidates)
             prior = prior * active.to(prior.dtype)
             prior = prior / prior.sum()
@@ -355,7 +381,7 @@ def parameter_inventory(model: UnifiedPointerReader) -> dict[str, Any]:
         active["relational_transport"] = 0
     if model.variant == NO_POLAR_EVIDENCE:
         active["polar_evidence"] = 0
-    if model.variant == FIXED_ROUTING:
+    if not adaptive_routing_enabled(model.variant):
         active["conditional_router"] = 0
     return {
         "stored_unique": int(sum(components.values())),
@@ -422,16 +448,21 @@ __all__ = [
     "ARCHITECTURE",
     "CANDIDATE_NAMES",
     "FIXED_ROUTING",
+    "FIXED_ROUTING_VARIANTS",
     "FULL",
+    "GEOMETRY_OFF_VARIANTS",
     "NO_GEOMETRY_FUSION",
+    "NO_GEOMETRY_FIXED_ROUTING",
     "NO_POLAR_EVIDENCE",
     "NO_RELATIONAL_TRANSPORT",
     "PROTOCOL",
     "PUBLICATION_NAME",
     "UnifiedPointerReader",
     "VARIANTS",
+    "adaptive_routing_enabled",
     "candidate_mask",
     "fixed_geometry_base",
+    "geometry_fusion_enabled",
     "load_unified_pointer_reader_checkpoint",
     "mask_router_logits",
     "parameter_inventory",

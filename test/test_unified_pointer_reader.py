@@ -10,10 +10,13 @@ from experiments.unified_pointer_reader import (
     FIXED_ROUTING,
     FULL,
     NO_GEOMETRY_FUSION,
+    NO_GEOMETRY_FIXED_ROUTING,
     NO_POLAR_EVIDENCE,
     NO_RELATIONAL_TRANSPORT,
+    adaptive_routing_enabled,
     candidate_mask,
     fixed_geometry_base,
+    geometry_fusion_enabled,
     mask_router_logits,
 )
 
@@ -27,10 +30,19 @@ class UnifiedPointerReaderAblationTests(unittest.TestCase):
             NO_POLAR_EVIDENCE: [True, False, True],
             NO_RELATIONAL_TRANSPORT: [True, True, False],
             FIXED_ROUTING: [True, True, True],
+            NO_GEOMETRY_FIXED_ROUTING: [True, True, True],
         }
         for variant, values in expected.items():
             with self.subTest(variant=variant):
                 self.assertEqual(candidate_mask(variant, device=device).tolist(), values)
+
+    def test_joint_factorial_cell_combines_both_inference_interventions(self) -> None:
+        self.assertFalse(geometry_fusion_enabled(NO_GEOMETRY_FIXED_ROUTING))
+        self.assertFalse(adaptive_routing_enabled(NO_GEOMETRY_FIXED_ROUTING))
+        self.assertFalse(geometry_fusion_enabled(NO_GEOMETRY_FUSION))
+        self.assertTrue(adaptive_routing_enabled(NO_GEOMETRY_FUSION))
+        self.assertTrue(geometry_fusion_enabled(FIXED_ROUTING))
+        self.assertFalse(adaptive_routing_enabled(FIXED_ROUTING))
 
     def test_fixed_geometry_fusion_respects_view_availability(self) -> None:
         raw = torch.tensor([0.2, 0.4, 0.6])

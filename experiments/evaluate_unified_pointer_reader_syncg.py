@@ -8,9 +8,9 @@ from typing import Any, Final, Sequence
 
 from experiments.evaluate_remstnet_syncg import evaluate_remstnet_syncg
 from experiments.unified_pointer_reader import (
-    FIXED_ROUTING,
     PROTOCOL as TRAINING_PROTOCOL,
     PUBLICATION_NAME,
+    adaptive_routing_enabled,
     load_unified_pointer_reader_checkpoint,
 )
 
@@ -23,12 +23,19 @@ def _require(condition: bool, message: str) -> None:
         raise ValueError(message)
 
 
-def annotate_unified_output(output_path: Path) -> dict[str, Any]:
+def annotate_unified_output(
+    output_path: Path,
+    *,
+    expected_protocol: str = PROTOCOL,
+) -> dict[str, Any]:
     """Replace compatibility labels with the publication-facing model identity."""
 
     output = Path(output_path).resolve()
     payload = json.loads(output.read_text(encoding="utf-8"))
-    _require(payload.get("protocol") == PROTOCOL, "evaluation protocol differs")
+    _require(
+        payload.get("protocol") == str(expected_protocol),
+        "evaluation protocol differs",
+    )
     model = payload.get("model")
     _require(isinstance(model, dict), "model metadata is missing")
     _require(model.get("protocol") == TRAINING_PROTOCOL, "training protocol differs")
@@ -46,7 +53,7 @@ def annotate_unified_output(output_path: Path) -> dict[str, Any]:
                 "The mett/remstnet fields contain the unified-reader prediction "
                 "only because the shared evaluator retains historical machine keys."
             ),
-            "prediction_dependent_routing": variant != FIXED_ROUTING,
+            "prediction_dependent_routing": adaptive_routing_enabled(variant),
             "frozen_checkpoint": True,
             "training_or_adaptation_during_evaluation": False,
         }
