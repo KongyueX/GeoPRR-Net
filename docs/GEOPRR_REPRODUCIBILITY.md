@@ -150,7 +150,8 @@ Acc@2%FS, while VDN obtained 1.6620 ± 0.0878%FS and 74.49 ± 2.19%. The paired
 GeoPRR-Net-minus-VDN NMAE difference was -0.6607%FS (95% scene-bootstrap CI
 -0.8251 to -0.4854; 20,000 replicates), corresponding to a 39.8% relative NMAE
 reduction. The compact publication aggregate is
-`paper/geoprr_net_electronics_overleaf/figures/vdn_supplement.csv`.
+[`figures/vdn_supplement.csv`](https://github.com/KongyueX/GeoPRR-Net-Paper/blob/main/figures/vdn_supplement.csv)
+in the companion paper repository.
 
 ## 6. Focused validation
 
@@ -178,11 +179,14 @@ if ($errors.Count -ne 0) { $errors | Format-List; exit 1 }
 ## 7. Manuscript figures
 
 Quantitative figures are generated from compact aggregate CSV files stored with
-the manuscript:
+the manuscript in
+[GeoPRR-Net-Paper](https://github.com/KongyueX/GeoPRR-Net-Paper). Clone that
+repository alongside this code repository before running:
 
 ```powershell
+git clone https://github.com/KongyueX/GeoPRR-Net-Paper.git ..\GeoPRR-Net-Paper
 .\.venv\Scripts\python.exe `
-  paper\geoprr_net_electronics_overleaf\figures\build_geoprr_figures.py
+  ..\GeoPRR-Net-Paper\figures\build_geoprr_figures.py
 ```
 
 The paper source targets the bundled MDPI *Electronics* LaTeX class. Compile it

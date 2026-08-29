@@ -1,2 +1,0 @@
-reporting_scope,accepted_labeled_frames,all_labeled_frames,conditional_accuracy_at_5_percent,conditional_accuracy_at_5_percent_sample_sd,n_seeds,detector_boxes
-accepted labeled frames only,9,33,0.7407407407407408,0.12830005981991682,3,cached; live detector recall and latency excluded

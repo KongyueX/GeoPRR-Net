@@ -61,69 +61,10 @@ __pycache__/
 .ruff_cache/
 .vscode/
 
-# Paper workspaces remain local by default. Only the current public manuscript
-# package and its explicitly listed compile assets are tracked below.
+# Paper sources are maintained in the companion GeoPRR-Net-Paper repository.
 /paper/
-!/paper/
-/paper/*
-!/paper/r2mt_net_electronics_overleaf/
-/paper/r2mt_net_electronics_overleaf/*
-!/paper/r2mt_net_electronics_overleaf/README_CN.md
-!/paper/r2mt_net_electronics_overleaf/R2MT_EXPERIMENT_GAP_AUDIT_CN.md
-!/paper/r2mt_net_electronics_overleaf/manuscript.tex
-!/paper/r2mt_net_electronics_overleaf/references.bib
-!/paper/r2mt_net_electronics_overleaf/Definitions/
-!/paper/r2mt_net_electronics_overleaf/Definitions/**
-!/paper/r2mt_net_electronics_overleaf/figures/
-/paper/r2mt_net_electronics_overleaf/figures/*
-!/paper/r2mt_net_electronics_overleaf/figures/build_r2mt_figures.py
-!/paper/r2mt_net_electronics_overleaf/figures/source_r2mt_main.csv
-!/paper/r2mt_net_electronics_overleaf/figures/source_r2mt_ablation.csv
-!/paper/r2mt_net_electronics_overleaf/figures/source_r2mt_paired_effects.csv
-!/paper/r2mt_net_electronics_overleaf/figures/source_r2mt_routing_sensitivity.csv
-!/paper/r2mt_net_electronics_overleaf/figures/source_r2mt_industrial_multimethod.csv
-!/paper/r2mt_net_electronics_overleaf/figures/source_r2mt_vdn.csv
-!/paper/r2mt_net_electronics_overleaf/figures/source_r2mt_ocr_accepted.csv
-!/paper/r2mt_net_electronics_overleaf/figures/source_r2mt_efficiency.csv
-!/paper/r2mt_net_electronics_overleaf/figures/source_r2mt_repeatability.csv
-!/paper/r2mt_net_electronics_overleaf/figures/r2mt_architecture.pdf
-!/paper/r2mt_net_electronics_overleaf/figures/r2mt_architecture.png
-!/paper/r2mt_net_electronics_overleaf/figures/r2mt_ocr_pipeline.pdf
-!/paper/r2mt_net_electronics_overleaf/figures/r2mt_ocr_pipeline.png
-!/paper/r2mt_net_electronics_overleaf/figures/r2mt_core_performance.pdf
-!/paper/r2mt_net_electronics_overleaf/figures/r2mt_core_performance.png
-!/paper/r2mt_net_electronics_overleaf/figures/r2mt_ablation.pdf
-!/paper/r2mt_net_electronics_overleaf/figures/r2mt_ablation.png
-!/paper/r2mt_net_electronics_overleaf/figures/r2mt_industrial_validation.pdf
-!/paper/r2mt_net_electronics_overleaf/figures/r2mt_industrial_validation.png
-!/paper/r2mt_net_electronics_overleaf/figures/r2mt_vdn_validation.pdf
-!/paper/r2mt_net_electronics_overleaf/figures/r2mt_vdn_validation.png
-!/paper/r2mt_net_electronics_overleaf/figures/r2mt_efficiency.pdf
-!/paper/r2mt_net_electronics_overleaf/figures/r2mt_efficiency.png
-
-# GeoPRR-Net Electronics manuscript and reproducibility assets. Review-only
-# DOCX/Markdown mirrors, temporary render directories, SVG/TIFF exports, raw
-# data, checkpoints, and per-sample ledgers remain local.
-!/paper/geoprr_net_electronics_overleaf/
-/paper/geoprr_net_electronics_overleaf/*
-!/paper/geoprr_net_electronics_overleaf/README_CN.md
-!/paper/geoprr_net_electronics_overleaf/manuscript.tex
-!/paper/geoprr_net_electronics_overleaf/references.bib
-!/paper/geoprr_net_electronics_overleaf/Definitions/
-!/paper/geoprr_net_electronics_overleaf/Definitions/**
-!/paper/geoprr_net_electronics_overleaf/figures/
-/paper/geoprr_net_electronics_overleaf/figures/*
-!/paper/geoprr_net_electronics_overleaf/figures/build_geoprr_figures.py
-!/paper/geoprr_net_electronics_overleaf/figures/derive_condition_summaries.py
-!/paper/geoprr_net_electronics_overleaf/figures/fig1_qa_notes.md
-!/paper/geoprr_net_electronics_overleaf/figures/*.csv
-!/paper/geoprr_net_electronics_overleaf/figures/fig*.pdf
-!/paper/geoprr_net_electronics_overleaf/figures/fig*.png
-/paper/geoprr_net_electronics_overleaf/figures/fig5_efficiency.pdf
-!/paper/geoprr_net_electronics_overleaf/figures/assets/
-!/paper/geoprr_net_electronics_overleaf/figures/assets/**
 /MDPI_template_ACS/
 
-# Local orchestration and notification helpers are not part of the paper API.
+# Local orchestration and notification helpers are not part of the public code release.
 /experiments/*.ps1
 !/experiments/run_geoprr_vdn_matched.ps1

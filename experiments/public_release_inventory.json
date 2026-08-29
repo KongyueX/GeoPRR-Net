@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release_scope": "R²MT-Net manuscript, reproducible model code, aggregate results, figure source data, and focused validation tests",
+  "release_scope": "Public model code, reproducibility scripts, aggregate result tables, and focused validation tests",
   "categories": {
     "paper_model_and_reproduction": [
       "experiments/__init__.py",
@@ -180,7 +180,6 @@
       "experiments/vdn_seed20_terminal_matched_baseline.py",
       "experiments/verify_vdn_phase2.py",
       "experiments/verify_vdn_phase2_cohort.py",
-      "paper/r2mt_net_electronics_overleaf/figures/build_r2mt_figures.py",
       "r2mt/__init__.py",
       "r2mt/model.py",
       "remstnet/__init__.py",
@@ -206,46 +205,6 @@
       "README.md",
       "THIRD_PARTY_NOTICES.md",
       "docs/R2MT_NET_ARCHITECTURE_CN.md"
-    ],
-    "paper_manuscript": [
-      "paper/r2mt_net_electronics_overleaf/Definitions/journalnames.tex",
-      "paper/r2mt_net_electronics_overleaf/Definitions/logo-mdpi.eps",
-      "paper/r2mt_net_electronics_overleaf/Definitions/logo-orcid.pdf",
-      "paper/r2mt_net_electronics_overleaf/Definitions/logo-updates.eps",
-      "paper/r2mt_net_electronics_overleaf/Definitions/mdpi.bst",
-      "paper/r2mt_net_electronics_overleaf/Definitions/mdpi.cls",
-      "paper/r2mt_net_electronics_overleaf/Definitions/mdpi_apacite.bst",
-      "paper/r2mt_net_electronics_overleaf/Definitions/mdpi_apacite.sty",
-      "paper/r2mt_net_electronics_overleaf/Definitions/mdpi_chicago.bst",
-      "paper/r2mt_net_electronics_overleaf/R2MT_EXPERIMENT_GAP_AUDIT_CN.md",
-      "paper/r2mt_net_electronics_overleaf/README_CN.md",
-      "paper/r2mt_net_electronics_overleaf/figures/r2mt_ablation.pdf",
-      "paper/r2mt_net_electronics_overleaf/figures/r2mt_ablation.png",
-      "paper/r2mt_net_electronics_overleaf/figures/r2mt_architecture.pdf",
-      "paper/r2mt_net_electronics_overleaf/figures/r2mt_architecture.png",
-      "paper/r2mt_net_electronics_overleaf/figures/r2mt_core_performance.pdf",
-      "paper/r2mt_net_electronics_overleaf/figures/r2mt_core_performance.png",
-      "paper/r2mt_net_electronics_overleaf/figures/r2mt_efficiency.pdf",
-      "paper/r2mt_net_electronics_overleaf/figures/r2mt_efficiency.png",
-      "paper/r2mt_net_electronics_overleaf/figures/r2mt_industrial_validation.pdf",
-      "paper/r2mt_net_electronics_overleaf/figures/r2mt_industrial_validation.png",
-      "paper/r2mt_net_electronics_overleaf/figures/r2mt_ocr_pipeline.pdf",
-      "paper/r2mt_net_electronics_overleaf/figures/r2mt_ocr_pipeline.png",
-      "paper/r2mt_net_electronics_overleaf/figures/r2mt_vdn_validation.pdf",
-      "paper/r2mt_net_electronics_overleaf/figures/r2mt_vdn_validation.png",
-      "paper/r2mt_net_electronics_overleaf/manuscript.tex",
-      "paper/r2mt_net_electronics_overleaf/references.bib"
-    ],
-    "figure_source_data": [
-      "paper/r2mt_net_electronics_overleaf/figures/source_r2mt_ablation.csv",
-      "paper/r2mt_net_electronics_overleaf/figures/source_r2mt_efficiency.csv",
-      "paper/r2mt_net_electronics_overleaf/figures/source_r2mt_industrial_multimethod.csv",
-      "paper/r2mt_net_electronics_overleaf/figures/source_r2mt_main.csv",
-      "paper/r2mt_net_electronics_overleaf/figures/source_r2mt_ocr_accepted.csv",
-      "paper/r2mt_net_electronics_overleaf/figures/source_r2mt_paired_effects.csv",
-      "paper/r2mt_net_electronics_overleaf/figures/source_r2mt_repeatability.csv",
-      "paper/r2mt_net_electronics_overleaf/figures/source_r2mt_routing_sensitivity.csv",
-      "paper/r2mt_net_electronics_overleaf/figures/source_r2mt_vdn.csv"
     ],
     "paper_result_tables": [
       "results/README.md",
@@ -290,8 +249,7 @@
     "experiments/summarize_r2mt_ablations.py",
     "experiments/r2mt_paired_statistics.py",
     "experiments/summarize_r2mt_industrial_multimethod.py",
-    "experiments/summarize_r2mt_net_main_table.py",
-    "paper/r2mt_net_electronics_overleaf/figures/build_r2mt_figures.py"
+    "experiments/summarize_r2mt_net_main_table.py"
   ],
   "local_module_roots": [
     "experiments",
@@ -377,45 +335,7 @@
     ".codex_tmp/",
     "MDPI_template_ACS/"
   ],
-  "forbidden_path_exceptions": [
-    "paper/r2mt_net_electronics_overleaf/Definitions/journalnames.tex",
-    "paper/r2mt_net_electronics_overleaf/Definitions/logo-mdpi.eps",
-    "paper/r2mt_net_electronics_overleaf/Definitions/logo-orcid.pdf",
-    "paper/r2mt_net_electronics_overleaf/Definitions/logo-updates.eps",
-    "paper/r2mt_net_electronics_overleaf/Definitions/mdpi.bst",
-    "paper/r2mt_net_electronics_overleaf/Definitions/mdpi.cls",
-    "paper/r2mt_net_electronics_overleaf/Definitions/mdpi_apacite.bst",
-    "paper/r2mt_net_electronics_overleaf/Definitions/mdpi_apacite.sty",
-    "paper/r2mt_net_electronics_overleaf/Definitions/mdpi_chicago.bst",
-    "paper/r2mt_net_electronics_overleaf/R2MT_EXPERIMENT_GAP_AUDIT_CN.md",
-    "paper/r2mt_net_electronics_overleaf/README_CN.md",
-    "paper/r2mt_net_electronics_overleaf/figures/build_r2mt_figures.py",
-    "paper/r2mt_net_electronics_overleaf/figures/r2mt_ablation.pdf",
-    "paper/r2mt_net_electronics_overleaf/figures/r2mt_ablation.png",
-    "paper/r2mt_net_electronics_overleaf/figures/r2mt_architecture.pdf",
-    "paper/r2mt_net_electronics_overleaf/figures/r2mt_architecture.png",
-    "paper/r2mt_net_electronics_overleaf/figures/r2mt_core_performance.pdf",
-    "paper/r2mt_net_electronics_overleaf/figures/r2mt_core_performance.png",
-    "paper/r2mt_net_electronics_overleaf/figures/r2mt_efficiency.pdf",
-    "paper/r2mt_net_electronics_overleaf/figures/r2mt_efficiency.png",
-    "paper/r2mt_net_electronics_overleaf/figures/r2mt_industrial_validation.pdf",
-    "paper/r2mt_net_electronics_overleaf/figures/r2mt_industrial_validation.png",
-    "paper/r2mt_net_electronics_overleaf/figures/r2mt_ocr_pipeline.pdf",
-    "paper/r2mt_net_electronics_overleaf/figures/r2mt_ocr_pipeline.png",
-    "paper/r2mt_net_electronics_overleaf/figures/r2mt_vdn_validation.pdf",
-    "paper/r2mt_net_electronics_overleaf/figures/r2mt_vdn_validation.png",
-    "paper/r2mt_net_electronics_overleaf/figures/source_r2mt_ablation.csv",
-    "paper/r2mt_net_electronics_overleaf/figures/source_r2mt_efficiency.csv",
-    "paper/r2mt_net_electronics_overleaf/figures/source_r2mt_industrial_multimethod.csv",
-    "paper/r2mt_net_electronics_overleaf/figures/source_r2mt_main.csv",
-    "paper/r2mt_net_electronics_overleaf/figures/source_r2mt_ocr_accepted.csv",
-    "paper/r2mt_net_electronics_overleaf/figures/source_r2mt_paired_effects.csv",
-    "paper/r2mt_net_electronics_overleaf/figures/source_r2mt_repeatability.csv",
-    "paper/r2mt_net_electronics_overleaf/figures/source_r2mt_routing_sensitivity.csv",
-    "paper/r2mt_net_electronics_overleaf/figures/source_r2mt_vdn.csv",
-    "paper/r2mt_net_electronics_overleaf/manuscript.tex",
-    "paper/r2mt_net_electronics_overleaf/references.bib"
-  ],
+  "forbidden_path_exceptions": [],
   "forbidden_tracked_suffixes": [
     ".pt",
     ".pth",
@@ -444,20 +364,6 @@
     "paper_documentation": [
       ".md"
     ],
-    "paper_manuscript": [
-      ".bib",
-      ".bst",
-      ".cls",
-      ".eps",
-      ".md",
-      ".pdf",
-      ".png",
-      ".sty",
-      ".tex"
-    ],
-    "figure_source_data": [
-      ".csv"
-    ],
     "paper_result_tables": [
       ".json",
       ".md"
@@ -484,7 +390,6 @@
     "results/README.md",
     "results/r2mt_net_tables.json",
     "results/r2mt_industrial_multimethod.json",
-    "paper/r2mt_net_electronics_overleaf/manuscript.tex",
     "experiments/public_release_inventory.json",
     "experiments/check_public_release.py"
   ]
