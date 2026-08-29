@@ -1234,6 +1234,139 @@ def build_efficiency(*, png_only: bool = False) -> None:
         save_all(fig, "fig6_efficiency")
 
 
+def build_vdn(*, png_only: bool = False) -> None:
+    """Plot the complete three-seed, same-pixel VDN comparison."""
+    rows = read_csv("vdn_supplement.csv")
+    pooled = next(row for row in rows if row["scope"] == "all_conditions")
+    conditions = [row for row in rows if row["scope"] == "condition"]
+    if len(conditions) != 6:
+        raise ValueError("The VDN figure requires all six prespecified conditions.")
+    if any(int(row["checkpoints"]) != 3 for row in rows):
+        raise ValueError("The formal VDN figure requires three checkpoints per method.")
+
+    vdn_color = COLORS["mobile"]
+    fig = plt.figure(figsize=(7.20, 3.85), layout="constrained")
+    grid = fig.add_gridspec(1, 3, width_ratios=[0.78, 1.42, 1.22])
+    ax = fig.add_subplot(grid[0, 0])
+    ax2 = fig.add_subplot(grid[0, 1])
+    ax3 = fig.add_subplot(grid[0, 2])
+
+    pooled_mean = np.array(
+        [number(pooled, "geoprr_nmae_percent_fs"), number(pooled, "vdn_nmae_percent_fs")]
+    )
+    pooled_sd = np.array(
+        [number(pooled, "geoprr_nmae_sd_percent_fs"), number(pooled, "vdn_nmae_sd_percent_fs")]
+    )
+    pooled_colors = [COLORS["hero"], vdn_color]
+    xpos = np.arange(2)
+    ax.bar(
+        xpos,
+        pooled_mean,
+        yerr=pooled_sd,
+        capsize=2.6,
+        color=pooled_colors,
+        width=0.62,
+        edgecolor="white",
+        linewidth=0.5,
+        zorder=3,
+    )
+    ax.set_xticks(xpos, ["GeoPRR-Net", "VDN"])
+    for tick in ax.get_xticklabels():
+        tick.set_rotation(18)
+        tick.set_rotation_mode("anchor")
+        tick.set_ha("right")
+    ax.set_ylim(0, 2.05)
+    ax.set_ylabel("NMAE (%FS; lower is better)")
+    title_left(ax, "Complete matched roster")
+    panel_label(ax, "a", -0.17, 1.03)
+    quantitative_axis(ax)
+    for x, value, sd in zip(xpos, pooled_mean, pooled_sd):
+        ax.text(x, value + sd + 0.06, f"{value:.3f}", ha="center", va="bottom", fontweight="bold")
+    takeaway(ax, "39.8% lower", x=0.96, y=0.98)
+
+    labels = [row["label"] for row in conditions]
+    y = np.arange(len(conditions))[::-1]
+    geo = np.array([number(row, "geoprr_nmae_percent_fs") for row in conditions])
+    geo_sd = np.array([number(row, "geoprr_nmae_sd_percent_fs") for row in conditions])
+    vdn = np.array([number(row, "vdn_nmae_percent_fs") for row in conditions])
+    vdn_sd = np.array([number(row, "vdn_nmae_sd_percent_fs") for row in conditions])
+    ax2.errorbar(
+        geo,
+        y + 0.12,
+        xerr=geo_sd,
+        fmt="o",
+        markersize=4.2,
+        color=COLORS["hero"],
+        ecolor=COLORS["hero"],
+        capsize=2.0,
+        linewidth=1.0,
+        label="GeoPRR-Net",
+        zorder=4,
+    )
+    ax2.errorbar(
+        vdn,
+        y - 0.12,
+        xerr=vdn_sd,
+        fmt="s",
+        markersize=3.8,
+        color=vdn_color,
+        ecolor=vdn_color,
+        capsize=2.0,
+        linewidth=1.0,
+        label="VDN",
+        zorder=3,
+    )
+    ax2.set_yticks(y, labels)
+    style_condition_ticks(ax2, labels)
+    ax2.set_xlim(0.55, 3.02)
+    ax2.set_xlabel("Condition NMAE (%FS)")
+    title_left(ax2, "Condition-wise performance")
+    panel_label(ax2, "b", -0.20, 1.03)
+    quantitative_axis(ax2)
+    ax2.legend(loc="lower right")
+
+    forest_rows = [pooled, *conditions]
+    forest_labels = [row["label"] for row in forest_rows]
+    forest_y = np.arange(len(forest_rows))[::-1]
+    delta = np.array([number(row, "delta_percent_fs") for row in forest_rows])
+    low = np.array([number(row, "ci95_low_percent_fs") for row in forest_rows])
+    high = np.array([number(row, "ci95_high_percent_fs") for row in forest_rows])
+    ax3.axvspan(-1.75, 0, color=COLORS["hero_soft"], alpha=0.55, zorder=0)
+    ax3.axvline(0, color=COLORS["ink"], linewidth=0.9, zorder=2)
+    for i, (yy, effect, lo, hi) in enumerate(zip(forest_y, delta, low, high)):
+        marker_color = COLORS["warn"] if lo <= 0 <= hi else COLORS["hero"]
+        marker = "D" if i == 0 else "o"
+        ax3.errorbar(
+            effect,
+            yy,
+            xerr=[[effect - lo], [hi - effect]],
+            fmt=marker,
+            markersize=4.5 if i == 0 else 3.8,
+            color=marker_color,
+            ecolor=marker_color,
+            capsize=2.0,
+            linewidth=1.15,
+            zorder=4,
+        )
+    ax3.set_yticks(forest_y, forest_labels)
+    style_condition_ticks(ax3, forest_labels)
+    ax3.set_xlim(-1.75, 0.42)
+    ax3.set_xlabel(r"GeoPRR-Net $-$ VDN NMAE (%FS)")
+    title_left(ax3, "Paired scene-bootstrap effects")
+    panel_label(ax3, "c", -0.22, 1.03)
+    quantitative_axis(ax3)
+
+    fig.suptitle(
+        "Three-seed VDN comparison on 1,558 images and all six conditions",
+        fontsize=FONT_HEAD,
+        fontweight="bold",
+    )
+    if png_only:
+        save_png(fig, "fig6_vdn_comparison")
+    else:
+        save_all(fig, "fig6_vdn_comparison")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -1246,6 +1379,7 @@ def main() -> None:
             "industrial",
             "rf100",
             "cross_domain",
+            "vdn",
             "efficiency",
         ),
         default="all",
@@ -1270,6 +1404,8 @@ def main() -> None:
         build_rf100(png_only=args.png_only)
     if args.figure in ("all", "cross_domain"):
         build_cross_domain(png_only=args.png_only)
+    if args.figure in ("all", "vdn"):
+        build_vdn(png_only=args.png_only)
     if args.figure in ("all", "efficiency"):
         build_efficiency(png_only=args.png_only)
     if args.png_only:

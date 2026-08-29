@@ -143,6 +143,15 @@ prediction ledgers are reused; missing seed directories start fresh. The wrapper
 then evaluates each terminal epoch-200 checkpoint and produces a paired,
 scene-bootstrap three-seed summary.
 
+The formal run is complete. Each terminal checkpoint was evaluated on all 1,558
+held-out images under the six prespecified conditions (9,348 rows per seed; 14
+scene clusters). GeoPRR-Net obtained 1.0013 ± 0.0382%FS NMAE and 91.11 ± 0.79%
+Acc@2%FS, while VDN obtained 1.6620 ± 0.0878%FS and 74.49 ± 2.19%. The paired
+GeoPRR-Net-minus-VDN NMAE difference was -0.6607%FS (95% scene-bootstrap CI
+-0.8251 to -0.4854; 20,000 replicates), corresponding to a 39.8% relative NMAE
+reduction. The compact publication aggregate is
+`paper/geoprr_net_electronics_overleaf/figures/vdn_supplement.csv`.
+
 ## 6. Focused validation
 
 ```powershell
@@ -185,7 +194,7 @@ submission.
 
 - The repository does not redistribute fitted checkpoints.
 - Industrial-1395 remains restricted.
-- The VDN three-seed, 200-epoch result is not final until every seed, terminal
-  evaluation, and summary completes.
+- The VDN comparison is an annotation-assisted direction-component evaluation,
+  not a deployable end-to-end VDN system comparison.
 - The repository has no project-level license at this release point; see
   `THIRD_PARTY_NOTICES.md` before reuse or redistribution.
