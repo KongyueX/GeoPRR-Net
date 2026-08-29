@@ -76,8 +76,7 @@ architecture contribution.
   by Git and are not redistributed here.
 
 Generated manifests, prediction caches, fitted calibrators, checkpoints and
-per-sample result files are ignored by Git. The GeoPRR-Net manuscript figure
-CSVs and the retained legacy aggregate tables under `results/` contain no raw
-field images, per-sample predictions, or model parameters. Review the target
-venue's artifact policy before publishing any generated model or data-derived
-artifact.
+per-sample result files are ignored by Git. Aggregate manuscript tables live in
+the companion GeoPRR-Net-Paper repository and contain no raw field images,
+per-sample predictions, or model parameters. Review the target venue's artifact
+policy before publishing any generated model or data-derived artifact.

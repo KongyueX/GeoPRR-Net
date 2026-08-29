@@ -1,4 +1,4 @@
-"""Audit the R²MT-Net paper release declared by its inventory.
+"""Audit the GeoPRR-Net code release declared by its inventory.
 
 Workspace mode reports files that still need to be added to Git. Release mode
 turns that report into an error. Neither mode stages, commits, or pushes files.
@@ -140,7 +140,13 @@ def _imports(path: Path) -> list[str]:
             modules.extend(alias.name for alias in node.names)
         elif isinstance(node, ast.ImportFrom) and node.module and node.level == 0:
             modules.append(node.module)
-            if node.module in {"experiments", "models", "services", "test", "utils"}:
+            if node.module in {
+                "experiments",
+                "geoprr",
+                "remstnet",
+                "test",
+                "utils",
+            }:
                 modules.extend(f"{node.module}.{alias.name}" for alias in node.names)
     return modules
 
@@ -252,7 +258,12 @@ def run_audit(root: Path, inventory_path: Path, *, mode: str) -> Mapping[str, An
         }
     )
 
-    tracked = set(_git_lines(root, "ls-files"))
+    # Audit the release state represented by the working tree.  Paths already
+    # removed during a reviewed cleanup still appear in ``git ls-files`` until
+    # the deletion is staged, but they must not be treated as shipped files.
+    tracked = {
+        path for path in _git_lines(root, "ls-files") if (root / path).is_file()
+    }
     untracked_required = sorted(path for path in declared if path not in tracked)
     undeclared_tracked = sorted(tracked.difference(declared))
     tracked_paths = sorted(tracked)
@@ -335,7 +346,7 @@ def run_audit(root: Path, inventory_path: Path, *, mode: str) -> Mapping[str, An
         errors["undeclared_tracked_files"] = undeclared_tracked
     failed = {name: values for name, values in errors.items() if values}
     return {
-        "protocol": "r2mt_net_public_release_audit_v1",
+        "protocol": "geoprr_net_public_release_audit_v1",
         "status": "pass" if not failed else "fail",
         "mode": mode,
         "declared_files": len(declared),

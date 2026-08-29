@@ -22,6 +22,10 @@ PUBLICATION_FULL_NAME: Final[str] = (
 )
 PUBLICATION_PROTOCOL: Final[str] = "geoprr_net_inference_v1"
 
+# GeoPRR-Net is the only supported public model identity.  The implementation
+# class keeps its historical name so reproduced checkpoints remain compatible.
+GeoPRRNet = UnifiedPointerReader
+
 
 def publication_model_identity() -> dict[str, Any]:
     """Return the stable paper identity without opening a checkpoint."""
@@ -41,7 +45,7 @@ def load_geoprr_net(
     checkpoint_path: str | Path,
     *,
     device: torch.device | str,
-) -> tuple[UnifiedPointerReader, dict[str, Any]]:
+) -> tuple[GeoPRRNet, dict[str, Any]]:
     """Load one publication checkpoint and attach the public model identity."""
 
     model, metadata = load_unified_pointer_reader_checkpoint(
@@ -62,6 +66,7 @@ __all__ = [
     "ARCHITECTURE",
     "CANDIDATE_NAMES",
     "CHECKPOINT_PROTOCOL",
+    "GeoPRRNet",
     "PUBLICATION_FULL_NAME",
     "PUBLICATION_NAME",
     "PUBLICATION_PROTOCOL",

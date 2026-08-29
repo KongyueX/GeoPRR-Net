@@ -1,8 +1,35 @@
 {
   "schema_version": 1,
-  "release_scope": "Public model code, reproducibility scripts, aggregate result tables, and focused validation tests",
+  "release_scope": "GeoPRR-Net public API, reproduction workflows, matched VDN comparison, internal checkpoint-replay dependencies, and focused tests",
   "categories": {
-    "paper_model_and_reproduction": [
+    "public_model": [
+      "geoprr/__init__.py",
+      "geoprr/model.py"
+    ],
+    "reproduction": [
+      "experiments/analyze_unified_pointer_reader_routing.py",
+      "experiments/benchmark_unified_pointer_reader_paper_efficiency.py",
+      "experiments/evaluate_geoprr_geometry_routing_factorial.py",
+      "experiments/evaluate_geoprr_perspective_scan.py",
+      "experiments/evaluate_geoprr_vdn_matched.py",
+      "experiments/evaluate_unified_pointer_reader_industrial.py",
+      "experiments/evaluate_unified_pointer_reader_rf100.py",
+      "experiments/evaluate_unified_pointer_reader_syncg.py",
+      "experiments/export_geoprr_public_cnn_data.py",
+      "experiments/export_geoprr_public_industrial_groups.py",
+      "experiments/export_geoprr_public_rf100_data.py",
+      "experiments/run_geoprr_vdn_matched.ps1",
+      "experiments/run_vdn_oracle_reference_component.py",
+      "experiments/summarize_geoprr_figure3.py",
+      "experiments/summarize_geoprr_vdn_matched.py",
+      "experiments/summarize_unified_pointer_reader_experiments.py",
+      "experiments/summarize_unified_pointer_reader_rf100.py",
+      "experiments/train_unified_pointer_reader.py",
+      "experiments/train_vdn_syncg.py",
+      "experiments/unified_pointer_reader.py",
+      "experiments/vdn_baseline.py"
+    ],
+    "internal_dependencies": [
       "experiments/__init__.py",
       "experiments/a10_pccot_data.py",
       "experiments/a10_pccot_protocol.py",
@@ -28,7 +55,8 @@
       "experiments/benchmark_a15_2_fteb_efficiency.py",
       "experiments/benchmark_a15_2_mett_efficiency.py",
       "experiments/benchmark_cagh_v5_paper_efficiency.py",
-      "experiments/benchmark_remstnet_efficiency.py",
+      "experiments/benchmark_db_gar18_sarn_v2_efficiency.py",
+      "experiments/benchmark_paper_syncg_only_efficiency.py",
       "experiments/cagh_net.py",
       "experiments/cagh_scalemark_reference_head.py",
       "experiments/cagh_scalemark_reference_head_v3.py",
@@ -58,17 +86,11 @@
       "experiments/evaluate_paper_syncg_only_natural_repeat_stability.py",
       "experiments/evaluate_paper_syncg_only_pgsiam.py",
       "experiments/evaluate_projective_geometry_guided_siam.py",
-      "experiments/evaluate_r2mt_net_syncg.py",
-      "experiments/evaluate_remst_resnet18_probe.py",
-      "experiments/evaluate_remst_resnet18_syncg.py",
       "experiments/evaluate_remstnet_clean_external.py",
-      "experiments/evaluate_remstnet_natural_repeat_stability.py",
       "experiments/evaluate_remstnet_ocr_end_to_end.py",
       "experiments/evaluate_remstnet_real_domains.py",
-      "experiments/evaluate_remstnet_stress_sweep.py",
       "experiments/evaluate_remstnet_syncg.py",
       "experiments/evaluate_vdn_baseline.py",
-      "experiments/export_remstnet_ocr_paper_assets.py",
       "experiments/extract_pointer10k_test.py",
       "experiments/fadr_multiseed_protocol.py",
       "experiments/formal_environment.py",
@@ -78,6 +100,7 @@
       "experiments/geoattn_resnet18_progress.py",
       "experiments/geopepd.py",
       "experiments/geopepd_progress.py",
+      "experiments/pcrt_meter.py",
       "experiments/perspective_adaptive_db_gar18.py",
       "experiments/pivot_direction_fallback.py",
       "experiments/prepare_a10_fold_b_manifest.py",
@@ -92,27 +115,18 @@
       "experiments/projective_geometry_guided_siam.py",
       "experiments/projective_geometry_views.py",
       "experiments/quality_router.py",
-      "experiments/r2mt_net.py",
-      "experiments/r2mt_paired_statistics.py",
       "experiments/raw_angular_moment_refiner_probe.py",
       "experiments/raw_context_endpoint_control_probe.py",
-      "experiments/raw_layer4_endpoint_fullfit_probe.py",
-      "experiments/raw_layer4_endpoint_refinement_probe.py",
-      "experiments/raw_monotone_residual_calibration_probe.py",
       "experiments/raw_multiscale_progress_probe.py",
-      "experiments/raw_relative_angular_frame_probe.py",
       "experiments/reference_conditioned_progress_calibrator.py",
       "experiments/reference_conditioned_router.py",
-      "experiments/refresh_resnet18_endpoint.py",
-      "experiments/remst_resnet18.py",
-      "experiments/remst_resnet18_train_monotone_calibration_probe.py",
+      "experiments/refine_pcrt_minimax_router.py",
       "experiments/resnet18_direct_progress.py",
       "experiments/robustness_degradations.py",
       "experiments/run_a12_fixed_q0_causal_probe.py",
       "experiments/run_a15_fteb_inner_scene_probe.py",
       "experiments/run_cagh_v5_plain_paper_batch.py",
       "experiments/run_cagh_v5_solver_gated_screen.py",
-      "experiments/run_r2mt_downstream_replays.py",
       "experiments/sarn_guided_attention_db_gar18.py",
       "experiments/score_cagh_v5_plain_paper_batch.py",
       "experiments/score_db_gar18_factorial_3seed.py",
@@ -120,15 +134,8 @@
       "experiments/screen_cagh_factorized_reference_oracle.py",
       "experiments/screen_cagh_internal_oracle.py",
       "experiments/sgca_syncg_internal_pilot.py",
-      "experiments/shrink_resnet18_endpoint.py",
       "experiments/strict_json.py",
       "experiments/summarize_pgsiam_v3_multiseed.py",
-      "experiments/summarize_r2mt_ablations.py",
-      "experiments/summarize_r2mt_industrial_multimethod.py",
-      "experiments/summarize_r2mt_net_main_table.py",
-      "experiments/summarize_remstnet_ablations.py",
-      "experiments/summarize_remstnet_multiseed.py",
-      "experiments/summarize_remstnet_real_domains.py",
       "experiments/summarize_remstnet_vdn_intersection.py",
       "experiments/summarize_support_normalized_cbam_pilot.py",
       "experiments/support_aware_roi_normalization.py",
@@ -151,19 +158,13 @@
       "experiments/train_geopepd_progress_probe.py",
       "experiments/train_geopepd_progress_v2_probe.py",
       "experiments/train_geopepd_train_only_probe.py",
+      "experiments/train_pcrt_meter.py",
       "experiments/train_projective_circular_transport_syncg.py",
       "experiments/train_projective_geometry_guided_siam.py",
       "experiments/train_projective_geometry_guided_siam_syncg.py",
-      "experiments/train_r2mt_net.py",
-      "experiments/train_raw_context_residual_correction_adaptation.py",
-      "experiments/train_raw_layer4_fullfit_correction_adaptation.py",
-      "experiments/train_remst_resnet18_probe.py",
-      "experiments/train_remst_resnet18_raw_context_residual.py",
-      "experiments/train_remst_resnet18_relative_context_transport.py",
       "experiments/train_remstnet.py",
       "experiments/train_support_geometry_multiview_efficientnet_pilot.py",
       "experiments/train_uhpf_shared_mask_geometry_probe.py",
-      "experiments/train_vdn_syncg.py",
       "experiments/uhpf_shared_mask_geometry.py",
       "experiments/uncertainty_fusion.py",
       "experiments/v5_shared_roi_comparison_input.py",
@@ -173,15 +174,12 @@
       "experiments/v5_unified_full_auto_progress_providers.py",
       "experiments/v5_unified_legacy_adapters.py",
       "experiments/v5_unified_two_stage_retest.py",
-      "experiments/vdn_baseline.py",
       "experiments/vdn_official200_protocol.py",
       "experiments/vdn_phase2_evaluation_plan.py",
       "experiments/vdn_phase2_protocol.py",
       "experiments/vdn_seed20_terminal_matched_baseline.py",
       "experiments/verify_vdn_phase2.py",
       "experiments/verify_vdn_phase2_cohort.py",
-      "r2mt/__init__.py",
-      "r2mt/model.py",
       "remstnet/__init__.py",
       "remstnet/model.py",
       "utils/angleDetect/dataloader.py",
@@ -198,18 +196,17 @@
       "utils/angleDetect/vitTranforms/meterCilp.py",
       "utils/angleDetect/vitTranforms/simple_tokenizer.py",
       "utils/angleDetect/vitTranforms/textencoder.py",
+      "utils/angleDetect/yoloDetection/pointGet.py",
       "utils/angleDetect/yoloDetection/yoloDectect.py",
       "utils/angleDetect/zeroShotMeter.py"
     ],
-    "paper_documentation": [
+    "documentation": [
       "README.md",
       "THIRD_PARTY_NOTICES.md",
-      "docs/R2MT_NET_ARCHITECTURE_CN.md"
+      "docs/GEOPRR_REPRODUCIBILITY.md"
     ],
-    "paper_result_tables": [
-      "results/README.md",
-      "results/r2mt_industrial_multimethod.json",
-      "results/r2mt_net_tables.json"
+    "citation": [
+      "CITATION.cff"
     ],
     "release_support": [
       ".gitattributes",
@@ -220,43 +217,45 @@
       "pytest.ini"
     ],
     "focused_tests": [
-      "test/test_evaluate_remstnet_clean_external.py",
-      "test/test_evaluate_remstnet_ocr_end_to_end.py",
-      "test/test_r2mt_public_api.py",
-      "test/test_r2mt_release_tables.py",
-      "test/test_raw_angular_moment_refiner_probe.py",
-      "test/test_raw_context_endpoint_control_probe.py",
-      "test/test_raw_monotone_residual_calibration_probe.py",
-      "test/test_raw_multiscale_progress_probe.py",
-      "test/test_raw_relative_angular_frame_probe.py",
-      "test/test_remst_resnet18.py",
-      "test/test_remstnet_extended_evaluators.py",
-      "test/test_remstnet_model.py",
-      "test/test_remstnet_public_api.py",
-      "test/test_summarize_remstnet_ablations.py",
-      "test/test_summarize_remstnet_multiseed.py",
-      "test/test_summarize_remstnet_real_domains.py",
-      "test/test_summarize_remstnet_vdn_intersection.py"
+      "test/test_geoprr_figure3_experiments.py",
+      "test/test_geoprr_public_api.py",
+      "test/test_run_vdn_oracle_reference_component.py",
+      "test/test_unified_pointer_reader.py"
     ]
   },
   "python_entrypoints": [
-    "r2mt/__init__.py",
-    "r2mt/model.py",
-    "experiments/r2mt_net.py",
-    "experiments/train_r2mt_net.py",
-    "experiments/evaluate_r2mt_net_syncg.py",
-    "experiments/run_r2mt_downstream_replays.py",
-    "experiments/summarize_r2mt_ablations.py",
-    "experiments/r2mt_paired_statistics.py",
-    "experiments/summarize_r2mt_industrial_multimethod.py",
-    "experiments/summarize_r2mt_net_main_table.py"
+    "geoprr/__init__.py",
+    "geoprr/model.py",
+    "experiments/analyze_unified_pointer_reader_routing.py",
+    "experiments/benchmark_unified_pointer_reader_paper_efficiency.py",
+    "experiments/evaluate_geoprr_geometry_routing_factorial.py",
+    "experiments/evaluate_geoprr_perspective_scan.py",
+    "experiments/evaluate_geoprr_vdn_matched.py",
+    "experiments/evaluate_unified_pointer_reader_industrial.py",
+    "experiments/evaluate_unified_pointer_reader_rf100.py",
+    "experiments/evaluate_unified_pointer_reader_syncg.py",
+    "experiments/export_geoprr_public_cnn_data.py",
+    "experiments/export_geoprr_public_industrial_groups.py",
+    "experiments/export_geoprr_public_rf100_data.py",
+    "experiments/run_vdn_oracle_reference_component.py",
+    "experiments/summarize_geoprr_figure3.py",
+    "experiments/summarize_geoprr_vdn_matched.py",
+    "experiments/summarize_unified_pointer_reader_experiments.py",
+    "experiments/summarize_unified_pointer_reader_rf100.py",
+    "experiments/train_unified_pointer_reader.py",
+    "experiments/train_vdn_syncg.py",
+    "experiments/unified_pointer_reader.py",
+    "experiments/vdn_baseline.py",
+    "experiments/check_public_release.py",
+    "test/test_geoprr_figure3_experiments.py",
+    "test/test_geoprr_public_api.py",
+    "test/test_run_vdn_oracle_reference_component.py",
+    "test/test_unified_pointer_reader.py"
   ],
   "local_module_roots": [
     "experiments",
-    "models",
-    "r2mt",
+    "geoprr",
     "remstnet",
-    "services",
     "test",
     "utils"
   ],
@@ -271,19 +270,29 @@
     "PIL": "pillow",
     "cv2": "opencv-python",
     "einops": "einops",
+    "fastapi": "fastapi",
     "ftfy": "ftfy",
+    "imageio": "imageio",
     "joblib": "joblib",
     "loguru": "loguru",
     "matplotlib": "matplotlib",
     "numpy": "numpy",
+    "openpyxl": "openpyxl",
     "packaging": "packaging",
+    "polars": "polars",
+    "psutil": "psutil",
+    "pytest": "pytest",
     "regex": "regex",
+    "requests": "requests",
     "scipy": "scipy",
+    "skimage": "scikit-image",
     "sklearn": "scikit-learn",
     "torch": "torch",
     "torchvision": "torchvision",
     "tqdm": "tqdm",
-    "ultralytics": "ultralytics"
+    "ultralytics": "ultralytics",
+    "uvicorn": "uvicorn",
+    "yaml": "pyyaml"
   },
   "required_gitignore_patterns": [
     "/artifacts/",
@@ -296,6 +305,7 @@
     "/sealed/",
     "/confirmatory/",
     "/outputs/",
+    "/results/",
     "/paper/",
     "/pointer_read/",
     "/.agents/",
@@ -328,6 +338,7 @@
     "sealed/",
     "confirmatory/",
     "outputs/",
+    "results/",
     "paper/",
     "pointer_read/",
     ".agents/",
@@ -335,7 +346,9 @@
     ".codex_tmp/",
     "MDPI_template_ACS/"
   ],
-  "forbidden_path_exceptions": [],
+  "forbidden_path_exceptions": [
+    "experiments/run_geoprr_vdn_matched.ps1"
+  ],
   "forbidden_tracked_suffixes": [
     ".pt",
     ".pth",
@@ -352,21 +365,27 @@
     ".xlsx"
   ],
   "forbidden_declared_path_patterns": [
-    "(?:^|/)(?:private|sealed|confirmatory|test[-_]?data|field[-_]?data|outputs?)(?:/|$)",
+    "(?:^|/)(?:private|sealed|confirmatory|test[-_]?data|field[-_]?data|outputs?|results)(?:/|$)",
     "(?i)(?:^|/)(?:AGENTS\\.md|CLAUDE\\.md|README_LEGACY\\.md)$",
     "(?i)\\.ps1$",
     "(?i)^(?:main\\.py|models/|services/|config/|static/)"
   ],
   "category_allowed_suffixes": {
-    "paper_model_and_reproduction": [
+    "public_model": [
       ".py"
     ],
-    "paper_documentation": [
+    "reproduction": [
+      ".py",
+      ".ps1"
+    ],
+    "internal_dependencies": [
+      ".py"
+    ],
+    "documentation": [
       ".md"
     ],
-    "paper_result_tables": [
-      ".json",
-      ".md"
+    "citation": [
+      ".cff"
     ],
     "focused_tests": [
       ".py"
@@ -374,23 +393,13 @@
   },
   "forbidden_content_patterns": [
     "open\\.feishu\\.cn/open-apis/bot/",
-    "(?i)(?:webhook|signing[_-]?secret)[ \\t]*[:=][ \\t]*['\\\"]?[A-Za-z0-9_-]{20,}",
-    "(?i)(?:api[_-]?key|access[_-]?token)[ \\t]*[:=][ \\t]*['\\\"]?[A-Za-z0-9_-]{20,}"
+    "(?i)(?:webhook|signing[_-]?secret)[ \\t]*[:=][ \\t]*[\\'\\\"]?[A-Za-z0-9_-]{20,}",
+    "(?i)(?:api[_-]?key|access[_-]?token)[ \\t]*[:=][ \\t]*[\\'\\\"]?[A-Za-z0-9_-]{20,}"
   ],
   "readme_required_paths": [
-    "r2mt/__init__.py",
-    "r2mt/model.py",
-    "docs/R2MT_NET_ARCHITECTURE_CN.md",
-    "experiments/r2mt_net.py",
-    "experiments/train_r2mt_net.py",
-    "experiments/evaluate_r2mt_net_syncg.py",
-    "experiments/run_r2mt_downstream_replays.py",
-    "experiments/summarize_r2mt_ablations.py",
-    "experiments/r2mt_paired_statistics.py",
-    "results/README.md",
-    "results/r2mt_net_tables.json",
-    "results/r2mt_industrial_multimethod.json",
-    "experiments/public_release_inventory.json",
-    "experiments/check_public_release.py"
+    "THIRD_PARTY_NOTICES.md",
+    "docs/GEOPRR_REPRODUCIBILITY.md",
+    "experiments/check_public_release.py",
+    "experiments/public_release_inventory.json"
   ]
 }

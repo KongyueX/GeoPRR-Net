@@ -40,8 +40,10 @@ by Git. Paths supplied to the scripts are local inputs, not download promises.
 
 ## 4. GeoPRR-Net entry points
 
-The stable import API is `geoprr.load_geoprr_net`. The implementation and
-reproduction scripts are:
+The stable import API is `geoprr.GeoPRRNet` together with
+`geoprr.load_geoprr_net`. GeoPRR-Net is the only supported public model; older
+module and checkpoint names below are retained strictly as internal provenance
+and replay identifiers. The implementation and reproduction scripts are:
 
 - `experiments/unified_pointer_reader.py`
 - `experiments/train_unified_pointer_reader.py`
@@ -64,6 +66,9 @@ Inspect the complete CLI of any stage before running it:
 The trainer requires a locally reproduced source expert-bank checkpoint and a
 warm polar checkpoint. Their paths are explicit inputs; neither weight file is
 redistributed:
+
+The `--source-r2mt` option name is a checkpoint-compatibility field. It does not
+expose R2MT as a separate supported model in this repository.
 
 ```powershell
 .\.venv\Scripts\python.exe -m experiments.train_unified_pointer_reader `
@@ -156,11 +161,11 @@ in the companion paper repository.
 ## 6. Focused validation
 
 ```powershell
-.\.venv\Scripts\python.exe -m unittest `
-  test.test_geoprr_public_api `
-  test.test_unified_pointer_reader `
-  test.test_vdn_baseline `
-  test.test_run_vdn_oracle_reference_component
+.\.venv\Scripts\python.exe -m pytest `
+  test\test_geoprr_public_api.py `
+  test\test_unified_pointer_reader.py `
+  test\test_geoprr_figure3_experiments.py `
+  test\test_run_vdn_oracle_reference_component.py
 ```
 
 Validate that the PowerShell wrapper parses without launching training:

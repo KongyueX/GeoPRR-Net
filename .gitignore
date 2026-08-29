@@ -37,6 +37,7 @@
 /artifacts/
 /runs/
 /outputs/
+/results/
 /.cache/
 /data/
 /data-717/

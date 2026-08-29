@@ -9,8 +9,8 @@ authors:
     given-names: Xiaoyi
 repository-code: "https://github.com/KongyueX/GeoPRR-Net"
 abstract: >-
-  Reproducibility code, manuscript source, aggregate figure data, and matched
-  baseline scripts for geometry-aware analog gauge progress estimation.
+  GeoPRR-Net model code, reproducibility workflows, and matched baseline
+  scripts for geometry-aware analog gauge progress estimation.
 keywords:
   - analog gauge reading
   - pointer meter reading
