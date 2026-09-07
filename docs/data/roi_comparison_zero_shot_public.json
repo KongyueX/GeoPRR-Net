@@ -1,0 +1,976 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "generated_at_utc": "2026-09-07T10:33:07.257394+00:00",
+  "units": "NMAE is percent full scale; accuracy and coverage are percentages; SD is across training seeds, ddof=1.",
+  "seeds": [
+    20262020,
+    20262021,
+    20262022
+  ],
+  "source_domain": {
+    "name": "SyncG",
+    "train_samples": 12866,
+    "validation_samples": 1576,
+    "selection": "YOLO: best inner-validation fitness, 30-epoch budget; DeepLab: best inner-validation Dice, 20-epoch budget; VDN: terminal epoch 200 matched checkpoint."
+  },
+  "protocol": {
+    "conditions": [
+      "clean",
+      "blur_moderate",
+      "blur_severe",
+      "perspective_moderate",
+      "perspective_severe",
+      "combined_severe"
+    ],
+    "clean": "Single undegraded condition; one row per image per seed.",
+    "all_conditions": "Six conditions pooled by image-condition rows; each image has equal weight; no source-level macro average.",
+    "error": "abs(normalized_progress - normalized_target); all failed rows receive 1.0.",
+    "acc_thresholds": "Inclusive absolute error <= 0.02 / <= 0.05; failed rows remain in denominator.",
+    "units": "Metrics are percentages; NMAE is %FS. SD is sample standard deviation across three seeds (ddof=1).",
+    "field_use": "Retrospective test only for the three retrained reader components; previously viewed field data are not a new confirmatory set.",
+    "strict_zero_shot_scope": {
+      "yolo11s_pose4kp": "Source-trained reader evaluated frozen within a supplied ROI; no target geometry used at inference. Full-frame ROI acquisition is outside scope.",
+      "deeplabv3plus_roi": "Industrial: source-trained segmentation plus source-trained YOLO11s-Pose-4KP reference geometry, evaluated frozen within supplied ROI. RF100: annotated pivot/minimum/maximum at inference; geometry-assisted component transfer.",
+      "vdn": "Industrial: source-trained direction plus source-trained YOLO11s-Pose-4KP reference geometry, evaluated frozen within supplied ROI. RF100: annotated pivot/minimum/maximum at inference; geometry-assisted component transfer."
+    }
+  },
+  "reference_kind": "source_only_pose4kp_reference",
+  "reference_geometry": {
+    "model": "YOLO11s-Pose-4KP trained on SyncG",
+    "keypoint_indices": [
+      0,
+      2,
+      3
+    ],
+    "predicted_pointer_tip_used": false,
+    "scope": "Industrial supplied ROI; RF100 keeps annotated pivot/start/end",
+    "training_manifest_audit": "Each seed has 12866 training and 1576 validation IDs in the SyncG train manifest, with no train/validation ID overlap.",
+    "per_seed": [
+      {
+        "seed": 20262020,
+        "rows": 8370,
+        "passes": 8360,
+        "failures": 10,
+        "detector_configuration": {
+          "confidence": 0.05,
+          "grayscale_three_channel": false,
+          "image_size": 384,
+          "iou": 0.7,
+          "keypoint_confidence": 0.05,
+          "max_det": 5,
+          "pointer_tip_used": false
+        }
+      },
+      {
+        "seed": 20262021,
+        "rows": 8370,
+        "passes": 8340,
+        "failures": 30,
+        "detector_configuration": {
+          "confidence": 0.05,
+          "grayscale_three_channel": false,
+          "image_size": 384,
+          "iou": 0.7,
+          "keypoint_confidence": 0.05,
+          "max_det": 5,
+          "pointer_tip_used": false
+        }
+      },
+      {
+        "seed": 20262022,
+        "rows": 8370,
+        "passes": 8368,
+        "failures": 2,
+        "detector_configuration": {
+          "confidence": 0.05,
+          "grayscale_three_channel": false,
+          "image_size": 384,
+          "iou": 0.7,
+          "keypoint_confidence": 0.05,
+          "max_det": 5,
+          "pointer_tip_used": false
+        }
+      }
+    ]
+  },
+  "datasets": {
+    "industrial_pooled": {
+      "name": "Industrial-1395",
+      "samples": 1395,
+      "groups": 52,
+      "rows_per_seed": 8370,
+      "methods": {
+        "yolo11s_pose4kp": {
+          "name": "YOLO11s-Pose-4KP",
+          "aggregate": {
+            "clean": {
+              "rows_per_seed": 1395,
+              "nmae_percent_fs": {
+                "mean": 22.466530081257215,
+                "sample_sd": 7.004334914891296,
+                "per_seed": {
+                  "20262020": 15.497249441439076,
+                  "20262021": 22.396940087503793,
+                  "20262022": 29.505400714828767
+                }
+              },
+              "acc_at_2_percent": {
+                "mean": 24.492234169653525,
+                "sample_sd": 3.701544828849114,
+                "per_seed": {
+                  "20262020": 27.81362007168459,
+                  "20262021": 20.50179211469534,
+                  "20262022": 25.161290322580644
+                }
+              },
+              "acc_at_5_percent": {
+                "mean": 41.72043010752688,
+                "sample_sd": 6.045778011534266,
+                "per_seed": {
+                  "20262020": 48.67383512544803,
+                  "20262021": 37.70609318996416,
+                  "20262022": 38.78136200716846
+                }
+              },
+              "coverage_percent": {
+                "mean": 99.83273596176821,
+                "sample_sd": 0.1492233691373595,
+                "per_seed": {
+                  "20262020": 100.0,
+                  "20262021": 99.71326164874552,
+                  "20262022": 99.78494623655914
+                }
+              }
+            },
+            "all_conditions": {
+              "rows_per_seed": 8370,
+              "nmae_percent_fs": {
+                "mean": 31.004500114042504,
+                "sample_sd": 7.614609935600333,
+                "per_seed": {
+                  "20262020": 23.53194708412602,
+                  "20262021": 30.72792254709623,
+                  "20262022": 38.75363071090527
+                }
+              },
+              "acc_at_2_percent": {
+                "mean": 15.870171246515332,
+                "sample_sd": 3.6604077716710917,
+                "per_seed": {
+                  "20262020": 18.685782556750297,
+                  "20262021": 11.732377538829152,
+                  "20262022": 17.19235364396655
+                }
+              },
+              "acc_at_5_percent": {
+                "mean": 27.741935483870964,
+                "sample_sd": 5.886908103590731,
+                "per_seed": {
+                  "20262020": 34.396654719235364,
+                  "20262021": 23.213859020310633,
+                  "20262022": 25.615292712066907
+                }
+              },
+              "coverage_percent": {
+                "mean": 99.67343687773796,
+                "sample_sd": 0.23574111647867627,
+                "per_seed": {
+                  "20262020": 99.78494623655914,
+                  "20262021": 99.4026284348865,
+                  "20262022": 99.83273596176822
+                }
+              }
+            }
+          },
+          "per_seed": [
+            {
+              "seed": 20262020,
+              "clean": {
+                "rows": 1395,
+                "failures": 0,
+                "nmae_percent_fs": 15.497249441439076,
+                "acc_at_2_percent": 27.81362007168459,
+                "acc_at_5_percent": 48.67383512544803,
+                "coverage_percent": 100.0
+              },
+              "all_conditions": {
+                "rows": 8370,
+                "failures": 18,
+                "nmae_percent_fs": 23.53194708412602,
+                "acc_at_2_percent": 18.685782556750297,
+                "acc_at_5_percent": 34.396654719235364,
+                "coverage_percent": 99.78494623655914
+              }
+            },
+            {
+              "seed": 20262021,
+              "clean": {
+                "rows": 1395,
+                "failures": 4,
+                "nmae_percent_fs": 22.396940087503793,
+                "acc_at_2_percent": 20.50179211469534,
+                "acc_at_5_percent": 37.70609318996416,
+                "coverage_percent": 99.71326164874552
+              },
+              "all_conditions": {
+                "rows": 8370,
+                "failures": 50,
+                "nmae_percent_fs": 30.72792254709623,
+                "acc_at_2_percent": 11.732377538829152,
+                "acc_at_5_percent": 23.213859020310633,
+                "coverage_percent": 99.4026284348865
+              }
+            },
+            {
+              "seed": 20262022,
+              "clean": {
+                "rows": 1395,
+                "failures": 3,
+                "nmae_percent_fs": 29.505400714828767,
+                "acc_at_2_percent": 25.161290322580644,
+                "acc_at_5_percent": 38.78136200716846,
+                "coverage_percent": 99.78494623655914
+              },
+              "all_conditions": {
+                "rows": 8370,
+                "failures": 14,
+                "nmae_percent_fs": 38.75363071090527,
+                "acc_at_2_percent": 17.19235364396655,
+                "acc_at_5_percent": 25.615292712066907,
+                "coverage_percent": 99.83273596176822
+              }
+            }
+          ]
+        },
+        "deeplabv3plus_roi": {
+          "name": "DeepLabV3+-ROI",
+          "aggregate": {
+            "clean": {
+              "rows_per_seed": 1395,
+              "nmae_percent_fs": {
+                "mean": 19.05146332052762,
+                "sample_sd": 5.010304977967542,
+                "per_seed": {
+                  "20262020": 16.355666939402244,
+                  "20262021": 15.966228603554173,
+                  "20262022": 24.83249441862645
+                }
+              },
+              "acc_at_2_percent": {
+                "mean": 36.63082437275986,
+                "sample_sd": 4.497886578365876,
+                "per_seed": {
+                  "20262020": 38.70967741935484,
+                  "20262021": 39.71326164874552,
+                  "20262022": 31.469534050179213
+                }
+              },
+              "acc_at_5_percent": {
+                "mean": 52.903225806451616,
+                "sample_sd": 7.478595759567012,
+                "per_seed": {
+                  "20262020": 58.63799283154122,
+                  "20262021": 55.62724014336918,
+                  "20262022": 44.44444444444444
+                }
+              },
+              "coverage_percent": {
+                "mean": 97.10872162485066,
+                "sample_sd": 1.1588392499863496,
+                "per_seed": {
+                  "20262020": 96.91756272401433,
+                  "20262021": 98.35125448028674,
+                  "20262022": 96.05734767025089
+                }
+              }
+            },
+            "all_conditions": {
+              "rows_per_seed": 8370,
+              "nmae_percent_fs": {
+                "mean": 32.93555056056938,
+                "sample_sd": 4.084163488885349,
+                "per_seed": {
+                  "20262020": 30.304491921662336,
+                  "20262021": 30.86160510759597,
+                  "20262022": 37.640554652449836
+                }
+              },
+              "acc_at_2_percent": {
+                "mean": 28.15611310234966,
+                "sample_sd": 2.883376677832192,
+                "per_seed": {
+                  "20262020": 30.81242532855436,
+                  "20262021": 28.566308243727597,
+                  "20262022": 25.089605734767026
+                }
+              },
+              "acc_at_5_percent": {
+                "mean": 40.39426523297491,
+                "sample_sd": 4.798451937087216,
+                "per_seed": {
+                  "20262020": 44.587813620071685,
+                  "20262021": 41.4336917562724,
+                  "20262022": 35.16129032258065
+                }
+              },
+              "coverage_percent": {
+                "mean": 85.20111509358821,
+                "sample_sd": 0.8062819710359735,
+                "per_seed": {
+                  "20262020": 84.67144563918758,
+                  "20262021": 86.12903225806451,
+                  "20262022": 84.80286738351255
+                }
+              }
+            }
+          },
+          "per_seed": [
+            {
+              "seed": 20262020,
+              "clean": {
+                "rows": 1395,
+                "failures": 43,
+                "nmae_percent_fs": 16.355666939402244,
+                "acc_at_2_percent": 38.70967741935484,
+                "acc_at_5_percent": 58.63799283154122,
+                "coverage_percent": 96.91756272401433
+              },
+              "all_conditions": {
+                "rows": 8370,
+                "failures": 1283,
+                "nmae_percent_fs": 30.304491921662336,
+                "acc_at_2_percent": 30.81242532855436,
+                "acc_at_5_percent": 44.587813620071685,
+                "coverage_percent": 84.67144563918758
+              }
+            },
+            {
+              "seed": 20262021,
+              "clean": {
+                "rows": 1395,
+                "failures": 23,
+                "nmae_percent_fs": 15.966228603554173,
+                "acc_at_2_percent": 39.71326164874552,
+                "acc_at_5_percent": 55.62724014336918,
+                "coverage_percent": 98.35125448028674
+              },
+              "all_conditions": {
+                "rows": 8370,
+                "failures": 1161,
+                "nmae_percent_fs": 30.86160510759597,
+                "acc_at_2_percent": 28.566308243727597,
+                "acc_at_5_percent": 41.4336917562724,
+                "coverage_percent": 86.12903225806451
+              }
+            },
+            {
+              "seed": 20262022,
+              "clean": {
+                "rows": 1395,
+                "failures": 55,
+                "nmae_percent_fs": 24.83249441862645,
+                "acc_at_2_percent": 31.469534050179213,
+                "acc_at_5_percent": 44.44444444444444,
+                "coverage_percent": 96.05734767025089
+              },
+              "all_conditions": {
+                "rows": 8370,
+                "failures": 1272,
+                "nmae_percent_fs": 37.640554652449836,
+                "acc_at_2_percent": 25.089605734767026,
+                "acc_at_5_percent": 35.16129032258065,
+                "coverage_percent": 84.80286738351255
+              }
+            }
+          ]
+        },
+        "vdn": {
+          "name": "VDN",
+          "aggregate": {
+            "clean": {
+              "rows_per_seed": 1395,
+              "nmae_percent_fs": {
+                "mean": 23.959623318966763,
+                "sample_sd": 5.680861216508008,
+                "per_seed": {
+                  "20262020": 20.18618095552545,
+                  "20262021": 30.493175002068405,
+                  "20262022": 21.19951399930643
+                }
+              },
+              "acc_at_2_percent": {
+                "mean": 32.04301075268817,
+                "sample_sd": 6.309465505665017,
+                "per_seed": {
+                  "20262020": 32.831541218637994,
+                  "20262021": 25.376344086021504,
+                  "20262022": 37.92114695340502
+                }
+              },
+              "acc_at_5_percent": {
+                "mean": 47.12066905615293,
+                "sample_sd": 4.988306534574469,
+                "per_seed": {
+                  "20262020": 51.03942652329749,
+                  "20262021": 41.505376344086024,
+                  "20262022": 48.81720430107527
+                }
+              },
+              "coverage_percent": {
+                "mean": 99.83273596176821,
+                "sample_sd": 0.1492233691373595,
+                "per_seed": {
+                  "20262020": 100.0,
+                  "20262021": 99.71326164874552,
+                  "20262022": 99.78494623655914
+                }
+              }
+            },
+            "all_conditions": {
+              "rows_per_seed": 8370,
+              "nmae_percent_fs": {
+                "mean": 25.384042764404214,
+                "sample_sd": 6.707042569822726,
+                "per_seed": {
+                  "20262020": 21.119689652314907,
+                  "20262021": 33.11495930681856,
+                  "20262022": 21.917479334079175
+                }
+              },
+              "acc_at_2_percent": {
+                "mean": 29.561927518916765,
+                "sample_sd": 6.149740313711442,
+                "per_seed": {
+                  "20262020": 31.40979689366786,
+                  "20262021": 22.700119474313023,
+                  "20262022": 34.57586618876942
+                }
+              },
+              "acc_at_5_percent": {
+                "mean": 42.508960573476706,
+                "sample_sd": 5.378295145783894,
+                "per_seed": {
+                  "20262020": 46.547192353643965,
+                  "20262021": 36.40382317801673,
+                  "20262022": 44.57586618876942
+                }
+              },
+              "coverage_percent": {
+                "mean": 99.67343687773796,
+                "sample_sd": 0.23574111647867627,
+                "per_seed": {
+                  "20262020": 99.78494623655914,
+                  "20262021": 99.4026284348865,
+                  "20262022": 99.83273596176822
+                }
+              }
+            }
+          },
+          "per_seed": [
+            {
+              "seed": 20262020,
+              "clean": {
+                "rows": 1395,
+                "failures": 0,
+                "nmae_percent_fs": 20.18618095552545,
+                "acc_at_2_percent": 32.831541218637994,
+                "acc_at_5_percent": 51.03942652329749,
+                "coverage_percent": 100.0
+              },
+              "all_conditions": {
+                "rows": 8370,
+                "failures": 18,
+                "nmae_percent_fs": 21.119689652314907,
+                "acc_at_2_percent": 31.40979689366786,
+                "acc_at_5_percent": 46.547192353643965,
+                "coverage_percent": 99.78494623655914
+              }
+            },
+            {
+              "seed": 20262021,
+              "clean": {
+                "rows": 1395,
+                "failures": 4,
+                "nmae_percent_fs": 30.493175002068405,
+                "acc_at_2_percent": 25.376344086021504,
+                "acc_at_5_percent": 41.505376344086024,
+                "coverage_percent": 99.71326164874552
+              },
+              "all_conditions": {
+                "rows": 8370,
+                "failures": 50,
+                "nmae_percent_fs": 33.11495930681856,
+                "acc_at_2_percent": 22.700119474313023,
+                "acc_at_5_percent": 36.40382317801673,
+                "coverage_percent": 99.4026284348865
+              }
+            },
+            {
+              "seed": 20262022,
+              "clean": {
+                "rows": 1395,
+                "failures": 3,
+                "nmae_percent_fs": 21.19951399930643,
+                "acc_at_2_percent": 37.92114695340502,
+                "acc_at_5_percent": 48.81720430107527,
+                "coverage_percent": 99.78494623655914
+              },
+              "all_conditions": {
+                "rows": 8370,
+                "failures": 14,
+                "nmae_percent_fs": 21.917479334079175,
+                "acc_at_2_percent": 34.57586618876942,
+                "acc_at_5_percent": 44.57586618876942,
+                "coverage_percent": 99.83273596176822
+              }
+            }
+          ]
+        }
+      }
+    },
+    "rf100": {
+      "name": "RF100-VL",
+      "samples": 151,
+      "groups": 35,
+      "rows_per_seed": 906,
+      "methods": {
+        "yolo11s_pose4kp": {
+          "name": "YOLO11s-Pose-4KP",
+          "aggregate": {
+            "clean": {
+              "rows_per_seed": 151,
+              "nmae_percent_fs": {
+                "mean": 10.903948065434653,
+                "sample_sd": 5.204636825161349,
+                "per_seed": {
+                  "20262020": 11.410329871539604,
+                  "20262021": 5.464628781628377,
+                  "20262022": 15.836885543135976
+                }
+              },
+              "acc_at_2_percent": {
+                "mean": 32.22958057395143,
+                "sample_sd": 16.65313837752079,
+                "per_seed": {
+                  "20262020": 44.370860927152314,
+                  "20262021": 39.0728476821192,
+                  "20262022": 13.245033112582782
+                }
+              },
+              "acc_at_5_percent": {
+                "mean": 56.512141280353205,
+                "sample_sd": 15.801792642978612,
+                "per_seed": {
+                  "20262020": 63.57615894039735,
+                  "20262021": 67.54966887417218,
+                  "20262022": 38.41059602649007
+                }
+              },
+              "coverage_percent": {
+                "mean": 100.0,
+                "sample_sd": 0.0,
+                "per_seed": {
+                  "20262020": 100.0,
+                  "20262021": 100.0,
+                  "20262022": 100.0
+                }
+              }
+            },
+            "all_conditions": {
+              "rows_per_seed": 906,
+              "nmae_percent_fs": {
+                "mean": 16.16315739703001,
+                "sample_sd": 4.628025955216276,
+                "per_seed": {
+                  "20262020": 15.26125831456762,
+                  "20262021": 12.052467126094351,
+                  "20262022": 21.175746750428058
+                }
+              },
+              "acc_at_2_percent": {
+                "mean": 22.442972774098603,
+                "sample_sd": 10.554746977920926,
+                "per_seed": {
+                  "20262020": 30.4635761589404,
+                  "20262021": 26.379690949227374,
+                  "20262022": 10.485651214128035
+                }
+              },
+              "acc_at_5_percent": {
+                "mean": 42.531272994849154,
+                "sample_sd": 12.623541382005188,
+                "per_seed": {
+                  "20262020": 48.45474613686534,
+                  "20262021": 51.1037527593819,
+                  "20262022": 28.03532008830022
+                }
+              },
+              "coverage_percent": {
+                "mean": 99.7056659308315,
+                "sample_sd": 0.4178740504635959,
+                "per_seed": {
+                  "20262020": 99.8896247240618,
+                  "20262021": 99.22737306843267,
+                  "20262022": 100.0
+                }
+              }
+            }
+          },
+          "per_seed": [
+            {
+              "seed": 20262020,
+              "clean": {
+                "rows": 151,
+                "failures": 0,
+                "nmae_percent_fs": 11.410329871539604,
+                "acc_at_2_percent": 44.370860927152314,
+                "acc_at_5_percent": 63.57615894039735,
+                "coverage_percent": 100.0
+              },
+              "all_conditions": {
+                "rows": 906,
+                "failures": 1,
+                "nmae_percent_fs": 15.26125831456762,
+                "acc_at_2_percent": 30.4635761589404,
+                "acc_at_5_percent": 48.45474613686534,
+                "coverage_percent": 99.8896247240618
+              }
+            },
+            {
+              "seed": 20262021,
+              "clean": {
+                "rows": 151,
+                "failures": 0,
+                "nmae_percent_fs": 5.464628781628377,
+                "acc_at_2_percent": 39.0728476821192,
+                "acc_at_5_percent": 67.54966887417218,
+                "coverage_percent": 100.0
+              },
+              "all_conditions": {
+                "rows": 906,
+                "failures": 7,
+                "nmae_percent_fs": 12.052467126094351,
+                "acc_at_2_percent": 26.379690949227374,
+                "acc_at_5_percent": 51.1037527593819,
+                "coverage_percent": 99.22737306843267
+              }
+            },
+            {
+              "seed": 20262022,
+              "clean": {
+                "rows": 151,
+                "failures": 0,
+                "nmae_percent_fs": 15.836885543135976,
+                "acc_at_2_percent": 13.245033112582782,
+                "acc_at_5_percent": 38.41059602649007,
+                "coverage_percent": 100.0
+              },
+              "all_conditions": {
+                "rows": 906,
+                "failures": 0,
+                "nmae_percent_fs": 21.175746750428058,
+                "acc_at_2_percent": 10.485651214128035,
+                "acc_at_5_percent": 28.03532008830022,
+                "coverage_percent": 100.0
+              }
+            }
+          ]
+        },
+        "deeplabv3plus_roi": {
+          "name": "DeepLabV3+-ROI",
+          "aggregate": {
+            "clean": {
+              "rows_per_seed": 151,
+              "nmae_percent_fs": {
+                "mean": 8.85496105741152,
+                "sample_sd": 2.0809098125274814,
+                "per_seed": {
+                  "20262020": 10.429956023521681,
+                  "20262021": 9.63900065327596,
+                  "20262022": 6.49592649543692
+                }
+              },
+              "acc_at_2_percent": {
+                "mean": 83.6644591611479,
+                "sample_sd": 0.38235117164875615,
+                "per_seed": {
+                  "20262020": 84.10596026490066,
+                  "20262021": 83.44370860927152,
+                  "20262022": 83.44370860927152
+                }
+              },
+              "acc_at_5_percent": {
+                "mean": 88.30022075055187,
+                "sample_sd": 3.2668098425935397,
+                "per_seed": {
+                  "20262020": 86.75496688741723,
+                  "20262021": 86.09271523178808,
+                  "20262022": 92.05298013245033
+                }
+              },
+              "coverage_percent": {
+                "mean": 95.5849889624724,
+                "sample_sd": 1.9117558582437888,
+                "per_seed": {
+                  "20262020": 93.37748344370861,
+                  "20262021": 96.6887417218543,
+                  "20262022": 96.6887417218543
+                }
+              }
+            },
+            "all_conditions": {
+              "rows_per_seed": 906,
+              "nmae_percent_fs": {
+                "mean": 15.853202908378755,
+                "sample_sd": 4.08131540054935,
+                "per_seed": {
+                  "20262020": 19.264032436579942,
+                  "20262021": 16.964136284321302,
+                  "20262022": 11.331440004235022
+                }
+              },
+              "acc_at_2_percent": {
+                "mean": 60.77998528329655,
+                "sample_sd": 1.371202733891406,
+                "per_seed": {
+                  "20262020": 59.93377483443709,
+                  "20262021": 60.04415011037528,
+                  "20262022": 62.36203090507726
+                }
+              },
+              "acc_at_5_percent": {
+                "mean": 74.9448123620309,
+                "sample_sd": 4.454842399693279,
+                "per_seed": {
+                  "20262020": 71.30242825607064,
+                  "20262021": 73.62030905077263,
+                  "20262022": 79.91169977924945
+                }
+              },
+              "coverage_percent": {
+                "mean": 94.40765268579838,
+                "sample_sd": 2.551396386694015,
+                "per_seed": {
+                  "20262020": 91.72185430463576,
+                  "20262021": 94.70198675496688,
+                  "20262022": 96.7991169977925
+                }
+              }
+            }
+          },
+          "per_seed": [
+            {
+              "seed": 20262020,
+              "clean": {
+                "rows": 151,
+                "failures": 10,
+                "nmae_percent_fs": 10.429956023521681,
+                "acc_at_2_percent": 84.10596026490066,
+                "acc_at_5_percent": 86.75496688741723,
+                "coverage_percent": 93.37748344370861
+              },
+              "all_conditions": {
+                "rows": 906,
+                "failures": 75,
+                "nmae_percent_fs": 19.264032436579942,
+                "acc_at_2_percent": 59.93377483443709,
+                "acc_at_5_percent": 71.30242825607064,
+                "coverage_percent": 91.72185430463576
+              }
+            },
+            {
+              "seed": 20262021,
+              "clean": {
+                "rows": 151,
+                "failures": 5,
+                "nmae_percent_fs": 9.63900065327596,
+                "acc_at_2_percent": 83.44370860927152,
+                "acc_at_5_percent": 86.09271523178808,
+                "coverage_percent": 96.6887417218543
+              },
+              "all_conditions": {
+                "rows": 906,
+                "failures": 48,
+                "nmae_percent_fs": 16.964136284321302,
+                "acc_at_2_percent": 60.04415011037528,
+                "acc_at_5_percent": 73.62030905077263,
+                "coverage_percent": 94.70198675496688
+              }
+            },
+            {
+              "seed": 20262022,
+              "clean": {
+                "rows": 151,
+                "failures": 5,
+                "nmae_percent_fs": 6.49592649543692,
+                "acc_at_2_percent": 83.44370860927152,
+                "acc_at_5_percent": 92.05298013245033,
+                "coverage_percent": 96.6887417218543
+              },
+              "all_conditions": {
+                "rows": 906,
+                "failures": 29,
+                "nmae_percent_fs": 11.331440004235022,
+                "acc_at_2_percent": 62.36203090507726,
+                "acc_at_5_percent": 79.91169977924945,
+                "coverage_percent": 96.7991169977925
+              }
+            }
+          ]
+        },
+        "vdn": {
+          "name": "VDN",
+          "aggregate": {
+            "clean": {
+              "rows_per_seed": 151,
+              "nmae_percent_fs": {
+                "mean": 11.61351476763049,
+                "sample_sd": 4.661997101608269,
+                "per_seed": {
+                  "20262020": 11.455862394674886,
+                  "20262021": 16.35233840822562,
+                  "20262022": 7.032343499990959
+                }
+              },
+              "acc_at_2_percent": {
+                "mean": 46.35761589403973,
+                "sample_sd": 9.800429527780622,
+                "per_seed": {
+                  "20262020": 39.735099337748345,
+                  "20262021": 41.72185430463576,
+                  "20262022": 57.615894039735096
+                }
+              },
+              "acc_at_5_percent": {
+                "mean": 66.88741721854304,
+                "sample_sd": 9.389037668051541,
+                "per_seed": {
+                  "20262020": 63.57615894039735,
+                  "20262021": 59.602649006622514,
+                  "20262022": 77.48344370860927
+                }
+              },
+              "coverage_percent": {
+                "mean": 100.0,
+                "sample_sd": 0.0,
+                "per_seed": {
+                  "20262020": 100.0,
+                  "20262021": 100.0,
+                  "20262022": 100.0
+                }
+              }
+            },
+            "all_conditions": {
+              "rows_per_seed": 906,
+              "nmae_percent_fs": {
+                "mean": 13.012858692740261,
+                "sample_sd": 3.2760852955966113,
+                "per_seed": {
+                  "20262020": 12.858629272987343,
+                  "20262021": 16.36333479858056,
+                  "20262022": 9.816612006652878
+                }
+              },
+              "acc_at_2_percent": {
+                "mean": 40.32376747608536,
+                "sample_sd": 6.279114832432779,
+                "per_seed": {
+                  "20262020": 36.86534216335541,
+                  "20262021": 36.53421633554084,
+                  "20262022": 47.571743929359826
+                }
+              },
+              "acc_at_5_percent": {
+                "mean": 62.36203090507726,
+                "sample_sd": 5.191159389097062,
+                "per_seed": {
+                  "20262020": 59.93377483443709,
+                  "20262021": 58.83002207505519,
+                  "20262022": 68.32229580573951
+                }
+              },
+              "coverage_percent": {
+                "mean": 100.0,
+                "sample_sd": 0.0,
+                "per_seed": {
+                  "20262020": 100.0,
+                  "20262021": 100.0,
+                  "20262022": 100.0
+                }
+              }
+            }
+          },
+          "per_seed": [
+            {
+              "seed": 20262020,
+              "clean": {
+                "rows": 151,
+                "failures": 0,
+                "nmae_percent_fs": 11.455862394674886,
+                "acc_at_2_percent": 39.735099337748345,
+                "acc_at_5_percent": 63.57615894039735,
+                "coverage_percent": 100.0
+              },
+              "all_conditions": {
+                "rows": 906,
+                "failures": 0,
+                "nmae_percent_fs": 12.858629272987343,
+                "acc_at_2_percent": 36.86534216335541,
+                "acc_at_5_percent": 59.93377483443709,
+                "coverage_percent": 100.0
+              }
+            },
+            {
+              "seed": 20262021,
+              "clean": {
+                "rows": 151,
+                "failures": 0,
+                "nmae_percent_fs": 16.35233840822562,
+                "acc_at_2_percent": 41.72185430463576,
+                "acc_at_5_percent": 59.602649006622514,
+                "coverage_percent": 100.0
+              },
+              "all_conditions": {
+                "rows": 906,
+                "failures": 0,
+                "nmae_percent_fs": 16.36333479858056,
+                "acc_at_2_percent": 36.53421633554084,
+                "acc_at_5_percent": 58.83002207505519,
+                "coverage_percent": 100.0
+              }
+            },
+            {
+              "seed": 20262022,
+              "clean": {
+                "rows": 151,
+                "failures": 0,
+                "nmae_percent_fs": 7.032343499990959,
+                "acc_at_2_percent": 57.615894039735096,
+                "acc_at_5_percent": 77.48344370860927,
+                "coverage_percent": 100.0
+              },
+              "all_conditions": {
+                "rows": 906,
+                "failures": 0,
+                "nmae_percent_fs": 9.816612006652878,
+                "acc_at_2_percent": 47.571743929359826,
+                "acc_at_5_percent": 68.32229580573951,
+                "coverage_percent": 100.0
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "verification": {
+    "rows_recomputed": 83484,
+    "stored_error_max_abs_difference": 0.0,
+    "checks": [
+      "Pass errors recomputed from prediction and target; failed errors verified as 1.0.",
+      "Expected sample, group and condition counts checked for each seed and cohort.",
+      "Sample-condition identities, groups and targets agree across methods and seeds."
+    ]
+  }
+}

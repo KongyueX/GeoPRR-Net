@@ -1,0 +1,6 @@
+arm,scope,seed,params_m,supported_neural_gflops,mean_ms,p50_ms,p95_ms,images_per_second,peak_cuda_mib,valid_outputs,timed_calls,warmup_calls
+yolo11s_pose4kp,provided ROI to normalized reading; four predicted keypoints,20262020,9.715447,8.038176768,6.537221,6.39825,7.65623,152.97019941654116,84.23974609375,100,100,20
+deeplab_component,ROI to pointer probability map,20262020,40.347041,91.243937792,11.742275999999999,11.94165,12.689125,85.16236545623694,201.7275390625,100,100,20
+vdn_component,ROI to normalized direction vector,20262020,15.377219,17.392730112,5.736602,5.6112,6.76293,174.31922242470375,87.5009765625,100,100,20
+deeplab_auto_geometry,provided ROI to normalized reading with Industrial automatic geometry,20262020,50.062488,99.28211456,19.556746,19.5576,20.762794999999997,51.133250899715115,271.40478515625,97,100,20
+vdn_auto_geometry,provided ROI to normalized reading with Industrial automatic geometry,20262020,25.092666,25.43090688,12.495693000000001,12.380199999999999,13.34911,80.02757430100115,158.427734375,100,100,20

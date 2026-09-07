@@ -1,0 +1,662 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "measurement_date": "2026-09-07",
+  "reports": {
+    "yolo11s_pose4kp": {
+      "method": "yolo11s_pose4kp",
+      "display_name": "YOLO11s-Pose-4KP",
+      "protocol": "matched_roi_comparator_batch1_efficiency_v1",
+      "environment": {
+        "cuda_runtime": "12.8",
+        "cudnn": 91900,
+        "device": "cuda:0",
+        "device_name": "NVIDIA GeForce RTX 4060",
+        "platform": "Windows-10-10.0.19045-SP0",
+        "python": "3.11.15",
+        "torch": "2.11.0+cu128"
+      },
+      "configuration": {
+        "seed": 20262020,
+        "precision": "float32; no autocast; YOLO quantize=None",
+        "condition": "clean",
+        "image_size": 384,
+        "preprocessing": "OpenCV bilinear square resize, then Ultralytics native preprocessing",
+        "evaluation_scope": "provided ROI to normalized reading; four predicted keypoints",
+        "success_definition": "valid decoded normalized reading; no accuracy labels read",
+        "observed_precision": {
+          "failure_code": null,
+          "model_input_dtypes": {
+            "YOLO11s-Pose-4KP": [
+              "torch.float32"
+            ]
+          },
+          "scope": "one additional real input inference after timing; empty component list means early geometry failure skipped that component"
+        }
+      },
+      "input": {
+        "manifest_rows": 1395,
+        "selected_rows": 100,
+        "selection": "first_n_manifest_rows_in_file_order",
+        "ground_truth_read": false
+      },
+      "parameters": {
+        "counting_rule": "unique torch.nn.Parameter objects reachable from the loaded inference predictor; shared tensors counted once",
+        "learned_component_roots": [
+          {
+            "declared_parameters": 9715447,
+            "type": "ultralytics.nn.tasks.PoseModel"
+          }
+        ],
+        "parameter_bytes": 38861788,
+        "scope": "loaded checkpoint neural modules before native inference fusion; automatic-geometry arms include reference detector",
+        "total_parameters": 9715447,
+        "trainable_parameters": 0,
+        "unique_parameter_tensors": 280
+      },
+      "measurement": {
+        "batch_size": 1,
+        "cuda_memory": {
+          "baseline_allocated_mib": 69.05224609375,
+          "baseline_reserved_mib": 98.0,
+          "incremental_peak_allocated_mib": 15.1875,
+          "measurement_api": "torch.cuda.reset_peak_memory_stats/max_memory_allocated",
+          "peak_allocated_mib": 84.23974609375,
+          "peak_reserved_mib": 100.0,
+          "supported": true
+        },
+        "failure_codes": {},
+        "latency": {
+          "max_ms": 7.9775,
+          "mean_ms": 6.537221,
+          "min_ms": 5.7643,
+          "p50_ms": 6.39825,
+          "p90_ms": 7.4305,
+          "p95_ms": 7.65623,
+          "sample_sd_ms": 0.5868746079991376,
+          "throughput_images_per_second": 152.97019941654116
+        },
+        "model_reported_failure_calls": 0,
+        "success_definition": "valid decoded normalized reading; no accuracy labels read",
+        "successful_calls": 100,
+        "timed_calls": 100,
+        "timing_scope": {
+          "excluded": [
+            "model/checkpoint construction",
+            "PNG file read and decode",
+            "ground-truth loading and accuracy scoring"
+          ],
+          "included": [
+            "model-native CPU preprocessing",
+            "host-to-device transfer",
+            "all learned forward passes",
+            "analytic postprocessing and result validation",
+            "CUDA synchronization"
+          ]
+        },
+        "warmup_calls": 20,
+        "warmup_failure_codes": {}
+      },
+      "flops": {
+        "components": [
+          {
+            "component": "YOLO11s-Pose-4KP",
+            "flops": 8038176768,
+            "gflops": 8.038176768,
+            "input_shape": [
+              1,
+              3,
+              384,
+              384
+            ],
+            "status": "measured_supported_aten_ops"
+          }
+        ],
+        "counting_rule": "PyTorch aten FlopCounterMode supported operators; multiply-add counts as two FLOPs",
+        "gflops": 8.038176768,
+        "pipeline_limitation": "not end-to-end FLOPs; each reference module is counted at its listed square resolution (legacy reference timed letterbox shapes may vary); automatic-geometry failures omit the direction forward during timing",
+        "scope": "one fixed-shape forward per listed neural module; excludes preprocessing, NMS, CPU geometry and unsupported operations",
+        "status": "fixed_shape_neural_components",
+        "value": 8038176768
+      }
+    },
+    "deeplab_component": {
+      "method": "deeplab_component",
+      "display_name": "DeepLabV3+-ROI (native component)",
+      "protocol": "matched_roi_comparator_batch1_efficiency_v1",
+      "environment": {
+        "cuda_runtime": "12.8",
+        "cudnn": 91900,
+        "device": "cuda:0",
+        "device_name": "NVIDIA GeForce RTX 4060",
+        "platform": "Windows-10-10.0.19045-SP0",
+        "python": "3.11.15",
+        "torch": "2.11.0+cu128"
+      },
+      "configuration": {
+        "seed": 20262020,
+        "precision": "float32; no autocast; YOLO quantize=None",
+        "condition": "clean",
+        "image_size": 256,
+        "preprocessing": "OpenCV bilinear square resize; ImageNet-normalized RGB",
+        "evaluation_scope": "ROI to pointer probability map",
+        "success_definition": "valid native component output only; successful_calls is NOT reading coverage",
+        "observed_precision": {
+          "failure_code": null,
+          "model_input_dtypes": {
+            "DeepLabV3+-ROI": [
+              "torch.float32"
+            ]
+          },
+          "scope": "one additional real input inference after timing; empty component list means early geometry failure skipped that component"
+        },
+        "reference_detector_kind": null,
+        "reference_configuration": null,
+        "geometry_failure_behavior": null
+      },
+      "input": {
+        "manifest_rows": 1395,
+        "selected_rows": 100,
+        "selection": "first_n_manifest_rows_in_file_order",
+        "ground_truth_read": false
+      },
+      "parameters": {
+        "counting_rule": "unique torch.nn.Parameter objects reachable from the loaded inference predictor; shared tensors counted once",
+        "learned_component_roots": [
+          {
+            "declared_parameters": 40347041,
+            "type": "experiments.deeplabv3plus_roi.DeepLabV3PlusROI"
+          }
+        ],
+        "parameter_bytes": 161388164,
+        "scope": "loaded checkpoint neural modules before native inference fusion; automatic-geometry arms include reference detector",
+        "total_parameters": 40347041,
+        "trainable_parameters": 40347041,
+        "unique_parameter_tensors": 188
+      },
+      "measurement": {
+        "batch_size": 1,
+        "cuda_memory": {
+          "baseline_allocated_mib": 155.9765625,
+          "baseline_reserved_mib": 172.0,
+          "incremental_peak_allocated_mib": 45.7509765625,
+          "measurement_api": "torch.cuda.reset_peak_memory_stats/max_memory_allocated",
+          "peak_allocated_mib": 201.7275390625,
+          "peak_reserved_mib": 262.0,
+          "supported": true
+        },
+        "failure_codes": {},
+        "latency": {
+          "max_ms": 13.1607,
+          "mean_ms": 11.742275999999999,
+          "min_ms": 10.5849,
+          "p50_ms": 11.94165,
+          "p90_ms": 12.595509999999999,
+          "p95_ms": 12.689125,
+          "sample_sd_ms": 0.745946591518441,
+          "throughput_images_per_second": 85.16236545623694
+        },
+        "model_reported_failure_calls": 0,
+        "success_definition": "valid native component output only; successful_calls is NOT reading coverage",
+        "successful_calls": 100,
+        "timed_calls": 100,
+        "timing_scope": {
+          "excluded": [
+            "model/checkpoint construction",
+            "PNG file read and decode",
+            "ground-truth loading and accuracy scoring"
+          ],
+          "included": [
+            "model-native CPU preprocessing",
+            "host-to-device transfer",
+            "all learned forward passes",
+            "analytic postprocessing and result validation",
+            "CUDA synchronization"
+          ]
+        },
+        "warmup_calls": 20,
+        "warmup_failure_codes": {}
+      },
+      "flops": {
+        "components": [
+          {
+            "component": "DeepLabV3+-ROI",
+            "flops": 91243937792,
+            "gflops": 91.243937792,
+            "input_shape": [
+              1,
+              3,
+              256,
+              256
+            ],
+            "status": "measured_supported_aten_ops"
+          }
+        ],
+        "counting_rule": "PyTorch aten FlopCounterMode supported operators; multiply-add counts as two FLOPs",
+        "gflops": 91.243937792,
+        "pipeline_limitation": "not end-to-end FLOPs; each reference module is counted at its listed square resolution (legacy reference timed letterbox shapes may vary); automatic-geometry failures omit the direction forward during timing",
+        "scope": "one fixed-shape forward per listed neural module; excludes preprocessing, NMS, CPU geometry and unsupported operations",
+        "status": "fixed_shape_neural_components",
+        "value": 91243937792
+      }
+    },
+    "vdn_component": {
+      "method": "vdn_component",
+      "display_name": "VDN (native component)",
+      "protocol": "matched_roi_comparator_batch1_efficiency_v1",
+      "environment": {
+        "cuda_runtime": "12.8",
+        "cudnn": 91900,
+        "device": "cuda:0",
+        "device_name": "NVIDIA GeForce RTX 4060",
+        "platform": "Windows-10-10.0.19045-SP0",
+        "python": "3.11.15",
+        "torch": "2.11.0+cu128"
+      },
+      "configuration": {
+        "seed": 20262020,
+        "precision": "float32; no autocast; YOLO quantize=None",
+        "condition": "clean",
+        "image_size": 384,
+        "preprocessing": "OpenCV bilinear square resize; ImageNet-normalized BGR",
+        "evaluation_scope": "ROI to normalized direction vector",
+        "success_definition": "valid native component output only; successful_calls is NOT reading coverage",
+        "observed_precision": {
+          "failure_code": null,
+          "model_input_dtypes": {
+            "VDN": [
+              "torch.float32"
+            ]
+          },
+          "scope": "one additional real input inference after timing; empty component list means early geometry failure skipped that component"
+        },
+        "reference_detector_kind": null,
+        "reference_configuration": null,
+        "geometry_failure_behavior": null
+      },
+      "input": {
+        "manifest_rows": 1395,
+        "selected_rows": 100,
+        "selection": "first_n_manifest_rows_in_file_order",
+        "ground_truth_read": false
+      },
+      "parameters": {
+        "counting_rule": "unique torch.nn.Parameter objects reachable from the loaded inference predictor; shared tensors counted once",
+        "learned_component_roots": [
+          {
+            "declared_parameters": 15377219,
+            "type": "external_vdn_model_68afe1e.VDNModel"
+          }
+        ],
+        "parameter_bytes": 61508876,
+        "scope": "loaded checkpoint neural modules before native inference fusion; automatic-geometry arms include reference detector",
+        "total_parameters": 15377219,
+        "trainable_parameters": 15377219,
+        "unique_parameter_tensors": 73
+      },
+      "measurement": {
+        "batch_size": 1,
+        "cuda_memory": {
+          "baseline_allocated_mib": 58.71923828125,
+          "baseline_reserved_mib": 84.0,
+          "incremental_peak_allocated_mib": 28.78173828125,
+          "measurement_api": "torch.cuda.reset_peak_memory_stats/max_memory_allocated",
+          "peak_allocated_mib": 87.5009765625,
+          "peak_reserved_mib": 106.0,
+          "supported": true
+        },
+        "failure_codes": {},
+        "latency": {
+          "max_ms": 9.7515,
+          "mean_ms": 5.736602,
+          "min_ms": 5.015,
+          "p50_ms": 5.6112,
+          "p90_ms": 6.254580000000001,
+          "p95_ms": 6.76293,
+          "sample_sd_ms": 0.6442977506643268,
+          "throughput_images_per_second": 174.31922242470375
+        },
+        "model_reported_failure_calls": 0,
+        "success_definition": "valid native component output only; successful_calls is NOT reading coverage",
+        "successful_calls": 100,
+        "timed_calls": 100,
+        "timing_scope": {
+          "excluded": [
+            "model/checkpoint construction",
+            "PNG file read and decode",
+            "ground-truth loading and accuracy scoring"
+          ],
+          "included": [
+            "model-native CPU preprocessing",
+            "host-to-device transfer",
+            "all learned forward passes",
+            "analytic postprocessing and result validation",
+            "CUDA synchronization"
+          ]
+        },
+        "warmup_calls": 20,
+        "warmup_failure_codes": {}
+      },
+      "flops": {
+        "components": [
+          {
+            "component": "VDN",
+            "flops": 17392730112,
+            "gflops": 17.392730112,
+            "input_shape": [
+              1,
+              3,
+              384,
+              384
+            ],
+            "status": "measured_supported_aten_ops"
+          }
+        ],
+        "counting_rule": "PyTorch aten FlopCounterMode supported operators; multiply-add counts as two FLOPs",
+        "gflops": 17.392730112,
+        "pipeline_limitation": "not end-to-end FLOPs; each reference module is counted at its listed square resolution (legacy reference timed letterbox shapes may vary); automatic-geometry failures omit the direction forward during timing",
+        "scope": "one fixed-shape forward per listed neural module; excludes preprocessing, NMS, CPU geometry and unsupported operations",
+        "status": "fixed_shape_neural_components",
+        "value": 17392730112
+      }
+    },
+    "deeplab_auto_geometry": {
+      "method": "deeplab_auto_geometry",
+      "display_name": "DeepLabV3+-ROI + source pose references",
+      "protocol": "matched_roi_comparator_batch1_efficiency_v1",
+      "environment": {
+        "cuda_runtime": "12.8",
+        "cudnn": 91900,
+        "device": "cuda:0",
+        "device_name": "NVIDIA GeForce RTX 4060",
+        "platform": "Windows-10-10.0.19045-SP0",
+        "python": "3.11.15",
+        "torch": "2.11.0+cu128"
+      },
+      "configuration": {
+        "seed": 20262020,
+        "precision": "float32; no autocast; YOLO quantize=None",
+        "condition": "clean",
+        "image_size": 256,
+        "preprocessing": "OpenCV bilinear square resize; ImageNet-normalized RGB",
+        "evaluation_scope": "provided ROI to normalized reading with Industrial automatic geometry",
+        "success_definition": "valid decoded normalized reading; no accuracy labels read",
+        "observed_precision": {
+          "failure_code": null,
+          "model_input_dtypes": {
+            "DeepLabV3+-ROI": [
+              "torch.float32"
+            ],
+            "source pose reference detector": [
+              "torch.float32"
+            ]
+          },
+          "scope": "one additional real input inference after timing; empty component list means early geometry failure skipped that component"
+        },
+        "reference_detector_kind": "source_pose4kp",
+        "reference_configuration": {
+          "conf": 0.05,
+          "grayscale_three_channel": false,
+          "imgsz": 384,
+          "iou": 0.7,
+          "keypoint_confidence": 0.05,
+          "letterbox": "square training input",
+          "max_det": 5,
+          "pointer_tip_used": false
+        },
+        "geometry_failure_behavior": "record timed failure before direction-model inference"
+      },
+      "input": {
+        "manifest_rows": 1395,
+        "selected_rows": 100,
+        "selection": "first_n_manifest_rows_in_file_order",
+        "ground_truth_read": false
+      },
+      "parameters": {
+        "counting_rule": "unique torch.nn.Parameter objects reachable from the loaded inference predictor; shared tensors counted once",
+        "learned_component_roots": [
+          {
+            "declared_parameters": 40347041,
+            "type": "experiments.deeplabv3plus_roi.DeepLabV3PlusROI"
+          },
+          {
+            "declared_parameters": 9715447,
+            "type": "ultralytics.nn.tasks.PoseModel"
+          }
+        ],
+        "parameter_bytes": 200249952,
+        "scope": "loaded checkpoint neural modules before native inference fusion; automatic-geometry arms include reference detector",
+        "total_parameters": 50062488,
+        "trainable_parameters": 40347041,
+        "unique_parameter_tensors": 468
+      },
+      "measurement": {
+        "batch_size": 1,
+        "cuda_memory": {
+          "baseline_allocated_mib": 225.65380859375,
+          "baseline_reserved_mib": 248.0,
+          "incremental_peak_allocated_mib": 45.7509765625,
+          "measurement_api": "torch.cuda.reset_peak_memory_stats/max_memory_allocated",
+          "peak_allocated_mib": 271.40478515625,
+          "peak_reserved_mib": 336.0,
+          "supported": true
+        },
+        "failure_codes": {
+          "pointer_component_too_short": 3
+        },
+        "latency": {
+          "max_ms": 22.9002,
+          "mean_ms": 19.556746,
+          "min_ms": 18.0973,
+          "p50_ms": 19.5576,
+          "p90_ms": 20.402589999999996,
+          "p95_ms": 20.762794999999997,
+          "sample_sd_ms": 0.7810342794918891,
+          "throughput_images_per_second": 51.133250899715115
+        },
+        "model_reported_failure_calls": 3,
+        "success_definition": "valid decoded normalized reading; no accuracy labels read",
+        "successful_calls": 97,
+        "timed_calls": 100,
+        "timing_scope": {
+          "excluded": [
+            "model/checkpoint construction",
+            "PNG file read and decode",
+            "ground-truth loading and accuracy scoring"
+          ],
+          "included": [
+            "model-native CPU preprocessing",
+            "host-to-device transfer",
+            "all learned forward passes",
+            "analytic postprocessing and result validation",
+            "CUDA synchronization"
+          ]
+        },
+        "warmup_calls": 20,
+        "warmup_failure_codes": {}
+      },
+      "flops": {
+        "components": [
+          {
+            "component": "DeepLabV3+-ROI",
+            "flops": 91243937792,
+            "gflops": 91.243937792,
+            "input_shape": [
+              1,
+              3,
+              256,
+              256
+            ],
+            "status": "measured_supported_aten_ops"
+          },
+          {
+            "component": "source pose reference detector",
+            "flops": 8038176768,
+            "gflops": 8.038176768,
+            "input_shape": [
+              1,
+              3,
+              384,
+              384
+            ],
+            "status": "measured_supported_aten_ops"
+          }
+        ],
+        "counting_rule": "PyTorch aten FlopCounterMode supported operators; multiply-add counts as two FLOPs",
+        "gflops": 99.28211456,
+        "pipeline_limitation": "not end-to-end FLOPs; each reference module is counted at its listed square resolution (legacy reference timed letterbox shapes may vary); automatic-geometry failures omit the direction forward during timing",
+        "scope": "one fixed-shape forward per listed neural module; excludes preprocessing, NMS, CPU geometry and unsupported operations",
+        "status": "fixed_shape_neural_components",
+        "value": 99282114560
+      }
+    },
+    "vdn_auto_geometry": {
+      "method": "vdn_auto_geometry",
+      "display_name": "VDN + source pose references",
+      "protocol": "matched_roi_comparator_batch1_efficiency_v1",
+      "environment": {
+        "cuda_runtime": "12.8",
+        "cudnn": 91900,
+        "device": "cuda:0",
+        "device_name": "NVIDIA GeForce RTX 4060",
+        "platform": "Windows-10-10.0.19045-SP0",
+        "python": "3.11.15",
+        "torch": "2.11.0+cu128"
+      },
+      "configuration": {
+        "seed": 20262020,
+        "precision": "float32; no autocast; YOLO quantize=None",
+        "condition": "clean",
+        "image_size": 384,
+        "preprocessing": "OpenCV bilinear square resize; ImageNet-normalized BGR",
+        "evaluation_scope": "provided ROI to normalized reading with Industrial automatic geometry",
+        "success_definition": "valid decoded normalized reading; no accuracy labels read",
+        "observed_precision": {
+          "failure_code": null,
+          "model_input_dtypes": {
+            "VDN": [
+              "torch.float32"
+            ],
+            "source pose reference detector": [
+              "torch.float32"
+            ]
+          },
+          "scope": "one additional real input inference after timing; empty component list means early geometry failure skipped that component"
+        },
+        "reference_detector_kind": "source_pose4kp",
+        "reference_configuration": {
+          "conf": 0.05,
+          "grayscale_three_channel": false,
+          "imgsz": 384,
+          "iou": 0.7,
+          "keypoint_confidence": 0.05,
+          "letterbox": "square training input",
+          "max_det": 5,
+          "pointer_tip_used": false
+        },
+        "geometry_failure_behavior": "record timed failure before direction-model inference"
+      },
+      "input": {
+        "manifest_rows": 1395,
+        "selected_rows": 100,
+        "selection": "first_n_manifest_rows_in_file_order",
+        "ground_truth_read": false
+      },
+      "parameters": {
+        "counting_rule": "unique torch.nn.Parameter objects reachable from the loaded inference predictor; shared tensors counted once",
+        "learned_component_roots": [
+          {
+            "declared_parameters": 15377219,
+            "type": "external_vdn_model_68afe1e.VDNModel"
+          },
+          {
+            "declared_parameters": 9715447,
+            "type": "ultralytics.nn.tasks.PoseModel"
+          }
+        ],
+        "parameter_bytes": 100370664,
+        "scope": "loaded checkpoint neural modules before native inference fusion; automatic-geometry arms include reference detector",
+        "total_parameters": 25092666,
+        "trainable_parameters": 15377219,
+        "unique_parameter_tensors": 353
+      },
+      "measurement": {
+        "batch_size": 1,
+        "cuda_memory": {
+          "baseline_allocated_mib": 128.396484375,
+          "baseline_reserved_mib": 162.0,
+          "incremental_peak_allocated_mib": 30.03125,
+          "measurement_api": "torch.cuda.reset_peak_memory_stats/max_memory_allocated",
+          "peak_allocated_mib": 158.427734375,
+          "peak_reserved_mib": 180.0,
+          "supported": true
+        },
+        "failure_codes": {},
+        "latency": {
+          "max_ms": 13.7866,
+          "mean_ms": 12.495693000000001,
+          "min_ms": 11.6645,
+          "p50_ms": 12.380199999999999,
+          "p90_ms": 13.1702,
+          "p95_ms": 13.34911,
+          "sample_sd_ms": 0.48764424071864165,
+          "throughput_images_per_second": 80.02757430100115
+        },
+        "model_reported_failure_calls": 0,
+        "success_definition": "valid decoded normalized reading; no accuracy labels read",
+        "successful_calls": 100,
+        "timed_calls": 100,
+        "timing_scope": {
+          "excluded": [
+            "model/checkpoint construction",
+            "PNG file read and decode",
+            "ground-truth loading and accuracy scoring"
+          ],
+          "included": [
+            "model-native CPU preprocessing",
+            "host-to-device transfer",
+            "all learned forward passes",
+            "analytic postprocessing and result validation",
+            "CUDA synchronization"
+          ]
+        },
+        "warmup_calls": 20,
+        "warmup_failure_codes": {}
+      },
+      "flops": {
+        "components": [
+          {
+            "component": "VDN",
+            "flops": 17392730112,
+            "gflops": 17.392730112,
+            "input_shape": [
+              1,
+              3,
+              384,
+              384
+            ],
+            "status": "measured_supported_aten_ops"
+          },
+          {
+            "component": "source pose reference detector",
+            "flops": 8038176768,
+            "gflops": 8.038176768,
+            "input_shape": [
+              1,
+              3,
+              384,
+              384
+            ],
+            "status": "measured_supported_aten_ops"
+          }
+        ],
+        "counting_rule": "PyTorch aten FlopCounterMode supported operators; multiply-add counts as two FLOPs",
+        "gflops": 25.43090688,
+        "pipeline_limitation": "not end-to-end FLOPs; each reference module is counted at its listed square resolution (legacy reference timed letterbox shapes may vary); automatic-geometry failures omit the direction forward during timing",
+        "scope": "one fixed-shape forward per listed neural module; excludes preprocessing, NMS, CPU geometry and unsupported operations",
+        "status": "fixed_shape_neural_components",
+        "value": 25430906880
+      }
+    }
+  }
+}

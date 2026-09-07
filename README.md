@@ -94,6 +94,20 @@ experiments/
   evaluate_geoprr_vdn_matched.py                 same-pixel VDN evaluation
   summarize_geoprr_vdn_matched.py                paired three-seed summary
   run_geoprr_vdn_matched.ps1                     run/resume wrapper
+  train_deeplabv3plus_roi.py                     matched ROI segmentation comparison
+  evaluate_deeplabv3plus_roi.py                  six-condition segmentation evaluation
+  evaluate_deeplabv3plus_roi_rf100.py            annotation-assisted RF100 field evaluation
+  train_yolo11s_pose4kp.py                       matched four-keypoint pose comparison
+  evaluate_yolo11s_pose4kp.py                    six-condition pose evaluation
+  evaluate_yolo11s_pose4kp_field.py              four-cohort real-photo ROI evaluation
+  roi_geometry_field.py                          real-photo cohort/geometry registry
+  summarize_roi_geometry_comparison.py           ROI comparison aggregation
+  summarize_roi_geometry_full_experiment.py      three-seed synthetic/field aggregation
+  roi_reference_geometry.py                     source-trained pivot/start/end adapter
+  evaluate_missing_roi_direction_baselines.py    automatic-reference field evaluation
+  benchmark_roi_comparison_efficiency.py         native and complete ROI timing
+  summarize_roi_comparison_zero_shot.py          per-row transfer metric aggregation
+  export_roi_comparison_public_results.py        aggregate-only public data export
 test/
   test_geoprr_public_api.py
   test_unified_pointer_reader.py
@@ -242,7 +256,69 @@ The formal configuration uses three seeds and 200 epochs. Existing seed
 directories resume; missing seed directories begin fresh. Checkpoints, logs,
 per-sample ledgers, datasets, and private images remain ignored by Git.
 
-### 6. Rebuild manuscript figures
+### 6. Run the matched ROI geometry comparisons
+
+DeepLabV3+-ROI predicts a pointer mask from pixels. On SyncG and RF100-VL,
+its offline conversion uses annotated pivot and ordered scale endpoints and
+is an annotation-assisted component comparison. Industrial-1395 uses the
+source-trained automatic reference geometry described below.
+YOLO11s-Pose-4KP predicts pivot, pointer tip, scale start, and scale end from
+the same canonical ROI and does not use annotation geometry at inference.
+
+~~~powershell
+.\.venv\Scripts\python.exe -m experiments.train_deeplabv3plus_roi --outer-split <path-to-outer-split.json> --output-dir artifacts\runs\roi_comparison\seed_20262020\deeplabv3plus_roi --seed 20262020
+.\.venv\Scripts\python.exe -m experiments.evaluate_deeplabv3plus_roi --checkpoint artifacts\runs\roi_comparison\seed_20262020\deeplabv3plus_roi\best.pt --roi-manifest <path-to-label-free-roi-manifest.jsonl> --output-dir artifacts\runs\roi_comparison\seed_20262020\deeplabv3plus_roi\evaluation
+
+.\.venv\Scripts\python.exe -m experiments.train_yolo11s_pose4kp --outer-split <path-to-outer-split.json> --output-dir artifacts\runs\roi_comparison\seed_20262020\yolo11s_pose4kp --seed 20262020
+.\.venv\Scripts\python.exe -m experiments.evaluate_yolo11s_pose4kp --checkpoint artifacts\runs\roi_comparison\seed_20262020\yolo11s_pose4kp\ultralytics\weights\best.pt --roi-manifest <path-to-label-free-roi-manifest.jsonl> --output-dir artifacts\runs\roi_comparison\seed_20262020\yolo11s_pose4kp\evaluation_square
+
+.\.venv\Scripts\python.exe -m experiments.evaluate_deeplabv3plus_roi_rf100 --checkpoint artifacts\runs\roi_comparison\seed_20262020\deeplabv3plus_roi\best.pt --output-dir artifacts\runs\roi_comparison\seed_20262020\deeplabv3plus_roi\field\rf100
+.\.venv\Scripts\python.exe -m experiments.evaluate_yolo11s_pose4kp_field --checkpoint artifacts\runs\roi_comparison\seed_20262020\yolo11s_pose4kp\ultralytics\weights\best.pt --output-dir artifacts\runs\roi_comparison\seed_20262020\yolo11s_pose4kp\field
+
+.\.venv\Scripts\python.exe -m experiments.summarize_roi_geometry_full_experiment --run-root artifacts\runs\roi_comparison --geoprr-root artifacts\runs\unified_pointer_reader --output artifacts\runs\roi_comparison_three_seed\summary.json --report artifacts\runs\roi_comparison_three_seed\report.md
+~~~
+
+Use seeds <code>20262020</code>, <code>20262021</code>, and
+<code>20262022</code> for the paper comparison. Every failed sample-condition
+row remains in the denominator with normalized absolute error 1.0.
+
+The completed three-seed comparison on the 1,558-sample, six-condition outer
+holdout produced NMAE 1.0013 ± 0.0382%FS for GeoPRR-Net, 1.7076 ± 0.4078%FS
+for annotation-assisted DeepLabV3+-ROI, 5.5666 ± 2.9705%FS for
+YOLO11s-Pose-4KP, and 1.6620 ± 0.0878%FS for the VDN direction component.
+Real-photo transfer is reported separately on Industrial-1395 (1,395 ROIs,
+52 groups) and RF100-VL (151 ROIs, 35 groups). On Industrial-1395, YOLO,
+DeepLab, and VDN obtain six-condition NMAE 31.0045 ± 7.6146%FS,
+32.9356 ± 4.0842%FS, and 25.3840 ± 6.7070%FS, respectively. The latter two
+Industrial results were rerun with source-trained YOLO reference geometry on
+2026-09-07. On RF100-VL,
+the corresponding values are 16.1632 ± 4.6280%FS, 15.8532 ± 4.0813%FS,
+and 13.0129 ± 3.2761%FS. DeepLab and VDN use annotated geometry on RF100-VL
+and the same-seed SyncG-trained YOLO11s-Pose model's pivot/start/end on
+Industrial-1395. Its predicted pointer tip is excluded from detection selection
+and decoding. This replaces the legacy detector with unresolved training-data
+provenance; all three Industrial pipelines are evaluated within a provided ROI.
+
+Matched RTX 4060 / FP32 / batch-1 measurements give P50 latency of 6.398 ms
+for YOLO, 19.558 ms for DeepLab plus source reference detection, and 12.380 ms
+for VDN plus source reference detection. Their full loaded parameter counts
+are 9.715M, 50.062M, and 25.093M. See the updated results, native-component
+timings, peak memory, supported operation counts, and measurement scope in
+[<code>docs/ROI_GEOMETRY_COMPARISON_CN.md</code>](docs/ROI_GEOMETRY_COMPARISON_CN.md).
+
+Reproduce the source-trained reference replacement using the commands in
+[the detector audit](docs/ROI_REFERENCE_DETECTOR_AUDIT_CN.md), then export:
+
+~~~powershell
+.\.venv\Scripts\python.exe -m experiments.summarize_roi_comparison_zero_shot --missing-root artifacts/runs/roi_source_pose_reference_20260907
+.\.venv\Scripts\python.exe -m experiments.export_roi_comparison_public_results
+~~~
+
+Published summaries are in [docs/data](docs/data). Raw local JSONs, private
+input manifests, image-level field ledgers, and weights are not included in
+the public export; field-data users must configure their own input paths.
+
+### 7. Rebuild manuscript figures
 
 Clone the paper repository beside this code repository, then rebuild figures
 from its compact aggregate CSV files:
