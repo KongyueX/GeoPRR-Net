@@ -1,0 +1,106 @@
+{
+  "experiment": "shared_full_raw_full_correction_full_router_20260911",
+  "seeds": [
+    20262020,
+    20262021,
+    20262022
+  ],
+  "foundation": {
+    "architecture": "EfficientNet-B0 scalar regressor",
+    "training_images": 16000,
+    "epochs": 60,
+    "selection": "same-seed terminal checkpoint",
+    "reused": true
+  },
+  "downstream_training": {
+    "remst": 16000,
+    "r2mt": 16000,
+    "polar": 16000,
+    "final_router": 16000
+  },
+  "final_router_image_condition_rows": 96000,
+  "warm_initialization": "same saved A-trained initializer for all three seeds",
+  "warm_training_images": 12818,
+  "budgets": {
+    "remst": 5,
+    "r2mt_experts": 40,
+    "r2mt_router": 40,
+    "polar": 10,
+    "router": [
+      40,
+      120
+    ]
+  },
+  "variants": [
+    "full"
+  ],
+  "final_checkpoint": "fixed-epoch parameter EMA",
+  "evaluation_precision": "float32",
+  "source_test_access_during_training": false,
+  "target_adaptation": false,
+  "training_overlap": "foundation, candidates and final router share the full source-training pool",
+  "conditions": [
+    "clean",
+    "blur_moderate",
+    "blur_severe",
+    "perspective_moderate",
+    "perspective_severe",
+    "combined_severe"
+  ],
+  "scopes": {
+    "all_conditions": [
+      "clean",
+      "blur_moderate",
+      "blur_severe",
+      "perspective_moderate",
+      "perspective_severe",
+      "combined_severe"
+    ],
+    "clean": [
+      "clean"
+    ],
+    "blur_moderate": [
+      "blur_moderate"
+    ],
+    "blur_severe": [
+      "blur_severe"
+    ],
+    "perspective_moderate": [
+      "perspective_moderate"
+    ],
+    "perspective_severe": [
+      "perspective_severe"
+    ],
+    "combined_severe": [
+      "combined_severe"
+    ],
+    "perspective_pair": [
+      "perspective_moderate",
+      "perspective_severe"
+    ],
+    "projective_three": [
+      "perspective_moderate",
+      "perspective_severe",
+      "combined_severe"
+    ]
+  },
+  "cohorts": {
+    "syncg": {
+      "images": 4000,
+      "groups": 145,
+      "prediction_rows": 72000
+    },
+    "rf100": {
+      "images": 151,
+      "groups": 35,
+      "prediction_rows": 2718
+    },
+    "industrial": {
+      "images": 1395,
+      "groups": 52,
+      "prediction_rows": 25110
+    }
+  },
+  "original_comparator_package": "official_syncg_fulltrain_20260908/details",
+  "group_aliases_match_original_comparator_package": true
+}

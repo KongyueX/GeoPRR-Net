@@ -1,0 +1,17 @@
+{
+  "status": "complete",
+  "seeds": [
+    20262020,
+    20262021,
+    20262022
+  ],
+  "prediction_rows": 99828,
+  "failures": 0,
+  "group_metric_rows": 8352,
+  "group_comparison_rows": 4176,
+  "checked_metric_scopes": 81,
+  "per_row_errors_recomputed": true,
+  "summary_metrics_match": true,
+  "sample_target_group_alignment": true,
+  "aliases_match_previous_public_package": true
+}

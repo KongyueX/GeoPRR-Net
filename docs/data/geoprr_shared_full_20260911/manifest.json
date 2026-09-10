@@ -1,0 +1,282 @@
+{
+  "experiment": "shared_full_raw_full_correction_full_router_20260911",
+  "seeds": [
+    20262020,
+    20262021,
+    20262022
+  ],
+  "prediction_rows": 99828,
+  "group_metric_rows": 8352,
+  "group_comparison_rows": 4176,
+  "new_training_epoch_rows": 1005,
+  "status": "complete",
+  "files": [
+    {
+      "file": "export_validation.json",
+      "bytes": 384
+    },
+    {
+      "file": "full_three_seed_mean_sample_sd.csv",
+      "bytes": 14737,
+      "columns": [
+        "dataset",
+        "method",
+        "scope",
+        "seed_count",
+        "images",
+        "rows",
+        "groups",
+        "nmae_pct_fs_mean",
+        "nmae_pct_fs_sample_sd",
+        "acc_at_2_pct_mean",
+        "acc_at_2_pct_sample_sd",
+        "acc_at_5_pct_mean",
+        "acc_at_5_pct_sample_sd",
+        "coverage_pct_mean",
+        "coverage_pct_sample_sd",
+        "failures_mean",
+        "failures_sample_sd"
+      ],
+      "rows": 81
+    },
+    {
+      "file": "full_three_seed_paired_comparisons.csv",
+      "bytes": 1673,
+      "columns": [
+        "dataset",
+        "scope",
+        "candidate",
+        "reference",
+        "rows_per_seed",
+        "groups",
+        "candidate_minus_reference_pct_fs",
+        "ci95_low",
+        "ci95_high",
+        "better_groups",
+        "worse_groups",
+        "tied_groups",
+        "bootstrap_replicates"
+      ],
+      "rows": 12
+    },
+    {
+      "file": "full_three_seed_per_seed_metrics.csv",
+      "bytes": 27964,
+      "columns": [
+        "dataset",
+        "method",
+        "scope",
+        "seed",
+        "images",
+        "rows",
+        "groups",
+        "nmae_pct_fs",
+        "acc_at_2_pct",
+        "acc_at_5_pct",
+        "coverage_pct",
+        "failures"
+      ],
+      "rows": 243
+    },
+    {
+      "file": "full_three_seed_summary.json",
+      "bytes": 138412
+    },
+    {
+      "file": "group_comparisons.csv.gz",
+      "bytes": 123616,
+      "columns": [
+        "dataset",
+        "scope",
+        "reference",
+        "group_id",
+        "rows_per_seed",
+        "seed_count",
+        "shared_full_nmae_pct_fs",
+        "reference_nmae_pct_fs",
+        "candidate_minus_reference_pct_fs"
+      ],
+      "rows": 4176
+    },
+    {
+      "file": "group_metrics.csv.gz",
+      "bytes": 160868,
+      "columns": [
+        "dataset",
+        "method",
+        "seed",
+        "aggregation",
+        "scope",
+        "group_id",
+        "images",
+        "rows",
+        "nmae_pct_fs",
+        "acc_at_2_pct",
+        "acc_at_5_pct",
+        "coverage_pct",
+        "failures"
+      ],
+      "rows": 8352
+    },
+    {
+      "file": "per_sample/industrial.csv.gz",
+      "bytes": 2327275,
+      "columns": [
+        "dataset",
+        "seed",
+        "sample_id",
+        "group_id",
+        "condition",
+        "normalized_target",
+        "normalized_prediction",
+        "normalized_absolute_error",
+        "status",
+        "relation_available",
+        "candidate_base",
+        "candidate_polar",
+        "candidate_relational",
+        "weight_base",
+        "weight_polar",
+        "weight_relational",
+        "original_geoprr_error",
+        "raw_full_error"
+      ],
+      "rows": 25110
+    },
+    {
+      "file": "per_sample/rf100.csv.gz",
+      "bytes": 273181,
+      "columns": [
+        "dataset",
+        "seed",
+        "sample_id",
+        "group_id",
+        "condition",
+        "normalized_target",
+        "normalized_prediction",
+        "normalized_absolute_error",
+        "status",
+        "relation_available",
+        "candidate_base",
+        "candidate_polar",
+        "candidate_relational",
+        "weight_base",
+        "weight_polar",
+        "weight_relational",
+        "original_geoprr_error",
+        "raw_full_error"
+      ],
+      "rows": 2718
+    },
+    {
+      "file": "per_sample/syncg.csv.gz",
+      "bytes": 7202381,
+      "columns": [
+        "dataset",
+        "seed",
+        "sample_id",
+        "group_id",
+        "condition",
+        "normalized_target",
+        "normalized_prediction",
+        "normalized_absolute_error",
+        "status",
+        "relation_available",
+        "candidate_base",
+        "candidate_polar",
+        "candidate_relational",
+        "weight_base",
+        "weight_polar",
+        "weight_relational",
+        "original_geoprr_error",
+        "raw_full_error"
+      ],
+      "rows": 72000
+    },
+    {
+      "file": "protocol.json",
+      "bytes": 2359
+    },
+    {
+      "file": "README.md",
+      "bytes": 6630
+    },
+    {
+      "file": "RESULTS.md",
+      "bytes": 4442
+    },
+    {
+      "file": "training_epochs.csv",
+      "bytes": 271801,
+      "columns": [
+        "seed",
+        "stage",
+        "pipeline_stage",
+        "epoch",
+        "learning_rate",
+        "elapsed_seconds",
+        "training_elapsed_seconds",
+        "train_elapsed_seconds",
+        "steps",
+        "optimizer_steps",
+        "samples",
+        "unique_training_images",
+        "image_condition_rows",
+        "condition_rows",
+        "physical_samples_seen",
+        "metric_absolute_moment_error",
+        "metric_absolute_total_shift",
+        "metric_combined_risk_weight",
+        "metric_condition_regression",
+        "metric_consistency",
+        "metric_final_l1",
+        "metric_gain",
+        "metric_gain_loss",
+        "metric_gradient_norm",
+        "metric_loss",
+        "metric_mean_absolute_shift",
+        "metric_mean_condition_l1",
+        "metric_mean_risk_weight",
+        "metric_moment_budget_gain",
+        "metric_nmae",
+        "metric_no_harm",
+        "metric_polar_consistency",
+        "metric_prior_kl",
+        "metric_raw_nmae",
+        "metric_relation_available",
+        "metric_route",
+        "metric_route_imitation",
+        "metric_route_loss",
+        "metric_sarn_nmae",
+        "metric_scale16_feature_residual_rms",
+        "metric_scale8_feature_residual_rms",
+        "metric_tail10",
+        "metric_tail_l1",
+        "metric_tail_risk_weight",
+        "metric_weighted_exact_l1",
+        "metric_worst_excess"
+      ],
+      "rows": 1005
+    },
+    {
+      "file": "training_stages.csv",
+      "bytes": 1503,
+      "columns": [
+        "seed",
+        "stage",
+        "status",
+        "checkpoint_seed",
+        "source_population",
+        "epoch_budget",
+        "completed_epochs",
+        "exported_epoch_rows",
+        "optimizer_steps",
+        "epoch_elapsed_seconds",
+        "wall_elapsed_seconds",
+        "image_condition_rows_min_per_epoch",
+        "image_condition_rows_max_per_epoch"
+      ],
+      "rows": 15
+    }
+  ]
+}

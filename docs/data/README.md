@@ -1,4 +1,15 @@
-# ROI comparison public data
+# Public experiment data
+
+| Package | Contents |
+| --- | --- |
+| [Shared full-source GeoPRR](geoprr_shared_full_20260911/README.md) | Three-seed full-source downstream training, 99,828 predictions, source-group statistics, training histories and matched comparator summaries |
+| [Official full-training experiments](official_syncg_fulltrain_20260908/README.md) | Original official-source protocol, aggregate results and detailed ledgers for all prescribed experiment families |
+
+Each package records its own training and evaluation protocol. The shared
+full-source study is a separate experiment version and keeps the original
+results available for comparison.
+
+## ROI comparison update: 2026-09-07
 
 Updated 2026-09-07. These files contain cohort/seed aggregates only.
 
