@@ -1,6 +1,6 @@
 {
   "run": "official_syncg_fulltrain_20260908",
-  "publication_scope": "aggregate_results",
+  "publication_scope": "aggregate_and_per_sample_and_group_results",
   "files": [
     {
       "file": "per_seed_metrics.csv",
@@ -117,7 +117,115 @@
     {
       "file": "README.md",
       "source_artifact": "Public export documentation",
-      "bytes": 4126
+      "bytes": 4549
+    },
+    {
+      "file": "details/group_metrics.csv.gz",
+      "rows": 215424,
+      "bytes": 4386836
+    },
+    {
+      "file": "details/per_sample/syncg_main.csv.gz",
+      "rows": 504000,
+      "bytes": 14187388
+    },
+    {
+      "file": "details/per_sample/rf100_main.csv.gz",
+      "rows": 19026,
+      "bytes": 513518
+    },
+    {
+      "file": "details/per_sample/industrial_main.csv.gz",
+      "rows": 175770,
+      "bytes": 3220634
+    },
+    {
+      "file": "details/per_sample/syncg_sarn_v2.csv.gz",
+      "rows": 216000,
+      "bytes": 6151009
+    },
+    {
+      "file": "details/per_sample/rf100_sarn_v2.csv.gz",
+      "rows": 8154,
+      "bytes": 231181
+    },
+    {
+      "file": "details/per_sample/industrial_sarn_v2.csv.gz",
+      "rows": 75330,
+      "bytes": 1526638
+    },
+    {
+      "file": "details/per_sample/syncg_annotation.csv.gz",
+      "rows": 144000,
+      "bytes": 4055893
+    },
+    {
+      "file": "details/per_sample/rf100_annotation.csv.gz",
+      "rows": 5436,
+      "bytes": 140056
+    },
+    {
+      "file": "details/per_sample/syncg_ablation.csv.gz",
+      "rows": 432000,
+      "bytes": 12318635
+    },
+    {
+      "file": "details/per_sample/industrial_adapted.csv.gz",
+      "rows": 100440,
+      "bytes": 2125037
+    },
+    {
+      "file": "details/per_sample/industrial_frozen_fold_aligned.csv.gz",
+      "rows": 100440,
+      "bytes": 2035037
+    },
+    {
+      "file": "details/per_sample/industrial_sensitivity.csv.gz",
+      "rows": 175770,
+      "bytes": 3617951
+    },
+    {
+      "file": "details/per_sample/rf100_sensitivity.csv.gz",
+      "rows": 19026,
+      "bytes": 541944
+    },
+    {
+      "file": "details/per_sample/syncg_sensitivity.csv.gz",
+      "rows": 504000,
+      "bytes": 14473120
+    },
+    {
+      "file": "details/per_sample/syncg_perspective_scan.csv.gz",
+      "rows": 216000,
+      "bytes": 7856380
+    },
+    {
+      "file": "details/per_sample/industrial_ensemble_frozen_fold_aligned.csv.gz",
+      "rows": 33480,
+      "bytes": 682538
+    },
+    {
+      "file": "details/per_sample/industrial_ensemble_adapted.csv.gz",
+      "rows": 33480,
+      "bytes": 716483
+    },
+    {
+      "file": "details/group_comparisons.csv.gz",
+      "rows": 37818,
+      "bytes": 1274261
+    },
+    {
+      "file": "details/scan_group_comparisons.csv.gz",
+      "rows": 1740,
+      "bytes": 51730
+    },
+    {
+      "file": "details/README.md",
+      "bytes": 5961
+    },
+    {
+      "file": "details/manifest.json",
+      "bytes": 113085
     }
   ]
 }

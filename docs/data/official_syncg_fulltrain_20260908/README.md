@@ -1,10 +1,16 @@
-# Official SyncG full-training aggregate results
+# Official SyncG full-training results
 
-Verified aggregate results for `official_syncg_fulltrain_20260908`.
+Verified aggregate results, per-sample predictions and source-group statistics
+for `official_syncg_fulltrain_20260908`.
 
 The experiment completed 21 source model-seed combinations, 65 optimization stages, 63 automatic main comparison units, 27 additional SARN units, 12 annotation-assisted diagnostics, 18 ablation evaluations, 63 sensitivity configurations, 54 angle-scan units, 60 adaptation heads, 12 OOF outputs, 8 ensembles and 18 full-path efficiency measurements.
 
 ## Contents
+
+The [detailed result tables](details/README.md) contain 2,762,352 prediction
+rows from 269 result units, per-group metrics, and per-group paired differences.
+The detailed manifest identifies fold-alignment and default-sensitivity copies
+so they are not counted as additional independent experiments.
 
 | File | Contents |
 | --- | --- |
@@ -30,7 +36,12 @@ Each result keeps its full denominator, including failed readings (normalized er
 
 ## Release scope
 
-This folder contains aggregate tables and protocol metadata. Source images, individual labels/predictions, acquisition-group identifiers, weights, caches, local file inventories and machine-specific paths remain in the original run archive. The release follows the repository's existing aggregate-data publication scope and third-party notices.
+This folder contains aggregate tables, normalized per-sample targets and
+predictions, anonymous source-group statistics, and protocol metadata.
+Industrial sample identifiers and all group identifiers use one consistent
+alias roster within this release. Source images, original Industrial identities
+and physical readings, weights, caches, local file inventories and
+machine-specific paths remain in the original run archive.
 
 ## Limitations
 
