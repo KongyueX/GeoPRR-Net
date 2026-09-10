@@ -1,0 +1,101 @@
+{
+  "run": "official_syncg_fulltrain_20260908",
+  "scope": "Aggregate experimental results",
+  "seeds": [
+    20262020,
+    20262021,
+    20262022
+  ],
+  "datasets": {
+    "syncg": {
+      "name": "SyncG",
+      "source_training_images": 16000,
+      "test_images": 4000,
+      "test_groups": 145
+    },
+    "rf100": {
+      "name": "RF100-VL",
+      "images": 151,
+      "groups": 35
+    },
+    "industrial": {
+      "name": "Industrial-1395",
+      "images": 1395,
+      "groups": 52
+    }
+  },
+  "geoprr_source_roles": {
+    "candidate_training_images": 12818,
+    "candidate_scenes": 116,
+    "router_training_images": 3182,
+    "router_scenes": 29,
+    "router_condition_rows": 19092,
+    "source_validation_set": false
+  },
+  "conditions": [
+    "clean",
+    "blur_moderate",
+    "blur_severe",
+    "perspective_moderate",
+    "perspective_severe",
+    "combined_severe"
+  ],
+  "source_epochs": {
+    "cnn": 60,
+    "geoprr_raw_base": 60,
+    "foundation": 30,
+    "warm_polar": 10,
+    "remst": 5,
+    "r2mt_experts_and_router": 40,
+    "unified_polar": 10,
+    "final_router_stages": [
+      40,
+      120
+    ],
+    "yolo": 40,
+    "deeplab": 20,
+    "vdn": 200
+  },
+  "source_checkpoint_selection": "Fixed terminal budget or the predefined trajectory EMA; source budgets were determined before formal testing",
+  "main_alpha": 100,
+  "main_prior": [
+    0.5,
+    0.25,
+    0.25
+  ],
+  "metrics": {
+    "nmae_unit": "percent full scale (%FS)",
+    "failure_normalized_error": 1.0,
+    "accuracy_thresholds": [
+      0.02,
+      0.05
+    ],
+    "all_conditions_includes_clean": true
+  },
+  "bootstrap": {
+    "replicates": 20000,
+    "unit": "source group, retaining all images and selected conditions",
+    "seed_handling": "average seed errors per original row before resampling",
+    "confidence_level": 0.95
+  },
+  "adaptation": {
+    "outer_folds": 5,
+    "group_count": 52,
+    "source_encoders_frozen": true,
+    "hidden_layers": [
+      128,
+      64
+    ],
+    "dropout": 0.1,
+    "maximum_epochs": 100,
+    "patience": 20,
+    "selection": "lexicographic validation Acc@5, Acc@2, negative NMAE; earlier epoch wins ties",
+    "weighting": "row_weighted",
+    "ensemble_weights": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "member_failure_policy": "any failed member fails the ensemble"
+  }
+}

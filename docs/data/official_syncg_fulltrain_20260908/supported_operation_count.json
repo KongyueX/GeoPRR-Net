@@ -1,0 +1,36 @@
+{
+  "method": "geoprr",
+  "source_seed": 20262020,
+  "profiled_rois": 100,
+  "environment": {
+    "python": "3.11.15",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "processor": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+    "logical_cpu_count": 20,
+    "torch": "2.11.0+cu128",
+    "opencv": "4.11.0",
+    "numpy": "1.26.4",
+    "device": "cuda:0",
+    "cuda_runtime": "12.8",
+    "cudnn": 91900,
+    "torch_cpu_threads": 12,
+    "gpu_name": "NVIDIA GeForce RTX 4060",
+    "gpu_total_memory_bytes": 8585216000,
+    "parameter_dtype": "float32",
+    "autocast": false,
+    "tf32": false,
+    "batch_size": 1
+  },
+  "profiler": "THOP",
+  "profile_function": "experiments.benchmark_unified_pointer_reader._supported_macs",
+  "batch_size": 1,
+  "supported_gmacs": {
+    "mean": 1.4869485559999995,
+    "p50": 1.486948556,
+    "minimum": 1.486948556,
+    "maximum": 1.486948556
+  },
+  "two_flop_per_mac_gflops_mean": 2.973897111999999,
+  "counting_scope": "THOP-supported module operations. Tensor-only exact moment transport, grid sampling, softmax and other unsupported operators are omitted; this is a documented lower-bound estimate, not a complete FLOP count.",
+  "full_pipeline_flops_available": false
+}

@@ -1,0 +1,123 @@
+{
+  "run": "official_syncg_fulltrain_20260908",
+  "publication_scope": "aggregate_results",
+  "files": [
+    {
+      "file": "per_seed_metrics.csv",
+      "rows": 1368,
+      "source_artifact": "statistics/metrics.csv",
+      "bytes": 173022
+    },
+    {
+      "file": "seed_mean_sample_sd.csv",
+      "rows": 432,
+      "source_artifact": "statistics/seed_mean_sample_sd.csv",
+      "bytes": 79942
+    },
+    {
+      "file": "paired_comparisons.csv",
+      "rows": 486,
+      "source_artifact": "statistics/paired_comparisons.csv",
+      "bytes": 129948
+    },
+    {
+      "file": "perspective_scan.csv",
+      "rows": 54,
+      "source_artifact": "statistics/perspective_scan_metrics.csv",
+      "bytes": 5120
+    },
+    {
+      "file": "alpha_prior_sensitivity.csv",
+      "rows": 567,
+      "source_artifact": "sensitivity/metrics.csv",
+      "bytes": 88713
+    },
+    {
+      "file": "training_stages.csv",
+      "rows": 65,
+      "source_artifact": "statistics/optimization_stage_costs.csv",
+      "bytes": 9917
+    },
+    {
+      "file": "training_epochs.csv",
+      "rows": 3985,
+      "source_artifact": "statistics/training_epoch_costs.csv",
+      "bytes": 623071
+    },
+    {
+      "file": "annotation_assisted_comparison.csv",
+      "rows": 9,
+      "source_artifact": "annotation_diagnostics/statistics/geoprr_vs_vdn_annotation.csv",
+      "bytes": 4160
+    },
+    {
+      "file": "training_loss_curves.csv",
+      "rows": 36350,
+      "source_artifact": "statistics/training_epoch_costs.csv",
+      "bytes": 2612572
+    },
+    {
+      "file": "ensemble_metrics.csv",
+      "rows": 72,
+      "source_artifact": "statistics/ensemble_metrics.json",
+      "bytes": 8595
+    },
+    {
+      "file": "paired_group_consistency.csv",
+      "rows": 486,
+      "source_artifact": "statistics/paired_comparisons.json",
+      "bytes": 90266
+    },
+    {
+      "file": "error_distribution_summaries.json",
+      "source_artifact": "statistics/error_distributions.json",
+      "bytes": 176283
+    },
+    {
+      "file": "factorial_interactions.json",
+      "source_artifact": "statistics/factorial_interactions.json",
+      "bytes": 6256
+    },
+    {
+      "file": "perspective_scan_seed_summaries.json",
+      "source_artifact": "perspective_scan/summary.json",
+      "bytes": 23388
+    },
+    {
+      "file": "perspective_scan_comparisons.json",
+      "source_artifact": "perspective_scan/summary.json",
+      "bytes": 12614
+    },
+    {
+      "file": "geoprr_diagnostics.json",
+      "source_artifact": "cache_analysis/summary.json",
+      "bytes": 431892
+    },
+    {
+      "file": "efficiency.csv",
+      "rows": 18,
+      "source_artifact": "efficiency/*/summary.json",
+      "bytes": 3805
+    },
+    {
+      "file": "supported_operation_count.json",
+      "source_artifact": "efficiency/geoprr_raw/operation_profile.json",
+      "bytes": 1221
+    },
+    {
+      "file": "completion_counts.json",
+      "source_artifact": "final_audit/completion_summary.json",
+      "bytes": 1090
+    },
+    {
+      "file": "protocol.json",
+      "source_artifact": "Recorded source, evaluation and adaptation protocols",
+      "bytes": 2356
+    },
+    {
+      "file": "README.md",
+      "source_artifact": "Public export documentation",
+      "bytes": 4126
+    }
+  ]
+}
