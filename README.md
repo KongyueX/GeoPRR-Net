@@ -394,3 +394,20 @@ subject to their own terms.
 Review
 [<code>THIRD_PARTY_NOTICES.md</code>](THIRD_PARTY_NOTICES.md) before reuse,
 redistribution, or artifact publication.
+
+## Paper revision experiments
+
+The supplementary experiment workflow for the official 16,000-image source pool
+is documented in [the portable execution prompt](refine-logs/REVISION_EXECUTION_PROMPT_20260922.md).
+It includes independent warm initialization, full-pool polar/router fitting,
+matched simple gates and a frozen-encoder dual-view control, complete-roster
+exports, grouped statistics, and conditional augmentation/OOF controls.
+The existing replay entry points keep their defaults; the revision runner selects
+`official_full` explicitly and records the availability policy.
+
+On the training computer, fill
+[`revision_20260922.example.json`](experiments/configs/revision_20260922.example.json)
+with local resources and recovered run settings, then use
+[`run_revision_experiments.ps1`](experiments/run_revision_experiments.ps1).
+Start with `-Phase Audit`; the prompt specifies the subsequent fixed stages.
+Source images, checkpoints, and restricted field images remain local.

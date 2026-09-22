@@ -69,3 +69,7 @@ __pycache__/
 # Local orchestration and notification helpers are not part of the public code release.
 /experiments/*.ps1
 !/experiments/run_geoprr_vdn_matched.ps1
+
+# Portable revision runner and machine-local run settings.
+!/experiments/run_revision_experiments.ps1
+/experiments/configs/*.local.json

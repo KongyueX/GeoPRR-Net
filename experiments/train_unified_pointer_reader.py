@@ -1,10 +1,9 @@
 """Train the unified non-distilled reader and its compact ablation suite.
 
-Only the established SyncG formal-fit population is opened.  The polar branch
-is fitted on the inner-train scenes; candidate routing is fitted on the
-disjoint inner-development scenes under all six robustness conditions.  The
-formal SyncG holdout and every Industrial image remain inaccessible until all
-terminal checkpoints have been written.
+The default population preserves the disjoint inner-train/inner-development
+protocol.  The explicit official_full mode fits polar evidence and routing on
+the same 16,000 source-training images using a same-seed warm initializer.
+Neither mode opens official test or Industrial images during training.
 """
 from __future__ import annotations
 
@@ -46,6 +45,7 @@ from experiments.unified_pointer_reader import (
     FIXED_ROUTING,
     FULL,
     NO_GEOMETRY_FUSION,
+    NO_GEOMETRY_FIXED_ROUTING,
     NO_POLAR_EVIDENCE,
     NO_RELATIONAL_TRANSPORT,
     PROTOCOL,
@@ -568,7 +568,19 @@ def train_suite(
     ema_decay: float,
     learning_rate: float,
     smooth_max_temperature: float,
+    population_mode: str = "inner_scene",
+    official_train_manifest: Path | None = None,
+    availability_policy: str | None = None,
 ) -> dict[str, Any]:
+    _require(population_mode in {"inner_scene", "official_full"}, "unknown training population")
+    if population_mode == "official_full":
+        _require(official_train_manifest is not None, "official_full requires --official-train-manifest")
+        _require(polar_epochs == 10, "official_full requires explicit --polar-epochs 10")
+        _require(smooth_max_temperature is not None, "official_full requires --smooth-max-temperature from the run configuration")
+        _require(availability_policy in {"image_only", "clean_disabled"}, "official_full requires --availability-policy")
+    else:
+        _require(official_train_manifest is None and availability_policy is None,
+                 "official training options require --population-mode official_full")
     output = Path(output_root).resolve()
     _require(not output.exists(), f"unified-reader output already exists: {output}")
     _require(polar_epochs >= 1 and router_stage_one_epochs >= 1 and router_stage_two_epochs >= 1, "epochs must be positive")
@@ -578,11 +590,43 @@ def train_suite(
     if device.type == "cuda":
         _require(torch.cuda.is_available(), "CUDA is unavailable")
     _configure_reproducibility(seed, device)
-    internal = load_inner_scene_population(fit_manifest_path, outer_split_path)
+    if population_mode == "official_full":
+        from experiments.revision_full_training import (
+            load_independent_warm,
+            load_official_train_population,
+            official_training_scope,
+        )
+        polar_samples = router_samples = load_official_train_population(official_train_manifest)
+        training_scope = official_training_scope(polar_samples, official_train_manifest, availability_policy)
+        training_scope["candidate_lineage"] = str(output)
+        cache_name = "source_train_cache_ema_polar.pt"
+        cache_scope = "source_train"
+        statistics_scope = "source_train"
+    else:
+        internal = load_inner_scene_population(fit_manifest_path, outer_split_path)
+        polar_samples, router_samples = internal.train, internal.dev
+        training_scope = {
+            "syncg_formal_fit_only": True,
+            "polar_inner_train_samples": len(internal.train),
+            "router_inner_dev_samples": len(internal.dev),
+            "router_inner_dev_rows": len(internal.dev) * len(CONDITIONS),
+            "inner_scene_disjoint": True,
+            "formal_syncg_holdout_access": False,
+            "industrial_image_access": False,
+            "industrial_test_only": True,
+        }
+        cache_name = "inner_dev_cache_ema_polar.pt"
+        cache_scope = "disjoint SyncG inner-development only"
+        statistics_scope = "inner_dev"
     bank, bank_metadata = load_remst_r2mt_expert_bank(
         source_r2mt_checkpoint, device=device
     )
-    polar, warm_metadata = _load_warm_polar(warm_polar_checkpoint)
+    if population_mode == "official_full":
+        polar, warm_metadata = load_independent_warm(
+            warm_polar_checkpoint, bank=bank, bank_metadata=bank_metadata, seed=seed
+        )
+    else:
+        polar, warm_metadata = _load_warm_polar(warm_polar_checkpoint)
     router = ConditionalRegretRouter()
     model = UnifiedPointerReader(bank, polar, router, variant=FULL).to(device)
     initial_router_state = _clone_state(model.regret_router)
@@ -593,7 +637,7 @@ def train_suite(
     polar_history, _polar_terminal_state, polar_ema_state, polar_ema_updates = (
         _train_polar_with_ema(
             model,
-            internal.train,
+            polar_samples,
             device=device,
             seed=seed,
             epochs=polar_epochs,
@@ -603,32 +647,34 @@ def train_suite(
         )
     )
     model.polar_expert.load_state_dict(polar_ema_state, strict=True)
-    cache_path = output / "inner_dev_cache_ema_polar.pt"
-    cache, cache_elapsed = _collect_router_cache(
-        model,
-        internal.dev,
-        cache_path=cache_path,
-        device=device,
-        seed=seed,
-        batch_size=polar_batch_size,
-        workers=workers,
-    )
+    cache_path = output / cache_name
+    if population_mode == "official_full":
+        from experiments.revision_cache import collect_revision_cache
+
+        cache, cache_elapsed = collect_revision_cache(
+            model, router_samples, cache_path=cache_path, device=device, seed=seed,
+            batch_size=polar_batch_size, workers=workers, scope="source_train",
+            availability_policy=availability_policy,
+        )
+        _require(int(cache["target"].shape[0]) == 96_000, "official_full cache must contain 96,000 rows")
+    else:
+        cache, cache_elapsed = _collect_router_cache(
+            model, router_samples, cache_path=cache_path, device=device, seed=seed,
+            batch_size=polar_batch_size, workers=workers,
+        )
     cache_payload = torch.load(cache_path, map_location="cpu", weights_only=False)
     cache_payload["protocol"] = PROTOCOL
-    cache_payload["scope"] = "SyncG inner-development only; EMA polar evidence"
+    cache_payload["scope"] = (
+        "source_train" if population_mode == "official_full"
+        else "SyncG inner-development only; EMA polar evidence"
+    )
+    cache_payload["training_scope"] = training_scope
+    if population_mode == "official_full":
+        cache_payload["candidate_lineage"] = training_scope["candidate_lineage"]
+        cache_payload["candidate_variant"] = FULL
     cache_payload["polar_weight_variant"] = "ema"
     torch.save(cache_payload, cache_path)
 
-    training_scope = {
-        "syncg_formal_fit_only": True,
-        "polar_inner_train_samples": len(internal.train),
-        "router_inner_dev_samples": len(internal.dev),
-        "router_inner_dev_rows": len(internal.dev) * len(CONDITIONS),
-        "inner_scene_disjoint": True,
-        "formal_syncg_holdout_access": False,
-        "industrial_image_access": False,
-        "industrial_test_only": True,
-    }
     results: dict[str, Any] = {}
     for variant in DYNAMIC_VARIANTS:
         variant_started = time.perf_counter()
@@ -700,19 +746,22 @@ def train_suite(
         )
         common_training = {
             "polar_weight_variant": "ema",
+            "polar_epochs": polar_epochs,
             "polar_ema_decay": ema_decay,
             "polar_ema_updates": polar_ema_updates,
+            "smooth_max_temperature": smooth_max_temperature,
+            "router_stage_two_learning_rate": learning_rate,
             "router_stage_one_epochs": router_stage_one_epochs,
             "router_stage_two_epochs": router_stage_two_epochs,
             "router_ema_decay": ema_decay,
             "router_ema_updates": router_ema.updates,
             "cache": str(cache_path),
-            "cache_scope": "disjoint SyncG inner-development only",
+            "cache_scope": cache_scope,
             "candidate_active": [bool(value) for value in active.cpu()],
             "stage_one_history": stage_one,
             "stage_two_history": stage_two,
-            "terminal_inner_dev": terminal_stats,
-            "ema_inner_dev": ema_stats,
+            f"terminal_{statistics_scope}": terminal_stats,
+            f"ema_{statistics_scope}": ema_stats,
         }
         variant_dir = output / variant
         variant_dir.mkdir(parents=True, exist_ok=False)
@@ -755,8 +804,8 @@ def train_suite(
         results[variant] = {
             "terminal_checkpoint": str(terminal_path),
             "ema_checkpoint": str(ema_path),
-            "terminal_inner_dev": terminal_stats,
-            "ema_inner_dev": ema_stats,
+            f"terminal_{statistics_scope}": terminal_stats,
+            f"ema_{statistics_scope}": ema_stats,
             "elapsed_seconds": time.perf_counter() - variant_started,
         }
         del fitted_router, ema_router
@@ -764,43 +813,48 @@ def train_suite(
         if device.type == "cuda":
             torch.cuda.empty_cache()
 
-    fixed_dir = output / FIXED_ROUTING
-    fixed_dir.mkdir(parents=True, exist_ok=False)
-    fixed_path = fixed_dir / "ema.pt"
-    fixed_model = UnifiedPointerReader(
-        model.expert_bank,
-        model.polar_expert,
-        _build_router(construction, initial_router_state, device=device),
-        variant=FIXED_ROUTING,
+    fixed_variants = (
+        (FIXED_ROUTING, NO_GEOMETRY_FIXED_ROUTING)
+        if population_mode == "official_full" else (FIXED_ROUTING,)
     )
-    torch.save(
-        _checkpoint_payload(
-            seed=seed,
-            variant=FIXED_ROUTING,
-            weight_variant="ema_polar_fixed_router",
-            source_r2mt_checkpoint=source_r2mt_checkpoint,
-            source_r2mt_metadata=bank_metadata,
-            warm_metadata=warm_metadata,
-            construction=construction,
-            polar_state=polar_ema_state,
-            router_state=_clone_state(fixed_model.regret_router),
-            training_scope=training_scope,
-            training={
-                "polar_weight_variant": "ema",
-                "polar_ema_decay": ema_decay,
-                "polar_ema_updates": polar_ema_updates,
-                "router_training": False,
-                "routing": "fixed normalized prior",
-            },
-            checkpoint_selection="fixed_prior_no_adaptive_routing",
-        ),
-        fixed_path,
-    )
-    results[FIXED_ROUTING] = {
-        "ema_checkpoint": str(fixed_path),
-        "learned_router": False,
-        "parameter_inventory": parameter_inventory(fixed_model),
-    }
+    for fixed_variant in fixed_variants:
+        fixed_dir = output / fixed_variant
+        fixed_dir.mkdir(parents=True, exist_ok=False)
+        fixed_path = fixed_dir / "ema.pt"
+        fixed_model = UnifiedPointerReader(
+            model.expert_bank,
+            model.polar_expert,
+            _build_router(construction, initial_router_state, device=device),
+            variant=fixed_variant,
+        )
+        torch.save(
+            _checkpoint_payload(
+                seed=seed,
+                variant=fixed_variant,
+                weight_variant="ema_polar_fixed_router",
+                source_r2mt_checkpoint=source_r2mt_checkpoint,
+                source_r2mt_metadata=bank_metadata,
+                warm_metadata=warm_metadata,
+                construction=construction,
+                polar_state=polar_ema_state,
+                router_state=_clone_state(fixed_model.regret_router),
+                training_scope=training_scope,
+                training={
+                    "polar_weight_variant": "ema",
+                    "polar_ema_decay": ema_decay,
+                    "polar_ema_updates": polar_ema_updates,
+                    "router_training": False,
+                    "routing": "fixed normalized prior",
+                },
+                checkpoint_selection="fixed_prior_no_adaptive_routing",
+            ),
+            fixed_path,
+        )
+        results[fixed_variant] = {
+            "ema_checkpoint": str(fixed_path),
+            "learned_router": False,
+            "parameter_inventory": parameter_inventory(fixed_model),
+        }
 
     summary = {
         "schema_version": 1,
@@ -844,6 +898,9 @@ def train_suite(
 def build_argument_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source-r2mt", type=Path, required=True)
+    parser.add_argument("--population-mode", choices=("inner_scene", "official_full"), default="inner_scene")
+    parser.add_argument("--official-train-manifest", type=Path)
+    parser.add_argument("--availability-policy", choices=("image_only", "clean_disabled"))
     parser.add_argument("--warm-polar", type=Path, default=DEFAULT_WARM_POLAR)
     parser.add_argument("--fit-manifest", type=Path, default=DEFAULT_FIT_MANIFEST)
     parser.add_argument("--outer-split", type=Path, default=DEFAULT_SCENE_SPLIT)
@@ -858,7 +915,8 @@ def build_argument_parser() -> argparse.ArgumentParser:
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--ema-decay", type=float, default=0.995)
     parser.add_argument("--learning-rate", type=float, default=3.0e-4)
-    parser.add_argument("--smooth-max-temperature", type=float, default=2.0e-4)
+    parser.add_argument("--smooth-max-temperature", type=float,
+                        help="required for official_full; legacy inner_scene defaults to 2e-4")
     return parser
 
 
@@ -880,7 +938,13 @@ def main(argv: Sequence[str] | None = None) -> int:
         workers=args.workers,
         ema_decay=args.ema_decay,
         learning_rate=args.learning_rate,
-        smooth_max_temperature=args.smooth_max_temperature,
+        smooth_max_temperature=(
+            args.smooth_max_temperature if args.smooth_max_temperature is not None
+            else 2.0e-4 if args.population_mode == "inner_scene" else None
+        ),
+        population_mode=args.population_mode,
+        official_train_manifest=args.official_train_manifest,
+        availability_policy=args.availability_policy,
     )
     print(
         json.dumps(

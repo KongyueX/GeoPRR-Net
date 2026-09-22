@@ -1,0 +1,16 @@
+{
+  "python": ".venv/Scripts/python.exe",
+  "device": "cuda:0",
+  "workers": 4,
+  "output_root": "artifacts/revision_20260922",
+  "source_train_manifest": "",
+  "evaluation_manifests": {"syncg": "", "rf100": "", "industrial": ""},
+  "availability_policy": "",
+  "smooth_max_temperature": null,
+  "warm": {"manifest": "", "expected_images": 12818, "epochs": 10, "learning_rate": null, "weight_decay": null},
+  "seeds": {
+    "20262020": {"foundation": "", "source_r2mt": ""},
+    "20262021": {"foundation": "", "source_r2mt": ""},
+    "20262022": {"foundation": "", "source_r2mt": ""}
+  }
+}
