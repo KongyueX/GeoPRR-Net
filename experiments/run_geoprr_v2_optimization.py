@@ -24,7 +24,9 @@ def read_jsonl(path: Path) -> list[dict]:
 
 def write_json(path: Path, value: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n")
+    temporary = path.with_name(path.name + ".tmp")
+    temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n")
+    temporary.replace(path)
 
 
 def source_folds(rows: list[dict]) -> list[list[dict]]:
