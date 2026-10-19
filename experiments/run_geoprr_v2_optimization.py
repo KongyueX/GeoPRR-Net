@@ -84,6 +84,10 @@ class OptimizationRun:
             return
         if previous.get("status") == "running":
             pid = previous.get("pid")
+            if pid and not process_running(pid) and expected.exists():
+                previous.update(status="complete", exit_code=None, finished_at=datetime.now(timezone.utc).isoformat())
+                self.save()
+                return
             if pid and process_running(pid):
                 actual = Path(f"/proc/{pid}/cmdline").read_bytes().rstrip(b"\0").decode().split("\0")
                 if actual != previous["command"]:

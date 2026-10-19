@@ -16,7 +16,11 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader
 
 from experiments.geoprr_v2_model import distribution_cdf_loss, two_hot_targets
-from experiments.geoprr_v2_objectives import decoupled_readout_losses
+from experiments.geoprr_v2_objectives import (
+    decoupled_readout_losses,
+    state_composition_losses,
+    validate_state_composition_pairs,
+)
 
 
 PROTOCOL = "geoprr_v2_source_only_v1"
@@ -335,6 +339,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     use_direct_ce = config["loss_weights"].get("appearance_ce", 0) > 0 or config["loss_weights"].get("reading_ce", 0) > 0
     use_decoupled = config["model"]["variant"] == "field" and any(
         config["loss_weights"].get(name, 0) > 0 for name in ("q_physical_cdf", "u_local_cdf", "q_gt_support"))
+    pair_objective = training.get("pair_objective")
+    if pair_objective not in (None, "state_composition_v1"):
+        raise ValueError("unsupported training.pair_objective")
+    if pair_objective == "state_composition_v1":
+        if args.pair_manifest is None or config["model"]["variant"] != "field":
+            raise ValueError("state_composition_v1 requires a pair manifest and the field variant")
+        if use_decoupled:
+            raise ValueError("state_composition_v1 requires decoupled loss weights to be disabled")
     dataset_options = dict(dataset_root=args.data_root, **config["data"], require_geometry=geometry,
                            geometry_config=GeometryConfig(min_support_mass=config["model"]["support_threshold"]))
     train_data = GeoPRRV2Dataset(args.train_manifest, augment=True, pair_manifest=args.pair_manifest, **dataset_options)
@@ -382,6 +394,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         "batch_limits": {"train": args.max_train_batches, "validation": args.max_val_batches},
         "model_selection": "source_validation_nmae_full_denominator",
         "train_samples": len(train_data), "validation_samples": len(val_data),
+        "train_samples_semantics": "dataset_items",
+        "train_unique_images": train_data.unique_image_count,
+        "train_items": train_data.item_count,
+        "train_controlled_edges": train_data.controlled_edge_count,
+        "expected_full_epoch": {"source_image_forwards": train_data.item_count,
+                                "recipient_image_forwards": train_data.controlled_edge_count,
+                                "total_image_forwards": train_data.item_count + train_data.controlled_edge_count,
+                                "optimizer_steps": math.ceil(train_data.item_count / training["batch_size"])},
         "train_groups": len({str(row["group_id"]) for row in train_data.rows}),
         "validation_groups": len({str(row["group_id"]) for row in val_data.rows}),
         "manifests": {"train": str(args.train_manifest.resolve()), "validation": str(args.val_manifest.resolve()),
@@ -410,7 +430,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         train_loader = make_loader(train_data, batch_size=training["batch_size"], workers=training["workers"],
                                    shuffle=True, seed=seed + epoch, device=device)
         loss_sums: dict[str, float] = {}
-        seen, steps, pair_images, eligible_pairs, valid_pairs = 0, 0, 0, 0, 0
+        seen, steps, pair_images, eligible_pairs, valid_pairs, supervised_pairs = 0, 0, 0, 0, 0, 0
         if device.type == "cuda":
             torch.cuda.reset_peak_memory_stats(device)
         for batch_index, raw_batch in enumerate(train_loader):
@@ -434,6 +454,8 @@ def main(argv: Sequence[str] | None = None) -> int:
                     indices = torch.tensor([i for i, kind in enumerate(batch["pair_kind"]) if kind != "none"], device=device)
                     if indices.numel():
                         pair_batch = select_batch(batch, indices)
+                        if pair_objective == "state_composition_v1" and warmup:
+                            validate_state_composition_pairs(pair_batch)
                         partner_batch = {key.removeprefix("pair_"): value for key, value in pair_batch.items() if key.startswith("pair_")}
                         partner_details = model(partner_batch["image"])
                         partner_losses = reading_losses(partner_details, partner_batch["y"].float().reshape(-1),
@@ -453,11 +475,16 @@ def main(argv: Sequence[str] | None = None) -> int:
                         if field_variant and not warmup:
                             source_details = {key: value[indices] if isinstance(value, torch.Tensor) else value for key, value in details.items()}
                             with torch.autocast(device_type=device.type, enabled=False):
-                                pair_losses, pair_counts = controlled_pair_losses(source_details, partner_details, pair_batch,
-                                    image_size=config["data"]["image_size"], support_threshold=config["model"]["support_threshold"])
+                                if pair_objective == "state_composition_v1":
+                                    pair_losses, pair_counts = state_composition_losses(source_details, partner_details, pair_batch,
+                                        support_threshold=config["model"]["support_threshold"])
+                                else:
+                                    pair_losses, pair_counts = controlled_pair_losses(source_details, partner_details, pair_batch,
+                                        image_size=config["data"]["image_size"], support_threshold=config["model"]["support_threshold"])
                             losses.update(pair_losses)
                             eligible_pairs += pair_counts["eligible"]
                             valid_pairs += pair_counts["field_valid"]
+                            supervised_pairs += pair_counts.get("readout_supervised", pair_counts["field_valid"])
                 loss = sum(config["loss_weights"].get(name, 1.0) * value for name, value in losses.items())
             if not torch.isfinite(loss):
                 raise FloatingPointError(f"nonfinite loss at epoch {epoch + 1}, batch {batch_index}")
@@ -508,6 +535,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                   "global_step": global_step, "train_samples": seen, "train_batches": steps,
                   "additional_pair_images": pair_images, "eligible_pairs": eligible_pairs,
                   "valid_cross_readouts": valid_pairs, "cross_readout_coverage": valid_pairs / eligible_pairs if eligible_pairs else None,
+                  "supervised_cross_readouts": supervised_pairs,
                   "losses": {name: value / seen for name, value in loss_sums.items()},
                   "validation": summary, "best_nmae": best_nmae, "elapsed_seconds": time.perf_counter() - started,
                   "validation_experts": {"direct": summarize_rows(direct_rows),

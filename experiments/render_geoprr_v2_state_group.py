@@ -1,4 +1,4 @@
-"""Render one SyncG diagnostic pilot with a fixed scene and four pointer states.
+"""Render one SyncG group with a fixed scene and controlled pointer states.
 
 Run with Blender's --python option, passing this script's arguments after --.
 The vendor source and assets remain external to the project code.
@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 import ast
+import gzip
 import json
 import math
 from numbers import Integral, Real
@@ -170,6 +171,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source-root", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--role", choices=("geometry_diagnostic", "source_training"), default="geometry_diagnostic")
+    parser.add_argument("--layout-id")
     parser.add_argument("--seed", type=int, default=20262020)
     parser.add_argument("--states", type=float, nargs="+", default=[0.15, 0.35, 0.65, 0.85])
     parser.add_argument("--width", type=int, default=512)
@@ -190,6 +193,8 @@ def main(argv=None):
 
     source = args.source_root.resolve()
     output = args.output.resolve()
+    diagnostic = args.role == "geometry_diagnostic"
+    factor_path = output / "factors.json.gz"
     extension = "jpg" if args.image_format == "JPEG" else "png"
     if (output / "group.json").exists() or any((output / "images").glob("*.png")) or any((output / "images").glob("*.jpg")):
         raise FileExistsError(f"pilot output already contains results: {output}")
@@ -209,7 +214,7 @@ def main(argv=None):
     np.random.seed(args.seed)
     random.seed(args.seed)
     scene_file = vendor.make_random_sense(scene_root=str(source / "scene_file"))
-    layout_id = f"syncg_state_pilot_{args.seed}"
+    layout_id = args.layout_id or f"syncg_state_{'pilot' if diagnostic else 'training'}_{args.seed}"
     names = [f"{layout_id}_s{index:02d}" for index in range(len(args.states))]
     dial, model = vendor.parameter_generate(save_folder=str(output / "images"), save_name=names[0],
                                            use_gpu=[], width=args.width, height=args.height)
@@ -272,17 +277,20 @@ def main(argv=None):
             if baseline is None or failures or any(sum(check["phase"] == phase for check in checks) != index + 1
                                                     for phase in ("render_pre", "render_post")):
                 raise RuntimeError(f"render identity checks did not pass: {failures}")
+            if not diagnostic and index == 0:
+                with gzip.open(factor_path, "wt", encoding="utf-8") as handle:
+                    json.dump({"layout_id": layout_id, "fixed_factors": baseline}, handle, allow_nan=False)
             vendor.output_json(**dial, seed=args.seed, width=args.width, height=args.height,
                                save_folder=str(output / "annotations"), save_name=names[index], scene_name=scene_file)
             annotation_path = output / "annotations" / f"{names[index]}.json"
             annotation = json.loads(annotation_path.read_text())
-            factors = {**baseline, "r": state}
+            factors = {**baseline, "r": state} if diagnostic else {"reference": str(factor_path), "r": state}
             annotation.update({"layout_id": layout_id, "factors": factors, "provenance": provenance,
-                               "diagnostic_only": True, "role": "geometry_diagnostic",
+                               "diagnostic_only": diagnostic, "role": args.role,
                                "pointer_rotation_euler": list(pointer.rotation_euler), "normalized_state": state})
             annotation_path.write_text(json.dumps(annotation, allow_nan=False, indent=2) + "\n")
             images.append({"sample_id": names[index], "layout_id": layout_id, "normalized_state": state,
-                           "diagnostic_only": True, "role": "geometry_diagnostic",
+                           "diagnostic_only": diagnostic, "role": args.role,
                            "pointer_rotate_degree": degree, "physical_reading": annotation["ground_truth"],
                            "image_path": str(output / "images" / f"{names[index]}.{extension}"),
                            "annotation_path": str(annotation_path)})
@@ -290,8 +298,9 @@ def main(argv=None):
         bpy.app.handlers.render_pre.remove(before_render)
         bpy.app.handlers.render_post.remove(after_render)
     (output / "manifests/raw_images.jsonl").write_text("".join(json.dumps(row) + "\n" for row in images))
-    group = {"pilot_only": True, "diagnostic_only": True, "role": "geometry_diagnostic",
-             "layout_id": layout_id, "provenance": provenance, "fixed_factors": baseline,
+    group = {"pilot_only": diagnostic, "diagnostic_only": diagnostic, "role": args.role,
+             "layout_id": layout_id, "provenance": provenance,
+             "fixed_factors": baseline if diagnostic else {"reference": str(factor_path)},
              "states": args.states, "images": images, "identity_checks": checks,
              "annotation_format": "Upstream output_json plus explicit factors; convert with syncg_row before dataset loading."}
     (output / "group.json").write_text(json.dumps(group, allow_nan=False, indent=2) + "\n")

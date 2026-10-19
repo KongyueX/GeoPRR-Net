@@ -1,0 +1,69 @@
+{
+  "protocol": "geoprr_v2_gpu_render_quality_probe_v1",
+  "diagnostic_only": true,
+  "role": "render_quality_and_throughput",
+  "seed": 20262020,
+  "layout_groups": 1,
+  "images": 4,
+  "states": [
+    0.15,
+    0.35,
+    0.65,
+    0.85
+  ],
+  "settings": {
+    "blender_version": "4.5.14 LTS",
+    "render_engine": "CYCLES",
+    "backend": "CUDA",
+    "width": 1920,
+    "height": 1080,
+    "samples_per_pixel": 200,
+    "image_format": "JPEG",
+    "jpeg_quality": 95,
+    "cpu_threads": 4
+  },
+  "hardware": {
+    "gpu_name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "gpu_render_devices_enabled": 1,
+    "cpu_render_device_enabled": false
+  },
+  "provenance": {
+    "upstream_repository": "https://github.com/SKYWOWDYH/SyncG",
+    "upstream_revision": "337b868f0f5495b31acc383433cac44040247bf2",
+    "scene_name": "peppermint_powerplant_4k.hdr",
+    "intervention": "same selected pointer rotation only",
+    "virtual_q_semantics": "Virtual radius-one dial-plane readout point is derived by GeoPRRV2Dataset; Pointer.outside_kp is the physical pointer tip, not Q."
+  },
+  "render_seconds": [
+    3.32,
+    3.37,
+    3.41,
+    3.34
+  ],
+  "render_seconds_boundary": "Per-image elapsed values reported in Blender render-log Time lines; these exclude the full Blender-process startup and scene-construction boundary.",
+  "first_render_seconds": 3.32,
+  "subsequent_render_seconds_mean": 3.3733333333333335,
+  "render_seconds_mean": 3.36,
+  "render_process_wall_seconds": 18.548555,
+  "process_boundary": "Blender startup, scene construction, four renders, identity checks and labels",
+  "render_process_wall_excludes": [
+    "separate geometry-diagnostic process"
+  ],
+  "sampled_gpu_memory_max_mib": 4452,
+  "gpu_memory_sample_interval_seconds": 1,
+  "gpu_memory_samples": 12,
+  "gpu_memory_measurement_scope": "nvidia-smi --query-compute-apps sampled used_memory for the Blender render-process PID only; the reported maximum is not an exact peak.",
+  "image_bytes": [
+    386640,
+    386586,
+    386243,
+    386405
+  ],
+  "trained_model_used": false,
+  "formal_dataset_generation": false,
+  "limitations": [
+    "One fixed-layout, fixed-appearance, fixed-camera group with four pointer states; no full-dataset throughput or layout-diversity claim.",
+    "Per-image Blender timings and whole-render-process wall time have distinct measurement boundaries.",
+    "GPU memory was sampled once per second and may miss transient peaks."
+  ]
+}

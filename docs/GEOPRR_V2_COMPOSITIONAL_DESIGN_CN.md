@@ -4,7 +4,7 @@
 
 局部主峰读出是后处理，保留为强解码对照。单独添加 Q/U 两条辅助损失具有可解释的优化作用，但尚不足以认定强创新。主要研究问题是：在同一表盘改变指针状态后，刻度标定 U 能否稳定，并与另一状态图的 Q 正确组合；这种训练能否比等曝光的普通监督和一致性训练带来实际收益。
 
-当前已实现并开始训练首种子 Q/U 辅助损失候选，尚无其完整训练结果。跨状态主机制已有基础配对/warp/组合损失代码，但当前训练没有启用受控组；现有 14,494 条源训练 metadata 没有完整 g/r/a/c 因子记录，不能据场景名称直接认定它们是受控对。
+首种子 Q/U 辅助损失候选已完成 65 轮，native 源验证 NMAE 为 `0.191394952%FS`，相对原模型只下降 `0.18486%`，未达到冻结的 5% 扩展门槛。固定 r8 同读出下降 `12.0723%`、>5%FS 从 3 降至 1，保留为训练与读出响应差异的开发证据；不据此改写门槛或扩展该候选。完整结果见 [decoupled_20261020](data/geoprr_v2_decoupled_20261020/README.md)。跨状态主机制尚无训练结果；现有 14,494 条源训练 metadata 没有完整 g/r/a/c 因子记录，不能据场景名称直接认定它们是受控对。
 
 一个同场景四状态 CPU 诊断组已完成渲染及标签组合核验，状态为 0.15/0.35/0.65/0.85。11 次渲染前后及调用前检查的非干预因素均相等，4 个源配对可由现有 loader 读取；16 个 GT 跨图组合的最大读数误差为 `0.000073016%FS`。这是生成链路和标签合同证据，没有使用学习模型，不能代表组合训练或泛化收益。结果见 [state_pilot_20261020](data/geoprr_v2_state_pilot_20261020/README.md)。正式受控源组、多 recipient 采样、留出组合边和等曝光三臂仍待完成。
 
@@ -61,9 +61,9 @@ python -m experiments.prepare_geoprr_v2_state_group \
 
 此组使用 512×512、16 samples、CPU 4 线程。所有新清单均标记 `diagnostic_only`，不并入原固定清单。正式数据的分辨率、采样质量、执行设备、吞吐与组数需单独确定，不能将该试渲染配置直接当作正式数据协议。
 
-另一个质量与吞吐诊断已排入顺序队列：`python -m experiments.run_geoprr_v2_render_probe`。该入口等待当前 Q/U 读数队列完成及 GPU 无计算进程后，才用独立 Blender 4.5.14/CUDA 生成一个 1920×1080、200 samples、JPEG 95 的四状态组。4.5 路线参考官方 [Blackwell 支持说明](https://developer.blender.org/docs/release_notes/4.4/cycles/)，已验证的 4.1.1 CPU 路径保留。CUDA 场景执行、该设置的图像语义和实际吞吐尚待测量，不能从版本或硬件规格推断速度。
+另一个质量与吞吐诊断已完成：`python -m experiments.run_geoprr_v2_render_probe` 等待 Q/U 队列完成及 GPU 空闲后，用独立 Blender 4.5.14/CUDA 生成了一个 1920×1080、200 samples、JPEG 95 的四状态组。四张图的 Blender 调用耗时为 `3.32/3.37/3.41/3.34 秒`，包含启动、场景构建、四次渲染、因子检查与标签导出的整组进程为 `18.548555 秒`；每秒采样的显存最大值为 `4452 MiB`。16 次真值组合最大误差为 `0.000075102%FS`。详见 [GPU 渲染探针](data/geoprr_v2_gpu_render_probe_20261020/README.md)。4.5 路线参考官方 [Blackwell 支持说明](https://developer.blender.org/docs/release_notes/4.4/cycles/)，已验证的 4.1.1 CPU 路径保留。
 
-新诊断输出位于 `rendering/gpu_quality_probe_seed20262020_v1/`，继续标记 `diagnostic_only`。它将记录首次和后续渲染时间、整组进程耗时、按秒采样的 GPU 显存与几何合同；这些量分别报告，不把渲染调用时间当完整数据生成耗时。三臂正式训练尚未启动。
+诊断输出位于 `rendering/gpu_quality_probe_seed20262020_v1/`，继续标记 `diagnostic_only`。上述速度只来自一个布局，不能视为正式全数据吞吐；该诊断没有学习模型。正式补充源组与等曝光三臂的冻结协议见 [GEOPRR_V2_COMPOSITIONAL_PROTOCOL_CN.md](GEOPRR_V2_COMPOSITIONAL_PROTOCOL_CN.md)。
 
 ## 正式训练前的接口事项
 

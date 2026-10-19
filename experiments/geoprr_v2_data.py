@@ -6,6 +6,7 @@ Image/output pixel coordinates use the half-pixel, align_corners=False rule.
 """
 from __future__ import annotations
 
+import gzip
 import json
 import math
 from collections.abc import Mapping, Sequence
@@ -261,15 +262,42 @@ def _resolve_image(row: Mapping[str, Any], manifest_root: Path, dataset_root: Pa
     raise FileNotFoundError(f"{row['sample_id']}: image not found: {value}")
 
 
-def load_controlled_pairs(source: str | Path, rows: Sequence[Mapping[str, Any]]) -> dict[str, dict[str, Any]]:
+def load_controlled_pairs(source: str | Path, rows: Sequence[Mapping[str, Any]]) -> dict[str, list[dict[str, Any]]]:
     """Require complete per-image factor records, rather than seed equality."""
     records = [json.loads(line) for line in Path(source).read_text(encoding="utf-8").splitlines() if line.strip()]
     by_id = {str(row["sample_id"]): row for row in rows}
-    pairs: dict[str, dict[str, Any]] = {}
+    pairs: dict[str, list[dict[str, Any]]] = {}
+    edges: set[tuple[str, str]] = set()
+    snapshots: dict[Path, dict[str, Any]] = {}
+
+    def factors_for(value: Any, layout_id: str) -> dict[str, Any]:
+        if isinstance(value, dict) and set(value) == {"reference", "r"}:
+            path = Path(value["reference"])
+            if not path.is_absolute():
+                raise ValueError("factor snapshot reference must be an absolute path")
+            if path not in snapshots:
+                with gzip.open(path, "rt", encoding="utf-8") as handle:
+                    snapshots[path] = json.load(handle)
+            snapshot = snapshots[path]
+            if snapshot.get("layout_id") != layout_id:
+                raise ValueError("factor snapshot layout must match the pair and image")
+            fixed = snapshot.get("fixed_factors")
+            if not isinstance(fixed, dict) or set(fixed) != {"g", "a", "c"}:
+                raise ValueError("factor snapshot must contain fixed g, a, c")
+            value = dict(fixed, r=value["r"])
+        if not isinstance(value, dict) or set(value) != {"g", "r", "a", "c"}:
+            raise ValueError("pair factor record must contain exactly g, r, a, c")
+        if not isinstance(value["g"], dict) or not value["g"]:
+            raise ValueError("pair g must record actual nonempty layout parameters")
+        return value
+
     for pair in records:
         a, b = str(pair["sample_a"]), str(pair["sample_b"])
-        if a not in by_id or b not in by_id or a == b or a in pairs:
-            raise ValueError("controlled pairs require distinct in-partition IDs and one partner per sample_a")
+        if a not in by_id or b not in by_id or a == b:
+            raise ValueError("controlled pairs require distinct in-partition IDs")
+        if (a, b) in edges:
+            raise ValueError("duplicate controlled pair edge")
+        edges.add((a, b))
         kind = pair.get("kind")
         changed = {"state": "r", "appearance": "a", "camera": "c"}.get(kind)
         if changed is None or not pair.get("layout_id"):
@@ -277,12 +305,8 @@ def load_controlled_pairs(source: str | Path, rows: Sequence[Mapping[str, Any]])
         factors = []
         for side, sid in (("a", a), ("b", b)):
             metadata = by_id[sid].get("metadata", {})
-            value = pair.get(f"factors_{side}")
-            if not isinstance(value, dict) or set(value) != {"g", "r", "a", "c"}:
-                raise ValueError("pair factor record must contain exactly g, r, a, c")
-            if not isinstance(value["g"], dict) or not value["g"]:
-                raise ValueError("pair g must record actual nonempty layout parameters")
-            if metadata.get("factors") != value or metadata.get("layout_id") != pair["layout_id"]:
+            value = factors_for(pair.get(f"factors_{side}"), pair["layout_id"])
+            if metadata.get("layout_id") != pair["layout_id"] or factors_for(metadata.get("factors"), pair["layout_id"]) != value:
                 raise ValueError("pair factors/layout must match the individual image generation records")
             if abs(float(value["r"]) - normalized_target(by_id[sid])) > 1e-6:
                 raise ValueError("pair state r does not match its physical reading")
@@ -291,7 +315,7 @@ def load_controlled_pairs(source: str | Path, rows: Sequence[Mapping[str, Any]])
             raise ValueError("declared intervention did not change its recorded factor")
         if any(factors[0][key] != factors[1][key] for key in {"g", "r", "a", "c"} - {changed}):
             raise ValueError("non-intervened factors changed in controlled pair")
-        pairs[a] = dict(pair, pair_same_state=kind != "state")
+        pairs.setdefault(a, []).append(dict(pair, pair_same_state=kind != "state"))
     return pairs
 
 
@@ -312,10 +336,17 @@ class GeoPRRV2Dataset(Dataset):
         self.geometry_config = geometry_config or GeometryConfig()
         self.pairs = load_controlled_pairs(pair_manifest, self.rows) if pair_manifest is not None else None
         self.by_id = {str(row["sample_id"]): index for index, row in enumerate(self.rows)}
+        self.items = []
+        for index, row in enumerate(self.rows):
+            pairs = self.pairs.get(str(row["sample_id"]), [None]) if self.pairs is not None else [None]
+            self.items.extend((index, pair) for pair in pairs)
+        self.unique_image_count = len(self.rows)
+        self.item_count = len(self.items)
+        self.controlled_edge_count = sum(len(pairs) for pairs in self.pairs.values()) if self.pairs is not None else 0
         self._calibrations: dict[int, dict[str, Any]] = {}
 
     def __len__(self) -> int:
-        return len(self.rows)
+        return len(self.items)
 
     def _sample(self, index: int, photometric: tuple[float, float, float] | None = None) -> dict[str, Any]:
         row = self.rows[index]
@@ -354,10 +385,10 @@ class GeoPRRV2Dataset(Dataset):
 
     def __getitem__(self, index: int) -> dict[str, Any]:
         photometric = self._photometric() if self.augment else None
-        sample = self._sample(index, photometric)
+        row_index, pair = self.items[index]
+        sample = self._sample(row_index, photometric)
         if self.pairs is None:
             return sample
-        pair = self.pairs.get(sample["sample_id"])
         partner = self._sample(self.by_id[pair["sample_b"]], photometric) if pair is not None else sample
         keys = ["image", "y", "sample_id"]
         if self.require_geometry:

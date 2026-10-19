@@ -48,6 +48,9 @@ def syncg_row(annotation_path: Path, image_dir: Path) -> dict[str, Any]:
     for key in ("homography_bbox", "layout_id", "factors"):
         if key in annotation:
             row["metadata"][key] = annotation[key]
+    for key in ("diagnostic_only", "role"):
+        if key in annotation:
+            row[key] = annotation[key]
     normalized_target(row)
     return row
 
