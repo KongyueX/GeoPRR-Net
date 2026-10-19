@@ -117,14 +117,14 @@ python -m experiments.train_geoprr_v2 \
   --val-manifest "$GEOPRR_HOME/runs/geoprr_v2/manifests/validation.jsonl"
 ```
 
-对照用同一命令追加 `--variant raw_scalar`、`--variant raw_distribution` 或 `--variant multitask`；两种骨干和各变体使用独立输出目录。重复种子可通过 `--seed` 指定，骨干对照使用同一组种子。
+对照用同一命令追加 `--variant raw_scalar`、`--variant raw_distribution` 或 `--variant multitask`；两种骨干和各变体使用独立输出目录。默认训练种子沿用原正式实验的首个种子 `20262020`；重复种子可通过 `--seed` 指定，正式多种子比较沿用 `20262020、20262021、20262022`。训练种子与数据划分种子独立，重复训练须固定复用同一份 `split.json` 和名单，不随训练种子重新划分数据。
 
 默认输出结构为 `runs/geoprr_v2/{config.name}/{variant}/seed_{seed}/`，包含 `run.json`、`config.json`、`history.jsonl`、`latest.pt`、`best.pt` 和 `best_validation.json`。最优检查点只按源域验证 NMAE 选择。
 
 恢复时重用原命令及其参数，并追加：
 
 ```bash
---resume "$GEOPRR_HOME/runs/geoprr_v2/convnextv2_femto/field/seed_20261019/latest.pt"
+--resume "$GEOPRR_HOME/runs/geoprr_v2/convnextv2_femto/field/seed_20262020/latest.pt"
 ```
 
 恢复包含模型、优化器、调度器、AMP scaler、随机状态和 epoch；每轮用 `seed + epoch` 确定数据加载顺序。配置与名单须和原运行相同。有限 batch 的 smoke 检查点只用于诊断，不继续作为正式训练。
@@ -135,7 +135,7 @@ python -m experiments.train_geoprr_v2 \
 
 ```bash
 python -m experiments.evaluate_geoprr_v2 \
-  --checkpoint "$GEOPRR_HOME/runs/geoprr_v2/convnextv2_femto/field/seed_20261019/best.pt" \
+  --checkpoint "$GEOPRR_HOME/runs/geoprr_v2/convnextv2_femto/field/seed_20262020/best.pt" \
   --manifest "$GEOPRR_HOME/runs/geoprr_v2/manifests/test.jsonl" \
   --output "$GEOPRR_HOME/runs/geoprr_v2/evaluation/femto_syncg_test"
 ```

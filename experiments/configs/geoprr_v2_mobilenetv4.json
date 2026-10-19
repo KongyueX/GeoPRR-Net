@@ -13,7 +13,7 @@
     "output_size": 192
   },
   "training": {
-    "seed": 20261019,
+    "seed": 20262020,
     "epochs": 65,
     "warmup_epochs": 5,
     "batch_size": 32,
