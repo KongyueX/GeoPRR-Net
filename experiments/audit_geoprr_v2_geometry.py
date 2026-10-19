@@ -13,7 +13,7 @@ from experiments.geoprr_v2_data import GeoPRRV2Dataset, GeometryConfig, geometry
 
 
 def audit_geometry(manifest: Path, *, dataset_root: Path | None = None,
-                   image_size: int = 640, limit: int | None = None,
+                   image_size: int = 768, limit: int | None = None,
                    config: GeometryConfig | None = None,
                    probe_endpoints: bool = False) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     config = config or GeometryConfig()
@@ -49,7 +49,8 @@ def audit_geometry(manifest: Path, *, dataset_root: Path | None = None,
     for name in sorted(metric_names):
         values = np.asarray([row[name] for row in passed])
         metrics[name] = {"mean": float(values.mean()), "p95": float(np.quantile(values, 0.95)), "max": float(values.max())}
-    summary = {"protocol": "geoprr_v2_dial_plane_geometry_audit_v1", "manifest": str(manifest.resolve()),
+    summary = {"protocol": "geoprr_v2_dial_plane_geometry_audit_v2", "manifest": str(manifest.resolve()),
+               "calibration": "known_tick_angles_similarity_v1",
                "diagnostic_only": count != len(dataset) or "diagnostic" in manifest.name or any(row.get("diagnostic_only", False) for row in dataset.rows),
                "image_size": image_size, "output_size": image_size // 4,
                "pixel_centers": "align_corners_false_half_pixel",
@@ -73,7 +74,7 @@ def main() -> None:
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--dataset-root", type=Path)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--image-size", type=int, default=640)
+    parser.add_argument("--image-size", type=int, default=768)
     parser.add_argument("--limit", type=int)
     parser.add_argument("--probe-endpoints", action="store_true",
                         help="numerical label probes at both arc ends, not extra training images")

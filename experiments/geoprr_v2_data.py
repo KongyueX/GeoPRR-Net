@@ -119,7 +119,7 @@ def dial_calibration(row: Mapping[str, Any], original_to_roi: np.ndarray, config
     """Validate H against ordered ticks and construct a common metric dial frame.
 
     SyncG H maps bbox-normalized source coordinates to [0,1] dial-plane
-    coordinates.  The center comes from the complete rectified tick circle;
+    coordinates.  Known tick angles constrain a similarity fit after H;
     Pointer.origin_kp is above the dial and is not the plane center target.
     """
     sample_id = row["sample_id"]
@@ -132,44 +132,54 @@ def dial_calibration(row: Mapping[str, Any], original_to_roi: np.ndarray, config
         normalize_bbox = np.array([[1 / w, 0, -bbox[0] / w], [0, 1 / h, -bbox[1] / h], [0, 0, 1]])
         source_to_plane = h_ann @ normalize_bbox
         rectified = transform_points(marks, source_to_plane)
-        lhs = np.column_stack((2 * rectified, np.ones(len(marks))))
-        fit, _, rank, _ = np.linalg.lstsq(lhs, (rectified ** 2).sum(axis=1), rcond=None)
-        if rank != 3:
-            raise GeometryContractError("ordered scale points do not determine a circle")
-        center = fit[:2]
-        radius_squared = fit[2] + float(center @ center)
+        interval = float(metadata.get("long_interval_degree", float("nan")))
+        pointer_angle = float(metadata.get("pointer_angle", float("nan")))
+        if not np.isfinite([interval, pointer_angle]).all() or interval <= 0:
+            raise GeometryContractError("physical angle/interval labels are missing")
+        angles = np.deg2rad(np.arange(len(marks), dtype=np.float64) * interval)
+        if not 0 < angles[-1] < 2 * np.pi - 1e-5:
+            raise GeometryContractError("scale marks are not a single ordered arc")
+        y = normalized_target(row)
+        physical_error = abs(pointer_angle / (interval * (len(marks) - 1)) - y)
+        if physical_error > 1e-6:
+            raise GeometryContractError(f"physical y and pointer_rotate_degree disagree ({physical_error:.6g})")
+        # Quantized points on a short arc cannot reliably determine a free
+        # circle center.  The annotated angular intervals constrain all ticks
+        # with one translation, rotation and scale in the rectified plane.
+        polygon_area = np.sum(rectified[:, 0] * np.roll(rectified[:, 1], -1)
+                              - rectified[:, 1] * np.roll(rectified[:, 0], -1))
+        direction = 1.0 if polygon_area >= 0 else -1.0
+        cosines, sines = np.cos(direction * angles), np.sin(direction * angles)
+        lhs = np.zeros((2 * len(marks), 4), dtype=np.float64)
+        lhs[0::2] = np.column_stack((cosines, -sines, np.ones(len(marks)), np.zeros(len(marks))))
+        lhs[1::2] = np.column_stack((sines, cosines, np.zeros(len(marks)), np.ones(len(marks))))
+        fit, _, rank, _ = np.linalg.lstsq(lhs, rectified.reshape(-1), rcond=None)
+        if rank != 4:
+            raise GeometryContractError("ordered scale points do not determine angular calibration")
+        a, b = fit[:2]
+        center = fit[2:]
+        radius_squared = a * a + b * b
         if radius_squared <= 0:
             raise GeometryContractError("invalid reference ring radius")
         radius = math.sqrt(radius_squared)
-        vectors = (rectified - center) / radius
+        rotate = np.array([[a, b], [-direction * b, direction * a]]) / radius_squared
+        vectors = (rectified - center) @ rotate.T
         radial_error = float(np.max(np.abs(np.linalg.norm(vectors, axis=1) - 1)))
         center_error = float(np.linalg.norm(center - 0.5) / radius)
         unwrapped = np.unwrap(np.arctan2(vectors[:, 1], vectors[:, 0]))
-        differences = np.diff(unwrapped)
-        direction = 1.0 if np.median(differences) > 0 else -1.0
-        angles = direction * (unwrapped - unwrapped[0])
-        if np.any(np.diff(angles) <= 0) or not 0 < angles[-1] < 2 * np.pi - 1e-5:
+        unwrapped -= 2 * np.pi * round(float(unwrapped[0]) / (2 * np.pi))
+        measured_arc = float(unwrapped[-1] - unwrapped[0])
+        if np.any(np.diff(unwrapped) <= 0) or not 0 < measured_arc < 2 * np.pi - 1e-5:
             raise GeometryContractError("scale marks are not a single ordered arc")
         expected = np.linspace(0, 1, len(marks))
-        anchor_error = float(np.max(np.abs(angles / angles[-1] - expected)))
-        interval = float(metadata.get("long_interval_degree", float("nan")))
-        arc_error = abs(float(angles[-1]) - math.radians(interval * (len(marks) - 1))) / float(angles[-1])
-        y = normalized_target(row)
-        pointer_angle = float(metadata.get("pointer_angle", float("nan")))
-        physical_error = abs(pointer_angle / (interval * (len(marks) - 1)) - y)
-        if not np.isfinite([interval, pointer_angle, arc_error, physical_error]).all() or interval <= 0:
-            raise GeometryContractError("physical angle/interval labels are missing")
-        if physical_error > 1e-6:
-            raise GeometryContractError(f"physical y and pointer_rotate_degree disagree ({physical_error:.6g})")
+        anchor_error = float(np.max(np.abs(unwrapped - angles)) / angles[-1])
+        arc_error = abs(measured_arc - float(angles[-1])) / measured_arc
         if radial_error > config.max_radial_error or center_error > config.max_center_error:
             raise GeometryContractError(f"H/bbox circle audit failed: radial={radial_error:.6g}, center={center_error:.6g}")
         if anchor_error > config.max_anchor_progress_error or arc_error > config.max_anchor_progress_error:
             raise GeometryContractError(f"ordered scale angle audit failed: anchor={anchor_error:.6g}, arc={arc_error:.6g}")
         # This layout-fixed frame puts the ordered first mark on +x and follows
         # the physical tick order.  It never uses the current pointer position.
-        start = float(unwrapped[0])
-        rotate = np.array([[math.cos(start), math.sin(start)],
-                           [-direction * math.sin(start), direction * math.cos(start)]]) / radius
         plane_to_canonical = np.eye(3)
         plane_to_canonical[:2, :2] = rotate
         plane_to_canonical[:2, 2] = -rotate @ center
@@ -287,7 +297,7 @@ def load_controlled_pairs(source: str | Path, rows: Sequence[Mapping[str, Any]])
 
 class GeoPRRV2Dataset(Dataset):
     def __init__(self, manifest_path: str | Path | Sequence[Mapping[str, Any]], *,
-                 dataset_root: str | Path | None = None, image_size: int = 640,
+                 dataset_root: str | Path | None = None, image_size: int = 768,
                  output_size: int | None = None, augment: bool = False,
                  require_geometry: bool = True, pair_manifest: str | Path | None = None,
                  geometry_config: GeometryConfig | None = None) -> None:

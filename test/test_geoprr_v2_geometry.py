@@ -35,6 +35,36 @@ def synthetic_row(sample_id: str = "dial", y: float = 0.4, *, arc_degrees: float
 
 
 class GeoPRRV2GeometryTests(unittest.TestCase):
+    def test_quantized_short_arc_uses_annotated_angular_spacing(self) -> None:
+        row = synthetic_row(arc_degrees=60, num_ticks=7)
+        row["metadata"].update(dial_bbox=[633, 213, 1286, 866], homography=np.eye(3).tolist())
+        theta = np.deg2rad(240 + np.arange(7) * 10)
+        pixels = np.stack((960 + 245 * np.cos(theta), 540 + 245 * np.sin(theta)), -1)
+        row["metadata"]["keypoints"][0]["all_kp"] = pixels.astype(int).tolist()
+        result = dial_calibration(row, np.eye(3), GeometryConfig())
+        np.testing.assert_allclose(result["angles"], np.deg2rad(np.arange(7) * 10))
+        self.assertLess(result["audit"]["anchor_progress_error"], 0.01)
+        self.assertLess(result["audit"]["arc_relative_error"], 0.01)
+
+    def test_released_short_arc_endpoint_meets_readout_tolerance(self) -> None:
+        row = synthetic_row("sync_8352")
+        row.update(ground_truth=49.389767597011655, scale_start=49, scale_end=211)
+        row["metadata"].update(
+            dial_bbox=[698, 300, 1221, 802], long_num=7, long_interval_degree=10,
+            pointer_angle=0.14435836926357526,
+            homography=[[0.6032142104434299, 1.0417101309537347, -0.2698913129319288],
+                        [-0.9641700187690594, 0.6746588886232333, 0.6890913256038186],
+                        [1.1783093019381194e-7, 0.12251612559867543, 1]],
+        )
+        row["metadata"]["keypoints"][0]["all_kp"] = [
+            [1046, 385], [1074, 401], [1098, 421], [1119, 445], [1135, 472], [1146, 502], [1151, 533],
+        ]
+        image = np.zeros((1080, 1920, 3), dtype=np.uint8)
+        config = GeometryConfig()
+        _, resize = crop_and_resize(image, row["metadata"]["dial_bbox"], 768)
+        target = geometry_targets(dial_calibration(row, resize, config), 768, 192, config)
+        self.assertLess(target["geometry_audit"]["gt_readout_error"], config.max_readout_error)
+
     def test_metric_calibration_recovers_cross_zero_ordered_arc(self) -> None:
         result = dial_calibration(synthetic_row(), np.eye(3), GeometryConfig())
         np.testing.assert_allclose(result["angles"], np.deg2rad(np.arange(9) * 30), atol=1e-12)

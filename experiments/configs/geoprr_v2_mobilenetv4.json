@@ -9,8 +9,8 @@
     "support_threshold": 0.15
   },
   "data": {
-    "image_size": 640,
-    "output_size": 160
+    "image_size": 768,
+    "output_size": 192
   },
   "training": {
     "seed": 20261019,

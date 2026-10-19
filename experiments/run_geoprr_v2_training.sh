@@ -10,7 +10,7 @@ python -m experiments.prepare_geoprr_v2_data \
     --root "$GEOPRR_HOME/datasets/SyncG/syncG" --output-dir "$manifest_dir"
 python -m experiments.audit_geoprr_v2_geometry \
     --manifest "$manifest_dir/source_train.jsonl" --dataset-root "$GEOPRR_HOME/datasets" \
-    --image-size 640 --min-support-mass 0.15 \
+    --image-size 768 --min-support-mass 0.15 \
     --output "$GEOPRR_HOME/runs/geoprr_v2/geometry_audit.json"
 
 for backbone in femto mobilenetv4; do

@@ -31,7 +31,7 @@ source experiments/geoprr_v2_env.sh
 
 ```bash
 python -m experiments.check_geoprr_v2_runtime \
-  --device cuda --pretrained --image-size 640 --batch-size 2 \
+  --device cuda --pretrained --image-size 768 --batch-size 2 \
   --output "$GEOPRR_HOME/runs/geoprr_v2/setup/cuda_check.json"
 ```
 
@@ -53,7 +53,7 @@ python -m experiments.check_geoprr_v2_runtime \
 - `convnextv2_femto.fcmae_ft_in1k`，默认主骨干。
 - `mobilenetv4_conv_medium.e500_r224_in1k`，另一种轻量骨干。
 
-两个配置统一采用 640×640 输入、160×160 结构输出、256 个有序读数格、64 通道解码器、batch 32、8 个数据加载进程。初值为 5 轮骨干冻结热启动及 60 轮联合优化，AdamW，骨干/新增层学习率分别为 1e-4 / 5e-4，余弦衰减，AMP 与梯度裁剪。它们是初始训练设置，尚不能视为最佳超参数；正式 batch 与吞吐需在启用 GPU 后实测。
+两个配置统一采用 768×768 输入、192×192 结构输出、256 个有序读数格、64 通道解码器、batch 32、8 个数据加载进程。初值为 5 轮骨干冻结热启动及 60 轮联合优化，AdamW，骨干/新增层学习率分别为 1e-4 / 5e-4，余弦衰减，AMP 与梯度裁剪。它们是初始训练设置，尚不能视为最佳超参数；正式 batch 与吞吐需在启用 GPU 后实测。
 
 支持阈值初值为 0.15。阈值和几何标签参数随运行记录；后续只在源域开发集选择并冻结，外部测试不调阈值。
 
@@ -79,11 +79,11 @@ python -m experiments.prepare_geoprr_v2_data \
 python -m experiments.audit_geoprr_v2_geometry \
   --manifest "$GEOPRR_HOME/runs/geoprr_v2/manifests/source_train.jsonl" \
   --dataset-root "$GEOPRR_HOME/datasets" \
-  --image-size 640 --min-support-mass 0.15 \
+  --image-size 768 --min-support-mass 0.15 \
   --output "$GEOPRR_HOME/runs/geoprr_v2/geometry_audit.json"
 ```
 
-H 的输入是 bbox 归一化相机坐标；ROI 裁剪、缩放与输出网格采用同一半像素中心约定。规范中心和参考半径来自 H 整流后的有序主刻度圈，Q 从物理读数及该刻度环投影得到，可见针尖不会直接充当 Q 标签。
+H 的输入是 bbox 归一化相机坐标；ROI 裁剪、缩放与输出网格采用同一半像素中心约定。在 H 整流后的平面上，以标注的主刻度角间隔约束四参数相似拟合，估计规范中心、参考半径和方向；观测刻度的径向与角度残差仍按原阈值核验。Q 从物理读数及该刻度环投影得到，可见针尖不会直接充当 Q 标签。
 
 审计报告包含刻度圈残差、刻度顺序和角度—读数一致性、GT Q/M/U 组合误差及有效质量。失败行保留，命令以非零状态结束；不通过静默过滤失败行生成更容易的训练集。`--probe-endpoints` 可额外检查每个布局的端点数值表示，报告会将其标为标签探针。
 
