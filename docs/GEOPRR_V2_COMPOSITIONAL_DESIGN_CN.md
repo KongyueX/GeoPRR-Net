@@ -4,7 +4,9 @@
 
 局部主峰读出是后处理，保留为强解码对照。单独添加 Q/U 两条辅助损失具有可解释的优化作用，但尚不足以认定强创新。主要研究问题是：在同一表盘改变指针状态后，刻度标定 U 能否稳定，并与另一状态图的 Q 正确组合；这种训练能否比等曝光的普通监督和一致性训练带来实际收益。
 
-当前已实现首种子 Q/U 辅助损失候选，尚无其训练结果。跨状态主机制已有基础配对/warp/组合损失代码，但当前训练没有启用受控组；现有 14,494 条源训练 metadata 没有完整 g/r/a/c 因子记录，不能据场景名称直接认定它们是受控对。多状态组、采样器及其结果仍待完成。
+当前已实现并开始训练首种子 Q/U 辅助损失候选，尚无其完整训练结果。跨状态主机制已有基础配对/warp/组合损失代码，但当前训练没有启用受控组；现有 14,494 条源训练 metadata 没有完整 g/r/a/c 因子记录，不能据场景名称直接认定它们是受控对。
+
+一个同场景四状态 CPU 诊断组已完成渲染及标签组合核验，状态为 0.15/0.35/0.65/0.85。11 次渲染前后及调用前检查的非干预因素均相等，4 个源配对可由现有 loader 读取；16 个 GT 跨图组合的最大读数误差为 `0.000073016%FS`。这是生成链路和标签合同证据，没有使用学习模型，不能代表组合训练或泛化收益。结果见 [state_pilot_20261020](data/geoprr_v2_state_pilot_20261020/README.md)。正式受控源组、多 recipient 采样、留出组合边和等曝光三臂仍待完成。
 
 ## 已有工作与可以借鉴的机制
 
@@ -40,6 +42,24 @@
 先限定相同相机和 ROI 网格。外观与相机作为留出泛化轴，跨相机组合留作后续扩展；图像 warp 不等同于真实相机重新成像。Q 始终是共同表盘面的虚拟读出点，不能用突出表盘的可见针尖替代。不同布局不直接交换后沿用标签。
 
 当前 loader 每个 sample_a 只允许一个 partner。兑现多 recipient 需要独立实现组采样与留出边；现有原始训练名单保持冻结，新受控组须另存清单和协议，所有对照得到相同新增图像。
+
+## 诊断组入口
+
+官方 SyncG 工程、portable Blender 4.1.1、bundled Python 及独立 OpenCV 存放于项目 `rendering/`。CPU 入口仅为 Blender 子进程加载项目私有的共享库和 Python 包，当前训练 `.venv` 独立使用。
+
+```bash
+bash experiments/geoprr_v2_render_cpu.sh --background --factory-startup \
+  --python experiments/render_geoprr_v2_state_group.py -- \
+  --source-root /root/autodl-tmp/geoprrnet/rendering/vendor/SyncG-337b868f0f5495b31acc383433cac44040247bf2 \
+  --output /root/autodl-tmp/geoprrnet/rendering/pilot_state_seed20262020_v1
+
+python -m experiments.prepare_geoprr_v2_state_group \
+  --group /root/autodl-tmp/geoprrnet/rendering/pilot_state_seed20262020_v1
+```
+
+渲染脚本只加载外部生成器的函数和 imports，使用一次场景构建、随后改变同一指针旋转；生成标签时按实际图像尺寸投影主刻度。全部 RGB/JSON 在同一材质与 world 下完成，分割渲染不进入此路径。原始工程依赖在项目外部资源目录保留，公开代码仅包含适配器及诊断汇总。
+
+此组使用 512×512、16 samples、CPU 4 线程。所有新清单均标记 `diagnostic_only`，不并入原固定清单。正式数据的分辨率、采样质量、执行设备、吞吐与组数需单独确定，不能将该试渲染配置直接当作正式数据协议。
 
 ## 决定贡献的对照
 
