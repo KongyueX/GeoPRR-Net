@@ -1,4 +1,4 @@
-"""Render one CPU SyncG pilot with a fixed scene and four pointer states.
+"""Render one SyncG diagnostic pilot with a fixed scene and four pointer states.
 
 Run with Blender's --python option, passing this script's arguments after --.
 The vendor source and assets remain external to the project code.
@@ -68,6 +68,24 @@ def node_tree(tree):
                                             for link in tree.links)}
 
 
+def device_records(preferences):
+    return [{"name": device.name, "id": device.id, "type": device.type, "use": bool(device.use)}
+            for device in preferences.devices]
+
+
+def configure_devices(bpy, device):
+    if device == "CPU":
+        return {"backend": "CPU", "devices": []}
+    preferences = bpy.context.preferences.addons["cycles"].preferences
+    preferences.compute_device_type = "CUDA"
+    preferences.get_devices()
+    if not any(device.type == "CUDA" for device in preferences.devices):
+        raise RuntimeError("Cycles CUDA device requested but no CUDA device is available")
+    for device in preferences.devices:
+        device.use = device.type == "CUDA"
+    return {"backend": preferences.compute_device_type, "devices": device_records(preferences)}
+
+
 def scene_factors(bpy, pointer_name, dial_parameters, model_parameters):
     scene = bpy.context.scene
     objects, meshes, texts = [], {}, {}
@@ -116,8 +134,14 @@ def scene_factors(bpy, pointer_name, dial_parameters, model_parameters):
                    "device": scene.cycles.device, "seed": scene.cycles.seed,
                    "animated_seed": scene.cycles.use_animated_seed,
                    "resolution": [scene.render.resolution_x, scene.render.resolution_y, scene.render.resolution_percentage],
+                   "quality": scene.render.image_settings.quality,
                    "image_settings": properties(scene.render.image_settings)},
     }
+    if scene.cycles.device == "GPU":
+        preferences = bpy.context.preferences.addons["cycles"].preferences
+        appearance["render"].update(backend=preferences.compute_device_type, devices=device_records(preferences))
+    else:
+        appearance["render"].update(backend="CPU", devices=[])
     camera = scene.camera
     camera_parameters = {"name": camera.name, "location": list(camera.location),
                          "rotation_euler": list(camera.rotation_euler), "matrix_world": plain(camera.matrix_world),
@@ -125,9 +149,9 @@ def scene_factors(bpy, pointer_name, dial_parameters, model_parameters):
     return {"g": geometry, "a": appearance, "c": camera_parameters}
 
 
-def force_cpu(scene, args):
+def configure_render(scene, args):
     scene.render.engine = "CYCLES"
-    scene.cycles.device = "CPU"
+    scene.cycles.device = "GPU" if args.device == "CUDA" else "CPU"
     scene.cycles.samples = args.samples
     scene.cycles.seed = args.seed
     scene.cycles.use_animated_seed = False
@@ -136,8 +160,10 @@ def force_cpu(scene, args):
     scene.render.resolution_x = args.width
     scene.render.resolution_y = args.height
     scene.render.resolution_percentage = 100
-    scene.render.image_settings.file_format = "PNG"
+    scene.render.image_settings.file_format = args.image_format
     scene.render.image_settings.color_mode = "RGB"
+    if args.image_format == "JPEG":
+        scene.render.image_settings.quality = 95
 
 
 def main(argv=None):
@@ -150,18 +176,22 @@ def main(argv=None):
     parser.add_argument("--height", type=int, default=512)
     parser.add_argument("--threads", type=int, default=4)
     parser.add_argument("--samples", type=int, default=16)
+    parser.add_argument("--device", choices=("CPU", "CUDA"), default="CPU")
+    parser.add_argument("--image-format", choices=("PNG", "JPEG"), default="PNG")
     args = parser.parse_args(argv)
     if len(args.states) < 2 or len(set(args.states)) != len(args.states) or any(not 0 < state < 1 for state in args.states):
         parser.error("states must be distinct normalized values strictly between zero and one")
     if min(args.width, args.height, args.threads, args.samples) < 1:
         parser.error("dimensions, threads, and samples must be positive")
+    if args.device == "CPU":
+        os.environ["CUDA_VISIBLE_DEVICES"] = ""
     import bpy
     import numpy as np
 
-    os.environ["CUDA_VISIBLE_DEVICES"] = ""
     source = args.source_root.resolve()
     output = args.output.resolve()
-    if (output / "group.json").exists() or any((output / "images").glob("*.png")):
+    extension = "jpg" if args.image_format == "JPEG" else "png"
+    if (output / "group.json").exists() or any((output / "images").glob("*.png")) or any((output / "images").glob("*.jpg")):
         raise FileExistsError(f"pilot output already contains results: {output}")
     for folder in ("images", "annotations", "manifests", "asset_shim"):
         (output / folder).mkdir(parents=True, exist_ok=True)
@@ -172,6 +202,7 @@ def main(argv=None):
         if not link.exists():
             link.symlink_to(target, target_is_directory=True)
     bpy.ops.wm.open_mainfile(filepath=str(source / "blender_project/fakemeter_oil_new.blend"))
+    devices = configure_devices(bpy, args.device)
     vendor = load_vendor(source / "scripts/generate_syncg.py")
     original_projection = vendor.world_to_camera
     vendor.world_to_camera = lambda vector, _width, _height: original_projection(vector, args.width, args.height)
@@ -186,10 +217,10 @@ def main(argv=None):
     model = {key: plain(value) for key, value in model.items()}
     span = dial["long_interval_degree"] * dial["long_num"]
     dial["pointer_rotate_degree"] = args.states[0] * span
-    model["img_output_format"] = "PNG"
-    model["img_output_path"] = str(output / "images" / f"{names[0]}.png")
+    model["img_output_format"] = args.image_format
+    model["img_output_path"] = str(output / "images" / f"{names[0]}.{extension}")
     scene = bpy.context.scene
-    force_cpu(scene, args)
+    configure_render(scene, args)
     baseline, checks, failures = None, [], []
     current_state = args.states[0]
 
@@ -204,7 +235,7 @@ def main(argv=None):
             failures.append({"state": current_state, "phase": phase})
 
     def before_render(scene, *_):
-        force_cpu(scene, args)
+        configure_render(scene, args)
         inspect("render_pre")
 
     def after_render(_scene, *_):
@@ -215,7 +246,9 @@ def main(argv=None):
     provenance = {"upstream_repository": "https://github.com/SKYWOWDYH/SyncG", "upstream_revision": UPSTREAM_REVISION,
                   "vendor_source": vendor.__file__, "blend_file": str(source / "blender_project/fakemeter_oil_new.blend"),
                   "blender_version": bpy.app.version_string, "seed": args.seed, "scene_file": scene_file,
-                  "execution": "CYCLES_CPU", "threads": args.threads, "samples": args.samples,
+                  "execution": f"CYCLES_{args.device}", "backend": devices["backend"], "devices": devices["devices"],
+                  "threads": args.threads, "samples": args.samples,
+                  "image_format": args.image_format, "image_quality": scene.render.image_settings.quality,
                   "intervention": "same selected pointer rotation only", "longmark_projection_size": [args.width, args.height],
                   "virtual_q_semantics": "Virtual radius-one dial-plane readout point is derived by GeoPRRV2Dataset; Pointer.outside_kp is the physical pointer tip, not Q."}
     images = []
@@ -233,8 +266,8 @@ def main(argv=None):
                 inspect("before_render_call")
                 if failures:
                     raise RuntimeError(f"non-intervened scene factors changed: {failures}")
-                force_cpu(scene, args)
-                scene.render.filepath = str(output / "images" / f"{names[index]}.png")
+                configure_render(scene, args)
+                scene.render.filepath = str(output / "images" / f"{names[index]}.{extension}")
                 bpy.ops.render.render(write_still=True)
             if baseline is None or failures or any(sum(check["phase"] == phase for check in checks) != index + 1
                                                     for phase in ("render_pre", "render_post")):
@@ -251,7 +284,7 @@ def main(argv=None):
             images.append({"sample_id": names[index], "layout_id": layout_id, "normalized_state": state,
                            "diagnostic_only": True, "role": "geometry_diagnostic",
                            "pointer_rotate_degree": degree, "physical_reading": annotation["ground_truth"],
-                           "image_path": str(output / "images" / f"{names[index]}.png"),
+                           "image_path": str(output / "images" / f"{names[index]}.{extension}"),
                            "annotation_path": str(annotation_path)})
     finally:
         bpy.app.handlers.render_pre.remove(before_render)

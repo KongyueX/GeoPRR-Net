@@ -77,7 +77,8 @@ class OptimizationRun:
         self.state["updated_at"] = datetime.now(timezone.utc).isoformat()
         write_json(self.state_path, self.state)
 
-    def step(self, name: str, command: list[str], expected: Path) -> None:
+    def step(self, name: str, command: list[str], expected: Path,
+             environment_overrides: dict[str, str] | None = None) -> None:
         previous = self.state["steps"].get(name, {})
         if previous.get("status") == "complete" and expected.exists():
             return
@@ -102,11 +103,14 @@ class OptimizationRun:
         log_path.parent.mkdir(parents=True, exist_ok=True)
         record = {"status": "running", "command": command, "log": str(log_path),
                   "expected": str(expected), "started_at": datetime.now(timezone.utc).isoformat()}
+        if environment_overrides:
+            record["environment_overrides"] = environment_overrides
         self.state["steps"][name] = record
         self.save()
         print(json.dumps({"event": "start", "step": name, "log": str(log_path)}), flush=True)
         with log_path.open("a") as log:
-            process = subprocess.Popen(command, cwd=self.repo, stdout=log, stderr=subprocess.STDOUT)
+            process = subprocess.Popen(command, cwd=self.repo, stdout=log, stderr=subprocess.STDOUT,
+                                       env={**os.environ, **environment_overrides} if environment_overrides else None)
             record["pid"] = process.pid
             self.save()
             code = process.wait()
