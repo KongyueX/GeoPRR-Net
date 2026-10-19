@@ -8,7 +8,7 @@
 [![Manuscript](https://img.shields.io/badge/manuscript-MDPI%20Electronics-008A8A.svg)](https://github.com/KongyueX/GeoPRR-Net-Paper/blob/main/manuscript.tex)
 [![License](https://img.shields.io/badge/license-not%20yet%20declared-lightgrey.svg)](#license-and-third-party-materials)
 
-GeoPRR-Net is the final and only supported model identity in this repository.
+GeoPRR-Net is the publication model identity in this repository.
 This research artifact contains the model implementation, training and evaluation
 entry points, matched VDN comparison, release audit, and focused tests used by
 the accompanying paper. Manuscript source, figures, and compact aggregate figure
@@ -19,6 +19,12 @@ data are maintained in the separate
 > from this repository alone. Reproducing the reported GPU experiments requires
 > separately obtained datasets and locally reproduced checkpoints. No model
 > weights or restricted industrial images are distributed here.
+
+The experimental lightweight reader uses ConvNeXt V2-Femto or MobileNetV4
+with supervised dial calibration and spatial readout. Its Linux environment,
+data audit, training, controls, and evaluation commands are documented in
+[Lightweight reader training](docs/GEOPRR_V2_TRAINING_CN.md). It has a separate
+checkpoint identity and does not replace the publication model or its results.
 
 ## Scope
 
