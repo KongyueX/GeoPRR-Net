@@ -16,6 +16,7 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader
 
 from experiments.geoprr_v2_model import distribution_cdf_loss, two_hot_targets
+from experiments.geoprr_v2_objectives import decoupled_readout_losses
 
 
 PROTOCOL = "geoprr_v2_source_only_v1"
@@ -332,6 +333,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         raise FileExistsError(f"{output_dir}/latest.pt exists; use --resume or a new output directory")
     geometry = config["model"]["variant"] in {"field", "multitask"}
     use_direct_ce = config["loss_weights"].get("appearance_ce", 0) > 0 or config["loss_weights"].get("reading_ce", 0) > 0
+    use_decoupled = config["model"]["variant"] == "field" and any(
+        config["loss_weights"].get(name, 0) > 0 for name in ("q_physical_cdf", "u_local_cdf", "q_gt_support"))
     dataset_options = dict(dataset_root=args.data_root, **config["data"], require_geometry=geometry,
                            geometry_config=GeometryConfig(min_support_mass=config["model"]["support_threshold"]))
     train_data = GeoPRRV2Dataset(args.train_manifest, augment=True, pair_manifest=args.pair_manifest, **dataset_options)
@@ -423,6 +426,10 @@ def main(argv: Sequence[str] | None = None) -> int:
                 if geometry:
                     losses.update(structure_losses(details, batch))
                     losses["support_mass"] = details["support_deficit"].mean()
+                if use_decoupled and not warmup:
+                    losses.update({name: value for name, value in decoupled_readout_losses(details, batch,
+                                   support_threshold=config["model"]["support_threshold"]).items()
+                                   if config["loss_weights"].get(name, 0) > 0})
                 if "pair_kind" in batch:
                     indices = torch.tensor([i for i, kind in enumerate(batch["pair_kind"]) if kind != "none"], device=device)
                     if indices.numel():
@@ -435,6 +442,10 @@ def main(argv: Sequence[str] | None = None) -> int:
                         if geometry:
                             partner_losses.update(structure_losses(partner_details, partner_batch))
                             partner_losses["support_mass"] = partner_details["support_deficit"].mean()
+                        if use_decoupled and not warmup:
+                            partner_losses.update({name: value for name, value in decoupled_readout_losses(partner_details, partner_batch,
+                                                   support_threshold=config["model"]["support_threshold"]).items()
+                                                   if config["loss_weights"].get(name, 0) > 0})
                         a_count, b_count = len(batch["y"]), int(indices.numel())
                         losses = {name: (value * a_count + partner_losses[name] * b_count) / (a_count + b_count)
                                   for name, value in losses.items()}
