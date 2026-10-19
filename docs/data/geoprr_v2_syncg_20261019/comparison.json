@@ -1,0 +1,222 @@
+{
+  "scope": "single-seed frozen evaluation on official SyncG native images",
+  "seed": 20262020,
+  "training_commit": "c52d3ae",
+  "official_test_samples": 4000,
+  "matched_test_sample_ids": 4000,
+  "maximum_normalized_target_difference": 2.98011495480921e-08,
+  "source_group_count": 145,
+  "new_model_group_count": 723,
+  "source_split_seed": 20261019,
+  "source_validation_selection": "minimum full-population validation NMAE",
+  "official_test_used_for_training_or_selection": false,
+  "evaluation_model_inputs": "ImageNet-normalized ROI pixels only",
+  "new_runs": {
+    "femto": {
+      "backbone": "convnextv2_femto.fcmae_ft_in1k",
+      "parameters": 5157874,
+      "config": {
+        "name": "convnextv2_femto",
+        "model": {
+          "backbone": "convnextv2_femto.fcmae_ft_in1k",
+          "pretrained": true,
+          "variant": "field",
+          "bins": 256,
+          "decoder_dim": 64,
+          "support_threshold": 0.15
+        },
+        "data": {
+          "image_size": 768,
+          "output_size": 192
+        },
+        "training": {
+          "seed": 20262020,
+          "epochs": 65,
+          "warmup_epochs": 5,
+          "batch_size": 32,
+          "workers": 8,
+          "backbone_lr": 0.0001,
+          "head_lr": 0.0005,
+          "min_lr": 1e-06,
+          "weight_decay": 0.01,
+          "gradient_clip": 5.0,
+          "amp": true
+        },
+        "loss_weights": {
+          "appearance_l1": 0.5,
+          "appearance_cdf": 0.5,
+          "reading_l1": 1.0,
+          "reading_cdf": 1.0,
+          "field_ce": 0.25,
+          "field_l1": 1.0,
+          "point_ce": 0.1,
+          "support_bce": 0.25,
+          "support_mass": 0.1,
+          "pair_support_mass": 1.0,
+          "pair_reading_l1": 1.0,
+          "pair_reading_cdf": 1.0,
+          "pair_field_l1": 0.5,
+          "pair_support_l1": 0.1,
+          "pair_point_l1": 0.1
+        }
+      },
+      "train_samples": 14494,
+      "validation_samples": 1506,
+      "completed_epochs": 65,
+      "selected_epoch": 61,
+      "best_validation": {
+        "epoch": 61,
+        "smoke_only": false,
+        "samples": 1506,
+        "groups": 70,
+        "nmae": 0.0022985739046134466,
+        "nmae_percent_fs": 0.22985739046134465,
+        "acc_at_1": 0.9907038512616202,
+        "acc_at_2": 0.9933598937583001,
+        "acc_at_5": 0.9946879150066401,
+        "coverage": 1.0,
+        "field_coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.0006780661642551422,
+        "p90_error": 0.0030489712953567505,
+        "p95_error": 0.004975492600351572,
+        "tail10_nmae": 0.015746958230757804,
+        "maximum_error": 0.46727198525331914
+      },
+      "test_summary": {
+        "samples": 4000,
+        "groups": 723,
+        "nmae": 0.0024215210002294044,
+        "nmae_percent_fs": 0.24215210002294044,
+        "acc_at_1": 0.98925,
+        "acc_at_2": 0.99325,
+        "acc_at_5": 0.99525,
+        "coverage": 1.0,
+        "field_coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.0006419625133275986,
+        "p90_error": 0.002931410074234009,
+        "p95_error": 0.0046980232000350935,
+        "tail10_nmae": 0.017305519878937047,
+        "maximum_error": 0.43545248359441757
+      },
+      "epoch_training_minutes": 130.81898142794768,
+      "mean_joint_epoch_seconds": 123.17127377881359,
+      "last_appearance_l1": 0.24949355241889476
+    },
+    "mobilenetv4": {
+      "backbone": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "parameters": 7695954,
+      "config": {
+        "name": "mobilenetv4_conv_medium",
+        "model": {
+          "backbone": "mobilenetv4_conv_medium.e500_r224_in1k",
+          "pretrained": true,
+          "variant": "field",
+          "bins": 256,
+          "decoder_dim": 64,
+          "support_threshold": 0.15
+        },
+        "data": {
+          "image_size": 768,
+          "output_size": 192
+        },
+        "training": {
+          "seed": 20262020,
+          "epochs": 65,
+          "warmup_epochs": 5,
+          "batch_size": 32,
+          "workers": 8,
+          "backbone_lr": 0.0001,
+          "head_lr": 0.0005,
+          "min_lr": 1e-06,
+          "weight_decay": 0.01,
+          "gradient_clip": 5.0,
+          "amp": true
+        },
+        "loss_weights": {
+          "appearance_l1": 0.5,
+          "appearance_cdf": 0.5,
+          "reading_l1": 1.0,
+          "reading_cdf": 1.0,
+          "field_ce": 0.25,
+          "field_l1": 1.0,
+          "point_ce": 0.1,
+          "support_bce": 0.25,
+          "support_mass": 0.1,
+          "pair_support_mass": 1.0,
+          "pair_reading_l1": 1.0,
+          "pair_reading_cdf": 1.0,
+          "pair_field_l1": 0.5,
+          "pair_support_l1": 0.1,
+          "pair_point_l1": 0.1
+        }
+      },
+      "train_samples": 14494,
+      "validation_samples": 1506,
+      "completed_epochs": 65,
+      "selected_epoch": 61,
+      "best_validation": {
+        "epoch": 61,
+        "smoke_only": false,
+        "samples": 1506,
+        "groups": 70,
+        "nmae": 0.0019174051203155824,
+        "nmae_percent_fs": 0.19174051203155823,
+        "acc_at_1": 0.9893758300132802,
+        "acc_at_2": 0.9953519256308101,
+        "acc_at_5": 0.9966799468791501,
+        "coverage": 1.0,
+        "field_coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.0006740540266036987,
+        "p90_error": 0.003098323941230774,
+        "p95_error": 0.004773328080773354,
+        "tail10_nmae": 0.012044147751937349,
+        "maximum_error": 0.32007013261318207
+      },
+      "test_summary": {
+        "samples": 4000,
+        "groups": 723,
+        "nmae": 0.0022074910033115886,
+        "nmae_percent_fs": 0.22074910033115885,
+        "acc_at_1": 0.98925,
+        "acc_at_2": 0.994,
+        "acc_at_5": 0.996,
+        "coverage": 1.0,
+        "field_coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.0006574392318725586,
+        "p90_error": 0.002778001129627228,
+        "p95_error": 0.004176060855388635,
+        "tail10_nmae": 0.015355564567507828,
+        "maximum_error": 0.6755390763282776
+      },
+      "epoch_training_minutes": 95.48409522995352,
+      "mean_joint_epoch_seconds": 87.8327605602021,
+      "last_appearance_l1": 0.2495558156594747
+    }
+  },
+  "relative_nmae_reduction_percent": {
+    "femto": {
+      "original_geoprr": 64.49823249557197,
+      "shared_full_geoprr": 60.17240406664583
+    },
+    "mobilenetv4": {
+      "original_geoprr": 67.63611285623368,
+      "shared_full_geoprr": 63.69262967445689
+    }
+  },
+  "mobilenetv4_nmae_reduction_vs_femto_percent": 8.8386595407407,
+  "reference_protocols": [
+    "docs/data/official_syncg_fulltrain_20260908/protocol.json",
+    "docs/data/geoprr_shared_full_20260911/protocol.json"
+  ],
+  "limitations": [
+    "One training seed and native images only; perturbation and external-domain results are not included.",
+    "New readers use 14494 training and 1506 validation images; historical shared_full uses all 16000 source-training images. Checkpoint selection and input resolution also differ.",
+    "All new test rows use the field path. Appearance auxiliary losses remain near 0.25; fallback reliability is not established.",
+    "Worst-sample errors increase despite lower average errors.",
+    "Training epoch durations are operational observations, not deployment latency benchmarks."
+  ]
+}
