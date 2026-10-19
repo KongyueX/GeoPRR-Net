@@ -2,9 +2,11 @@
 
 ## 当前执行决策
 
-先完成正在训练的 `detail_ce / seed_20262020` 全部 65 轮，再将其最佳源验证 NMAE 与初始 MobileNetV4 的正式记录 `0.191740512%FS` 比较。两者使用同一批 1,506 张源验证图和相同训练种子；决定不读取官方测试成绩。
+`detail_ce / seed_20262020` 已完成 65 轮，最佳源验证检查点为第 64 轮，NMAE `0.419775313%FS`，高于初始 MobileNetV4 的 `0.191740512%FS`。同一验证队列上的 >2%FS 误读为 22 张，>5%FS 为 9 张，最大误差为 `69.627927%FS`。队列已记录 `validation_rejected / return_to_original_mobilenet`，没有执行三折或路由。结果与决定保存在 `docs/data/geoprr_v2_optimization_20261019/`。
 
-只有源验证 NMAE 严格降低才进入后续三折和路由。相等或更差时，写出 `validation_decision.json`，保留所有已完成结果，并将旧队列置为 `validation_rejected` 正常结束；剩余旧实验矩阵暂不执行。研究随后回到初始 MobileNetV4，针对严重误读的成因设计新迭代。以下矩阵为满足继续条件后的安排。
+继续条件为：完整 65 轮训练后，最佳源验证 NMAE 必须严格低于初始 MobileNetV4 的正式记录。两者使用同一批 1,506 张源验证图和相同训练种子；决定不读取官方测试成绩。
+
+源验证 NMAE 相等或更差时，写出 `validation_decision.json`，保留所有已完成结果，并将旧队列置为 `validation_rejected` 正常结束；剩余旧实验矩阵暂不执行。研究回到初始 MobileNetV4，针对严重误读的成因设计新迭代。以下矩阵保留为原实验设计，未满足继续条件的部分不执行。
 
 ## 目标与固定协议
 
