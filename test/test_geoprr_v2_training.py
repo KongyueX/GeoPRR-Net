@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 import math
+import tempfile
 import unittest
+from pathlib import Path
+from unittest.mock import patch
 
 import torch
 
@@ -9,6 +12,8 @@ from experiments.train_geoprr_v2 import (
     controlled_pair_losses,
     make_loader,
     prediction_rows,
+    reading_losses,
+    save_checkpoint,
     source_split_check,
     structure_losses,
     summarize_rows,
@@ -19,6 +24,43 @@ from experiments.evaluate_geoprr_v2 import FullPopulationDataset
 
 
 class GeoPRRV2TrainingTests(unittest.TestCase):
+    def test_interrupted_checkpoint_write_preserves_previous_complete_file(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "best.pt"
+            torch.save({"epoch": 1}, path)
+            def interrupted_save(value, temporary):
+                Path(temporary).write_bytes(b"partial")
+                raise OSError("interrupted checkpoint write")
+            with patch("experiments.train_geoprr_v2.torch.save", side_effect=interrupted_save):
+                with self.assertRaises(OSError):
+                    save_checkpoint(path, {"epoch": 2})
+            self.assertEqual(torch.load(path, weights_only=False)["epoch"], 1)
+
+    def test_cross_entropy_recovers_gradient_from_saturated_wrong_direct_bin(self) -> None:
+        logits = torch.tensor([[22.0, 0.0, 0.0]], requires_grad=True)
+        probabilities = logits.softmax(1)
+        reading = (probabilities * torch.linspace(0, 1, 3)).sum(1)
+        output = {"appearance_logits": logits, "appearance_probs": probabilities,
+                  "appearance_reading": reading, "reading": reading, "distribution": probabilities}
+        target = torch.ones(1)
+        original = reading_losses(output, target, structural_warmup=True, appearance_auxiliary=True)
+        self.assertNotIn("appearance_ce", original)
+        losses = reading_losses(output, target, structural_warmup=True,
+                                appearance_auxiliary=True, cross_entropy=True)
+        losses["appearance_ce"].backward()
+        self.assertGreater(float(logits.grad[0, 0]), 0.9)
+        self.assertLess(float(logits.grad[0, 2]), -0.9)
+
+    def test_direct_control_receives_same_stable_distribution_supervision(self) -> None:
+        logits = torch.zeros(2, 5, requires_grad=True)
+        probabilities = logits.softmax(1)
+        output = {"appearance_logits": logits, "appearance_probs": probabilities,
+                  "reading": (probabilities * torch.linspace(0, 1, 5)).sum(1), "distribution": probabilities}
+        losses = reading_losses(output, torch.tensor([0.1, 0.9]), structural_warmup=False, cross_entropy=True)
+        losses["reading_ce"].backward()
+        self.assertTrue(torch.isfinite(logits.grad).all())
+        self.assertGreater(float(logits.grad.abs().sum()), 0)
+
     def test_epoch_seed_reproduces_resume_shuffle_without_restarting_epoch_zero(self) -> None:
         dataset = torch.utils.data.TensorDataset(torch.arange(32))
         def order(epoch: int) -> torch.Tensor:

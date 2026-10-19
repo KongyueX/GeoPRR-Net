@@ -28,6 +28,12 @@ def write_json(path: Path, value: Any) -> None:
     path.write_text(json.dumps(value, ensure_ascii=False, allow_nan=False, indent=2) + "\n", encoding="utf-8")
 
 
+def save_checkpoint(path: Path, checkpoint: dict[str, Any]) -> None:
+    temporary = path.with_suffix(".tmp")
+    torch.save(checkpoint, temporary)
+    temporary.replace(path)
+
+
 def seed_everything(seed: int) -> None:
     random.seed(seed)
     np.random.seed(seed)
@@ -71,7 +77,13 @@ def structure_losses(output: Mapping[str, torch.Tensor], batch: Mapping[str, Any
     point_log_probability = output["point_logits"].float().flatten(1).log_softmax(1)
     point_ce = -(batch["point_target"].float().flatten(1) * point_log_probability).sum(1).mean()
     support_bce = F.binary_cross_entropy_with_logits(output["support_logits"].float(), batch["support_target"].float())
-    return {"field_ce": field_ce, "field_l1": field_l1, "point_ce": point_ce, "support_bce": support_bce}
+    result = {"field_ce": field_ce, "field_l1": field_l1, "point_ce": point_ce, "support_bce": support_bce}
+    if output.get("coarse_point_logits") is not None:
+        coarse_logits = output["coarse_point_logits"].float()
+        coarse_target = F.interpolate(batch["point_target"].float(), size=coarse_logits.shape[-2:], mode="area")
+        coarse_target = coarse_target / coarse_target.flatten(1).sum(1)[:, None, None, None]
+        result["coarse_point_ce"] = -(coarse_target.flatten(1) * coarse_logits.flatten(1).log_softmax(1)).sum(1).mean()
+    return result
 
 
 def warp_to_partner(source: torch.Tensor, source_to_canonical: torch.Tensor,
@@ -147,16 +159,22 @@ def controlled_pair_losses(output: Mapping[str, torch.Tensor], partner: Mapping[
 
 
 def reading_losses(output: Mapping[str, torch.Tensor], target: torch.Tensor, *, structural_warmup: bool,
-                   appearance_auxiliary: bool = False) -> dict[str, torch.Tensor]:
+                   appearance_auxiliary: bool = False, cross_entropy: bool = False) -> dict[str, torch.Tensor]:
     result = {}
     if appearance_auxiliary:
         result["appearance_l1"] = (output["appearance_reading"].float().reshape(-1) - target).abs().mean()
         if output.get("appearance_probs") is not None:
             result["appearance_cdf"] = distribution_loss(output["appearance_probs"], target)
+            if cross_entropy:
+                labels = two_hot(target, output["appearance_logits"].shape[1])
+                result["appearance_ce"] = -(labels * output["appearance_logits"].float().log_softmax(1)).sum(1).mean()
     if not structural_warmup:
         result["reading_l1"] = (output["reading"].float().reshape(-1) - target).abs().mean()
         if output.get("distribution") is not None:
             result["reading_cdf"] = distribution_loss(output["distribution"], target)
+            if cross_entropy and not appearance_auxiliary:
+                labels = two_hot(target, output["appearance_logits"].shape[1])
+                result["reading_ce"] = -(labels * output["appearance_logits"].float().log_softmax(1)).sum(1).mean()
     return result
 
 
@@ -190,6 +208,8 @@ def summarize_rows(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
         "p95_error": float(np.quantile(error, 0.95)),
         "tail10_nmae": float(np.sort(error)[-tail_count:].mean()),
         "maximum_error": float(error.max()),
+        "errors_above_2_percent_fs": int((error > 0.02).sum()),
+        "errors_above_5_percent_fs": int((error > 0.05).sum()),
     }
 
 
@@ -311,6 +331,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     if (output_dir / "latest.pt").exists() and args.resume is None:
         raise FileExistsError(f"{output_dir}/latest.pt exists; use --resume or a new output directory")
     geometry = config["model"]["variant"] in {"field", "multitask"}
+    use_direct_ce = config["loss_weights"].get("appearance_ce", 0) > 0 or config["loss_weights"].get("reading_ce", 0) > 0
     dataset_options = dict(dataset_root=args.data_root, **config["data"], require_geometry=geometry,
                            geometry_config=GeometryConfig(min_support_mass=config["model"]["support_threshold"]))
     train_data = GeoPRRV2Dataset(args.train_manifest, augment=True, pair_manifest=args.pair_manifest, **dataset_options)
@@ -366,9 +387,17 @@ def main(argv: Sequence[str] | None = None) -> int:
         "gpu": torch.cuda.get_device_name(device) if device.type == "cuda" else None,
         "torch": torch.__version__, "cuda": torch.version.cuda,
         "parameters": sum(parameter.numel() for parameter in model.parameters()),
+        "sample_ids": {"train": [row["sample_id"] for row in train_data.rows],
+                       "validation": [row["sample_id"] for row in val_data.rows]},
+        "scene_ids": {"train": sorted({Path(row["metadata"]["scene_name"]).stem for row in train_data.rows}),
+                      "validation": sorted({Path(row["metadata"]["scene_name"]).stem for row in val_data.rows})},
         "controlled_pairs": args.pair_manifest is not None,
         "geometry_target_config": vars(dataset_options["geometry_config"]) if geometry else None,
     }
+    if args.resume is not None:
+        saved_ids = checkpoint.get("run_metadata", {}).get("sample_ids")
+        if saved_ids is not None and saved_ids != run_metadata["sample_ids"]:
+            raise ValueError("resume source-training/validation identities differ from checkpoint")
     write_json(output_dir / "run.json", run_metadata)
     for epoch in range(start_epoch, training["epochs"]):
         started = time.perf_counter()
@@ -390,7 +419,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 details = model(batch["image"])
                 field_variant = config["model"]["variant"] == "field"
                 losses = reading_losses(details, batch["y"].float().reshape(-1), structural_warmup=warmup and field_variant,
-                                        appearance_auxiliary=field_variant)
+                                        appearance_auxiliary=field_variant, cross_entropy=use_direct_ce)
                 if geometry:
                     losses.update(structure_losses(details, batch))
                     losses["support_mass"] = details["support_deficit"].mean()
@@ -401,7 +430,8 @@ def main(argv: Sequence[str] | None = None) -> int:
                         partner_batch = {key.removeprefix("pair_"): value for key, value in pair_batch.items() if key.startswith("pair_")}
                         partner_details = model(partner_batch["image"])
                         partner_losses = reading_losses(partner_details, partner_batch["y"].float().reshape(-1),
-                                                         structural_warmup=warmup and field_variant, appearance_auxiliary=field_variant)
+                                                         structural_warmup=warmup and field_variant, appearance_auxiliary=field_variant,
+                                                         cross_entropy=use_direct_ce)
                         if geometry:
                             partner_losses.update(structure_losses(partner_details, partner_batch))
                             partner_losses["support_mass"] = partner_details["support_deficit"].mean()
@@ -441,6 +471,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             raise ValueError("no training samples were consumed")
         model.eval()
         val_rows = []
+        direct_rows, field_rows = [], []
+        direct_predictions = []
         val_loader = make_loader(val_data, batch_size=training["batch_size"], workers=training["workers"],
                                  shuffle=False, seed=seed, device=device)
         with torch.inference_mode():
@@ -451,6 +483,11 @@ def main(argv: Sequence[str] | None = None) -> int:
                 with torch.autocast(device_type=device.type, dtype=torch.float16, enabled=amp_enabled):
                     details = model(batch["image"])
                 val_rows.extend(prediction_rows(details, batch))
+                direct_rows.extend(prediction_rows(dict(details, reading=details["appearance_reading"]), batch))
+                direct_predictions.extend(details["appearance_reading"].detach().float().cpu().tolist())
+                if geometry:
+                    field_reading = torch.where(details["field_valid"], details["field_reading"], torch.nan)
+                    field_rows.extend(prediction_rows(dict(details, reading=field_reading), batch))
         summary = summarize_rows(val_rows)
         improved = summary["nmae"] < best_nmae
         if improved:
@@ -462,22 +499,28 @@ def main(argv: Sequence[str] | None = None) -> int:
                   "valid_cross_readouts": valid_pairs, "cross_readout_coverage": valid_pairs / eligible_pairs if eligible_pairs else None,
                   "losses": {name: value / seen for name, value in loss_sums.items()},
                   "validation": summary, "best_nmae": best_nmae, "elapsed_seconds": time.perf_counter() - started,
+                  "validation_experts": {"direct": summarize_rows(direct_rows),
+                                         **({"field": summarize_rows(field_rows)} if field_rows else {})},
+                  "direct_prediction_std": float(np.std(direct_predictions)),
                   "learning_rates": [group["lr"] for group in optimizer.param_groups],
                   "peak_cuda_memory_bytes": torch.cuda.max_memory_allocated(device) if device.type == "cuda" else None,
                   "smoke_only": smoke}
-        with (output_dir / "history.jsonl").open("a", encoding="utf-8") as handle:
-            handle.write(json.dumps(record, allow_nan=False) + "\n")
         checkpoint = {"protocol": PROTOCOL, "config": config, "model": model.state_dict(),
                       "optimizer": optimizer.state_dict(), "scheduler": scheduler.state_dict(), "scaler": scaler.state_dict(),
                       "epoch": epoch + 1, "global_step": global_step, "best_nmae": best_nmae,
                       "rng": rng_state(), "manifests": run_metadata["manifests"], "smoke_only": smoke,
                       "batch_limits": run_metadata["batch_limits"],
                       "run_metadata": run_metadata}
-        torch.save(checkpoint, output_dir / "latest.pt")
         if improved:
-            torch.save(checkpoint, output_dir / "best.pt")
+            save_checkpoint(output_dir / "best.pt", checkpoint)
             write_json(output_dir / "best_validation.json", {"epoch": epoch + 1, "smoke_only": smoke, **summary})
+        save_checkpoint(output_dir / "latest.pt", checkpoint)
+        with (output_dir / "history.jsonl").open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(record, allow_nan=False) + "\n")
         print(json.dumps(record, allow_nan=False), flush=True)
+    write_json(output_dir / "completed.json", {"protocol": PROTOCOL, "config": config,
+               "epochs": training["epochs"], "smoke_only": smoke, "manifests": run_metadata["manifests"],
+               "sample_ids": run_metadata["sample_ids"]})
     return 0
 
 

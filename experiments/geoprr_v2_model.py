@@ -109,6 +109,75 @@ class _Refine(nn.Sequential):
         )
 
 
+class _DynamicRefine(nn.Module):
+    """Aggregate four convolution kernels from the low-resolution features."""
+
+    def __init__(self, channels: int) -> None:
+        super().__init__()
+        self.channels = channels
+        self.kernels = nn.Parameter(torch.empty(4, channels, channels, 3, 3))
+        for kernel in self.kernels:
+            nn.init.kaiming_uniform_(kernel, a=math.sqrt(5))
+        self.router = nn.Linear(channels, 4)
+        self.norm = nn.GroupNorm(math.gcd(8, channels), channels)
+
+    def kernel_weights(self, features: torch.Tensor) -> torch.Tensor:
+        return self.router(features.mean((2, 3))).softmax(1)
+
+    def forward(self, features: torch.Tensor) -> torch.Tensor:
+        batch, channels, height, width = features.shape
+        weights = self.kernel_weights(features) @ self.kernels.flatten(1)
+        kernels = weights.reshape(batch * channels, channels, 3, 3)
+        decoded = F.conv2d(
+            features.reshape(1, batch * channels, height, width),
+            kernels,
+            padding=1,
+            groups=batch,
+        ).reshape(batch, channels, height, width)
+        return F.gelu(self.norm(decoded))
+
+
+class _SpatialAppearanceHead(nn.Module):
+    """Read multi-scale image features without using the geometry predictions."""
+
+    def __init__(
+        self, channels: tuple[int, ...], hidden: int, outputs: int
+    ) -> None:
+        super().__init__()
+        self.projections = nn.ModuleList(
+            nn.Sequential(
+                nn.Conv2d(channel + 2, hidden, 1, bias=False),
+                nn.GroupNorm(math.gcd(8, hidden), hidden),
+                nn.GELU(),
+            )
+            for channel in channels
+        )
+        self.attention = nn.ModuleList(nn.Conv2d(hidden, 1, 1) for _ in channels)
+        self.norm = nn.LayerNorm(len(channels) * hidden + channels[-1])
+        self.output = nn.Linear(len(channels) * hidden + channels[-1], outputs)
+        nn.init.normal_(self.output.weight, std=0.001)
+        nn.init.zeros_(self.output.bias)
+
+    def forward(
+        self, features: list[torch.Tensor], global_features: torch.Tensor
+    ) -> torch.Tensor:
+        pooled = []
+        for feature, projection, attention in zip(
+            features, self.projections, self.attention
+        ):
+            height, width = feature.shape[-2:]
+            yy, xx = torch.meshgrid(
+                torch.linspace(-1, 1, height, device=feature.device, dtype=feature.dtype),
+                torch.linspace(-1, 1, width, device=feature.device, dtype=feature.dtype),
+                indexing="ij",
+            )
+            coordinates = torch.stack((xx, yy))[None].expand(feature.shape[0], -1, -1, -1)
+            projected = projection(torch.cat((feature, coordinates), dim=1))
+            spatial_weights = attention(projected).flatten(2).softmax(-1)
+            pooled.append((projected.flatten(2) * spatial_weights).sum(-1))
+        return self.output(self.norm(torch.cat((*pooled, global_features), dim=1)))
+
+
 class GeoPRRV2(nn.Module):
     """A shared CNN and compact stride-four calibration/state decoder.
 
@@ -125,12 +194,19 @@ class GeoPRRV2(nn.Module):
         decoder_dim: int = 64,
         support_threshold: float = 0.15,
         variant: str = "field",
+        appearance_pooling: str = "global",
+        detail_refinement: bool = False,
+        decoder_kernel: str = "static",
     ) -> None:
         super().__init__()
         if backbone not in BACKBONES:
             raise ValueError(f"unsupported backbone: {backbone}")
         if variant not in VARIANTS:
             raise ValueError(f"unknown model variant: {variant}")
+        if appearance_pooling not in ("global", "spatial"):
+            raise ValueError(f"unknown appearance pooling: {appearance_pooling}")
+        if decoder_kernel not in ("static", "dynamic"):
+            raise ValueError(f"unknown decoder kernel: {decoder_kernel}")
         if bins < 2 or decoder_dim < 1:
             raise ValueError("bins must be at least two and decoder_dim positive")
         if not 0.0 < support_threshold < 1.0:
@@ -147,21 +223,44 @@ class GeoPRRV2(nn.Module):
         self.backbone_name = backbone
         self.bins = int(bins)
         self.variant = variant
+        self.appearance_pooling = appearance_pooling
+        self.detail_refinement = bool(detail_refinement)
+        self.decoder_kernel = decoder_kernel
         self.support_threshold = float(support_threshold)
         self.output_stride = 4
         self._backbone_trainable = True
         self.register_buffer("bin_coordinates", torch.linspace(0, 1, bins))
         self.appearance_norm = nn.LayerNorm(self.feature_channels[-1])
-        self.appearance_head = nn.Linear(
-            self.feature_channels[-1], 1 if variant == "raw_scalar" else bins
-        )
+        appearance_outputs = 1 if variant == "raw_scalar" else bins
+        if appearance_pooling == "spatial":
+            self.appearance_head = _SpatialAppearanceHead(
+                self.feature_channels, decoder_dim, appearance_outputs
+            )
+        else:
+            self.appearance_head = nn.Linear(
+                self.feature_channels[-1], appearance_outputs
+            )
         if variant in ("field", "multitask"):
             self.lateral = nn.ModuleList(
                 nn.Conv2d(c, decoder_dim, 1) for c in self.feature_channels
             )
-            self.refine = nn.ModuleList(_Refine(decoder_dim) for _ in range(4))
+            self.refine = nn.ModuleList(
+                _DynamicRefine(decoder_dim)
+                if decoder_kernel == "dynamic" and level >= 2
+                else _Refine(decoder_dim)
+                for level in range(4)
+            )
             self.field_head = nn.Conv2d(decoder_dim, bins, 1)
-            self.point_head = nn.Conv2d(decoder_dim, 1, 1)
+            if self.detail_refinement:
+                self.coarse_point_head = nn.Conv2d(decoder_dim, 1, 1)
+                self.point_head = nn.Sequential(
+                    nn.Conv2d(2 * decoder_dim + 1, decoder_dim, 3, padding=1, bias=False),
+                    nn.GroupNorm(math.gcd(8, decoder_dim), decoder_dim),
+                    nn.GELU(),
+                    nn.Conv2d(decoder_dim, 1, 1),
+                )
+            else:
+                self.point_head = nn.Conv2d(decoder_dim, 1, 1)
             self.support_head = nn.Conv2d(decoder_dim, 1, 1)
 
     def set_backbone_trainable(self, trainable: bool) -> None:
@@ -184,9 +283,14 @@ class GeoPRRV2(nn.Module):
         extracted = self.backbone(images)
         features = [extracted[i] for i in self.feature_indices]
         pooled = self.appearance_norm(features[-1].mean((2, 3)))
-        appearance_logits = self.appearance_head(pooled).float()
+        if self.appearance_pooling == "spatial":
+            appearance_logits = self.appearance_head(features, pooled).float()
+        else:
+            appearance_logits = self.appearance_head(pooled).float()
         outputs: dict[str, torch.Tensor | None] = {
             "appearance_logits": appearance_logits,
+            "global_features": pooled,
+            "coarse_point_logits": None,
             "field_logits": None,
             "point_logits": None,
             "support_logits": None,
@@ -222,15 +326,31 @@ class GeoPRRV2(nn.Module):
         )
         if self.variant == "raw_distribution":
             return outputs
-        decoded = self.refine[-1](self.lateral[-1](features[-1]))
+        projected = [lateral(feature) for lateral, feature in zip(self.lateral, features)]
+        decoded = self.refine[-1](projected[-1])
+        coarse_point_logits = None
         for level in range(2, -1, -1):
-            lateral = self.lateral[level](features[level])
+            lateral = projected[level]
             decoded = F.interpolate(
                 decoded, size=lateral.shape[-2:], mode="bilinear", align_corners=False
             )
             decoded = self.refine[level](decoded + lateral)
+            if self.detail_refinement and level == 2:
+                coarse_point_logits = self.coarse_point_head(decoded)
         field_logits = self.field_head(decoded)
-        point_logits = self.point_head(decoded)
+        if self.detail_refinement:
+            coarse = F.interpolate(
+                coarse_point_logits,
+                size=decoded.shape[-2:],
+                mode="bilinear",
+                align_corners=False,
+            )
+            mid = F.interpolate(
+                projected[1], size=decoded.shape[-2:], mode="bilinear", align_corners=False
+            )
+            point_logits = coarse + self.point_head(torch.cat((projected[0], mid, coarse), dim=1))
+        else:
+            point_logits = self.point_head(decoded)
         support_logits = self.support_head(decoded)
         field_probs = field_logits.float().softmax(1)
         point_probs = point_logits.float().flatten(1).softmax(1).view_as(point_logits)
@@ -238,6 +358,7 @@ class GeoPRRV2(nn.Module):
         outputs.update(
             field_logits=field_logits,
             point_logits=point_logits,
+            coarse_point_logits=coarse_point_logits,
             support_logits=support_logits,
             field_probs=field_probs,
             point_probs=point_probs,

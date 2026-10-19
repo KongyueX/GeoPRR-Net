@@ -1,0 +1,49 @@
+{
+  "name": "mnv4_opt_detail_ce",
+  "model": {
+    "backbone": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "pretrained": true,
+    "variant": "field",
+    "bins": 256,
+    "decoder_dim": 64,
+    "support_threshold": 0.15,
+    "appearance_pooling": "spatial",
+    "detail_refinement": true
+  },
+  "data": {
+    "image_size": 768,
+    "output_size": 192
+  },
+  "training": {
+    "seed": 20262020,
+    "epochs": 65,
+    "warmup_epochs": 5,
+    "batch_size": 32,
+    "workers": 8,
+    "backbone_lr": 0.0001,
+    "head_lr": 0.0005,
+    "min_lr": 1e-06,
+    "weight_decay": 0.01,
+    "gradient_clip": 5.0,
+    "amp": true
+  },
+  "loss_weights": {
+    "appearance_l1": 0.5,
+    "appearance_cdf": 0.5,
+    "reading_l1": 1.0,
+    "reading_cdf": 1.0,
+    "field_ce": 0.25,
+    "field_l1": 1.0,
+    "point_ce": 0.1,
+    "support_bce": 0.25,
+    "support_mass": 0.1,
+    "pair_support_mass": 1.0,
+    "pair_reading_l1": 1.0,
+    "pair_reading_cdf": 1.0,
+    "pair_field_l1": 0.5,
+    "pair_support_l1": 0.1,
+    "pair_point_l1": 0.1,
+    "appearance_ce": 1.0,
+    "coarse_point_ce": 0.1
+  }
+}

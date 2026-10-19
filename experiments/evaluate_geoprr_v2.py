@@ -56,7 +56,7 @@ class FullPopulationDataset(Dataset):
 def write_predictions(path: Path, rows: Sequence[Mapping[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     fields = ("sample_id", "group_id", "dataset", "condition", "target", "prediction", "absolute_error",
-              "valid", "field_valid", "support_mass", "failure")
+              "valid", "field_valid", "support_mass", "failure", "expert_index")
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)
         writer.writeheader()
@@ -64,7 +64,8 @@ def write_predictions(path: Path, rows: Sequence[Mapping[str, Any]]) -> None:
 
 
 def evaluate(*, checkpoint_path: Path, manifest_path: Path, dataset_root: Path, output_dir: Path,
-             device_name: str, batch_size: int, workers: int, use_amp: bool, max_batches: int = 0) -> dict[str, Any]:
+             device_name: str, batch_size: int, workers: int, use_amp: bool, max_batches: int = 0,
+             expert_mode: str = "native", router_path: Path | None = None) -> dict[str, Any]:
     from experiments.geoprr_v2_data import GeoPRRV2Dataset
     from experiments.geoprr_v2_model import GeoPRRV2
 
@@ -81,6 +82,16 @@ def evaluate(*, checkpoint_path: Path, manifest_path: Path, dataset_root: Path, 
     model = GeoPRRV2(**model_options).to(device)
     model.load_state_dict(checkpoint["model"], strict=True)
     model.eval()
+    router = None
+    if router_path is not None:
+        from experiments.geoprr_v2_router import load_router
+        router = load_router(router_path, device)
+        if router.reader_config != {"model": config["model"], "data": config["data"]}:
+            raise ValueError("router and reader model/data configuration differ")
+        if router.reader_seed != config["training"]["seed"]:
+            raise ValueError("router and reader experiment seeds differ")
+    if (expert_mode != "native" or router is not None) and config["model"]["variant"] != "field":
+        raise ValueError("expert routing requires a two-expert field reader")
     dataset = FullPopulationDataset(GeoPRRV2Dataset(manifest_path, dataset_root=dataset_root,
                                                    **config["data"], require_geometry=False, augment=False))
     loader = make_loader(dataset, batch_size=batch_size, workers=workers, shuffle=False, seed=config["training"]["seed"], device=device)
@@ -99,15 +110,22 @@ def evaluate(*, checkpoint_path: Path, manifest_path: Path, dataset_root: Path, 
             forward_start = time.perf_counter()
             with torch.autocast(device_type=device.type, dtype=torch.float16, enabled=use_amp and device.type == "cuda"):
                 output = model(batch["image"])
+                if expert_mode != "native" or router is not None:
+                    from experiments.geoprr_v2_router import apply_expert_mode
+                    output = apply_expert_mode(output, "field" if expert_mode == "native" else expert_mode, router=router)
             if device.type == "cuda":
                 torch.cuda.synchronize(device)
             forward_seconds += time.perf_counter() - forward_start
             batch_rows = prediction_rows(output, batch)
             for index, row in enumerate(batch_rows):
                 row.update(dataset=raw_batch["dataset"][index], condition=raw_batch["condition"][index])
+                if "expert_index" in output:
+                    row["expert_index"] = int(output["expert_index"][index])
+                else:
+                    row["expert_index"] = int(not row["field_valid"]) if config["model"]["variant"] == "field" else 1
                 if not bool(raw_batch["input_valid"][index]):
                     row.update(prediction=None, valid=False, absolute_error=1.0, field_valid=False,
-                               support_mass=None, failure=raw_batch["input_failure"][index])
+                               support_mass=None, failure=raw_batch["input_failure"][index], expert_index=-2)
             rows.extend(batch_rows)
     elapsed = time.perf_counter() - started
     if not max_batches and len(rows) != len(dataset):
@@ -128,6 +146,11 @@ def evaluate(*, checkpoint_path: Path, manifest_path: Path, dataset_root: Path, 
                            or any(row.get("diagnostic_only", False) for row in dataset.dataset.rows)),
         "model": model_options, "training_config": config,
         "training_or_adaptation_during_evaluation": False,
+        "expert_mode": "router" if router is not None else expert_mode,
+        "router": str(router_path.resolve()) if router_path is not None else None,
+        "selected_experts": {"field": sum(row["expert_index"] == 0 for row in rows),
+                             "direct": sum(row["expert_index"] == 1 for row in rows),
+                             "mean": sum(row["expert_index"] == -1 for row in rows)},
         "model_inputs": "ImageNet-normalized ROI pixels only", "summary": summary,
         "by_dataset": {name: summarize_rows(population) for name, population in by_dataset.items()},
         "by_condition": {name: summarize_rows(population) for name, population in by_condition.items()},
@@ -138,7 +161,10 @@ def evaluate(*, checkpoint_path: Path, manifest_path: Path, dataset_root: Path, 
                    "pipeline_boundary": "image read, ROI crop/resize, normalization, transfer, forward and prediction collection; batched throughput",
                    "warmup_excluded": False},
         "device": str(device), "gpu": torch.cuda.get_device_name(device) if device.type == "cuda" else None,
-        "parameters": sum(parameter.numel() for parameter in model.parameters()),
+        "reader_parameters": sum(parameter.numel() for parameter in model.parameters()),
+        "router_parameters": sum(parameter.numel() for parameter in router.parameters()) if router is not None else 0,
+        "parameters": (sum(parameter.numel() for parameter in model.parameters())
+                       + (sum(parameter.numel() for parameter in router.parameters()) if router is not None else 0)),
         "peak_cuda_memory_bytes": torch.cuda.max_memory_allocated(device) if device.type == "cuda" else None,
     }
     write_predictions(output_dir / "predictions.csv", rows)
@@ -157,6 +183,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--no-amp", action="store_true")
     parser.add_argument("--max-batches", type=int, default=0, help="Positive limits are smoke checks, not full evaluations.")
+    parser.add_argument("--expert-mode", choices=("native", "field", "direct", "mean"), default="native")
+    parser.add_argument("--router", type=Path)
     return parser
 
 
@@ -164,7 +192,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     result = evaluate(checkpoint_path=args.checkpoint, manifest_path=args.manifest, dataset_root=args.data_root,
                       output_dir=args.output, device_name=args.device, batch_size=args.batch_size, workers=args.workers,
-                      use_amp=not args.no_amp, max_batches=args.max_batches)
+                      use_amp=not args.no_amp, max_batches=args.max_batches,
+                      expert_mode=args.expert_mode, router_path=args.router)
     print(json.dumps({"output": str(args.output.resolve()), **result["summary"]}, allow_nan=False), flush=True)
     return 0
 
