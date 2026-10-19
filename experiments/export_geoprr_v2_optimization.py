@@ -57,6 +57,8 @@ def export(run: Path, output: Path) -> dict:
     result = {"protocol": json.loads((run / "protocol.json").read_text()),
               "evaluations": len(rows), "per_seed": rows, "three_seed": seed_summary,
               "scope": "native SyncG exploratory comparison; source-validation selection only"}
+    if (run / "validation_decision.json").exists():
+        result["validation_decision"] = json.loads((run / "validation_decision.json").read_text())
     (output / "summary.json").write_text(json.dumps(result, indent=2) + "\n")
     if seed_summary:
         with (output / "three_seed_metrics.csv").open("w", newline="") as handle:

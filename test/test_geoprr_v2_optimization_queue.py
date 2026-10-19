@@ -1,10 +1,25 @@
 """Source fold contracts for the fixed MobileNet comparison."""
 import unittest
 
-from experiments.run_geoprr_v2_optimization import source_folds
+from experiments.run_geoprr_v2_optimization import compare_validation, source_folds
 
 
 class OptimizationFoldTests(unittest.TestCase):
+    def test_only_source_validation_improvement_allows_oof(self):
+        baseline = {"samples": 1506, "nmae": .0019174051203155824, "smoke_only": False}
+        for score in (.0035, baseline["nmae"]):
+            result = compare_validation(dict(baseline, nmae=score), baseline)
+            self.assertFalse(result["improved"])
+            self.assertEqual(result["decision"], "return_to_original_mobilenet")
+            self.assertFalse(result["test_used_for_decision"])
+        self.assertTrue(compare_validation(dict(baseline, nmae=.0018), baseline)["improved"])
+
+    def test_diagnostic_or_wrong_cohort_cannot_authorize_oof(self):
+        baseline = {"samples": 1506, "nmae": .002, "smoke_only": False}
+        for candidate in (dict(baseline, samples=64), dict(baseline, smoke_only=True)):
+            with self.assertRaises(ValueError):
+                compare_validation(candidate, baseline)
+
     def test_folds_partition_images_without_splitting_scenes(self):
         rows = [{"sample_id": f"{scene}_{index}", "dataset": "SyncG", "split": "train",
                  "metadata": {"scene_name": f"{scene}.blend"}}

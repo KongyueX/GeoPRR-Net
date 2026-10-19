@@ -8,6 +8,7 @@ import os
 import random
 import subprocess
 import sys
+import time
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -41,6 +42,25 @@ def source_folds(rows: list[dict]) -> list[list[dict]]:
     return folds
 
 
+def process_running(pid: int) -> bool:
+    path = Path(f"/proc/{pid}/stat")
+    try:
+        return path.read_text().split(") ", 1)[1][0] != "Z"
+    except FileNotFoundError:
+        return False
+
+
+def compare_validation(candidate: dict, baseline: dict) -> dict:
+    if candidate["samples"] != 1506 or baseline["samples"] != 1506:
+        raise ValueError("validation decision requires the fixed 1506-image source cohort")
+    if candidate.get("smoke_only") or baseline.get("smoke_only"):
+        raise ValueError("diagnostic runs cannot decide whether to continue OOF training")
+    improved = candidate["nmae"] < baseline["nmae"]
+    return {"decision": "proceed_with_oof" if improved else "return_to_original_mobilenet",
+            "improved": improved, "rule": "strictly lower source-validation NMAE",
+            "test_used_for_decision": False, "candidate": candidate, "baseline": baseline}
+
+
 class OptimizationRun:
     def __init__(self, home: Path, output: Path, seeds: list[int]) -> None:
         self.home, self.output, self.seeds = home, output, seeds
@@ -63,8 +83,21 @@ class OptimizationRun:
             return
         if previous.get("status") == "running":
             pid = previous.get("pid")
-            if pid and Path(f"/proc/{pid}/cmdline").exists():
-                raise RuntimeError(f"{name} still has a process ({pid}); inspect it before resuming")
+            if pid and process_running(pid):
+                actual = Path(f"/proc/{pid}/cmdline").read_bytes().rstrip(b"\0").decode().split("\0")
+                if actual != previous["command"]:
+                    raise RuntimeError(f"{name}: PID {pid} no longer belongs to the recorded command")
+                previous["adopted_by"] = os.getpid()
+                self.save()
+                print(json.dumps({"event": "adopt_running_step", "step": name, "pid": pid}), flush=True)
+                while process_running(pid):
+                    time.sleep(5)
+                previous.update(status="complete" if expected.exists() else "failed",
+                                finished_at=datetime.now(timezone.utc).isoformat(), exit_code=None)
+                self.save()
+                if previous["status"] != "complete":
+                    raise RuntimeError(f"{name} exited without its completion output; see {previous['log']}")
+                return
         log_path = self.output / "logs" / f"{name}.log"
         log_path.parent.mkdir(parents=True, exist_ok=True)
         record = {"status": "running", "command": command, "log": str(log_path),
@@ -124,6 +157,7 @@ class OptimizationRun:
             "router_training": "three-fold source-training held-out predictions",
             "selection": "source-validation NMAE; no test-based configuration selection",
             "main_configuration": "detail_ce", "epochs_per_reader": 65,
+            "continuation_rule": "first detail_ce seed must improve original MobileNetV4 source-validation NMAE before OOF/routing",
             "probe_configurations": ["global_ce", "spatial_ce", "dynamic", "wide"],
             "conditions": ["native"], "external_data": "not used for fitting or selection",
         })
@@ -162,16 +196,51 @@ class OptimizationRun:
             if (directory / "latest.pt").exists():
                 command += ["--resume", str(directory / "latest.pt")]
             self.step(f"train_{tag}", command, complete_path)
+            complete = json.loads(complete_path.read_text())
+            if complete["config"] != expected_config or complete["epochs"] != 65 or complete["smoke_only"]:
+                raise ValueError(f"reader did not finish the expected formal configuration: {tag}")
+            actual_train = self.manifests / "train.jsonl" if fold is None else self.output / "manifests" / f"fold{fold}_train.jsonl"
+            identities = {"train": [r["sample_id"] for r in read_jsonl(actual_train)],
+                          "validation": [r["sample_id"] for r in read_jsonl(self.manifests / "validation.jsonl")]}
+            if complete["sample_ids"] != identities:
+                raise ValueError(f"reader completion identities differ: {tag}")
+        elif self.state["steps"].get(f"train_{tag}", {}).get("status") == "running":
+            self.state["steps"][f"train_{tag}"].update(status="complete", exit_code=None)
+            self.save()
         return directory / "best.pt"
 
+    def validation_gate(self, checkpoint: Path) -> bool:
+        reference_dir = self.home / "runs/geoprr_v2/mobilenetv4_conv_medium/field/seed_20262020"
+        reference_run = json.loads((reference_dir / "run.json").read_text())
+        candidate_run = json.loads((checkpoint.parent / "run.json").read_text())
+        if (reference_run["manifests"]["validation"] != candidate_run["manifests"]["validation"]
+                or reference_run["config"]["training"]["seed"] != candidate_run["config"]["training"]["seed"]):
+            raise ValueError("validation gate readers must use the same validation cohort and seed")
+        reference_ids = reference_run.get("sample_ids", {}).get("validation")
+        if reference_ids is None:
+            reference_ids = [row["sample_id"] for row in read_jsonl(Path(reference_run["manifests"]["validation"]))]
+        if reference_ids != candidate_run["sample_ids"]["validation"]:
+            raise ValueError("baseline and candidate validation sample identities differ")
+        decision = compare_validation(json.loads((checkpoint.parent / "best_validation.json").read_text()),
+                                      json.loads((reference_dir / "best_validation.json").read_text()))
+        decision.update(candidate_checkpoint=str(checkpoint), baseline_checkpoint=str(reference_dir / "best.pt"),
+                        validation_sample_ids=candidate_run["sample_ids"]["validation"],
+                        observed_at=datetime.now(timezone.utc).isoformat())
+        write_json(self.output / "validation_decision.json", decision)
+        self.state["validation_decision"] = decision["decision"]
+        self.save()
+        return decision["improved"]
+
     def evaluate(self, label: str, seed: int, checkpoint: Path, mode: str = "native",
-                 router: Path | None = None) -> None:
-        mode = "router" if router else mode
-        directory = self.output / "evaluation" / f"{label}_s{seed}_{mode}"
+                 router: Path | None = None, modal_radius: int = 0) -> None:
+        tag = "router" if router else f"modal_r{modal_radius}" if modal_radius else mode
+        directory = self.output / "evaluation" / f"{label}_s{seed}_{tag}"
         command = [sys.executable, "-m", "experiments.evaluate_geoprr_v2", "--checkpoint", str(checkpoint),
                    "--manifest", str(self.manifests / "test.jsonl"), "--output", str(directory)]
         command += ["--router", str(router)] if router else ["--expert-mode", mode]
-        self.step(f"test_{label}_s{seed}_{mode}", command, directory / "summary.json")
+        if modal_radius:
+            command += ["--modal-radius", str(modal_radius)]
+        self.step(f"test_{label}_s{seed}_{tag}", command, directory / "summary.json")
 
     def routed_reader(self, seed: int, checkpoint: Path) -> Path:
         caches = self.output / "caches" / f"s{seed}"
@@ -202,6 +271,14 @@ class OptimizationRun:
         self.evaluate("global_ce", first, repaired)
         for seed in self.seeds:
             main = self.reader("detail_ce", seed)
+            if seed == first and not self.validation_gate(main):
+                self.state.update(status="validation_rejected", deferred_work=["OOF", "routing", "remaining_previous_matrix"],
+                                  next_direction="optimize severe errors from the original MobileNetV4")
+                self.save()
+                from experiments.export_geoprr_v2_optimization import export
+                export(self.output, self.output / "exports")
+                print(json.dumps({"event": "validation_rejected", "next": self.state["next_direction"]}), flush=True)
+                return
             router = self.routed_reader(seed, main)
             for mode in ("field", "direct", "mean"):
                 self.evaluate("detail_ce", seed, main, mode)

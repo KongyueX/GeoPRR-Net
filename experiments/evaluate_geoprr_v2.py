@@ -65,7 +65,7 @@ def write_predictions(path: Path, rows: Sequence[Mapping[str, Any]]) -> None:
 
 def evaluate(*, checkpoint_path: Path, manifest_path: Path, dataset_root: Path, output_dir: Path,
              device_name: str, batch_size: int, workers: int, use_amp: bool, max_batches: int = 0,
-             expert_mode: str = "native", router_path: Path | None = None) -> dict[str, Any]:
+             expert_mode: str = "native", router_path: Path | None = None, modal_radius: int = 0) -> dict[str, Any]:
     from experiments.geoprr_v2_data import GeoPRRV2Dataset
     from experiments.geoprr_v2_model import GeoPRRV2
 
@@ -92,6 +92,8 @@ def evaluate(*, checkpoint_path: Path, manifest_path: Path, dataset_root: Path, 
             raise ValueError("router and reader experiment seeds differ")
     if (expert_mode != "native" or router is not None) and config["model"]["variant"] != "field":
         raise ValueError("expert routing requires a two-expert field reader")
+    if modal_radius and (router is not None or expert_mode not in ("native", "field") or config["model"]["variant"] != "field"):
+        raise ValueError("modal field readout requires the original field-only output")
     dataset = FullPopulationDataset(GeoPRRV2Dataset(manifest_path, dataset_root=dataset_root,
                                                    **config["data"], require_geometry=False, augment=False))
     loader = make_loader(dataset, batch_size=batch_size, workers=workers, shuffle=False, seed=config["training"]["seed"], device=device)
@@ -113,6 +115,9 @@ def evaluate(*, checkpoint_path: Path, manifest_path: Path, dataset_root: Path, 
                 if expert_mode != "native" or router is not None:
                     from experiments.geoprr_v2_router import apply_expert_mode
                     output = apply_expert_mode(output, "field" if expert_mode == "native" else expert_mode, router=router)
+                if modal_radius:
+                    from experiments.geoprr_v2_model import apply_modal_field_readout
+                    output = apply_modal_field_readout(output, modal_radius)
             if device.type == "cuda":
                 torch.cuda.synchronize(device)
             forward_seconds += time.perf_counter() - forward_start
@@ -147,6 +152,7 @@ def evaluate(*, checkpoint_path: Path, manifest_path: Path, dataset_root: Path, 
         "model": model_options, "training_config": config,
         "training_or_adaptation_during_evaluation": False,
         "expert_mode": "router" if router is not None else expert_mode,
+        "modal_radius": modal_radius,
         "router": str(router_path.resolve()) if router_path is not None else None,
         "selected_experts": {"field": sum(row["expert_index"] == 0 for row in rows),
                              "direct": sum(row["expert_index"] == 1 for row in rows),
@@ -185,6 +191,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--max-batches", type=int, default=0, help="Positive limits are smoke checks, not full evaluations.")
     parser.add_argument("--expert-mode", choices=("native", "field", "direct", "mean"), default="native")
     parser.add_argument("--router", type=Path)
+    parser.add_argument("--modal-radius", type=int, choices=(0, 2, 4, 8), default=0,
+                        help="Zero preserves original expectation; positive radii use the source-selected field mode window.")
     return parser
 
 
@@ -193,7 +201,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     result = evaluate(checkpoint_path=args.checkpoint, manifest_path=args.manifest, dataset_root=args.data_root,
                       output_dir=args.output, device_name=args.device, batch_size=args.batch_size, workers=args.workers,
                       use_amp=not args.no_amp, max_batches=args.max_batches,
-                      expert_mode=args.expert_mode, router_path=args.router)
+                      expert_mode=args.expert_mode, router_path=args.router, modal_radius=args.modal_radius)
     print(json.dumps({"output": str(args.output.resolve()), **result["summary"]}, allow_nan=False), flush=True)
     return 0
 

@@ -100,6 +100,30 @@ def masked_field_readout(
     }
 
 
+def apply_modal_field_readout(
+    output: dict[str, torch.Tensor | None], radius: int
+) -> dict[str, torch.Tensor | None]:
+    """Read the local field mode while retaining unsupported rows' fallback."""
+    field_distribution = output["field_distribution"]
+    bins = field_distribution.shape[1]
+    if not 0 < radius < bins:
+        raise ValueError("radius must be positive and smaller than the bin count")
+    valid = output["field_valid"]
+    probabilities = field_distribution[valid]
+    peaks = probabilities.argmax(1)
+    indices = torch.arange(bins, device=probabilities.device)
+    local = probabilities * ((indices[None, :] - peaks[:, None]).abs() <= radius)
+    local = local / local.sum(1, keepdim=True)
+    coordinates = torch.linspace(
+        0.0, 1.0, bins, device=probabilities.device, dtype=probabilities.dtype
+    )
+    distribution = output["distribution"].clone()
+    reading = output["reading"].clone()
+    distribution[valid] = local
+    reading[valid] = (local * coordinates).sum(1)
+    return {**output, "distribution": distribution, "reading": reading}
+
+
 class _Refine(nn.Sequential):
     def __init__(self, channels: int) -> None:
         super().__init__(
