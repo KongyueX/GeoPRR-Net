@@ -1,6 +1,6 @@
 # 完整1506张：逐顶点物理接口与相对状态网格
 
-**新的物理接口同时保住普通样本精度并救回原严重误读；连续读出和冻结256×256网格均通过预注册零训练门槛。**它逐顶点使用各自高度，不再依赖origin/outside同高。下面是GT几何标签诊断，尚无新RGB模型训练结果；正式模型与独立组合对照均为pending，见[冻结训练协议](../../GEOPRR_V2_RELATIVE_STATE_PROTOCOL_CN.md)。
+**新的物理接口同时保住普通样本精度并救回原严重误读；连续读出和冻结256×256网格均通过预注册零训练门槛。**它逐顶点使用各自高度，不再依赖origin/outside同高。下面是GT几何标签诊断，尚无新RGB模型完整训练结果；joint正式训练已于北京时间2026-10-21 04:40:04启动，独立组合对照按冻结门槛有条件执行，见[冻结训练协议](../../GEOPRR_V2_RELATIVE_STATE_PROTOCOL_CN.md)。
 
 ## 完整人口与结果
 
@@ -87,7 +87,7 @@ ordered256另由JavaScript float64四atom推送计算复核，不导入Torch或r
 - [paired_changes.json](paired_changes.json)、[severe_cases.csv](severe_cases.csv)、[threshold_cases.csv](threshold_cases.csv)：救回、新增和逐图不利结果。
 - [protocol.json](protocol.json)、[independent_verification.json](independent_verification.json)、[ordered256_independent_verification.json](ordered256_independent_verification.json)：物理合同与独立复核。
 - [label_preparation_summary.json](label_preparation_summary.json)、[label_schema_verification.json](label_schema_verification.json)：原14494/新增4096/验证1506完整标签与canonical source_role合同。
-- [正式RGB协议](../../GEOPRR_V2_RELATIVE_STATE_PROTOCOL_CN.md)：单seed joint→有条件independent、完整质量读出与预注册停止规则；训练pending。
+- [正式RGB协议](../../GEOPRR_V2_RELATIVE_STATE_PROTOCOL_CN.md)：单seed joint→有条件independent、完整质量读出与预注册停止规则；joint训练进行中。
 
 ## Limitations
 
