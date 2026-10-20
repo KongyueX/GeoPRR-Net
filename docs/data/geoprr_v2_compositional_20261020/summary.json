@@ -1,18 +1,19 @@
 {
-  "status": "partial",
+  "status": "complete",
   "protocol": {
     "name": "geoprr_v2_compositional_source_v1",
     "first_seed": 20262020,
     "completed_arms": [
       "supervised",
-      "consistency"
+      "consistency",
+      "composition"
     ],
     "planned_first_seed_arms": [
       "supervised",
       "consistency",
       "composition"
     ],
-    "completed_first_seed_arms": 2,
+    "completed_first_seed_arms": 3,
     "planned_first_seed_arms_count": 3,
     "selection": "native NMAE on original source validation",
     "modal_radius": 8,
@@ -20,13 +21,15 @@
     "official_test_status": "not_evaluated",
     "seed_count": 1,
     "sample_sd": null,
-    "continuation_decision": "pending composition arm; unchanged five-check native rule",
-    "new_trainable_parameters": 0
+    "continuation_decision": "validation_rejected",
+    "new_trainable_parameters": 0,
+    "seed_expansion_authorized": false,
+    "further_training_started": false
   },
   "population_accounting": {
     "source_validation_unique_images": 1506,
     "source_validation_groups": 70,
-    "source_validation_prediction_rows": 9036,
+    "source_validation_prediction_rows": 12048,
     "matched_source_validation_ids_targets_groups": true,
     "heldout_composition_edges": 4096,
     "heldout_composition_groups": 1024,
@@ -34,7 +37,7 @@
     "heldout_images_seen_in_training": 4096,
     "heldout_training_edge_overlap": 0,
     "populations_combined": false,
-    "heldout_composition_prediction_rows": 8192,
+    "heldout_composition_prediction_rows": 12288,
     "heldout_composition_unique_edges": 4096,
     "heldout_composition_unique_images": 4096
   },
@@ -277,6 +280,86 @@
       "roi_pipeline_images_per_second": 85.90244401160733,
       "selected_field_percent": 99.933598937583,
       "selected_direct_percent": 0.06640106241699867,
+      "selected_mean_percent": 0.0
+    },
+    {
+      "split": "source_validation",
+      "configuration": "composition",
+      "seed": 20262020,
+      "readout": "native",
+      "checkpoint_epoch": 34,
+      "samples": 1506,
+      "groups": 70,
+      "nmae_percent_fs": 0.16226118324310246,
+      "acc_at_1_percent": 98.93758300132802,
+      "acc_at_2_percent": 99.66799468791501,
+      "acc_at_5_percent": 99.800796812749,
+      "errors_above_2_percent_fs": 5,
+      "errors_above_5_percent_fs": 3,
+      "median_error_percent_fs": 0.0718533992767334,
+      "p90_error_percent_fs": 0.3143236041069031,
+      "p95_error_percent_fs": 0.5066171288490295,
+      "tail10_nmae_percent_fs": 0.8628410941929173,
+      "maximum_error_percent_fs": 20.013926923274994,
+      "failures": 0,
+      "coverage_percent": 100.0,
+      "field_coverage_percent": 100.0,
+      "parameters": 7695954,
+      "peak_cuda_memory_bytes": 3101347840,
+      "evaluation_batch_size": 16,
+      "evaluation_workers": 4,
+      "amp": true,
+      "pipeline_seconds": 15.26566619426012,
+      "selected_field": 1506,
+      "selected_direct": 0,
+      "selected_mean": 0,
+      "forward_seconds": 9.739296905696392,
+      "forward_ms_per_image": 6.466996617328282,
+      "forward_images_per_second": 154.63128545954478,
+      "roi_pipeline_ms_per_image": 10.136564538021329,
+      "roi_pipeline_images_per_second": 98.65275323302005,
+      "selected_field_percent": 100.0,
+      "selected_direct_percent": 0.0,
+      "selected_mean_percent": 0.0
+    },
+    {
+      "split": "source_validation",
+      "configuration": "composition",
+      "seed": 20262020,
+      "readout": "modal_r8",
+      "checkpoint_epoch": 34,
+      "samples": 1506,
+      "groups": 70,
+      "nmae_percent_fs": 0.15672111414259735,
+      "acc_at_1_percent": 98.93758300132802,
+      "acc_at_2_percent": 99.60159362549801,
+      "acc_at_5_percent": 99.867197875166,
+      "errors_above_2_percent_fs": 6,
+      "errors_above_5_percent_fs": 2,
+      "median_error_percent_fs": 0.07169544696807861,
+      "p90_error_percent_fs": 0.3090661090936919,
+      "p95_error_percent_fs": 0.5120588408317417,
+      "tail10_nmae_percent_fs": 0.816990464360988,
+      "maximum_error_percent_fs": 20.489101111888885,
+      "failures": 0,
+      "coverage_percent": 100.0,
+      "field_coverage_percent": 100.0,
+      "parameters": 7695954,
+      "peak_cuda_memory_bytes": 3101347840,
+      "evaluation_batch_size": 16,
+      "evaluation_workers": 4,
+      "amp": true,
+      "pipeline_seconds": 15.281273905187845,
+      "selected_field": 1506,
+      "selected_direct": 0,
+      "selected_mean": 0,
+      "forward_seconds": 9.524718649685383,
+      "forward_ms_per_image": 6.324514375621104,
+      "forward_images_per_second": 158.1149066329372,
+      "roi_pipeline_ms_per_image": 10.146928223896312,
+      "roi_pipeline_images_per_second": 98.551993069683,
+      "selected_field_percent": 100.0,
+      "selected_direct_percent": 0.0,
       "selected_mean_percent": 0.0
     }
   ],
@@ -525,6 +608,139 @@
       "regressed_ids_at_5_percent_fs": []
     },
     {
+      "comparison": "composition_native_vs_baseline_native",
+      "role": "same native readout; added data and exposure versus original baseline",
+      "baseline_configuration": "baseline",
+      "baseline_readout": "native",
+      "candidate_configuration": "composition",
+      "candidate_readout": "native",
+      "matched_samples": 1506,
+      "exact_ids_targets_groups": true,
+      "relative_nmae_reduction_percent": 15.378527019061849,
+      "per_metric_candidate_minus_baseline": {
+        "nmae_percent_fs": -0.029488236292118164,
+        "acc_at_1_percent": 0.0,
+        "acc_at_2_percent": 0.13280212483400078,
+        "acc_at_5_percent": 0.13280212483398657,
+        "errors_above_2_percent_fs": -2,
+        "errors_above_5_percent_fs": -2,
+        "median_error_percent_fs": 0.004489719867706299,
+        "p90_error_percent_fs": 0.0044792890548706055,
+        "p95_error_percent_fs": 0.028888322412967682,
+        "tail10_nmae_percent_fs": -0.3416125350385065,
+        "maximum_error_percent_fs": -11.99294924736023
+      },
+      "rescues_at_2_percent_fs": 5,
+      "regressions_at_2_percent_fs": 3,
+      "persistent_errors_at_2_percent_fs": 2,
+      "rescued_ids_at_2_percent_fs": [
+        "sync_12540",
+        "sync_3172",
+        "sync_3663",
+        "sync_4515",
+        "sync_7246"
+      ],
+      "regressed_ids_at_2_percent_fs": [
+        "sync_10635",
+        "sync_11838",
+        "sync_15647"
+      ],
+      "rescues_at_5_percent_fs": 3,
+      "regressions_at_5_percent_fs": 1,
+      "persistent_errors_at_5_percent_fs": 2,
+      "rescued_ids_at_5_percent_fs": [
+        "sync_3172",
+        "sync_3663",
+        "sync_4515"
+      ],
+      "regressed_ids_at_5_percent_fs": [
+        "sync_15647"
+      ]
+    },
+    {
+      "comparison": "composition_modal_r8_vs_baseline_modal_r8",
+      "role": "same frozen readout; added data and exposure versus original baseline",
+      "baseline_configuration": "baseline",
+      "baseline_readout": "modal_r8",
+      "candidate_configuration": "composition",
+      "candidate_readout": "modal_r8",
+      "matched_samples": 1506,
+      "exact_ids_targets_groups": true,
+      "relative_nmae_reduction_percent": 4.488140687318543,
+      "per_metric_candidate_minus_baseline": {
+        "nmae_percent_fs": -0.0073643881922827725,
+        "acc_at_1_percent": -0.26560424966798735,
+        "acc_at_2_percent": -0.13280212483398657,
+        "acc_at_5_percent": 0.06640106241700039,
+        "errors_above_2_percent_fs": 2,
+        "errors_above_5_percent_fs": -1,
+        "median_error_percent_fs": 0.004827231168746948,
+        "p90_error_percent_fs": 0.018031529816653347,
+        "p95_error_percent_fs": 0.05571040674112737,
+        "tail10_nmae_percent_fs": -0.11882027171687848,
+        "maximum_error_percent_fs": -7.460006698966026
+      },
+      "rescues_at_2_percent_fs": 1,
+      "regressions_at_2_percent_fs": 3,
+      "persistent_errors_at_2_percent_fs": 3,
+      "rescued_ids_at_2_percent_fs": [
+        "sync_4515"
+      ],
+      "regressed_ids_at_2_percent_fs": [
+        "sync_10635",
+        "sync_11838",
+        "sync_12540"
+      ],
+      "rescues_at_5_percent_fs": 1,
+      "regressions_at_5_percent_fs": 0,
+      "persistent_errors_at_5_percent_fs": 2,
+      "rescued_ids_at_5_percent_fs": [
+        "sync_3663"
+      ],
+      "regressed_ids_at_5_percent_fs": []
+    },
+    {
+      "comparison": "composition_modal_r8_vs_composition_native",
+      "role": "same checkpoint readout comparison",
+      "baseline_configuration": "composition",
+      "baseline_readout": "native",
+      "candidate_configuration": "composition",
+      "candidate_readout": "modal_r8",
+      "matched_samples": 1506,
+      "exact_ids_targets_groups": true,
+      "relative_nmae_reduction_percent": 3.41429107675425,
+      "per_metric_candidate_minus_baseline": {
+        "nmae_percent_fs": -0.005540069100505113,
+        "acc_at_1_percent": 0.0,
+        "acc_at_2_percent": -0.06640106241700039,
+        "acc_at_5_percent": 0.06640106241700039,
+        "errors_above_2_percent_fs": 1,
+        "errors_above_5_percent_fs": -1,
+        "median_error_percent_fs": -0.00015795230865478516,
+        "p90_error_percent_fs": -0.005257495013211155,
+        "p95_error_percent_fs": 0.00544171198271215,
+        "tail10_nmae_percent_fs": -0.045850629831929335,
+        "maximum_error_percent_fs": 0.4751741886138916
+      },
+      "rescues_at_2_percent_fs": 1,
+      "regressions_at_2_percent_fs": 2,
+      "persistent_errors_at_2_percent_fs": 4,
+      "rescued_ids_at_2_percent_fs": [
+        "sync_15647"
+      ],
+      "regressed_ids_at_2_percent_fs": [
+        "sync_12540",
+        "sync_3663"
+      ],
+      "rescues_at_5_percent_fs": 1,
+      "regressions_at_5_percent_fs": 0,
+      "persistent_errors_at_5_percent_fs": 2,
+      "rescued_ids_at_5_percent_fs": [
+        "sync_15647"
+      ],
+      "regressed_ids_at_5_percent_fs": []
+    },
+    {
       "comparison": "consistency_native_vs_supervised_native",
       "role": "matched exposure; added U/M consistency objective",
       "baseline_configuration": "supervised",
@@ -643,6 +859,170 @@
       "regressed_ids_at_5_percent_fs": [
         "sync_4515"
       ]
+    },
+    {
+      "comparison": "composition_native_vs_supervised_native",
+      "role": "same executed batches and image exposure; added U/M consistency and composition objectives",
+      "baseline_configuration": "supervised",
+      "baseline_readout": "native",
+      "candidate_configuration": "composition",
+      "candidate_readout": "native",
+      "matched_samples": 1506,
+      "exact_ids_targets_groups": true,
+      "relative_nmae_reduction_percent": -9.692213359892943,
+      "per_metric_candidate_minus_baseline": {
+        "nmae_percent_fs": 0.014337116189469229,
+        "acc_at_1_percent": -0.33200531208498774,
+        "acc_at_2_percent": 0.0,
+        "acc_at_5_percent": 0.0,
+        "errors_above_2_percent_fs": 0,
+        "errors_above_5_percent_fs": 0,
+        "median_error_percent_fs": 0.014728307723999023,
+        "p90_error_percent_fs": 0.07501542568206787,
+        "p95_error_percent_fs": 0.11734887957572937,
+        "tail10_nmae_percent_fs": -0.03463183822640714,
+        "maximum_error_percent_fs": -6.613469123840332
+      },
+      "rescues_at_2_percent_fs": 2,
+      "regressions_at_2_percent_fs": 2,
+      "persistent_errors_at_2_percent_fs": 3,
+      "rescued_ids_at_2_percent_fs": [
+        "sync_3663",
+        "sync_4515"
+      ],
+      "regressed_ids_at_2_percent_fs": [
+        "sync_11838",
+        "sync_15647"
+      ],
+      "rescues_at_5_percent_fs": 1,
+      "regressions_at_5_percent_fs": 1,
+      "persistent_errors_at_5_percent_fs": 2,
+      "rescued_ids_at_5_percent_fs": [
+        "sync_4515"
+      ],
+      "regressed_ids_at_5_percent_fs": [
+        "sync_15647"
+      ]
+    },
+    {
+      "comparison": "composition_modal_r8_vs_supervised_modal_r8",
+      "role": "same executed batches and image exposure; added U/M consistency and composition objectives",
+      "baseline_configuration": "supervised",
+      "baseline_readout": "modal_r8",
+      "candidate_configuration": "composition",
+      "candidate_readout": "modal_r8",
+      "matched_samples": 1506,
+      "exact_ids_targets_groups": true,
+      "relative_nmae_reduction_percent": -20.600625581262655,
+      "per_metric_candidate_minus_baseline": {
+        "nmae_percent_fs": 0.026770615637930706,
+        "acc_at_1_percent": -0.4648074369189885,
+        "acc_at_2_percent": -0.06640106241700039,
+        "acc_at_5_percent": 0.0,
+        "errors_above_2_percent_fs": 1,
+        "errors_above_5_percent_fs": 0,
+        "median_error_percent_fs": 0.014309585094451904,
+        "p90_error_percent_fs": 0.07193946066763601,
+        "p95_error_percent_fs": 0.13102422817610204,
+        "tail10_nmae_percent_fs": 0.0964122128962781,
+        "maximum_error_percent_fs": 0.9319648146629333
+      },
+      "rescues_at_2_percent_fs": 0,
+      "regressions_at_2_percent_fs": 1,
+      "persistent_errors_at_2_percent_fs": 5,
+      "rescued_ids_at_2_percent_fs": [],
+      "regressed_ids_at_2_percent_fs": [
+        "sync_11838"
+      ],
+      "rescues_at_5_percent_fs": 0,
+      "regressions_at_5_percent_fs": 0,
+      "persistent_errors_at_5_percent_fs": 2,
+      "rescued_ids_at_5_percent_fs": [],
+      "regressed_ids_at_5_percent_fs": []
+    },
+    {
+      "comparison": "composition_native_vs_consistency_native",
+      "role": "same executed batches and image exposure; added composition objective",
+      "baseline_configuration": "consistency",
+      "baseline_readout": "native",
+      "candidate_configuration": "composition",
+      "candidate_readout": "native",
+      "matched_samples": 1506,
+      "exact_ids_targets_groups": true,
+      "relative_nmae_reduction_percent": 4.085522424245591,
+      "per_metric_candidate_minus_baseline": {
+        "nmae_percent_fs": -0.0069115916541455935,
+        "acc_at_1_percent": -0.26560424966798735,
+        "acc_at_2_percent": 0.13280212483400078,
+        "acc_at_5_percent": 0.0,
+        "errors_above_2_percent_fs": -2,
+        "errors_above_5_percent_fs": 0,
+        "median_error_percent_fs": 0.014478713274002075,
+        "p90_error_percent_fs": 0.06227083504199982,
+        "p95_error_percent_fs": 0.12317150831222534,
+        "tail10_nmae_percent_fs": -0.21142900930270414,
+        "maximum_error_percent_fs": -24.808388575911522
+      },
+      "rescues_at_2_percent_fs": 4,
+      "regressions_at_2_percent_fs": 2,
+      "persistent_errors_at_2_percent_fs": 3,
+      "rescued_ids_at_2_percent_fs": [
+        "sync_10975",
+        "sync_12540",
+        "sync_3172",
+        "sync_3663"
+      ],
+      "regressed_ids_at_2_percent_fs": [
+        "sync_11838",
+        "sync_15647"
+      ],
+      "rescues_at_5_percent_fs": 1,
+      "regressions_at_5_percent_fs": 1,
+      "persistent_errors_at_5_percent_fs": 2,
+      "rescued_ids_at_5_percent_fs": [
+        "sync_3663"
+      ],
+      "regressed_ids_at_5_percent_fs": [
+        "sync_15647"
+      ]
+    },
+    {
+      "comparison": "composition_modal_r8_vs_consistency_modal_r8",
+      "role": "same executed batches and image exposure; added composition objective",
+      "baseline_configuration": "consistency",
+      "baseline_readout": "modal_r8",
+      "candidate_configuration": "composition",
+      "candidate_readout": "modal_r8",
+      "matched_samples": 1506,
+      "exact_ids_targets_groups": true,
+      "relative_nmae_reduction_percent": 2.019708628883954,
+      "per_metric_candidate_minus_baseline": {
+        "nmae_percent_fs": -0.0032305577186252654,
+        "acc_at_1_percent": -0.33200531208498774,
+        "acc_at_2_percent": -0.06640106241700039,
+        "acc_at_5_percent": 0.06640106241700039,
+        "errors_above_2_percent_fs": 1,
+        "errors_above_5_percent_fs": -1,
+        "median_error_percent_fs": 0.01432076096534729,
+        "p90_error_percent_fs": 0.057150058182742214,
+        "p95_error_percent_fs": 0.13099368079565465,
+        "tail10_nmae_percent_fs": -0.16609622276964775,
+        "maximum_error_percent_fs": -24.33321438729763
+      },
+      "rescues_at_2_percent_fs": 0,
+      "regressions_at_2_percent_fs": 1,
+      "persistent_errors_at_2_percent_fs": 5,
+      "rescued_ids_at_2_percent_fs": [],
+      "regressed_ids_at_2_percent_fs": [
+        "sync_11838"
+      ],
+      "rescues_at_5_percent_fs": 1,
+      "regressions_at_5_percent_fs": 0,
+      "persistent_errors_at_5_percent_fs": 2,
+      "rescued_ids_at_5_percent_fs": [
+        "sync_3663"
+      ],
+      "regressed_ids_at_5_percent_fs": []
     }
   ],
   "heldout_seen_source_combinations": [
@@ -733,6 +1113,57 @@
         "reader_forward_ms_per_edge": 3.2995752035276382,
         "composition_seconds": 0.3717721663415432,
         "composition_ms_per_edge": 0.09076468904822832,
+        "reader_image_forwards": 8192
+      },
+      "readout": "full-distribution native expectation; unsupported edges fail without fallback",
+      "model_inputs": "two ImageNet-normalized ROI pixel tensors; no U/Q/M labels or GT support overlap in composition",
+      "edge_split": {
+        "training_edges": 8192,
+        "heldout_edges": 4096,
+        "overlap_edges": 0,
+        "heldout_unique_images": 4096,
+        "images_seen_in_training": 4096,
+        "unseen_images": 0,
+        "scope": "unseen directed composition edges between seen source images; not unseen-image evaluation"
+      },
+      "failure_rule": "mass below 0.15, nonfinite/out-of-range readout or input failure retains error 1.0; no GT spatial mask, warp or fallback"
+    },
+    {
+      "configuration": "composition",
+      "scope": "new directed edges between seen source images/states/layouts; not unseen-image transfer",
+      "metrics": {
+        "split": "heldout_seen_source_combinations",
+        "configuration": "composition",
+        "seed": 20262020,
+        "readout": "cross_state_native",
+        "checkpoint_epoch": 34,
+        "samples": 4096,
+        "groups": 1024,
+        "nmae_percent_fs": 0.08566952129172023,
+        "acc_at_1_percent": 99.8046875,
+        "acc_at_2_percent": 99.951171875,
+        "acc_at_5_percent": 99.951171875,
+        "errors_above_2_percent_fs": 2,
+        "errors_above_5_percent_fs": 2,
+        "median_error_percent_fs": 0.041151419281959534,
+        "p90_error_percent_fs": 0.1608431339263916,
+        "p95_error_percent_fs": 0.2734832465648651,
+        "tail10_nmae_percent_fs": 0.4428845598850763,
+        "maximum_error_percent_fs": 24.14393201470375,
+        "failures": 0,
+        "coverage_percent": 100.0,
+        "field_coverage_percent": 100.0,
+        "parameters": 7695954,
+        "peak_cuda_memory_bytes": 4127790592,
+        "evaluation_batch_size": 16,
+        "evaluation_workers": 4,
+        "amp": true,
+        "pipeline_seconds": 48.39257027953863,
+        "pipeline_ms_per_edge": 11.814592353402986,
+        "reader_forward_seconds": 14.152294915169477,
+        "reader_forward_ms_per_edge": 3.455150125773798,
+        "composition_seconds": 0.37596624344587326,
+        "composition_ms_per_edge": 0.09178863365377765,
         "reader_image_forwards": 8192
       },
       "readout": "full-distribution native expectation; unsupported edges fail without fallback",
@@ -957,6 +1388,110 @@
         "state_support_l1": 0.1
       },
       "counter_interpretation": "raw losses and supervised_cross_readouts count describe eligible computed terms; only nonzero state weights receive effective cross-state supervision; all state terms are disabled during five-epoch warmup"
+    },
+    "composition": {
+      "configuration": "composition",
+      "config": {
+        "name": "mobilenetv4_compositional_composition",
+        "model": {
+          "backbone": "mobilenetv4_conv_medium.e500_r224_in1k",
+          "pretrained": true,
+          "variant": "field",
+          "bins": 256,
+          "decoder_dim": 64,
+          "support_threshold": 0.15
+        },
+        "data": {
+          "image_size": 768,
+          "output_size": 192
+        },
+        "training": {
+          "seed": 20262020,
+          "epochs": 65,
+          "warmup_epochs": 5,
+          "batch_size": 32,
+          "workers": 8,
+          "backbone_lr": 0.0001,
+          "head_lr": 0.0005,
+          "min_lr": 1e-06,
+          "weight_decay": 0.01,
+          "gradient_clip": 5.0,
+          "amp": true,
+          "pair_objective": "state_composition_v1"
+        },
+        "loss_weights": {
+          "appearance_l1": 0.5,
+          "appearance_cdf": 0.5,
+          "reading_l1": 1.0,
+          "reading_cdf": 1.0,
+          "field_ce": 0.25,
+          "field_l1": 1.0,
+          "point_ce": 0.1,
+          "support_bce": 0.25,
+          "support_mass": 0.1,
+          "pair_support_mass": 0.0,
+          "pair_reading_l1": 0.0,
+          "pair_reading_cdf": 0.0,
+          "pair_field_l1": 0.0,
+          "pair_support_l1": 0.0,
+          "pair_point_l1": 0.0,
+          "state_reading_cdf": 1.0,
+          "state_mass_l1": 0.1,
+          "state_field_l1": 0.5,
+          "state_support_l1": 0.1
+        }
+      },
+      "epochs_completed": 65,
+      "selected_epoch": 34,
+      "checkpoint_selection_best_validation": {
+        "epoch": 34,
+        "smoke_only": false,
+        "samples": 1506,
+        "groups": 70,
+        "nmae": 0.001622523502885346,
+        "nmae_percent_fs": 0.1622523502885346,
+        "acc_at_1": 0.9893758300132802,
+        "acc_at_2": 0.9966799468791501,
+        "acc_at_5": 0.99800796812749,
+        "coverage": 1.0,
+        "field_coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.000718727707862854,
+        "p90_error": 0.0031430423259735107,
+        "p95_error": 0.005068168044090271,
+        "tail10_nmae": 0.008627590179987947,
+        "maximum_error": 0.20014061033725739,
+        "errors_above_2_percent_fs": 5,
+        "errors_above_5_percent_fs": 3
+      },
+      "unique_rgb_images": 18590,
+      "donor_items_per_epoch": 22686,
+      "recipient_forwards_per_epoch": 8192,
+      "total_image_forwards_per_epoch": 30878,
+      "batches_per_epoch": 709,
+      "batches_total": 46085,
+      "effective_optimizer_updates": 46063,
+      "amp_skipped_updates": 22,
+      "effective_update_definition": "global_step increments when AMP scale does not decrease; skipped scaler updates remain in batch and image exposure counts",
+      "donor_items_total": 1474590,
+      "recipient_forwards_total": 532480,
+      "image_forwards_total": 2007070,
+      "recorded_epoch_seconds_total": 14290.72532723099,
+      "recorded_mean_warmup_epoch_seconds": 246.84799933061004,
+      "recorded_mean_joint_epoch_seconds": 217.60808884296566,
+      "training_process_wall_seconds": 14346.154169,
+      "started_at_utc": "2026-10-20T10:24:51.989467+00:00",
+      "finished_at_utc": "2026-10-20T14:23:58.143636+00:00",
+      "peak_recorded_cuda_memory_bytes": 31135903744,
+      "joint_eligible_edges_per_epoch": 8192,
+      "raw_readout_supervised_count_per_joint_epoch": 8192,
+      "effective_cross_state_loss_weights": {
+        "state_reading_cdf": 1.0,
+        "state_mass_l1": 0.1,
+        "state_field_l1": 0.5,
+        "state_support_l1": 0.1
+      },
+      "counter_interpretation": "raw losses and supervised_cross_readouts count describe eligible computed terms; only nonzero state weights receive effective cross-state supervision; all state terms are disabled during five-epoch warmup"
     }
   },
   "execution_cost": {
@@ -983,10 +1518,20 @@
         "validation_consistency_native": 18.891157,
         "validation_consistency_modal_r8": 20.937055,
         "heldout_consistency": 89.083097
+      },
+      "composition": {
+        "validation_composition_native": 18.448821,
+        "validation_composition_modal_r8": 18.3849,
+        "heldout_composition": 90.644738
       }
     },
     "timing_interpretation": "individual batch throughput observations, not batch-one latency or a controlled overhead benchmark; heldout costs are per two-image edge",
-    "epoch_timing_boundary": "epoch loop plus its source validation, recorded before checkpoint saving; process wall additionally includes setup, writes and shutdown"
+    "epoch_timing_boundary": "epoch loop plus its source validation, recorded before checkpoint saving; process wall additionally includes setup, writes and shutdown",
+    "training_process_wall_seconds_total": 43549.177831,
+    "recorded_epoch_seconds_total": 43367.51900866255,
+    "evaluation_process_wall_seconds_total": 390.760933,
+    "sequential_training_and_evaluation_wall_seconds": 43940.11993,
+    "cost_total_boundary": "Three sequential training processes and nine evaluation processes; training includes epoch validation. This is process wall, not GPU-kernel time, and excludes source generation."
   },
   "metric_definitions": {
     "error": "normalized absolute full-scale error, multiplied by 100 in percent_fs fields; failures retain 1.0",
@@ -1002,18 +1547,19 @@
     "protocol_document": "../../GEOPRR_V2_COMPOSITIONAL_PROTOCOL_CN.md",
     "completed_arm_raw_archives": {
       "supervised": "refine-logs/geoprr_mobilenet_tail_20261019/iteration_v3_compositional/supervised_completed",
-      "consistency": "refine-logs/geoprr_mobilenet_tail_20261019/iteration_v3_compositional/consistency_completed"
+      "consistency": "refine-logs/geoprr_mobilenet_tail_20261019/iteration_v3_compositional/consistency_completed",
+      "composition": "refine-logs/geoprr_mobilenet_tail_20261019/iteration_v3_compositional/composition_completed"
     }
   },
   "limitations": [
-    "Only two of three first-seed arms are complete; the composition objective has no result in this package and the final native continuation decision remains pending.",
-    "One seed provides no seed-variance, significance or reproducibility estimate.",
+    "One seed provides no seed-variance, significance or reproducibility estimate. The user prohibited seed expansion and additional candidate training.",
     "Source validation is used for development and checkpoint selection; no candidate official-test, perturbation or real-domain result is available.",
-    "Comparisons with the original baseline combine added data, repeated exposure and more batches. The supervised-versus-consistency comparison matches these quantities.",
-    "Heldout source edges use seen images/states/layouts and form a separate diagnostic. Low combination error alone cannot demonstrate necessity of explicit composition supervision.",
-    "Consistency selects the direct fallback for one low-field-support source-validation image; it is retained in all metrics and yields the maximum error. This is a specific failure observation, not broad fallback-reliability evidence.",
-    "Saved selection and batch-16 reevaluation scores differ slightly with AMP/batch paths; selected epochs remain fixed.",
-    "Timing includes startup/warmup and measures batch throughput. Heldout prediction uses the shared reader twice per edge, parameters counted once."
+    "Comparisons with the original baseline combine added data, repeated exposure and more batches. Comparisons among the three new arms match these quantities.",
+    "Heldout source edges use seen images/states/layouts and form a separate diagnostic; they do not establish unseen-image or unseen-layout transfer.",
+    "The consistency fallback is retained as a severe error. Composition uses the field for every source-validation sample, but this does not establish general fallback reliability or repair of the underlying mechanism.",
+    "Saved selection and batch-16 reevaluation scores differ slightly with AMP/batch paths; selected epochs remain fixed. Main source-validation metrics use the complete formal reevaluation.",
+    "Timing includes startup/warmup and measures batch throughput. Heldout prediction uses the shared reader twice per edge, parameters counted once.",
+    "The rejected native gate cannot be replaced with the frozen r8 readout or the separate combination diagnostic."
   ],
   "baseline_training_reference": {
     "unique_rgb_images": 14494,
@@ -1022,7 +1568,7 @@
     "batches_total": 29445,
     "effective_optimizer_updates": 29430,
     "recorded_epoch_seconds_total": 5729.045713797212,
-    "attribution": "comparison with original baseline combines added images, repetition and extra batches; comparison between supervised and consistency has matched exposure"
+    "attribution": "comparison with original baseline combines added images, repetition and extra batches; the three controlled arms have identical executed batches and image exposure, with effective updates differing by one AMP skip"
   },
   "actual_fallback_cases": [
     {
@@ -1056,6 +1602,238 @@
       "support_mass": 0.023441256955266,
       "failure": "",
       "expert_index": 1
+    }
+  ],
+  "validation_decision": {
+    "decision": "validation_rejected",
+    "checks": {
+      "native_reduction_at_least_5_percent_vs_consistency": false,
+      "severe_count_not_increased_vs_consistency": true,
+      "tail10_not_increased_vs_consistency": true,
+      "native_strictly_better_than_supervised": false,
+      "native_strictly_better_than_original": true
+    },
+    "test_used_for_decision": false,
+    "automatic_seed_expansion": false,
+    "composition": {
+      "samples": 1506,
+      "groups": 70,
+      "nmae": 0.0016226118324310247,
+      "nmae_percent_fs": 0.16226118324310246,
+      "acc_at_1": 0.9893758300132802,
+      "acc_at_2": 0.9966799468791501,
+      "acc_at_5": 0.99800796812749,
+      "coverage": 1.0,
+      "field_coverage": 1.0,
+      "failed": 0,
+      "median_error": 0.000718533992767334,
+      "p90_error": 0.0031432360410690308,
+      "p95_error": 0.005066171288490295,
+      "tail10_nmae": 0.008628410941929173,
+      "maximum_error": 0.20013926923274994,
+      "errors_above_2_percent_fs": 5,
+      "errors_above_5_percent_fs": 3
+    },
+    "consistency": {
+      "samples": 1506,
+      "groups": 70,
+      "nmae": 0.0016917277489724805,
+      "nmae_percent_fs": 0.16917277489724805,
+      "acc_at_1": 0.9920318725099602,
+      "acc_at_2": 0.9953519256308101,
+      "acc_at_5": 0.99800796812749,
+      "coverage": 1.0,
+      "field_coverage": 0.99933598937583,
+      "failed": 0,
+      "median_error": 0.0005737468600273132,
+      "p90_error": 0.0025205276906490326,
+      "p95_error": 0.003834456205368042,
+      "tail10_nmae": 0.010742701034956215,
+      "maximum_error": 0.44822315499186516,
+      "errors_above_2_percent_fs": 7,
+      "errors_above_5_percent_fs": 3
+    },
+    "supervised": {
+      "samples": 1506,
+      "groups": 70,
+      "nmae": 0.0014792406705363323,
+      "nmae_percent_fs": 0.14792406705363323,
+      "acc_at_1": 0.9926958831341302,
+      "acc_at_2": 0.9966799468791501,
+      "acc_at_5": 0.99800796812749,
+      "coverage": 1.0,
+      "field_coverage": 1.0,
+      "failed": 0,
+      "median_error": 0.0005712509155273438,
+      "p90_error": 0.002393081784248352,
+      "p95_error": 0.0038926824927330017,
+      "tail10_nmae": 0.008974729324193244,
+      "maximum_error": 0.26627396047115326,
+      "errors_above_2_percent_fs": 5,
+      "errors_above_5_percent_fs": 3
+    },
+    "original": {
+      "samples": 1506,
+      "groups": 70,
+      "nmae": 0.0019174941953522063,
+      "nmae_percent_fs": 0.19174941953522062,
+      "acc_at_1": 0.9893758300132802,
+      "acc_at_2": 0.9953519256308101,
+      "acc_at_5": 0.9966799468791501,
+      "coverage": 1.0,
+      "field_coverage": 1.0,
+      "failed": 0,
+      "median_error": 0.000673636794090271,
+      "p90_error": 0.0030984431505203247,
+      "p95_error": 0.004777288064360619,
+      "tail10_nmae": 0.012044536292314239,
+      "maximum_error": 0.32006876170635223,
+      "errors_above_2_percent_fs": 7,
+      "errors_above_5_percent_fs": 5
+    }
+  },
+  "heldout_paired_comparisons": [
+    {
+      "baseline_configuration": "supervised",
+      "candidate_configuration": "composition",
+      "matched_edges": 4096,
+      "exact_ids_targets_groups": true,
+      "relative_nmae_reduction_percent": -300.81752947124085,
+      "rescues_at_2_percent_fs": 0,
+      "regressions_at_2_percent_fs": 2,
+      "regressed_ids_at_2_percent_fs": [
+        "geoprr_compositional_v1_g0336_s03->geoprr_compositional_v1_g0336_s00",
+        "geoprr_compositional_v1_g0825_s01->geoprr_compositional_v1_g0825_s03"
+      ],
+      "rescues_at_5_percent_fs": 0,
+      "regressions_at_5_percent_fs": 2,
+      "regressed_ids_at_5_percent_fs": [
+        "geoprr_compositional_v1_g0336_s03->geoprr_compositional_v1_g0336_s00",
+        "geoprr_compositional_v1_g0825_s01->geoprr_compositional_v1_g0825_s03"
+      ]
+    },
+    {
+      "baseline_configuration": "consistency",
+      "candidate_configuration": "composition",
+      "matched_edges": 4096,
+      "exact_ids_targets_groups": true,
+      "relative_nmae_reduction_percent": -268.2078932429035,
+      "rescues_at_2_percent_fs": 0,
+      "regressions_at_2_percent_fs": 2,
+      "regressed_ids_at_2_percent_fs": [
+        "geoprr_compositional_v1_g0336_s03->geoprr_compositional_v1_g0336_s00",
+        "geoprr_compositional_v1_g0825_s01->geoprr_compositional_v1_g0825_s03"
+      ],
+      "rescues_at_5_percent_fs": 0,
+      "regressions_at_5_percent_fs": 2,
+      "regressed_ids_at_5_percent_fs": [
+        "geoprr_compositional_v1_g0336_s03->geoprr_compositional_v1_g0336_s00",
+        "geoprr_compositional_v1_g0825_s01->geoprr_compositional_v1_g0825_s03"
+      ]
+    }
+  ],
+  "composition_readout_cases": [
+    {
+      "split": "source_validation",
+      "configuration": "composition",
+      "seed": 20262020,
+      "readout": "native",
+      "sample_id": "sync_12540",
+      "group_id": "sf6gas::zwartkops_pit_4k",
+      "target": 0.04647042229771614,
+      "prediction": 0.04832583665847778,
+      "valid": true,
+      "field_valid": true,
+      "absolute_error": 0.0018554143607616425,
+      "support_mass": 0.9988826513290405,
+      "failure": "",
+      "expert_index": 0
+    },
+    {
+      "split": "source_validation",
+      "configuration": "composition",
+      "seed": 20262020,
+      "readout": "native",
+      "sample_id": "sync_3663",
+      "group_id": "bar::studio_garden_4k",
+      "target": 0.05373759940266609,
+      "prediction": 0.04202888160943985,
+      "valid": true,
+      "field_valid": true,
+      "absolute_error": 0.011708717793226242,
+      "support_mass": 0.9983797073364258,
+      "failure": "",
+      "expert_index": 0
+    },
+    {
+      "split": "source_validation",
+      "configuration": "composition",
+      "seed": 20262020,
+      "readout": "modal_r8",
+      "sample_id": "sync_12540",
+      "group_id": "sf6gas::zwartkops_pit_4k",
+      "target": 0.04647042229771614,
+      "prediction": 0.02576226368546486,
+      "valid": true,
+      "field_valid": true,
+      "absolute_error": 0.020708158612251282,
+      "support_mass": 0.9988826513290405,
+      "failure": "",
+      "expert_index": 0
+    },
+    {
+      "split": "source_validation",
+      "configuration": "composition",
+      "seed": 20262020,
+      "readout": "modal_r8",
+      "sample_id": "sync_3663",
+      "group_id": "bar::studio_garden_4k",
+      "target": 0.05373759940266609,
+      "prediction": 0.023027382791042328,
+      "valid": true,
+      "field_valid": true,
+      "absolute_error": 0.030710216611623764,
+      "support_mass": 0.9983797073364258,
+      "failure": "",
+      "expert_index": 0
+    }
+  ],
+  "composition_heldout_severe_edges": [
+    {
+      "split": "heldout_seen_source_combinations",
+      "configuration": "composition",
+      "seed": 20262020,
+      "readout": "cross_state_native",
+      "sample_id": "geoprr_compositional_v1_g0336_s03->geoprr_compositional_v1_g0336_s00",
+      "group_id": "geoprr_compositional_v1_g0336",
+      "target": 0.042301855981349945,
+      "prediction": 0.28374117612838745,
+      "valid": true,
+      "field_valid": true,
+      "absolute_error": 0.2414393201470375,
+      "support_mass": 0.9999978542327881,
+      "failure": "",
+      "donor_id": "geoprr_compositional_v1_g0336_s03",
+      "recipient_id": "geoprr_compositional_v1_g0336_s00",
+      "layout_id": "geoprr_compositional_v1_g0336"
+    },
+    {
+      "split": "heldout_seen_source_combinations",
+      "configuration": "composition",
+      "seed": 20262020,
+      "readout": "cross_state_native",
+      "sample_id": "geoprr_compositional_v1_g0825_s01->geoprr_compositional_v1_g0825_s03",
+      "group_id": "geoprr_compositional_v1_g0825",
+      "target": 0.9495533108711243,
+      "prediction": 0.7564598917961121,
+      "valid": true,
+      "field_valid": true,
+      "absolute_error": 0.1930934190750122,
+      "support_mass": 0.9999949336051941,
+      "failure": "",
+      "donor_id": "geoprr_compositional_v1_g0825_s01",
+      "recipient_id": "geoprr_compositional_v1_g0825_s03",
+      "layout_id": "geoprr_compositional_v1_g0825"
     }
   ]
 }
