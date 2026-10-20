@@ -1,0 +1,91 @@
+{
+  "scope": "Existing1506 source-development records only; ideal true-label hard selection among complete existing predictions, not a trained router or method score",
+  "reference": "supervised/modal_r8",
+  "reference_above2_ids": [
+    "sync_10202",
+    "sync_10635",
+    "sync_12540",
+    "sync_338",
+    "sync_3663"
+  ],
+  "families": {
+    "supervised+consistency": {
+      "ideal_nmae_percent_fs": 0.09711821470034239,
+      "ideal_above2": 5,
+      "ideal_above5": 2,
+      "ideal_maximum_percent_fs": 16.561825573444366,
+      "still_above5_ids": [
+        "sync_10202",
+        "sync_338"
+      ],
+      "rescued_reference_above2_ids": [],
+      "rescued_reference_above5_ids": []
+    },
+    "supervised+composition": {
+      "ideal_nmae_percent_fs": 0.09432774164695966,
+      "ideal_above2": 5,
+      "ideal_above5": 2,
+      "ideal_maximum_percent_fs": 16.561825573444366,
+      "still_above5_ids": [
+        "sync_10202",
+        "sync_338"
+      ],
+      "rescued_reference_above2_ids": [],
+      "rescued_reference_above5_ids": []
+    },
+    "supervised+consistency+composition": {
+      "ideal_nmae_percent_fs": 0.07959813710574813,
+      "ideal_above2": 5,
+      "ideal_above5": 2,
+      "ideal_maximum_percent_fs": 16.561825573444366,
+      "still_above5_ids": [
+        "sync_10202",
+        "sync_338"
+      ],
+      "rescued_reference_above2_ids": [],
+      "rescued_reference_above5_ids": []
+    }
+  },
+  "current_tail_cases": [
+    {
+      "sample_id": "sync_10202",
+      "error_percent_fs": {
+        "supervised": 16.561825573444366,
+        "consistency": 17.03987568616867,
+        "composition": 20.489101111888885
+      }
+    },
+    {
+      "sample_id": "sync_10635",
+      "error_percent_fs": {
+        "supervised": 2.455461025238037,
+        "consistency": 3.2862067222595215,
+        "composition": 2.878636121749878
+      }
+    },
+    {
+      "sample_id": "sync_12540",
+      "error_percent_fs": {
+        "supervised": 2.511203847825527,
+        "consistency": 4.6097943937638775,
+        "composition": 2.070815861225128
+      }
+    },
+    {
+      "sample_id": "sync_338",
+      "error_percent_fs": {
+        "supervised": 19.557136297225952,
+        "consistency": 15.303701162338257,
+        "composition": 10.963249206542969
+      }
+    },
+    {
+      "sample_id": "sync_3663",
+      "error_percent_fs": {
+        "supervised": 3.1867893412709236,
+        "consistency": 44.822315499186516,
+        "composition": 3.0710216611623764
+      }
+    }
+  ]
+}
