@@ -1,0 +1,15 @@
+{
+  "population": 1506,
+  "implementation": "JavaScript float64 four-atom twohot pushforward; no Torch or reader import",
+  "target_reading_excluded_from_pushforward": true,
+  "maximum_prediction_difference_from_float32_reader": 2.0931723965222915e-7,
+  "maximum_float64_distribution_mass_error": 2.220446049250313e-16,
+  "tolerance": 0.000002,
+  "float_precision_limit": "The archived grid uses float32 targets/scatter; this independent calculation uses float64 physical labels and PMFs.",
+  "all_prediction_error_columns_recomputed": true,
+  "all_geometry_reference_rows_joined_by_exact_id_and_target": true,
+  "new_rgb_reads": 0,
+  "new_network_forwards": 0,
+  "gpu_calls": 0,
+  "training_steps": 0
+}

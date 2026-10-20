@@ -1,0 +1,15 @@
+{
+  "population": 1506,
+  "unique_ids": 1506,
+  "valid": 1506,
+  "csv_and_jsonl_identical": true,
+  "all_four_prediction_error_columns_recomputed": true,
+  "continuous_summary_nmae_recomputed": true,
+  "continuous_all_rescue_new_ids_verified": true,
+  "common_ordinary": 1495,
+  "r8_ordinary": 1497,
+  "local_links_verified": 38,
+  "private_paths_or_raw_geometry_fields_found": false,
+  "new_model_forwards": 0,
+  "training_steps": 0
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": "physical_relative_state_v1_source_role_centered_mesh_and_tick_fit",
+  "population": 20096,
+  "unique_ids": 20096,
+  "source_role_counts": {
+    "original": 14494,
+    "supplement": 4096,
+    "validation": 1506
+  },
+  "validation_matches_target_blind_geometry_exactly": true,
+  "validation_geometry_max_difference": 0,
+  "target_or_pointer_angle_used": false,
+  "all_valid": true,
+  "new_model_forwards": 0,
+  "training_steps": 0
+}

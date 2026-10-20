@@ -1,0 +1,72 @@
+{
+  "version": "physical_interface_v2a_centered_rigid_mesh_centered_tick_complex_fit",
+  "date": "2026-10-21",
+  "role": "source_validation_geometry_diagnostic",
+  "population": 1506,
+  "source_split": {
+    "train": 14494,
+    "validation": 1506,
+    "historical_official_test": 4000,
+    "supplemental_training_images": 4096
+  },
+  "geometry_inputs": [
+    "original ordered projected needle mesh vertices",
+    "original plane H",
+    "camera world centre",
+    "integer casing box",
+    "ordered long tick pixels and angular spacing",
+    "immutable unrotated scaled template vertex coordinates"
+  ],
+  "excluded_during_decoding": [
+    "reading/ground_truth",
+    "pointer angle/rotation",
+    "baseline predictions",
+    "RGB",
+    "model weights"
+  ],
+  "template_family_rule": "Only the observed ordered vertex count selects one of the three templates; all correspondences retained.",
+  "pixel_rule": "original integer annotation cell center +0.5; original integer casing bbox",
+  "needle_fit": "per-vertex height lift; centered 2D orthogonal Procrustes; translation reported but not used for angle/readout",
+  "tick_fit": "complex LS with free circle center and amplitude against exp(-i*j*spacing); no assumed tick height",
+  "readout": "first tick phi0 - object rotation theta; a physical tip-anchor decoder must subtract intrinsic beta; fixed arc-midpoint unwrap; clip [0,1]",
+  "point_height_contract": "Each vertex uses its own template height; no equality of origin/outside heights is assumed.",
+  "score_join": "Targets and fixed baseline outputs are joined after geometry predictions are saved.",
+  "reference": {
+    "checkpoint": "ordinary supervised MobileNetV4, seed20262020, best epoch63",
+    "parameters": 7695954,
+    "readouts": [
+      "native",
+      "frozen r8"
+    ]
+  },
+  "common_ordinary_rule": "Both fixed references have error <=1%FS;1495 images. The r8-only ordinary population has1497 images.",
+  "gate": {
+    "G0": "All1506 valid, physically auditable input contract, raw error <=1%FS everywhere",
+    "G1": {
+      "common_nmae_max_percent_fs": 0.0972051518,
+      "common_median_max_percent_fs": 0.0564150512,
+      "common_p90_max_percent_fs": 0.2246701717,
+      "r8_ordinary_nmae_max_percent_fs": 0.0977505576
+    },
+    "G2": {
+      "full_nmae_max_percent_fs": 0.1299504985,
+      "tail10_max_percent_fs": 0.7205782515,
+      "maximum": "strictly below both references",
+      "all_six_old_severe_ids_below_percent_fs": 2,
+      "new_errors_vs_either_reference_at_1_2_5_percent_fs": 0
+    }
+  },
+  "all_failure_rows_retained": true,
+  "new_rgb_or_image_reads": 0,
+  "new_model_forwards": 0,
+  "gpu_calls": 0,
+  "training_steps": 0,
+  "seed_expansion": false,
+  "limits": [
+    "GT-assisted geometry diagnostic, not an RGB result or upper bound",
+    "Does not validate a sparse endpoint head",
+    "Repeatedly inspected source-development population, not a blind test",
+    "Original H used a float casing box while released box and point labels are integer; residual remains visible",
+    "Original annotations do not record generation commit; per-image correspondence consistency is numerical evidence, not recovered per-image provenance"
+  ]
+}

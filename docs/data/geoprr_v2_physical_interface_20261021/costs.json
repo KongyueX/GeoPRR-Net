@@ -1,0 +1,56 @@
+{
+  "scope": "recorded zero-training geometry and final-schema label preparation; no RGB model work",
+  "geometry_decoder": {
+    "population": 1506,
+    "wall_seconds": 1.0034931004047394,
+    "numpy_version": "1.26.4",
+    "user_cpu_seconds": 1.064544,
+    "system_cpu_seconds": 0.016007999999999998,
+    "max_rss_linux_kib": 39228
+  },
+  "independent_geometry_and_score_verification": {
+    "geometry_seconds": 0.8929366208612919,
+    "wall_seconds": 1.0323387831449509,
+    "peak_rss": 187108,
+    "new_model_forwards": 0,
+    "rgb_or_image_reads": 0,
+    "gpu_calls": 0,
+    "training_steps": 0,
+    "seed_expansion": false
+  },
+  "final_schema_training_and_validation_label_export": {
+    "population": 20096,
+    "wall_seconds": 10.707695718854666,
+    "numpy_version": "1.26.4",
+    "user_cpu_seconds": 11.359587,
+    "system_cpu_seconds": 3.704131,
+    "max_rss_linux_kib": 382184
+  },
+  "all_recorded_label_exports": {
+    "runs": 2,
+    "population_per_run": 20096,
+    "wall_seconds": 22.419156711548567,
+    "peak_rss_linux_kib": 382372
+  },
+  "original_training_label_inventory": {
+    "population": 14494,
+    "wall_seconds": 5.397106342017651,
+    "new_model_forwards": 0
+  },
+  "ordered256_label_grid_check": {
+    "population": 1506,
+    "cpu_wall_seconds": 0.8942253477871418,
+    "network_forward_images": 0,
+    "gpu_calls": 0,
+    "training_steps": 0
+  },
+  "source_annotation_export_wall_seconds": null,
+  "source_annotation_export_note": "No isolated wall timer was saved; SSH tool elapsed is not substituted for computation time.",
+  "new_rgb_or_image_reads": 0,
+  "new_model_forwards": 0,
+  "gpu_calls": 0,
+  "training_steps": 0,
+  "seed_expansion": false,
+  "parameter_count": "No new trained model exists in this diagnostic; current supervised reference has 7695954 parameters.",
+  "timing_limit": "CPU timers and RSS describe these recorded stages, not GPU kernel time, inference latency or a complete metering-camera pipeline."
+}

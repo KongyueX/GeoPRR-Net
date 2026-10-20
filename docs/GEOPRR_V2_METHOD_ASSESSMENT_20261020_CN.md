@@ -1,5 +1,7 @@
 # 完整GT标定验证后的方法判断
 
+当前物理接口已更新为逐顶点独立高度的v2合同；完整1506张与冻结ordered256网格均通过零训练门槛，见[物理接口结果包](data/geoprr_v2_physical_interface_20261021/README.md)。旧origin/outside同高假设仍否决；[新的RGB相对状态配对方案](GEOPRR_V2_RELATIVE_STATE_PROTOCOL_CN.md)训练pending，不能把GT几何结果视为模型收益。以下保留此前GT-atlas与旧端点候选的边界。
+
 后续完整[零训练端点几何检查](data/geoprr_v2_endpoint_geometry_20261021/README.md)表明：GT端点严重错误减少，但均值更差、1%门槛有2张未通过，同高前提无标签保证；[联合针体关键点候选](GEOPRR_V2_JOINT_ENDPOINT_PROGRESS_DESIGN_CN.md)暂停进入训练或算法推广。分工能力基线及已有逐图互补性见[故障互补与因子修复](GEOPRR_V2_FAILURE_COMPLEMENTARITY_DESIGN_CN.md)；下文的结构假设不表示已获得算法创新或新增模型结果。
 
 完整1,506图的GT-atlas/frozen-Q验证已完成。平均误差和严重错误数量有改善空间，但最大误差变差，且连续GT-H与65射线atlas的结果几乎相同。当前不建议直接训练“65-ray标定头＋原whole-Q”作为下一主候选；也不能据此宣称所有全局标定方法不可行。完整逐图结果见[GT-atlas验证](data/geoprr_v2_gt_atlas_20261020/README.md)。本说明只提出后续研究假设，没有启动训练、扩种子或新评价。

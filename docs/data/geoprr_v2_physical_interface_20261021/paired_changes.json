@@ -1,0 +1,79 @@
+{
+  "native": {
+    "better": 1266,
+    "worse": 240,
+    "equal": 0,
+    "relative_nmae_change_percent": -87.3560247527684,
+    "above1": {
+      "rescued": [
+        "sync_10202",
+        "sync_10635",
+        "sync_11838",
+        "sync_12540",
+        "sync_1811",
+        "sync_1999",
+        "sync_3172",
+        "sync_338",
+        "sync_3663",
+        "sync_3855",
+        "sync_4515"
+      ],
+      "new": []
+    },
+    "above2": {
+      "rescued": [
+        "sync_10202",
+        "sync_10635",
+        "sync_338",
+        "sync_3663",
+        "sync_4515"
+      ],
+      "new": []
+    },
+    "above5": {
+      "rescued": [
+        "sync_10202",
+        "sync_338",
+        "sync_4515"
+      ],
+      "new": []
+    }
+  },
+  "r8": {
+    "better": 1268,
+    "worse": 238,
+    "equal": 0,
+    "relative_nmae_change_percent": -85.60722533720178,
+    "above1": {
+      "rescued": [
+        "sync_10202",
+        "sync_10635",
+        "sync_11838",
+        "sync_12540",
+        "sync_1811",
+        "sync_1999",
+        "sync_338",
+        "sync_3663",
+        "sync_3855"
+      ],
+      "new": []
+    },
+    "above2": {
+      "rescued": [
+        "sync_10202",
+        "sync_10635",
+        "sync_12540",
+        "sync_338",
+        "sync_3663"
+      ],
+      "new": []
+    },
+    "above5": {
+      "rescued": [
+        "sync_10202",
+        "sync_338"
+      ],
+      "new": []
+    }
+  }
+}

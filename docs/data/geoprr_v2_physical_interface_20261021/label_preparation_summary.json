@@ -1,0 +1,149 @@
+{
+  "version": "physical_relative_state_v1_source_role_centered_mesh_and_tick_fit",
+  "source_role_counts": {
+    "original": 14494,
+    "supplement": 4096,
+    "validation": 1506
+  },
+  "source_roles": {
+    "original": {
+      "population": 14494,
+      "valid": 14494,
+      "invalid": 0,
+      "invalid_rows": [],
+      "template_counts": {
+        "pointer1": 4841,
+        "pointer3": 4770,
+        "pointer2": 4883
+      },
+      "clipped_first": 1,
+      "clipped_last": 1,
+      "delta_radians": {
+        "minimum": 0.0001319692509804682,
+        "maximum": 6.282383718257399,
+        "mean": 1.8942815560452717
+      },
+      "span_radians": {
+        "minimum": 1.0471975511965976,
+        "maximum": 6.1086523819801535,
+        "mean": 3.781020890171488
+      },
+      "raw_progress": {
+        "minimum": -0.00014352394420565775,
+        "maximum": 1.0000776827273608,
+        "mean": 0.5015296497166363
+      },
+      "rigid_centered_rmse_world": {
+        "minimum": 0.0007428977911319245,
+        "maximum": 0.0028270300629909344,
+        "mean": 0.0015184648475944148
+      },
+      "tick_fit_rmse_world": {
+        "minimum": 0.00041413557204560147,
+        "maximum": 0.003307451338928135,
+        "mean": 0.0014239117745768026
+      }
+    },
+    "supplement": {
+      "population": 4096,
+      "valid": 4096,
+      "invalid": 0,
+      "invalid_rows": [],
+      "template_counts": {
+        "pointer3": 1348,
+        "pointer1": 1352,
+        "pointer2": 1396
+      },
+      "clipped_first": 0,
+      "clipped_last": 0,
+      "delta_radians": {
+        "minimum": 0.00013914368704215363,
+        "maximum": 5.922390993381043,
+        "mean": 1.8591138756779007
+      },
+      "span_radians": {
+        "minimum": 1.0471975511965976,
+        "maximum": 6.1086523819801535,
+        "mean": 3.706779352770769
+      },
+      "raw_progress": {
+        "minimum": 0.00006643621677826535,
+        "maximum": 0.9997459357422653,
+        "mean": 0.5016113435490506
+      },
+      "rigid_centered_rmse_world": {
+        "minimum": 0.000763515932405142,
+        "maximum": 0.002595441199715916,
+        "mean": 0.0015253820111774943
+      },
+      "tick_fit_rmse_world": {
+        "minimum": 0.0005128924649945699,
+        "maximum": 0.0033411578145348727,
+        "mean": 0.0014376685258977989
+      }
+    },
+    "validation": {
+      "population": 1506,
+      "valid": 1506,
+      "invalid": 0,
+      "invalid_rows": [],
+      "template_counts": {
+        "pointer3": 508,
+        "pointer2": 529,
+        "pointer1": 469
+      },
+      "clipped_first": 0,
+      "clipped_last": 0,
+      "delta_radians": {
+        "minimum": 0.000056470990618784356,
+        "maximum": 5.66755912459919,
+        "mean": 1.8937883890842273
+      },
+      "span_radians": {
+        "minimum": 1.0471975511965976,
+        "maximum": 6.1086523819801535,
+        "mean": 3.7107948196701486
+      },
+      "raw_progress": {
+        "minimum": 0.00001540737822561528,
+        "maximum": 0.9995830849012821,
+        "mean": 0.5087151195957029
+      },
+      "rigid_centered_rmse_world": {
+        "minimum": 0.0007853035836998759,
+        "maximum": 0.002693144632395796,
+        "mean": 0.0015288073586127544
+      },
+      "tick_fit_rmse_world": {
+        "minimum": 0.0004379603243832809,
+        "maximum": 0.0032892506130297572,
+        "mean": 0.0014301872558218022
+      }
+    }
+  },
+  "delta": "(first_tick_phi0 - object_theta) modulo 2*pi, range [0,2*pi)",
+  "span": "(ordered tick count - 1) * annotation long_interval_degree",
+  "pixel_rule": "original integer annotation cell center +0.5; original integer casing bbox",
+  "needle_fit": "individual vertex-height ray lift; centered 2D orthogonal Procrustes",
+  "tick_fit": "centered complex least squares with free center/amplitude; no assumed tick height",
+  "excluded_information": [
+    "ground_truth",
+    "pointer_angle",
+    "pointer_rotate_degree",
+    "pointer_rotation_euler",
+    "normalized_state",
+    "factors.r",
+    "RGB",
+    "model_weights"
+  ],
+  "resources": {
+    "wall_seconds": 10.707695718854666,
+    "numpy_version": "1.26.4",
+    "user_cpu_seconds": 11.359587,
+    "system_cpu_seconds": 3.704131,
+    "max_rss_linux_kib": 382184
+  },
+  "new_model_forwards": 0,
+  "training_steps": 0,
+  "seed_expansion": false
+}

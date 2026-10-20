@@ -1,5 +1,7 @@
 # 联合针体关键点到物理进度的概率推断
 
+当前执行入口为[相对物理状态分布冻结协议](GEOPRR_V2_RELATIVE_STATE_PROTOCOL_CN.md)：逐顶点独立高度的v2物理合同与256×256网格已在完整1506张通过零训练门槛，[结果包](data/geoprr_v2_physical_interface_20261021/README.md)保留完整逐图及普通精度保护。旧origin/outside同高前提仍不成立；新RGB模型训练pending。以下保留旧两端点接口的研究判断，不能作为新v2接口或已训练算法结果。
+
 ## 研究判断
 
 **完整1,506张零训练检查后，当前标签接口暂停进入算法推广或训练。**GT origin/outside＋GT标定的NMAE为0.166169994%FS，差于普通监督native/r8的0.147924067/0.129950499；虽然>2/>5%FS均为0、最大误差降至1.053687579%FS，但新增两张>1%FS，且预先固定的1%原始方向门槛未通过。源码不约束origin与outside同高，不能直接套用严格同高消项。完整逐图结果与标签证据见[零训练端点几何检查](data/geoprr_v2_endpoint_geometry_20261021/README.md)。
