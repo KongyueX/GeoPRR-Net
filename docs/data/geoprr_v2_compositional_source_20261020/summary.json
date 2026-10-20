@@ -1,0 +1,164 @@
+{
+  "protocol": "geoprr_v2_compositional_source_v1",
+  "status": "complete",
+  "role": "source_training",
+  "source_identity": {
+    "layout_id_prefix": "geoprr_compositional_v1",
+    "first_layout_id": "geoprr_compositional_v1_g0000",
+    "last_layout_id": "geoprr_compositional_v1_g1023",
+    "render_seed_start": 20262020,
+    "render_seed_end": 20263043,
+    "upstream_repository": "https://github.com/SKYWOWDYH/SyncG",
+    "upstream_revision": "337b868f0f5495b31acc383433cac44040247bf2",
+    "state_rng": "numpy.default_rng(20262020), one continuous state in each quartile"
+  },
+  "render_settings": {
+    "blender": "4.5.14",
+    "backend": "CUDA",
+    "width": 1920,
+    "height": 1080,
+    "samples": 200,
+    "image_format": "JPEG",
+    "quality": 95,
+    "threads": 4
+  },
+  "populations": {
+    "groups": 1024,
+    "new_unique_images": 4096,
+    "original_training_images": 14494,
+    "unique_training_images": 18590,
+    "source_validation_images": 1506
+  },
+  "data_identity_checks": {
+    "source_unique_sample_ids": 4096,
+    "combined_unique_sample_ids": 18590,
+    "original_source_sample_id_overlap": 0,
+    "combined_validation_sample_id_overlap": 0,
+    "combined_ids_equal_original_plus_source": true,
+    "source_role_counts": {
+      "source_training": 4096
+    },
+    "diagnostic_only_false_count": 4096
+  },
+  "hdr_partition_permission": {
+    "basis": "HDR scene stems present in the original fixed source-training roster",
+    "original_source_training_scene_count": 131,
+    "original_source_validation_scene_count": 14,
+    "generated_scene_stems": [
+      "peppermint_powerplant_4k"
+    ],
+    "all_generated_scenes_allowed_by_original_training": true,
+    "generated_validation_scene_overlap": []
+  },
+  "source_image_meter_types": {
+    "temperature": 816,
+    "bar": 776,
+    "sf6gas": 884,
+    "pressure": 816,
+    "oil": 804
+  },
+  "composition_edges": {
+    "training_directed_edges": 8192,
+    "heldout_directed_edges": 4096,
+    "training_directed_edges_per_group": 8,
+    "heldout_directed_edges_per_group": 4,
+    "training_heldout_directed_overlap": 0,
+    "training_heldout_undirected_overlap": 0,
+    "duplicate_training_edges": 0,
+    "duplicate_heldout_edges": 0,
+    "all_groups_cover_all_12_nonself_directed_pairs": true,
+    "heldout_scope": "untrained composition edges among the same source-training images, states and layouts; not image-, state- or layout-disjoint evaluation"
+  },
+  "declared_training_exposure_per_epoch": {
+    "unique_training_images": 18590,
+    "training_items_per_epoch": 22686,
+    "recipient_forwards_per_epoch": 8192,
+    "image_forwards_per_epoch": 30878
+  },
+  "existing_geometry_audit": {
+    "groups": 1024,
+    "images_audited": 4096,
+    "recorded_render_identity_checks": 11264,
+    "failed_recorded_render_identity_checks": 0,
+    "fixed_field_and_camera_equal_groups": 1024,
+    "gt_combinations": 16384,
+    "self_gt_combinations": 4096,
+    "cross_state_gt_combinations": 12288,
+    "maximum_gt_composed_error_percent_fs": 0.4340926473836432,
+    "minimum_gt_support_mass": 0.39870211482048035,
+    "worst_error_composition": {
+      "layout_id": "geoprr_compositional_v1_g0019",
+      "donor": 0,
+      "recipient": 0,
+      "gt_support_mass": 0.4594786763191223,
+      "gt_composed_error": 0.004340926473836432
+    },
+    "minimum_support_composition": {
+      "layout_id": "geoprr_compositional_v1_g0287",
+      "donor": 0,
+      "recipient": 3,
+      "gt_support_mass": 0.39870211482048035,
+      "gt_composed_error": 0.0023033445511487782
+    },
+    "audit_scope": "summary of completed prepared.json and recorded render identity checks; no geometry rerun"
+  },
+  "cost": {
+    "measurement": "recorded step process wall times, not CUDA kernel times; controller-adoption polling can affect recorded end times",
+    "phases": {
+      "render": {
+        "steps": 1024,
+        "recorded_step_process_wall_seconds_sum": 14549.827573,
+        "mean_recorded_step_wall_seconds": 14.208815989257813,
+        "minimum_recorded_step_wall_seconds": 8.842219,
+        "maximum_recorded_step_wall_seconds": 26.669599,
+        "explicit_zero_exit_code_steps": 1023,
+        "complete_steps_without_exit_code": 1
+      },
+      "prepare": {
+        "steps": 1024,
+        "recorded_step_process_wall_seconds_sum": 2132.652137,
+        "mean_recorded_step_wall_seconds": 2.0826681025390625,
+        "minimum_recorded_step_wall_seconds": 1.822463,
+        "maximum_recorded_step_wall_seconds": 2.804139,
+        "explicit_zero_exit_code_steps": 1024,
+        "complete_steps_without_exit_code": 0
+      },
+      "assemble": {
+        "steps": 1,
+        "recorded_step_process_wall_seconds_sum": 43.5451,
+        "mean_recorded_step_wall_seconds": 43.5451,
+        "minimum_recorded_step_wall_seconds": 43.5451,
+        "maximum_recorded_step_wall_seconds": 43.5451,
+        "explicit_zero_exit_code_steps": 1,
+        "complete_steps_without_exit_code": 0
+      }
+    },
+    "first_recorded_step_started_at": "2026-10-20T05:32:16.983532+08:00",
+    "queue_completed_at": "2026-10-20T10:13:32.983917+08:00",
+    "complete_wall_seconds": 16876.000385,
+    "sum_recorded_step_process_wall_seconds": 16726.02481,
+    "non_step_wall_difference_seconds": 149.975575,
+    "non_step_wall_difference_scope": "scheduling, state I/O, controller handoff and completion bookkeeping; not all attributable to handoff",
+    "controller_adoptions": 1,
+    "adopted_steps": [
+      "render_g0175"
+    ],
+    "adopted_step_exit_code_available": false,
+    "adopted_step_completion_evidence": "queue status complete and persisted group/prepared artifacts; original subprocess exit code not available to adopting parent",
+    "full_generation_gpu_peak_recorded": false
+  },
+  "model_results": {
+    "included": false,
+    "scope": "generated source data and GT geometry contract; no learned accuracy"
+  },
+  "failure_policy": "stop and retain failed group; no seed or state resampling",
+  "original_population_identity": {
+    "dataset": "SyncG",
+    "training_roster": "runs/geoprr_v2/manifests/train.jsonl",
+    "validation_roster": "runs/geoprr_v2/manifests/validation.jsonl",
+    "training_images": 14494,
+    "validation_images": 1506,
+    "original_official_test_images": 4000,
+    "official_test_used_for_generation_or_selection": false
+  }
+}
