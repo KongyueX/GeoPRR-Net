@@ -1,0 +1,32 @@
+{
+  "upstream_repository": "https://github.com/SKYWOWDYH/SyncG",
+  "inspected_revision": "337b868f0f5495b31acc383433cac44040247bf2",
+  "inspected_file": "scripts/generate_syncg.py",
+  "original_validation_images": 1506,
+  "original_annotations_record_generator_revision": false,
+  "original_annotations_record_selected_vertex": false,
+  "origin_definition": "projection of fixed world point (0, 0, origin_z[pointer_type])",
+  "origin_definition_lines": [651, 658],
+  "outside_definition": "evaluated world-mesh vertex with greatest squared distance from normalized image center (0.5, 0.5), selected before integer quantization",
+  "outside_definition_lines": [524, 546],
+  "outside_centerline_guaranteed": false,
+  "outside_visibility_checked": false,
+  "equal_world_height_enforced": false,
+  "projection_quantization": "Python int; positive coordinates truncate to floor",
+  "homography_world_plane_z": 0.0,
+  "scale_mark_world_height": 0.002,
+  "pointer_rotation": "z axis only in inspected generator",
+  "template_evidence": "existing completed supplemental group g0000 factor snapshot from the pinned blend; no new rendering",
+  "templates": [
+    {"pointer": "pointer1", "origin_world_z": 0.04, "radial_end_vertex_world_z": [0.020382387563586235, 0.027455806732177734]},
+    {"pointer": "pointer2", "origin_world_z": 0.05, "radial_end_vertex_world_z": [0.02251394126585038, 0.02756315212790894]},
+    {"pointer": "pointer3", "origin_world_z": 0.025, "radial_end_vertex_world_z": [0.010766833496820394, 0.014728034355787512]}
+  ],
+  "same_height_verdict": "not guaranteed by label generation; exact equal-height cancellation cannot be claimed for these labels",
+  "limits": [
+    "The inspected revision is pinned for supplemental rendering; the original released 1506 annotations do not establish that same commit per image.",
+    "Radial-end vertices demonstrate template geometry, not each original camera's selected outside vertex.",
+    "Hub vertices can be near the origin label height; do not claim every possible selected vertex has a different height.",
+    "Small 2D reconstruction error does not prove equal 3D height."
+  ]
+}

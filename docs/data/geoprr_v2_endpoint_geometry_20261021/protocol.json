@@ -1,0 +1,19 @@
+{
+  "protocol": "geoprr_v2_full1506_gt_endpoint_geometry_v1",
+  "diagnostic_only": true,
+  "population": 1506,
+  "manifest": "/root/autodl-tmp/geoprrnet/runs/geoprr_v2/manifests/validation.jsonl",
+  "geometry_cache": "/root/autodl-tmp/geoprrnet/diagnostics/gt_atlas_full1506_v1/frozen_q_geometry.npz",
+  "reference": "/root/autodl-tmp/geoprrnet/diagnostics/gt_atlas_full1506_v1/predictions.csv",
+  "image_or_model_loading": false,
+  "new_model_forwards": 0,
+  "training_steps": 0,
+  "seed_expansion": false,
+  "coordinates": "cached float64 ROI-to-canonical H composed with original half-pixel source-to-ROI",
+  "readout": "transform both annotated points; difference; fixed arc-midpoint unwrap; endpoint clip",
+  "target_rule": "original float32 reference for paired scores; manifest float64 y for circular residual",
+  "denominator": "all original 1506 IDs; failed geometry has error 1",
+  "quantization": "fixed conservative +/-1 source-pixel endpoint boxes; excludes H/tick-frame error",
+  "raw_geometry_gate": "all 1506 valid and raw circular direction error <= existing 1%FS geometry tolerance",
+  "height_contract": "must be established from source provenance; numerical agreement alone cannot prove equal height"
+}

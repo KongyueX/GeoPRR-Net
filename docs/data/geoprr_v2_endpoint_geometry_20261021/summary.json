@@ -1,0 +1,238 @@
+{
+  "protocol": "geoprr_v2_full1506_gt_endpoint_geometry_v1",
+  "diagnostic_only": true,
+  "population": 1506,
+  "manifest": "/root/autodl-tmp/geoprrnet/runs/geoprr_v2/manifests/validation.jsonl",
+  "geometry_cache": "/root/autodl-tmp/geoprrnet/diagnostics/gt_atlas_full1506_v1/frozen_q_geometry.npz",
+  "reference": "/root/autodl-tmp/geoprrnet/diagnostics/gt_atlas_full1506_v1/predictions.csv",
+  "image_or_model_loading": false,
+  "new_model_forwards": 0,
+  "training_steps": 0,
+  "seed_expansion": false,
+  "coordinates": "cached float64 ROI-to-canonical H composed with original half-pixel source-to-ROI",
+  "readout": "transform both annotated points; difference; fixed arc-midpoint unwrap; endpoint clip",
+  "target_rule": "original float32 reference for paired scores; manifest float64 y for circular residual",
+  "denominator": "all original 1506 IDs; failed geometry has error 1",
+  "quantization": "fixed conservative +/-1 source-pixel endpoint boxes; excludes H/tick-frame error",
+  "raw_geometry_gate": "all 1506 valid and raw circular direction error <= existing 1%FS geometry tolerance",
+  "height_contract": "must be established from source provenance; numerical agreement alone cannot prove equal height",
+  "summary": {
+    "gt_endpoint_pair": {
+      "samples": 1506,
+      "nmae_percent_fs": 0.16616999421067796,
+      "acc_at_1_percent": 99.867197875166,
+      "acc_at_2_percent": 100.0,
+      "acc_at_5_percent": 100.0,
+      "above_1_percent_fs": 2,
+      "above_2_percent_fs": 0,
+      "above_5_percent_fs": 0,
+      "median_percent_fs": 0.12567740108754832,
+      "p90_percent_fs": 0.37163219498471955,
+      "p95_percent_fs": 0.47022926161528134,
+      "tail10_count": 151,
+      "tail10_percent_fs": 0.5229273910404372,
+      "maximum_percent_fs": 1.053687578536222,
+      "maximum_ids": [
+        "sync_12479"
+      ]
+    },
+    "gt_endpoint_pair_unclipped": {
+      "samples": 1506,
+      "nmae_percent_fs": 0.16628772717893223,
+      "acc_at_1_percent": 99.867197875166,
+      "acc_at_2_percent": 100.0,
+      "acc_at_5_percent": 100.0,
+      "above_1_percent_fs": 2,
+      "above_2_percent_fs": 0,
+      "above_5_percent_fs": 0,
+      "median_percent_fs": 0.1257187046788344,
+      "p90_percent_fs": 0.37163219498471955,
+      "p95_percent_fs": 0.47022926161528134,
+      "tail10_count": 151,
+      "tail10_percent_fs": 0.5229273910404372,
+      "maximum_percent_fs": 1.053687578536222,
+      "maximum_ids": [
+        "sync_12479"
+      ]
+    },
+    "raw_circular_direction": {
+      "samples": 1506,
+      "nmae_percent_fs": 0.16628767953555862,
+      "acc_at_1_percent": 99.867197875166,
+      "acc_at_2_percent": 100.0,
+      "acc_at_5_percent": 100.0,
+      "above_1_percent_fs": 2,
+      "above_2_percent_fs": 0,
+      "above_5_percent_fs": 0,
+      "median_percent_fs": 0.12571774682180573,
+      "p90_percent_fs": 0.3716333318479018,
+      "p95_percent_fs": 0.47022961628249704,
+      "tail10_count": 151,
+      "tail10_percent_fs": 0.5229272833313531,
+      "maximum_percent_fs": 1.0536886788782658,
+      "maximum_ids": [
+        "sync_12479"
+      ]
+    },
+    "supervised_native": {
+      "samples": 1506,
+      "nmae_percent_fs": 0.14792406705363323,
+      "acc_at_1_percent": 99.26958831341301,
+      "acc_at_2_percent": 99.66799468791501,
+      "acc_at_5_percent": 99.800796812749,
+      "above_1_percent_fs": 11,
+      "above_2_percent_fs": 5,
+      "above_5_percent_fs": 3,
+      "median_percent_fs": 0.057125091552734375,
+      "p90_percent_fs": 0.2393081784248352,
+      "p95_percent_fs": 0.38926824927330017,
+      "tail10_count": 151,
+      "tail10_percent_fs": 0.8974729324193245,
+      "maximum_percent_fs": 26.627396047115326,
+      "maximum_ids": [
+        "sync_10202"
+      ]
+    },
+    "supervised_r8": {
+      "samples": 1506,
+      "nmae_percent_fs": 0.12995049850466664,
+      "acc_at_1_percent": 99.40239043824701,
+      "acc_at_2_percent": 99.66799468791501,
+      "acc_at_5_percent": 99.867197875166,
+      "above_1_percent_fs": 9,
+      "above_2_percent_fs": 5,
+      "above_5_percent_fs": 2,
+      "median_percent_fs": 0.05738586187362671,
+      "p90_percent_fs": 0.2371266484260559,
+      "p95_percent_fs": 0.38103461265563965,
+      "tail10_count": 151,
+      "tail10_percent_fs": 0.7205782514647099,
+      "maximum_percent_fs": 19.557136297225952,
+      "maximum_ids": [
+        "sync_338"
+      ]
+    }
+  },
+  "paired": {
+    "vs_native": {
+      "nmae_delta_percent_fs": 0.018245927157044727,
+      "above_1_percent_fs": {
+        "rescued_ids": [
+          "sync_10202",
+          "sync_10635",
+          "sync_11838",
+          "sync_12540",
+          "sync_1811",
+          "sync_1999",
+          "sync_3172",
+          "sync_338",
+          "sync_3663",
+          "sync_3855",
+          "sync_4515"
+        ],
+        "new_error_ids": [
+          "sync_12479",
+          "sync_3401"
+        ]
+      },
+      "above_2_percent_fs": {
+        "rescued_ids": [
+          "sync_10202",
+          "sync_10635",
+          "sync_338",
+          "sync_3663",
+          "sync_4515"
+        ],
+        "new_error_ids": []
+      },
+      "above_5_percent_fs": {
+        "rescued_ids": [
+          "sync_10202",
+          "sync_338",
+          "sync_4515"
+        ],
+        "new_error_ids": []
+      }
+    },
+    "vs_r8": {
+      "nmae_delta_percent_fs": 0.036219495706011344,
+      "above_1_percent_fs": {
+        "rescued_ids": [
+          "sync_10202",
+          "sync_10635",
+          "sync_11838",
+          "sync_12540",
+          "sync_1811",
+          "sync_1999",
+          "sync_338",
+          "sync_3663",
+          "sync_3855"
+        ],
+        "new_error_ids": [
+          "sync_12479",
+          "sync_3401"
+        ]
+      },
+      "above_2_percent_fs": {
+        "rescued_ids": [
+          "sync_10202",
+          "sync_10635",
+          "sync_12540",
+          "sync_338",
+          "sync_3663"
+        ],
+        "new_error_ids": []
+      },
+      "above_5_percent_fs": {
+        "rescued_ids": [
+          "sync_10202",
+          "sync_338"
+        ],
+        "new_error_ids": []
+      }
+    }
+  },
+  "geometry": {
+    "valid": 1506,
+    "failed_ids": [],
+    "unique_pointer": 1506,
+    "integer_endpoint_labels": 1506,
+    "clipped_first": 1,
+    "clipped_last": 2,
+    "raw_circular_above_percent_fs": {
+      "0.1": 856,
+      "0.5": 65,
+      "1": 2,
+      "2": 0,
+      "5": 0
+    },
+    "minimum_source_endpoint_distance_pixels": 116.05602095539895,
+    "minimum_canonical_endpoint_distance": 0.8288771149553076,
+    "quantization_angle_unidentified": 0,
+    "endpoint_quantization_bound_max_percent_fs": 1.7916272513241398,
+    "raw_circular_beyond_endpoint_only_quantization_bound": 70
+  },
+  "numerical_gate_passed": false,
+  "height_hypothesis_status": "not enforced by inspected generator; existing template endpoints provide unequal-height examples; original per-image vertex identities are unavailable",
+  "interpretation": {
+    "decision": "hold_current_equal_height_endpoint_candidate",
+    "strict_same_height_contract_passed": false,
+    "numerical_1_percent_fs_gate_passed": false,
+    "severe_error_capability": "GT endpoints plus GT geometry rescue all existing above2/above5 errors with no new errors at those thresholds",
+    "average_accuracy": "worse than both supervised native and fixed r8; not a replacement model result",
+    "new_above1_ids": ["sync_12479", "sync_3401"],
+    "training_started": false,
+    "seed_expansion": false,
+    "algorithm_promotion": false,
+    "next_requirement": "establish a geometrically valid endpoint label/reading interface before advancing this candidate"
+  },
+  "resources": {
+    "cpu_wall_seconds": 0.2465088739991188,
+    "user_cpu_seconds": 0.296295,
+    "system_cpu_seconds": 0.028027999999999997,
+    "peak_rss_kib_linux": 58224,
+    "numpy_version": "1.26.4",
+    "new_forward_images": 0,
+    "gpu_calls": 0
+  }
+}
