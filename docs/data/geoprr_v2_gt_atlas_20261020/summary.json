@@ -1,0 +1,472 @@
+{
+  "protocol": "geoprr_v2_full_source_validation_gt_atlas_frozen_q_K65_v1",
+  "diagnostic_only": true,
+  "checkpoint": "/root/autodl-tmp/geoprrnet/runs/geoprr_v2_tail/iteration_v3_compositional/readers/supervised_s20262020/best.pt",
+  "checkpoint_epoch": 63,
+  "seed": 20262020,
+  "manifest": "/root/autodl-tmp/geoprrnet/runs/geoprr_v2/manifests/validation.jsonl",
+  "declared_samples": 1506,
+  "K": 65,
+  "reference_native": "/root/autodl-tmp/geoprrnet/runs/geoprr_v2_tail/iteration_v3_compositional/validation_evaluation/supervised_native/predictions.csv",
+  "reference_r8": "/root/autodl-tmp/geoprrnet/runs/geoprr_v2_tail/iteration_v3_compositional/validation_evaluation/supervised_modal_r8/predictions.csv",
+  "training_or_adaptation": false,
+  "reader_parameters": 7695954,
+  "model_inputs": "RGB ROI only; GT geometry used exclusively after frozen Q inference",
+  "readout": "full normalized predicted Q expectation of GT chart; no M, window, threshold or fallback",
+  "coordinate_rule": "output cell (j+.5)*image_size/output_size-.5; float64 ROI-to-canonical H",
+  "chart_rule": "65 projected circle rays; strictly ordered CW/CCW; arc-midpoint unwrap; endpoint clipping",
+  "exact_center_rule": "atan2(0,0)=0; exact-center Q mass is retained and reported",
+  "denominator": "all original 1506 rows; input/geometry/readout failures retain normalized error 1",
+  "limitations": [
+    "GT atlas and GT H are conditional oracle diagnostics, not predicted model performance or upper bounds.",
+    "Source validation is development data; no new seed, training, official test or real-domain transfer.",
+    "Within-arc interpolation and out-of-arc chart endpoint seams are reported separately."
+  ],
+  "summary": {
+    "native_replay": {
+      "samples": 1506,
+      "groups": 70,
+      "nmae": 0.0014792406705363323,
+      "nmae_percent_fs": 0.14792406705363323,
+      "acc_at_1": 0.9926958831341302,
+      "acc_at_2": 0.9966799468791501,
+      "acc_at_5": 0.99800796812749,
+      "coverage": 1.0,
+      "field_coverage": 1.0,
+      "failed": 0,
+      "median_error": 0.0005712509155273438,
+      "p90_error": 0.002393081784248352,
+      "p95_error": 0.0038926824927330017,
+      "tail10_nmae": 0.008974729324193244,
+      "maximum_error": 0.26627396047115326,
+      "errors_above_2_percent_fs": 5,
+      "errors_above_5_percent_fs": 3
+    },
+    "r8_replay": {
+      "samples": 1506,
+      "groups": 70,
+      "nmae": 0.0012995049850466664,
+      "nmae_percent_fs": 0.12995049850466664,
+      "acc_at_1": 0.9940239043824701,
+      "acc_at_2": 0.9966799468791501,
+      "acc_at_5": 0.99867197875166,
+      "coverage": 1.0,
+      "field_coverage": 1.0,
+      "failed": 0,
+      "median_error": 0.0005738586187362671,
+      "p90_error": 0.002371266484260559,
+      "p95_error": 0.0038103461265563965,
+      "tail10_nmae": 0.007205782514647099,
+      "maximum_error": 0.19557136297225952,
+      "errors_above_2_percent_fs": 5,
+      "errors_above_5_percent_fs": 2
+    },
+    "native_reference": {
+      "samples": 1506,
+      "groups": 70,
+      "nmae": 0.0014792406705363323,
+      "nmae_percent_fs": 0.14792406705363323,
+      "acc_at_1": 0.9926958831341302,
+      "acc_at_2": 0.9966799468791501,
+      "acc_at_5": 0.99800796812749,
+      "coverage": 1.0,
+      "field_coverage": 1.0,
+      "failed": 0,
+      "median_error": 0.0005712509155273438,
+      "p90_error": 0.002393081784248352,
+      "p95_error": 0.0038926824927330017,
+      "tail10_nmae": 0.008974729324193244,
+      "maximum_error": 0.26627396047115326,
+      "errors_above_2_percent_fs": 5,
+      "errors_above_5_percent_fs": 3
+    },
+    "r8_reference": {
+      "samples": 1506,
+      "groups": 70,
+      "nmae": 0.0012995049850466664,
+      "nmae_percent_fs": 0.12995049850466664,
+      "acc_at_1": 0.9940239043824701,
+      "acc_at_2": 0.9966799468791501,
+      "acc_at_5": 0.99867197875166,
+      "coverage": 1.0,
+      "field_coverage": 1.0,
+      "failed": 0,
+      "median_error": 0.0005738586187362671,
+      "p90_error": 0.002371266484260559,
+      "p95_error": 0.0038103461265563965,
+      "tail10_nmae": 0.007205782514647099,
+      "maximum_error": 0.19557136297225952,
+      "errors_above_2_percent_fs": 5,
+      "errors_above_5_percent_fs": 2
+    },
+    "gt_atlas_full_q": {
+      "samples": 1506,
+      "groups": 70,
+      "nmae": 0.0011964500518617397,
+      "nmae_percent_fs": 0.11964500518617396,
+      "acc_at_1": 0.99734395750332,
+      "acc_at_2": 0.99800796812749,
+      "acc_at_5": 0.99867197875166,
+      "coverage": 1.0,
+      "failed": 0,
+      "median_error": 0.0004787470760221138,
+      "p90_error": 0.0019000111191932456,
+      "p95_error": 0.002752623162690121,
+      "tail10_nmae": 0.007109097461042284,
+      "maximum_error": 0.2858866493468876,
+      "errors_above_2_percent_fs": 3,
+      "errors_above_5_percent_fs": 2
+    },
+    "gt_h_full_q": {
+      "samples": 1506,
+      "groups": 70,
+      "nmae": 0.0011965812780373604,
+      "nmae_percent_fs": 0.11965812780373604,
+      "acc_at_1": 0.99734395750332,
+      "acc_at_2": 0.99800796812749,
+      "acc_at_5": 0.99867197875166,
+      "coverage": 1.0,
+      "failed": 0,
+      "median_error": 0.0004787470546090064,
+      "p90_error": 0.0019013658020169688,
+      "p95_error": 0.0027526231626885944,
+      "tail10_nmae": 0.007109883695064502,
+      "maximum_error": 0.2858866493479329,
+      "errors_above_2_percent_fs": 3,
+      "errors_above_5_percent_fs": 2
+    }
+  },
+  "replay_vs_formal": {
+    "native": {
+      "maximum_prediction_difference": 0.0,
+      "validity_disagreement_ids": [],
+      "nmae_delta_percent_fs": 0.0,
+      "above_1_percent_fs": {
+        "rescued_ids": [],
+        "new_error_ids": []
+      },
+      "above_2_percent_fs": {
+        "rescued_ids": [],
+        "new_error_ids": []
+      },
+      "above_5_percent_fs": {
+        "rescued_ids": [],
+        "new_error_ids": []
+      }
+    },
+    "r8": {
+      "maximum_prediction_difference": 0.0,
+      "validity_disagreement_ids": [],
+      "nmae_delta_percent_fs": 0.0,
+      "above_1_percent_fs": {
+        "rescued_ids": [],
+        "new_error_ids": []
+      },
+      "above_2_percent_fs": {
+        "rescued_ids": [],
+        "new_error_ids": []
+      },
+      "above_5_percent_fs": {
+        "rescued_ids": [],
+        "new_error_ids": []
+      }
+    }
+  },
+  "paired": {
+    "gt_atlas_full_q_vs_native_reference": {
+      "nmae_delta_percent_fs": -0.02827906186745928,
+      "above_1_percent_fs": {
+        "rescued_ids": [
+          "sync_10635",
+          "sync_11838",
+          "sync_12540",
+          "sync_1999",
+          "sync_3172",
+          "sync_338",
+          "sync_3855"
+        ],
+        "new_error_ids": []
+      },
+      "above_2_percent_fs": {
+        "rescued_ids": [
+          "sync_10635",
+          "sync_338"
+        ],
+        "new_error_ids": []
+      },
+      "above_5_percent_fs": {
+        "rescued_ids": [
+          "sync_338"
+        ],
+        "new_error_ids": []
+      }
+    },
+    "gt_atlas_full_q_vs_r8_reference": {
+      "nmae_delta_percent_fs": -0.010305493318492669,
+      "above_1_percent_fs": {
+        "rescued_ids": [
+          "sync_10635",
+          "sync_11838",
+          "sync_12540",
+          "sync_1999",
+          "sync_338",
+          "sync_3855"
+        ],
+        "new_error_ids": [
+          "sync_4515"
+        ]
+      },
+      "above_2_percent_fs": {
+        "rescued_ids": [
+          "sync_10635",
+          "sync_12540",
+          "sync_338"
+        ],
+        "new_error_ids": [
+          "sync_4515"
+        ]
+      },
+      "above_5_percent_fs": {
+        "rescued_ids": [
+          "sync_338"
+        ],
+        "new_error_ids": [
+          "sync_4515"
+        ]
+      }
+    },
+    "gt_atlas_full_q_vs_native_replay": {
+      "nmae_delta_percent_fs": -0.02827906186745928,
+      "above_1_percent_fs": {
+        "rescued_ids": [
+          "sync_10635",
+          "sync_11838",
+          "sync_12540",
+          "sync_1999",
+          "sync_3172",
+          "sync_338",
+          "sync_3855"
+        ],
+        "new_error_ids": []
+      },
+      "above_2_percent_fs": {
+        "rescued_ids": [
+          "sync_10635",
+          "sync_338"
+        ],
+        "new_error_ids": []
+      },
+      "above_5_percent_fs": {
+        "rescued_ids": [
+          "sync_338"
+        ],
+        "new_error_ids": []
+      }
+    },
+    "gt_atlas_full_q_vs_r8_replay": {
+      "nmae_delta_percent_fs": -0.010305493318492669,
+      "above_1_percent_fs": {
+        "rescued_ids": [
+          "sync_10635",
+          "sync_11838",
+          "sync_12540",
+          "sync_1999",
+          "sync_338",
+          "sync_3855"
+        ],
+        "new_error_ids": [
+          "sync_4515"
+        ]
+      },
+      "above_2_percent_fs": {
+        "rescued_ids": [
+          "sync_10635",
+          "sync_12540",
+          "sync_338"
+        ],
+        "new_error_ids": [
+          "sync_4515"
+        ]
+      },
+      "above_5_percent_fs": {
+        "rescued_ids": [
+          "sync_338"
+        ],
+        "new_error_ids": [
+          "sync_4515"
+        ]
+      }
+    },
+    "gt_h_full_q_vs_native_reference": {
+      "nmae_delta_percent_fs": -0.02826593924989719,
+      "above_1_percent_fs": {
+        "rescued_ids": [
+          "sync_10635",
+          "sync_11838",
+          "sync_12540",
+          "sync_1999",
+          "sync_3172",
+          "sync_338",
+          "sync_3855"
+        ],
+        "new_error_ids": []
+      },
+      "above_2_percent_fs": {
+        "rescued_ids": [
+          "sync_10635",
+          "sync_338"
+        ],
+        "new_error_ids": []
+      },
+      "above_5_percent_fs": {
+        "rescued_ids": [
+          "sync_338"
+        ],
+        "new_error_ids": []
+      }
+    },
+    "gt_h_full_q_vs_r8_reference": {
+      "nmae_delta_percent_fs": -0.010292370700930578,
+      "above_1_percent_fs": {
+        "rescued_ids": [
+          "sync_10635",
+          "sync_11838",
+          "sync_12540",
+          "sync_1999",
+          "sync_338",
+          "sync_3855"
+        ],
+        "new_error_ids": [
+          "sync_4515"
+        ]
+      },
+      "above_2_percent_fs": {
+        "rescued_ids": [
+          "sync_10635",
+          "sync_12540",
+          "sync_338"
+        ],
+        "new_error_ids": [
+          "sync_4515"
+        ]
+      },
+      "above_5_percent_fs": {
+        "rescued_ids": [
+          "sync_338"
+        ],
+        "new_error_ids": [
+          "sync_4515"
+        ]
+      }
+    },
+    "gt_h_full_q_vs_native_replay": {
+      "nmae_delta_percent_fs": -0.02826593924989719,
+      "above_1_percent_fs": {
+        "rescued_ids": [
+          "sync_10635",
+          "sync_11838",
+          "sync_12540",
+          "sync_1999",
+          "sync_3172",
+          "sync_338",
+          "sync_3855"
+        ],
+        "new_error_ids": []
+      },
+      "above_2_percent_fs": {
+        "rescued_ids": [
+          "sync_10635",
+          "sync_338"
+        ],
+        "new_error_ids": []
+      },
+      "above_5_percent_fs": {
+        "rescued_ids": [
+          "sync_338"
+        ],
+        "new_error_ids": []
+      }
+    },
+    "gt_h_full_q_vs_r8_replay": {
+      "nmae_delta_percent_fs": -0.010292370700930578,
+      "above_1_percent_fs": {
+        "rescued_ids": [
+          "sync_10635",
+          "sync_11838",
+          "sync_12540",
+          "sync_1999",
+          "sync_338",
+          "sync_3855"
+        ],
+        "new_error_ids": [
+          "sync_4515"
+        ]
+      },
+      "above_2_percent_fs": {
+        "rescued_ids": [
+          "sync_10635",
+          "sync_12540",
+          "sync_338"
+        ],
+        "new_error_ids": [
+          "sync_4515"
+        ]
+      },
+      "above_5_percent_fs": {
+        "rescued_ids": [
+          "sync_338"
+        ],
+        "new_error_ids": [
+          "sync_4515"
+        ]
+      }
+    }
+  },
+  "geometry": {
+    "feasible": 1506,
+    "failed_ids": [],
+    "positive_image_bearing_direction": 1506,
+    "negative_image_bearing_direction": 0
+  },
+  "resources": {
+    "device": "cuda",
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "batch_size": 16,
+    "workers": 4,
+    "amp": true,
+    "autocast_dtype": "float16",
+    "q_cache_dtype": "float32",
+    "geometry_and_expectation_dtype": "float64",
+    "model_forward_batches": 95,
+    "model_forward_images": 1506,
+    "valid_input_images": 1506,
+    "forward_seconds": 10.391623843461275,
+    "r8_readout_seconds": 0.036925043910741806,
+    "inference_pipeline_seconds": 16.22748016938567,
+    "inference_boundary": "image IO/ROI/normalization/transfer/model/native+r8 collection/Q CPU cache; batch throughput, no warmup exclusion",
+    "cpu_geometry_seconds": 4.8995875008404255,
+    "cache_compression_seconds": 8.185970962047577,
+    "peak_cuda_allocated_bytes": 3101364736,
+    "peak_cuda_boundary": "model resident plus frozen inference/native+r8; reset after checkpoint/model loading",
+    "cache_bytes": 69799433,
+    "process_wall_seconds_before_summary_write": 31.079176146537066,
+    "process_user_cpu_seconds": 27.111743,
+    "process_system_cpu_seconds": 3.5244869999999997,
+    "peak_rss_kib_linux": 3613724
+  },
+  "result_scope": "Full1506 source-development GT-geometry conditional feasibility; no trained atlas model or performance upper bound",
+  "interpretation": {
+    "status": "mixed_feasibility",
+    "geometry_feasible": 1506,
+    "native_nmae_relative_reduction_percent": 19.11728255633077,
+    "r8_nmae_relative_reduction_percent": 7.93032226661492,
+    "maximum_error_improved": false,
+    "native_above_5_rescues": 1,
+    "native_above_5_regressions": 0,
+    "r8_above_5_rescues": 1,
+    "r8_above_5_regressions": 1,
+    "new_model_training_started": false,
+    "seed_expansion": false,
+    "conclusion": "GT calibration has average-error room, but fixed-Q whole-chart replacement does not solve severe tail errors and supplies no evidence for learning 64 free ray gaps."
+  }
+}

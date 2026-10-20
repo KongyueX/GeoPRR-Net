@@ -1,0 +1,151 @@
+{
+  "independent_of_evaluator_module": true,
+  "model_forwards": 0,
+  "dataset_items_loaded": 0,
+  "population": 1506,
+  "checks": {
+    "maximum_absolute_recomputed_column_difference": {
+      "gt_atlas_full_q_prediction": 2.2315482794965646e-14,
+      "gt_h_full_q_prediction": 2.2426505097428162e-14,
+      "gt_atlas_full_q_absolute_error": 2.2315482794965646e-14,
+      "gt_h_full_q_absolute_error": 2.2426505097428162e-14,
+      "q_original_sum": 0.0,
+      "q_atlas_clipped_first": 0.0,
+      "q_atlas_clipped_last": 0.0,
+      "q_h_clipped_first": 0.0,
+      "q_h_clipped_last": 0.0,
+      "q_endpoint_seam": 0.0,
+      "q_membership_mismatch": 0.0,
+      "q_negative_h_denominator": 0.0,
+      "atlas_minus_h_reading": 3.552713678800501e-15,
+      "in_arc_interpolation_reading_delta": 3.719462487709018e-16,
+      "out_of_arc_endpoint_reading_delta": 0.0,
+      "arc_membership_reading_delta": 0.0,
+      "minimum_bearing_gap_radians": 0.0,
+      "minimum_bearing_gap_fraction": 0.0,
+      "image_span_radians": 0.0,
+      "minimum_grid_distance_to_center_roi_pixels": 0.0
+    },
+    "all_column_differences_below_1e_10": true,
+    "all_geometry_and_input_valid": true
+  },
+  "serious_residual_q_diagnostics": [
+    {
+      "sample_id": "sync_10202",
+      "target": 0.18149270117282867,
+      "GT_atlas_reading": 0.46737935051971624,
+      "GT_atlas_error_percent_fs": 28.588664934688758,
+      "q_peak_cell_yx": [
+        28,
+        60
+      ],
+      "q_peak_probability": 0.004264095396849236,
+      "q_peak_atlas_progress": 0.34579733268255164,
+      "q_peak_progress_error_percent_fs": 16.430463150972297,
+      "q_entropy_nats": 9.216262753803694,
+      "q_effective_pixels_inverse_collision": 1863.29283514679,
+      "q_mass_within_true_2_percent_fs": 0.02127324823197822,
+      "q_mass_within_true_5_percent_fs": 0.04611859892388173,
+      "q_mass_below_true_minus_5_percent_fs": 0.14151236014052704,
+      "q_mass_above_true_plus_5_percent_fs": 0.8123690409355913,
+      "q_mass_clipped_first": 0.09245963052288392,
+      "q_mass_clipped_last": 0.09300817360452963,
+      "q_atlas_progress_variance": 0.09301558349261509,
+      "q_expected_absolute_progress_deviation_from_target": 0.33162350172294613,
+      "atlas_H_reading_difference": -1.0450529330796599e-12
+    },
+    {
+      "sample_id": "sync_338",
+      "target": 0.5160202383995056,
+      "GT_atlas_reading": 0.5218843434088581,
+      "GT_atlas_error_percent_fs": 0.5864105009352527,
+      "q_peak_cell_yx": [
+        131,
+        36
+      ],
+      "q_peak_probability": 0.22365424200905332,
+      "q_peak_atlas_progress": 0.5214950838080853,
+      "q_peak_progress_error_percent_fs": 0.5474845408579676,
+      "q_entropy_nats": 2.5631272174058553,
+      "q_effective_pixels_inverse_collision": 9.09956828986081,
+      "q_mass_within_true_2_percent_fs": 0.9636874497807831,
+      "q_mass_within_true_5_percent_fs": 0.9972817925036211,
+      "q_mass_below_true_minus_5_percent_fs": 1.9338347231676653e-05,
+      "q_mass_above_true_plus_5_percent_fs": 0.0026988691491469635,
+      "q_mass_clipped_first": 5.762968752133854e-06,
+      "q_mass_clipped_last": 1.764970766555319e-06,
+      "q_atlas_progress_variance": 0.00010426613449002345,
+      "q_expected_absolute_progress_deviation_from_target": 0.00786708897507866,
+      "atlas_H_reading_difference": 2.343937289261966e-06
+    },
+    {
+      "sample_id": "sync_3663",
+      "target": 0.05373759940266609,
+      "GT_atlas_reading": 0.09501540734514242,
+      "GT_atlas_error_percent_fs": 4.1277807942476334,
+      "q_peak_cell_yx": [
+        24,
+        103
+      ],
+      "q_peak_probability": 0.0878965607249494,
+      "q_peak_atlas_progress": 0.055310539765549366,
+      "q_peak_progress_error_percent_fs": 0.1572940362883274,
+      "q_entropy_nats": 4.93469234086185,
+      "q_effective_pixels_inverse_collision": 31.215822761306693,
+      "q_mass_within_true_2_percent_fs": 0.6393537467838183,
+      "q_mass_within_true_5_percent_fs": 0.6839393652628639,
+      "q_mass_below_true_minus_5_percent_fs": 0.22184802472828985,
+      "q_mass_above_true_plus_5_percent_fs": 0.09421261000884637,
+      "q_mass_clipped_first": 0.22071132424727657,
+      "q_mass_clipped_last": 0.01509888019166621,
+      "q_atlas_progress_variance": 0.03810209969996906,
+      "q_expected_absolute_progress_deviation_from_target": 0.07210696226091654,
+      "atlas_H_reading_difference": -0.00010865156472539272
+    },
+    {
+      "sample_id": "sync_4515",
+      "target": 0.8315746784210205,
+      "GT_atlas_reading": 0.6043060520063941,
+      "GT_atlas_error_percent_fs": 22.726862641462642,
+      "q_peak_cell_yx": [
+        54,
+        150
+      ],
+      "q_peak_probability": 0.00477556435330923,
+      "q_peak_atlas_progress": 0.8185880397667763,
+      "q_peak_progress_error_percent_fs": 1.298663865424421,
+      "q_entropy_nats": 9.065039676535935,
+      "q_effective_pixels_inverse_collision": 1492.8219138659772,
+      "q_mass_within_true_2_percent_fs": 0.13998411710635267,
+      "q_mass_within_true_5_percent_fs": 0.2751116678648006,
+      "q_mass_below_true_minus_5_percent_fs": 0.5171389715770693,
+      "q_mass_above_true_plus_5_percent_fs": 0.20774936055813004,
+      "q_mass_clipped_first": 0.09651814916869138,
+      "q_mass_clipped_last": 0.10701672912552093,
+      "q_atlas_progress_variance": 0.11282032833303049,
+      "q_expected_absolute_progress_deviation_from_target": 0.2892880978490844,
+      "atlas_H_reading_difference": -4.0818459723368505e-12
+    }
+  ],
+  "gt_atlas_full_q": {
+    "nmae_percent_fs": 0.11964500518616807,
+    "errors_above_2_percent_fs": 3,
+    "errors_above_5_percent_fs": 2,
+    "maximum_error": 0.28588664934688757,
+    "tail10_nmae": 0.007109097461042084
+  },
+  "gt_h_full_q": {
+    "nmae_percent_fs": 0.11965812780372895,
+    "errors_above_2_percent_fs": 3,
+    "errors_above_5_percent_fs": 2,
+    "maximum_error": 0.2858866493479326,
+    "tail10_nmae": 0.007109883695064331
+  },
+  "wall_seconds": 5.0790709257125854,
+  "resources": {
+    "numpy_only": true,
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+  }
+}
