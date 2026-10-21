@@ -1,0 +1,146 @@
+{
+  "scope": "Posthoc diagnosis only: true spacing/span are joined after nominal predictions and target scoring are locked; not solver inputs or model selection.",
+  "span_error_degrees": {
+    "mean": 2.5503013406209227,
+    "median": 0.5313362206497345,
+    "p90": 5.948054133271015,
+    "maximum": 89.93191301309946
+  },
+  "span_error_above1degree": 561,
+  "tick_fit_rmse_pixels": {
+    "mean": 0.3256951837499152,
+    "median": 0.32860477636990326,
+    "p90": 0.42384901257970586,
+    "maximum": 0.5845234085319322
+  },
+  "body_fit_rmse_pixels": {
+    "mean": 0.7572257438721761,
+    "median": 0.40632259147798105,
+    "p90": 1.071916063769662,
+    "maximum": 43.38158138736787
+  },
+  "images_with_near_fit_alternatives": 0,
+  "worst_reading_cases": [
+    {
+      "sample_id": "sync_8861",
+      "reading_error_percent_fs": 45.6835150718689,
+      "true_span_degrees_posthoc": 70,
+      "estimated_span_degrees": 0.04224437343444649,
+      "span_error_degrees": 69.95775562656556,
+      "tick_fit_rmse_pixels": 0.3364542129332852,
+      "body_fit_rmse_pixels": 12.462035793157709,
+      "jacobian_condition": 366292064107.29675,
+      "near_fit_alternatives": 0,
+      "near_fit_reading_range_percent_fs": 0
+    },
+    {
+      "sample_id": "sync_4109",
+      "reading_error_percent_fs": 33.31503868103027,
+      "true_span_degrees_posthoc": 90,
+      "estimated_span_degrees": 0.06808698690053358,
+      "span_error_degrees": 89.93191301309946,
+      "tick_fit_rmse_pixels": 0.32973774057860067,
+      "body_fit_rmse_pixels": 17.76143426812192,
+      "jacobian_condition": 294687336123.2639,
+      "near_fit_alternatives": 0,
+      "near_fit_reading_range_percent_fs": 0
+    },
+    {
+      "sample_id": "sync_1315",
+      "reading_error_percent_fs": 32.7396035194397,
+      "true_span_degrees_posthoc": 90,
+      "estimated_span_degrees": 40.18951647131401,
+      "span_error_degrees": 49.81048352868599,
+      "tick_fit_rmse_pixels": 0.31861833710461385,
+      "body_fit_rmse_pixels": 9.114979931867282,
+      "jacobian_condition": 16973.714352892068,
+      "near_fit_alternatives": 0,
+      "near_fit_reading_range_percent_fs": 0
+    },
+    {
+      "sample_id": "sync_15021",
+      "reading_error_percent_fs": 30.66481351852417,
+      "true_span_degrees_posthoc": 60,
+      "estimated_span_degrees": 0.0004156931642709793,
+      "span_error_degrees": 59.99958430683573,
+      "tick_fit_rmse_pixels": 0.40902649299601485,
+      "body_fit_rmse_pixels": 26.198107448446503,
+      "jacobian_condition": 3.46927329112125e+32,
+      "near_fit_alternatives": 0,
+      "near_fit_reading_range_percent_fs": 0
+    },
+    {
+      "sample_id": "sync_7732",
+      "reading_error_percent_fs": 24.917298555374146,
+      "true_span_degrees_posthoc": 80,
+      "estimated_span_degrees": 43.98599420139529,
+      "span_error_degrees": 36.01400579860471,
+      "tick_fit_rmse_pixels": 0.2349194124719289,
+      "body_fit_rmse_pixels": 2.017590772573464,
+      "jacobian_condition": 14597.588802911214,
+      "near_fit_alternatives": 0,
+      "near_fit_reading_range_percent_fs": 0
+    },
+    {
+      "sample_id": "sync_4050",
+      "reading_error_percent_fs": 19.820902585399857,
+      "true_span_degrees_posthoc": 90,
+      "estimated_span_degrees": 55.71753314949918,
+      "span_error_degrees": 34.28246685050082,
+      "tick_fit_rmse_pixels": 0.35678244811231535,
+      "body_fit_rmse_pixels": 8.021169588552517,
+      "jacobian_condition": 6279.9036690950625,
+      "near_fit_alternatives": 0,
+      "near_fit_reading_range_percent_fs": 0
+    },
+    {
+      "sample_id": "sync_582",
+      "reading_error_percent_fs": 19.68815326690674,
+      "true_span_degrees_posthoc": 60,
+      "estimated_span_degrees": 0.01792838337196044,
+      "span_error_degrees": 59.98207161662804,
+      "tick_fit_rmse_pixels": 0.23990579841303528,
+      "body_fit_rmse_pixels": 27.57151409770462,
+      "jacobian_condition": 774385482350.8351,
+      "near_fit_alternatives": 0,
+      "near_fit_reading_range_percent_fs": 0
+    },
+    {
+      "sample_id": "sync_13176",
+      "reading_error_percent_fs": 15.816545486450195,
+      "true_span_degrees_posthoc": 60,
+      "estimated_span_degrees": 22.437039196786063,
+      "span_error_degrees": 37.56296080321394,
+      "tick_fit_rmse_pixels": 0.18599118257607794,
+      "body_fit_rmse_pixels": 13.007110463940688,
+      "jacobian_condition": 154703.1241730657,
+      "near_fit_alternatives": 0,
+      "near_fit_reading_range_percent_fs": 0
+    },
+    {
+      "sample_id": "sync_11838",
+      "reading_error_percent_fs": 15.239554643630981,
+      "true_span_degrees_posthoc": 60,
+      "estimated_span_degrees": 29.411798145068833,
+      "span_error_degrees": 30.588201854931167,
+      "tick_fit_rmse_pixels": 0.2495346675731616,
+      "body_fit_rmse_pixels": 8.638574333438202,
+      "jacobian_condition": 123077.82696366137,
+      "near_fit_alternatives": 0,
+      "near_fit_reading_range_percent_fs": 0
+    },
+    {
+      "sample_id": "sync_5194",
+      "reading_error_percent_fs": 14.843538821413915,
+      "true_span_degrees_posthoc": 70,
+      "estimated_span_degrees": 49.390720646920826,
+      "span_error_degrees": 20.609279353079174,
+      "tick_fit_rmse_pixels": 0.317932520244319,
+      "body_fit_rmse_pixels": 8.388118976227616,
+      "jacobian_condition": 13652.099721353548,
+      "near_fit_alternatives": 0,
+      "near_fit_reading_range_percent_fs": 0
+    }
+  ],
+  "uncertainty_limit": "No near-fit alternatives were found by the fixed starts; this does not certify global uniqueness or calibrated confidence."
+}

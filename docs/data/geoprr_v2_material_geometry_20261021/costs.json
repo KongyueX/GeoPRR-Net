@@ -1,0 +1,27 @@
+{
+  "known_G_known_step": {
+    "cpu_process_wall_seconds": 16.599260803312063,
+    "samples": 1506,
+    "material_correspondences": 222054,
+    "new_neural_model_forwards": 0,
+    "model_optimizer_updates": 0
+  },
+  "observed_calibration": {
+    "cpu_process_wall_seconds": 25.165828868746758,
+    "samples": 1506,
+    "material_correspondences": 222054,
+    "new_neural_model_forwards": 0,
+    "model_optimizer_updates": 0
+  },
+  "scope": "Wall times are the complete CPU decode-process measurements for each saved 1506-row run, excluding independent auditing, archival, annotation export and detection. They are not camera end-to-end latency.",
+  "geometry_solver_learned_parameters": 0,
+  "ordinary_reference_reader_parameters": 7695954,
+  "runtime": {
+    "numpy": "1.26.4",
+    "scipy": "1.15.3",
+    "installation": "SciPy installed only in project venv with --no-deps; NumPy unchanged"
+  },
+  "seed_expansion": false,
+  "new_rgb_images": 0,
+  "stress_tests_run": false
+}

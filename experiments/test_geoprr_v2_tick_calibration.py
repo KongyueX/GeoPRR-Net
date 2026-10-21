@@ -4,6 +4,8 @@ import unittest
 import numpy as np
 
 from experiments.geoprr_v2_tick_calibration import fit_ordered_tick_calibration
+from experiments.geoprr_v2_height_profile import fit_height_geometry
+from experiments import test_geoprr_v2_height_profile as height_fixture
 
 
 def project(matrix, points):
@@ -18,6 +20,24 @@ def observed_ticks(matrix, count, span):
 
 
 class TickCalibrationTests(unittest.TestCase):
+    def test_body_frame_without_homography_or_span_inputs(self):
+        fixture = height_fixture.HeightGeometryTests()
+        theta, first_tick, span = -.4, .7, 4.
+        pixels, gt_matrix = fixture.observation([.7, -.4, 3.], theta)
+        box = fixture.bbox
+        crop = np.array([[box[2]-box[0], 0., box[0]], [0., box[3]-box[1], box[1]], [0., 0., 1.]])
+        normalize = np.array([[.5, 0., .5], [0., -.5, .5], [0., 0., 1.]])
+        plane_to_pixel = crop @ np.linalg.inv(gt_matrix) @ normalize
+        angles = first_tick - np.arange(20) * span / 19
+        tick_world = np.column_stack((.8*np.cos(angles), .8*np.sin(angles)))
+        ticks = project(plane_to_pixel, tick_world) - .5
+        calibration = fit_ordered_tick_calibration(ticks)
+        matrix = normalize @ calibration["G"] @ crop
+        fitted = fit_height_geometry(fixture.xyz, pixels, box, matrix)
+        delta = (-fitted["theta_radians"]) % (2*np.pi)
+        self.assertAlmostEqual(delta / calibration["span_radians"], (first_tick-theta)/span, places=7)
+        self.assertLess(fitted["pixel_max"], 1e-6)
+
     def test_exact_ordered_arc_with_unknown_perspective_and_span(self):
         matrices = [np.array([[350., 0, 900], [0, 350., 500], [0, 0, 1.]]),
                     np.array([[350., 80., 900], [-70., 280., 500], [.18, -.12, 1.]])]

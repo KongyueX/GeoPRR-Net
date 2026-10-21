@@ -1,0 +1,105 @@
+{
+  "samples": 1506,
+  "unique_sample_ids": 1506,
+  "families": {
+    "pointer3": 508,
+    "pointer2": 529,
+    "pointer1": 469
+  },
+  "projected_vertex_counts": {
+    "76": 529,
+    "274": 469,
+    "472": 508
+  },
+  "tick_count_histogram": {
+    "7": 166,
+    "8": 56,
+    "9": 159,
+    "10": 47,
+    "11": 140,
+    "12": 58,
+    "13": 138,
+    "14": 50,
+    "15": 130,
+    "16": 43,
+    "17": 130,
+    "18": 31,
+    "19": 66,
+    "20": 34,
+    "21": 58,
+    "22": 25,
+    "23": 68,
+    "24": 13,
+    "25": 12,
+    "26": 1,
+    "27": 13,
+    "28": 4,
+    "29": 12,
+    "30": 3,
+    "31": 16,
+    "32": 5,
+    "33": 13,
+    "34": 4,
+    "35": 10,
+    "36": 1
+  },
+  "tick_count_min": 7,
+  "tick_count_max": 36,
+  "image_dimensions": {
+    "(1920, 1080)": 1506
+  },
+  "coordinate_scalar_type_counts": {
+    "ticks": {
+      "int": 44118
+    },
+    "pointer_vertices": {
+      "int": 816972
+    }
+  },
+  "adjacent_ordered_tick_lengths_pixels": {
+    "count": 20553,
+    "min": 21.633307652783937,
+    "p01": 25.709920264364882,
+    "median": 58,
+    "max": 169.09760495051373,
+    "zero_count": 0
+  },
+  "visibility_and_material_identity_keys": [],
+  "identity_scope": "All projected vertex counts match a fixed template. Explicit vertex IDs, material IDs, per-image original generator revision and visibility are absent in this exported schema; count compatibility alone does not independently establish vertex-order identity or visibility.",
+  "selection_target_access": "No y, reading, rotation or tick-spacing file used; no prediction, model or RGB loaded; no score computed.",
+  "template_geometry_summary": {
+    "76": {
+      "family": "pointer2",
+      "total_vertex_count": 76,
+      "exact_z_group_count": 8,
+      "excluded_circular_group_counts": [
+        32,
+        32
+      ],
+      "selected_body_points": 12,
+      "centered_xyz_rank": 3
+    },
+    "274": {
+      "family": "pointer1",
+      "total_vertex_count": 274,
+      "exact_z_group_count": 12,
+      "excluded_circular_group_counts": [
+        128,
+        128
+      ],
+      "selected_body_points": 18,
+      "centered_xyz_rank": 3
+    },
+    "472": {
+      "family": "pointer3",
+      "total_vertex_count": 472,
+      "exact_z_group_count": 104,
+      "excluded_circular_group_counts": [
+        32,
+        32
+      ],
+      "selected_body_points": 408,
+      "centered_xyz_rank": 3
+    }
+  }
+}
