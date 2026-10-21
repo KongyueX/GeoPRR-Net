@@ -1,0 +1,35 @@
+{
+  "source_population": {
+    "train": 14494,
+    "validation": 1506,
+    "test": 4000
+  },
+  "scope": "original source validation development only",
+  "prediction_before_target_join": true,
+  "input_fields": [
+    "sample_id",
+    "group_id",
+    "ordered_long_tick_pixels",
+    "pointer_projected_vertices_pixels"
+  ],
+  "camera_calibration_or_angle_labels": "none",
+  "pixel_rule": "raw integer cell centers +0.5 exactly once inside joint fitter",
+  "joint_fit": "H8 + span1 + height-aware body7; shared full source-pixel SSE across all tick and material residuals",
+  "starts": "best retained serial tick-only fit and fixed 0.2/0.5/0.8 times 2pi spans; observation-only initialization",
+  "prediction_selection": "minimum joint source-pixel SSE among converged physically valid final iterates; retain all four starts; no target selection or global optimum certificate",
+  "physical_constraints": "whole canonical circle in front; positive material camera denominator and projected depths",
+  "readout": "canonical first tick angle0, delta=-theta; fixed arc-midpoint unwrap/clip; no fallback or r8",
+  "failures": "retain each invalid row for error1; no deletion",
+  "observation_limitations": "projected mesh vertices lack verified per-image visibility and observable vertex identity",
+  "material_selection_reference": "../geoprr_v2_material_geometry_20261021/material_selection.json",
+  "material_counts_by_family": {
+    "pointer1": 18,
+    "pointer2": 12,
+    "pointer3": 408
+  },
+  "new_model_forwards": 0,
+  "model_optimizer_updates": 0,
+  "seed_expansion": false,
+  "pressure_test_status": "not_run_nominal_failed",
+  "code_revision": "e89e808"
+}

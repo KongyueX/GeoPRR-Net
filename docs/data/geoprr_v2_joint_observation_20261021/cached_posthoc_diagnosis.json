@@ -1,0 +1,162 @@
+{
+  "scope": "Posthoc cached-output diagnosis after full1506 predictions and scores locked; no optimization, model forward or target-based selection",
+  "new_model_forwards": 0,
+  "geometry_refits": 0,
+  "family_metrics": {
+    "pointer1": {
+      "samples": 469,
+      "nmae_percent_fs": 0.16867838656628395,
+      "above1_2_5": [
+        12,
+        5,
+        0
+      ]
+    },
+    "pointer2": {
+      "samples": 529,
+      "nmae_percent_fs": 0.17118294976253057,
+      "above1_2_5": [
+        16,
+        4,
+        0
+      ]
+    },
+    "pointer3": {
+      "samples": 508,
+      "nmae_percent_fs": 0.09098151258560681,
+      "above1_2_5": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "cohorts": {
+    "above2": {
+      "samples": 9,
+      "tick_pixel_rmse_median": 0.2919293454862595,
+      "material_pixel_rmse_median": 0.3281794561627375,
+      "normalized_jacobian_condition_median": 240.33386135168044,
+      "absolute_span_error_degrees_median": 1.8076519010275174
+    },
+    "at_most2": {
+      "samples": 1497,
+      "tick_pixel_rmse_median": 0.3424893199259608,
+      "material_pixel_rmse_median": 0.3756461197368612,
+      "normalized_jacobian_condition_median": 101.27514027007022,
+      "absolute_span_error_degrees_median": 0.27795861858534193
+    }
+  },
+  "new_above2": [
+    {
+      "sample_id": "sync_10960",
+      "family": "pointer2",
+      "error_percent_fs": 2.284683617343808,
+      "selected_span_degrees": 83.67898253779748,
+      "known_GT_span_degrees_posthoc": 90.0,
+      "tick_rmse_pixels": 0.2758154740568533,
+      "material_rmse_pixels": 0.30170204353722346,
+      "accepted_starts": 4,
+      "near_cost_starts": 4,
+      "near_cost_raw_progress_spread": 1.2605119725783709e-09
+    },
+    {
+      "sample_id": "sync_15021",
+      "family": "pointer2",
+      "error_percent_fs": 2.5408323870783733,
+      "selected_span_degrees": 64.42288042853887,
+      "known_GT_span_degrees_posthoc": 59.99999999999999,
+      "tick_rmse_pixels": 0.42469571554810986,
+      "material_rmse_pixels": 0.2103517207257449,
+      "accepted_starts": 4,
+      "near_cost_starts": 3,
+      "near_cost_raw_progress_spread": 1.8285617020552536e-08
+    },
+    {
+      "sample_id": "sync_15686",
+      "family": "pointer2",
+      "error_percent_fs": 2.0057584381017346,
+      "selected_span_degrees": 94.10991286263817,
+      "known_GT_span_degrees_posthoc": 90.0,
+      "tick_rmse_pixels": 0.21499451737728084,
+      "material_rmse_pixels": 0.33675626178615964,
+      "accepted_starts": 4,
+      "near_cost_starts": 4,
+      "near_cost_raw_progress_spread": 3.9629139969576954e-09
+    },
+    {
+      "sample_id": "sync_15943",
+      "family": "pointer1",
+      "error_percent_fs": 2.650102505933727,
+      "selected_span_degrees": 87.3101745788934,
+      "known_GT_span_degrees_posthoc": 90.0,
+      "tick_rmse_pixels": 0.23773275598258561,
+      "material_rmse_pixels": 0.3735368482854693,
+      "accepted_starts": 4,
+      "near_cost_starts": 4,
+      "near_cost_raw_progress_spread": 1.0467828825966308e-09
+    },
+    {
+      "sample_id": "sync_2853",
+      "family": "pointer1",
+      "error_percent_fs": 3.1944412361536054,
+      "selected_span_degrees": 90.22287747577369,
+      "known_GT_span_degrees_posthoc": 90.0,
+      "tick_rmse_pixels": 0.3443759742316668,
+      "material_rmse_pixels": 0.34620299024600365,
+      "accepted_starts": 4,
+      "near_cost_starts": 4,
+      "near_cost_raw_progress_spread": 7.356011744175106e-09
+    },
+    {
+      "sample_id": "sync_3401",
+      "family": "pointer2",
+      "error_percent_fs": 2.0345062641276335,
+      "selected_span_degrees": 88.19234809897247,
+      "known_GT_span_degrees_posthoc": 90.0,
+      "tick_rmse_pixels": 0.33775505222995833,
+      "material_rmse_pixels": 0.33074442291793665,
+      "accepted_starts": 4,
+      "near_cost_starts": 4,
+      "near_cost_raw_progress_spread": 2.404350385454279e-09
+    },
+    {
+      "sample_id": "sync_582",
+      "family": "pointer1",
+      "error_percent_fs": 2.718756669453251,
+      "selected_span_degrees": 59.077580093196815,
+      "known_GT_span_degrees_posthoc": 59.99999999999999,
+      "tick_rmse_pixels": 0.3108818771967055,
+      "material_rmse_pixels": 0.289475833356577,
+      "accepted_starts": 3,
+      "near_cost_starts": 3,
+      "near_cost_raw_progress_spread": 1.4721557306529576e-13
+    },
+    {
+      "sample_id": "sync_6114",
+      "family": "pointer1",
+      "error_percent_fs": 2.1116655174374497,
+      "selected_span_degrees": 58.35695264831252,
+      "known_GT_span_degrees_posthoc": 59.99999999999999,
+      "tick_rmse_pixels": 0.2919293454862595,
+      "material_rmse_pixels": 0.29865943459371935,
+      "accepted_starts": 4,
+      "near_cost_starts": 4,
+      "near_cost_raw_progress_spread": 6.512132777469759e-09
+    },
+    {
+      "sample_id": "sync_9264",
+      "family": "pointer1",
+      "error_percent_fs": 2.2549569972110883,
+      "selected_span_degrees": 59.52799574265573,
+      "known_GT_span_degrees_posthoc": 59.99999999999999,
+      "tick_rmse_pixels": 0.2531549173049318,
+      "material_rmse_pixels": 0.3281794561627375,
+      "accepted_starts": 4,
+      "near_cost_starts": 4,
+      "near_cost_raw_progress_spread": 1.8117951583462855e-09
+    }
+  ],
+  "maximum_same_cost_raw_progress_spread": 2.623037365090397e-08,
+  "interpretation": "Finite multistart selected solutions still create ordinary errors; stable local convergence does not establish calibrated uncertainty or global uniqueness. Integer-coordinate sensitivity and thin-shape conditioning remain hypotheses, not isolated causal findings."
+}

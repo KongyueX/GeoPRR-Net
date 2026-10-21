@@ -1,0 +1,33 @@
+{
+  "status": "WARN",
+  "rows": 1506,
+  "accepted_starts_replayed": 6018,
+  "failed_rows_retained": 0,
+  "selected_material_points": 222054,
+  "frozen_indices_verified": true,
+  "ordered_full1506_ids_verified": true,
+  "targets_joined_after_geometry_replay": true,
+  "max_numeric_discrepancies": {
+    "H_vs_parameter_pixel": 0.0023834291744151415,
+    "tick_pixel_sse": 1.112887559884257e-12,
+    "material_pixel_sse": 0.01062582740041762,
+    "pixel_sse": 0.01062582740041762,
+    "pixel_rmse": 2.1369905068624462e-05,
+    "pixel_max": 2.631228568361621e-13,
+    "sourceH_tick_pixel_sse": 0.0015247933384201495,
+    "sourceH_material_pixel_sse": 0.04635891417910898,
+    "sourceH_pixel_sse": 0.04483412084118754,
+    "sourceH_vs_parameter_SSE": 0.03420829344076992,
+    "raw_readout": 5.002220859751105e-12,
+    "clipped_readout": 4.440892098500626e-16,
+    "theta": 4.440892098500626e-16,
+    "depth_min": 1.1102230246251565e-16,
+    "selected_replayed_SSE_excess": 2.9558577807620168e-12
+  },
+  "failure_count": 0,
+  "warning_count": 7,
+  "warning_start_locations": [
+    "sync_15021:serial"
+  ],
+  "warning_selected_start_locations": []
+}

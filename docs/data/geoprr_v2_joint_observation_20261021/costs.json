@@ -1,0 +1,14 @@
+{
+  "cpu_decoder_wall_seconds": 174.97933883592486,
+  "samples": 1506,
+  "saved_joint_start_records": 6024,
+  "material_correspondences": 222054,
+  "new_neural_model_forwards": 0,
+  "model_optimizer_updates": 0,
+  "geometry_solver_learned_parameters": 0,
+  "ordinary_reference_reader_parameters": 7695954,
+  "numpy": "1.26.4",
+  "scipy": "1.15.3",
+  "scope": "CPU decoder wall time includes input loading, 1506 fits and saved outputs after argument parsing; excludes Python imports, annotation export, scoring, auditing, archival and RGB observation detection; not camera end-to-end latency",
+  "seed_expansion": false
+}
