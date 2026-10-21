@@ -1,0 +1,3447 @@
+{
+  "status": "complete",
+  "scope": "frozen best48 zero-training conditional diagnosis",
+  "formal_RGB_results_unchanged": {
+    "ordinary_native": {
+      "all1506": {
+        "samples": 1506,
+        "nmae_percent_fs": 0.14792406705363323,
+        "median_percent_fs": 0.057125091552734375,
+        "p90_percent_fs": 0.2393081784248352,
+        "p95_percent_fs": 0.38926824927330017,
+        "tail10_percent_fs": 0.8974729324193245,
+        "maximum_percent_fs": 26.627396047115326,
+        "acc_at_1_percent": 99.26958831341301,
+        "acc_at_2_percent": 99.66799468791501,
+        "acc_at_5_percent": 99.800796812749,
+        "above_1_percent_fs": 11,
+        "above_2_percent_fs": 5,
+        "above_5_percent_fs": 3
+      },
+      "common1495": {
+        "samples": 1495,
+        "nmae_percent_fs": 0.09792309559839929,
+        "median_percent_fs": 0.056415051221847534,
+        "p90_percent_fs": 0.22808670997619646,
+        "p95_percent_fs": 0.3689330816268921,
+        "tail10_percent_fs": 0.40988367386429064,
+        "maximum_percent_fs": 0.966954231262207,
+        "acc_at_1_percent": 100.0,
+        "acc_at_2_percent": 100.0,
+        "acc_at_5_percent": 100.0,
+        "above_1_percent_fs": 0,
+        "above_2_percent_fs": 0,
+        "above_5_percent_fs": 0
+      },
+      "r8ordinary1497": {
+        "samples": 1497,
+        "nmae_percent_fs": 0.11044400268396044,
+        "median_percent_fs": 0.05651712417602539,
+        "p90_percent_fs": 0.2304939925670626,
+        "p95_percent_fs": 0.36987781524658203,
+        "tail10_percent_fs": 0.5330932248410439,
+        "maximum_percent_fs": 17.546069622039795,
+        "acc_at_1_percent": 99.86639946559787,
+        "acc_at_2_percent": 99.93319973279893,
+        "acc_at_5_percent": 99.93319973279893,
+        "above_1_percent_fs": 2,
+        "above_2_percent_fs": 1,
+        "above_5_percent_fs": 1
+      },
+      "old_severe6": {
+        "samples": 6,
+        "nmae_percent_fs": 11.647128934661549,
+        "median_percent_fs": 10.000979900360107,
+        "p90_percent_fs": 23.10253605246544,
+        "p95_percent_fs": 24.864966049790382,
+        "tail10_percent_fs": 26.627396047115326,
+        "maximum_percent_fs": 26.627396047115326,
+        "acc_at_1_percent": 0.0,
+        "acc_at_2_percent": 16.666666666666664,
+        "acc_at_5_percent": 50.0,
+        "above_1_percent_fs": 6,
+        "above_2_percent_fs": 5,
+        "above_5_percent_fs": 3
+      }
+    },
+    "ordinary_r8": {
+      "all1506": {
+        "samples": 1506,
+        "nmae_percent_fs": 0.12995049850466664,
+        "median_percent_fs": 0.05738586187362671,
+        "p90_percent_fs": 0.2371266484260559,
+        "p95_percent_fs": 0.38103461265563965,
+        "tail10_percent_fs": 0.7205782514647099,
+        "maximum_percent_fs": 19.557136297225952,
+        "acc_at_1_percent": 99.40239043824701,
+        "acc_at_2_percent": 99.66799468791501,
+        "acc_at_5_percent": 99.867197875166,
+        "above_1_percent_fs": 9,
+        "above_2_percent_fs": 5,
+        "above_5_percent_fs": 2
+      },
+      "common1495": {
+        "samples": 1495,
+        "nmae_percent_fs": 0.09720515176512431,
+        "median_percent_fs": 0.05651116371154785,
+        "p90_percent_fs": 0.22467017173767098,
+        "p95_percent_fs": 0.36469118669629086,
+        "tail10_percent_fs": 0.4040797372375285,
+        "maximum_percent_fs": 0.9670138359069824,
+        "acc_at_1_percent": 100.0,
+        "acc_at_2_percent": 100.0,
+        "acc_at_5_percent": 100.0,
+        "above_1_percent_fs": 0,
+        "above_2_percent_fs": 0,
+        "above_5_percent_fs": 0
+      },
+      "r8ordinary1497": {
+        "samples": 1497,
+        "nmae_percent_fs": 0.0977505576107699,
+        "median_percent_fs": 0.056624412536621094,
+        "p90_percent_fs": 0.22595524787902854,
+        "p95_percent_fs": 0.3670136630535127,
+        "tail10_percent_fs": 0.40861147837980144,
+        "maximum_percent_fs": 0.9670138359069824,
+        "acc_at_1_percent": 100.0,
+        "acc_at_2_percent": 100.0,
+        "acc_at_5_percent": 100.0,
+        "above_1_percent_fs": 0,
+        "above_2_percent_fs": 0,
+        "above_5_percent_fs": 0
+      },
+      "old_severe6": {
+        "samples": 6,
+        "nmae_percent_fs": 7.529527818163236,
+        "median_percent_fs": 2.8489965945482254,
+        "p90_percent_fs": 18.05948093533516,
+        "p95_percent_fs": 18.808308616280556,
+        "tail10_percent_fs": 19.557136297225952,
+        "maximum_percent_fs": 19.557136297225952,
+        "acc_at_1_percent": 16.666666666666664,
+        "acc_at_2_percent": 16.666666666666664,
+        "acc_at_5_percent": 66.66666666666666,
+        "above_1_percent_fs": 5,
+        "above_2_percent_fs": 5,
+        "above_5_percent_fs": 2
+      }
+    },
+    "v5_best57": {
+      "all1506": {
+        "samples": 1506,
+        "nmae_percent_fs": 0.07712251912293488,
+        "median_percent_fs": 0.04487857222557068,
+        "p90_percent_fs": 0.150415301322937,
+        "p95_percent_fs": 0.2279886044561863,
+        "tail10_percent_fs": 0.34185209996159505,
+        "maximum_percent_fs": 5.908846855163574,
+        "acc_at_1_percent": 99.734395750332,
+        "acc_at_2_percent": 99.800796812749,
+        "acc_at_5_percent": 99.933598937583,
+        "above_1_percent_fs": 4,
+        "above_2_percent_fs": 3,
+        "above_5_percent_fs": 1
+      },
+      "common1495": {
+        "samples": 1495,
+        "nmae_percent_fs": 0.06757109334258138,
+        "median_percent_fs": 0.04410147666931152,
+        "p90_percent_fs": 0.14790534973144537,
+        "p95_percent_fs": 0.22326588630676258,
+        "tail10_percent_fs": 0.2509848990788063,
+        "maximum_percent_fs": 0.9953022003173828,
+        "acc_at_1_percent": 100.0,
+        "acc_at_2_percent": 100.0,
+        "acc_at_5_percent": 100.0,
+        "above_1_percent_fs": 0,
+        "above_2_percent_fs": 0,
+        "above_5_percent_fs": 0
+      },
+      "r8ordinary1497": {
+        "samples": 1497,
+        "nmae_percent_fs": 0.07143281299290498,
+        "median_percent_fs": 0.04410147666931152,
+        "p90_percent_fs": 0.1483553647994996,
+        "p95_percent_fs": 0.22487401962280276,
+        "tail10_percent_fs": 0.28939031747480237,
+        "maximum_percent_fs": 5.908846855163574,
+        "acc_at_1_percent": 99.93319973279893,
+        "acc_at_2_percent": 99.93319973279893,
+        "acc_at_5_percent": 99.93319973279893,
+        "above_1_percent_fs": 1,
+        "above_2_percent_fs": 1,
+        "above_5_percent_fs": 1
+      },
+      "old_severe6": {
+        "samples": 6,
+        "nmae_percent_fs": 1.0971419513225555,
+        "median_percent_fs": 0.11301282793283463,
+        "p90_percent_fs": 3.142864815890789,
+        "p95_percent_fs": 3.294282127171755,
+        "tail10_percent_fs": 3.4456994384527206,
+        "maximum_percent_fs": 3.4456994384527206,
+        "acc_at_1_percent": 66.66666666666666,
+        "acc_at_2_percent": 66.66666666666666,
+        "acc_at_5_percent": 100.0,
+        "above_1_percent_fs": 2,
+        "above_2_percent_fs": 2,
+        "above_5_percent_fs": 0
+      }
+    },
+    "v6_formal_best48": {
+      "all1506": {
+        "samples": 1506,
+        "nmae_percent_fs": 0.06361299291666786,
+        "median_percent_fs": 0.03247112035751343,
+        "p90_percent_fs": 0.12440010905265808,
+        "p95_percent_fs": 0.19170381128787994,
+        "tail10_percent_fs": 0.3015102855024211,
+        "maximum_percent_fs": 4.558325186371803,
+        "acc_at_1_percent": 99.66799468791501,
+        "acc_at_2_percent": 99.867197875166,
+        "acc_at_5_percent": 100.0,
+        "above_1_percent_fs": 5,
+        "above_2_percent_fs": 2,
+        "above_5_percent_fs": 0
+      },
+      "common1495": {
+        "samples": 1495,
+        "nmae_percent_fs": 0.05814751164927237,
+        "median_percent_fs": 0.03215670585632324,
+        "p90_percent_fs": 0.12193083763122561,
+        "p95_percent_fs": 0.18446624279022214,
+        "tail10_percent_fs": 0.2506210927567736,
+        "maximum_percent_fs": 3.0963778495788574,
+        "acc_at_1_percent": 99.86622073578594,
+        "acc_at_2_percent": 99.93311036789298,
+        "acc_at_5_percent": 100.0,
+        "above_1_percent_fs": 2,
+        "above_2_percent_fs": 1,
+        "above_5_percent_fs": 0
+      },
+      "r8ordinary1497": {
+        "samples": 1497,
+        "nmae_percent_fs": 0.058457931336257894,
+        "median_percent_fs": 0.032272934913635254,
+        "p90_percent_fs": 0.12216031551361087,
+        "p95_percent_fs": 0.1853099465370179,
+        "tail10_percent_fs": 0.2530538762014961,
+        "maximum_percent_fs": 3.0963778495788574,
+        "acc_at_1_percent": 99.86639946559787,
+        "acc_at_2_percent": 99.93319973279893,
+        "acc_at_5_percent": 100.0,
+        "above_1_percent_fs": 2,
+        "above_2_percent_fs": 1,
+        "above_5_percent_fs": 0
+      },
+      "old_severe6": {
+        "samples": 6,
+        "nmae_percent_fs": 1.1805575961867967,
+        "median_percent_fs": 0.34033283591270447,
+        "p90_percent_fs": 3.157372586429119,
+        "p95_percent_fs": 3.857848886400461,
+        "tail10_percent_fs": 4.558325186371803,
+        "maximum_percent_fs": 4.558325186371803,
+        "acc_at_1_percent": 66.66666666666666,
+        "acc_at_2_percent": 83.33333333333334,
+        "acc_at_5_percent": 100.0,
+        "above_1_percent_fs": 2,
+        "above_2_percent_fs": 1,
+        "above_5_percent_fs": 0
+      }
+    }
+  },
+  "readouts": {
+    "native_GT_A_cached": {
+      "kind": "cached_posthoc_intervention",
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.05756157785842451,
+          "median_percent_fs": 0.031386315672143894,
+          "p90_percent_fs": 0.12182752035373445,
+          "p95_percent_fs": 0.1755177624826354,
+          "tail10_percent_fs": 0.25244711524301483,
+          "maximum_percent_fs": 3.0981218470930827,
+          "acc_at_1_percent": 99.867197875166,
+          "acc_at_2_percent": 99.933598937583,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.05702450172409198,
+          "median_percent_fs": 0.031322327267169214,
+          "p90_percent_fs": 0.1212794403611106,
+          "p95_percent_fs": 0.1735685949534682,
+          "tail10_percent_fs": 0.24848418316761445,
+          "maximum_percent_fs": 3.0981218470930827,
+          "acc_at_1_percent": 99.86622073578594,
+          "acc_at_2_percent": 99.93311036789298,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.05731096506173386,
+          "median_percent_fs": 0.031382986450267936,
+          "p90_percent_fs": 0.12146027719881938,
+          "p95_percent_fs": 0.1738321687592759,
+          "tail10_percent_fs": 0.25090736988928813,
+          "maximum_percent_fs": 3.0981218470930827,
+          "acc_at_1_percent": 99.86639946559787,
+          "acc_at_2_percent": 99.93319973279893,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 0.13835934746055334,
+          "median_percent_fs": 0.05611122804787538,
+          "p90_percent_fs": 0.33918927100426294,
+          "p95_percent_fs": 0.41198376575449436,
+          "tail10_percent_fs": 0.4847782605047257,
+          "maximum_percent_fs": 0.4847782605047257,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        }
+      },
+      "maximum_error_id": "sync_2810",
+      "paired": {
+        "ordinary_native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_3172",
+              "sync_338",
+              "sync_3663",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_10304",
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          }
+        },
+        "ordinary_r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_338",
+              "sync_3663",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_10304",
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338",
+              "sync_3663"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": []
+          }
+        },
+        "v5_best57": {
+          "1": {
+            "rescued": [
+              "sync_12540",
+              "sync_1999",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_10304",
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_12540",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_3172"
+            ],
+            "new": []
+          }
+        },
+        "v6_formal_best48": {
+          "1": {
+            "rescued": [
+              "sync_12540",
+              "sync_1999",
+              "sync_3663"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_3663"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [],
+            "new": []
+          }
+        }
+      }
+    },
+    "native_MAP_A_posthoc_diagnostic": {
+      "kind": "cached_posthoc_intervention",
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.11548625170653541,
+          "median_percent_fs": 0.07683411240577698,
+          "p90_percent_fs": 0.24901367723941803,
+          "p95_percent_fs": 0.3473633900284767,
+          "tail10_percent_fs": 0.4202511079361915,
+          "maximum_percent_fs": 3.0522823333740234,
+          "acc_at_1_percent": 99.734395750332,
+          "acc_at_2_percent": 99.867197875166,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 4,
+          "above_2_percent_fs": 2,
+          "above_5_percent_fs": 0
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.11263263909736346,
+          "median_percent_fs": 0.07593035697937012,
+          "p90_percent_fs": 0.24825572967529297,
+          "p95_percent_fs": 0.34408330917358393,
+          "tail10_percent_fs": 0.3961779864330311,
+          "maximum_percent_fs": 3.0522823333740234,
+          "acc_at_1_percent": 99.86622073578594,
+          "acc_at_2_percent": 99.93311036789298,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.11295798114743782,
+          "median_percent_fs": 0.07613301277160645,
+          "p90_percent_fs": 0.24861633777618414,
+          "p95_percent_fs": 0.34514382481575023,
+          "tail10_percent_fs": 0.39761507428678067,
+          "maximum_percent_fs": 3.0522823333740234,
+          "acc_at_1_percent": 99.86639946559787,
+          "acc_at_2_percent": 99.93319973279893,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 0.820455327630043,
+          "median_percent_fs": 0.31716153025627136,
+          "p90_percent_fs": 2.032278850674629,
+          "p95_percent_fs": 2.4048103019595146,
+          "tail10_percent_fs": 2.7773417532444,
+          "maximum_percent_fs": 2.7773417532444,
+          "acc_at_1_percent": 66.66666666666666,
+          "acc_at_2_percent": 83.33333333333334,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        }
+      },
+      "maximum_error_id": "sync_2810",
+      "paired": {
+        "ordinary_native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_1999",
+              "sync_3172",
+              "sync_338",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_10304",
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_12540",
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          }
+        },
+        "ordinary_r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_1999",
+              "sync_338",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_10304",
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": []
+          }
+        },
+        "v5_best57": {
+          "1": {
+            "rescued": [
+              "sync_1999",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_10304",
+              "sync_2810",
+              "sync_3663"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_3172"
+            ],
+            "new": []
+          }
+        },
+        "v6_formal_best48": {
+          "1": {
+            "rescued": [
+              "sync_1999"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_3663"
+            ],
+            "new": [
+              "sync_12540"
+            ]
+          },
+          "5": {
+            "rescued": [],
+            "new": []
+          }
+        }
+      }
+    },
+    "native_joint": {
+      "kind": "runtime_intervention",
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.06361299813448607,
+          "median_percent_fs": 0.03247112035751343,
+          "p90_percent_fs": 0.12440010905265808,
+          "p95_percent_fs": 0.19170381128787994,
+          "tail10_percent_fs": 0.3015102851169399,
+          "maximum_percent_fs": 4.558325186371803,
+          "acc_at_1_percent": 99.66799468791501,
+          "acc_at_2_percent": 99.867197875166,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 5,
+          "above_2_percent_fs": 2,
+          "above_5_percent_fs": 0
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.05814751690548255,
+          "median_percent_fs": 0.03215670585632324,
+          "p90_percent_fs": 0.12193083763122561,
+          "p95_percent_fs": 0.18446624279022214,
+          "tail10_percent_fs": 0.25062109236872254,
+          "maximum_percent_fs": 3.0963778495788574,
+          "acc_at_1_percent": 99.86622073578594,
+          "acc_at_2_percent": 99.93311036789298,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.05845793658544575,
+          "median_percent_fs": 0.032272934913635254,
+          "p90_percent_fs": 0.12216031551361087,
+          "p95_percent_fs": 0.1853099465370179,
+          "tail10_percent_fs": 0.25305387581344496,
+          "maximum_percent_fs": 3.0963778495788574,
+          "acc_at_1_percent": 99.86639946559787,
+          "acc_at_2_percent": 99.93319973279893,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 1.1805575961867967,
+          "median_percent_fs": 0.34033283591270447,
+          "p90_percent_fs": 3.157372586429119,
+          "p95_percent_fs": 3.857848886400461,
+          "tail10_percent_fs": 4.558325186371803,
+          "maximum_percent_fs": 4.558325186371803,
+          "acc_at_1_percent": 66.66666666666666,
+          "acc_at_2_percent": 83.33333333333334,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        }
+      },
+      "maximum_error_id": "sync_3663",
+      "paired": {
+        "ordinary_native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3172",
+              "sync_338",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_10304",
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          }
+        },
+        "ordinary_r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_338",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_10304",
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": []
+          }
+        },
+        "v5_best57": {
+          "1": {
+            "rescued": [
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_10304",
+              "sync_2810",
+              "sync_3663"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_12540",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810",
+              "sync_3663"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_3172"
+            ],
+            "new": []
+          }
+        },
+        "v6_formal_best48": {
+          "1": {
+            "rescued": [],
+            "new": []
+          },
+          "2": {
+            "rescued": [],
+            "new": []
+          },
+          "5": {
+            "rescued": [],
+            "new": []
+          }
+        }
+      }
+    },
+    "native_local_reference": {
+      "kind": "runtime_intervention",
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.07285642602314576,
+          "median_percent_fs": 0.035906583070755005,
+          "p90_percent_fs": 0.13681650161743164,
+          "p95_percent_fs": 0.1977875828742981,
+          "tail10_percent_fs": 0.35915932153962205,
+          "maximum_percent_fs": 12.078024074435234,
+          "acc_at_1_percent": 99.734395750332,
+          "acc_at_2_percent": 99.867197875166,
+          "acc_at_5_percent": 99.933598937583,
+          "above_1_percent_fs": 4,
+          "above_2_percent_fs": 2,
+          "above_5_percent_fs": 1
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.06229819561907983,
+          "median_percent_fs": 0.03558695316314697,
+          "p90_percent_fs": 0.13341426849365234,
+          "p95_percent_fs": 0.18903031945228574,
+          "tail10_percent_fs": 0.2584315323426078,
+          "maximum_percent_fs": 3.1011104583740234,
+          "acc_at_1_percent": 99.86622073578594,
+          "acc_at_2_percent": 99.93311036789298,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.06317726138143662,
+          "median_percent_fs": 0.03571659326553345,
+          "p90_percent_fs": 0.13457804918289196,
+          "p95_percent_fs": 0.19028961658477797,
+          "tail10_percent_fs": 0.2662516915394614,
+          "maximum_percent_fs": 3.1011104583740234,
+          "acc_at_1_percent": 99.86639946559787,
+          "acc_at_2_percent": 99.93319973279893,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 2.396734493474166,
+          "median_percent_fs": 0.38911402225494385,
+          "p90_percent_fs": 6.691244803369045,
+          "p95_percent_fs": 9.38463443890214,
+          "tail10_percent_fs": 12.078024074435234,
+          "maximum_percent_fs": 12.078024074435234,
+          "acc_at_1_percent": 66.66666666666666,
+          "acc_at_2_percent": 83.33333333333334,
+          "acc_at_5_percent": 83.33333333333334,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 1
+        }
+      },
+      "maximum_error_id": "sync_3663",
+      "paired": {
+        "ordinary_native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_1999",
+              "sync_3172",
+              "sync_338",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_10304",
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_3663"
+            ]
+          }
+        },
+        "ordinary_r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_1999",
+              "sync_338",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_10304",
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": [
+              "sync_3663"
+            ]
+          }
+        },
+        "v5_best57": {
+          "1": {
+            "rescued": [
+              "sync_1999",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_10304",
+              "sync_2810",
+              "sync_3663"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_12540",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810",
+              "sync_3663"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_3172"
+            ],
+            "new": [
+              "sync_3663"
+            ]
+          }
+        },
+        "v6_formal_best48": {
+          "1": {
+            "rescued": [
+              "sync_1999"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [],
+            "new": []
+          },
+          "5": {
+            "rescued": [],
+            "new": [
+              "sync_3663"
+            ]
+          }
+        }
+      }
+    },
+    "native_product": {
+      "kind": "runtime_intervention",
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.06750512235715674,
+          "median_percent_fs": 0.03298036754131317,
+          "p90_percent_fs": 0.12855678796768188,
+          "p95_percent_fs": 0.1955270767211914,
+          "tail10_percent_fs": 0.33639666313163447,
+          "maximum_percent_fs": 6.867329403758049,
+          "acc_at_1_percent": 99.66799468791501,
+          "acc_at_2_percent": 99.800796812749,
+          "acc_at_5_percent": 99.933598937583,
+          "above_1_percent_fs": 5,
+          "above_2_percent_fs": 3,
+          "above_5_percent_fs": 1
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.058998326526717854,
+          "median_percent_fs": 0.03260970115661621,
+          "p90_percent_fs": 0.12351274490356468,
+          "p95_percent_fs": 0.1878966391086578,
+          "tail10_percent_fs": 0.2559244469145293,
+          "maximum_percent_fs": 3.09525728225708,
+          "acc_at_1_percent": 99.86622073578594,
+          "acc_at_2_percent": 99.93311036789298,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.05958050283684227,
+          "median_percent_fs": 0.032714009284973145,
+          "p90_percent_fs": 0.12576997280120866,
+          "p95_percent_fs": 0.18961429595947277,
+          "tail10_percent_fs": 0.2608597512383615,
+          "maximum_percent_fs": 3.09525728225708,
+          "acc_at_1_percent": 99.86639946559787,
+          "acc_at_2_percent": 99.93319973279893,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 1.594823816170295,
+          "median_percent_fs": 0.3622680902481079,
+          "p90_percent_fs": 4.309317376464605,
+          "p95_percent_fs": 5.588323390111327,
+          "tail10_percent_fs": 6.867329403758049,
+          "maximum_percent_fs": 6.867329403758049,
+          "acc_at_1_percent": 66.66666666666666,
+          "acc_at_2_percent": 83.33333333333334,
+          "acc_at_5_percent": 83.33333333333334,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 1
+        }
+      },
+      "maximum_error_id": "sync_3663",
+      "paired": {
+        "ordinary_native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3172",
+              "sync_338",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_10304",
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_1999",
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_3663"
+            ]
+          }
+        },
+        "ordinary_r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_338",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_10304",
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338"
+            ],
+            "new": [
+              "sync_1999",
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": [
+              "sync_3663"
+            ]
+          }
+        },
+        "v5_best57": {
+          "1": {
+            "rescued": [
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_10304",
+              "sync_2810",
+              "sync_3663"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_12540",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_1999",
+              "sync_2810",
+              "sync_3663"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_3172"
+            ],
+            "new": [
+              "sync_3663"
+            ]
+          }
+        },
+        "v6_formal_best48": {
+          "1": {
+            "rescued": [],
+            "new": []
+          },
+          "2": {
+            "rescued": [],
+            "new": [
+              "sync_1999"
+            ]
+          },
+          "5": {
+            "rescued": [],
+            "new": [
+              "sync_3663"
+            ]
+          }
+        }
+      }
+    },
+    "teacher_A": {
+      "kind": "runtime_intervention",
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.05686833079841839,
+          "median_percent_fs": 0.03205086104571819,
+          "p90_percent_fs": 0.11990666389465332,
+          "p95_percent_fs": 0.17071068286895752,
+          "tail10_percent_fs": 0.24280570917996996,
+          "maximum_percent_fs": 3.0544161796569824,
+          "acc_at_1_percent": 99.933598937583,
+          "acc_at_2_percent": 99.933598937583,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.055927806730372606,
+          "median_percent_fs": 0.03173947334289551,
+          "p90_percent_fs": 0.11911213397979743,
+          "p95_percent_fs": 0.16635835170745847,
+          "tail10_percent_fs": 0.23645952469936066,
+          "maximum_percent_fs": 3.0544161796569824,
+          "acc_at_1_percent": 99.93311036789298,
+          "acc_at_2_percent": 99.93311036789298,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.05622635649030034,
+          "median_percent_fs": 0.03178715705871582,
+          "p90_percent_fs": 0.11934950947761537,
+          "p95_percent_fs": 0.16730785369873058,
+          "tail10_percent_fs": 0.23882239189576163,
+          "maximum_percent_fs": 3.0544161796569824,
+          "acc_at_1_percent": 99.93319973279893,
+          "acc_at_2_percent": 99.93319973279893,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 0.1921112338701884,
+          "median_percent_fs": 0.1065768301486969,
+          "p90_percent_fs": 0.4094026982784271,
+          "p95_percent_fs": 0.44156424701213837,
+          "tail10_percent_fs": 0.4737257957458496,
+          "maximum_percent_fs": 0.4737257957458496,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        }
+      },
+      "maximum_error_id": "sync_2810",
+      "paired": {
+        "ordinary_native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_3172",
+              "sync_338",
+              "sync_3663",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          }
+        },
+        "ordinary_r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_338",
+              "sync_3663",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338",
+              "sync_3663"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": []
+          }
+        },
+        "v5_best57": {
+          "1": {
+            "rescued": [
+              "sync_12540",
+              "sync_1999",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_12540",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_3172"
+            ],
+            "new": []
+          }
+        },
+        "v6_formal_best48": {
+          "1": {
+            "rescued": [
+              "sync_10304",
+              "sync_12540",
+              "sync_1999",
+              "sync_3663"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_3663"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [],
+            "new": []
+          }
+        }
+      }
+    },
+    "teacher_AB": {
+      "kind": "runtime_intervention",
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.053990417802576296,
+          "median_percent_fs": 0.03174245357513428,
+          "p90_percent_fs": 0.11539459228515625,
+          "p95_percent_fs": 0.16063302755355835,
+          "tail10_percent_fs": 0.22541997787986523,
+          "maximum_percent_fs": 3.0622482299804688,
+          "acc_at_1_percent": 99.933598937583,
+          "acc_at_2_percent": 99.933598937583,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.05302167528905702,
+          "median_percent_fs": 0.031566619873046875,
+          "p90_percent_fs": 0.11330202221870424,
+          "p95_percent_fs": 0.15692706685513255,
+          "tail10_percent_fs": 0.21824043983239486,
+          "maximum_percent_fs": 3.0622482299804688,
+          "acc_at_1_percent": 99.93311036789298,
+          "acc_at_2_percent": 99.93311036789298,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.053312559007345175,
+          "median_percent_fs": 0.031626224517822266,
+          "p90_percent_fs": 0.11349990963935856,
+          "p95_percent_fs": 0.15767134726047521,
+          "tail10_percent_fs": 0.22063627336441033,
+          "maximum_percent_fs": 3.0622482299804688,
+          "acc_at_1_percent": 99.93319973279893,
+          "acc_at_2_percent": 99.93319973279893,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 0.18582971145709354,
+          "median_percent_fs": 0.09901616722345352,
+          "p90_percent_fs": 0.40889084339141846,
+          "p95_percent_fs": 0.4407957196235657,
+          "tail10_percent_fs": 0.4727005958557129,
+          "maximum_percent_fs": 0.4727005958557129,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        }
+      },
+      "maximum_error_id": "sync_2810",
+      "paired": {
+        "ordinary_native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_3172",
+              "sync_338",
+              "sync_3663",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          }
+        },
+        "ordinary_r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_338",
+              "sync_3663",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338",
+              "sync_3663"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": []
+          }
+        },
+        "v5_best57": {
+          "1": {
+            "rescued": [
+              "sync_12540",
+              "sync_1999",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_12540",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_3172"
+            ],
+            "new": []
+          }
+        },
+        "v6_formal_best48": {
+          "1": {
+            "rescued": [
+              "sync_10304",
+              "sync_12540",
+              "sync_1999",
+              "sync_3663"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_3663"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [],
+            "new": []
+          }
+        }
+      }
+    },
+    "teacher_AP": {
+      "kind": "runtime_intervention",
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.01162005544377281,
+          "median_percent_fs": 0.0030279159545898438,
+          "p90_percent_fs": 0.02552121877670288,
+          "p95_percent_fs": 0.04815012216567993,
+          "tail10_percent_fs": 0.0752334675889147,
+          "maximum_percent_fs": 1.2850046157836914,
+          "acc_at_1_percent": 99.933598937583,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.011472467126212445,
+          "median_percent_fs": 0.0029861927032470703,
+          "p90_percent_fs": 0.025367736816406267,
+          "p95_percent_fs": 0.04805207252502441,
+          "tail10_percent_fs": 0.07407622677540834,
+          "maximum_percent_fs": 1.2850046157836914,
+          "acc_at_1_percent": 99.93311036789298,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.011468101210684216,
+          "median_percent_fs": 0.0029861927032470703,
+          "p90_percent_fs": 0.025340914726257335,
+          "p95_percent_fs": 0.04804253578186036,
+          "tail10_percent_fs": 0.07407622677540834,
+          "maximum_percent_fs": 1.2850046157836914,
+          "acc_at_1_percent": 99.93319973279893,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 0.03387611359357834,
+          "median_percent_fs": 0.0026674941182136536,
+          "p90_percent_fs": 0.09894073009490967,
+          "p95_percent_fs": 0.13990551233291626,
+          "tail10_percent_fs": 0.18087029457092285,
+          "maximum_percent_fs": 0.18087029457092285,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        }
+      },
+      "maximum_error_id": "sync_10304",
+      "paired": {
+        "ordinary_native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_3172",
+              "sync_338",
+              "sync_3663",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_10304"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          }
+        },
+        "ordinary_r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_338",
+              "sync_3663",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_10304"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338",
+              "sync_3663"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": []
+          }
+        },
+        "v5_best57": {
+          "1": {
+            "rescued": [
+              "sync_12540",
+              "sync_1999",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_10304"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_12540",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_3172"
+            ],
+            "new": []
+          }
+        },
+        "v6_formal_best48": {
+          "1": {
+            "rescued": [
+              "sync_12540",
+              "sync_1999",
+              "sync_2810",
+              "sync_3663"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_2810",
+              "sync_3663"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [],
+            "new": []
+          }
+        }
+      }
+    },
+    "teacher_APB": {
+      "kind": "runtime_intervention",
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.0009009582679630223,
+          "median_percent_fs": 0.000286102294921875,
+          "p90_percent_fs": 0.0016711652278900146,
+          "p95_percent_fs": 0.002422742545604706,
+          "tail10_percent_fs": 0.005885404444772624,
+          "maximum_percent_fs": 0.14838576589681907,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.0008965777267067674,
+          "median_percent_fs": 0.000286102294921875,
+          "p90_percent_fs": 0.0016593933105468763,
+          "p95_percent_fs": 0.0023939460515975948,
+          "tail10_percent_fs": 0.005850338317638186,
+          "maximum_percent_fs": 0.14838576589681907,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.0008961403808562641,
+          "median_percent_fs": 0.000286102294921875,
+          "p90_percent_fs": 0.0016576051712036141,
+          "p95_percent_fs": 0.0023926794528961186,
+          "tail10_percent_fs": 0.005850338317638186,
+          "maximum_percent_fs": 0.14838576589681907,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 0.000848683218161265,
+          "median_percent_fs": 0.00019669532775878906,
+          "p90_percent_fs": 0.0023074448108673096,
+          "p95_percent_fs": 0.0029277056455612183,
+          "tail10_percent_fs": 0.003547966480255127,
+          "maximum_percent_fs": 0.003547966480255127,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        }
+      },
+      "maximum_error_id": "sync_11131",
+      "paired": {
+        "ordinary_native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_3172",
+              "sync_338",
+              "sync_3663",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          }
+        },
+        "ordinary_r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_338",
+              "sync_3663",
+              "sync_3855"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338",
+              "sync_3663"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": []
+          }
+        },
+        "v5_best57": {
+          "1": {
+            "rescued": [
+              "sync_12540",
+              "sync_1999",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_12540",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_3172"
+            ],
+            "new": []
+          }
+        },
+        "v6_formal_best48": {
+          "1": {
+            "rescued": [
+              "sync_10304",
+              "sync_12540",
+              "sync_1999",
+              "sync_2810",
+              "sync_3663"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_2810",
+              "sync_3663"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [],
+            "new": []
+          }
+        }
+      }
+    },
+    "teacher_B": {
+      "kind": "runtime_intervention",
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.05958627712949324,
+          "median_percent_fs": 0.032611191272735596,
+          "p90_percent_fs": 0.12040138244628906,
+          "p95_percent_fs": 0.1707180868834257,
+          "tail10_percent_fs": 0.2705431715395924,
+          "maximum_percent_fs": 3.998471423983574,
+          "acc_at_1_percent": 99.734395750332,
+          "acc_at_2_percent": 99.867197875166,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 4,
+          "above_2_percent_fs": 2,
+          "above_5_percent_fs": 0
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.0542458620900006,
+          "median_percent_fs": 0.0324249267578125,
+          "p90_percent_fs": 0.11623233556747438,
+          "p95_percent_fs": 0.16544908285140988,
+          "tail10_percent_fs": 0.22054525893448348,
+          "maximum_percent_fs": 3.0603885650634766,
+          "acc_at_1_percent": 99.93311036789298,
+          "acc_at_2_percent": 99.93311036789298,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.054619432744229576,
+          "median_percent_fs": 0.03252178430557251,
+          "p90_percent_fs": 0.1168036460876465,
+          "p95_percent_fs": 0.16579270362854004,
+          "tail10_percent_fs": 0.22344325663167788,
+          "maximum_percent_fs": 3.0603885650634766,
+          "acc_at_1_percent": 99.93319973279893,
+          "acc_at_2_percent": 99.93319973279893,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 1.1039202411969504,
+          "median_percent_fs": 0.40996596217155457,
+          "p90_percent_fs": 2.88616344332695,
+          "p95_percent_fs": 3.442317433655262,
+          "tail10_percent_fs": 3.998471423983574,
+          "maximum_percent_fs": 3.998471423983574,
+          "acc_at_1_percent": 66.66666666666666,
+          "acc_at_2_percent": 83.33333333333334,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        }
+      },
+      "maximum_error_id": "sync_3663",
+      "paired": {
+        "ordinary_native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3172",
+              "sync_338",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          }
+        },
+        "ordinary_r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_338",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": []
+          }
+        },
+        "v5_best57": {
+          "1": {
+            "rescued": [
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810",
+              "sync_3663"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_12540",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810",
+              "sync_3663"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_3172"
+            ],
+            "new": []
+          }
+        },
+        "v6_formal_best48": {
+          "1": {
+            "rescued": [
+              "sync_10304"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [],
+            "new": []
+          },
+          "5": {
+            "rescued": [],
+            "new": []
+          }
+        }
+      }
+    },
+    "teacher_P": {
+      "kind": "runtime_intervention",
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.022195763612595027,
+          "median_percent_fs": 0.005353987216949463,
+          "p90_percent_fs": 0.04438161849975586,
+          "p95_percent_fs": 0.07776543498039246,
+          "tail10_percent_fs": 0.14921866470152034,
+          "maximum_percent_fs": 4.099449887871742,
+          "acc_at_1_percent": 99.734395750332,
+          "acc_at_2_percent": 99.933598937583,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 4,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.017243906978885122,
+          "median_percent_fs": 0.005283951759338379,
+          "p90_percent_fs": 0.04291534423828137,
+          "p95_percent_fs": 0.07212668657302852,
+          "tail10_percent_fs": 0.10116616948774512,
+          "maximum_percent_fs": 1.2920856475830078,
+          "acc_at_1_percent": 99.93311036789298,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.01738510231944074,
+          "median_percent_fs": 0.005283951759338379,
+          "p90_percent_fs": 0.043313652276992805,
+          "p95_percent_fs": 0.0732815265655519,
+          "tail10_percent_fs": 0.10250186984073176,
+          "maximum_percent_fs": 1.2920856475830078,
+          "acc_at_1_percent": 99.93319973279893,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 1.0115081444382668,
+          "median_percent_fs": 0.13572871685028076,
+          "p90_percent_fs": 2.8976796194911003,
+          "p95_percent_fs": 3.4985647536814213,
+          "tail10_percent_fs": 4.099449887871742,
+          "maximum_percent_fs": 4.099449887871742,
+          "acc_at_1_percent": 66.66666666666666,
+          "acc_at_2_percent": 83.33333333333334,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        }
+      },
+      "maximum_error_id": "sync_3663",
+      "paired": {
+        "ordinary_native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3172",
+              "sync_338",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_10304"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          }
+        },
+        "ordinary_r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_338",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_10304"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": []
+          }
+        },
+        "v5_best57": {
+          "1": {
+            "rescued": [
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_10304",
+              "sync_3663"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_12540",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_3663"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_3172"
+            ],
+            "new": []
+          }
+        },
+        "v6_formal_best48": {
+          "1": {
+            "rescued": [
+              "sync_2810"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_2810"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [],
+            "new": []
+          }
+        }
+      }
+    },
+    "teacher_PB": {
+      "kind": "runtime_intervention",
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.014439558636558953,
+          "median_percent_fs": 0.0026732683181762695,
+          "p90_percent_fs": 0.024272873997688293,
+          "p95_percent_fs": 0.04478795453906059,
+          "tail10_percent_fs": 0.10432701749338372,
+          "maximum_percent_fs": 4.100581631064415,
+          "acc_at_1_percent": 99.800796812749,
+          "acc_at_2_percent": 99.933598937583,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 3,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.009715960021818916,
+          "median_percent_fs": 0.0026673078536987305,
+          "p90_percent_fs": 0.02330482006072998,
+          "p95_percent_fs": 0.04263717681169505,
+          "tail10_percent_fs": 0.05795435477314943,
+          "maximum_percent_fs": 0.29437392950057983,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.009877754042146355,
+          "median_percent_fs": 0.0026673078536987305,
+          "p90_percent_fs": 0.02349674701690678,
+          "p95_percent_fs": 0.04342406988143921,
+          "tail10_percent_fs": 0.059535129557237575,
+          "maximum_percent_fs": 0.29437392950057983,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 0.9781520813703537,
+          "median_percent_fs": 0.035884976387023926,
+          "p90_percent_fs": 2.898089960217476,
+          "p95_percent_fs": 3.4993357956409454,
+          "tail10_percent_fs": 4.100581631064415,
+          "maximum_percent_fs": 4.100581631064415,
+          "acc_at_1_percent": 66.66666666666666,
+          "acc_at_2_percent": 83.33333333333334,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        }
+      },
+      "maximum_error_id": "sync_3663",
+      "paired": {
+        "ordinary_native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3172",
+              "sync_338",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          }
+        },
+        "ordinary_r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_338",
+              "sync_3855"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": []
+          }
+        },
+        "v5_best57": {
+          "1": {
+            "rescued": [
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_3663"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_12540",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_3663"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_3172"
+            ],
+            "new": []
+          }
+        },
+        "v6_formal_best48": {
+          "1": {
+            "rescued": [
+              "sync_10304",
+              "sync_2810"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_2810"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [],
+            "new": []
+          }
+        }
+      }
+    },
+    "teacher_rectifier_MAP_A_posthoc_diagnostic": {
+      "kind": "cached_posthoc_intervention",
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.11357373524800954,
+          "median_percent_fs": 0.07659532129764557,
+          "p90_percent_fs": 0.2405598759651184,
+          "p95_percent_fs": 0.32423660159111023,
+          "tail10_percent_fs": 0.4065120863417528,
+          "maximum_percent_fs": 3.0084550380706787,
+          "acc_at_1_percent": 99.800796812749,
+          "acc_at_2_percent": 99.867197875166,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 3,
+          "above_2_percent_fs": 2,
+          "above_5_percent_fs": 0
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.11047551307702544,
+          "median_percent_fs": 0.07632970809936523,
+          "p90_percent_fs": 0.2384459972381592,
+          "p95_percent_fs": 0.3212940320372581,
+          "tail10_percent_fs": 0.38071576809549396,
+          "maximum_percent_fs": 3.0084550380706787,
+          "acc_at_1_percent": 99.93311036789298,
+          "acc_at_2_percent": 99.93311036789298,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.1107782886229799,
+          "median_percent_fs": 0.07644891738891602,
+          "p90_percent_fs": 0.238992851227522,
+          "p95_percent_fs": 0.32202392816543585,
+          "tail10_percent_fs": 0.3820294761972036,
+          "maximum_percent_fs": 3.0084550380706787,
+          "acc_at_1_percent": 99.93319973279893,
+          "acc_at_2_percent": 99.93319973279893,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 0.8791954877475897,
+          "median_percent_fs": 0.3873981535434723,
+          "p90_percent_fs": 2.079510409384966,
+          "p95_percent_fs": 2.459516515955329,
+          "tail10_percent_fs": 2.839522622525692,
+          "maximum_percent_fs": 2.839522622525692,
+          "acc_at_1_percent": 66.66666666666666,
+          "acc_at_2_percent": 83.33333333333334,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        }
+      },
+      "maximum_error_id": "sync_2810",
+      "paired": {
+        "ordinary_native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_1999",
+              "sync_3172",
+              "sync_338",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_12540",
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          }
+        },
+        "ordinary_r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_1999",
+              "sync_338",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": []
+          }
+        },
+        "v5_best57": {
+          "1": {
+            "rescued": [
+              "sync_1999",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810",
+              "sync_3663"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_3172"
+            ],
+            "new": []
+          }
+        },
+        "v6_formal_best48": {
+          "1": {
+            "rescued": [
+              "sync_10304",
+              "sync_1999"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_3663"
+            ],
+            "new": [
+              "sync_12540"
+            ]
+          },
+          "5": {
+            "rescued": [],
+            "new": []
+          }
+        }
+      }
+    },
+    "teacher_rectifier_joint": {
+      "kind": "runtime_intervention",
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.06247053219398135,
+          "median_percent_fs": 0.03355592489242554,
+          "p90_percent_fs": 0.1237235963344574,
+          "p95_percent_fs": 0.1804843544960022,
+          "tail10_percent_fs": 0.2885602169622654,
+          "maximum_percent_fs": 3.9973530918359756,
+          "acc_at_1_percent": 99.734395750332,
+          "acc_at_2_percent": 99.867197875166,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 4,
+          "above_2_percent_fs": 2,
+          "above_5_percent_fs": 0
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.057015793476160107,
+          "median_percent_fs": 0.03345906734466553,
+          "p90_percent_fs": 0.12084692716598514,
+          "p95_percent_fs": 0.17040193080902097,
+          "tail10_percent_fs": 0.23834085854347603,
+          "maximum_percent_fs": 3.0525684356689453,
+          "acc_at_1_percent": 99.93311036789298,
+          "acc_at_2_percent": 99.93311036789298,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.05737514806528723,
+          "median_percent_fs": 0.03350377082824707,
+          "p90_percent_fs": 0.121760368347168,
+          "p95_percent_fs": 0.17076075077056885,
+          "tail10_percent_fs": 0.24107026450292326,
+          "maximum_percent_fs": 3.0525684356689453,
+          "acc_at_1_percent": 99.93319973279893,
+          "acc_at_2_percent": 99.93319973279893,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 1.1330915304521718,
+          "median_percent_fs": 0.4104696214199066,
+          "p90_percent_fs": 2.885760460048914,
+          "p95_percent_fs": 3.441556775942445,
+          "tail10_percent_fs": 3.9973530918359756,
+          "maximum_percent_fs": 3.9973530918359756,
+          "acc_at_1_percent": 66.66666666666666,
+          "acc_at_2_percent": 83.33333333333334,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        }
+      },
+      "maximum_error_id": "sync_3663",
+      "paired": {
+        "ordinary_native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3172",
+              "sync_338",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          }
+        },
+        "ordinary_r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_338",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": []
+          }
+        },
+        "v5_best57": {
+          "1": {
+            "rescued": [
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810",
+              "sync_3663"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_12540",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810",
+              "sync_3663"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_3172"
+            ],
+            "new": []
+          }
+        },
+        "v6_formal_best48": {
+          "1": {
+            "rescued": [
+              "sync_10304"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [],
+            "new": []
+          },
+          "5": {
+            "rescued": [],
+            "new": []
+          }
+        }
+      }
+    },
+    "teacher_rectifier_local_reference": {
+      "kind": "runtime_intervention",
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.07132294494128714,
+          "median_percent_fs": 0.03703385591506958,
+          "p90_percent_fs": 0.1337088644504547,
+          "p95_percent_fs": 0.19127801060676575,
+          "tail10_percent_fs": 0.34752067429821515,
+          "maximum_percent_fs": 11.5358155220747,
+          "acc_at_1_percent": 99.800796812749,
+          "acc_at_2_percent": 99.867197875166,
+          "acc_at_5_percent": 99.933598937583,
+          "above_1_percent_fs": 3,
+          "above_2_percent_fs": 2,
+          "above_5_percent_fs": 1
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.060956929679791626,
+          "median_percent_fs": 0.03688037395477295,
+          "p90_percent_fs": 0.13013517647777925,
+          "p95_percent_fs": 0.184783935546875,
+          "tail10_percent_fs": 0.24862693740942632,
+          "maximum_percent_fs": 3.0573368072509766,
+          "acc_at_1_percent": 99.93311036789298,
+          "acc_at_2_percent": 99.93311036789298,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.061830538866528645,
+          "median_percent_fs": 0.03695487976074219,
+          "p90_percent_fs": 0.13066112995147708,
+          "p95_percent_fs": 0.1863789558410645,
+          "tail10_percent_fs": 0.2564188036291549,
+          "maximum_percent_fs": 3.0573368072509766,
+          "acc_at_1_percent": 99.93319973279893,
+          "acc_at_2_percent": 99.93319973279893,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 2.308465540409088,
+          "median_percent_fs": 0.4107445478439331,
+          "p90_percent_fs": 6.422369182109833,
+          "p95_percent_fs": 8.979092352092266,
+          "tail10_percent_fs": 11.5358155220747,
+          "maximum_percent_fs": 11.5358155220747,
+          "acc_at_1_percent": 66.66666666666666,
+          "acc_at_2_percent": 83.33333333333334,
+          "acc_at_5_percent": 83.33333333333334,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 1
+        }
+      },
+      "maximum_error_id": "sync_3663",
+      "paired": {
+        "ordinary_native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_1999",
+              "sync_3172",
+              "sync_338",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_3663"
+            ]
+          }
+        },
+        "ordinary_r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_1999",
+              "sync_338",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": [
+              "sync_3663"
+            ]
+          }
+        },
+        "v5_best57": {
+          "1": {
+            "rescued": [
+              "sync_1999",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810",
+              "sync_3663"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_12540",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810",
+              "sync_3663"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_3172"
+            ],
+            "new": [
+              "sync_3663"
+            ]
+          }
+        },
+        "v6_formal_best48": {
+          "1": {
+            "rescued": [
+              "sync_10304",
+              "sync_1999"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [],
+            "new": []
+          },
+          "5": {
+            "rescued": [],
+            "new": [
+              "sync_3663"
+            ]
+          }
+        }
+      }
+    },
+    "teacher_rectifier_product": {
+      "kind": "runtime_intervention",
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.06618325154702091,
+          "median_percent_fs": 0.03346465528011322,
+          "p90_percent_fs": 0.12435019016265869,
+          "p95_percent_fs": 0.18407683819532394,
+          "tail10_percent_fs": 0.3233209310360357,
+          "maximum_percent_fs": 6.07638917863369,
+          "acc_at_1_percent": 99.734395750332,
+          "acc_at_2_percent": 99.800796812749,
+          "acc_at_5_percent": 99.933598937583,
+          "above_1_percent_fs": 4,
+          "above_2_percent_fs": 3,
+          "above_5_percent_fs": 1
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.0577757612237873,
+          "median_percent_fs": 0.03333687782287598,
+          "p90_percent_fs": 0.12217640876770021,
+          "p95_percent_fs": 0.17168879508972168,
+          "tail10_percent_fs": 0.243666424977467,
+          "maximum_percent_fs": 3.0514419078826904,
+          "acc_at_1_percent": 99.93311036789298,
+          "acc_at_2_percent": 99.93311036789298,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.05844842839319769,
+          "median_percent_fs": 0.03339648246765137,
+          "p90_percent_fs": 0.1225179433822632,
+          "p95_percent_fs": 0.17472326755523684,
+          "tail10_percent_fs": 0.24951846860615964,
+          "maximum_percent_fs": 3.0514419078826904,
+          "acc_at_1_percent": 99.93319973279893,
+          "acc_at_2_percent": 99.93319973279893,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 1.5041406266391277,
+          "median_percent_fs": 0.40971413254737854,
+          "p90_percent_fs": 3.922701720148325,
+          "p95_percent_fs": 4.999545449391007,
+          "tail10_percent_fs": 6.07638917863369,
+          "maximum_percent_fs": 6.07638917863369,
+          "acc_at_1_percent": 66.66666666666666,
+          "acc_at_2_percent": 83.33333333333334,
+          "acc_at_5_percent": 83.33333333333334,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 1
+        }
+      },
+      "maximum_error_id": "sync_3663",
+      "paired": {
+        "ordinary_native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3172",
+              "sync_338",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_1999",
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_3663"
+            ]
+          }
+        },
+        "ordinary_r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_338",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_2810"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338"
+            ],
+            "new": [
+              "sync_1999",
+              "sync_2810"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": [
+              "sync_3663"
+            ]
+          }
+        },
+        "v5_best57": {
+          "1": {
+            "rescued": [
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_2810",
+              "sync_3663"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_12540",
+              "sync_3172",
+              "sync_338"
+            ],
+            "new": [
+              "sync_1999",
+              "sync_2810",
+              "sync_3663"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_3172"
+            ],
+            "new": [
+              "sync_3663"
+            ]
+          }
+        },
+        "v6_formal_best48": {
+          "1": {
+            "rescued": [
+              "sync_10304"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [],
+            "new": [
+              "sync_1999"
+            ]
+          },
+          "5": {
+            "rescued": [],
+            "new": [
+              "sync_3663"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "focus": {
+    "sync_2810": {
+      "target": 0.9679930210113525,
+      "errors_percent_fs": {
+        "native_GT_A_cached": 3.0981218470930827,
+        "native_MAP_A_posthoc_diagnostic": 3.0522823333740234,
+        "native_joint": 3.0963778495788574,
+        "native_local_reference": 3.1011104583740234,
+        "native_product": 3.09525728225708,
+        "teacher_A": 3.0544161796569824,
+        "teacher_AB": 3.0622482299804688,
+        "teacher_AP": 0.00902414321899414,
+        "teacher_APB": 0.0009357929229736328,
+        "teacher_B": 3.0603885650634766,
+        "teacher_P": 0.00928640365600586,
+        "teacher_PB": 0.0012040138244628906,
+        "teacher_rectifier_MAP_A_posthoc_diagnostic": 3.0084550380706787,
+        "teacher_rectifier_joint": 3.0525684356689453,
+        "teacher_rectifier_local_reference": 3.0573368072509766,
+        "teacher_rectifier_product": 3.0514419078826904
+      },
+      "derived": {
+        "center_error_ROI_normalized": 0.000120196979029211,
+        "SPD_relative_Frobenius": 0.00013349901943157801,
+        "native_A_teacher_neighbor_mass": 0.9999990463256836,
+        "native_GT_A_conditional_reading": 0.9370117783546448,
+        "native_GT_A_conditional_error_percent_fs": 3.0981242656707764,
+        "native_P_correct_mass_at_GT_A": 0.9317637085914612,
+        "native_B_correct_mass_at_GT_A": 0.9999996423721313,
+        "native_local_A_teacher_neighbor_mass": 0.9999353885650635,
+        "native_A_global_local_L1": 0.06252909451723099,
+        "teacher_rectifier_A_teacher_neighbor_mass": 0.9999990463256836,
+        "teacher_rectifier_GT_A_conditional_reading": 0.9374487400054932,
+        "teacher_rectifier_GT_A_conditional_error_percent_fs": 3.0544281005859375,
+        "teacher_rectifier_P_correct_mass_at_GT_A": 0.9330730438232422,
+        "teacher_rectifier_B_correct_mass_at_GT_A": 0.9999996423721313,
+        "teacher_rectifier_local_A_teacher_neighbor_mass": 0.999937117099762,
+        "teacher_rectifier_A_global_local_L1": 0.06291154026985168
+      }
+    },
+    "sync_3663": {
+      "target": 0.05373759940266609,
+      "errors_percent_fs": {
+        "native_GT_A_cached": 0.0793563883188464,
+        "native_MAP_A_posthoc_diagnostic": 1.2872159481048584,
+        "native_joint": 4.558325186371803,
+        "native_local_reference": 12.078024074435234,
+        "native_product": 6.867329403758049,
+        "teacher_A": 0.11360794305801392,
+        "teacher_AB": 0.1131303608417511,
+        "teacher_AP": 0.0005718320608139038,
+        "teacher_APB": 8.23289155960083e-05,
+        "teacher_B": 3.998471423983574,
+        "teacher_P": 4.099449887871742,
+        "teacher_PB": 4.100581631064415,
+        "teacher_rectifier_MAP_A_posthoc_diagnostic": 1.3194981962442398,
+        "teacher_rectifier_joint": 3.9973530918359756,
+        "teacher_rectifier_local_reference": 11.5358155220747,
+        "teacher_rectifier_product": 6.07638917863369
+      },
+      "derived": {
+        "center_error_ROI_normalized": 0.0011964062347343068,
+        "SPD_relative_Frobenius": 0.0005676298511903576,
+        "native_A_teacher_neighbor_mass": 0.6626654863357544,
+        "native_GT_A_conditional_reading": 0.052944034337997437,
+        "native_GT_A_conditional_error_percent_fs": 0.07935650646686554,
+        "native_P_correct_mass_at_GT_A": 0.9787359833717346,
+        "native_B_correct_mass_at_GT_A": 0.9543044567108154,
+        "native_local_A_teacher_neighbor_mass": 0.44377729296684265,
+        "native_A_global_local_L1": 0.4433615207672119,
+        "teacher_rectifier_A_teacher_neighbor_mass": 0.6941222548484802,
+        "teacher_rectifier_GT_A_conditional_reading": 0.052601516246795654,
+        "teacher_rectifier_GT_A_conditional_error_percent_fs": 0.11360831558704376,
+        "teacher_rectifier_P_correct_mass_at_GT_A": 0.9750849604606628,
+        "teacher_rectifier_B_correct_mass_at_GT_A": 0.989447295665741,
+        "teacher_rectifier_local_A_teacher_neighbor_mass": 0.4675966501235962,
+        "teacher_rectifier_A_global_local_L1": 0.45305126905441284
+      }
+    },
+    "sync_10304": {
+      "target": 0.939039945602417,
+      "errors_percent_fs": {
+        "native_GT_A_cached": 1.1302166514028933,
+        "native_MAP_A_posthoc_diagnostic": 1.146632432937622,
+        "native_joint": 1.1489152908325195,
+        "native_local_reference": 1.1520206928253174,
+        "native_product": 1.1517763137817383,
+        "teacher_A": 0.9508073329925537,
+        "teacher_AB": 0.3209710121154785,
+        "teacher_AP": 1.2850046157836914,
+        "teacher_APB": 0.008749961853027344,
+        "teacher_B": 0.3137350082397461,
+        "teacher_P": 1.2920856475830078,
+        "teacher_PB": 0.015723705291748047,
+        "teacher_rectifier_MAP_A_posthoc_diagnostic": 0.9680569171905518,
+        "teacher_rectifier_joint": 0.9581685066223145,
+        "teacher_rectifier_local_reference": 0.948798656463623,
+        "teacher_rectifier_product": 0.9615659713745117
+      },
+      "derived": {
+        "center_error_ROI_normalized": 0.0016118806773249572,
+        "SPD_relative_Frobenius": 0.0006947181170748158,
+        "native_A_teacher_neighbor_mass": 0.9582476615905762,
+        "native_GT_A_conditional_reading": 0.9503421187400818,
+        "native_GT_A_conditional_error_percent_fs": 1.1302173137664795,
+        "native_P_correct_mass_at_GT_A": 0.9688044190406799,
+        "native_B_correct_mass_at_GT_A": 0.991450309753418,
+        "native_local_A_teacher_neighbor_mass": 0.8845758438110352,
+        "native_A_global_local_L1": 0.20253828167915344,
+        "teacher_rectifier_A_teacher_neighbor_mass": 0.997588038444519,
+        "teacher_rectifier_GT_A_conditional_reading": 0.9485480785369873,
+        "teacher_rectifier_GT_A_conditional_error_percent_fs": 0.9508132934570312,
+        "teacher_rectifier_P_correct_mass_at_GT_A": 0.9694961905479431,
+        "teacher_rectifier_B_correct_mass_at_GT_A": 0.9987325072288513,
+        "teacher_rectifier_local_A_teacher_neighbor_mass": 0.9826294183731079,
+        "teacher_rectifier_A_global_local_L1": 0.15637409687042236
+      }
+    },
+    "sync_3172": {
+      "target": 0.31569457054138184,
+      "errors_percent_fs": {
+        "native_GT_A_cached": 0.05810635939336173,
+        "native_MAP_A_posthoc_diagnostic": 0.2715796232223511,
+        "native_joint": 0.09402334690093994,
+        "native_local_reference": 0.9527415037155151,
+        "native_product": 0.5041539669036865,
+        "teacher_A": 0.08505880832672119,
+        "teacher_AB": 0.06879568099975586,
+        "teacher_AP": 0.016373395919799805,
+        "teacher_APB": 7.152557373046875e-05,
+        "teacher_B": 0.1929163932800293,
+        "teacher_P": 0.24362802505493164,
+        "teacher_PB": 0.26042163372039795,
+        "teacher_rectifier_MAP_A_posthoc_diagnostic": 0.2444922924041748,
+        "teacher_rectifier_joint": 0.176161527633667,
+        "teacher_rectifier_local_reference": 0.9530365467071533,
+        "teacher_rectifier_product": 0.6483197212219238
+      },
+      "derived": {
+        "center_error_ROI_normalized": 0.0027656256596944747,
+        "SPD_relative_Frobenius": 0.0006319041777108455,
+        "native_A_teacher_neighbor_mass": 0.8524819612503052,
+        "native_GT_A_conditional_reading": 0.31511348485946655,
+        "native_GT_A_conditional_error_percent_fs": 0.05810856819152832,
+        "native_P_correct_mass_at_GT_A": 0.9994707107543945,
+        "native_B_correct_mass_at_GT_A": 0.9999969005584717,
+        "native_local_A_teacher_neighbor_mass": 0.7305471897125244,
+        "native_A_global_local_L1": 0.24386973679065704,
+        "teacher_rectifier_A_teacher_neighbor_mass": 0.7361782789230347,
+        "teacher_rectifier_GT_A_conditional_reading": 0.31484395265579224,
+        "teacher_rectifier_GT_A_conditional_error_percent_fs": 0.08506178855895996,
+        "teacher_rectifier_P_correct_mass_at_GT_A": 0.9995599389076233,
+        "teacher_rectifier_B_correct_mass_at_GT_A": 0.9999969601631165,
+        "teacher_rectifier_local_A_teacher_neighbor_mass": 0.6569595336914062,
+        "teacher_rectifier_A_global_local_L1": 0.23827151954174042
+      }
+    }
+  },
+  "saved_error_recompute_max": 0.0,
+  "reading_scope": {
+    "teacher": "GT coordinate/role interventions; not deployable RGB predictions",
+    "local_reference": "same frozen weights and conditional evidence, localA normalization deletion",
+    "MAP_A": "posthoc predicted-reference maximum; no fitted threshold or per-image GT selection",
+    "native_GT_A_cached": "GT-A reweighting of native per-reference cached readings"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "scope": "posthoc decomposition of fixed focus P modes; no rejection or gate, no selectable inference rule",
+  "sample_id": "sync_2810",
+  "rows": [
+    {
+      "reference_probability": 0.6764819622039795,
+      "subset_role": "correct_two_bins",
+      "P_mass": 0.9324638172984123,
+      "conditional_reading": 0.9683647077209264,
+      "signed_bias_contribution_percent_fs": 0.023445810042585127
+    },
+    {
+      "reference_probability": 0.6764819622039795,
+      "subset_role": "secondary_two_bins",
+      "P_mass": 0.06574765592813492,
+      "conditional_reading": 0.503144800802282,
+      "signed_bias_contribution_percent_fs": -2.0675102305609325
+    },
+    {
+      "reference_probability": 0.6764819622039795,
+      "subset_role": "secondary_four_bins",
+      "P_mass": 0.06641434047378425,
+      "conditional_reading": 0.5030645389428158,
+      "signed_bias_contribution_percent_fs": -2.0888354898400734
+    },
+    {
+      "reference_probability": 0.3235170841217041,
+      "subset_role": "correct_two_bins",
+      "P_mass": 0.9303823560476303,
+      "conditional_reading": 0.968155657682607,
+      "signed_bias_contribution_percent_fs": 0.004895275768664949
+    },
+    {
+      "reference_probability": 0.3235170841217041,
+      "subset_role": "secondary_two_bins",
+      "P_mass": 0.06772633269429207,
+      "conditional_reading": 0.49981852950877453,
+      "signed_bias_contribution_percent_fs": -1.0257996032264307
+    },
+    {
+      "reference_probability": 0.3235170841217041,
+      "subset_role": "secondary_four_bins",
+      "P_mass": 0.0684361069543229,
+      "conditional_reading": 0.4997351304842231,
+      "signed_bias_contribution_percent_fs": -1.0367346653279788
+    }
+  ]
+}

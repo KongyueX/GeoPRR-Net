@@ -1,0 +1,27 @@
+{
+  "checkpoint_epoch": 48,
+  "seed": 20262020,
+  "population": 1506,
+  "batch_size": 16,
+  "optimizer_updates": 0,
+  "teacher_scope": "conditional coordinate/role intervention, not deployable RGB performance",
+  "reader_class": "ReferenceRelationReader",
+  "reference_normalization": "global",
+  "capture_reference_feedback": true,
+  "focus_ids": [
+    "sync_10304",
+    "sync_2810",
+    "sync_3172",
+    "sync_3663"
+  ],
+  "code_revision": "6a71459",
+  "teacher_role_subsets": [
+    "A",
+    "P",
+    "B",
+    "PB",
+    "AP",
+    "AB",
+    "APB"
+  ]
+}

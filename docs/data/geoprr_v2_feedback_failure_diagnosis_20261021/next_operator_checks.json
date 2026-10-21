@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "scope": "new exact triangle component only; no full reader integration",
+  "tests_run": 3,
+  "failures": 0,
+  "errors": 0,
+  "counts": {
+    "pair_factor_calls": 9,
+    "triangle_contract_calls": 7,
+    "gradient_queries": 4
+  },
+  "process_wall_seconds": 1.8117240890860558,
+  "unittest_seconds": 0.867,
+  "CNN_image_forwards": 0,
+  "GPU_calls": 0,
+  "optimizer_updates": 0,
+  "device": "CPU",
+  "environment": "existing server project venv; no installation",
+  "checks": [
+    "tinyK5 exact enumeration: J/logZ/all6input gradients for full and separable",
+    "zeroW star limit, factor marginals, joint CE identity",
+    "common absolute rotation, constant logfactor shift, full mass"
+  ],
+  "tolerance": {
+    "rtol": 2e-11,
+    "atol": 2e-12
+  },
+  "formal_memory_or_speed_verified": false,
+  "formal_training_started": false
+}
