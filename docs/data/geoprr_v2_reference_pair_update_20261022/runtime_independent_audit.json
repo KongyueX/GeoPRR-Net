@@ -1,0 +1,88 @@
+{
+  "status": "PASS",
+  "scope": "CPU-only metadata consistency audit of the completed bounded RGB resource job; no model/GPU/remote/tests/job replay",
+  "job_pid": 192990,
+  "source_code_revision": "d5cf15a",
+  "expected_counts_verified": {
+    "pid": 192990,
+    "initial_epoch": 64,
+    "model_seed": 20262020,
+    "unique_RGB_images": 2,
+    "CNN_image_attempts": 132,
+    "CNN_image_forwards": 132,
+    "backbone_calls": 4,
+    "native_state_head_image_calls": 132,
+    "new_verifier_image_calls": 132,
+    "new_update_calls": 4,
+    "readout_module_calls": 24,
+    "readout_image_equivalents": 792,
+    "backward_calls": 4,
+    "backward_completed": 4,
+    "optimizer_updates": 0,
+    "parameters_each_arm": 7465988,
+    "states_each_arm": 500,
+    "max_effective_batch": 64
+  },
+  "initialization_and_matched_state": {
+    "retained_tensors": 497,
+    "new_tensors": 3,
+    "total_tensors": 500,
+    "retained_parameters": 7461316,
+    "new_parameters": 4672,
+    "parameters_each_arm": 7465988,
+    "same_initial_tensors": true
+  },
+  "v0_checks": {
+    "pair_preserving": {
+      "best64_reading_replay_max": 8.642673492431641e-07,
+      "original_objective_replay_max": 0.0,
+      "evidence_abs_max": 0.0,
+      "probability_mass_max_error": 2.384185791015625e-07,
+      "new_last_layer_gradient_abs_max": 0.026050589978694916,
+      "gradients_finite": true
+    },
+    "global": {
+      "best64_reading_replay_max": 8.940696716308594e-07,
+      "original_objective_replay_max": 0.0,
+      "evidence_abs_max": 0.0,
+      "probability_mass_max_error": 2.384185791015625e-07,
+      "new_last_layer_gradient_abs_max": 0.02598395384848118,
+      "gradients_finite": true
+    }
+  },
+  "nonzero_probe_checks": {
+    "pair_preserving": {
+      "effective_batch": 64,
+      "repeated_unique_RGB_images": 2,
+      "evidence_abs_max": 0.0026115989312529564,
+      "probability_mass_max_error": 7.748603820800781e-07,
+      "new_last_layer_gradient_abs_max": 0.02004730887711048,
+      "gradients_finite": true,
+      "new_last_layer_probe": "(index-15.5)*1e-3/32, ephemeral, not saved"
+    },
+    "global": {
+      "effective_batch": 64,
+      "repeated_unique_RGB_images": 2,
+      "evidence_abs_max": 0.0026115989312529564,
+      "probability_mass_max_error": 2.384185791015625e-07,
+      "new_last_layer_gradient_abs_max": 0.020139237865805626,
+      "gradients_finite": true,
+      "new_last_layer_probe": "(index-15.5)*1e-3/32, ephemeral, not saved"
+    }
+  },
+  "full_process_wall_seconds": 22.98902701959014,
+  "stage_forward_backward_sum_seconds": 16.252535428851843,
+  "peak_allocated_bytes_all_stages": 23662420992,
+  "peak_allocated_stage": "pair_preserving_shared_nonzero_probe_maxbatch",
+  "peak_reserved_bytes_all_stages": 29267853312,
+  "process_log_final_report_matches": true,
+  "partial_progress_counts_match_complete": true,
+  "limits": [
+    "Metadata verifies recorded completed work and hook-count consistency, not independent GPU execution profiling.",
+    "Two unique RGB images were repeated to effectivebatch64; this is not64 independent examples or a full1506 evaluation.",
+    "The nonzero ramp is an ephemeral resource fixture, not trained weights or accuracy evidence.",
+    "No Adam optimizer or moments were allocated; the observed peak is not a formal training peak.",
+    "Stage timing differs by order and runtime/cache state; no speed comparison or algorithmic acceleration conclusion is supported.",
+    "No new GPU PB-marginal check was added; the exact preservation property is covered by the prior mathematical CPU checks."
+  ]
+}
