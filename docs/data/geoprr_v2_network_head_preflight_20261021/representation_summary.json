@@ -1,0 +1,77 @@
+{
+  "protocol": "six_parameter_ordered_radial_teacher_representation_v1",
+  "process_pid": 62360,
+  "completed_at_utc": "2026-10-21T04:13:18.037836+00:00",
+  "loaded_npz_members": [
+    "roi_to_canonical.npy",
+    "arc_span_radians.npy",
+    "sample_id.npy"
+  ],
+  "samples": 1506,
+  "unique_ids": 1506,
+  "grid": [
+    192,
+    192
+  ],
+  "coordinate_rule": "xy_norm=(index+.5)/192; ROI pixel=768*xy_norm-.5; mask canonical radius[.8,1.2], angle<=span",
+  "determinant_parity_counts": {
+    "positive": 1506,
+    "negative": 0,
+    "zero": 0
+  },
+  "as_written_family_contains_all_teacher_orientations": true,
+  "fixed_coordinate_correction": "none; all numerator Jacobians have positive parity",
+  "center_xy_min": [
+    0.49996749024254483,
+    0.4569823973196
+  ],
+  "center_xy_max": [
+    0.5021442553348571,
+    0.5022590129071294
+  ],
+  "outside_sigmoid_center_ids": [],
+  "support_nonpositive_denominator_ids": [],
+  "corrected_winding_mismatch_ids": [],
+  "seam_disagreement_ids": [],
+  "condition_A": {
+    "min": 1.0000000000004343,
+    "median": 1.0000001002244612,
+    "max": 1.0404352482200334
+  },
+  "span_radians": {
+    "min": 1.0471975511965976,
+    "median": 3.6651914291880923,
+    "max": 6.1086523819801535
+  },
+  "support_grid_points": {
+    "min": 1716,
+    "median": 7440.5,
+    "max": 14969
+  },
+  "relative_A_reconstruction_max": {
+    "min": 0.0,
+    "median": 1.8369013751404582e-16,
+    "max": 7.48071989619263e-16
+  },
+  "corrected_support_angular_max_abs_radians": {
+    "min": 4.440892098500626e-16,
+    "median": 8.881784197001252e-16,
+    "max": 1.7763568394002505e-15
+  },
+  "corrected_support_field_progress_max_abs": {
+    "min": 2.220446049250313e-16,
+    "median": 3.3306690738754696e-16,
+    "max": 8.881784197001252e-16
+  },
+  "support_min_distance_to_angle_seam_radians": {
+    "min": 1.3883660282338757e-06,
+    "median": 0.00032230266547656047,
+    "max": 0.010792361787245014
+  },
+  "elapsed_seconds": 6.299172541999724,
+  "scope": "Teacher field representation only; no Q/targets, query sampling, reading metric, new model accuracy, optimization, or training.",
+  "cnn_image_forwards": 0,
+  "training_updates": 0,
+  "optimizer_calls": 0,
+  "remote_calls": 0
+}

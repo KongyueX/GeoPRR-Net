@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "tests": 3,
+  "failures": 0,
+  "errors": 0,
+  "fixed_parity": 1,
+  "untrained_prototype_forward_calls": 3,
+  "untrained_prototype_feature_items_forwarded": 4,
+  "backbone_image_forwards": 0,
+  "checkpoint_loads": 0,
+  "optimizer_updates": 0,
+  "backward_calls": 1,
+  "device": "cpu",
+  "gpu_calls": 0,
+  "parameters": 13766,
+  "torch": "2.11.0+cu128",
+  "wall_seconds": 0.07779493182897568,
+  "process_pid": 88038,
+  "scope": "generated-feature interface tests; no accuracy, novelty, or speed evidence"
+}
