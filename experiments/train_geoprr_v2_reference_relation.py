@@ -163,7 +163,7 @@ def main(argv=None):
            "torch": torch.__version__, "cuda": torch.version.cuda,
            "inference_input": "RGB only; H/span/y and virtual role phases are training/scoring labels",
            "recipient_batching": "donors and recipients concatenated in one forward; old reader used separate forwards",
-           "comparison": "new arms match parameters, labels, initialization, exposure and updates; only shared-reference joint versus same-marginals product differs; old supervised differs in architecture, supervision and warm start history"}
+           "comparison": config.get("control", "new arms match parameters, labels, initialization, exposure and updates; only shared-reference joint versus same-marginals product differs; old supervised differs in architecture, supervision and warm start history")}
     write_json(args.output / "config.json", config)
     write_json(args.output / "run.json", run)
     write_history(args.output / "history.jsonl", history)

@@ -1,0 +1,11 @@
+{
+  "status": "pass",
+  "samples": 1506,
+  "IDs_groups_targets": "exact",
+  "prediction_error_max_difference": 0,
+  "all_valid": true,
+  "best_selection": "epoch48 earliest strict NMAE minimum among65",
+  "controller_metrics_paired_and_gates": "independently reproduced from ordinary public rows",
+  "history_and_completed_counters": "exact",
+  "independent_agent_audit": "PASS; full1506/counts/pairedIDs/cohorts/65history/costs"
+}

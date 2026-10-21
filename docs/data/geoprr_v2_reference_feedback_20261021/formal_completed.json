@@ -1,0 +1,21 @@
+{
+  "protocol": "geoprr_v2_reference_feedback_source_only_v1",
+  "epochs": 65,
+  "best_epoch": 48,
+  "best_nmae": 0.0006361299291666785,
+  "totals": {
+    "train_batches": 46085,
+    "optimizer_updates": 46068,
+    "amp_skipped_updates": 17,
+    "donor_images": 1474590,
+    "recipient_images": 532480,
+    "validation_images": 97890,
+    "training_wall_seconds": 13365.386419411749,
+    "validation_wall_seconds": 543.62897913903
+  },
+  "current_process_wall_seconds": 13999.708380471915,
+  "checkpointed_process_wall_seconds_before_resume": 0.0,
+  "uncheckpointed_work_after_interruptions": "not included in checkpointed counters; use controller process logs",
+  "seed": 20262020,
+  "seed_expansion": false
+}

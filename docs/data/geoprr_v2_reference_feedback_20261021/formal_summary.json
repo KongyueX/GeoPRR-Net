@@ -1,0 +1,452 @@
+{
+  "status": "complete_gate_rejected",
+  "seed": 20262020,
+  "epochs": 65,
+  "best_epoch": 48,
+  "code_revision": "7cad738",
+  "scope": "single-seed complete1506 source development; repeatedly viewed; no official test or real transfer",
+  "metrics": {
+    "native": {
+      "samples": 1506,
+      "nmae_percent_fs": 0.14792406705363323,
+      "median_percent_fs": 0.057125091552734375,
+      "p90_percent_fs": 0.2393081784248352,
+      "p95_percent_fs": 0.38926824927330017,
+      "tail10_percent_fs": 0.8974729324193245,
+      "maximum_percent_fs": 26.627396047115326,
+      "maximum_error_id": "sync_10202",
+      "acc_at_1_percent": 99.26958831341301,
+      "acc_at_2_percent": 99.66799468791501,
+      "acc_at_5_percent": 99.800796812749,
+      "above_1_percent_fs": 11,
+      "above_2_percent_fs": 5,
+      "above_5_percent_fs": 3
+    },
+    "r8": {
+      "samples": 1506,
+      "nmae_percent_fs": 0.12995049850466664,
+      "median_percent_fs": 0.05738586187362671,
+      "p90_percent_fs": 0.2371266484260559,
+      "p95_percent_fs": 0.38103461265563965,
+      "tail10_percent_fs": 0.7205782514647099,
+      "maximum_percent_fs": 19.557136297225952,
+      "maximum_error_id": "sync_338",
+      "acc_at_1_percent": 99.40239043824701,
+      "acc_at_2_percent": 99.66799468791501,
+      "acc_at_5_percent": 99.867197875166,
+      "above_1_percent_fs": 9,
+      "above_2_percent_fs": 5,
+      "above_5_percent_fs": 2
+    },
+    "best57": {
+      "samples": 1506,
+      "nmae_percent_fs": 0.07712251912293488,
+      "median_percent_fs": 0.04487857222557068,
+      "p90_percent_fs": 0.150415301322937,
+      "p95_percent_fs": 0.2279886044561863,
+      "tail10_percent_fs": 0.34185209996159505,
+      "maximum_percent_fs": 5.908846855163574,
+      "maximum_error_id": "sync_3172",
+      "acc_at_1_percent": 99.734395750332,
+      "acc_at_2_percent": 99.800796812749,
+      "acc_at_5_percent": 99.933598937583,
+      "above_1_percent_fs": 4,
+      "above_2_percent_fs": 3,
+      "above_5_percent_fs": 1
+    },
+    "candidate": {
+      "samples": 1506,
+      "nmae_percent_fs": 0.06361299291666786,
+      "median_percent_fs": 0.03247112035751343,
+      "p90_percent_fs": 0.12440010905265808,
+      "p95_percent_fs": 0.19170381128787994,
+      "tail10_percent_fs": 0.3015102855024211,
+      "maximum_percent_fs": 4.558325186371803,
+      "maximum_error_id": "sync_3663",
+      "acc_at_1_percent": 99.66799468791501,
+      "acc_at_2_percent": 99.867197875166,
+      "acc_at_5_percent": 100.0,
+      "above_1_percent_fs": 5,
+      "above_2_percent_fs": 2,
+      "above_5_percent_fs": 0
+    }
+  },
+  "ordinary": {
+    "common1495": {
+      "native": {
+        "samples": 1495,
+        "nmae_percent_fs": 0.09792309559839929,
+        "median_percent_fs": 0.056415051221847534,
+        "p90_percent_fs": 0.22808670997619646,
+        "p95_percent_fs": 0.3689330816268921,
+        "tail10_percent_fs": 0.40988367386429064,
+        "maximum_percent_fs": 0.966954231262207,
+        "maximum_error_id": "sync_14662",
+        "acc_at_1_percent": 100.0,
+        "acc_at_2_percent": 100.0,
+        "acc_at_5_percent": 100.0,
+        "above_1_percent_fs": 0,
+        "above_2_percent_fs": 0,
+        "above_5_percent_fs": 0
+      },
+      "r8": {
+        "samples": 1495,
+        "nmae_percent_fs": 0.09720515176512431,
+        "median_percent_fs": 0.05651116371154785,
+        "p90_percent_fs": 0.22467017173767098,
+        "p95_percent_fs": 0.36469118669629086,
+        "tail10_percent_fs": 0.4040797372375285,
+        "maximum_percent_fs": 0.9670138359069824,
+        "maximum_error_id": "sync_14662",
+        "acc_at_1_percent": 100.0,
+        "acc_at_2_percent": 100.0,
+        "acc_at_5_percent": 100.0,
+        "above_1_percent_fs": 0,
+        "above_2_percent_fs": 0,
+        "above_5_percent_fs": 0
+      },
+      "best57": {
+        "samples": 1495,
+        "nmae_percent_fs": 0.06757109334258138,
+        "median_percent_fs": 0.04410147666931152,
+        "p90_percent_fs": 0.14790534973144537,
+        "p95_percent_fs": 0.22326588630676258,
+        "tail10_percent_fs": 0.2509848990788063,
+        "maximum_percent_fs": 0.9953022003173828,
+        "maximum_error_id": "sync_10304",
+        "acc_at_1_percent": 100.0,
+        "acc_at_2_percent": 100.0,
+        "acc_at_5_percent": 100.0,
+        "above_1_percent_fs": 0,
+        "above_2_percent_fs": 0,
+        "above_5_percent_fs": 0
+      },
+      "candidate": {
+        "samples": 1495,
+        "nmae_percent_fs": 0.05814751164927237,
+        "median_percent_fs": 0.03215670585632324,
+        "p90_percent_fs": 0.12193083763122561,
+        "p95_percent_fs": 0.18446624279022214,
+        "tail10_percent_fs": 0.2506210927567736,
+        "maximum_percent_fs": 3.0963778495788574,
+        "maximum_error_id": "sync_2810",
+        "acc_at_1_percent": 99.86622073578594,
+        "acc_at_2_percent": 99.93311036789298,
+        "acc_at_5_percent": 100.0,
+        "above_1_percent_fs": 2,
+        "above_2_percent_fs": 1,
+        "above_5_percent_fs": 0
+      }
+    },
+    "r8ordinary1497": {
+      "native": {
+        "samples": 1497,
+        "nmae_percent_fs": 0.11044400268396044,
+        "median_percent_fs": 0.05651712417602539,
+        "p90_percent_fs": 0.2304939925670626,
+        "p95_percent_fs": 0.36987781524658203,
+        "tail10_percent_fs": 0.5330932248410439,
+        "maximum_percent_fs": 17.546069622039795,
+        "maximum_error_id": "sync_4515",
+        "acc_at_1_percent": 99.86639946559787,
+        "acc_at_2_percent": 99.93319973279893,
+        "acc_at_5_percent": 99.93319973279893,
+        "above_1_percent_fs": 2,
+        "above_2_percent_fs": 1,
+        "above_5_percent_fs": 1
+      },
+      "r8": {
+        "samples": 1497,
+        "nmae_percent_fs": 0.0977505576107699,
+        "median_percent_fs": 0.056624412536621094,
+        "p90_percent_fs": 0.22595524787902854,
+        "p95_percent_fs": 0.3670136630535127,
+        "tail10_percent_fs": 0.40861147837980144,
+        "maximum_percent_fs": 0.9670138359069824,
+        "maximum_error_id": "sync_14662",
+        "acc_at_1_percent": 100.0,
+        "acc_at_2_percent": 100.0,
+        "acc_at_5_percent": 100.0,
+        "above_1_percent_fs": 0,
+        "above_2_percent_fs": 0,
+        "above_5_percent_fs": 0
+      },
+      "best57": {
+        "samples": 1497,
+        "nmae_percent_fs": 0.07143281299290498,
+        "median_percent_fs": 0.04410147666931152,
+        "p90_percent_fs": 0.1483553647994996,
+        "p95_percent_fs": 0.22487401962280276,
+        "tail10_percent_fs": 0.28939031747480237,
+        "maximum_percent_fs": 5.908846855163574,
+        "maximum_error_id": "sync_3172",
+        "acc_at_1_percent": 99.93319973279893,
+        "acc_at_2_percent": 99.93319973279893,
+        "acc_at_5_percent": 99.93319973279893,
+        "above_1_percent_fs": 1,
+        "above_2_percent_fs": 1,
+        "above_5_percent_fs": 1
+      },
+      "candidate": {
+        "samples": 1497,
+        "nmae_percent_fs": 0.058457931336257894,
+        "median_percent_fs": 0.032272934913635254,
+        "p90_percent_fs": 0.12216031551361087,
+        "p95_percent_fs": 0.1853099465370179,
+        "tail10_percent_fs": 0.2530538762014961,
+        "maximum_percent_fs": 3.0963778495788574,
+        "maximum_error_id": "sync_2810",
+        "acc_at_1_percent": 99.86639946559787,
+        "acc_at_2_percent": 99.93319973279893,
+        "acc_at_5_percent": 100.0,
+        "above_1_percent_fs": 2,
+        "above_2_percent_fs": 1,
+        "above_5_percent_fs": 0
+      }
+    }
+  },
+  "paired": {
+    "native": {
+      "better": 992,
+      "worse": 514,
+      "equal": 0,
+      "above1": {
+        "rescued_ids": [
+          "sync_10202",
+          "sync_10635",
+          "sync_11838",
+          "sync_1811",
+          "sync_3172",
+          "sync_338",
+          "sync_3855",
+          "sync_4515"
+        ],
+        "new_error_ids": [
+          "sync_10304",
+          "sync_2810"
+        ]
+      },
+      "above2": {
+        "rescued_ids": [
+          "sync_10202",
+          "sync_10635",
+          "sync_338",
+          "sync_4515"
+        ],
+        "new_error_ids": [
+          "sync_2810"
+        ]
+      },
+      "above5": {
+        "rescued_ids": [
+          "sync_10202",
+          "sync_338",
+          "sync_4515"
+        ],
+        "new_error_ids": []
+      }
+    },
+    "r8": {
+      "better": 989,
+      "worse": 517,
+      "equal": 0,
+      "above1": {
+        "rescued_ids": [
+          "sync_10202",
+          "sync_10635",
+          "sync_11838",
+          "sync_1811",
+          "sync_338",
+          "sync_3855"
+        ],
+        "new_error_ids": [
+          "sync_10304",
+          "sync_2810"
+        ]
+      },
+      "above2": {
+        "rescued_ids": [
+          "sync_10202",
+          "sync_10635",
+          "sync_12540",
+          "sync_338"
+        ],
+        "new_error_ids": [
+          "sync_2810"
+        ]
+      },
+      "above5": {
+        "rescued_ids": [
+          "sync_10202",
+          "sync_338"
+        ],
+        "new_error_ids": []
+      }
+    },
+    "best57": {
+      "better": 910,
+      "worse": 595,
+      "equal": 1,
+      "above1": {
+        "rescued_ids": [
+          "sync_3172",
+          "sync_338"
+        ],
+        "new_error_ids": [
+          "sync_10304",
+          "sync_2810",
+          "sync_3663"
+        ]
+      },
+      "above2": {
+        "rescued_ids": [
+          "sync_12540",
+          "sync_3172",
+          "sync_338"
+        ],
+        "new_error_ids": [
+          "sync_2810",
+          "sync_3663"
+        ]
+      },
+      "above5": {
+        "rescued_ids": [
+          "sync_3172"
+        ],
+        "new_error_ids": []
+      }
+    }
+  },
+  "gate": {
+    "checks": {
+      "all1506_valid": true,
+      "nmae_no_worse_r8": true,
+      "tail10_no_worse_r8": true,
+      "maximum_below_both": true,
+      "old_severe_union_rescued": false,
+      "no_new_above1_2_5": false,
+      "ordinary_nmae_percent_fs_protected": true,
+      "ordinary_median_percent_fs_protected": true,
+      "ordinary_p90_percent_fs_protected": true,
+      "r8_ordinary_mean_protected": true
+    },
+    "RGB_passed": 8,
+    "RGB_total": 10,
+    "G0_label_gate_passed": true,
+    "combined_passed": 9,
+    "combined_total": 11,
+    "passed": false
+  },
+  "old_severe_union6": [
+    {
+      "sample_id": "sync_10202",
+      "native_error_percent_fs": 26.627396047115326,
+      "r8_error_percent_fs": 16.561825573444366,
+      "best57_error_percent_fs": 0.14838725328445435,
+      "candidate_error_percent_fs": 0.19369572401046753
+    },
+    {
+      "sample_id": "sync_10635",
+      "native_error_percent_fs": 2.45589017868042,
+      "r8_error_percent_fs": 2.455461025238037,
+      "best57_error_percent_fs": 0.06380677223205566,
+      "candidate_error_percent_fs": 0.032329559326171875
+    },
+    {
+      "sample_id": "sync_12540",
+      "native_error_percent_fs": 1.3645756989717484,
+      "r8_error_percent_fs": 2.511203847825527,
+      "best57_error_percent_fs": 3.4456994384527206,
+      "candidate_error_percent_fs": 1.756419986486435
+    },
+    {
+      "sample_id": "sync_338",
+      "native_error_percent_fs": 19.57767605781555,
+      "r8_error_percent_fs": 19.557136297225952,
+      "best57_error_percent_fs": 2.8400301933288574,
+      "candidate_error_percent_fs": 0.055605173110961914
+    },
+    {
+      "sample_id": "sync_3663",
+      "native_error_percent_fs": 2.311166003346443,
+      "r8_error_percent_fs": 3.1867893412709236,
+      "best57_error_percent_fs": 0.0776384025812149,
+      "candidate_error_percent_fs": 4.558325186371803
+    },
+    {
+      "sample_id": "sync_4515",
+      "native_error_percent_fs": 17.546069622039795,
+      "r8_error_percent_fs": 0.9047508239746094,
+      "best57_error_percent_fs": 0.0072896480560302734,
+      "candidate_error_percent_fs": 0.4869699478149414
+    }
+  ],
+  "relative_improvement_vs_best57_percent": {
+    "nmae_percent_fs": 17.516966976574714,
+    "tail10_percent_fs": 11.800955578071951,
+    "maximum_percent_fs": 22.855926069764156
+  },
+  "relative_improvement_vs_r8_percent": {
+    "nmae_percent_fs": 51.04828865709703,
+    "tail10_percent_fs": 58.15717656069342,
+    "maximum_percent_fs": 76.69226661257981
+  },
+  "control": "local normalization skipped by predeclared G1; feedback effect is not isolated from continued optimization",
+  "cost": {
+    "protocol": "geoprr_v2_reference_feedback_source_only_v1",
+    "epochs": 65,
+    "best_epoch": 48,
+    "best_nmae": 0.0006361299291666785,
+    "totals": {
+      "train_batches": 46085,
+      "optimizer_updates": 46068,
+      "amp_skipped_updates": 17,
+      "donor_images": 1474590,
+      "recipient_images": 532480,
+      "validation_images": 97890,
+      "training_wall_seconds": 13365.386419411749,
+      "validation_wall_seconds": 543.62897913903
+    },
+    "current_process_wall_seconds": 13999.708380471915,
+    "checkpointed_process_wall_seconds_before_resume": 0.0,
+    "uncheckpointed_work_after_interruptions": "not included in checkpointed counters; use controller process logs",
+    "seed": 20262020,
+    "seed_expansion": false,
+    "training_image_forwards": 2007070,
+    "epoch_elapsed_sum_seconds": 13909.313793130219,
+    "peak_cuda_allocated_bytes": 19894852608,
+    "peak_cuda_reserved_bytes": 25874661376
+  },
+  "same_checkpoint_counterfactual": {
+    "scope": "same trained feedback checkpoint with marginal-product readout; diagnostic only, not the matched local-reference normalization control",
+    "metrics": {
+      "samples": 1506,
+      "nmae_percent_fs": 0.06750511054556234,
+      "median_percent_fs": 0.03298036754131317,
+      "p90_percent_fs": 0.12855678796768188,
+      "p95_percent_fs": 0.1955270767211914,
+      "tail10_percent_fs": 0.3363964261377939,
+      "maximum_percent_fs": 6.86732642352581,
+      "maximum_error_id": "sync_3663",
+      "acc_at_1_percent": 99.66799468791501,
+      "acc_at_2_percent": 99.800796812749,
+      "acc_at_5_percent": 99.933598937583,
+      "above_1_percent_fs": 5,
+      "above_2_percent_fs": 3,
+      "above_5_percent_fs": 1
+    },
+    "maximum_normalized_reading_difference": 0.02309001237154007,
+    "threshold_changes": {
+      "1": 0,
+      "2": 1,
+      "5": 1
+    }
+  },
+  "limitations": [
+    "best57 initialization followed by further optimization; no trained local normalization control, so gains cannot be isolated to feedback",
+    "one seed and source development only",
+    "teacher label quantization includes GTy and is not RGB accuracy"
+  ],
+  "completed_at_utc": "2026-10-21T13:32:57.439424+00:00",
+  "control_started": false
+}

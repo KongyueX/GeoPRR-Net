@@ -1,5 +1,7 @@
 # 参考权重能量反馈：正式实施协议
 
+阶段结果：feedback已正常完成65轮，best48源开发NMAE0.063612993%FS。原11项仅9项通过，local依冻结规则跳过；完整结果见[归档](data/geoprr_v2_reference_feedback_20261021/README.md)。以下合同保持原定门槛。
+
 本实验仅检验P／B原始匹配能量的行log-partition反馈参考A，详见[设计](GEOPRR_V2_REFERENCE_FEEDBACK_DESIGN_CN.md)。以完整v5 best57初始化；local删除对照采用相同joint读出，只恢复独立A归一化。无新增参数、loss、标签、温度或entropy路由。
 
 ## 固定合同
