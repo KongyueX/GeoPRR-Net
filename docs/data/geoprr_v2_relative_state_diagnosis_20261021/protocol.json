@@ -1,0 +1,124 @@
+{
+  "protocol": "geoprr_v2_relative_state_frozen_best60_diagnosis_v1",
+  "checkpoint_epoch": 60,
+  "code_revision": "48fefb3",
+  "config": {
+    "name": "mobilenetv4_relative_state_joint",
+    "model": {
+      "bins": 256,
+      "decoder_dim": 64,
+      "components": 2,
+      "coupling": "joint"
+    },
+    "data": {
+      "image_size": 768,
+      "output_size": 192
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 65,
+      "warmup_epochs": 5,
+      "batch_size": 32,
+      "workers": 8,
+      "backbone_lr": 0.0001,
+      "head_lr": 0.0005,
+      "min_lr": 1e-06,
+      "weight_decay": 0.01,
+      "gradient_clip": 5.0,
+      "amp": true
+    },
+    "objective": "relative_state_nll/(2*log(256)) + progress_cdf",
+    "state_grid": {
+      "delta": "circular [0,2pi),256",
+      "span": "inclusive [0,2pi],256"
+    },
+    "exposure": {
+      "donor_items": 22686,
+      "recipient_images": 8192,
+      "total_images": 30878,
+      "optimizer_batches": 709
+    }
+  },
+  "network_forward_images_planned": 1506,
+  "optimizer_updates": 0,
+  "readouts": [
+    "joint",
+    "product_marginals",
+    "gt_delta_pred_span",
+    "pred_delta_gt_span"
+  ],
+  "prediction_input": "RGB only",
+  "marginals": "sum original joint over the other axis; no extra normalization",
+  "gt_interventions": "unconditional outer product; GT replacement is diagnostic and not deployable",
+  "readout": "unchanged full-mass native mean; endpoint mass uniform; no fallback or r8",
+  "replay_tolerance_normalized_reading": 1e-05,
+  "checkpoint": "iteration_v4_relative_state joint best60; private model weights are not included",
+  "reference_predictions": "../geoprr_v2_relative_state_20261021/predictions.csv.gz",
+  "ordinary_reference": "../geoprr_v2_physical_interface_20261021/predictions.csv.gz (saved native/r8 columns)",
+  "state_labels": "canonical relative_state_labels_v1_20261021 validation1506; relative angles only in cache",
+  "cache": "predicted_components.npz; float32 mixture and component PMFs, source IDs/groups, target and two state labels",
+  "cache_schema": {
+    "sample_ids": {
+      "descr": "<U10",
+      "fortran_order": false,
+      "shape": [
+        1506
+      ]
+    },
+    "group_ids": {
+      "descr": "<U45",
+      "fortran_order": false,
+      "shape": [
+        1506
+      ]
+    },
+    "target": {
+      "descr": "<f4",
+      "fortran_order": false,
+      "shape": [
+        1506
+      ]
+    },
+    "mixture": {
+      "descr": "<f4",
+      "fortran_order": false,
+      "shape": [
+        1506,
+        2
+      ]
+    },
+    "delta_components": {
+      "descr": "<f4",
+      "fortran_order": false,
+      "shape": [
+        1506,
+        2,
+        256
+      ]
+    },
+    "span_components": {
+      "descr": "<f4",
+      "fortran_order": false,
+      "shape": [
+        1506,
+        2,
+        256
+      ]
+    },
+    "gt_delta": {
+      "descr": "<f4",
+      "fortran_order": false,
+      "shape": [
+        1506
+      ]
+    },
+    "gt_span": {
+      "descr": "<f4",
+      "fortran_order": false,
+      "shape": [
+        1506
+      ]
+    }
+  },
+  "population": "original source validation1506; common ordinary1495; r8 ordinary1497; severe union6"
+}

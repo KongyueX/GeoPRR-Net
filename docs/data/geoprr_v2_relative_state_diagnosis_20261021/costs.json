@@ -1,0 +1,23 @@
+{
+  "network_forward_images": 1506,
+  "optimizer_updates": 0,
+  "network_and_original_readout_seconds": 17.136549398303032,
+  "three_counterfactuals_seconds": 0.2845623679459095,
+  "process_wall_seconds": 27.321896005421877,
+  "parameters": 7963234,
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "peak_cuda_memory_bytes": 2385520128,
+  "peak_cuda_reserved_bytes": 2980052992,
+  "timing_boundaries": {
+    "network_and_original_readout_seconds": "CUDA synchronized per batch; includes RGB model and original physical readout",
+    "three_counterfactuals_seconds": "three fixed readouts plus CPU serialization of validation rows; no extra network forward",
+    "process_wall_seconds": "checkpoint/model/data loading, one pass, diagnostics, scoring and export through cost publication; not camera end-to-end",
+    "peak_cuda_memory_bytes": "full1506 diagnostic run observed peak, not training peak or batch1 deployment peak"
+  },
+  "prior_training_not_repeated": {
+    "full_epochs": 65,
+    "scope": "see ../geoprr_v2_relative_state_20261021/costs.json; excluded from this diagnostic-only cost"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "status": "complete",
+  "samples": 1506,
+  "seed": 20262020,
+  "checkpoint_epoch": 60,
+  "optimizer_updates": 0,
+  "interpretation_allowed": true,
+  "code_revision": "48fefb3",
+  "network_forward_images": 1506,
+  "seed_expansion": false
+}
