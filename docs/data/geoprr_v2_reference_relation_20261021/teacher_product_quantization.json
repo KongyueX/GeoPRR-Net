@@ -1,0 +1,15 @@
+{
+  "scope": "same GT-conditioned role quantization; product deletes shared-reference dependency, not a trained control",
+  "samples": 1506,
+  "product_teacher_nmae_percent_fs": 0.0018953519807128503,
+  "product_teacher_max_percent_fs": 0.15196349602162318,
+  "product_above1_2_5": [
+    0,
+    0,
+    0
+  ],
+  "mean_joint_product_reading_difference_percent_fs": 0.0015557219869958884,
+  "maximum_joint_product_reading_difference_percent_fs": 0.13229126958680393,
+  "new_model_forwards": 0,
+  "optimizer_updates": 0
+}

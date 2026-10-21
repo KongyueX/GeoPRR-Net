@@ -1,0 +1,29 @@
+{
+  "parameters": 7461060,
+  "shared_parameters": 7431248,
+  "head_parameters": 29812,
+  "buffer_tensors": 237,
+  "buffer_elements": 459420,
+  "buffer_bytes": 2231200,
+  "shared_state_tensors": 476,
+  "untrained_RGB_image_forwards": 1,
+  "source_RGB_image_forwards": 0,
+  "model_backward_calls": 1,
+  "loss_values": {
+    "role_nll_raw": 16.569705963134766,
+    "role_nll_normalized": 0.9960430264472961,
+    "field_l1": 0.10665516555309296,
+    "reading_cdf": 0.39216676354408264,
+    "total": 1.4948649406433105
+  },
+  "status": "PASS",
+  "tests": 3,
+  "failures": 0,
+  "errors": 0,
+  "torch": "2.11.0+cu128",
+  "process_pid": 88997,
+  "wall_seconds": 1.3381168097257614,
+  "checkpoint_loads": 0,
+  "optimizer_updates": 0,
+  "gpu_calls": 0
+}

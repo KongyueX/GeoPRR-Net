@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "samples": 1506,
+  "unique_ids": 1506,
+  "discrepancies": [],
+  "maximum_prediction_difference_normalized": 1.3322676295501878e-15,
+  "maximum_polar_phi_difference_radians": 0.0,
+  "maximum_joint_mass_error": 2.220446049250313e-16,
+  "teacher_NMAE_percent_fs": 0.0009019829212015157,
+  "teacher_maximum_percent_fs": 0.14838571766869568,
+  "strict_above1_2_5": [
+    0,
+    0,
+    0
+  ],
+  "method": "standalone sparse eight-atom enumeration; integer-grid centered unwrap; closed-form polar angle",
+  "scope": "GTy-conditioned label representation only, no RGB/model accuracy claim",
+  "new_model_forwards": 0,
+  "optimizer_updates": 0,
+  "elapsed_seconds": 0.04776874999515712
+}

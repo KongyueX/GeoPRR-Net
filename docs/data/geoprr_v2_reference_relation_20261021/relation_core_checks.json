@@ -1,0 +1,55 @@
+{
+  "tests": 4,
+  "passed": true,
+  "fft_roundoff_records": [
+    {
+      "circle_bins": 8,
+      "max_negative_atom": 0.0,
+      "negative_mass": -0.0,
+      "raw_total_mass_error": 0.0,
+      "imaginary_max_abs": 0.0,
+      "rounding_allowance": 1.1368683772161603e-13,
+      "correction_l1_actual": 0.0,
+      "correction_l1_from_negative_and_mass": 0.0,
+      "correction_scope": "binary64 numerical cleanup; allowance is not a certified FFT bound; numerical failure check only, no confidence/atom-selection gate"
+    },
+    {
+      "circle_bins": 256,
+      "max_negative_atom": 1.9235217811455626e-17,
+      "negative_mass": 6.2597650302463025e-15,
+      "raw_total_mass_error": 0.0,
+      "imaginary_max_abs": 2.331979924134474e-17,
+      "rounding_allowance": 3.637978807091713e-12,
+      "correction_l1_actual": 1.2905490666713492e-14,
+      "correction_l1_from_negative_and_mass": 1.2921103177997242e-14,
+      "correction_scope": "binary64 numerical cleanup; allowance is not a certified FFT bound; numerical failure check only, no confidence/atom-selection gate"
+    },
+    {
+      "circle_bins": 8,
+      "max_negative_atom": 1.962615573354719e-17,
+      "negative_mass": 1.5339591148655797e-16,
+      "raw_total_mass_error": 0.0,
+      "imaginary_max_abs": 0.0,
+      "rounding_allowance": 1.1368683772161603e-13,
+      "correction_l1_actual": 1.5339591148655797e-16,
+      "correction_l1_from_negative_and_mass": 1.5339591148655797e-16,
+      "correction_scope": "binary64 numerical cleanup; allowance is not a certified FFT bound; numerical failure check only, no confidence/atom-selection gate"
+    },
+    {
+      "circle_bins": 8,
+      "max_negative_atom": 1.3877787807814457e-17,
+      "negative_mass": 1.5052117993286874e-16,
+      "raw_total_mass_error": 2.220446049250313e-16,
+      "imaginary_max_abs": 0.0,
+      "rounding_allowance": 1.1368683772161603e-13,
+      "correction_l1_actual": 1.5052117993286874e-16,
+      "correction_l1_from_negative_and_mass": 1.5052117993286874e-16,
+      "correction_scope": "binary64 numerical cleanup; allowance is not a certified FFT bound; numerical failure check only, no confidence/atom-selection gate"
+    }
+  ],
+  "ghost_counterexample": {
+    "consistent_reading": 0.5,
+    "marginal_head_reading": 0.375,
+    "zero_span_mass": 0.5
+  }
+}
