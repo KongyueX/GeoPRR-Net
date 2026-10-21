@@ -1,6 +1,6 @@
 # 配对守恒参考更新：CPU实现准入
 
-精确算子、匹配global算子和RGB Reader已实现。新增CPU检查及有界实际RGB／GPU资源准入均PASS；没有optimizer更新或新训练结果。
+精确算子、匹配global算子和RGB Reader已实现。新增CPU检查及有界实际RGB／GPU资源准入均PASS；CPU／资源准入阶段没有optimizer更新；正式候选已按最新授权启动，正式训练成本和结果单独记录。
 
 ## 实现与检查
 
@@ -58,3 +58,9 @@ Reader继承旧full前向，会先计算原生J／读数再作新更新；未来
 ## 正式队列合同
 
 新队列iteration_v8_reference_pair_update，preserve候选先65轮，过三组gate后才global65；两臂同完整best64初始化及原曝光／优化安排。[新比较器与配置标量接线检查](formal_metadata_checks.json)PASS：best64自比6／6，已知best64相对best48新增3172负例正确拒绝（5／6），0新CNN／GPU／optimizer；这是门槛接线检查，不是新模型效果。正式成本与完整1506逐图结果待各臂实际完成后归档。
+
+## 正式启动快照
+
+2026-10-22北京时间04:29:20启动preserve候选65轮，训练代码d6376a0。父193689／子193692实际命令核对一致，GPU只有该候选；global未启动。首批epoch1／head_warmup实际32donor＋11recipient，loss0.0901810601有限；启动核验时完整history为0轮，这不是后续实时进度或方法结论。实际最新进度以服务器history／latest和当前step日志为准。
+
+[启动标量记录](formal_launch_state.json)保留同best64初始化、曝光、三组gate和进程；全部权重／原始run.json只在server／private归档。保留v6best48、v7best64及旧失败结果。候选完整65轮通过原11＋best48／best64保护后才matched global65；否则归档负结果并跳过global。

@@ -1,0 +1,40 @@
+{
+  "status": "running",
+  "snapshot_utc": "2026-10-21T20:30:37.501158+00:00",
+  "formal_output": "runs/geoprr_v2_tail/iteration_v8_reference_pair_update",
+  "training_code_revision": "d6376a0",
+  "started_utc": "2026-10-21T20:29:20.575439+00:00",
+  "started_Beijing": "2026-10-22 04:29:20",
+  "pipeline_pid": 193689,
+  "preserve_pid": 193692,
+  "parent_and_child_commands_verified": true,
+  "only_GPU_model_pid": 193692,
+  "global_started": false,
+  "preserve_epochs_planned": 65,
+  "matched_global_epochs_if_all_gates_pass": 65,
+  "seed": 20262020,
+  "parameters_each_arm": 7465988,
+  "shared_parameters": 7431248,
+  "head_parameters": 34740,
+  "loaded_best64_state_tensors": 497,
+  "new_state_tensors": 3,
+  "epoch_exposure": {
+    "unique": 18590,
+    "donor": 22686,
+    "recipient": 8192,
+    "CNN_images": 30878,
+    "executed_batches": 709
+  },
+  "first_batch": {
+    "epoch": 1,
+    "stage": "head_warmup",
+    "loss": 0.09018106013536453,
+    "donor_images": 32,
+    "recipient_images": 11
+  },
+  "complete_epochs_at_startup_verification": 0,
+  "effective_updates_and_AMPskip": "recorded in complete epoch history; not inferred from the first-batch event",
+  "control_gate": "original11 + all6best48 protections + all6best64 protections; any failure skips global and retains result",
+  "scope": "startup metadata only; no final model score or mechanism claim",
+  "review": "bounded fresh-agent launch review PASS, same-family provisional; no repeated model tests"
+}
