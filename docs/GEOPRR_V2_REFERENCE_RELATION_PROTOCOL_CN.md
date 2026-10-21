@@ -2,7 +2,7 @@
 
 本候选保留普通监督MobileNetV4的骨干与FPN，用局部角色证据和共享参考状态替换自由U／Q／M／direct读数。核心假设是：起点、指针虚拟读数点与终点的关系应在同一个起点解释下形成联合分布，再转换成读数；先独立形成两个相对量再相乘，会丢掉共同参考带来的依赖。
 
-这是待正式验证的网络机制，不是已取得准确率收益或已经确认的新颖性结论。原普通监督best63＋固定r8仍是当前最佳已完成RGB参照。
+正式joint65轮已完成，best57的完整1506源开发NMAE为0.077122519%FS，优于普通监督best63＋固定r8的0.129950499%FS；旧严重并集和无新增错误两项未通过，product按预设规则跳过。完整结果见[归档](data/geoprr_v2_reference_relation_20261021/README.md)。共享参考机制的独立收益与新颖性尚未由匹配训练对照确认。
 
 ## 输入与角度坐标
 
@@ -95,4 +95,4 @@ joint未过则归档负结果，跳过control；不能从未运行control推断�
 
 正式输出为`runs/geoprr_v2_tail/iteration_v5_reference_relation`。保存protocol、config、run、history、best／latest／completed、完整1506逐图预测、固定cohort与阈值转移、参数／优化步／实际图像曝光及完整训练／验证成本。保留失败和partial，不以best不更新判停滞。
 
-只使用已有main与项目venv。无新模型seed、官方test、旧专家／OOF／router或loss-window矩阵。源开发、GT标签检查、历史officialtest、真实冻结迁移分别表述。未来训练结果尚不存在。
+只使用已有main与项目venv。无新模型seed、官方test、旧专家／OOF／router或loss-window矩阵。源开发、GT标签检查、历史officialtest、真实冻结迁移分别表述。

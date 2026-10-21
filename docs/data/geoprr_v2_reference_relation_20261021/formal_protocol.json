@@ -1,0 +1,312 @@
+{
+  "protocol": "geoprr_v2_reference_relation_matched_source_v1",
+  "seed": 20262020,
+  "epochs_per_arm": 65,
+  "configs": {
+    "joint": {
+      "name": "mobilenetv4_reference_relation_joint",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "coupling": "joint"
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 65,
+        "warmup_epochs": 5,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 0.0001,
+        "head_lr": 0.0005,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "same role conditionals and marginal distributions; joint versus marginal product only"
+    },
+    "product": {
+      "name": "mobilenetv4_reference_relation_product",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "coupling": "independent"
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 65,
+        "warmup_epochs": 5,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 0.0001,
+        "head_lr": 0.0005,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "same role conditionals and marginal distributions; joint versus marginal product only"
+    }
+  },
+  "code_revision": "1e5a08d",
+  "arms": [
+    "joint",
+    "product_if_joint_gate_passes"
+  ],
+  "primary_readout": "full_native_probability_mean",
+  "checkpoint_selection": "complete1506 source NMAE, earliest strict minimum",
+  "initial_shared_checkpoint": "/root/autodl-tmp/geoprrnet/runs/geoprr_v2_tail/iteration_v3_compositional/readers/supervised_s20262020/best.pt",
+  "teacher_label_preflight": {
+    "scope": "GTy-conditioned role label quantization only; not learned RGB performance, learned rescue or standalone training admission",
+    "samples": 1506,
+    "checks": {
+      "all1506_valid": true,
+      "nmae_no_worse_r8": true,
+      "tail10_no_worse_r8": true,
+      "maximum_below_both": true,
+      "old_severe_union_rescued": true,
+      "no_new_above1_2_5": true,
+      "ordinary_nmae_percent_fs_protected": true,
+      "ordinary_median_percent_fs_protected": true,
+      "ordinary_p90_percent_fs_protected": true,
+      "r8_ordinary_mean_protected": true,
+      "GT_teacher_raw_max_at_most1_percent_fs": true
+    },
+    "numerical_gate_passed": true,
+    "teacher_metrics": {
+      "samples": 1506,
+      "nmae_percent_fs": 0.000901982921201079,
+      "median_percent_fs": 0.00028920319127268,
+      "p90_percent_fs": 0.0016728238900587389,
+      "p95_percent_fs": 0.0024245869846794416,
+      "tail10_percent_fs": 0.005885392430676917,
+      "maximum_percent_fs": 0.14838571766869516,
+      "acc_at_1_percent": 100,
+      "acc_at_2_percent": 100,
+      "acc_at_5_percent": 100,
+      "above_1_percent_fs": 0,
+      "above_2_percent_fs": 0,
+      "above_5_percent_fs": 0
+    },
+    "ordinary_cohort_samples": [
+      1495,
+      1497
+    ],
+    "independent_verification": "PASS"
+  },
+  "runtime_preflight": {
+    "status": "passed",
+    "process_pid": 89654,
+    "configs": {
+      "joint": {
+        "name": "mobilenetv4_reference_relation_joint",
+        "model": {
+          "bins": 256,
+          "decoder_dim": 64,
+          "token_dim": 16,
+          "coupling": "joint"
+        },
+        "data": {
+          "image_size": 768,
+          "output_size": 192
+        },
+        "training": {
+          "seed": 20262020,
+          "epochs": 65,
+          "warmup_epochs": 5,
+          "batch_size": 32,
+          "workers": 8,
+          "backbone_lr": 0.0001,
+          "head_lr": 0.0005,
+          "min_lr": 1e-06,
+          "weight_decay": 0.01,
+          "gradient_clip": 5,
+          "amp": true,
+          "validation_batch_size": 16
+        },
+        "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+        "state_grid": {
+          "absolute_roles": "circular [0,2pi),256",
+          "delta": "circular [0,2pi),256",
+          "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+        },
+        "exposure": {
+          "donor_items": 22686,
+          "recipient_images": 8192,
+          "total_images": 30878,
+          "optimizer_batches": 709
+        },
+        "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+        "control": "same role conditionals and marginal distributions; joint versus marginal product only"
+      },
+      "product": {
+        "name": "mobilenetv4_reference_relation_product",
+        "model": {
+          "bins": 256,
+          "decoder_dim": 64,
+          "token_dim": 16,
+          "coupling": "independent"
+        },
+        "data": {
+          "image_size": 768,
+          "output_size": 192
+        },
+        "training": {
+          "seed": 20262020,
+          "epochs": 65,
+          "warmup_epochs": 5,
+          "batch_size": 32,
+          "workers": 8,
+          "backbone_lr": 0.0001,
+          "head_lr": 0.0005,
+          "min_lr": 1e-06,
+          "weight_decay": 0.01,
+          "gradient_clip": 5,
+          "amp": true,
+          "validation_batch_size": 16
+        },
+        "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+        "state_grid": {
+          "absolute_roles": "circular [0,2pi),256",
+          "delta": "circular [0,2pi),256",
+          "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+        },
+        "exposure": {
+          "donor_items": 22686,
+          "recipient_images": 8192,
+          "total_images": 30878,
+          "optimizer_batches": 709
+        },
+        "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+        "control": "same role conditionals and marginal distributions; joint versus marginal product only"
+      }
+    },
+    "code_revision": "1e5a08d",
+    "same_initial_parameters": true,
+    "original_train_images": 14494,
+    "supplementary_images": 4096,
+    "validation_images": 1506,
+    "donor_items": 22686,
+    "recipient_items": 8192,
+    "unique_RGB_images_forwarded": 2,
+    "CNN_image_forwards": 4,
+    "original_validation_images_read_without_forward": 1,
+    "backward_calls": 1,
+    "optimizer_steps": 0,
+    "arms": {
+      "joint": {
+        "parameters": 7461060,
+        "head_parameters": 29812,
+        "initialization": {
+          "source_epoch": 63,
+          "source_protocol": "geoprr_v2_source_only_v1",
+          "loaded_shared_tensors": 476,
+          "shared_prefixes": [
+            "backbone.",
+            "lateral.",
+            "refine."
+          ],
+          "new_head": "reference rectifier/radial embedding/content matching; no old U/Q/M/direct heads"
+        },
+        "probability_mass_max_error": 5.960464477539062e-07,
+        "losses": {
+          "role_nll_raw": 16.546375274658203,
+          "role_nll_normalized": 0.994640588760376,
+          "field_l1": 0.0013289664639160037,
+          "reading_cdf": 0.4200894236564636,
+          "total": 1.4160590171813965
+        },
+        "validation_CSV_interface_passed": true,
+        "peak_cuda_allocated_bytes": 180349440,
+        "reference_max": [
+          0.007674342952668667,
+          0.007674233056604862
+        ],
+        "joint_product_state_l1": [
+          0.005445352755486965,
+          0.0053666699677705765
+        ]
+      },
+      "product": {
+        "parameters": 7461060,
+        "head_parameters": 29812,
+        "initialization": {
+          "source_epoch": 63,
+          "source_protocol": "geoprr_v2_source_only_v1",
+          "loaded_shared_tensors": 476,
+          "shared_prefixes": [
+            "backbone.",
+            "lateral.",
+            "refine."
+          ],
+          "new_head": "reference rectifier/radial embedding/content matching; no old U/Q/M/direct heads"
+        },
+        "probability_mass_max_error": 7.152557373046875e-07,
+        "losses": {
+          "role_nll_raw": 16.546375274658203,
+          "role_nll_normalized": 0.994640588760376,
+          "field_l1": 0.0013289664639160037,
+          "reading_cdf": 0.42014944553375244,
+          "total": 1.4161189794540405
+        },
+        "validation_CSV_interface_passed": true,
+        "peak_cuda_allocated_bytes": 200353280,
+        "reference_max": [
+          0.007674342952668667,
+          0.007674233056604862
+        ],
+        "joint_product_state_l1": [
+          0.005445352755486965,
+          0.0053666699677705765
+        ]
+      }
+    },
+    "wall_seconds": 9.13667394965887,
+    "scope": "RGB runtime, initialization and label-interface preflight; no model accuracy evaluation"
+  },
+  "source_images_unique": 18590,
+  "epoch_donors": 22686,
+  "epoch_recipients": 8192,
+  "epoch_images": 30878,
+  "epoch_optimizer_batches": 709,
+  "scope": "source-development only, no official test or automatic seed expansion",
+  "continuation": "joint must pass predeclared ordinary/tail/new-error gates before matched control"
+}

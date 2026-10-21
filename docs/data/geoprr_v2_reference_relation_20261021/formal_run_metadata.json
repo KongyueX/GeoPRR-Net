@@ -1,0 +1,36 @@
+{
+  "protocol": "geoprr_v2_reference_relation_source_only_v1",
+  "train_unique_images": 18590,
+  "train_items": 22686,
+  "expected_full_epoch": {
+    "donor_images": 22686,
+    "recipient_images": 8192,
+    "total_image_forwards": 30878,
+    "optimizer_batches": 709
+  },
+  "validation_images": 1506,
+  "model_selection": "full1506_native_nmae_earliest_tie",
+  "initialization": {
+    "source_epoch": 63,
+    "source_protocol": "geoprr_v2_source_only_v1",
+    "loaded_shared_tensors": 476,
+    "shared_prefixes": [
+      "backbone.",
+      "lateral.",
+      "refine."
+    ],
+    "new_head": "reference rectifier/radial embedding/content matching; no old U/Q/M/direct heads"
+  },
+  "parameters": 7461060,
+  "shared_parameters": 7431248,
+  "head_parameters": 29812,
+  "device": "cuda",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "inference_input": "RGB only; H/span/y and virtual role phases are training/scoring labels",
+  "recipient_batching": "donors and recipients concatenated in one forward; old reader used separate forwards",
+  "comparison": "Product schedule, supervision and initialization were frozen to match joint, but product training was skipped by G1. Actual joint effective updates46066 and AMP skips19; old ordinary differs in architecture, structural supervision and warm start history.",
+  "arm": "joint",
+  "product_started": false
+}
