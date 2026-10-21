@@ -154,8 +154,11 @@ class CircularProgressPushforward(nn.Module):
 class ReferenceRelationHead(nn.Module):
     """Content matching conditions pointer/end rows on each start-bin hypothesis."""
 
-    def __init__(self, feature_dim=16, bins=256):
+    def __init__(self, feature_dim=16, bins=256, reference_normalization="local"):
         super().__init__()
+        if reference_normalization not in ("local", "global"):
+            raise ValueError("reference normalization must be local or global")
+        self.reference_normalization = reference_normalization
         self.projections = nn.ModuleList(nn.Linear(feature_dim, feature_dim, bias=False) for _ in range(3))
         self.unaries = nn.ModuleList(nn.Linear(feature_dim, 1, bias=False) for _ in range(3))
         self.scale = feature_dim**-.5
@@ -165,27 +168,32 @@ class ReferenceRelationHead(nn.Module):
         roles = [projection(features) for projection in self.projections]
         a, p, b = roles
         unary = [layer(role).squeeze(-1) for layer, role in zip(self.unaries, roles)]
-        log_a = unary[0].log_softmax(-1)
+        energy_p = (a @ p.transpose(1, 2))*self.scale+unary[1][:, None]
+        energy_b = (a @ b.transpose(1, 2))*self.scale+unary[2][:, None]
+        log_z_p, log_z_b = energy_p.logsumexp(-1), energy_b.logsumexp(-1)
+        reference = unary[0]+log_z_p+log_z_b if self.reference_normalization == "global" else unary[0]
+        log_a = reference.log_softmax(-1)
         indices = self.relative_indices[None].expand(len(features), -1, -1)
-        log_p = ((a @ p.transpose(1, 2))*self.scale+unary[1][:, None]).log_softmax(-1).gather(-1, indices)
-        log_b = ((a @ b.transpose(1, 2))*self.scale+unary[2][:, None]).log_softmax(-1).gather(-1, indices)
+        log_p = energy_p.log_softmax(-1).gather(-1, indices)
+        log_b = energy_b.log_softmax(-1).gather(-1, indices)
         start, pointer, end = log_a.exp(), log_p.exp(), log_b.exp()
         joint = pointer.transpose(1, 2) @ (start[:, :, None]*end)
         delta, span = (start[:, :, None]*pointer).sum(1), (start[:, :, None]*end).sum(1)
         return {"A": start, "P_rel": pointer, "B_rel": end, "log_A": log_a, "log_P_rel": log_p, "log_B_rel": log_b,
-                "J": joint, "product": delta[:, :, None]*span[:, None], "delta_marginal": delta, "span_marginal": span}
+                "J": joint, "product": delta[:, :, None]*span[:, None], "delta_marginal": delta, "span_marginal": span,
+                "reference_unary": unary[0], "log_Z_P": log_z_p, "log_Z_B": log_z_b}
 
 
 class ReferenceRelationStateHead(nn.Module):
     """Angular line-pencil rectifier and empirical boundary-to-center feature rays."""
 
-    def __init__(self, bins=256, channels=64, token_dim=16):
+    def __init__(self, bins=256, channels=64, token_dim=16, reference_normalization="local"):
         super().__init__()
         self.context = nn.Sequential(nn.Linear(3*channels, 64), nn.SiLU(), nn.Linear(64, 4))
         nn.init.normal_(self.context[-1].weight, std=.001)
         nn.init.zeros_(self.context[-1].bias)
         self.radial_embedding = nn.Parameter(torch.randn(16, channels, token_dim)/math.sqrt(channels))
-        self.relation = ReferenceRelationHead(token_dim, bins)
+        self.relation = ReferenceRelationHead(token_dim, bins, reference_normalization)
         angle = torch.arange(bins)*2*math.pi/bins
         self.register_buffer("directions", torch.stack((angle.cos(), angle.sin()), -1))
         self.register_buffer("radii", torch.arange(1., 17.)/17)
@@ -209,7 +217,7 @@ class ReferenceRelationStateHead(nn.Module):
 
 
 class ReferenceRelationReader(nn.Module):
-    def __init__(self, bins=256, decoder_dim=64, token_dim=16, coupling="joint"):
+    def __init__(self, bins=256, decoder_dim=64, token_dim=16, coupling="joint", reference_normalization="local"):
         super().__init__()
         if (bins, decoder_dim, token_dim) != (256, 64, 16) or coupling not in ("joint", "independent"):
             raise ValueError("requires the frozen256/64/16 architecture and joint or independent coupling")
@@ -217,7 +225,7 @@ class ReferenceRelationReader(nn.Module):
                         decoder_dim=decoder_dim, variant="field")
         self.backbone, self.lateral, self.refine = base.backbone, base.lateral, base.refine
         self.feature_indices = base.feature_indices
-        self.state_head = ReferenceRelationStateHead(bins, decoder_dim, token_dim)
+        self.state_head = ReferenceRelationStateHead(bins, decoder_dim, token_dim, reference_normalization)
         self.readout = CircularProgressPushforward(bins)
         self.bins, self.coupling, self._shared_trainable = bins, coupling, True
 
@@ -248,6 +256,14 @@ class ReferenceRelationReader(nn.Module):
         return {"source_epoch": int(source["epoch"]), "source_protocol": source["protocol"],
                 "loaded_shared_tensors": len(selected), "shared_prefixes": prefixes,
                 "new_head": "reference rectifier/radial embedding/content matching; no old U/Q/M/direct heads"}
+
+    def initialize_full(self, checkpoint):
+        source = torch.load(Path(checkpoint), map_location="cpu", weights_only=False)
+        if source["epoch"] != 57 or source["config"]["training"]["seed"] != 20262020:
+            raise ValueError("feedback initialization requires the frozen best57 seed20262020")
+        self.load_state_dict(source["model"], strict=True)
+        return {"source_epoch": 57, "source_protocol": source["protocol"],
+                "loaded_full_tensors": len(source["model"]), "preserved_all_trained_weights": True}
 
     def forward(self, images):
         extracted = self.backbone(images)

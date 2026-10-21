@@ -93,6 +93,7 @@ def main(argv=None):
     process_started = time.perf_counter()
     args = build_parser().parse_args(argv)
     config = json.loads(args.config.read_text())
+    protocol = config.get("protocol", PROTOCOL)
     training = config["training"]
     seed = int(training["seed"])
     if seed != 20262020:
@@ -115,7 +116,10 @@ def main(argv=None):
     data_contract = {"paths": paths, "train": train_data.supervision_contract(),
                      "validation": val_data.supervision_contract(), "exposure_edges": train_data.edges}
     model = ReferenceRelationReader(**config["model"])
-    initialization = model.initialize_shared(args.init_checkpoint) if args.resume is None else None
+    initialization = None
+    if args.resume is None:
+        initialization = (model.initialize_full(args.init_checkpoint) if config.get("initialization") == "full_best57"
+                          else model.initialize_shared(args.init_checkpoint))
     model = model.to(device)
     head_parameters = list(model.state_head.parameters())
     head_ids = {id(parameter) for parameter in head_parameters}
@@ -134,7 +138,7 @@ def main(argv=None):
     checkpointed_process_seconds = 0.0
     if args.resume is not None:
         checkpoint = torch.load(args.resume, map_location="cpu", weights_only=False)
-        if checkpoint["protocol"] != PROTOCOL or checkpoint["config"] != config or checkpoint["data_contract"] != data_contract:
+        if checkpoint["protocol"] != protocol or checkpoint["config"] != config or checkpoint["data_contract"] != data_contract:
             raise ValueError("resume protocol/config/source supervision or exposure differs")
         model.load_state_dict(checkpoint["model"], strict=True)
         optimizer.load_state_dict(checkpoint["optimizer"])
@@ -147,7 +151,7 @@ def main(argv=None):
         initialization = checkpoint["initialization"]
         restore_rng(checkpoint["rng"])
     args.output.mkdir(parents=True, exist_ok=True)
-    run = {"protocol": PROTOCOL, "config": config, "data_contract": data_contract,
+    run = {"protocol": protocol, "config": config, "data_contract": data_contract,
            "train_unique_images": len(train_data.rows), "train_items": len(train_data),
            "expected_full_epoch": {"donor_images": 22686, "recipient_images": 8192,
                                    "total_image_forwards": 30878, "optimizer_batches": math.ceil(22686 / training["batch_size"])},
@@ -256,7 +260,7 @@ def main(argv=None):
                   "peak_cuda_memory_bytes": torch.cuda.max_memory_allocated(device) if device.type == "cuda" else None,
                   "peak_cuda_reserved_bytes": torch.cuda.max_memory_reserved(device) if device.type == "cuda" else None}
         history.append(record)
-        checkpoint = {"protocol": PROTOCOL, "config": config, "data_contract": data_contract,
+        checkpoint = {"protocol": protocol, "config": config, "data_contract": data_contract,
                       "initialization": initialization, "model": model.state_dict(), "optimizer": optimizer.state_dict(),
                       "scheduler": scheduler.state_dict(), "scaler": scaler.state_dict(), "rng": rng_state(),
                       "epoch": epoch + 1, "best_nmae": best_nmae, "best_epoch": best_epoch,
@@ -270,7 +274,7 @@ def main(argv=None):
         save_checkpoint(args.output / "latest.pt", checkpoint)
         write_history(args.output / "history.jsonl", history)
         print(json.dumps(record, allow_nan=False), flush=True)
-    write_json(args.output / "completed.json", {"protocol": PROTOCOL, "epochs": training["epochs"],
+    write_json(args.output / "completed.json", {"protocol": protocol, "epochs": training["epochs"],
                "best_epoch": best_epoch, "best_nmae": best_nmae, "totals": totals,
                "current_process_wall_seconds": time.perf_counter() - process_started,
                "checkpointed_process_wall_seconds_before_resume": checkpointed_process_seconds,
