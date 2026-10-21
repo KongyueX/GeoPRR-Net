@@ -1,0 +1,95 @@
+{
+  "status": "components_checked_RGB_direction_contract_not_passed",
+  "scope": "one existing four-state source-training group plus three typed synthetic state boxes",
+  "RGB_images": 4,
+  "RGB_family_posthoc_only": "pointer3",
+  "detected_segments_per_image": [
+    1365,
+    1381,
+    1370,
+    1384
+  ],
+  "all_posthoc_GT_edge_rows": 1872,
+  "qualified_edge_line_pairs": 16,
+  "qualified_pair_ranges": {
+    "axial_degrees": {
+      "min": 0.013692520168231678,
+      "max": 0.13764282050953772
+    },
+    "lateral_pixels": {
+      "min": 0.10656645033500318,
+      "max": 0.8152765630293078
+    },
+    "GT_coverage": {
+      "min": 0.660864702722007,
+      "max": 0.9428250550144938
+    },
+    "unordered_endpoint_mean_pixels": {
+      "min": 15.991197506231366,
+      "max": 70.03562897713357
+    },
+    "unordered_endpoint_max_pixels": {
+      "min": 16.306022736739237,
+      "max": 92.76614055569394
+    }
+  },
+  "matched_edges_per_image": [
+    4,
+    4,
+    4,
+    4
+  ],
+  "distinct_matching_segments_per_image": [
+    2,
+    2,
+    2,
+    2
+  ],
+  "physical_endpoint_polarity_inferred": false,
+  "halfturn_ambiguity": {
+    "scope": "untyped endpoint-direction associations with free shared Z in the necessary relaxation",
+    "span_radians": "3*pi/2",
+    "reading_1": "4/5",
+    "reading_2": "2/15",
+    "reading_separation_percent_fs": "200/3",
+    "identity": "theta_prime=theta+pi, d_prime=-d, Z_prime=-Z, H_prime=H leaves V unchanged",
+    "full_RGB_indistinguishability_proved": false
+  },
+  "continuous_boxes": [
+    {
+      "name": "true_box",
+      "total_charts": 18,
+      "verified_excluded_charts": 17,
+      "retained_unresolved_charts": 1,
+      "union_excluded": false
+    },
+    {
+      "name": "obvious_wrong_box",
+      "total_charts": 18,
+      "verified_excluded_charts": 18,
+      "retained_unresolved_charts": 0,
+      "union_excluded": true
+    },
+    {
+      "name": "zero_span_closure",
+      "total_charts": 18,
+      "verified_excluded_charts": 12,
+      "retained_unresolved_charts": 6,
+      "union_excluded": false
+    }
+  ],
+  "new_full1506_readings": 0,
+  "CNN_forwards": 0,
+  "training_updates": 0,
+  "new_model_seeds": 0,
+  "new_renders": 0,
+  "training_decision": "not_ready; observable polarity, association and RGB uncertainty contract unresolved",
+  "best_completed_RGB_reference": {
+    "model": "ordinary supervised MobileNetV4",
+    "seed": 20262020,
+    "checkpoint_epoch": 63,
+    "native_NMAE_percent_fs": 0.1479240671,
+    "frozen_r8_NMAE_percent_fs": 0.1299504985
+  },
+  "independent_continuous_audit": "PASS;54charts,44exactcertificates,3analyticcontradictions,7retained,82trigdomains"
+}

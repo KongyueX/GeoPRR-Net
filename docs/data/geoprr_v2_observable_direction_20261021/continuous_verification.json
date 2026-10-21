@@ -1,0 +1,77 @@
+{
+  "protocol": "independent_continuous_box_exact_certificate_replay_v1",
+  "status": "PASS",
+  "completed_at_utc": "2026-10-21T03:50:50.857725+00:00",
+  "discrepancies": [],
+  "charts_audited": 54,
+  "positive_rational_certificates": 44,
+  "analytic_empty_charts": 3,
+  "unresolved_retained_charts": 7,
+  "cases": [
+    {
+      "case": "true_box",
+      "excluded_charts": 17,
+      "all_charts_excluded": false,
+      "retained_charts": [
+        [
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "case": "obvious_wrong_box",
+      "excluded_charts": 18,
+      "all_charts_excluded": true,
+      "retained_charts": []
+    },
+    {
+      "case": "zero_span_closure",
+      "excluded_charts": 12,
+      "all_charts_excluded": false,
+      "retained_charts": [
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          -1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          4,
+          -1
+        ]
+      ]
+    }
+  ],
+  "unique_outward_trig_domains_checked": 82,
+  "outward_trig_validation": "Independent recurrence for degree31 polynomial, rational derivative remainder and global1-Lipschitz radius; dyadic rounding checked; independent degree47 analytic full-interval enclosure contained. No trigonometric sampling/libm predicate.",
+  "cone_validation": "Exact ambient cross-pair supporting normals of all endpoint-corner generators, generator rank3, full facet set checked independently.",
+  "finite_chart_coverage": "All18 signed maxabs-H charts per state, including explicit H33=-1/H33>=0 contradiction. This is conditional on whole-circle-front coordinate assumptions.",
+  "coefficient_contract": "Existing binary64 unit-template directions treated as exact declared Fraction inputs; uncertainty from prior mesh normalization is not covered.",
+  "elapsed_seconds": 1.229609125002753,
+  "solver_calls": 0,
+  "new_states": 0,
+  "detector_calls": 0,
+  "model_forwards": 0,
+  "training_updates": 0,
+  "limitations": [
+    "True and zero-span boxes are retained, not proved feasible throughout.",
+    "The wrong-box exclusion is for one fixed typed/directed synthetic association and declared continuous half-pixel observation boxes.",
+    "Full physical-camera constraints and RGB identity/polarity/uncertainty coverage are not established.",
+    "These54chart outcomes do not cover all continuous readings or all untyped association branches and give no full1506 claim."
+  ]
+}

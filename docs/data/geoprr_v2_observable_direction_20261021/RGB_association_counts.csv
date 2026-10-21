@@ -1,0 +1,5 @@
+sample_id,all_segments,all_GT_edges,matched_GT_edges,distinct_matching_segments,max_GT_edges_per_matching_segment,zero_projected_edges
+geoprr_compositional_v1_g0000_s00,1365,468,4,2,2,232
+geoprr_compositional_v1_g0000_s01,1381,468,4,2,2,221
+geoprr_compositional_v1_g0000_s02,1370,468,4,2,2,228
+geoprr_compositional_v1_g0000_s03,1384,468,4,2,2,215

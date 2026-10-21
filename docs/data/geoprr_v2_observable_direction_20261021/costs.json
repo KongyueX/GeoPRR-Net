@@ -1,0 +1,25 @@
+{
+  "RGB_detection_server_PID": 86935,
+  "RGB_detection_server_process_seconds": 0.5404480844736099,
+  "RGB_detection_server_per_image_seconds": [
+    0.13833091035485268,
+    0.11195549741387367,
+    0.1020297221839428,
+    0.09907282516360283
+  ],
+  "posthoc_association_local_seconds": 29.04396933398675,
+  "independent_association_local_seconds": 0.1513361250399612,
+  "continuous_box_server_PID": 87192,
+  "continuous_box_server_process_seconds": 2.7037592492997646,
+  "phase_I_LP_calls": 51,
+  "analytic_empty_charts": 3,
+  "focused_new_core_tests": 3,
+  "sourceval_1506_runs": 0,
+  "CNN_forwards": 0,
+  "optimizer_updates": 0,
+  "GPU_calls": 0,
+  "renders": 0,
+  "new_seeds": 0,
+  "timing_scope": "server detection, local association/verification and synthetic CPU solver are separate; no RGB reader end-to-end timing",
+  "independent_continuous_local_seconds": 1.229609125002753
+}

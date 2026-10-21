@@ -1,0 +1,71 @@
+{
+  "status": "PASS",
+  "differences": [],
+  "images": [
+    {
+      "sample_id": "geoprr_compositional_v1_g0000_s00",
+      "all_segments": 1365,
+      "all_GT_edges": 468,
+      "matched_GT_edges": 4,
+      "distinct_matching_segments": 2,
+      "max_GT_edges_per_matching_segment": 2,
+      "zero_projected_edges": 232
+    },
+    {
+      "sample_id": "geoprr_compositional_v1_g0000_s01",
+      "all_segments": 1381,
+      "all_GT_edges": 468,
+      "matched_GT_edges": 4,
+      "distinct_matching_segments": 2,
+      "max_GT_edges_per_matching_segment": 2,
+      "zero_projected_edges": 221
+    },
+    {
+      "sample_id": "geoprr_compositional_v1_g0000_s02",
+      "all_segments": 1370,
+      "all_GT_edges": 468,
+      "matched_GT_edges": 4,
+      "distinct_matching_segments": 2,
+      "max_GT_edges_per_matching_segment": 2,
+      "zero_projected_edges": 228
+    },
+    {
+      "sample_id": "geoprr_compositional_v1_g0000_s03",
+      "all_segments": 1384,
+      "all_GT_edges": 468,
+      "matched_GT_edges": 4,
+      "distinct_matching_segments": 2,
+      "max_GT_edges_per_matching_segment": 2,
+      "zero_projected_edges": 215
+    }
+  ],
+  "qualified_pairs": 16,
+  "qualified_pair_ranges": {
+    "axial_degrees": {
+      "min": 0.013692520168231678,
+      "max": 0.13764282050953772
+    },
+    "lateral_pixels": {
+      "min": 0.10656645033500318,
+      "max": 0.8152765630293078
+    },
+    "GT_coverage": {
+      "min": 0.660864702722007,
+      "max": 0.9428250550144938
+    },
+    "unordered_endpoint_mean_pixels": {
+      "min": 15.991197506231366,
+      "max": 70.03562897713357
+    },
+    "unordered_endpoint_max_pixels": {
+      "min": 16.306022736739237,
+      "max": 92.76614055569394
+    }
+  },
+  "all_saved_edge_rows": 1872,
+  "method": "standalone vector dot/cross comparison; no helper imports or detector calls",
+  "new_image_decodes": 0,
+  "new_CNN_forwards": 0,
+  "optimizer_updates": 0,
+  "elapsed_seconds": 0.1513361250399612
+}

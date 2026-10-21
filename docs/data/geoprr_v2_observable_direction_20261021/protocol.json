@@ -1,0 +1,98 @@
+{
+  "detector": "createLineSegmentDetector(LSD_REFINE_STD); all other OpenCV defaults",
+  "preprocessing": "full decoded 1920x1080 RGB to OpenCV grayscale; no ROI or resize",
+  "selection": "all returned segments retained, no postfilter or threshold search",
+  "endpoint_direction": "unordered geometric endpoints; no physical orientation inferred",
+  "pipeline_order": "All full-image LSD segments were cached before annotations were supplied to this independent posthoc analysis. GT association changes no inference detections.",
+  "posthoc_criterion": {
+    "axial_degrees_max": 5.0,
+    "symmetric_endpoint_to_infinite_line_px_max": 2.0,
+    "GT_projected_overlap_fraction_min": 0.5
+  },
+  "posthoc_annotation_coordinates": "raw serialized integer source coordinates, no +.5 shift or subpixel refinement; conditional annotation projection only",
+  "continuous_box_source": "saved pointer1 typed synthetic directions and continuous pixels; no source1506 or RGB solver inputs",
+  "continuous_box_domains": [
+    {
+      "name": "true_box",
+      "u": [
+        [
+          36999,
+          100000
+        ],
+        [
+          37001,
+          100000
+        ]
+      ],
+      "span": [
+        [
+          2763365325793087167,
+          879609302220800000
+        ],
+        [
+          2763382917979131583,
+          879609302220800000
+        ]
+      ]
+    },
+    {
+      "name": "obvious_wrong_box",
+      "u": [
+        [
+          46999,
+          100000
+        ],
+        [
+          47001,
+          100000
+        ]
+      ],
+      "span": [
+        [
+          2763365325793087167,
+          879609302220800000
+        ],
+        [
+          2763382917979131583,
+          879609302220800000
+        ]
+      ]
+    },
+    {
+      "name": "zero_span_closure",
+      "u": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "span": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1000
+        ]
+      ]
+    }
+  ],
+  "coefficient_contract": "saved binary64 unit directions treated as exact supplied rational coefficients; normalization roundoff not intervalized",
+  "trig": "degree31 rational Taylor(center), |remainder|<=|center|^32/32! plus global1-Lipschitz radius; outward dyadic2^-48",
+  "gauge": "all18signed maxabsH charts; H entries[-1,1],H33>=0,abs(H31/32)<=H33; sharedZ unbounded",
+  "relaxation": "independent sin/cos interval phases and McCormick H*phase lifts; no false exclusion by numerical status",
+  "certificate_rule": "nonnegative rational y; exact yAZ=0 for all three free Z columns; exact bounded-box support minus yb strictly positive",
+  "finite_budget": "3declared boxes,17phaseI calls each at.5s/1000iter; one analytically empty chart perbox; one rational dual repair attempt",
+  "variables_per_nonempty_chart": 186,
+  "bounded_variables_per_nonempty_chart": 183,
+  "unbounded_variables_per_nonempty_chart": 3,
+  "inequalities_per_nonempty_chart": 732,
+  "retained_meaning": "not excluded; neither whole-box nor point feasibility established",
+  "population_and_model_seed": "original14494/1506/4000 frozen; unique model seed20262020 unchanged",
+  "original_full1506_reading_gates": "unchanged; not evaluated in this component stage"
+}
