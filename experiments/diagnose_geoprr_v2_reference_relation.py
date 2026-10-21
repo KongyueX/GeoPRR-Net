@@ -69,7 +69,9 @@ def save_rows(path, rows):
     temporary.replace(path)
 
 
-def main(argv=None):
+def main(argv=None, *,
+         fixedreader_relative="runs/geoprr_v2_tail/iteration_v5_reference_relation/readers/joint_s20262020",
+         expected_epoch=57, focus=FOCUS, capture_reference_feedback=False):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--home", type=Path, default=Path("/root/autodl-tmp/geoprrnet"))
     parser.add_argument("--output", type=Path, required=True)
@@ -79,12 +81,14 @@ def main(argv=None):
     if compute_processes():
         raise RuntimeError("GPU occupied; do not overlap the frozen checkpoint diagnostic")
     started = time.perf_counter()
-    reader_path = args.home/"runs/geoprr_v2_tail/iteration_v5_reference_relation/readers/joint_s20262020"
+    reader_path = args.home/fixedreader_relative
     reference = read_predictions(reader_path/"best_predictions.csv.gz")
     checkpoint = torch.load(reader_path/"best.pt", map_location="cpu", weights_only=False)
-    if checkpoint["epoch"] != 57 or checkpoint["config"]["training"]["seed"] != 20262020:
-        raise ValueError("requires the frozen best57 seed20262020 checkpoint")
+    if checkpoint["epoch"] != expected_epoch or checkpoint["config"]["training"]["seed"] != 20262020:
+        raise ValueError(f"requires the frozen best{expected_epoch} seed20262020 checkpoint")
     config = checkpoint["config"]
+    if capture_reference_feedback and config["model"]["reference_normalization"] != "global":
+        raise ValueError("feedback diagnostic requires global reference normalization")
     dataset = ReferenceRelationDataset(args.home/"runs/geoprr_v2/manifests/validation.jsonl",
                                        data_root=DEFAULT_DATA_ROOT, data_config=config["data"], augment=False)
     if dataset.supervision_contract() != checkpoint["data_contract"]["validation"]:
@@ -107,10 +111,13 @@ def main(argv=None):
     (args.output/"batches").mkdir()
     (args.output/"focus").mkdir()
     (args.output/"diagnostic.pid").write_text(str(os.getpid())+"\n")
-    write_json(args.output/"protocol.json", {"checkpoint_epoch": 57, "seed": 20262020,
+    write_json(args.output/"protocol.json", {"checkpoint_epoch": expected_epoch, "seed": 20262020,
         "population": 1506, "batch_size": 16, "optimizer_updates": 0,
         "teacher_scope": "conditional coordinate/role intervention, not deployable RGB performance",
-        "focus_ids": sorted(FOCUS), "code_revision": os.environ.get("GEOPRR_CODE_REVISION"),
+        "reader_relative": str(fixedreader_relative), "reader_class": type(model).__name__,
+        "reference_normalization": model.state_head.relation.reference_normalization,
+        "capture_reference_feedback": capture_reference_feedback,
+        "focus_ids": sorted(focus), "code_revision": os.environ.get("GEOPRR_CODE_REVISION"),
         "teacher_role_subsets": ["A", "P", "B", "PB", "AP", "AB", "APB"]})
     loader = make_loader(dataset, batch_size=16, workers=8, shuffle=False, seed=20262020, device=device)
     rows, native_rows, position = [], [], 0
@@ -153,8 +160,24 @@ def main(argv=None):
                     result = model.readout(joint)
                     rows.extend(score_rows(f"{branch_name}_{coupling}", result, batch))
                     mass_max = max(mass_max, float((result["distribution"].sum(-1)-1).abs().max()))
+                if capture_reference_feedback:
+                    for key in ("reference_unary", "log_Z_P", "log_Z_B"):
+                        arrays[f"{branch_name}__{key}"] = state[key].float().cpu().numpy()
+                    local_a = state["reference_unary"].float().softmax(-1)
+                    global_a = (state["reference_unary"].float()+state["log_Z_P"].float()
+                                +state["log_Z_B"].float()).softmax(-1)
+                    arrays[f"{branch_name}__local_A"] = local_a.cpu().numpy()
+                    arrays[f"{branch_name}__global_A"] = global_a.cpu().numpy()
+                    normalization_residual = (global_a-state["A"].float()).abs().amax(-1)
+                    arrays[f"{branch_name}__normalization_A_residual"] = normalization_residual.cpu().numpy()
+                    identities_max = max(identities_max, float(normalization_residual.max()))
+                    local_joint = state["P_rel"].float().transpose(1, 2) @ (local_a[:, :, None]*state["B_rel"].float())
+                    result = model.readout(local_joint)
+                    rows.extend(score_rows(f"{branch_name}_local_reference", result, batch))
+                    arrays[f"{branch_name}__local_reference_progress"] = result["distribution"].cpu().numpy()
+                    mass_max = max(mass_max, float((result["distribution"].sum(-1)-1).abs().max()))
                 for i, sample_id in enumerate(batch["sample_id"]):
-                    if sample_id in FOCUS:
+                    if sample_id in focus:
                         np.savez_compressed(args.output/"focus"/f"{sample_id}_{branch_name}.npz",
                                             A=state["A"][i].cpu().numpy(), P_rel=state["P_rel"][i].cpu().numpy(),
                                             B_rel=state["B_rel"][i].cpu().numpy())
@@ -172,6 +195,9 @@ def main(argv=None):
     save_rows(args.output/"predictions.csv.gz", rows)
     torch.cuda.synchronize(device)
     write_json(args.output/"completed.json", {"status": "complete", "images": position,
+        "checkpoint_epoch": expected_epoch, "reader_class": type(model).__name__,
+        "reference_normalization": model.state_head.relation.reference_normalization,
+        "capture_reference_feedback": capture_reference_feedback,
         "CNN_image_forwards": position, "native_head_image_calls": position,
         "teacher_rectifier_head_image_calls": position, "optimizer_updates": 0, "backward_calls": 0,
         "readout_calls": readout_counts["calls"], "readout_image_equivalents": readout_counts["image_equivalents"],
