@@ -1,0 +1,118 @@
+{
+  "protocol": "geoprr_v2_role_triangle_matched_source_v1",
+  "seed": 20262020,
+  "epochs_per_arm": 65,
+  "configs": {
+    "full": {
+      "name": "mobilenetv4_role_triangle_full",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "association": "full",
+        "tile": 16
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 65,
+        "warmup_epochs": 5,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 0.0001,
+        "head_lr": 0.0005,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "three_role_joint_cross_entropy/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "same full best48 initialization, parameters, structural labels, objective and exposure; normalized P-B association versus the product of its own factor marginals",
+      "protocol": "geoprr_v2_role_triangle_source_only_v1",
+      "initialization": "full_best48"
+    },
+    "separable": {
+      "name": "mobilenetv4_role_triangle_separable",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "association": "separable",
+        "tile": 16
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 65,
+        "warmup_epochs": 5,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 0.0001,
+        "head_lr": 0.0005,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "three_role_joint_cross_entropy/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "same full best48 initialization, parameters, structural labels, objective and exposure; normalized P-B association versus the product of its own factor marginals",
+      "protocol": "geoprr_v2_role_triangle_source_only_v1",
+      "initialization": "full_best48"
+    }
+  },
+  "code_revision": "9909333",
+  "arms": [
+    "full",
+    "separable_if_original_G1_and_best48_protection_pass"
+  ],
+  "primary_readout": "full_native_probability_mean",
+  "checkpoint_selection": "complete1506 source NMAE, earliest strict minimum",
+  "initial_full_best48_checkpoint": "/root/autodl-tmp/geoprrnet/runs/geoprr_v2_tail/iteration_v6_reference_feedback/readers/feedback_s20262020/best.pt",
+  "parameters_per_arm": 7461316,
+  "source_images_unique": 18590,
+  "epoch_donors": 22686,
+  "epoch_recipients": 8192,
+  "epoch_images": 30878,
+  "epoch_optimizer_batches": 709,
+  "original_G1": "unchanged compare_to_ordinary ten RGB checks plus reused G0 teacher label gate",
+  "best48_protection": "separate additional gate: full mean, common1495 mean/median/p90, r8ordinary1497 mean no worse; no new >2/5",
+  "counterfactual": "same checkpoint product of the new relative J marginals; diagnosis only",
+  "reference_summary": "true triangle posterior A marginal entropy and maximum",
+  "scope": "source-development only; other seeds, official test and old controls are forbidden",
+  "continuation": "full must pass original G1 and separate best48 protection before separable",
+  "private_artifacts": "run/data_contract contains original geometry; public export requires explicit allowlist",
+  "teacher_label_gate_passed": true,
+  "runtime_preflight": "runtime_preflight.json"
+}

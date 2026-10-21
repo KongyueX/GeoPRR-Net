@@ -85,4 +85,6 @@ L_{role}=\log Z-\mathbb E_{q_Aq_Pq_B}[U+\log F].
 
 完整reader、训练入口与匹配队列已接入。新增2项CPU集成检查通过：真实A边缘／联合CE／梯度、497项state与496项旧参数迁移接口、新W进入头参数组及共享冻结规则，0CNN／0GPU／0optimizer，2次特征头图像调用／1次三角归约／2次梯度查询，进程2.661064s。
 
-实际best48权重迁移与RGB满batch64反传准入已通过：两臂2张unique RGB共132个CNN图像前向、4次反传、0optimizer；完整进程23.224318s，最大allocated22,271,958,528bytes，W=0保存读数差≤2.124e−6。tile16已冻结。full65于北京时间2026-10-21 22:17:11启动，尚无完成验证结果，separable等待门槛。详细边界和分阶段成本见[资源／启动记录](data/geoprr_v2_role_triangle_20261021/README.md)。
+实际best48权重迁移与RGB满batch64反传准入已通过：两臂2张unique RGB共132个CNN图像前向、4次反传、0optimizer；进程23.224318s，W=0保存读数差≤2.124e−6，tile16冻结。
+
+full65于北京时间2026-10-22 02:54:24正常完成，最终best64，NMAE0.059146231%FS／max3.350493312，>1／2／5=6／1／0。2810／3663救回至2%内，但3172从0.094023%FS升至3.350493%FS成为新增严重错误。普通四项聚合精度均改善，原G1为10／11、best48保护5／6，未通过。separable依协议跳过，无法归因关联机制。完整对比和成本见[最终记录](data/geoprr_v2_role_triangle_20261021/README.md)。

@@ -1,0 +1,13 @@
+{
+  "checkpoint_epoch": 64,
+  "best_epoch": 64,
+  "best_nmae": 0.0005914623106257776,
+  "protocol": "geoprr_v2_role_triangle_source_only_v1",
+  "seed": 20262020,
+  "state_tensors": 497,
+  "loaded_old_tensors": 496,
+  "new_zero_parameter": "state_head.Wpb",
+  "new_parameters": 256,
+  "checkpoint_bytes_retained_on_server": 106570953,
+  "scope": "CPU metadata confirmation; no image or model forward; weights not exported"
+}

@@ -1,0 +1,18 @@
+{
+  "claim_supported": "partial",
+  "review_independence": "same-family",
+  "acceptance_status": "provisional",
+  "numeric_audit_status": "PASS",
+  "scope": "single-seed complete1506 source development",
+  "supports": [
+    "aggregate NMAE, worst151 and maximum improve over retainedbest48",
+    "specified ordinary aggregate protections pass",
+    "2810 and3663 move below2%FS"
+  ],
+  "does_not_support": [
+    "no-new-error protection:3172 newly exceeds2%FS",
+    "causal benefit ofP-B association:matchedseparable not run",
+    "cross-seed, official-test, real-transfer or novelty certification"
+  ],
+  "next_action": "archive validation-rejected result; only bounded cache-first diagnosis next, no automatic new training"
+}

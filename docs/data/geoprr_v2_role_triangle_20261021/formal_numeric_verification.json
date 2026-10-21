@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "scope": "deterministic recomputation from saved complete1506 predictions and65history; not an independent semantic audit",
+  "samples": 1506,
+  "ID_group_target": "exact",
+  "saved_error_max_difference": 0.0,
+  "all_valid": true,
+  "ordinary_populations": [
+    1495,
+    1497
+  ],
+  "old_severe_population": 6,
+  "best_selection": "epoch64 earliest strict minimum among65",
+  "controller_metrics_gates_pairedIDs": "exact within1e-11 scalar tolerance",
+  "history_completed_counters": "exact",
+  "public_run_data_contract_exported": false,
+  "separable_started": false,
+  "CNN_forwards": 0,
+  "optimizer_steps": 0
+}

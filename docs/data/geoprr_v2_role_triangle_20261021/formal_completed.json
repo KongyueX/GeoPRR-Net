@@ -1,0 +1,21 @@
+{
+  "protocol": "geoprr_v2_role_triangle_source_only_v1",
+  "epochs": 65,
+  "best_epoch": 64,
+  "best_nmae": 0.0005914623106257776,
+  "totals": {
+    "train_batches": 46085,
+    "optimizer_updates": 46068,
+    "amp_skipped_updates": 17,
+    "donor_images": 1474590,
+    "recipient_images": 532480,
+    "validation_images": 97890,
+    "training_wall_seconds": 16109.221002571285,
+    "validation_wall_seconds": 459.43121307715774
+  },
+  "current_process_wall_seconds": 16629.503464560956,
+  "checkpointed_process_wall_seconds_before_resume": 0.0,
+  "uncheckpointed_work_after_interruptions": "not included in checkpointed counters; use controller process logs",
+  "seed": 20262020,
+  "seed_expansion": false
+}
