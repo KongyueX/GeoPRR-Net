@@ -1,6 +1,6 @@
 # 参考条件联合读数：结构与标签准入
 
-完整1506个理想角色标签的读出量化检查通过，RGB网络和同参数product对照已经实现，尚无新模型准确率。正式实验方法与准入／停止规则见[冻结协议](../../GEOPRR_V2_REFERENCE_RELATION_PROTOCOL_CN.md)。
+完整1506个理想角色标签的读出量化检查通过，RGB网络与同参数product对照已经实现。joint正式训练于北京时间2026年10月21日13:10:55启动，完整结果待完成。正式实验方法与准入／停止规则见[冻结协议](../../GEOPRR_V2_REFERENCE_RELATION_PROTOCOL_CN.md)。
 
 ## 实际网络差异
 
@@ -37,7 +37,9 @@
 
 完整RGB类的三个CPU检查通过，覆盖Torch／NumPy全质量读出、半像素教师标签和一个未训练64×64生成RGB前向／新头反传。模型参数／初始化选择与两臂一致。另有针对性数据合同检查覆盖逐行路径／监督变更、配对曝光以及验证输入失败完整保留。
 
-上述生成输入检查不是源图准确率。实际best63共享权重、原始名单及零优化GPU runtime属于另外的准入记录，不从这些单测推导训练成功。
+上述生成输入检查不是源图准确率。实际GPU runtime另已通过：原14494＋固定4096训练名单、1506验证ID／group／target一致，两臂逐tensor初始状态相同；使用相同2张RGB分别前向，共4张图像前向、1次新头反传、0优化步。共享best63加载476个状态tensor，概率质量最大偏差7.16×10⁻⁷，实际验证CSV接口通过。该进程9.136674s包含数据／模型加载，不作为推理速度或完整训练峰值。
+
+正式代码版本为`1e5a08d`，首批32个donor＋11个recipient已经执行，日志显示有限loss。主臂65轮完成后才应用完整源开发门槛；未通过即跳过product。没有扩seed或启动官方test。当前最好完成参照仍是普通监督best63，训练启动不代表新模型改善。
 
 ## Limitations
 
@@ -49,6 +51,7 @@
 
 - [完整逐图标签读出](teacher_label_rows.csv)、[标签量化摘要](teacher_summary.json)、[product量化对照](teacher_product_quantization.json)、[独立复核](teacher_verification.json)。
 - [圆周算子检查](relation_core_checks.json)、[条件模块检查](conditional_module_checks.json)、[RGB类CPU检查](RGB_integration_checks.json)。
+- [实际共享权重与GPU runtime准入](runtime_preflight.json)。
 - [网络／标签／读出实现](../../../experiments/geoprr_v2_reference_relation.py)、[训练入口](../../../experiments/train_geoprr_v2_reference_relation.py)、[门控控制器](../../../experiments/run_geoprr_v2_reference_relation.py)。
 
 原始H／相机／XYZ／像素／phase缓存及权重保留在私有归档，公开逐图行只包含ID、读出误差与质量标量。

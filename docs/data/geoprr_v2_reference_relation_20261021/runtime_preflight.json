@@ -1,0 +1,170 @@
+{
+  "status": "passed",
+  "process_pid": 89654,
+  "configs": {
+    "joint": {
+      "name": "mobilenetv4_reference_relation_joint",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "coupling": "joint"
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 65,
+        "warmup_epochs": 5,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 0.0001,
+        "head_lr": 0.0005,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "same role conditionals and marginal distributions; joint versus marginal product only"
+    },
+    "product": {
+      "name": "mobilenetv4_reference_relation_product",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "coupling": "independent"
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 65,
+        "warmup_epochs": 5,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 0.0001,
+        "head_lr": 0.0005,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "same role conditionals and marginal distributions; joint versus marginal product only"
+    }
+  },
+  "code_revision": "1e5a08d",
+  "same_initial_parameters": true,
+  "original_train_images": 14494,
+  "supplementary_images": 4096,
+  "validation_images": 1506,
+  "donor_items": 22686,
+  "recipient_items": 8192,
+  "unique_RGB_images_forwarded": 2,
+  "CNN_image_forwards": 4,
+  "original_validation_images_read_without_forward": 1,
+  "backward_calls": 1,
+  "optimizer_steps": 0,
+  "arms": {
+    "joint": {
+      "parameters": 7461060,
+      "head_parameters": 29812,
+      "initialization": {
+        "source_epoch": 63,
+        "source_protocol": "geoprr_v2_source_only_v1",
+        "loaded_shared_tensors": 476,
+        "shared_prefixes": [
+          "backbone.",
+          "lateral.",
+          "refine."
+        ],
+        "new_head": "reference rectifier/radial embedding/content matching; no old U/Q/M/direct heads"
+      },
+      "probability_mass_max_error": 5.960464477539062e-07,
+      "losses": {
+        "role_nll_raw": 16.546375274658203,
+        "role_nll_normalized": 0.994640588760376,
+        "field_l1": 0.0013289664639160037,
+        "reading_cdf": 0.4200894236564636,
+        "total": 1.4160590171813965
+      },
+      "validation_CSV_interface_passed": true,
+      "peak_cuda_allocated_bytes": 180349440,
+      "reference_max": [
+        0.007674342952668667,
+        0.007674233056604862
+      ],
+      "joint_product_state_l1": [
+        0.005445352755486965,
+        0.0053666699677705765
+      ]
+    },
+    "product": {
+      "parameters": 7461060,
+      "head_parameters": 29812,
+      "initialization": {
+        "source_epoch": 63,
+        "source_protocol": "geoprr_v2_source_only_v1",
+        "loaded_shared_tensors": 476,
+        "shared_prefixes": [
+          "backbone.",
+          "lateral.",
+          "refine."
+        ],
+        "new_head": "reference rectifier/radial embedding/content matching; no old U/Q/M/direct heads"
+      },
+      "probability_mass_max_error": 7.152557373046875e-07,
+      "losses": {
+        "role_nll_raw": 16.546375274658203,
+        "role_nll_normalized": 0.994640588760376,
+        "field_l1": 0.0013289664639160037,
+        "reading_cdf": 0.42014944553375244,
+        "total": 1.4161189794540405
+      },
+      "validation_CSV_interface_passed": true,
+      "peak_cuda_allocated_bytes": 200353280,
+      "reference_max": [
+        0.007674342952668667,
+        0.007674233056604862
+      ],
+      "joint_product_state_l1": [
+        0.005445352755486965,
+        0.0053666699677705765
+      ]
+    }
+  },
+  "wall_seconds": 9.13667394965887,
+  "scope": "RGB runtime, initialization and label-interface preflight; no model accuracy evaluation"
+}
