@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "scope": "CPU initialization and cached-energy/synthetic-token interface only, no RGB forward or GPU resource claim",
+  "seed": 20262020,
+  "initializations": [
+    {
+      "source_epoch": 64,
+      "loaded_full_tensors": 497,
+      "preserved_all_trained_weights": true,
+      "new_parameters": 4672,
+      "new_zero_parameter": "state_head.reference_verifier.last.weight"
+    },
+    {
+      "source_epoch": 64,
+      "loaded_full_tensors": 497,
+      "preserved_all_trained_weights": true,
+      "new_parameters": 4672,
+      "new_zero_parameter": "state_head.reference_verifier.last.weight"
+    }
+  ],
+  "states_each": 500,
+  "parameters_each": 7465988,
+  "new_parameters_each": 4672,
+  "all_initial_tensors_identical": true,
+  "cached_focus_ids": [
+    "sync_3172",
+    "sync_9323"
+  ],
+  "v0_reading_replay_max": 3.5762786865234375e-07,
+  "v0_mass_error_max": 5.960464477539062e-07,
+  "v0_CE_correction_max": 0.0,
+  "component_gradient_queries": 1,
+  "zero_output_first_step_gradient_finite_nonzero": true,
+  "CNN_image_forwards": 0,
+  "GPU_calls": 0,
+  "optimizer_updates": 0,
+  "reader_update_calls": 2,
+  "reference_verifier_image_calls": 4,
+  "readout_module_calls": 4,
+  "readout_module_image_equivalents": 8,
+  "reader_contract_wall_seconds": 3.5800991505384445,
+  "timing_scope": "after imports; not full process wall"
+}

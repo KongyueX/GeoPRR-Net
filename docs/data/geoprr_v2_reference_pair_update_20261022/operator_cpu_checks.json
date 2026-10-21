@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "new_CPU_operator_tests": 3,
+  "operator_calls": 18,
+  "CE_correction_calls": 8,
+  "gradient_queries": 10,
+  "differentiable_operator_inputs": 5,
+  "CNN_image_forwards": 0,
+  "GPU_calls": 0,
+  "optimizer_updates": 0,
+  "unittest_seconds": 0.794,
+  "process_wall_seconds": 1.7680558376014233,
+  "scope": "new tinyK exact operator checks only; no GPU resource or learned performance claim",
+  "checks": [
+    "tinyK direct enumeration, PB joint marginal, fullmass, trueA and relativeJ",
+    "exact original roleCE and all5 input gradients; v0 base CE gradients unchanged",
+    "commonroll, base logconstantshifts, tile independence and concentrated finite logits"
+  ]
+}
