@@ -1,0 +1,21 @@
+{
+  "component_feature_forward_calls": 7,
+  "component_feature_examples": 14,
+  "component_feature_tokens": 126,
+  "component_backward_calls": 1,
+  "direct_global_probability_fixtures": 2,
+  "row_offset_fixtures": 1,
+  "status": "PASS",
+  "tests": 6,
+  "failures": 0,
+  "errors": 0,
+  "torch": "2.11.0+cu128",
+  "process_pid": 123175,
+  "wall_seconds": 0.21488197147846222,
+  "cpu_threads": 1,
+  "CNN_image_forwards": 0,
+  "source_RGB_image_forwards": 0,
+  "checkpoint_loads": 0,
+  "optimizer_updates": 0,
+  "gpu_calls": 0
+}

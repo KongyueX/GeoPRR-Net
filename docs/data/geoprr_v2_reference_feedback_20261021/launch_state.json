@@ -1,0 +1,41 @@
+{
+  "controller_pid": 123362,
+  "started_at_utc": "2026-10-21T09:39:34.485351+00:00",
+  "command": [
+    "/root/autodl-tmp/geoprrnet/.venv/bin/python",
+    "-u",
+    "-m",
+    "experiments.run_geoprr_v2_reference_feedback",
+    "--home",
+    "/root/autodl-tmp/geoprrnet"
+  ],
+  "code_revision": "7cad738",
+  "output": "/root/autodl-tmp/geoprrnet/runs/geoprr_v2_tail/iteration_v6_reference_feedback",
+  "seed": 20262020,
+  "arms": "feedback65; local65 only if originalG1 passes",
+  "observed_at_utc": "2026-10-21T09:40:11.872782+00:00",
+  "trainer_pid": 123365,
+  "process_commands_match": true,
+  "only_gpu_process": 123365,
+  "completed_epochs": 0,
+  "current_epoch_running": 1,
+  "stage": "head_warmup",
+  "first_batch": {
+    "donor_images": 32,
+    "recipient_images": 11,
+    "loss": 0.7700107097625732
+  },
+  "parameters": 7461060,
+  "initialization": {
+    "source_epoch": 57,
+    "loaded_full_tensors": 496,
+    "preserved_all_trained_weights": true
+  },
+  "expected_full_epoch": {
+    "unique_training_images": 18590,
+    "donor_images": 22686,
+    "recipient_images": 8192,
+    "total_image_forwards": 30878,
+    "optimizer_batches": 709
+  }
+}

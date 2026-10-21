@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "frozen_best57_self_comparison_samples": 1506,
+  "ordinary_cohort_samples": [
+    1495,
+    1497
+  ],
+  "new_or_rescued_ids": 0,
+  "CNN_image_forwards": 0
+}
