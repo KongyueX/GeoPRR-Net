@@ -1,0 +1,82 @@
+{
+  "protocol": "geoprr_v2_relative_state_source_only_v1",
+  "config": {
+    "name": "mobilenetv4_relative_state_joint",
+    "model": {
+      "bins": 256,
+      "decoder_dim": 64,
+      "components": 2,
+      "coupling": "joint"
+    },
+    "data": {
+      "image_size": 768,
+      "output_size": 192
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 65,
+      "warmup_epochs": 5,
+      "batch_size": 32,
+      "workers": 8,
+      "backbone_lr": 0.0001,
+      "head_lr": 0.0005,
+      "min_lr": 1e-06,
+      "weight_decay": 0.01,
+      "gradient_clip": 5.0,
+      "amp": true
+    },
+    "objective": "relative_state_nll/(2*log(256)) + progress_cdf",
+    "state_grid": {
+      "delta": "circular [0,2pi),256",
+      "span": "inclusive [0,2pi],256"
+    },
+    "exposure": {
+      "donor_items": 22686,
+      "recipient_images": 8192,
+      "total_images": 30878,
+      "optimizer_batches": 709
+    }
+  },
+  "train_unique_images": 18590,
+  "train_items": 22686,
+  "expected_full_epoch": {
+    "donor_images": 22686,
+    "recipient_images": 8192,
+    "total_image_forwards": 30878,
+    "optimizer_batches": 709
+  },
+  "validation_images": 1506,
+  "model_selection": "full1506_native_nmae_earliest_tie",
+  "initialization": {
+    "checkpoint": "ordinary_supervised_seed20262020_best63; shared backbone/lateral/refine/appearance_norm only",
+    "source_epoch": 63,
+    "source_protocol": "geoprr_v2_source_only_v1",
+    "loaded_shared_tensors": 478,
+    "new_head": "random initialization under the declared seed"
+  },
+  "parameters": 7963234,
+  "shared_parameters": 7433168,
+  "head_parameters": 530066,
+  "device": "cuda",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "inference_input": "RGB only; state geometry and y are supervision/scoring labels",
+  "recipient_batching": "donors and recipients concatenated in one forward; old reader used separate forwards",
+  "comparison": "new arms have matched exposures and updates; old supervised has different head/objectives and warm start history",
+  "data_contract_summary": {
+    "original_training_roster": 14494,
+    "supplemental_training_images": 4096,
+    "train_unique_images": 18590,
+    "validation_images": 1506,
+    "training_exposure_edges": 8192,
+    "train_source_roles": {
+      "original": 14494,
+      "supplement": 4096
+    },
+    "full_validation_ids": "predictions.csv.gz",
+    "geometry_labels": "own-height projected-mesh relative state labels v1; offline supervision only",
+    "manifests": "frozen original train/validation rosters plus existing compositional_source_v1 training supplement and training edges",
+    "train_vertex_geometry_or_weights_in_archive": false
+  }
+}

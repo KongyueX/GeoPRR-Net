@@ -1,0 +1,23 @@
+{
+  "epoch": 60,
+  "samples": 1506,
+  "groups": 70,
+  "nmae": 0.004533216657177179,
+  "nmae_percent_fs": 0.45332166571771787,
+  "acc_at_1": 0.9209827357237715,
+  "acc_at_2": 0.9588313413014609,
+  "acc_at_5": 0.9860557768924303,
+  "coverage": 1.0,
+  "failed": 0,
+  "median_error": 0.0013231933116912842,
+  "p90_error": 0.00728723406791687,
+  "p95_error": 0.0168507918715477,
+  "tail10_nmae": 0.030753719890243468,
+  "maximum_error": 0.8284131698310375,
+  "errors_above_2_percent_fs": 62,
+  "errors_above_5_percent_fs": 21,
+  "input_failures": 0,
+  "errors_above_1_percent_fs": 119,
+  "mean_invalid_mass": 1.5675182960698635e-09,
+  "mean_outside_arc_mass": 0.0029719001319586194
+}

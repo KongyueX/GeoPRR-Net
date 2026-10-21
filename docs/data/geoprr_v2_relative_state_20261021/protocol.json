@@ -1,0 +1,100 @@
+{
+  "protocol": "geoprr_v2_relative_state_matched_source_v1",
+  "seed": 20262020,
+  "epochs_per_arm": 65,
+  "configs": {
+    "joint": {
+      "name": "mobilenetv4_relative_state_joint",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "components": 2,
+        "coupling": "joint"
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 65,
+        "warmup_epochs": 5,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 0.0001,
+        "head_lr": 0.0005,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true
+      },
+      "objective": "relative_state_nll/(2*log(256)) + progress_cdf",
+      "state_grid": {
+        "delta": "circular [0,2pi),256",
+        "span": "inclusive [0,2pi],256"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      }
+    },
+    "independent": {
+      "name": "mobilenetv4_relative_state_independent",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "components": 2,
+        "coupling": "independent"
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 65,
+        "warmup_epochs": 5,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 0.0001,
+        "head_lr": 0.0005,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true
+      },
+      "objective": "relative_state_nll/(2*log(256)) + progress_cdf",
+      "state_grid": {
+        "delta": "circular [0,2pi),256",
+        "span": "inclusive [0,2pi],256"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      }
+    }
+  },
+  "code_revision": "cd4680f",
+  "arms": [
+    "joint",
+    "independent_if_joint_gate_passes"
+  ],
+  "primary_readout": "full_native_probability_mean",
+  "checkpoint_selection": "complete1506 source NMAE, earliest strict minimum",
+  "initial_shared_checkpoint": "ordinary_supervised_seed20262020_best63 shared modules",
+  "labels": "offline own-height geometry relative_state_labels_v1_20261021",
+  "source_images_unique": 18590,
+  "epoch_donors": 22686,
+  "epoch_recipients": 8192,
+  "epoch_images": 30878,
+  "epoch_optimizer_batches": 709,
+  "scope": "source-development only, no official test or automatic seed expansion",
+  "continuation": "joint must pass predeclared ordinary/tail/new-error gates before matched control",
+  "result_status": "joint_validation_rejected",
+  "matched_independent_status": "skipped; predeclared joint G1/G2 failed",
+  "public_result": "summary.json"
+}

@@ -1,0 +1,37 @@
+{
+  "name": "mobilenetv4_relative_state_joint",
+  "model": {
+    "bins": 256,
+    "decoder_dim": 64,
+    "components": 2,
+    "coupling": "joint"
+  },
+  "data": {
+    "image_size": 768,
+    "output_size": 192
+  },
+  "training": {
+    "seed": 20262020,
+    "epochs": 65,
+    "warmup_epochs": 5,
+    "batch_size": 32,
+    "workers": 8,
+    "backbone_lr": 0.0001,
+    "head_lr": 0.0005,
+    "min_lr": 1e-06,
+    "weight_decay": 0.01,
+    "gradient_clip": 5.0,
+    "amp": true
+  },
+  "objective": "relative_state_nll/(2*log(256)) + progress_cdf",
+  "state_grid": {
+    "delta": "circular [0,2pi),256",
+    "span": "inclusive [0,2pi],256"
+  },
+  "exposure": {
+    "donor_items": 22686,
+    "recipient_images": 8192,
+    "total_images": 30878,
+    "optimizer_batches": 709
+  }
+}

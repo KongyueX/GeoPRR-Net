@@ -1,0 +1,8 @@
+{
+  "valid_samples": 1506,
+  "input_valid_samples": 1506,
+  "mean_invalid_mass": 1.5675182960698635e-09,
+  "max_invalid_mass": 1.8995518757947139e-06,
+  "mean_outside_arc_mass": 0.0029719001319586194,
+  "max_outside_arc_mass": 0.6667306423187256
+}

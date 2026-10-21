@@ -1,0 +1,18 @@
+{
+  "status": "validation_rejected",
+  "protocol": "geoprr_v2_relative_state_matched_source_v1",
+  "seed": 20262020,
+  "train_joint": {
+    "status": "complete",
+    "started_at": "2026-10-20T20:40:04.947868+00:00",
+    "finished_at": "2026-10-21T00:08:49.749887+00:00",
+    "exit_code": 0
+  },
+  "independent_status": "skipped_after_joint_gate_failure",
+  "deferred_work": [
+    "matched_control",
+    "other_seeds",
+    "official_test"
+  ],
+  "next_action": "preserve negative result and reassess mechanism without loss/window/seed expansion"
+}

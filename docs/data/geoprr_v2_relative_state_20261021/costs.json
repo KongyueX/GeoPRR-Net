@@ -1,0 +1,38 @@
+{
+  "incremental_joint_training": {
+    "protocol": "geoprr_v2_relative_state_source_only_v1",
+    "epochs": 65,
+    "best_epoch": 60,
+    "best_nmae": 0.004533216657177179,
+    "totals": {
+      "train_batches": 46085,
+      "optimizer_updates": 46067,
+      "amp_skipped_updates": 18,
+      "donor_images": 1474590,
+      "recipient_images": 532480,
+      "validation_images": 97890,
+      "training_wall_seconds": 12064.96078589186,
+      "validation_wall_seconds": 431.792673304677
+    },
+    "current_process_wall_seconds": 12521.720680467784,
+    "checkpointed_process_wall_seconds_before_resume": 0.0,
+    "uncheckpointed_work_after_interruptions": "not included in checkpointed counters; use controller process logs",
+    "seed": 20262020,
+    "seed_expansion": false
+  },
+  "train_image_forwards": 2007070,
+  "epoch_elapsed_seconds_sum": 12496.931469745934,
+  "peak_cuda_memory_bytes": 19890153984,
+  "peak_cuda_reserved_bytes": 25956450304,
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "parameters": 7963234,
+  "shared_parameters": 7433168,
+  "head_parameters": 530066,
+  "scope": "incremental joint 65 epochs including complete validation each epoch; inherited ordinary checkpoint training and offline label construction are separate historical costs",
+  "inference_latency": "not independently measured in this stage; validation wall includes data movement, loader, scoring and reporting and is not single-image model latency",
+  "independent_training_seconds": 0,
+  "official_test_images": 0,
+  "seed_count": 1
+}
