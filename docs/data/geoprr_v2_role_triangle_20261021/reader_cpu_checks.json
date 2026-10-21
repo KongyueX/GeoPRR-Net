@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "tests": 2,
+  "process_wall_seconds": 2.6610635332763195,
+  "unittest_seconds": 1.723,
+  "CNN_image_forwards": 0,
+  "GPU_calls": 0,
+  "optimizer_updates": 0,
+  "parameters": 7461316,
+  "state_tensors": 497,
+  "loaded_old_tensors": 496,
+  "new_zero_parameters": 256,
+  "feature_head_image_calls": 2,
+  "triangle_contract_calls": 1,
+  "gradient_queries": 2,
+  "scope": "CPU new posterior/CE/loader interface; synthetic checkpoint, actualbest48RGB runtime pending"
+}

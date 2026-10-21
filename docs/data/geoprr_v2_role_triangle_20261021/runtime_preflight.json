@@ -1,0 +1,193 @@
+{
+  "status": "passed",
+  "configs": {
+    "full": {
+      "name": "mobilenetv4_role_triangle_full",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "association": "full",
+        "tile": 16
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 65,
+        "warmup_epochs": 5,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 0.0001,
+        "head_lr": 0.0005,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "three_role_joint_cross_entropy/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "same full best48 initialization, parameters, structural labels, objective and exposure; normalized P-B association versus the product of its own factor marginals",
+      "protocol": "geoprr_v2_role_triangle_source_only_v1",
+      "initialization": "full_best48"
+    },
+    "separable": {
+      "name": "mobilenetv4_role_triangle_separable",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "association": "separable",
+        "tile": 16
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 65,
+        "warmup_epochs": 5,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 0.0001,
+        "head_lr": 0.0005,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "three_role_joint_cross_entropy/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "same full best48 initialization, parameters, structural labels, objective and exposure; normalized P-B association versus the product of its own factor marginals",
+      "protocol": "geoprr_v2_role_triangle_source_only_v1",
+      "initialization": "full_best48"
+    }
+  },
+  "code_revision": "9909333",
+  "optimizer_steps": 0,
+  "unique_RGB_images_forwarded": 2,
+  "CNN_image_forwards": 132,
+  "backward_calls": 4,
+  "teacher_numerical_gate_passed": true,
+  "max_effective_batch_size": 64,
+  "same_initial_parameters": true,
+  "stages": {
+    "full_head_warmup": {
+      "effective_batch": 2,
+      "repeated_unique_images": 2,
+      "losses": {
+        "role_nll_raw": 2.3556292057037354,
+        "role_nll_normalized": 0.1416022777557373,
+        "field_l1": 0.0003369185433257371,
+        "reading_cdf": 0.05095430463552475,
+        "total": 0.19289350509643555
+      },
+      "probability_mass_max_error": 2.384185791015625e-07,
+      "best48_reading_replay_max": 2.123415470123291e-06,
+      "star_objective_replay_max": 0.0,
+      "forward_and_loss_seconds": 4.711950898170471,
+      "forward_backward_seconds": 4.800126112997532,
+      "peak_cuda_allocated_bytes": 178906624,
+      "peak_cuda_reserved_bytes": 228589568,
+      "gradients_finite": true
+    },
+    "full_joint_finetune_maxbatch": {
+      "effective_batch": 64,
+      "repeated_unique_images": 2,
+      "losses": {
+        "role_nll_raw": 3.4405605792999268,
+        "role_nll_normalized": 0.20681998133659363,
+        "field_l1": 0.0003477817226666957,
+        "reading_cdf": 0.16357961297035217,
+        "total": 0.3707473874092102
+      },
+      "probability_mass_max_error": 2.980232238769531e-07,
+      "best48_reading_replay_max": null,
+      "star_objective_replay_max": null,
+      "forward_and_loss_seconds": 3.956719946116209,
+      "forward_backward_seconds": 11.01186479255557,
+      "peak_cuda_allocated_bytes": 22255050240,
+      "peak_cuda_reserved_bytes": 28194111488,
+      "gradients_finite": true
+    },
+    "separable_head_warmup": {
+      "effective_batch": 2,
+      "repeated_unique_images": 2,
+      "losses": {
+        "role_nll_raw": 2.3556292057037354,
+        "role_nll_normalized": 0.1416022777557373,
+        "field_l1": 0.0003369185433257371,
+        "reading_cdf": 0.05095430463552475,
+        "total": 0.19289350509643555
+      },
+      "probability_mass_max_error": 3.5762786865234375e-07,
+      "best48_reading_replay_max": 2.115964889526367e-06,
+      "star_objective_replay_max": 0.0,
+      "forward_and_loss_seconds": 0.029067151248455048,
+      "forward_backward_seconds": 0.07377112284302711,
+      "peak_cuda_allocated_bytes": 197223936,
+      "peak_cuda_reserved_bytes": 234881024,
+      "gradients_finite": true
+    },
+    "separable_joint_finetune_maxbatch": {
+      "effective_batch": 64,
+      "repeated_unique_images": 2,
+      "losses": {
+        "role_nll_raw": 3.4405605792999268,
+        "role_nll_normalized": 0.20681998133659363,
+        "field_l1": 0.0003477817226666957,
+        "reading_cdf": 0.16357962787151337,
+        "total": 0.3707473874092102
+      },
+      "probability_mass_max_error": 2.980232238769531e-07,
+      "best48_reading_replay_max": null,
+      "star_objective_replay_max": null,
+      "forward_and_loss_seconds": 0.13618259504437447,
+      "forward_backward_seconds": 0.4874671772122383,
+      "peak_cuda_allocated_bytes": 22271958528,
+      "peak_cuda_reserved_bytes": 28194111488,
+      "gradients_finite": true
+    }
+  },
+  "scope": "new reader initialization and RGB resource preflight; no accuracy evaluation",
+  "initialization": {
+    "source_epoch": 48,
+    "source_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+    "loaded_full_tensors": 496,
+    "preserved_all_trained_weights": true,
+    "new_zero_parameter": "state_head.Wpb",
+    "new_parameters": 256
+  },
+  "shared_finetune_backward_passed": true,
+  "parameters_each_arm": 7461316,
+  "wall_seconds": 23.224318332970142,
+  "memory_scope": "RGB zerooptimizer forward/backward; Adam moments not allocated",
+  "full1506_model_evaluation": false
+}

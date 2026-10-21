@@ -1,0 +1,39 @@
+{
+  "status": "running",
+  "code_revision": "9909333",
+  "parent_pid": 157356,
+  "full_training_child_pid": 157359,
+  "started_at_utc": "2026-10-21T14:17:11.156690+00:00",
+  "started_at_Beijing": "2026-10-21 22:17:11",
+  "checked_at_utc": "2026-10-21T14:18:39.908115+00:00",
+  "model_seed": 20262020,
+  "output": "runs/geoprr_v2_tail/iteration_v7_role_triangle",
+  "entrypoint": "experiments.run_geoprr_v2_role_triangle",
+  "current_step": "train_full_s20262020",
+  "completed_epochs": 0,
+  "first_batch": {
+    "epoch": 1,
+    "stage": "head_warmup",
+    "donor_images": 32,
+    "recipient_images": 11,
+    "loss": 0.09046000242233276
+  },
+  "parameters_each_arm": 7461316,
+  "shared_parameters": 7431248,
+  "head_parameters": 30068,
+  "old_tensors_loaded": 496,
+  "new_zero_parameter": "state_head.Wpb",
+  "new_parameters": 256,
+  "epoch_exposure": {
+    "unique_images": 18590,
+    "donor_images": 22686,
+    "recipient_images": 8192,
+    "total_forward_images": 30878,
+    "batches": 709
+  },
+  "separable_started": false,
+  "control_rule": "full complete65 passes unchanged originalG1 and separatebest48protection then matchedseparable65",
+  "inference_input": "RGB ROI only",
+  "preflight_only_updates": 0,
+  "scope": "dispatch/firstbatch only; no new model accuracy result or stable ETA"
+}
