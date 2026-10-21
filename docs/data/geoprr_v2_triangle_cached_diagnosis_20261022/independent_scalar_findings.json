@@ -1,0 +1,1278 @@
+{
+  "status": "complete",
+  "scope": "bounded descriptive scalar cache analysis; zero model/GPU/remote calls and no repeated full scoring or history audit",
+  "candidate_checkpoint": "v7 full best64",
+  "reference_checkpoint": "retained v6 feedback best48",
+  "population": {
+    "all1506": 1506,
+    "common1495": 1495,
+    "r8ordinary1497": 1497
+  },
+  "counterfactual_definition": "product of the relative delta/span marginals of saved triangular J at identical checkpoint; not Fsep factor deletion, W=0, localA deletion or a separately trained control",
+  "rank_definition": "one plus the count strictly greater; returned rank only if focus belongs to that cohort; no threshold is fitted",
+  "background_scalar_quantiles": {
+    "all1506": {
+      "reference_entropy": {
+        "min": 3.319306927096477e-07,
+        "q10": 0.029696867801249027,
+        "median": 0.6096143424510956,
+        "q90": 0.6834994852542877,
+        "q95": 0.6890110522508621,
+        "q99": 0.6931481689214707,
+        "max": 2.407822608947754
+      },
+      "reference_max": {
+        "min": 0.4384323060512543,
+        "q10": 0.5787836611270905,
+        "median": 0.7036173641681671,
+        "q90": 0.9953347742557526,
+        "q95": 0.9985651671886444,
+        "q99": 0.9999994039535522,
+        "max": 1.0
+      },
+      "joint_vs_product_state_l1": {
+        "min": 7.185639816498224e-08,
+        "q10": 0.013167212251573801,
+        "median": 0.36190757155418396,
+        "q90": 0.5601414740085602,
+        "q95": 0.596466138958931,
+        "q99": 0.7986239731311798,
+        "max": 1.399868369102478
+      },
+      "invalid_mass": {
+        "min": 1.258119997071816e-11,
+        "q10": 1.657772863428164e-09,
+        "median": 1.87435968967975e-08,
+        "q90": 1.3072335036667937e-07,
+        "q95": 2.2986998260421387e-07,
+        "q99": 1.9820996726594026e-06,
+        "max": 0.0075830621644854546
+      },
+      "outside_arc_mass": {
+        "min": 2.377381277951507e-12,
+        "q10": 5.217244136712651e-10,
+        "median": 1.555849582501878e-08,
+        "q90": 1.783671166322165e-07,
+        "q95": 7.546724418716622e-07,
+        "q99": 0.015124339377507586,
+        "max": 0.726530909538269
+      }
+    },
+    "common1495": {
+      "reference_entropy": {
+        "min": 3.319306927096477e-07,
+        "q10": 0.02968599796295166,
+        "median": 0.6095044016838074,
+        "q90": 0.6831429362297059,
+        "q95": 0.6886863887310029,
+        "q99": 0.6929877841472626,
+        "max": 2.407822608947754
+      },
+      "reference_max": {
+        "min": 0.4384323060512543,
+        "q10": 0.5786231875419616,
+        "median": 0.7034485340118408,
+        "q90": 0.9953368186950684,
+        "q95": 0.9985217690467835,
+        "q99": 0.9999994111061096,
+        "max": 1.0
+      },
+      "joint_vs_product_state_l1": {
+        "min": 7.185639816498224e-08,
+        "q10": 0.013163070939481259,
+        "median": 0.3617455065250397,
+        "q90": 0.5594882726669312,
+        "q95": 0.5939864993095398,
+        "q99": 0.7973634433746337,
+        "max": 1.399868369102478
+      },
+      "invalid_mass": {
+        "min": 1.258119997071816e-11,
+        "q10": 1.6680223868803523e-09,
+        "median": 1.8509954458068023e-08,
+        "q90": 1.290714152446527e-07,
+        "q95": 2.207523507991027e-07,
+        "q99": 1.1270197182966366e-06,
+        "max": 0.0075830621644854546
+      },
+      "outside_arc_mass": {
+        "min": 2.377381277951507e-12,
+        "q10": 5.144543679946878e-10,
+        "median": 1.5507414019566568e-08,
+        "q90": 1.6644499396534233e-07,
+        "q95": 5.693677735507655e-07,
+        "q99": 0.015332358591258356,
+        "max": 0.726530909538269
+      }
+    },
+    "r8ordinary1497": {
+      "reference_entropy": {
+        "min": 3.319306927096477e-07,
+        "q10": 0.029707737639546393,
+        "median": 0.6097242832183838,
+        "q90": 0.6832608342170715,
+        "q95": 0.6888112545013427,
+        "q99": 0.6930209279060364,
+        "max": 2.407822608947754
+      },
+      "reference_max": {
+        "min": 0.4384323060512543,
+        "q10": 0.5777446866035462,
+        "median": 0.7026305794715881,
+        "q90": 0.9953327298164367,
+        "q95": 0.9985121250152588,
+        "q99": 0.9999994087219238,
+        "max": 1.0
+      },
+      "joint_vs_product_state_l1": {
+        "min": 7.185639816498224e-08,
+        "q10": 0.013171353563666343,
+        "median": 0.36183640360832214,
+        "q90": 0.5596887588500977,
+        "q95": 0.5944664835929871,
+        "q99": 0.7988127946853637,
+        "max": 1.399868369102478
+      },
+      "invalid_mass": {
+        "min": 1.258119997071816e-11,
+        "q10": 1.6694629012548035e-09,
+        "median": 1.863545939784217e-08,
+        "q90": 1.29399424508847e-07,
+        "q95": 2.2113233626441806e-07,
+        "q99": 1.3865517576050435e-06,
+        "max": 0.0075830621644854546
+      },
+      "outside_arc_mass": {
+        "min": 2.377381277951507e-12,
+        "q10": 5.151437054706776e-10,
+        "median": 1.5510062567614114e-08,
+        "q90": 1.6887708227386612e-07,
+        "q95": 6.000035114084327e-07,
+        "q99": 0.015270204395055657,
+        "max": 0.726530909538269
+      }
+    }
+  },
+  "focus": {
+    "sync_3172": {
+      "target": 0.31569457054138184,
+      "native_prediction": 0.28218963742256165,
+      "native_signed_error_percent_fs": -3.350493311882019,
+      "native_absolute_error_percent_fs": 3.350493311882019,
+      "saved_relative_J_product_prediction": 0.3090095818042755,
+      "product_signed_error_percent_fs": -0.6684988737106323,
+      "product_absolute_error_percent_fs": 0.6684988737106323,
+      "product_minus_native_reading_percent_fs": 2.6819944381713867,
+      "product_absolute_error_change_percent_fs": -2.6819944381713867,
+      "product_moves_toward_target": true,
+      "v6_best48_prediction": 0.31663480401039124,
+      "v6_best48_absolute_error_percent_fs": 0.09402334690093994,
+      "common1495": false,
+      "r8ordinary1497": true,
+      "scalars": {
+        "reference_entropy": 1.7209131717681885,
+        "reference_max": 0.512285590171814,
+        "joint_vs_product_state_l1": 0.9174574613571167,
+        "invalid_mass": 0.000157190952450037,
+        "outside_arc_mass": 0.008245183154940605
+      },
+      "v6_scalars": {
+        "reference_entropy": 1.1044505834579468,
+        "reference_max": 0.5128944516181946,
+        "joint_vs_product_state_l1": 0.48858264088630676
+      },
+      "background_positions": {
+        "all1506": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": 2,
+            "fraction_cohort_strictly_below": 0.99867197875166,
+            "fraction_cohort_at_or_below": 0.99933598937583,
+            "cohort_samples": 1506
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": 1496,
+            "fraction_cohort_strictly_below": 0.006640106241699867,
+            "fraction_cohort_at_or_below": 0.0073041168658698535,
+            "cohort_samples": 1506
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": 3,
+            "fraction_cohort_strictly_below": 0.99800796812749,
+            "fraction_cohort_at_or_below": 0.99867197875166,
+            "cohort_samples": 1506
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": 4,
+            "fraction_cohort_strictly_below": 0.99734395750332,
+            "fraction_cohort_at_or_below": 0.99800796812749,
+            "cohort_samples": 1506
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": 21,
+            "fraction_cohort_strictly_below": 0.9860557768924303,
+            "fraction_cohort_at_or_below": 0.9867197875166003,
+            "cohort_samples": 1506
+          }
+        },
+        "common1495": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9993311036789297,
+            "fraction_cohort_at_or_below": 0.9993311036789297,
+            "cohort_samples": 1495
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.006688963210702341,
+            "fraction_cohort_at_or_below": 0.006688963210702341,
+            "cohort_samples": 1495
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9986622073578595,
+            "fraction_cohort_at_or_below": 0.9986622073578595,
+            "cohort_samples": 1495
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9986622073578595,
+            "fraction_cohort_at_or_below": 0.9986622073578595,
+            "cohort_samples": 1495
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9872909698996656,
+            "fraction_cohort_at_or_below": 0.9872909698996656,
+            "cohort_samples": 1495
+          }
+        },
+        "r8ordinary1497": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": 2,
+            "fraction_cohort_strictly_below": 0.9986639946559787,
+            "fraction_cohort_at_or_below": 0.9993319973279893,
+            "cohort_samples": 1497
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": 1487,
+            "fraction_cohort_strictly_below": 0.006680026720106881,
+            "fraction_cohort_at_or_below": 0.007348029392117568,
+            "cohort_samples": 1497
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": 3,
+            "fraction_cohort_strictly_below": 0.9979959919839679,
+            "fraction_cohort_at_or_below": 0.9986639946559787,
+            "cohort_samples": 1497
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": 3,
+            "fraction_cohort_strictly_below": 0.9979959919839679,
+            "fraction_cohort_at_or_below": 0.9986639946559787,
+            "cohort_samples": 1497
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": 20,
+            "fraction_cohort_strictly_below": 0.9866399465597863,
+            "fraction_cohort_at_or_below": 0.9873079492317969,
+            "cohort_samples": 1497
+          }
+        }
+      },
+      "fixed_mass_redistribution_bounds_percent_fs": {
+        "invalid_only": 0.0157190952450037,
+        "outside_only": 0.8245183154940605,
+        "invalid_plus_outside_disjoint": 0.8402374107390642,
+        "native_error_remaining_lower_bound_if_only_those_masses_changed": 2.510255901142955
+      },
+      "fixed_invalid_outside_reallocation_alone_cannot_remove_native_error": true,
+      "fixed_invalid_outside_reallocation_cannot_reach_threshold": {
+        "1": true,
+        "2": true,
+        "5": false
+      }
+    },
+    "sync_13360": {
+      "target": 0.1602078676223755,
+      "native_prediction": 0.14985230565071106,
+      "native_signed_error_percent_fs": -1.0355561971664429,
+      "native_absolute_error_percent_fs": 1.0355561971664429,
+      "saved_relative_J_product_prediction": 0.14987272024154663,
+      "product_signed_error_percent_fs": -1.0335147380828857,
+      "product_absolute_error_percent_fs": 1.0335147380828857,
+      "product_minus_native_reading_percent_fs": 0.002041459083557129,
+      "product_absolute_error_change_percent_fs": -0.002041459083557129,
+      "product_moves_toward_target": true,
+      "v6_best48_prediction": 0.15952575206756592,
+      "v6_best48_absolute_error_percent_fs": 0.06821155548095703,
+      "common1495": true,
+      "r8ordinary1497": true,
+      "scalars": {
+        "reference_entropy": 0.6318866610527039,
+        "reference_max": 0.6741669178009033,
+        "joint_vs_product_state_l1": 0.41667741537094116,
+        "invalid_mass": 0.0075830621644854546,
+        "outside_arc_mass": 0.0010965600376948714
+      },
+      "v6_scalars": {
+        "reference_entropy": 0.6187376379966736,
+        "reference_max": 0.6908964514732361,
+        "joint_vs_product_state_l1": 0.4294273555278778
+      },
+      "background_positions": {
+        "all1506": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": 569,
+            "fraction_cohort_strictly_below": 0.6221779548472776,
+            "fraction_cohort_at_or_below": 0.6228419654714475,
+            "cohort_samples": 1506
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": 923,
+            "fraction_cohort_strictly_below": 0.38711819389110225,
+            "fraction_cohort_at_or_below": 0.38778220451527223,
+            "cohort_samples": 1506
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": 587,
+            "fraction_cohort_strictly_below": 0.6102257636122178,
+            "fraction_cohort_at_or_below": 0.6108897742363878,
+            "cohort_samples": 1506
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": 1,
+            "fraction_cohort_strictly_below": 0.99933598937583,
+            "fraction_cohort_at_or_below": 1.0,
+            "cohort_samples": 1506
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": 26,
+            "fraction_cohort_strictly_below": 0.9827357237715804,
+            "fraction_cohort_at_or_below": 0.9833997343957503,
+            "cohort_samples": 1506
+          }
+        },
+        "common1495": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": 564,
+            "fraction_cohort_strictly_below": 0.622742474916388,
+            "fraction_cohort_at_or_below": 0.6234113712374582,
+            "cohort_samples": 1495
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": 915,
+            "fraction_cohort_strictly_below": 0.3879598662207358,
+            "fraction_cohort_at_or_below": 0.388628762541806,
+            "cohort_samples": 1495
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": 581,
+            "fraction_cohort_strictly_below": 0.611371237458194,
+            "fraction_cohort_at_or_below": 0.6120401337792643,
+            "cohort_samples": 1495
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": 1,
+            "fraction_cohort_strictly_below": 0.9993311036789297,
+            "fraction_cohort_at_or_below": 1.0,
+            "cohort_samples": 1495
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": 23,
+            "fraction_cohort_strictly_below": 0.9846153846153847,
+            "fraction_cohort_at_or_below": 0.9852842809364548,
+            "cohort_samples": 1495
+          }
+        },
+        "r8ordinary1497": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": 565,
+            "fraction_cohort_strictly_below": 0.6225784903139613,
+            "fraction_cohort_at_or_below": 0.6232464929859719,
+            "cohort_samples": 1497
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": 916,
+            "fraction_cohort_strictly_below": 0.38810955243820977,
+            "fraction_cohort_at_or_below": 0.38877755511022044,
+            "cohort_samples": 1497
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": 583,
+            "fraction_cohort_strictly_below": 0.6105544422177689,
+            "fraction_cohort_at_or_below": 0.6112224448897795,
+            "cohort_samples": 1497
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": 1,
+            "fraction_cohort_strictly_below": 0.9993319973279893,
+            "fraction_cohort_at_or_below": 1.0,
+            "cohort_samples": 1497
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": 24,
+            "fraction_cohort_strictly_below": 0.9839679358717435,
+            "fraction_cohort_at_or_below": 0.9846359385437542,
+            "cohort_samples": 1497
+          }
+        }
+      },
+      "fixed_mass_redistribution_bounds_percent_fs": {
+        "invalid_only": 0.7583062164485455,
+        "outside_only": 0.10965600376948714,
+        "invalid_plus_outside_disjoint": 0.8679622202180326,
+        "native_error_remaining_lower_bound_if_only_those_masses_changed": 0.16759397694841027
+      },
+      "fixed_invalid_outside_reallocation_alone_cannot_remove_native_error": true,
+      "fixed_invalid_outside_reallocation_cannot_reach_threshold": {
+        "1": false,
+        "2": false,
+        "5": false
+      }
+    },
+    "sync_1860": {
+      "target": 0.10239389538764954,
+      "native_prediction": 0.11305937170982361,
+      "native_signed_error_percent_fs": 1.0665476322174072,
+      "native_absolute_error_percent_fs": 1.0665476322174072,
+      "saved_relative_J_product_prediction": 0.1180000752210617,
+      "product_signed_error_percent_fs": 1.560617983341217,
+      "product_absolute_error_percent_fs": 1.560617983341217,
+      "product_minus_native_reading_percent_fs": 0.4940703511238098,
+      "product_absolute_error_change_percent_fs": 0.4940703511238098,
+      "product_moves_toward_target": false,
+      "v6_best48_prediction": 0.10688057541847229,
+      "v6_best48_absolute_error_percent_fs": 0.4486680030822754,
+      "common1495": true,
+      "r8ordinary1497": true,
+      "scalars": {
+        "reference_entropy": 0.36560165882110596,
+        "reference_max": 0.925194501876831,
+        "joint_vs_product_state_l1": 0.23335982859134674,
+        "invalid_mass": 1.6742797015467659e-07,
+        "outside_arc_mass": 7.600162462040316e-06
+      },
+      "v6_scalars": {
+        "reference_entropy": 0.22779497504234314,
+        "reference_max": 0.950980544090271,
+        "joint_vs_product_state_l1": 0.08342570811510086
+      },
+      "background_positions": {
+        "all1506": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": 1042,
+            "fraction_cohort_strictly_below": 0.30810092961487384,
+            "fraction_cohort_at_or_below": 0.30876494023904383,
+            "cohort_samples": 1506
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": 278,
+            "fraction_cohort_strictly_below": 0.8154050464807437,
+            "fraction_cohort_at_or_below": 0.8160690571049137,
+            "cohort_samples": 1506
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": 1137,
+            "fraction_cohort_strictly_below": 0.2450199203187251,
+            "fraction_cohort_at_or_below": 0.2456839309428951,
+            "cohort_samples": 1506
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": 110,
+            "fraction_cohort_strictly_below": 0.9269588313413014,
+            "fraction_cohort_at_or_below": 0.9276228419654714,
+            "cohort_samples": 1506
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": 43,
+            "fraction_cohort_strictly_below": 0.9714475431606906,
+            "fraction_cohort_at_or_below": 0.9721115537848606,
+            "cohort_samples": 1506
+          }
+        },
+        "common1495": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": 1034,
+            "fraction_cohort_strictly_below": 0.3083612040133779,
+            "fraction_cohort_at_or_below": 0.30903010033444817,
+            "cohort_samples": 1495
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": 276,
+            "fraction_cohort_strictly_below": 0.8153846153846154,
+            "fraction_cohort_at_or_below": 0.8160535117056856,
+            "cohort_samples": 1495
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": 1128,
+            "fraction_cohort_strictly_below": 0.2454849498327759,
+            "fraction_cohort_at_or_below": 0.24615384615384617,
+            "cohort_samples": 1495
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": 105,
+            "fraction_cohort_strictly_below": 0.9297658862876255,
+            "fraction_cohort_at_or_below": 0.9304347826086956,
+            "cohort_samples": 1495
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": 36,
+            "fraction_cohort_strictly_below": 0.9759197324414716,
+            "fraction_cohort_at_or_below": 0.9765886287625418,
+            "cohort_samples": 1495
+          }
+        },
+        "r8ordinary1497": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": 1036,
+            "fraction_cohort_strictly_below": 0.3079492317969272,
+            "fraction_cohort_at_or_below": 0.30861723446893785,
+            "cohort_samples": 1497
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": 276,
+            "fraction_cohort_strictly_below": 0.8156312625250501,
+            "fraction_cohort_at_or_below": 0.8162992651970608,
+            "cohort_samples": 1497
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": 1130,
+            "fraction_cohort_strictly_below": 0.24515698062792252,
+            "fraction_cohort_at_or_below": 0.2458249832999332,
+            "cohort_samples": 1497
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": 106,
+            "fraction_cohort_strictly_below": 0.9291917167668671,
+            "fraction_cohort_at_or_below": 0.9298597194388778,
+            "cohort_samples": 1497
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": 38,
+            "fraction_cohort_strictly_below": 0.9746158984635939,
+            "fraction_cohort_at_or_below": 0.9752839011356046,
+            "cohort_samples": 1497
+          }
+        }
+      },
+      "fixed_mass_redistribution_bounds_percent_fs": {
+        "invalid_only": 1.674279701546766e-05,
+        "outside_only": 0.0007600162462040316,
+        "invalid_plus_outside_disjoint": 0.0007767590432194993,
+        "native_error_remaining_lower_bound_if_only_those_masses_changed": 1.0657708731741877
+      },
+      "fixed_invalid_outside_reallocation_alone_cannot_remove_native_error": true,
+      "fixed_invalid_outside_reallocation_cannot_reach_threshold": {
+        "1": true,
+        "2": false,
+        "5": false
+      }
+    },
+    "sync_2810": {
+      "target": 0.9679930210113525,
+      "native_prediction": 0.9496104717254639,
+      "native_signed_error_percent_fs": -1.8382549285888672,
+      "native_absolute_error_percent_fs": 1.8382549285888672,
+      "saved_relative_J_product_prediction": 0.9496219754219055,
+      "product_signed_error_percent_fs": -1.8371045589447021,
+      "product_absolute_error_percent_fs": 1.8371045589447021,
+      "product_minus_native_reading_percent_fs": 0.001150369644165039,
+      "product_absolute_error_change_percent_fs": -0.001150369644165039,
+      "product_moves_toward_target": true,
+      "v6_best48_prediction": 0.937029242515564,
+      "v6_best48_absolute_error_percent_fs": 3.0963778495788574,
+      "common1495": true,
+      "r8ordinary1497": true,
+      "scalars": {
+        "reference_entropy": 0.6403378248214722,
+        "reference_max": 0.6610637307167053,
+        "joint_vs_product_state_l1": 0.5216242671012878,
+        "invalid_mass": 8.218711045060445e-09,
+        "outside_arc_mass": 4.118065444203012e-09
+      },
+      "v6_scalars": {
+        "reference_entropy": 0.629507839679718,
+        "reference_max": 0.6764819622039795,
+        "joint_vs_product_state_l1": 0.522091805934906
+      },
+      "background_positions": {
+        "all1506": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": 357,
+            "fraction_cohort_strictly_below": 0.7629482071713147,
+            "fraction_cohort_at_or_below": 0.7636122177954847,
+            "cohort_samples": 1506
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": 1156,
+            "fraction_cohort_strictly_below": 0.23240371845949534,
+            "fraction_cohort_at_or_below": 0.23306772908366533,
+            "cohort_samples": 1506
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": 282,
+            "fraction_cohort_strictly_below": 0.8127490039840638,
+            "fraction_cohort_at_or_below": 0.8134130146082338,
+            "cohort_samples": 1506
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": 1008,
+            "fraction_cohort_strictly_below": 0.33067729083665337,
+            "fraction_cohort_at_or_below": 0.33134130146082336,
+            "cohort_samples": 1506
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": 1059,
+            "fraction_cohort_strictly_below": 0.2968127490039841,
+            "fraction_cohort_at_or_below": 0.29747675962815406,
+            "cohort_samples": 1506
+          }
+        },
+        "common1495": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": 353,
+            "fraction_cohort_strictly_below": 0.7638795986622073,
+            "fraction_cohort_at_or_below": 0.7645484949832776,
+            "cohort_samples": 1495
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": 1147,
+            "fraction_cohort_strictly_below": 0.23277591973244147,
+            "fraction_cohort_at_or_below": 0.2334448160535117,
+            "cohort_samples": 1495
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": 277,
+            "fraction_cohort_strictly_below": 0.8147157190635451,
+            "fraction_cohort_at_or_below": 0.8153846153846154,
+            "cohort_samples": 1495
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": 1000,
+            "fraction_cohort_strictly_below": 0.3311036789297659,
+            "fraction_cohort_at_or_below": 0.33177257525083614,
+            "cohort_samples": 1495
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": 1049,
+            "fraction_cohort_strictly_below": 0.2983277591973244,
+            "fraction_cohort_at_or_below": 0.29899665551839466,
+            "cohort_samples": 1495
+          }
+        },
+        "r8ordinary1497": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": 354,
+            "fraction_cohort_strictly_below": 0.7635270541082164,
+            "fraction_cohort_at_or_below": 0.7641950567802271,
+            "cohort_samples": 1497
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": 1148,
+            "fraction_cohort_strictly_below": 0.23313293253173012,
+            "fraction_cohort_at_or_below": 0.23380093520374082,
+            "cohort_samples": 1497
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": 278,
+            "fraction_cohort_strictly_below": 0.8142952571810287,
+            "fraction_cohort_at_or_below": 0.8149632598530394,
+            "cohort_samples": 1497
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": 1002,
+            "fraction_cohort_strictly_below": 0.3306613226452906,
+            "fraction_cohort_at_or_below": 0.33132932531730125,
+            "cohort_samples": 1497
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": 1051,
+            "fraction_cohort_strictly_below": 0.29792919171676685,
+            "fraction_cohort_at_or_below": 0.2985971943887776,
+            "cohort_samples": 1497
+          }
+        }
+      },
+      "fixed_mass_redistribution_bounds_percent_fs": {
+        "invalid_only": 8.218711045060445e-07,
+        "outside_only": 4.118065444203012e-07,
+        "invalid_plus_outside_disjoint": 1.2336776489263457e-06,
+        "native_error_remaining_lower_bound_if_only_those_masses_changed": 1.8382536949112183
+      },
+      "fixed_invalid_outside_reallocation_alone_cannot_remove_native_error": true,
+      "fixed_invalid_outside_reallocation_cannot_reach_threshold": {
+        "1": true,
+        "2": false,
+        "5": false
+      }
+    },
+    "sync_3663": {
+      "target": 0.05373759940266609,
+      "native_prediction": 0.06518447399139404,
+      "native_signed_error_percent_fs": 1.144687458872795,
+      "native_absolute_error_percent_fs": 1.144687458872795,
+      "saved_relative_J_product_prediction": 0.07735339552164078,
+      "product_signed_error_percent_fs": 2.3615796118974686,
+      "product_absolute_error_percent_fs": 2.3615796118974686,
+      "product_minus_native_reading_percent_fs": 1.2168921530246735,
+      "product_absolute_error_change_percent_fs": 1.2168921530246735,
+      "product_moves_toward_target": false,
+      "v6_best48_prediction": 0.09932085126638412,
+      "v6_best48_absolute_error_percent_fs": 4.558325186371803,
+      "common1495": false,
+      "r8ordinary1497": false,
+      "scalars": {
+        "reference_entropy": 1.0413395166397095,
+        "reference_max": 0.7026633620262146,
+        "joint_vs_product_state_l1": 0.6636543273925781,
+        "invalid_mass": 5.375812907004729e-05,
+        "outside_arc_mass": 0.002971113659441471
+      },
+      "v6_scalars": {
+        "reference_entropy": 2.0654103755950928,
+        "reference_max": 0.5033021569252014,
+        "joint_vs_product_state_l1": 1.0993210077285767
+      },
+      "background_positions": {
+        "all1506": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": 3,
+            "fraction_cohort_strictly_below": 0.99800796812749,
+            "fraction_cohort_at_or_below": 0.99867197875166,
+            "cohort_samples": 1506
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": 755,
+            "fraction_cohort_strictly_below": 0.49867197875166,
+            "fraction_cohort_at_or_below": 0.49933598937583,
+            "cohort_samples": 1506
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": 45,
+            "fraction_cohort_strictly_below": 0.9701195219123506,
+            "fraction_cohort_at_or_below": 0.9707835325365206,
+            "cohort_samples": 1506
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": 6,
+            "fraction_cohort_strictly_below": 0.9960159362549801,
+            "fraction_cohort_at_or_below": 0.9966799468791501,
+            "cohort_samples": 1506
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": 25,
+            "fraction_cohort_strictly_below": 0.9833997343957503,
+            "fraction_cohort_at_or_below": 0.9840637450199203,
+            "cohort_samples": 1506
+          }
+        },
+        "common1495": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9993311036789297,
+            "fraction_cohort_at_or_below": 0.9993311036789297,
+            "cohort_samples": 1495
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.49966555183946487,
+            "fraction_cohort_at_or_below": 0.49966555183946487,
+            "cohort_samples": 1495
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9712374581939799,
+            "fraction_cohort_at_or_below": 0.9712374581939799,
+            "cohort_samples": 1495
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9986622073578595,
+            "fraction_cohort_at_or_below": 0.9986622073578595,
+            "cohort_samples": 1495
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9852842809364548,
+            "fraction_cohort_at_or_below": 0.9852842809364548,
+            "cohort_samples": 1495
+          }
+        },
+        "r8ordinary1497": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9986639946559787,
+            "fraction_cohort_at_or_below": 0.9986639946559787,
+            "cohort_samples": 1497
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.5003340013360054,
+            "fraction_cohort_at_or_below": 0.5003340013360054,
+            "cohort_samples": 1497
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9706078824315297,
+            "fraction_cohort_at_or_below": 0.9706078824315297,
+            "cohort_samples": 1497
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9979959919839679,
+            "fraction_cohort_at_or_below": 0.9979959919839679,
+            "cohort_samples": 1497
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9846359385437542,
+            "fraction_cohort_at_or_below": 0.9846359385437542,
+            "cohort_samples": 1497
+          }
+        }
+      },
+      "fixed_mass_redistribution_bounds_percent_fs": {
+        "invalid_only": 0.005375812907004729,
+        "outside_only": 0.2971113659441471,
+        "invalid_plus_outside_disjoint": 0.30248717885115184,
+        "native_error_remaining_lower_bound_if_only_those_masses_changed": 0.8422002800216433
+      },
+      "fixed_invalid_outside_reallocation_alone_cannot_remove_native_error": true,
+      "fixed_invalid_outside_reallocation_cannot_reach_threshold": {
+        "1": false,
+        "2": false,
+        "5": false
+      }
+    },
+    "sync_10304": {
+      "target": 0.939039945602417,
+      "native_prediction": 0.9477643966674805,
+      "native_signed_error_percent_fs": 0.8724451065063477,
+      "native_absolute_error_percent_fs": 0.8724451065063477,
+      "saved_relative_J_product_prediction": 0.9478517770767212,
+      "product_signed_error_percent_fs": 0.8811831474304199,
+      "product_absolute_error_percent_fs": 0.8811831474304199,
+      "product_minus_native_reading_percent_fs": 0.008738040924072266,
+      "product_absolute_error_change_percent_fs": 0.008738040924072266,
+      "product_moves_toward_target": false,
+      "v6_best48_prediction": 0.9505290985107422,
+      "v6_best48_absolute_error_percent_fs": 1.1489152908325195,
+      "common1495": true,
+      "r8ordinary1497": true,
+      "scalars": {
+        "reference_entropy": 0.5201486945152283,
+        "reference_max": 0.7979483604431152,
+        "joint_vs_product_state_l1": 0.503515899181366,
+        "invalid_mass": 2.846807092282688e-07,
+        "outside_arc_mass": 2.4477089937136043e-06
+      },
+      "v6_scalars": {
+        "reference_entropy": 0.2431275099515915,
+        "reference_max": 0.9450533390045166,
+        "joint_vs_product_state_l1": 0.1708781123161316
+      },
+      "background_positions": {
+        "all1506": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": 929,
+            "fraction_cohort_strictly_below": 0.38313413014608233,
+            "fraction_cohort_at_or_below": 0.3837981407702523,
+            "cohort_samples": 1506
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": 543,
+            "fraction_cohort_strictly_below": 0.6394422310756972,
+            "fraction_cohort_at_or_below": 0.6401062416998672,
+            "cohort_samples": 1506
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": 340,
+            "fraction_cohort_strictly_below": 0.7742363877822045,
+            "fraction_cohort_at_or_below": 0.7749003984063745,
+            "cohort_samples": 1506
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": 58,
+            "fraction_cohort_strictly_below": 0.9614873837981408,
+            "fraction_cohort_at_or_below": 0.9621513944223108,
+            "cohort_samples": 1506
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": 53,
+            "fraction_cohort_strictly_below": 0.9648074369189907,
+            "fraction_cohort_at_or_below": 0.9654714475431607,
+            "cohort_samples": 1506
+          }
+        },
+        "common1495": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": 922,
+            "fraction_cohort_strictly_below": 0.3832775919732441,
+            "fraction_cohort_at_or_below": 0.3839464882943144,
+            "cohort_samples": 1495
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": 538,
+            "fraction_cohort_strictly_below": 0.640133779264214,
+            "fraction_cohort_at_or_below": 0.6408026755852843,
+            "cohort_samples": 1495
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": 335,
+            "fraction_cohort_strictly_below": 0.7759197324414716,
+            "fraction_cohort_at_or_below": 0.7765886287625418,
+            "cohort_samples": 1495
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": 53,
+            "fraction_cohort_strictly_below": 0.9645484949832775,
+            "fraction_cohort_at_or_below": 0.9652173913043478,
+            "cohort_samples": 1495
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": 46,
+            "fraction_cohort_strictly_below": 0.9692307692307692,
+            "fraction_cohort_at_or_below": 0.9698996655518395,
+            "cohort_samples": 1495
+          }
+        },
+        "r8ordinary1497": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": 924,
+            "fraction_cohort_strictly_below": 0.38276553106212424,
+            "fraction_cohort_at_or_below": 0.3834335337341349,
+            "cohort_samples": 1497
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": 538,
+            "fraction_cohort_strictly_below": 0.6406145624582499,
+            "fraction_cohort_at_or_below": 0.6412825651302605,
+            "cohort_samples": 1497
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": 336,
+            "fraction_cohort_strictly_below": 0.7755511022044088,
+            "fraction_cohort_at_or_below": 0.7762191048764195,
+            "cohort_samples": 1497
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": 54,
+            "fraction_cohort_strictly_below": 0.9639278557114228,
+            "fraction_cohort_at_or_below": 0.9645958583834335,
+            "cohort_samples": 1497
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": 48,
+            "fraction_cohort_strictly_below": 0.9679358717434869,
+            "fraction_cohort_at_or_below": 0.9686038744154977,
+            "cohort_samples": 1497
+          }
+        }
+      },
+      "fixed_mass_redistribution_bounds_percent_fs": {
+        "invalid_only": 2.8468070922826882e-05,
+        "outside_only": 0.00024477089937136043,
+        "invalid_plus_outside_disjoint": 0.0002732389702941873,
+        "native_error_remaining_lower_bound_if_only_those_masses_changed": 0.8721718675360535
+      },
+      "fixed_invalid_outside_reallocation_alone_cannot_remove_native_error": true,
+      "fixed_invalid_outside_reallocation_cannot_reach_threshold": {
+        "1": false,
+        "2": false,
+        "5": false
+      }
+    },
+    "sync_12540": {
+      "target": 0.04647042229771614,
+      "native_prediction": 0.04303780198097229,
+      "native_signed_error_percent_fs": -0.34326203167438507,
+      "native_absolute_error_percent_fs": 0.34326203167438507,
+      "saved_relative_J_product_prediction": 0.043108973652124405,
+      "product_signed_error_percent_fs": -0.3361448645591736,
+      "product_absolute_error_percent_fs": 0.3361448645591736,
+      "product_minus_native_reading_percent_fs": 0.007117167115211487,
+      "product_absolute_error_change_percent_fs": -0.007117167115211487,
+      "product_moves_toward_target": true,
+      "v6_best48_prediction": 0.02890622243285179,
+      "v6_best48_absolute_error_percent_fs": 1.756419986486435,
+      "common1495": false,
+      "r8ordinary1497": false,
+      "scalars": {
+        "reference_entropy": 0.9466574192047119,
+        "reference_max": 0.5844637155532837,
+        "joint_vs_product_state_l1": 0.6227717399597168,
+        "invalid_mass": 1.7303658751188777e-05,
+        "outside_arc_mass": 0.0004664624866563827
+      },
+      "v6_scalars": {
+        "reference_entropy": 1.1954039335250854,
+        "reference_max": 0.46541470289230347,
+        "joint_vs_product_state_l1": 0.8092765808105469
+      },
+      "background_positions": {
+        "all1506": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": 4,
+            "fraction_cohort_strictly_below": 0.99734395750332,
+            "fraction_cohort_at_or_below": 0.99800796812749,
+            "cohort_samples": 1506
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": 1347,
+            "fraction_cohort_strictly_below": 0.10557768924302789,
+            "fraction_cohort_at_or_below": 0.10624169986719788,
+            "cohort_samples": 1506
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": 54,
+            "fraction_cohort_strictly_below": 0.9641434262948207,
+            "fraction_cohort_at_or_below": 0.9648074369189907,
+            "cohort_samples": 1506
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": 11,
+            "fraction_cohort_strictly_below": 0.9926958831341302,
+            "fraction_cohort_at_or_below": 0.9933598937583001,
+            "cohort_samples": 1506
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": 32,
+            "fraction_cohort_strictly_below": 0.9787516600265604,
+            "fraction_cohort_at_or_below": 0.9794156706507304,
+            "cohort_samples": 1506
+          }
+        },
+        "common1495": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9993311036789297,
+            "fraction_cohort_at_or_below": 0.9993311036789297,
+            "cohort_samples": 1495
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.10568561872909699,
+            "fraction_cohort_at_or_below": 0.10568561872909699,
+            "cohort_samples": 1495
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9658862876254181,
+            "fraction_cohort_at_or_below": 0.9658862876254181,
+            "cohort_samples": 1495
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9959866220735786,
+            "fraction_cohort_at_or_below": 0.9959866220735786,
+            "cohort_samples": 1495
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9812709030100334,
+            "fraction_cohort_at_or_below": 0.9812709030100334,
+            "cohort_samples": 1495
+          }
+        },
+        "r8ordinary1497": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9986639946559787,
+            "fraction_cohort_at_or_below": 0.9986639946559787,
+            "cohort_samples": 1497
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.1062124248496994,
+            "fraction_cohort_at_or_below": 0.1062124248496994,
+            "cohort_samples": 1497
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9652638610554443,
+            "fraction_cohort_at_or_below": 0.9652638610554443,
+            "cohort_samples": 1497
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9953239812959251,
+            "fraction_cohort_at_or_below": 0.9953239812959251,
+            "cohort_samples": 1497
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": null,
+            "fraction_cohort_strictly_below": 0.9806279225116901,
+            "fraction_cohort_at_or_below": 0.9806279225116901,
+            "cohort_samples": 1497
+          }
+        }
+      },
+      "fixed_mass_redistribution_bounds_percent_fs": {
+        "invalid_only": 0.0017303658751188777,
+        "outside_only": 0.04664624866563827,
+        "invalid_plus_outside_disjoint": 0.048376614540757146,
+        "native_error_remaining_lower_bound_if_only_those_masses_changed": 0.2948854171336279
+      },
+      "fixed_invalid_outside_reallocation_alone_cannot_remove_native_error": true,
+      "fixed_invalid_outside_reallocation_cannot_reach_threshold": {
+        "1": false,
+        "2": false,
+        "5": false
+      }
+    },
+    "sync_9323": {
+      "target": 0.9969997406005859,
+      "native_prediction": 0.9971413612365723,
+      "native_signed_error_percent_fs": 0.014162063598632812,
+      "native_absolute_error_percent_fs": 0.014162063598632812,
+      "saved_relative_J_product_prediction": 0.8322265148162842,
+      "product_signed_error_percent_fs": -16.477322578430176,
+      "product_absolute_error_percent_fs": 16.477322578430176,
+      "product_minus_native_reading_percent_fs": -16.49148464202881,
+      "product_absolute_error_change_percent_fs": 16.463160514831543,
+      "product_moves_toward_target": false,
+      "v6_best48_prediction": 0.9972915649414062,
+      "v6_best48_absolute_error_percent_fs": 0.02918243408203125,
+      "common1495": true,
+      "r8ordinary1497": true,
+      "scalars": {
+        "reference_entropy": 2.407822608947754,
+        "reference_max": 0.4384323060512543,
+        "joint_vs_product_state_l1": 1.399868369102478,
+        "invalid_mass": 0.0009307197760790586,
+        "outside_arc_mass": 0.0765981525182724
+      },
+      "v6_scalars": {
+        "reference_entropy": 0.981151819229126,
+        "reference_max": 0.6694943308830261,
+        "joint_vs_product_state_l1": 0.6181523203849792
+      },
+      "background_positions": {
+        "all1506": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": 1,
+            "fraction_cohort_strictly_below": 0.99933598937583,
+            "fraction_cohort_at_or_below": 1.0,
+            "cohort_samples": 1506
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": 1506,
+            "fraction_cohort_strictly_below": 0.0,
+            "fraction_cohort_at_or_below": 0.0006640106241699867,
+            "cohort_samples": 1506
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": 1,
+            "fraction_cohort_strictly_below": 0.99933598937583,
+            "fraction_cohort_at_or_below": 1.0,
+            "cohort_samples": 1506
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": 3,
+            "fraction_cohort_strictly_below": 0.99800796812749,
+            "fraction_cohort_at_or_below": 0.99867197875166,
+            "cohort_samples": 1506
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": 9,
+            "fraction_cohort_strictly_below": 0.9940239043824701,
+            "fraction_cohort_at_or_below": 0.9946879150066401,
+            "cohort_samples": 1506
+          }
+        },
+        "common1495": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": 1,
+            "fraction_cohort_strictly_below": 0.9993311036789297,
+            "fraction_cohort_at_or_below": 1.0,
+            "cohort_samples": 1495
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": 1495,
+            "fraction_cohort_strictly_below": 0.0,
+            "fraction_cohort_at_or_below": 0.0006688963210702341,
+            "cohort_samples": 1495
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": 1,
+            "fraction_cohort_strictly_below": 0.9993311036789297,
+            "fraction_cohort_at_or_below": 1.0,
+            "cohort_samples": 1495
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": 2,
+            "fraction_cohort_strictly_below": 0.9986622073578595,
+            "fraction_cohort_at_or_below": 0.9993311036789297,
+            "cohort_samples": 1495
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": 9,
+            "fraction_cohort_strictly_below": 0.9939799331103679,
+            "fraction_cohort_at_or_below": 0.9946488294314382,
+            "cohort_samples": 1495
+          }
+        },
+        "r8ordinary1497": {
+          "reference_entropy": {
+            "descending_rank_if_in_cohort": 1,
+            "fraction_cohort_strictly_below": 0.9993319973279893,
+            "fraction_cohort_at_or_below": 1.0,
+            "cohort_samples": 1497
+          },
+          "reference_max": {
+            "descending_rank_if_in_cohort": 1497,
+            "fraction_cohort_strictly_below": 0.0,
+            "fraction_cohort_at_or_below": 0.0006680026720106881,
+            "cohort_samples": 1497
+          },
+          "joint_vs_product_state_l1": {
+            "descending_rank_if_in_cohort": 1,
+            "fraction_cohort_strictly_below": 0.9993319973279893,
+            "fraction_cohort_at_or_below": 1.0,
+            "cohort_samples": 1497
+          },
+          "invalid_mass": {
+            "descending_rank_if_in_cohort": 2,
+            "fraction_cohort_strictly_below": 0.9986639946559787,
+            "fraction_cohort_at_or_below": 0.9993319973279893,
+            "cohort_samples": 1497
+          },
+          "outside_arc_mass": {
+            "descending_rank_if_in_cohort": 9,
+            "fraction_cohort_strictly_below": 0.9939879759519038,
+            "fraction_cohort_at_or_below": 0.9946559786239145,
+            "cohort_samples": 1497
+          }
+        }
+      },
+      "fixed_mass_redistribution_bounds_percent_fs": {
+        "invalid_only": 0.09307197760790586,
+        "outside_only": 7.65981525182724,
+        "invalid_plus_outside_disjoint": 7.752887229435146,
+        "native_error_remaining_lower_bound_if_only_those_masses_changed": 0.0
+      },
+      "fixed_invalid_outside_reallocation_alone_cannot_remove_native_error": false,
+      "fixed_invalid_outside_reallocation_cannot_reach_threshold": {
+        "1": false,
+        "2": false,
+        "5": false
+      }
+    }
+  },
+  "maximum_saved_relative_J_product_reading_shift_id": "sync_9323",
+  "maximum_saved_relative_J_product_reading_shift_percent_fs": 16.49148464202881,
+  "fixed_mass_bound_scope": "For a fixed state distribution with unchanged mass and remaining atoms, replacing output assignments of m mass within [0,1] changes its mean by at most m, or100m%FS. Invalid and outside masks are disjoint in the frozen reader. This bound does not cover moving state probability mass, changing learned evidence, coordinates, association or normalization.",
+  "facts_and_limits": [
+    "Saved relative-J product substantially helps3172 but is not Fsep; current scalars do not identify a P-B factor cause.",
+    "Low invalid/outside mass can exclude direct reassignment of those fixed subsets as a sufficient explanation, but cannot exclude earlier evidence or geometry errors.",
+    "Scalar reference entropy/max do not show whether reference peaks are in the correct locations.",
+    "State L1 measures distributional dependence; neither a large value nor a saved product improvement establishes incorrect association.",
+    "The v6 PMF teacher interventions apply only to v6 frozen weights. v7 uses exact triangular dependence; old independent-P/B diagnostic equations are not valid for v7."
+  ],
+  "missing_action_changing_information": [
+    "Exact same-weight full versus Fsep and W=0 readings, preserving their distinct definitions.",
+    "Actual star-A versus true triangle-A and per-reference exact-triangle conditional readings, rather than entropy alone.",
+    "P-B factor and joint-role conditional evidence at fixed role hypotheses; no independent P/B factor replacement shortcut.",
+    "Coordinate-resampling effects evaluated under the complete triangle distribution, with exact native replay before any new diagnosis."
+  ]
+}
