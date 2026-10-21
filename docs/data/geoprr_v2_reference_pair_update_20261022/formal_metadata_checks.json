@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "scope": "new formal config and anchor-protection wiring only; saved scalar predictions, no new model or old full audit",
+  "paired_configs_match_source_data_training_exposure": true,
+  "best64_self_protection": {
+    "checks": {
+      "nmae_no_worse_best64": true,
+      "no_new_above2_5_vs_best64": true,
+      "r8_ordinary_mean_protected_vs_best64": true,
+      "ordinary_nmae_percent_fs_protected_vs_best64": true,
+      "ordinary_median_percent_fs_protected_vs_best64": true,
+      "ordinary_p90_percent_fs_protected_vs_best64": true
+    },
+    "gate_passed": true
+  },
+  "best64_vs_best48_known_negative_protection": {
+    "checks": {
+      "nmae_no_worse_best48": true,
+      "no_new_above2_5_vs_best48": false,
+      "r8_ordinary_mean_protected_vs_best48": true,
+      "ordinary_nmae_percent_fs_protected_vs_best48": true,
+      "ordinary_median_percent_fs_protected_vs_best48": true,
+      "ordinary_p90_percent_fs_protected_vs_best48": true
+    },
+    "gate_passed": false
+  },
+  "new_CNN_forwards": 0,
+  "new_GPU_calls": 0,
+  "optimizer_updates": 0,
+  "contract_check_wall_seconds": 0.07907884940505028
+}

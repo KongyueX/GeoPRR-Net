@@ -25,7 +25,7 @@
 
 ## 下一步与边界
 
-有界实际RGB／资源检查已按[冻结合同](../../GEOPRR_V2_REFERENCE_PAIR_RESOURCE_CONTRACT_CN.md)完成，执行前已核对GPU／实际进程为空；结果见下节。当前没有正式训练队列或新的1506模型评估。下一步仅冻结正式候选与匹配global运行合同、配置及入口，继续不启动训练。
+有界实际RGB／资源检查已按[冻结合同](../../GEOPRR_V2_REFERENCE_PAIR_RESOURCE_CONTRACT_CN.md)完成，执行前已核对GPU／实际进程为空；结果见下节。用户已明确授权候选65轮及通过原11／best48／best64保护后的匹配global65；[正式合同](../../GEOPRR_V2_REFERENCE_PAIR_UPDATE_PROTOCOL_CN.md)、两份配置和训练／控制器入口已冻结，启动状态单独记录。没有新的已完成训练成绩。
 
 Reader继承旧full前向，会先计算原生J／读数再作新更新；未来实际成本需要包括这部分计算，不能只报新算子速度。原11门槛、best48／best64保护、冻结人口与模型seed不变；当前继续遵守不训练、不加loss、不扩seed。
 
@@ -51,6 +51,10 @@ Reader继承旧full前向，会先计算原生J／读数再作新更新；未来
 
 从模块imports开始的完整进程wall22.989027020s；实际阶段时序全部保存在[原始标量报告](runtime_preflight.json)。两臂先后执行的编译／缓存状态不同，阶段时序不用于算法速度对比。骨干使用AMP、头／读出／loss FP32；本检查使用未缩放loss.backward，没有GradScaler或Adam状态，不能替代正式训练的AMPskip、有效更新、速度或峰值记录。重复2张图的batch64也不能证明64张不同图的训练行为。
 
-实际RGB与资源准入通过不代表原11项精度门槛通过，也没有新模型性能或算法因果结论。正式训练继续遵守用户最新“先不训练”，不加loss、不扩seed，不自动启动候选或对照。
+实际RGB与资源准入通过不代表原11项精度门槛通过，也没有新模型性能或算法因果结论。正式训练按用户最新明确授权执行候选65轮，global仅候选通过原11及两组anchor保护后运行；不加loss、不扩seed。
 
 [独立资源标量审计](runtime_independent_audit.json)PASS：完成记录与process.log最终记录一致，实际调用／预算／初始化／零势重放／非零探针和成本统计一致；审计只读本地标量，没有重跑模型。
+
+## 正式队列合同
+
+新队列iteration_v8_reference_pair_update，preserve候选先65轮，过三组gate后才global65；两臂同完整best64初始化及原曝光／优化安排。[新比较器与配置标量接线检查](formal_metadata_checks.json)PASS：best64自比6／6，已知best64相对best48新增3172负例正确拒绝（5／6），0新CNN／GPU／optimizer；这是门槛接线检查，不是新模型效果。正式成本与完整1506逐图结果待各臂实际完成后归档。
