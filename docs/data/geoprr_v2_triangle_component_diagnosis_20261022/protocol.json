@@ -1,0 +1,31 @@
+{
+  "checkpoint_epoch": 64,
+  "seed": 20262020,
+  "population": 1506,
+  "batch_size": 16,
+  "model": {
+    "bins": 256,
+    "decoder_dim": 64,
+    "token_dim": 16,
+    "association": "full",
+    "tile": 16
+  },
+  "code_revision": "efdaf50",
+  "focus_ids": [
+    "sync_10304",
+    "sync_12540",
+    "sync_13360",
+    "sync_1860",
+    "sync_2810",
+    "sync_3172",
+    "sync_3663",
+    "sync_9323"
+  ],
+  "readouts_per_image": 8,
+  "optimizer_updates": 0,
+  "native_replay_tolerance": 1e-05,
+  "probability_mass_tolerance": 0.0001,
+  "GT_scope": "conditional diagnosis only; no GT inference input or new model accuracy claim",
+  "factor_scope": "same best64 weights:full/Fsep/W0; Jproduct is read from existing cache",
+  "reference_scope": "exact triangle conditionals normalized per A; no independent P/B replacement"
+}

@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "new_CPU_operator_tests": 2,
+  "triangle_summary_calls": 6,
+  "reference_blocks": 17,
+  "summary_image_equivalents": 12,
+  "CNN_image_forwards": 0,
+  "GPU_calls": 0,
+  "backward_calls": 0,
+  "optimizer_updates": 0,
+  "unittest_seconds": 0.044,
+  "process_wall_seconds": 1.0157880894839764,
+  "read_only_contract_audit": "no nominal mathematical/counting blocker; intervention-invalid rows retain full denominator"
+}

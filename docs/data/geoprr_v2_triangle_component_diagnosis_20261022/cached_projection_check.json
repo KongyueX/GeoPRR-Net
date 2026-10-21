@@ -1,0 +1,107 @@
+{
+  "scope": "eight frozen focus native caches only; GT reference potential diagnostic; not full1506 or RGB performance",
+  "new_CNN_forwards": 0,
+  "new_GPU_calls": 0,
+  "optimizer_updates": 0,
+  "backward_calls": 0,
+  "focus_cases": 8,
+  "results": [
+    {
+      "sample_id": "sync_10304",
+      "native_error_percent_fs": 0.8724391460418701,
+      "global_reference_GT_potential_error_percent_fs": 0.8341391558187805,
+      "pair_preserving_GT_potential_error_percent_fs": 0.8347009516747161,
+      "joint_mass_error": 1.2212453270876722e-15,
+      "PB_joint_marginal_max_error": 2.220446049250313e-16,
+      "control_replay_normalized_difference": 4.0059549011317586e-08,
+      "control_mass_error": 1.490116141589226e-08,
+      "new_A_correct_support_mass": 0.9999999999999987,
+      "new_A_GT_twohot_L1": 6.368991784799771e-07
+    },
+    {
+      "sample_id": "sync_12540",
+      "native_error_percent_fs": 0.3432612866163254,
+      "global_reference_GT_potential_error_percent_fs": 0.0004845886836031543,
+      "pair_preserving_GT_potential_error_percent_fs": 0.0018696507480264746,
+      "joint_mass_error": 5.995204332975845e-15,
+      "PB_joint_marginal_max_error": 1.1102230246251565e-16,
+      "control_replay_normalized_difference": 3.009448031054962e-09,
+      "control_mass_error": 1.490116130486996e-08,
+      "new_A_correct_support_mass": 0.999999999999994,
+      "new_A_GT_twohot_L1": 4.602437512121749e-05
+    },
+    {
+      "sample_id": "sync_13360",
+      "native_error_percent_fs": 1.035553216934204,
+      "global_reference_GT_potential_error_percent_fs": 1.0378431412708722,
+      "pair_preserving_GT_potential_error_percent_fs": 1.0380156350627723,
+      "joint_mass_error": 2.220446049250313e-16,
+      "PB_joint_marginal_max_error": 2.220446049250313e-16,
+      "control_replay_normalized_difference": 1.1059772930810396e-08,
+      "control_mass_error": 0.0,
+      "new_A_correct_support_mass": 0.9999999999999998,
+      "new_A_GT_twohot_L1": 1.966488246185616e-06
+    },
+    {
+      "sample_id": "sync_1860",
+      "native_error_percent_fs": 1.066548377275467,
+      "global_reference_GT_potential_error_percent_fs": 0.10242350730699235,
+      "pair_preserving_GT_potential_error_percent_fs": 0.10250117720363439,
+      "joint_mass_error": 3.219646771412954e-15,
+      "PB_joint_marginal_max_error": 3.3306690738754696e-16,
+      "control_replay_normalized_difference": 3.692169792124389e-09,
+      "control_mass_error": 2.2351740458503855e-08,
+      "new_A_correct_support_mass": 0.9999999999999968,
+      "new_A_GT_twohot_L1": 9.030407263355134e-07
+    },
+    {
+      "sample_id": "sync_2810",
+      "native_error_percent_fs": 1.8382251262664795,
+      "global_reference_GT_potential_error_percent_fs": 1.838031654418848,
+      "pair_preserving_GT_potential_error_percent_fs": 1.838154297680783,
+      "joint_mass_error": 4.440892098500626e-15,
+      "PB_joint_marginal_max_error": 1.1102230246251565e-16,
+      "control_replay_normalized_difference": 3.223480127267919e-08,
+      "control_mass_error": 0.0,
+      "new_A_correct_support_mass": 1.0000000000000044,
+      "new_A_GT_twohot_L1": 4.7068590636190066e-08
+    },
+    {
+      "sample_id": "sync_3172",
+      "native_error_percent_fs": 3.350493311882019,
+      "global_reference_GT_potential_error_percent_fs": 0.02977678006138018,
+      "pair_preserving_GT_potential_error_percent_fs": 0.030667465866662802,
+      "joint_mass_error": 5.551115123125783e-15,
+      "PB_joint_marginal_max_error": 2.220446049250313e-16,
+      "control_replay_normalized_difference": 1.2797638337946893e-08,
+      "control_mass_error": 1.490116174895917e-08,
+      "new_A_correct_support_mass": 0.9999999999999942,
+      "new_A_GT_twohot_L1": 5.894871428158144e-06
+    },
+    {
+      "sample_id": "sync_3663",
+      "native_error_percent_fs": 1.1446882039308548,
+      "global_reference_GT_potential_error_percent_fs": 0.1217115815288182,
+      "pair_preserving_GT_potential_error_percent_fs": 0.11832674954901437,
+      "joint_mass_error": 2.7755575615628914e-15,
+      "PB_joint_marginal_max_error": 6.661338147750939e-16,
+      "control_replay_normalized_difference": 3.580444697670604e-09,
+      "control_mass_error": 2.793965947489596e-09,
+      "new_A_correct_support_mass": 0.9999999999999971,
+      "new_A_GT_twohot_L1": 1.8908749201705655e-05
+    },
+    {
+      "sample_id": "sync_9323",
+      "native_error_percent_fs": 0.01424551010131836,
+      "global_reference_GT_potential_error_percent_fs": 0.091182932072853,
+      "pair_preserving_GT_potential_error_percent_fs": 0.09452778633745051,
+      "joint_mass_error": 1.2212453270876722e-14,
+      "PB_joint_marginal_max_error": 4.440892098500626e-16,
+      "control_replay_normalized_difference": 1.217443349466052e-07,
+      "control_mass_error": 4.440892098500626e-16,
+      "new_A_correct_support_mass": 0.9999999999999878,
+      "new_A_GT_twohot_L1": 0.00014671162192886333
+    }
+  ],
+  "wall_seconds": 2.274467332987115
+}

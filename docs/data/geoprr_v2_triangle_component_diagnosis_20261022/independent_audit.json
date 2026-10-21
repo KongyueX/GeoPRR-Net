@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "scope": "independent numpy cache audit of this new diagnosis only; zero model/GPU/remote/optimizer",
+  "population": {
+    "all1506": 1506,
+    "common1495": 1495,
+    "r8ordinary1497": 1497,
+    "old_severe6": 6
+  },
+  "runtime_readouts": 8,
+  "saved_rows": 12048,
+  "native_formal_replay_max": 1.7881393432617188e-07,
+  "conditional_full_to_formal_max": 8.344650268554688e-07,
+  "saved_error_recompute_max": 0.0,
+  "all_population_saved_summary_residuals": {
+    "A_mass": 2.2949499078883662e-07,
+    "A_from_logZa": 2.2949142497452613e-07,
+    "A_weighted_reading": 1.4849375329362147e-07,
+    "GTA_reading": 7.209504815364198e-08,
+    "A_weighted_invalid": 6.73807749179689e-10,
+    "A_weighted_outside": 3.443877338860091e-08,
+    "CSV_reading": 0.0,
+    "CSV_invalid": 0.0,
+    "CSV_outside": 0.0
+  },
+  "focus_float64_seven_reference_reconstruction_max": {
+    "conditional_reading": 3.357389306568592e-07,
+    "conditional_P_correct_mass": 3.830902700618921e-07,
+    "conditional_B_correct_mass": 3.017001900529337e-07,
+    "joint_correct_mass": 3.1756387353087945e-07,
+    "logZ_a": 4.3303766119606735e-06,
+    "conditional_invalid_mass": 3.178360479250131e-07,
+    "conditional_outside_arc_mass": 3.4314900632104184e-07,
+    "A": 2.7839437538590417e-07
+  },
+  "cost_count_consistency": "all counts agree with95batches,1506images,6summaries/image and8savedreadouts",
+  "limits": [
+    "GT coordinates and GT-A are conditional diagnostics, not deployed RGB scores or upper bounds.",
+    "Fsep preserves factor marginals, not the full posterior marginals; it is not saved J-product.",
+    "Fixed-weight deletion does not replace the gated-off matched training control.",
+    "Role support masses and GT-A effects do not uniquely identify a training cause.",
+    "Reported wall/peak/hook counts are metadata consistency checks, not independent GPU profiling."
+  ],
+  "audit_wall_seconds": 29.90852612501476
+}
