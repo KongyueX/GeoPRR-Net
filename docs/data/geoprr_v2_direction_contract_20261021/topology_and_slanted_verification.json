@@ -1,0 +1,265 @@
+{
+  "status": "PASS",
+  "discrepancies": [],
+  "topology": [
+    {
+      "family": "pointer1",
+      "vertices_exact_match": true,
+      "polygon_count": 143,
+      "edge_count": 413,
+      "counts": {
+        "surface_crease": 405,
+        "horizontal_within_precision": 264,
+        "horizontal_surface_crease": 260,
+        "exact_horizontal": 264,
+        "horizontal_hub_ring_only": 256,
+        "open_face_boundary": 8,
+        "horizontal_open_face_boundary": 4,
+        "horizontal_nonhub": 8,
+        "potential_horizontal_nonhub_boundary": 8,
+        "potential_exact_horizontal_nonhub_boundary": 8,
+        "nonhub_body_boundary_edges": 29,
+        "nonhub_body_boundary_slanted": 21
+      },
+      "max_edge_record_discrepancies": {
+        "length": 0.0,
+        "xy_length": 0.0,
+        "absolute_delta_z": 0.0,
+        "beta_radians_lower_to_higher_index": 4.440892098500626e-16,
+        "plane_residual": 2.1510571102112408e-16
+      },
+      "full_nonhub_surface_crease_count": 21
+    },
+    {
+      "family": "pointer2",
+      "vertices_exact_match": true,
+      "polygon_count": 42,
+      "edge_count": 114,
+      "counts": {
+        "surface_crease": 114,
+        "horizontal_within_precision": 68,
+        "horizontal_surface_crease": 68,
+        "exact_horizontal": 68,
+        "horizontal_hub_ring_only": 64,
+        "horizontal_nonhub": 4,
+        "potential_horizontal_nonhub_boundary": 4,
+        "potential_exact_horizontal_nonhub_boundary": 4,
+        "nonhub_body_boundary_edges": 18,
+        "nonhub_body_boundary_slanted": 14
+      },
+      "max_edge_record_discrepancies": {
+        "length": 0.0,
+        "xy_length": 0.0,
+        "absolute_delta_z": 0.0,
+        "beta_radians_lower_to_higher_index": 4.440892098500626e-16,
+        "plane_residual": 6.938893903907228e-17
+      },
+      "full_nonhub_surface_crease_count": 18
+    },
+    {
+      "family": "pointer3",
+      "vertices_exact_match": true,
+      "polygon_count": 340,
+      "edge_count": 808,
+      "counts": {
+        "surface_crease": 564,
+        "horizontal_within_precision": 372,
+        "horizontal_surface_crease": 278,
+        "exact_horizontal": 372,
+        "horizontal_nonhub": 308,
+        "potential_horizontal_nonhub_boundary": 214,
+        "potential_exact_horizontal_nonhub_boundary": 214,
+        "coplanar_internal": 244,
+        "horizontal_coplanar_internal": 94,
+        "horizontal_hub_ring_only": 64,
+        "nonhub_body_boundary_edges": 468,
+        "nonhub_body_boundary_slanted": 254
+      },
+      "max_edge_record_discrepancies": {
+        "length": 8.673617379884035e-19,
+        "xy_length": 8.673617379884035e-19,
+        "absolute_delta_z": 0.0,
+        "beta_radians_lower_to_higher_index": 4.440892098500626e-16,
+        "plane_residual": 2.7755575615628914e-17
+      },
+      "full_nonhub_surface_crease_count": 468
+    }
+  ],
+  "scaled_LP_cases": [
+    {
+      "case": "three_generic_slanted_edges",
+      "edge_count": 3,
+      "direction_max_absolute_difference": 0.0,
+      "length_max_absolute_difference": 0.0,
+      "frozen_endpoint_max_absolute_difference": 0.0,
+      "camera_projection_max_absolute_difference": 0.0,
+      "actual_camera_min_positive_depth": 2.935802298143588,
+      "states": [
+        {
+          "state": "true_state",
+          "status": 0,
+          "matrix_reconstruction_max_difference": 5.684341886080802e-14,
+          "shared_Z_variable_count": 3,
+          "inequality_max_violation": 1.1823431123048067e-11,
+          "equality_max_abs": 1.2789769243681803e-13,
+          "bound_max_violation": 0.0,
+          "direct_cone_equation_max_abs": 9.947598300641403e-14,
+          "equality_absolute_term_sum_max": 1217.3622571825642,
+          "analytic_camera_witness": {
+            "max_equality_abs": 1.6697754290362354e-13,
+            "max_inequality_violation": 2.2737367544323206e-13,
+            "max_bound_violation": 0.0,
+            "min_positive_endpoint_weight": 0.9474736213963376
+          },
+          "original_unscaled_physical_witness_replay": {
+            "original_solver_status": 0,
+            "max_equality_abs": 2.913225216616411e-13,
+            "max_inequality_violation": 2.2737367544323206e-13,
+            "scaled_unit_change_max_difference": 1.1102230246251565e-16
+          }
+        },
+        {
+          "state": "fixed_wrong_state",
+          "status": 2,
+          "matrix_reconstruction_max_difference": 5.684341886080802e-14,
+          "shared_Z_variable_count": 3,
+          "interpretation": "numerical infeasible only"
+        }
+      ]
+    },
+    {
+      "case": "pointer1_full_nonhub_surface_creases",
+      "edge_count": 21,
+      "direction_max_absolute_difference": 0.0,
+      "length_max_absolute_difference": 0.0,
+      "frozen_endpoint_max_absolute_difference": 0.0,
+      "camera_projection_max_absolute_difference": 0.0,
+      "actual_camera_min_positive_depth": 2.894163477485268,
+      "states": [
+        {
+          "state": "true_state",
+          "status": 0,
+          "matrix_reconstruction_max_difference": 5.684341886080802e-14,
+          "shared_Z_variable_count": 3,
+          "inequality_max_violation": 9.777068044058979e-12,
+          "equality_max_abs": 2.8421709430404007e-12,
+          "bound_max_violation": 0.0,
+          "direct_cone_equation_max_abs": 2.7853275241795927e-12,
+          "equality_absolute_term_sum_max": 1378.6751400841472,
+          "analytic_camera_witness": {
+            "max_equality_abs": 2.0028423364237824e-13,
+            "max_inequality_violation": 2.2737367544323206e-13,
+            "max_bound_violation": 0.0,
+            "min_positive_endpoint_weight": 0.9340354943723356
+          },
+          "original_unscaled_physical_witness_replay": {
+            "original_solver_status": 0,
+            "max_equality_abs": 3.680611371237319e-11,
+            "max_inequality_violation": 2.2737367544323206e-13,
+            "scaled_unit_change_max_difference": 2.220446049250313e-16
+          }
+        },
+        {
+          "state": "fixed_wrong_state",
+          "status": 2,
+          "matrix_reconstruction_max_difference": 5.684341886080802e-14,
+          "shared_Z_variable_count": 3,
+          "interpretation": "numerical infeasible only"
+        }
+      ]
+    },
+    {
+      "case": "pointer2_full_nonhub_surface_creases",
+      "edge_count": 18,
+      "direction_max_absolute_difference": 0.0,
+      "length_max_absolute_difference": 0.0,
+      "frozen_endpoint_max_absolute_difference": 0.0,
+      "camera_projection_max_absolute_difference": 0.0,
+      "actual_camera_min_positive_depth": 2.9219548302764866,
+      "states": [
+        {
+          "state": "true_state",
+          "status": 0,
+          "matrix_reconstruction_max_difference": 5.684341886080802e-14,
+          "shared_Z_variable_count": 3,
+          "inequality_max_violation": 9.43600753089413e-12,
+          "equality_max_abs": 4.156675004196586e-12,
+          "bound_max_violation": 0.0,
+          "direct_cone_equation_max_abs": 4.170885858911788e-12,
+          "equality_absolute_term_sum_max": 1314.6565149627722,
+          "analytic_camera_witness": {
+            "max_equality_abs": 1.616484723854228e-13,
+            "max_inequality_violation": 2.2737367544323206e-13,
+            "max_bound_violation": 0.0,
+            "min_positive_endpoint_weight": 0.9430046179707636
+          },
+          "original_unscaled_physical_witness_replay": {
+            "original_solver_status": 0,
+            "max_equality_abs": 1.595878984517185e-11,
+            "max_inequality_violation": 2.2737367544323206e-13,
+            "scaled_unit_change_max_difference": 2.220446049250313e-16
+          }
+        },
+        {
+          "state": "fixed_wrong_state",
+          "status": 2,
+          "matrix_reconstruction_max_difference": 5.684341886080802e-14,
+          "shared_Z_variable_count": 3,
+          "interpretation": "numerical infeasible only"
+        }
+      ]
+    },
+    {
+      "case": "pointer3_full_nonhub_surface_creases",
+      "edge_count": 468,
+      "direction_max_absolute_difference": 1.1102230246251565e-16,
+      "length_max_absolute_difference": 2.710505431213761e-20,
+      "frozen_endpoint_max_absolute_difference": 0.0,
+      "camera_projection_max_absolute_difference": 0.0,
+      "actual_camera_min_positive_depth": 2.9341542228649424,
+      "states": [
+        {
+          "state": "true_state",
+          "status": 0,
+          "matrix_reconstruction_max_difference": 5.684341886080802e-14,
+          "shared_Z_variable_count": 3,
+          "inequality_max_violation": 3.1946001399774104e-11,
+          "equality_max_abs": 1.5148771126405336e-11,
+          "bound_max_violation": 0.0,
+          "direct_cone_equation_max_abs": 1.5141665699047735e-11,
+          "equality_absolute_term_sum_max": 1320.5269409727312,
+          "analytic_camera_witness": {
+            "max_equality_abs": 2.2834512058977907e-13,
+            "max_inequality_violation": 2.2737367544323206e-13,
+            "max_bound_violation": 0.0,
+            "min_positive_endpoint_weight": 0.9469417368571167
+          },
+          "original_unscaled_physical_witness_replay": {
+            "original_solver_status": 2,
+            "max_equality_abs": 1.0798117955346243e-09,
+            "max_inequality_violation": 2.2737367544323206e-13,
+            "scaled_unit_change_max_difference": 2.220446049250313e-16
+          }
+        },
+        {
+          "state": "fixed_wrong_state",
+          "status": 4,
+          "matrix_reconstruction_max_difference": 5.684341886080802e-14,
+          "shared_Z_variable_count": 3,
+          "interpretation": "UNKNOWN, cannot exclude"
+        }
+      ]
+    }
+  ],
+  "solver_calls": 0,
+  "cnn_image_forwards": 0,
+  "semantic_limits": [
+    "Topology crease classification does not certify RGB visibility, silhouette, direction, or correspondence.",
+    "Frozen templates and endpoint association are conditional GT inputs.",
+    "One shared free Z is necessary physical-camera algebra but does not impose full physical-camera constraints.",
+    "Scaled true primals are floating-point feasibility witnesses, not exact rational certificates.",
+    "Three wrong-state status2 outcomes are numerical solver reports without independently checked infeasibility certificates.",
+    "Pointer3 wrong-state status4 is UNKNOWN and is not an exclusion.",
+    "No statement about continuous-state coverage, deployed RGB accuracy, or novelty follows from these numeric checks."
+  ]
+}

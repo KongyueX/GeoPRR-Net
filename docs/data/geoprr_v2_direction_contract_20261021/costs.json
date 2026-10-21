@@ -1,0 +1,26 @@
+{
+  "topology_existing_snapshot_read_seconds": 0.09751170873641968,
+  "new_Blender_invocations": 0,
+  "new_renders": 0,
+  "shared_Z_positive_unit_LP_calls": 8,
+  "shared_Z_positive_unit_prototype_wall_seconds": 0.15427514538168907,
+  "shared_Z_initial_equivalent_weight_LP_calls": 8,
+  "shared_Z_initial_equivalent_weight_wall_seconds": 0.1452806107699871,
+  "naive_span_interval_source_pass_seconds": 0.305249210447073,
+  "dependency_span_source_pass_seconds": 1.3321991488337517,
+  "public_core_exact_equivalence_seconds": 4.460031583032105,
+  "independent_dependency_audit_seconds": 5.463422125030775,
+  "new_CNN_forwards": 0,
+  "model_updates": 0,
+  "new_model_seeds": 0,
+  "scope": "separate in-process CPU measurements include their saved outputs, exclude Python imports/SSH/annotation export/RGB extraction; not camera end-to-end costs",
+  "compact_halfspace_LP_calls": 8,
+  "compact_halfspace_prototype_wall_seconds": 0.4697099030017853,
+  "fixed_state_LP_calls_total_this_phase": 24,
+  "independent_compact_audit_seconds": 0.6724779999931343,
+  "measurement_hosts": {
+    "topology_and_LP_and_span_passes": "existing remote server project runtime",
+    "public_core_equivalence": "local bundled runtime; verification only",
+    "other_independent_audits": "verification timings retained; not used for cross-hardware speed comparisons"
+  }
+}

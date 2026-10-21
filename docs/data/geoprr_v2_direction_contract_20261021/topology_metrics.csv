@@ -1,0 +1,4 @@
+family,vertices,polygons,face_boundary_edges,nonhub_boundary_edges,nonhub_boundary_slanted,horizontal_nonhub_boundary_candidates,horizontal_candidate_length_min,horizontal_candidate_length_median,horizontal_candidate_length_max,longest_body_edge_length,longest_body_edge_absolute_dz,longest_body_edge_horizontal,vertex_snapshot_exact_match
+pointer1,274,143,413,29,21,8,0.028559687547385693,0.05686549283564091,0.13861706852912903,0.8561118178580865,0.011595582589507103,False,True
+pointer2,76,42,114,18,14,4,0.0037470549903371175,0.011983905166147724,0.02022075534195833,0.5799237124787798,0.0079681278462429,False,True
+pointer3,472,340,808,468,254,214,6.683092775740148e-05,0.0013328443697307388,0.6378117355785662,0.6378117355785662,0.0,True,True

@@ -1,0 +1,10 @@
+{
+  "scope": "posthoc scalar source-span metadata check after allnew domains locked; not an RGB/reading score or coverage theorem",
+  "samples": 1506,
+  "retained": 1506,
+  "excluded_ids": [],
+  "source_span_metadata_joined": true,
+  "target_y_joined": false,
+  "model_forwards": 0,
+  "geometry_refits": 0
+}

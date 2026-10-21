@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "rows": 1506,
+  "exact_R_interval_records_replayed": 1506,
+  "positive_span_lower_count": 999,
+  "five_box_general_position_count": 1506,
+  "first_last_disjoint_count": 1506,
+  "positive_lower_and_general_position_count": 999,
+  "both_span_endpoints_and_singular_H_exclusion_count": 999,
+  "proof_scope": "conditional exact conic/ordered equal-angle and truncation-cell model only; no actualRGBcoverage claim",
+  "new_geometry_optimizations": 0,
+  "model_forwards": 0,
+  "targets_read": false,
+  "lower_bound_verification": "rational v^2(1+s)^2<=s and outward double<=rational lower; no inverse trig needed",
+  "source_fields": [
+    "sample_id",
+    "group_id",
+    "ordered_long_tick_pixels"
+  ]
+}

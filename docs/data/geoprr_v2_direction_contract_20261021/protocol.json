@@ -1,0 +1,27 @@
+{
+  "source_population": {
+    "train": 14494,
+    "validation": 1506,
+    "test": 4000
+  },
+  "model_seed_expansion": false,
+  "topology_source": "one existing frozen g0000 factor snapshot from pinned337b868; exact compact-template vertex comparison, no new export/render",
+  "edge_scope": "all face-boundary edges derived; coplanar internal edges distinguished, loose-wire edges absent; actual visibility and directed association unverified",
+  "direction_kernel": "V=H[R(-u*span)dxy,0]+Z*dz; one sharedZ, endpoint cones; no horizontal approximation for nonzero dz",
+  "slanted_checks": "same four synthetic bundles, trueu.37 and fixedwrongu.47 at spanpi, GTdirection roles only; allnonhub surfacecreases, no length filtering",
+  "numerical_unit_change": "positive length scaling is bijective and leaves the mathematical closed cone unchanged; original artifacts retained privately",
+  "source_span_input_fields": [
+    "sample_id",
+    "group_id",
+    "ordered_long_tick_pixels"
+  ],
+  "source_H_C_spacing_span_y_used_during_domain_computation": false,
+  "span_metadata_join": "after both domain files completed; y remains unused",
+  "span_contract": "consecutive ordered equal-angle circle identities; closed int-truncation cells; actual perimage generationrevision remainsunverified",
+  "exact_domain_rule": "independent integer determinant intervals; ifvacuous, exact shared-reference F=3N-4D quadratic sign over4^4maincorners; rationalatan lower bound",
+  "no_hand_set_span_floor": true,
+  "no_condition_number_cutoff": true,
+  "unresolved_domains_retained": true,
+  "implementation": "experiments.geoprr_v2_conic_interval.ordered_tick_span_domain",
+  "public_result_contains_no_raw_geometry": true
+}

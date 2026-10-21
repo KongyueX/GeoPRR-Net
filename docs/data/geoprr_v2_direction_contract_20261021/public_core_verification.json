@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "samples": 1506,
+  "positive_span_lower_count": 1295,
+  "rational_domain_fields_exact_match": true,
+  "namespace_separation_verified": true,
+  "elapsed_seconds": 4.460031583032105,
+  "geometric_refits": 0,
+  "model_forwards": 0,
+  "targets_read": false,
+  "purpose": "new public implementation equivalence against independently audited exact arithmetic outputs"
+}

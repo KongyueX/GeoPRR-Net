@@ -1,0 +1,93 @@
+{
+  "scope": "source-validation conditional geometry domains and fixed synthetic direction controls; not reading/model performance",
+  "source_samples": 1506,
+  "topology": [
+    {
+      "family": "pointer1",
+      "vertices": 274,
+      "polygons": 143,
+      "face_boundary_edges": 413,
+      "nonhub_boundary_edges": 29,
+      "nonhub_boundary_slanted": 21,
+      "horizontal_nonhub_boundary_candidates": 8,
+      "horizontal_candidate_length_min": 0.028559687547385693,
+      "horizontal_candidate_length_median": 0.05686549283564091,
+      "horizontal_candidate_length_max": 0.13861706852912903,
+      "longest_body_edge_length": 0.8561118178580865,
+      "longest_body_edge_absolute_dz": 0.011595582589507103,
+      "longest_body_edge_horizontal": false,
+      "vertex_snapshot_exact_match": true
+    },
+    {
+      "family": "pointer2",
+      "vertices": 76,
+      "polygons": 42,
+      "face_boundary_edges": 114,
+      "nonhub_boundary_edges": 18,
+      "nonhub_boundary_slanted": 14,
+      "horizontal_nonhub_boundary_candidates": 4,
+      "horizontal_candidate_length_min": 0.0037470549903371175,
+      "horizontal_candidate_length_median": 0.011983905166147724,
+      "horizontal_candidate_length_max": 0.02022075534195833,
+      "longest_body_edge_length": 0.5799237124787798,
+      "longest_body_edge_absolute_dz": 0.0079681278462429,
+      "longest_body_edge_horizontal": false,
+      "vertex_snapshot_exact_match": true
+    },
+    {
+      "family": "pointer3",
+      "vertices": 472,
+      "polygons": 340,
+      "face_boundary_edges": 808,
+      "nonhub_boundary_edges": 468,
+      "nonhub_boundary_slanted": 254,
+      "horizontal_nonhub_boundary_candidates": 214,
+      "horizontal_candidate_length_min": 6.683092775740148e-05,
+      "horizontal_candidate_length_median": 0.0013328443697307388,
+      "horizontal_candidate_length_max": 0.6378117355785662,
+      "longest_body_edge_length": 0.6378117355785662,
+      "longest_body_edge_absolute_dz": 0.0,
+      "longest_body_edge_horizontal": true,
+      "vertex_snapshot_exact_match": true
+    }
+  ],
+  "span_domain_comparison": [
+    {
+      "method": "independent determinant interval",
+      "positive_lower": 999,
+      "unresolved": 507
+    },
+    {
+      "method": "shared-reference exact quadratic sign",
+      "positive_lower": 1295,
+      "unresolved": 211
+    }
+  ],
+  "newly_positive_exact_proofs": 296,
+  "robust_five_box_general_position": 1506,
+  "first_last_box_disjoint": 1506,
+  "source_span_metadata_retention_posthoc": {
+    "scope": "posthoc scalar source-span metadata check after allnew domains locked; not an RGB/reading score or coverage theorem",
+    "samples": 1506,
+    "retained": 1506,
+    "excluded_ids": [],
+    "source_span_metadata_joined": true,
+    "target_y_joined": false,
+    "model_forwards": 0,
+    "geometry_refits": 0
+  },
+  "training_ready": false,
+  "new_CNN_forwards": 0,
+  "model_updates": 0,
+  "new_model_seed": false,
+  "RGB_edge_visibility_verified": false,
+  "continuous_reading_outer_bound_complete": false,
+  "compact_geometry_variable_count": 11,
+  "largest_weighted_cone_variable_count": 3755,
+  "compact_exact_cones_independently_verified": 510,
+  "compact_same8_states_numeric_summary": {
+    "true_feasible": 4,
+    "wrong_numerically_infeasible": 4,
+    "certified_infeasibility": 0
+  }
+}

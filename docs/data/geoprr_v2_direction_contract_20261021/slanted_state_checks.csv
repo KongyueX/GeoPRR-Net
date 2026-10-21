@@ -1,0 +1,9 @@
+case,edges,slanted_edges,shared_Z_variables,M_Z_rank_diagnostic,state,progress,span_radians,solver_status,interpretation,max_equality_residual,max_inequality_violation
+three_generic_slanted_edges,3,3,3,3,true_state,0.37,3.141592653589793,0,feasible_primal_verified,1.2789769243681803e-13,1.1823431123048067e-11
+three_generic_slanted_edges,3,3,3,3,fixed_wrong_state,0.47,3.141592653589793,2,numerical_infeasibility_no_certificate,,
+pointer1_full_nonhub_surface_creases,21,17,3,3,true_state,0.37,3.141592653589793,0,feasible_primal_verified,2.8421709430404007e-12,9.777068044058979e-12
+pointer1_full_nonhub_surface_creases,21,17,3,3,fixed_wrong_state,0.47,3.141592653589793,2,numerical_infeasibility_no_certificate,,
+pointer2_full_nonhub_surface_creases,18,14,3,3,true_state,0.37,3.141592653589793,0,feasible_primal_verified,4.156675004196586e-12,9.43600753089413e-12
+pointer2_full_nonhub_surface_creases,18,14,3,3,fixed_wrong_state,0.47,3.141592653589793,2,numerical_infeasibility_no_certificate,,
+pointer3_full_nonhub_surface_creases,468,254,3,3,true_state,0.37,3.141592653589793,0,feasible_primal_verified,1.5148771126405336e-11,3.1946001399774104e-11
+pointer3_full_nonhub_surface_creases,468,254,3,3,fixed_wrong_state,0.47,3.141592653589793,4,unknown,,

@@ -1,0 +1,101 @@
+{
+  "scope": "same8exact synthetic states; mathematically equivalent closed-cone representation",
+  "rows": [
+    {
+      "case": "three_generic_slanted_edges",
+      "edges": 3,
+      "state": "true_state",
+      "weighted_cone_variables": 35,
+      "compact_variables": 11,
+      "solver_status": 0,
+      "interpretation": "numerical_feasible_primal_verified",
+      "primal_inequality_max_violation": 2.2737367544323206e-13,
+      "primal_equality_max_abs": 1.6653345369377348e-16
+    },
+    {
+      "case": "three_generic_slanted_edges",
+      "edges": 3,
+      "state": "fixed_wrong_state",
+      "weighted_cone_variables": 35,
+      "compact_variables": 11,
+      "solver_status": 2,
+      "interpretation": "numerical_infeasible_no_exclusion_certificate",
+      "primal_inequality_max_violation": null,
+      "primal_equality_max_abs": null
+    },
+    {
+      "case": "pointer1_full_nonhub_surface_creases",
+      "edges": 21,
+      "state": "true_state",
+      "weighted_cone_variables": 179,
+      "compact_variables": 11,
+      "solver_status": 0,
+      "interpretation": "numerical_feasible_primal_verified",
+      "primal_inequality_max_violation": 8.242295734817162e-13,
+      "primal_equality_max_abs": 7.277511926417901e-14
+    },
+    {
+      "case": "pointer1_full_nonhub_surface_creases",
+      "edges": 21,
+      "state": "fixed_wrong_state",
+      "weighted_cone_variables": 179,
+      "compact_variables": 11,
+      "solver_status": 2,
+      "interpretation": "numerical_infeasible_no_exclusion_certificate",
+      "primal_inequality_max_violation": null,
+      "primal_equality_max_abs": null
+    },
+    {
+      "case": "pointer2_full_nonhub_surface_creases",
+      "edges": 18,
+      "state": "true_state",
+      "weighted_cone_variables": 155,
+      "compact_variables": 11,
+      "solver_status": 0,
+      "interpretation": "numerical_feasible_primal_verified",
+      "primal_inequality_max_violation": 2.4442670110147446e-11,
+      "primal_equality_max_abs": 4.280603649320369e-14
+    },
+    {
+      "case": "pointer2_full_nonhub_surface_creases",
+      "edges": 18,
+      "state": "fixed_wrong_state",
+      "weighted_cone_variables": 155,
+      "compact_variables": 11,
+      "solver_status": 2,
+      "interpretation": "numerical_infeasible_no_exclusion_certificate",
+      "primal_inequality_max_violation": null,
+      "primal_equality_max_abs": null
+    },
+    {
+      "case": "pointer3_full_nonhub_surface_creases",
+      "edges": 468,
+      "state": "true_state",
+      "weighted_cone_variables": 3755,
+      "compact_variables": 11,
+      "solver_status": 0,
+      "interpretation": "numerical_feasible_primal_verified",
+      "primal_inequality_max_violation": 1.7485035641584545e-10,
+      "primal_equality_max_abs": 1.2451601555385494e-10
+    },
+    {
+      "case": "pointer3_full_nonhub_surface_creases",
+      "edges": 468,
+      "state": "fixed_wrong_state",
+      "weighted_cone_variables": 3755,
+      "compact_variables": 11,
+      "solver_status": 2,
+      "interpretation": "numerical_infeasible_no_exclusion_certificate",
+      "primal_inequality_max_violation": null,
+      "primal_equality_max_abs": null
+    }
+  ],
+  "exact_endpoint_cones_verified": 510,
+  "all_true_feasible": true,
+  "all_fixed_wrong_status2_numerical": true,
+  "infeasibility_certificates_checked": false,
+  "continuous_state_search_run": false,
+  "total_prototype_wall_seconds": 0.4697099030017853,
+  "independent_replay": "PASS",
+  "RGB_observations_used": false
+}
