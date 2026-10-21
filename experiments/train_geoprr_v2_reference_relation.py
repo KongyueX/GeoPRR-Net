@@ -89,7 +89,8 @@ def build_parser():
     return parser
 
 
-def main(argv=None):
+def main(argv=None, *, reader_class=ReferenceRelationReader,
+         loss_function=reference_relation_losses, full_initialization="full_best57"):
     process_started = time.perf_counter()
     args = build_parser().parse_args(argv)
     config = json.loads(args.config.read_text())
@@ -115,10 +116,10 @@ def main(argv=None):
              ("train_manifest", "val_manifest", "pair_manifest", "init_checkpoint")}
     data_contract = {"paths": paths, "train": train_data.supervision_contract(),
                      "validation": val_data.supervision_contract(), "exposure_edges": train_data.edges}
-    model = ReferenceRelationReader(**config["model"])
+    model = reader_class(**config["model"])
     initialization = None
     if args.resume is None:
-        initialization = (model.initialize_full(args.init_checkpoint) if config.get("initialization") == "full_best57"
+        initialization = (model.initialize_full(args.init_checkpoint) if config.get("initialization") == full_initialization
                           else model.initialize_shared(args.init_checkpoint))
     model = model.to(device)
     head_parameters = list(model.state_head.parameters())
@@ -189,7 +190,7 @@ def main(argv=None):
             optimizer.zero_grad(set_to_none=True)
             with torch.autocast(device_type=device.type, dtype=torch.float16, enabled=amp_enabled):
                 output = model(images)
-            terms = reference_relation_losses(output, supervision)
+            terms = loss_function(output, supervision)
             loss = terms["total"]
             if not torch.isfinite(loss):
                 raise FloatingPointError(f"nonfinite training loss at epoch{epoch + 1}, batch{batch_index + 1}")
