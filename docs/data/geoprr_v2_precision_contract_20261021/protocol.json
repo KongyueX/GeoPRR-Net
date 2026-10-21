@@ -1,0 +1,33 @@
+{
+  "fixed_cases": [
+    {
+      "case": "well_spread_material",
+      "tick_count": 20,
+      "material_points": 12,
+      "span_degrees": 180.0
+    },
+    {
+      "case": "thin_material",
+      "tick_count": 20,
+      "material_points": 12,
+      "span_degrees": 180.0
+    },
+    {
+      "case": "short_arc",
+      "tick_count": 7,
+      "material_points": 12,
+      "span_degrees": 60.0
+    }
+  ],
+  "quantizer": "floor of continuous source-pixel coordinates, without +0.5 in generation",
+  "search": "Two deterministic bounded SLSQP reading extrema per case; 200 iterations each; no random starts.",
+  "maximum_iterations_each": 200,
+  "expanded_cases_or_search_budget": false,
+  "finite_extrema_extraction": "existing saved feasible extrema only; no additional optimization",
+  "camera_family": "unknown projective calibration; proper pinhole cameras verified; alternative intrinsics may differ",
+  "heights": "each material point retains own height; three height levels in each construction",
+  "same_input": "all tick and material integer coordinates match in both axes",
+  "claim_boundary": "finite witnesses imply a lower bound for any deterministic decoder restricted to those observations; not an upper bound, frequency estimate, full-image ambiguity, or new geometry theorem",
+  "original_quantizer_provenance": "pinned upstream source int truncation verified; per-released-image generator revision unverified",
+  "raw_artifacts": "kept private; no source image, H/C/XYZ, continuous coordinates or parameter vectors are distributed"
+}

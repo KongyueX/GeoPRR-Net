@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "well_spread_material",
+      "ticks": 20,
+      "material_points": 12,
+      "total_points": 32,
+      "all_coordinate_cells_equal": true,
+      "saved_explanations_replayed": 3,
+      "reading_separation_percent_fs": 0.49675654761389687,
+      "witness_pair_minimax_error_lower_bound_percent_fs": 0.24837827380694844,
+      "minimum_continuous_pixel_cell_margin": 9.999723715736764e-09,
+      "proper_pinhole_unknown_intrinsics_verified": true
+    },
+    {
+      "case": "thin_material",
+      "ticks": 20,
+      "material_points": 12,
+      "total_points": 32,
+      "all_coordinate_cells_equal": true,
+      "saved_explanations_replayed": 3,
+      "reading_separation_percent_fs": 1.0500045611939512,
+      "witness_pair_minimax_error_lower_bound_percent_fs": 0.5250022805969756,
+      "minimum_continuous_pixel_cell_margin": 9.992902505473467e-09,
+      "proper_pinhole_unknown_intrinsics_verified": true
+    },
+    {
+      "case": "short_arc",
+      "ticks": 7,
+      "material_points": 12,
+      "total_points": 19,
+      "all_coordinate_cells_equal": true,
+      "saved_explanations_replayed": 3,
+      "reading_separation_percent_fs": 5.305857568892081,
+      "witness_pair_minimax_error_lower_bound_percent_fs": 2.6529287844460403,
+      "minimum_continuous_pixel_cell_margin": 9.99739313556347e-09,
+      "proper_pinhole_unknown_intrinsics_verified": true
+    }
+  ],
+  "maximum_pixel_replay_difference": 2.2737367544323206e-13,
+  "optimizer_runs": 0,
+  "model_forwards": 0,
+  "training_updates": 0,
+  "scope": "Independent replay of finite synthetic witnesses only; not a dataset frequency or RGB ambiguity result",
+  "camera_contract": "Unknown intrinsics may differ between explanations; same-intrinsic ambiguity was not claimed",
+  "no_counterexample_is_not_identifiability": true
+}

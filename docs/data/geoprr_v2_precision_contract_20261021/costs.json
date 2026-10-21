@@ -1,0 +1,15 @@
+{
+  "synthetic_geometry_optimization_runs": 6,
+  "synthetic_search_wall_seconds": 0.0692431777715683,
+  "maximum_iterations_each": 200,
+  "search_restarts": 0,
+  "new_CNN_image_forwards": 0,
+  "model_optimizer_updates": 0,
+  "gpu_calls": 0,
+  "new_model_seeds": 0,
+  "independent_replay_optimizer_runs": 0,
+  "scope": "in-process synthetic construction/search/write timer excludes Python imports and SSH setup; no camera end-to-end timing claim",
+  "foreground_search_pid_recorded": false,
+  "fixed_state_prototype_LP_solves": 3,
+  "fixed_state_prototype_wall_seconds": 0.01624475046992302
+}

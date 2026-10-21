@@ -1,0 +1,42 @@
+{
+  "scope": "fixed synthetic (progress,span) necessary-feasibility prototype; not continuous reading bounds or actualdata accuracy",
+  "checks": [
+    {
+      "check": "true_exact",
+      "solver_status": 0,
+      "LP_constraint_construction_verified": true,
+      "primal_inequality_max_violation": 4.206412995699793e-12,
+      "primal_equality_max_abs": 3.794298208958935e-12
+    },
+    {
+      "check": "true_half_pixel_boxes",
+      "solver_status": 0,
+      "LP_constraint_construction_verified": true,
+      "primal_inequality_max_violation": 5.684341886080802e-14,
+      "primal_equality_max_abs": 1.2079226507921703e-13
+    },
+    {
+      "check": "fixed_wrong_reading_exact",
+      "solver_status": 2,
+      "LP_constraint_construction_verified": true,
+      "infeasibility_scope": "saved floating-point solver status only; no exact dual/Farkas certificate claimed"
+    }
+  ],
+  "independent_constraint_and_primal_replay": "PASS",
+  "independent_solver_runs": 0,
+  "different_edge_heights": true,
+  "edge_direction_associations": "known only in this synthetic construction",
+  "state_hypotheses": {
+    "true_progress": 0.37,
+    "fixed_wrong_progress": 0.47,
+    "span_degrees": 180
+  },
+  "uncertain_box_contract": "continuous-centered ±0.5 pixel boxes, not released-data coverage",
+  "closed_relaxation": "zero depth/cone totals and singularH admitted; Hbottom square is outer approximation to fullcirclefront",
+  "infeasibility_status": "floating-point HiGHS status2 only, no exact Farkas certificate",
+  "cpu_prototype_wall_seconds": 0.01624475046992302,
+  "LP_solve_count": 3,
+  "new_model_forwards": 0,
+  "training_updates": 0,
+  "continuous_state_search_run": false
+}

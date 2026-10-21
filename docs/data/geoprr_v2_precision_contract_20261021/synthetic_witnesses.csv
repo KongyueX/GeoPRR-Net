@@ -1,0 +1,4 @@
+case,ticks,material_points,total_points,all_coordinate_cells_equal,saved_explanations_replayed,reading_separation_percent_fs,witness_pair_minimax_error_lower_bound_percent_fs,minimum_continuous_pixel_cell_margin,proper_pinhole_unknown_intrinsics_verified,span_degrees,search_runs,search_successes,minimum_iterations,maximum_iterations
+well_spread_material,20,12,32,True,3,0.49675654761389687,0.24837827380694844,9.999723715736764e-09,True,180.0,2,2,11,12
+thin_material,20,12,32,True,3,1.0500045611939512,0.5250022805969756,9.992902505473467e-09,True,180.0,2,2,15,16
+short_arc,7,12,19,True,3,5.305857568892081,2.6529287844460403,9.99739313556347e-09,True,60.0,2,2,20,23
