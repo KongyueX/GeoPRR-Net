@@ -108,6 +108,7 @@ joint于北京时间2026年10月21日16:49:12正常完成65轮，唯一模型see
 
 ## 文件
 
+- [固定best57完整1506零训练诊断](../geoprr_v2_reference_diagnosis_20261021/README.md)。
 - [正式完整汇总与门槛](formal_summary.json)、[1506逐图配对](formal_paired_rows.csv.gz)、[原始预测标量](formal_predictions.csv.gz)、[阈值救回／新增](formal_threshold_transitions.csv)、[旧严重6张](formal_old_severe.csv)、[最差151张](formal_worst151.csv)。
 - [65轮history](formal_history.jsonl)、[config](formal_config.json)、[规范化run元数据](formal_run_metadata.json)、[completed](formal_completed.json)、[正式冻结protocol](formal_protocol.json)、[独立数值复核](formal_numeric_verification.json)。
 - [完整逐图标签读出](teacher_label_rows.csv)、[标签量化摘要](teacher_summary.json)、[product量化对照](teacher_product_quantization.json)、[独立复核](teacher_verification.json)。

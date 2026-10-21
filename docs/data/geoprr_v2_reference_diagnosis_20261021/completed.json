@@ -1,0 +1,20 @@
+{
+  "status": "complete",
+  "images": 1506,
+  "CNN_image_forwards": 1506,
+  "native_head_image_calls": 1506,
+  "teacher_rectifier_head_image_calls": 1506,
+  "optimizer_updates": 0,
+  "backward_calls": 0,
+  "readout_calls": 1615,
+  "readout_image_equivalents": 25602,
+  "readouts_per_image": 11,
+  "replay_max_difference": 1.1920928955078125e-07,
+  "identity_max_residual": 3.4496188163757324e-06,
+  "probability_mass_max_error": 6.854534149169922e-06,
+  "input_failures": 0,
+  "process_wall_seconds": 17.56406657770276,
+  "peak_cuda_allocated_bytes": 1294815232,
+  "peak_cuda_reserved_bytes": 1981808640,
+  "scope": "frozen checkpoint diagnostic; teacher interventions are not model performance"
+}

@@ -1,0 +1,2126 @@
+{
+  "status": "complete",
+  "scope": "frozen checkpoint zero-training conditional diagnosis, GT interventions not deployable models",
+  "completed": {
+    "status": "complete",
+    "images": 1506,
+    "CNN_image_forwards": 1506,
+    "native_head_image_calls": 1506,
+    "teacher_rectifier_head_image_calls": 1506,
+    "optimizer_updates": 0,
+    "backward_calls": 0,
+    "readout_calls": 1615,
+    "readout_image_equivalents": 25602,
+    "readouts_per_image": 11,
+    "replay_max_difference": 1.1920928955078125e-07,
+    "identity_max_residual": 3.4496188163757324e-06,
+    "probability_mass_max_error": 6.854534149169922e-06,
+    "input_failures": 0,
+    "process_wall_seconds": 17.56406657770276,
+    "peak_cuda_allocated_bytes": 1294815232,
+    "peak_cuda_reserved_bytes": 1981808640,
+    "scope": "frozen checkpoint diagnostic; teacher interventions are not model performance"
+  },
+  "readouts": {
+    "native_joint": {
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.0771225052396734,
+          "median_percent_fs": 0.04487857222557068,
+          "p90_percent_fs": 0.150415301322937,
+          "p95_percent_fs": 0.2279886044561863,
+          "tail10_percent_fs": 0.3418521345007104,
+          "maximum_percent_fs": 5.908846855163574,
+          "acc_at_1_percent": 99.734395750332,
+          "acc_at_2_percent": 99.800796812749,
+          "acc_at_5_percent": 99.933598937583,
+          "above_1_percent_fs": 4,
+          "above_2_percent_fs": 3,
+          "above_5_percent_fs": 1
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.0675710788588022,
+          "median_percent_fs": 0.04410147666931152,
+          "p90_percent_fs": 0.14790534973144537,
+          "p95_percent_fs": 0.22326588630676258,
+          "tail10_percent_fs": 0.2509849288811286,
+          "maximum_percent_fs": 0.9953022003173828,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.07143279852847621,
+          "median_percent_fs": 0.04410147666931152,
+          "p90_percent_fs": 0.1483553647994996,
+          "p95_percent_fs": 0.22487401962280276,
+          "tail10_percent_fs": 0.2893903472771247,
+          "maximum_percent_fs": 5.908846855163574,
+          "acc_at_1_percent": 99.93319973279893,
+          "acc_at_2_percent": 99.93319973279893,
+          "acc_at_5_percent": 99.93319973279893,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 1
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 1.097142075498899,
+          "median_percent_fs": 0.11301282793283463,
+          "p90_percent_fs": 3.142865188419819,
+          "p95_percent_fs": 3.2942826859652996,
+          "tail10_percent_fs": 3.4457001835107803,
+          "maximum_percent_fs": 3.4457001835107803,
+          "acc_at_1_percent": 66.66666666666666,
+          "acc_at_2_percent": 66.66666666666666,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 2,
+          "above_5_percent_fs": 0
+        }
+      },
+      "paired": {
+        "native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3663",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_12540",
+              "sync_3172"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_3172"
+            ]
+          }
+        },
+        "r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3663",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_3172"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_3663"
+            ],
+            "new": [
+              "sync_3172"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": [
+              "sync_3172"
+            ]
+          }
+        }
+      },
+      "maximum_error_id": "sync_3172"
+    },
+    "native_product": {
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.08204519330052044,
+          "median_percent_fs": 0.04437863826751709,
+          "p90_percent_fs": 0.15310049057006836,
+          "p95_percent_fs": 0.2287713810801506,
+          "tail10_percent_fs": 0.38962441663078917,
+          "maximum_percent_fs": 16.960278153419495,
+          "acc_at_1_percent": 99.734395750332,
+          "acc_at_2_percent": 99.933598937583,
+          "acc_at_5_percent": 99.933598937583,
+          "above_1_percent_fs": 4,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 1
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.06768755502028864,
+          "median_percent_fs": 0.044155120849609375,
+          "p90_percent_fs": 0.15028834342956573,
+          "p95_percent_fs": 0.22038131952285758,
+          "tail10_percent_fs": 0.25133800754944485,
+          "maximum_percent_fs": 1.002424955368042,
+          "acc_at_1_percent": 99.93311036789298,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.06873866849908625,
+          "median_percent_fs": 0.044155120849609375,
+          "p90_percent_fs": 0.15124201774597168,
+          "p95_percent_fs": 0.22234678268432628,
+          "tail10_percent_fs": 0.261663260559241,
+          "maximum_percent_fs": 1.6999870538711548,
+          "acc_at_1_percent": 99.86639946559787,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 0.49632856001456577,
+          "median_percent_fs": 0.3103882074356079,
+          "p90_percent_fs": 1.1422773823142052,
+          "p95_percent_fs": 1.27889821305871,
+          "tail10_percent_fs": 1.415519043803215,
+          "maximum_percent_fs": 1.415519043803215,
+          "acc_at_1_percent": 83.33333333333334,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        }
+      },
+      "paired": {
+        "native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_338",
+              "sync_3663",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_10304"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_1999"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_1999"
+            ]
+          }
+        },
+        "r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_338",
+              "sync_3663",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_10304",
+              "sync_3172"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338",
+              "sync_3663"
+            ],
+            "new": [
+              "sync_1999"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": [
+              "sync_1999"
+            ]
+          }
+        }
+      },
+      "maximum_error_id": "sync_1999"
+    },
+    "teacher_A": {
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.06434255491431962,
+          "median_percent_fs": 0.04219412803649902,
+          "p90_percent_fs": 0.13934001326560974,
+          "p95_percent_fs": 0.19485168159008026,
+          "tail10_percent_fs": 0.23653829782010657,
+          "maximum_percent_fs": 0.8163690567016602,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.06365814072770175,
+          "median_percent_fs": 0.04182755947113037,
+          "p90_percent_fs": 0.1382732391357422,
+          "p95_percent_fs": 0.18932312726974482,
+          "tail10_percent_fs": 0.23258721682820274,
+          "maximum_percent_fs": 0.8163690567016602,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.06364412297525797,
+          "median_percent_fs": 0.04182755947113037,
+          "p90_percent_fs": 0.13825058937072754,
+          "p95_percent_fs": 0.18918871879577642,
+          "tail10_percent_fs": 0.23258721682820274,
+          "maximum_percent_fs": 0.8163690567016602,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 0.12933046867450076,
+          "median_percent_fs": 0.073208287358284,
+          "p90_percent_fs": 0.2798132598400116,
+          "p95_percent_fs": 0.322466716170311,
+          "tail10_percent_fs": 0.36512017250061035,
+          "maximum_percent_fs": 0.36512017250061035,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        }
+      },
+      "paired": {
+        "native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_3172",
+              "sync_338",
+              "sync_3663",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          }
+        },
+        "r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_338",
+              "sync_3663",
+              "sync_3855"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338",
+              "sync_3663"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": []
+          }
+        }
+      },
+      "maximum_error_id": "sync_10304"
+    },
+    "teacher_AB": {
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.06224404645592059,
+          "median_percent_fs": 0.04144832491874695,
+          "p90_percent_fs": 0.13409405946731567,
+          "p95_percent_fs": 0.1847587525844574,
+          "tail10_percent_fs": 0.22674679059479563,
+          "maximum_percent_fs": 0.8653104305267334,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.061692595343532025,
+          "median_percent_fs": 0.041359663009643555,
+          "p90_percent_fs": 0.13335406780242925,
+          "p95_percent_fs": 0.17959177494049058,
+          "tail10_percent_fs": 0.2232535232506052,
+          "maximum_percent_fs": 0.8653104305267334,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.061675868217920864,
+          "median_percent_fs": 0.041365623474121094,
+          "p90_percent_fs": 0.1332664489746094,
+          "p95_percent_fs": 0.17926692962646498,
+          "tail10_percent_fs": 0.2232535232506052,
+          "maximum_percent_fs": 0.8653104305267334,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 0.08894987404346466,
+          "median_percent_fs": 0.07248539477586746,
+          "p90_percent_fs": 0.17556920647621155,
+          "p95_percent_fs": 0.18507502973079681,
+          "tail10_percent_fs": 0.19458085298538208,
+          "maximum_percent_fs": 0.19458085298538208,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        }
+      },
+      "paired": {
+        "native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_3172",
+              "sync_338",
+              "sync_3663",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          }
+        },
+        "r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_338",
+              "sync_3663",
+              "sync_3855"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338",
+              "sync_3663"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": []
+          }
+        }
+      },
+      "maximum_error_id": "sync_10304"
+    },
+    "teacher_AP": {
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.012229835366846116,
+          "median_percent_fs": 0.0031910836696624756,
+          "p90_percent_fs": 0.028815865516662598,
+          "p95_percent_fs": 0.0521928071975708,
+          "tail10_percent_fs": 0.07748275030274615,
+          "maximum_percent_fs": 1.7062366008758545,
+          "acc_at_1_percent": 99.933598937583,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.01199396253344163,
+          "median_percent_fs": 0.003147125244140625,
+          "p90_percent_fs": 0.028378963470458988,
+          "p95_percent_fs": 0.05172848701477049,
+          "tail10_percent_fs": 0.07580795707447882,
+          "maximum_percent_fs": 1.7062366008758545,
+          "acc_at_1_percent": 99.93311036789298,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.011995977202278374,
+          "median_percent_fs": 0.003153085708618164,
+          "p90_percent_fs": 0.028370618820190437,
+          "p95_percent_fs": 0.051691532135009786,
+          "tail10_percent_fs": 0.07580795707447882,
+          "maximum_percent_fs": 1.7062366008758545,
+          "acc_at_1_percent": 99.93319973279893,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 0.04416958739360173,
+          "median_percent_fs": 0.008514150977134705,
+          "p90_percent_fs": 0.1216500997543335,
+          "p95_percent_fs": 0.1653328537940979,
+          "tail10_percent_fs": 0.2090156078338623,
+          "maximum_percent_fs": 0.2090156078338623,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        }
+      },
+      "paired": {
+        "native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_3172",
+              "sync_338",
+              "sync_3663",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_10304"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          }
+        },
+        "r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_338",
+              "sync_3663",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_10304"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338",
+              "sync_3663"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": []
+          }
+        }
+      },
+      "maximum_error_id": "sync_10304"
+    },
+    "teacher_APB": {
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.0009009602468688913,
+          "median_percent_fs": 0.000286102294921875,
+          "p90_percent_fs": 0.0016711652278900146,
+          "p95_percent_fs": 0.002422742545604706,
+          "tail10_percent_fs": 0.005885404444772624,
+          "maximum_percent_fs": 0.14838576589681907,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.0008965797201731479,
+          "median_percent_fs": 0.000286102294921875,
+          "p90_percent_fs": 0.0016593933105468763,
+          "p95_percent_fs": 0.0023939460515975948,
+          "tail10_percent_fs": 0.005850338317638186,
+          "maximum_percent_fs": 0.14838576589681907,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.0008961423716593627,
+          "median_percent_fs": 0.000286102294921875,
+          "p90_percent_fs": 0.0016576051712036141,
+          "p95_percent_fs": 0.0023926794528961186,
+          "tail10_percent_fs": 0.005850338317638186,
+          "maximum_percent_fs": 0.14838576589681907,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 0.000848683218161265,
+          "median_percent_fs": 0.00019669532775878906,
+          "p90_percent_fs": 0.0023074448108673096,
+          "p95_percent_fs": 0.0029277056455612183,
+          "tail10_percent_fs": 0.003547966480255127,
+          "maximum_percent_fs": 0.003547966480255127,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        }
+      },
+      "paired": {
+        "native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_3172",
+              "sync_338",
+              "sync_3663",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          }
+        },
+        "r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_338",
+              "sync_3663",
+              "sync_3855"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338",
+              "sync_3663"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": []
+          }
+        }
+      },
+      "maximum_error_id": "sync_11131"
+    },
+    "teacher_B": {
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.07571704714625169,
+          "median_percent_fs": 0.0428028404712677,
+          "p90_percent_fs": 0.13976842164993286,
+          "p95_percent_fs": 0.2008030191063881,
+          "tail10_percent_fs": 0.3479340859991036,
+          "maximum_percent_fs": 6.053087115287781,
+          "acc_at_1_percent": 99.734395750332,
+          "acc_at_2_percent": 99.734395750332,
+          "acc_at_5_percent": 99.933598937583,
+          "above_1_percent_fs": 4,
+          "above_2_percent_fs": 4,
+          "above_5_percent_fs": 1
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.06336782602806958,
+          "median_percent_fs": 0.042652152478694916,
+          "p90_percent_fs": 0.1375436782836914,
+          "p95_percent_fs": 0.19306927919387806,
+          "tail10_percent_fs": 0.2286267379919688,
+          "maximum_percent_fs": 0.8473634719848633,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.0673542172636999,
+          "median_percent_fs": 0.042652152478694916,
+          "p90_percent_fs": 0.13765722513198855,
+          "p95_percent_fs": 0.19466042518615723,
+          "tail10_percent_fs": 0.268063614765803,
+          "maximum_percent_fs": 6.053087115287781,
+          "acc_at_1_percent": 99.93319973279893,
+          "acc_at_2_percent": 99.93319973279893,
+          "acc_at_5_percent": 99.93319973279893,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 1
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 1.2834329158067703,
+          "median_percent_fs": 0.16140062361955643,
+          "p90_percent_fs": 3.6594951525330544,
+          "p95_percent_fs": 3.767488617449999,
+          "tail10_percent_fs": 3.8754820823669434,
+          "maximum_percent_fs": 3.8754820823669434,
+          "acc_at_1_percent": 66.66666666666666,
+          "acc_at_2_percent": 66.66666666666666,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 2,
+          "above_5_percent_fs": 0
+        }
+      },
+      "paired": {
+        "native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3663",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_12540",
+              "sync_1999",
+              "sync_3172"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_3172"
+            ]
+          }
+        },
+        "r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3663",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_3172"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_3663"
+            ],
+            "new": [
+              "sync_1999",
+              "sync_3172"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": [
+              "sync_3172"
+            ]
+          }
+        }
+      },
+      "maximum_error_id": "sync_3172"
+    },
+    "teacher_P": {
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.028292025349419346,
+          "median_percent_fs": 0.006502866744995117,
+          "p90_percent_fs": 0.0506281852722168,
+          "p95_percent_fs": 0.08576065301895142,
+          "tail10_percent_fs": 0.19762528952574845,
+          "maximum_percent_fs": 6.010445952415466,
+          "acc_at_1_percent": 99.66799468791501,
+          "acc_at_2_percent": 99.800796812749,
+          "acc_at_5_percent": 99.933598937583,
+          "above_1_percent_fs": 5,
+          "above_2_percent_fs": 3,
+          "above_5_percent_fs": 1
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.019210237087980715,
+          "median_percent_fs": 0.006449222564697266,
+          "p90_percent_fs": 0.0492918491363526,
+          "p95_percent_fs": 0.08207440376281736,
+          "tail10_percent_fs": 0.10901795430375691,
+          "maximum_percent_fs": 1.717686653137207,
+          "acc_at_1_percent": 99.93311036789298,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.02320611580695537,
+          "median_percent_fs": 0.006473064422607422,
+          "p90_percent_fs": 0.04955172538757326,
+          "p95_percent_fs": 0.08265405893325808,
+          "tail10_percent_fs": 0.14875782135519935,
+          "maximum_percent_fs": 6.010445952415466,
+          "acc_at_1_percent": 99.86639946559787,
+          "acc_at_2_percent": 99.93319973279893,
+          "acc_at_5_percent": 99.93319973279893,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 1
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 1.0386242220799127,
+          "median_percent_fs": 0.07570255547761917,
+          "p90_percent_fs": 3.035152144730091,
+          "p95_percent_fs": 3.2045784406363964,
+          "tail10_percent_fs": 3.3740047365427017,
+          "maximum_percent_fs": 3.3740047365427017,
+          "acc_at_1_percent": 66.66666666666666,
+          "acc_at_2_percent": 66.66666666666666,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 2,
+          "above_5_percent_fs": 0
+        }
+      },
+      "paired": {
+        "native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3663",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_10304"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_12540",
+              "sync_3172"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_3172"
+            ]
+          }
+        },
+        "r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3663",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_10304",
+              "sync_3172"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_3663"
+            ],
+            "new": [
+              "sync_3172"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": [
+              "sync_3172"
+            ]
+          }
+        }
+      },
+      "maximum_error_id": "sync_3172"
+    },
+    "teacher_PB": {
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.023433653228955614,
+          "median_percent_fs": 0.0033833086490631104,
+          "p90_percent_fs": 0.027278810739517212,
+          "p95_percent_fs": 0.049214065074920654,
+          "tail10_percent_fs": 0.1882740031393065,
+          "maximum_percent_fs": 5.994334816932678,
+          "acc_at_1_percent": 99.734395750332,
+          "acc_at_2_percent": 99.734395750332,
+          "acc_at_5_percent": 99.933598937583,
+          "above_1_percent_fs": 4,
+          "above_2_percent_fs": 4,
+          "above_5_percent_fs": 1
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.011239555482412913,
+          "median_percent_fs": 0.003325939178466797,
+          "p90_percent_fs": 0.02697914838790894,
+          "p95_percent_fs": 0.04670947790145873,
+          "tail10_percent_fs": 0.06742270292670582,
+          "maximum_percent_fs": 0.3078293055295944,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.015228870591016649,
+          "median_percent_fs": 0.003325939178466797,
+          "p90_percent_fs": 0.02703368663787843,
+          "p95_percent_fs": 0.04695698618888857,
+          "tail10_percent_fs": 0.10720504822165822,
+          "maximum_percent_fs": 5.994334816932678,
+          "acc_at_1_percent": 99.93319973279893,
+          "acc_at_2_percent": 99.93319973279893,
+          "acc_at_5_percent": 99.93319973279893,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 1
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 1.2807780255874,
+          "median_percent_fs": 0.05410853773355484,
+          "p90_percent_fs": 3.7880735471844673,
+          "p95_percent_fs": 3.9285370148718357,
+          "tail10_percent_fs": 4.069000482559204,
+          "maximum_percent_fs": 4.069000482559204,
+          "acc_at_1_percent": 66.66666666666666,
+          "acc_at_2_percent": 66.66666666666666,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 2,
+          "above_5_percent_fs": 0
+        }
+      },
+      "paired": {
+        "native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3663",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_12540",
+              "sync_1999",
+              "sync_3172"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_3172"
+            ]
+          }
+        },
+        "r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3663",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_3172"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_3663"
+            ],
+            "new": [
+              "sync_1999",
+              "sync_3172"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": [
+              "sync_3172"
+            ]
+          }
+        }
+      },
+      "maximum_error_id": "sync_3172"
+    },
+    "teacher_rectifier_joint": {
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.07429612919085257,
+          "median_percent_fs": 0.04316456615924835,
+          "p90_percent_fs": 0.1476004719734192,
+          "p95_percent_fs": 0.2027273178100586,
+          "tail10_percent_fs": 0.3228935468571865,
+          "maximum_percent_fs": 6.069162487983704,
+          "acc_at_1_percent": 99.734395750332,
+          "acc_at_2_percent": 99.800796812749,
+          "acc_at_5_percent": 99.933598937583,
+          "above_1_percent_fs": 4,
+          "above_2_percent_fs": 3,
+          "above_5_percent_fs": 1
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.06518701663155425,
+          "median_percent_fs": 0.04264116287231445,
+          "p90_percent_fs": 0.14499783515930179,
+          "p95_percent_fs": 0.19905894994735715,
+          "tail10_percent_fs": 0.23660603786508244,
+          "maximum_percent_fs": 0.8317530155181885,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.06917507050998749,
+          "median_percent_fs": 0.04264116287231445,
+          "p90_percent_fs": 0.1451671123504639,
+          "p95_percent_fs": 0.1999700069427491,
+          "tail10_percent_fs": 0.2760997377336025,
+          "maximum_percent_fs": 6.069162487983704,
+          "acc_at_1_percent": 99.93319973279893,
+          "acc_at_2_percent": 99.93319973279893,
+          "acc_at_5_percent": 99.93319973279893,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 1
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 1.0397035628557205,
+          "median_percent_fs": 0.165526382625103,
+          "p90_percent_fs": 2.911697141826153,
+          "p95_percent_fs": 3.111038077622652,
+          "tail10_percent_fs": 3.3103790134191513,
+          "maximum_percent_fs": 3.3103790134191513,
+          "acc_at_1_percent": 66.66666666666666,
+          "acc_at_2_percent": 66.66666666666666,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 2,
+          "above_5_percent_fs": 0
+        }
+      },
+      "paired": {
+        "native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3663",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_12540",
+              "sync_3172"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_3172"
+            ]
+          }
+        },
+        "r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3663",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_3172"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_3663"
+            ],
+            "new": [
+              "sync_3172"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": [
+              "sync_3172"
+            ]
+          }
+        }
+      },
+      "maximum_error_id": "sync_3172"
+    },
+    "teacher_rectifier_product": {
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.0805823407218954,
+          "median_percent_fs": 0.04317350685596466,
+          "p90_percent_fs": 0.14931410551071167,
+          "p95_percent_fs": 0.20391158759593964,
+          "tail10_percent_fs": 0.38409292919943666,
+          "maximum_percent_fs": 16.63435995578766,
+          "acc_at_1_percent": 99.734395750332,
+          "acc_at_2_percent": 99.867197875166,
+          "acc_at_5_percent": 99.933598937583,
+          "above_1_percent_fs": 4,
+          "above_2_percent_fs": 2,
+          "above_5_percent_fs": 1
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.06533846859675642,
+          "median_percent_fs": 0.04280209541320801,
+          "p90_percent_fs": 0.1454722881317139,
+          "p95_percent_fs": 0.19596830010414099,
+          "tail10_percent_fs": 0.2367469084759553,
+          "maximum_percent_fs": 0.8338570594787598,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.06686740158601666,
+          "median_percent_fs": 0.04280209541320801,
+          "p90_percent_fs": 0.14574885368347174,
+          "p95_percent_fs": 0.2002313733100892,
+          "tail10_percent_fs": 0.25168705110748607,
+          "maximum_percent_fs": 2.3865461349487305,
+          "acc_at_1_percent": 99.93319973279893,
+          "acc_at_2_percent": 99.93319973279893,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 1,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 0.6462836017211278,
+          "median_percent_fs": 0.3682143986225128,
+          "p90_percent_fs": 1.5279833227396011,
+          "p95_percent_fs": 1.6190024092793465,
+          "tail10_percent_fs": 1.7100214958190918,
+          "maximum_percent_fs": 1.7100214958190918,
+          "acc_at_1_percent": 66.66666666666666,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        }
+      },
+      "paired": {
+        "native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3663",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_1999",
+              "sync_3172"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_1999"
+            ]
+          }
+        },
+        "r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3663",
+              "sync_3855"
+            ],
+            "new": [
+              "sync_3172"
+            ]
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338",
+              "sync_3663"
+            ],
+            "new": [
+              "sync_1999",
+              "sync_3172"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": [
+              "sync_1999"
+            ]
+          }
+        }
+      },
+      "maximum_error_id": "sync_1999"
+    },
+    "native_MAP_A_posthoc_diagnostic": {
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.12151701752382564,
+          "median_percent_fs": 0.08352026343345642,
+          "p90_percent_fs": 0.2661079168319702,
+          "p95_percent_fs": 0.3684096038341522,
+          "tail10_percent_fs": 0.42129981467216615,
+          "maximum_percent_fs": 2.823280729353428,
+          "acc_at_1_percent": 99.867197875166,
+          "acc_at_2_percent": 99.933598937583,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.11843077495100306,
+          "median_percent_fs": 0.08314549922943115,
+          "p90_percent_fs": 0.2630388736724854,
+          "p95_percent_fs": 0.3594584390521049,
+          "tail10_percent_fs": 0.39514795535554487,
+          "maximum_percent_fs": 0.9823739528656006,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.11837712370794098,
+          "median_percent_fs": 0.08314549922943115,
+          "p90_percent_fs": 0.2629512548446656,
+          "p95_percent_fs": 0.35941250622272497,
+          "tail10_percent_fs": 0.39514795535554487,
+          "maximum_percent_fs": 0.9823739528656006,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 0.7973725286622843,
+          "median_percent_fs": 0.34621357917785645,
+          "p90_percent_fs": 1.986707653850317,
+          "p95_percent_fs": 2.4049941916018724,
+          "tail10_percent_fs": 2.823280729353428,
+          "maximum_percent_fs": 2.823280729353428,
+          "acc_at_1_percent": 66.66666666666666,
+          "acc_at_2_percent": 83.33333333333334,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        }
+      },
+      "paired": {
+        "native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_1999",
+              "sync_3172",
+              "sync_338",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_12540"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          }
+        },
+        "r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_1999",
+              "sync_338",
+              "sync_3855"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": []
+          }
+        }
+      },
+      "maximum_error_id": "sync_12540"
+    },
+    "teacher_rectifier_MAP_A_posthoc_diagnostic": {
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.12243918818106175,
+          "median_percent_fs": 0.08476078510284424,
+          "p90_percent_fs": 0.25925412774086,
+          "p95_percent_fs": 0.36518629640340805,
+          "tail10_percent_fs": 0.43108548709987016,
+          "maximum_percent_fs": 4.07453179359436,
+          "acc_at_1_percent": 99.800796812749,
+          "acc_at_2_percent": 99.867197875166,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 3,
+          "above_2_percent_fs": 2,
+          "above_5_percent_fs": 0
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.11706680304467282,
+          "median_percent_fs": 0.0844120979309082,
+          "p90_percent_fs": 0.2567034959793092,
+          "p95_percent_fs": 0.36079909652471537,
+          "tail10_percent_fs": 0.38151912701626617,
+          "maximum_percent_fs": 0.8357346057891846,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.11705718109186246,
+          "median_percent_fs": 0.0844120979309082,
+          "p90_percent_fs": 0.2565491199493409,
+          "p95_percent_fs": 0.36064006388187414,
+          "tail10_percent_fs": 0.38151912701626617,
+          "maximum_percent_fs": 0.8357346057891846,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 0.8149715140461922,
+          "median_percent_fs": 0.3667585551738739,
+          "p90_percent_fs": 2.012811414897442,
+          "p95_percent_fs": 2.4360341019928455,
+          "tail10_percent_fs": 2.859256789088249,
+          "maximum_percent_fs": 2.859256789088249,
+          "acc_at_1_percent": 66.66666666666666,
+          "acc_at_2_percent": 83.33333333333334,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 2,
+          "above_2_percent_fs": 1,
+          "above_5_percent_fs": 0
+        }
+      },
+      "paired": {
+        "native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_3172",
+              "sync_338",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": [
+              "sync_12540",
+              "sync_1999"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          }
+        },
+        "r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_1811",
+              "sync_338",
+              "sync_3855"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663"
+            ],
+            "new": [
+              "sync_1999"
+            ]
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": []
+          }
+        }
+      },
+      "maximum_error_id": "sync_1999"
+    },
+    "native_GT_A_cached": {
+      "cohorts": {
+        "all1506": {
+          "samples": 1506,
+          "nmae_percent_fs": 0.06691829732297017,
+          "median_percent_fs": 0.0435727425042165,
+          "p90_percent_fs": 0.14758819549386265,
+          "p95_percent_fs": 0.22361465178806217,
+          "tail10_percent_fs": 0.2546068362438479,
+          "maximum_percent_fs": 0.9594767914617996,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "common1495": {
+          "samples": 1495,
+          "nmae_percent_fs": 0.06633791015325768,
+          "median_percent_fs": 0.04337681028747653,
+          "p90_percent_fs": 0.1421560116122578,
+          "p95_percent_fs": 0.2211251066950924,
+          "tail10_percent_fs": 0.25156850176100104,
+          "maximum_percent_fs": 0.9594767914617996,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "r8ordinary1497": {
+          "samples": 1497,
+          "nmae_percent_fs": 0.06627797281357015,
+          "median_percent_fs": 0.043244896646921216,
+          "p90_percent_fs": 0.14212328867365898,
+          "p95_percent_fs": 0.2208264558456287,
+          "tail10_percent_fs": 0.25156850176100104,
+          "maximum_percent_fs": 0.9594767914617996,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        },
+        "old_severe6": {
+          "samples": 6,
+          "nmae_percent_fs": 0.1178645714891284,
+          "median_percent_fs": 0.058518632903753476,
+          "p90_percent_fs": 0.26431575633473064,
+          "p95_percent_fs": 0.3222509729110139,
+          "tail10_percent_fs": 0.3801861894872971,
+          "maximum_percent_fs": 0.3801861894872971,
+          "acc_at_1_percent": 100.0,
+          "acc_at_2_percent": 100.0,
+          "acc_at_5_percent": 100.0,
+          "above_1_percent_fs": 0,
+          "above_2_percent_fs": 0,
+          "above_5_percent_fs": 0
+        }
+      },
+      "paired": {
+        "native": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_3172",
+              "sync_338",
+              "sync_3663",
+              "sync_3855",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_338",
+              "sync_3663",
+              "sync_4515"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338",
+              "sync_4515"
+            ],
+            "new": []
+          }
+        },
+        "r8": {
+          "1": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_11838",
+              "sync_12540",
+              "sync_1811",
+              "sync_1999",
+              "sync_338",
+              "sync_3663",
+              "sync_3855"
+            ],
+            "new": []
+          },
+          "2": {
+            "rescued": [
+              "sync_10202",
+              "sync_10635",
+              "sync_12540",
+              "sync_338",
+              "sync_3663"
+            ],
+            "new": []
+          },
+          "5": {
+            "rescued": [
+              "sync_10202",
+              "sync_338"
+            ],
+            "new": []
+          }
+        }
+      },
+      "maximum_error_id": "sync_10304"
+    }
+  },
+  "focus": {
+    "sync_3172": {
+      "target": 0.31569457054138184,
+      "readout_errors_percent_fs": {
+        "native_joint": 5.908846855163574,
+        "native_product": 1.6999870538711548,
+        "teacher_A": 0.07419288158416748,
+        "teacher_AB": 0.05621016025543213,
+        "teacher_AP": 0.018087029457092285,
+        "teacher_APB": 7.152557373046875e-05,
+        "teacher_B": 6.053087115287781,
+        "teacher_P": 6.010445952415466,
+        "teacher_PB": 5.994334816932678,
+        "teacher_rectifier_joint": 6.069162487983704,
+        "teacher_rectifier_product": 2.3865461349487305,
+        "native_MAP_A_posthoc_diagnostic": 0.10513663291931152,
+        "teacher_rectifier_MAP_A_posthoc_diagnostic": 0.145074725151062,
+        "native_GT_A_cached": 0.03440011276776289
+      },
+      "derived": {
+        "sample_id": "sync_3172",
+        "center_error_ROI_normalized": 0.002988520843593206,
+        "SPD_relative_Frobenius": 0.0009055214002561594,
+        "native_A_teacher_neighbor_mass": 0.5244570374488831,
+        "native_GT_A_conditional_reading": 0.31535056233406067,
+        "native_GT_A_conditional_error_percent_fs": 0.0344008207321167,
+        "native_P_correct_mass_at_GT_A": 0.998134970664978,
+        "native_B_correct_mass_at_GT_A": 0.9999895095825195,
+        "teacher_rectifier_A_teacher_neighbor_mass": 0.5835188031196594,
+        "teacher_rectifier_GT_A_conditional_reading": 0.31495264172554016,
+        "teacher_rectifier_GT_A_conditional_error_percent_fs": 0.07419288158416748,
+        "teacher_rectifier_P_correct_mass_at_GT_A": 0.9983237981796265,
+        "teacher_rectifier_B_correct_mass_at_GT_A": 0.9999973773956299
+      }
+    },
+    "sync_12540": {
+      "target": 0.04647042229771614,
+      "readout_errors_percent_fs": {
+        "native_joint": 3.4457001835107803,
+        "native_product": 1.415519043803215,
+        "teacher_A": 0.10388270020484924,
+        "teacher_AB": 0.10283626616001129,
+        "teacher_AP": 0.0046174973249435425,
+        "teacher_APB": 0.003547966480255127,
+        "teacher_B": 3.4435082226991653,
+        "teacher_P": 3.3740047365427017,
+        "teacher_PB": 3.5071466118097305,
+        "teacher_rectifier_joint": 3.3103790134191513,
+        "teacher_rectifier_product": 1.3459451496601105,
+        "native_MAP_A_posthoc_diagnostic": 2.823280729353428,
+        "teacher_rectifier_MAP_A_posthoc_diagnostic": 2.859256789088249,
+        "native_GT_A_cached": 0.06392804579186118
+      },
+      "derived": {
+        "sample_id": "sync_12540",
+        "center_error_ROI_normalized": 0.0005322727799746973,
+        "SPD_relative_Frobenius": 0.0002692498237037288,
+        "native_A_teacher_neighbor_mass": 0.09543963521718979,
+        "native_GT_A_conditional_reading": 0.045831143856048584,
+        "native_GT_A_conditional_error_percent_fs": 0.06392784416675568,
+        "native_P_correct_mass_at_GT_A": 0.956627607345581,
+        "native_B_correct_mass_at_GT_A": 0.9973208904266357,
+        "teacher_rectifier_A_teacher_neighbor_mass": 0.1077391728758812,
+        "teacher_rectifier_GT_A_conditional_reading": 0.04543159902095795,
+        "teacher_rectifier_GT_A_conditional_error_percent_fs": 0.1038823276758194,
+        "teacher_rectifier_P_correct_mass_at_GT_A": 0.9316143989562988,
+        "teacher_rectifier_B_correct_mass_at_GT_A": 0.996660590171814
+      }
+    },
+    "sync_338": {
+      "target": 0.5160202383995056,
+      "readout_errors_percent_fs": {
+        "native_joint": 2.8400301933288574,
+        "native_product": 0.8690357208251953,
+        "teacher_A": 0.36512017250061035,
+        "teacher_AB": 0.15655755996704102,
+        "teacher_AP": 0.2090156078338623,
+        "teacher_APB": 0.00018477439880371094,
+        "teacher_B": 3.8754820823669434,
+        "teacher_P": 2.6962995529174805,
+        "teacher_PB": 4.069000482559204,
+        "teacher_rectifier_joint": 2.5130152702331543,
+        "teacher_rectifier_product": 1.7100214958190918,
+        "native_MAP_A_posthoc_diagnostic": 0.5439817905426025,
+        "teacher_rectifier_MAP_A_posthoc_diagnostic": 0.5390167236328125,
+        "native_GT_A_cached": 0.3801861894872971
+      },
+      "derived": {
+        "sample_id": "sync_338",
+        "center_error_ROI_normalized": 0.0007568319714103228,
+        "SPD_relative_Frobenius": 0.002128994754629752,
+        "native_A_teacher_neighbor_mass": 0.5707849264144897,
+        "native_GT_A_conditional_reading": 0.5122183561325073,
+        "native_GT_A_conditional_error_percent_fs": 0.3801882266998291,
+        "native_P_correct_mass_at_GT_A": 0.9570949077606201,
+        "native_B_correct_mass_at_GT_A": 0.9894541501998901,
+        "teacher_rectifier_A_teacher_neighbor_mass": 0.5654118061065674,
+        "teacher_rectifier_GT_A_conditional_reading": 0.51236891746521,
+        "teacher_rectifier_GT_A_conditional_error_percent_fs": 0.36513209342956543,
+        "teacher_rectifier_P_correct_mass_at_GT_A": 0.9650375843048096,
+        "teacher_rectifier_B_correct_mass_at_GT_A": 0.9778683185577393
+      }
+    },
+    "sync_1999": {
+      "target": 0.36751481890678406,
+      "readout_errors_percent_fs": {
+        "native_joint": 1.891908049583435,
+        "native_product": 16.960278153419495,
+        "teacher_A": 0.14654695987701416,
+        "teacher_AB": 0.09972453117370605,
+        "teacher_AP": 0.046631693840026855,
+        "teacher_APB": 6.258487701416016e-05,
+        "teacher_B": 4.687061905860901,
+        "teacher_P": 1.4120608568191528,
+        "teacher_PB": 4.737761616706848,
+        "teacher_rectifier_joint": 1.3583660125732422,
+        "teacher_rectifier_product": 16.63435995578766,
+        "native_MAP_A_posthoc_diagnostic": 0.619131326675415,
+        "teacher_rectifier_MAP_A_posthoc_diagnostic": 4.07453179359436,
+        "native_GT_A_cached": 0.19572658013009558
+      },
+      "derived": {
+        "sample_id": "sync_1999",
+        "center_error_ROI_normalized": 0.0009165399814871122,
+        "SPD_relative_Frobenius": 0.0011741211287629835,
+        "native_A_teacher_neighbor_mass": 0.22067691385746002,
+        "native_GT_A_conditional_reading": 0.36947208642959595,
+        "native_GT_A_conditional_error_percent_fs": 0.19572675228118896,
+        "native_P_correct_mass_at_GT_A": 0.862808346748352,
+        "native_B_correct_mass_at_GT_A": 0.9999916553497314,
+        "teacher_rectifier_A_teacher_neighbor_mass": 0.22307336330413818,
+        "teacher_rectifier_GT_A_conditional_reading": 0.3689803183078766,
+        "teacher_rectifier_GT_A_conditional_error_percent_fs": 0.14654994010925293,
+        "teacher_rectifier_P_correct_mass_at_GT_A": 0.8905479907989502,
+        "teacher_rectifier_B_correct_mass_at_GT_A": 0.9999901056289673
+      }
+    }
+  },
+  "conditional_identity_independent_max": 3.6507844924926758e-06,
+  "posthoc_control": "MAP_A selected by predictedA only, noGT or fittedthreshold; diagnostic proposed after cached analysis, not preregistered newmodel",
+  "teacher_quantization_columns": [
+    "sample_id",
+    "group_id",
+    "target",
+    "teacher_reading",
+    "teacher_absolute_error",
+    "joint_mass_error",
+    "progress_mass_error",
+    "invalid_zero_span_mass",
+    "outside_arc_mass",
+    "ordinary_native_absolute_error",
+    "ordinary_r8_absolute_error"
+  ],
+  "GT_APB_existing_teacher_replay_max": 2.02558139039688e-07,
+  "independent_verification": {
+    "status": "PASS",
+    "native_replay_max_difference": 1.1920928955078125e-07,
+    "progress_mass_max_error_FP64": 6.7268265411e-06,
+    "PMF_reading_max_difference": 2.7070416264e-07,
+    "conditional_mean_identity_max_residual": 7.3945690326e-07,
+    "signed_contribution_identity_max_residual": 3.4794899507e-06,
+    "teacher_APB_existing_label_max_difference": 2.0255813904e-07,
+    "focus8_P_B_replay": "independent NumPy transport reconstruction PASS",
+    "scope": "cached-only numeric verification; not causal training or newmodel performance"
+  },
+  "interpretation": {
+    "observed_bottleneck": "reference probability weights mix otherwise accurate conditional readings with harmful secondary reference interpretations",
+    "coordinates": "teacher coordinate resampling alone does not rescue3172",
+    "roles": "teacherP/B/PB withoutreferencecorrection do notrescue3172; true-referenceP/Bprobabilities alreadyhigh",
+    "pairing": "same-aP/Bindependence notproven asdominant3172bottleneck; globalreference feedback isnextspecifictest",
+    "not_supported": "oracle results are not deployable, not a model upper bound, and do not prove a learned feedback correction will succeed"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "checkpoint_epoch": 57,
+  "seed": 20262020,
+  "population": 1506,
+  "batch_size": 16,
+  "optimizer_updates": 0,
+  "teacher_scope": "conditional coordinate/role intervention, not deployable RGB performance",
+  "focus_ids": [
+    "sync_12540",
+    "sync_1999",
+    "sync_3172",
+    "sync_338"
+  ],
+  "code_revision": "8f3951e",
+  "teacher_role_subsets": [
+    "A",
+    "P",
+    "B",
+    "PB",
+    "AP",
+    "AB",
+    "APB"
+  ]
+}
