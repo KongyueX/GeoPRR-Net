@@ -33,6 +33,7 @@ REFERENCE_PROTOCOLS = (
 )
 TRIANGLE_PROTOCOL = "geoprr_v2_role_triangle_source_only_v1"
 PAIR_PROTOCOL = "geoprr_v2_reference_pair_update_source_only_v1"
+GENERALIZATION_PROTOCOL = "geoprr_v2_generalization_source_only_v1"
 
 
 def reader_from_checkpoint(checkpoint):
@@ -40,26 +41,29 @@ def reader_from_checkpoint(checkpoint):
     config, protocol = checkpoint["config"], checkpoint["protocol"]
     if config.get("protocol", protocol) != protocol:
         raise ValueError("checkpoint and saved config protocols differ")
+    architecture_protocol = config.get("reader_protocol") if protocol == GENERALIZATION_PROTOCOL else protocol
+    if protocol == GENERALIZATION_PROTOCOL and architecture_protocol not in (*REFERENCE_PROTOCOLS, TRIANGLE_PROTOCOL):
+        raise ValueError("generalization checkpoint must declare its original angular reader protocol")
     if checkpoint.get("smoke_only", False):
         raise ValueError("smoke-only checkpoints are not full-population candidates")
     if config["data"] != {"image_size": 768, "output_size": 192}:
         raise ValueError("native ROI evaluation requires the original768/192 configuration")
     options = dict(config["model"])
-    if protocol == BASE_PROTOCOL:
+    if architecture_protocol == BASE_PROTOCOL:
         if options.get("variant") != "field":
             raise ValueError("the base source protocol requires a native field checkpoint")
         options["pretrained"] = False
         model = GeoPRRV2(**options)
         readout = "native masked U/Q/M expectation with the checkpoint's appearance fallback"
-    elif protocol in REFERENCE_PROTOCOLS:
-        if protocol == REFERENCE_PROTOCOLS[1] and "reference_normalization" not in options:
+    elif architecture_protocol in REFERENCE_PROTOCOLS:
+        if architecture_protocol == REFERENCE_PROTOCOLS[1] and "reference_normalization" not in options:
             raise ValueError("feedback checkpoints must declare reference normalization")
         model = ReferenceRelationReader(**options)
         readout = "native circular full-mass progress expectation"
-    elif protocol == TRIANGLE_PROTOCOL:
+    elif architecture_protocol == TRIANGLE_PROTOCOL:
         model = RoleTriangleReader(**options)
         readout = "native three-role circular full-mass progress expectation"
-    elif protocol == PAIR_PROTOCOL:
+    elif architecture_protocol == PAIR_PROTOCOL:
         model = ReferencePairReader(**options)
         readout = "native reference-update circular full-mass progress expectation"
     else:
@@ -68,6 +72,7 @@ def reader_from_checkpoint(checkpoint):
     model.eval().requires_grad_(False)
     metadata = {
         "class": f"{type(model).__module__}.{type(model).__name__}",
+        "architecture_protocol": architecture_protocol,
         "saved_model_options": config["model"], "constructor_options": options,
         "parameters": sum(parameter.numel() for parameter in model.parameters()),
         "state_tensors": len(model.state_dict()), "strict_state_load": True,
