@@ -1,6 +1,8 @@
 # MobileNetV4泛化迭代：完整短训练结果与已有模型定位
 
-2026-10-23。**v11正常BN端点覆盖best1取得两域一致的均值增量：Industrial为17.353598%FS、RF100为9.643770%FS，相对feedback48分别下降2.8468%／11.8399%，相对匹配v9正常BN控制下降4.7510%／5.3492%。** 源1506均值为0.068488%FS、相对feedback48上升7.6628%，2810新增>5%FS且成为源max9.506392%FS。保留这一有跨域收益和源尾部代价的候选，不直接替换全部用途的现有模型。固定BN best4的源均值更低，但两个外域均差于匹配v9固定BN控制。完整best／last、逐图、零位／非零、普通／严重错误及真实成本见[v11完整结果](v11_completed/report_cn.md)、[完整指标](v11_completed/metrics.json)、[数值与执行核对](v11_completed/numeric_execution_audit.json)与[24文件公开清单](v11_completed/public_allowlist.json)。
+2026-10-23。**真实端点源覆盖的匹配收益已在两个原生读出家族得到支持。v12 local端点best1的Industrial／RF100为20.539125／7.659157%FS，相对同local57初始化和相同四轮预算的原源控制分别降低12.6263%／19.8292%；预先固定的last4比较也降低6.2913%／10.8692%。** 相对原local57，best1两域降低6.3916%／16.3796%，但源1506均值0.083392%FS上升8.1298%；3172由5.908847恶化至18.677585%FS，是原有>5%FS成员，未新增该阈值成员。完整best／last、普通与严重错误、零位／非零、逐图／组效应和真实成本见[v12完整结果](v12_completed/report_cn.md)、[完整指标](v12_completed/metrics.json)、[303124项数值与执行核对](v12_completed/numeric_execution_audit.json)与[28文件公开清单](v12_completed/public_allowlist.json)。
+
+v11 feedback端点best1的Industrial17.353598%FS仍更低，v12 local端点best1的RF1007.659157%FS更低；保留各自源尾部代价，不将一个模型称为所有数据集最优。v11相对匹配正常BN控制两域均值降低4.7510%／5.3492%，源均值相对feedback48上升7.6628%，2810新增>5%FS。其固定BN臂源均值更低，但两域均差于匹配固定BN控制。见[v11完整结果](v11_completed/report_cn.md)与[完整指标](v11_completed/metrics.json)。端点数据带来的开发增量不自动构成算法创新认证。
 
 v9固定BN best1的局部收益保留：RF100为9.473928%FS、Industrial为18.709661%FS；MixStyle未取得一致增量。v10 ROI留边两臂均使源域及两外域回退，不保留、不延长。所有旧模型和负结果均保留，分别见[v9完整结果](v9_completed/report_cn.md)与[v10完整结果](v10_completed/report_cn.md)。
 
@@ -35,7 +37,9 @@ v10几何一致的源ROI留边实验现已完整结束：两臂各4轮、8份外
 
 v11将首128个quartile源组重新渲染为真实RGB状态[0,0.005,0.02,1]，保持18590人口与原曝光预算。128组／512张真实RGB与物理标签检查、0更新运行见证、两臂各4轮及6份实际外评均完整结束；固定BN best4与last的外评复用。一次独立CPU核对245849项全部通过，见[完整结果](v11_completed/report_cn.md)、[源阶段记录](v11_source_completed.json)、[运行见证](v11_runtime_preflight.json)和[外评别名记录](v11_completed/external_aliases.json)。
 
-下一独立v12比较已有v5 local57正常BN的原始源控制与同一128组端点源，各4轮；复用现有真实数据，不重新渲染。协议／配置与0优化更新运行见证已完成，串行训练队列于北京时间05:53:31启动，首臂首批loss有限，目前没有完整性能结果。见[local端点协议](../../GEOPRR_V2_LOCAL_ENDPOINT_GENERALIZATION_PROTOCOL_CN.md)、[运行见证](v12_runtime_preflight.json)和[启动记录](v12_training_launch.json)。
+v12原生v5 local57的正常BN原源控制与端点源两臂均完整4轮、best均为第1轮；8份实际外评共6184张CNN图像／392次调用，无别名或重复推理。一次独立CPU数值与执行核对303124项全部通过。输入metadata确认8192条实际训练配对在512-ID映射下顺序精确保留；保存的data_contract.edges按新ID规范排序，与loader采样顺序不同，不能据此推断实际训练配对顺序改变。见[完整结果](v12_completed/report_cn.md)、[local端点协议](../../GEOPRR_V2_LOCAL_ENDPOINT_GENERALIZATION_PROTOCOL_CN.md)和[运行见证](v12_runtime_preflight.json)。
+
+下一独立v13计划在feedback48与local57两个原生家族中仅固定CNN权重，源BN运行统计继续更新，decoder和head继续训练；使用同一端点源，各4轮，匹配控制复用v11／v12正常BN全量微调结果。v13尚未启动，协议／代码和新运行见证正在准备；固定已特化CNN权重不等于恢复ImageNet通用表征。
 
 ## 文献依据
 
@@ -45,7 +49,7 @@ v11将首128个quartile源组重新渲染为真实RGB状态[0,0.005,0.02,1]，�
 
 ## Limitations
 
-Industrial与RF100已经用于开发观察；结果不称新盲测。各已有版本训练历史不同，本表不能单因素归因结构。短训练是单seed开发筛选，不承诺外域收益、显著性或论文录用。v9归一化／风格和v10 ROI干预未补充缺失零位；v11真实端点覆盖取得局部跨域正结果，同时保留源严重错误代价，未证明所有零位或背景偏移已经解决。原14494／1506／4000与原门槛失败、旧模型和负结果均保留。RGB、权重、run.json原始几何与private trace不进入公开包。
+Industrial与RF100已经用于开发观察；结果不称新盲测。各已有版本训练历史不同，本表不能单因素归因结构。短训练是单seed开发筛选，不承诺外域收益、显著性或论文录用。v9归一化／风格和v10 ROI干预未补充缺失零位；v11／v12真实端点覆盖取得匹配跨域正结果，同时保留源严重错误代价，未证明所有零位或背景偏移已经解决。原14494／1506／4000与原门槛失败、旧模型和负结果均保留。RGB、权重、run.json原始几何与private trace不进入公开包。
 
 执行细节见[泛化协议](../../GEOPRR_V2_GENERALIZATION_ITERATION_PROTOCOL_CN.md)。本包保存family逐图与标量、[v10完整结果](v10_completed/report_cn.md)，以及[v9完整结果](v9_completed/report_cn.md)、[已核对的完整指标](v9_completed/metrics.json)、[数值与执行核对](v9_completed/numeric_execution_audit.json)和[公开文件清单](v9_completed/public_allowlist.json)。
 

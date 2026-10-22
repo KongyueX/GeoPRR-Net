@@ -1,0 +1,46 @@
+{
+  "protocol": "geoprr_v12_public_allowlist_v1",
+  "files": [
+    "comparison.csv",
+    "external_local_control_best_source_industrial_predictions.csv.gz",
+    "external_local_control_best_source_industrial_summary.json",
+    "external_local_control_best_source_rf100_predictions.csv.gz",
+    "external_local_control_best_source_rf100_summary.json",
+    "external_local_control_last_industrial_predictions.csv.gz",
+    "external_local_control_last_industrial_summary.json",
+    "external_local_control_last_rf100_predictions.csv.gz",
+    "external_local_control_last_rf100_summary.json",
+    "external_local_endpoint_best_source_industrial_predictions.csv.gz",
+    "external_local_endpoint_best_source_industrial_summary.json",
+    "external_local_endpoint_best_source_rf100_predictions.csv.gz",
+    "external_local_endpoint_best_source_rf100_summary.json",
+    "external_local_endpoint_last_industrial_predictions.csv.gz",
+    "external_local_endpoint_last_industrial_summary.json",
+    "external_local_endpoint_last_rf100_predictions.csv.gz",
+    "external_local_endpoint_last_rf100_summary.json",
+    "local_control_training_record.json",
+    "local_endpoint_training_record.json",
+    "metrics.json",
+    "numeric_execution_audit.json",
+    "public_allowlist.json",
+    "report_cn.md",
+    "source_local57_anchor_predictions.csv.gz",
+    "source_local_control_best_source_predictions.csv.gz",
+    "source_local_control_last_predictions.csv.gz",
+    "source_local_endpoint_best_source_predictions.csv.gz",
+    "source_local_endpoint_last_predictions.csv.gz"
+  ],
+  "reused_public_baselines": [
+    "../local57_industrial_predictions.csv.gz",
+    "../local57_rf100_predictions.csv.gz",
+    "../local57_industrial_summary.json",
+    "../local57_rf100_summary.json"
+  ],
+  "excluded": [
+    "raw run.json and data_contract",
+    "RGB and weights",
+    "H/C/XYZ and pixel matrices",
+    "private server paths and trace"
+  ],
+  "external_evaluation_aliases": false
+}
