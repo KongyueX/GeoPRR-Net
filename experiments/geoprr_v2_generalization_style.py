@@ -11,6 +11,28 @@ def freeze_backbone_bn_statistics(model):
             module.eval()
 
 
+def apply_generalization_training_policy(model, policy):
+    """Restore training mode, then apply the declared parameter and BN policy."""
+    model.set_shared_trainable(True)
+    model.train()
+    if policy.get("freeze_backbone_weights", False):
+        model.backbone.requires_grad_(False)
+        model.state_head.requires_grad_(True)
+    if policy["freeze_bn_statistics"]:
+        freeze_backbone_bn_statistics(model)
+    backbone = list(model.backbone.parameters())
+    decoder = [parameter for module in (model.lateral, model.refine)
+               for parameter in module.parameters()]
+    head = list(model.state_head.parameters())
+    return {
+        "frozen_backbone_parameters": sum(parameter.numel() for parameter in backbone if not parameter.requires_grad),
+        "trainable_backbone_parameters": sum(parameter.numel() for parameter in backbone if parameter.requires_grad),
+        "trainable_decoder_parameters": sum(parameter.numel() for parameter in decoder if parameter.requires_grad),
+        "trainable_head_parameters": sum(parameter.numel() for parameter in head if parameter.requires_grad),
+        "trainable_parameters": sum(parameter.numel() for parameter in model.parameters() if parameter.requires_grad),
+    }
+
+
 def _mix_style(features, lam, permutation):
     """Mix detached spatial channel statistics with explicit pairing and weights."""
     mean = features.mean(dim=(2, 3), keepdim=True)

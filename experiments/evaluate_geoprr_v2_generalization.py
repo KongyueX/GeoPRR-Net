@@ -36,6 +36,7 @@ PAIR_PROTOCOL = "geoprr_v2_reference_pair_update_source_only_v1"
 GENERALIZATION_PROTOCOL = "geoprr_v2_generalization_source_only_v1"
 ROI_GENERALIZATION_PROTOCOL = "geoprr_v2_roi_generalization_source_only_v1"
 ENDPOINT_GENERALIZATION_PROTOCOL = "geoprr_v2_endpoint_generalization_source_only_v1"
+WEIGHT_FROZEN_PROTOCOL = "geoprr_v2_endpoint_backbone_weight_freeze_source_only_v1"
 
 
 def reader_from_checkpoint(checkpoint):
@@ -43,7 +44,8 @@ def reader_from_checkpoint(checkpoint):
     config, protocol = checkpoint["config"], checkpoint["protocol"]
     if config.get("protocol", protocol) != protocol:
         raise ValueError("checkpoint and saved config protocols differ")
-    generalization = protocol in (GENERALIZATION_PROTOCOL, ROI_GENERALIZATION_PROTOCOL, ENDPOINT_GENERALIZATION_PROTOCOL)
+    generalization = protocol in (GENERALIZATION_PROTOCOL, ROI_GENERALIZATION_PROTOCOL,
+                                  ENDPOINT_GENERALIZATION_PROTOCOL, WEIGHT_FROZEN_PROTOCOL)
     architecture_protocol = config.get("reader_protocol") if generalization else protocol
     if generalization and architecture_protocol not in (*REFERENCE_PROTOCOLS, TRIANGLE_PROTOCOL):
         raise ValueError("generalization checkpoint must declare its original angular reader protocol")

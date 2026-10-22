@@ -10,7 +10,7 @@ import torch
 from torch import nn
 
 from experiments.geoprr_v2_generalization_style import (
-    freeze_backbone_bn_statistics, install_mixstyle_hooks,
+    apply_generalization_training_policy, install_mixstyle_hooks,
 )
 from experiments.geoprr_v2_reference_relation import (
     ReferenceRelationDataset, ReferenceRelationReader, reference_relation_losses,
@@ -29,6 +29,7 @@ from experiments.train_geoprr_v2_reference_relation import (
 PROTOCOL = "geoprr_v2_generalization_source_only_v1"
 ROI_PROTOCOL = "geoprr_v2_roi_generalization_source_only_v1"
 ENDPOINT_PROTOCOL = "geoprr_v2_endpoint_generalization_source_only_v1"
+WEIGHT_FROZEN_PROTOCOL = "geoprr_v2_endpoint_backbone_weight_freeze_source_only_v1"
 REFERENCE_PROTOCOLS = (
     "geoprr_v2_reference_relation_source_only_v1",
     "geoprr_v2_reference_feedback_source_only_v1",
@@ -37,7 +38,7 @@ TRIANGLE_PROTOCOL = "geoprr_v2_role_triangle_source_only_v1"
 
 
 def reader_and_loss(config):
-    if config["protocol"] not in (PROTOCOL, ROI_PROTOCOL, ENDPOINT_PROTOCOL):
+    if config["protocol"] not in (PROTOCOL, ROI_PROTOCOL, ENDPOINT_PROTOCOL, WEIGHT_FROZEN_PROTOCOL):
         raise ValueError("requires the frozen generalization training protocol")
     required = {"seed": 20262020, "epochs": 4, "warmup_epochs": 0, "batch_size": 32,
                 "workers": 8, "validation_batch_size": 16, "backbone_lr": 1e-5,
@@ -51,10 +52,17 @@ def reader_and_loss(config):
         raise ValueError("generalization policy differs from the frozen interventions")
     if config["protocol"] == ROI_PROTOCOL and policy.get("roi_padding") != {"probability": .8, "max_padding": .3}:
         raise ValueError("ROI padding differs from the frozen source-view intervention")
-    if config["protocol"] == ENDPOINT_PROTOCOL:
+    if config["protocol"] in (ENDPOINT_PROTOCOL, WEIGHT_FROZEN_PROTOCOL):
         from experiments.geoprr_v2_endpoint_source import REPLACEMENT
         if policy.get("source_replacement") != REPLACEMENT or policy["mixstyle_module_names"]:
             raise ValueError("endpoint source replacement differs from the frozen data intervention")
+    if config["protocol"] == WEIGHT_FROZEN_PROTOCOL:
+        if (policy.get("freeze_backbone_weights") is not True
+                or policy["freeze_bn_statistics"] is not False
+                or config["reader_protocol"] not in REFERENCE_PROTOCOLS):
+            raise ValueError("requires frozen backbone weights, updating source BN statistics and a native reference reader")
+    elif policy.get("freeze_backbone_weights", False):
+        raise ValueError("backbone weight freezing requires its independent training protocol")
     reader_protocol = config["reader_protocol"]
     if reader_protocol in REFERENCE_PROTOCOLS:
         if reader_protocol == REFERENCE_PROTOCOLS[1] and "reference_normalization" not in config["model"]:
@@ -74,7 +82,7 @@ def initialize_from_anchor(model, path, config, data_contract):
             or source["config"]["training"]["seed"] != 20262020):
         raise ValueError("anchor protocol, architecture, source data configuration or seed differs")
     source_replacement = None
-    if config["protocol"] == ENDPOINT_PROTOCOL:
+    if config["protocol"] in (ENDPOINT_PROTOCOL, WEIGHT_FROZEN_PROTOCOL):
         from experiments.geoprr_v2_endpoint_source import verify_endpoint_training_contract
         source_replacement = verify_endpoint_training_contract(data_contract, source["data_contract"])
     else:
@@ -143,13 +151,15 @@ def main(argv=None):
                      "validation": val_data.supervision_contract(), "exposure_edges": train_data.edges}
     if protocol == ROI_PROTOCOL:
         data_contract["training_input_intervention"] = policy["roi_padding"]
-    if protocol == ENDPOINT_PROTOCOL:
+    if protocol in (ENDPOINT_PROTOCOL, WEIGHT_FROZEN_PROTOCOL):
         data_contract["training_source_intervention"] = policy["source_replacement"]
     initialization = None
     if args.resume is None:
         initialization = initialize_from_anchor(model, args.init_checkpoint, config, data_contract)
     model = model.to(device)
-    shared_parameters, head_parameters = list(model.shared_parameters()), list(model.state_head.parameters())
+    training_parameter_counts = apply_generalization_training_policy(model, policy)
+    shared_parameters = [parameter for parameter in model.shared_parameters() if parameter.requires_grad]
+    head_parameters = list(model.state_head.parameters())
     optimizer = torch.optim.AdamW([{"params": shared_parameters, "lr": training["backbone_lr"]},
                                   {"params": head_parameters, "lr": training["head_lr"]}],
                                  weight_decay=training["weight_decay"])
@@ -175,6 +185,7 @@ def main(argv=None):
         checkpointed_process_seconds = checkpoint["checkpointed_process_wall_seconds"]
         initialization = checkpoint["initialization"]
         restore_rng(checkpoint["rng"])
+        training_parameter_counts = apply_generalization_training_policy(model, policy)
     args.output.mkdir(parents=True, exist_ok=True)
     run = {"protocol": protocol, "reader_protocol": reader_protocol, "config": config,
            "data_contract": data_contract, "generalization": policy, "initialization": initialization,
@@ -194,6 +205,8 @@ def main(argv=None):
            "comparison": config.get("control"), "external_labels_used_for_training": False,
            "within_run_checkpoint_selection_uses_external_data": False,
            "anchor_selection_used_external_development": True}
+    if protocol == WEIGHT_FROZEN_PROTOCOL:
+        run.update(training_parameter_counts)
     write_json(args.output / "config.json", config)
     write_json(args.output / "run.json", run)
     write_history(args.output / "history.jsonl", history)
@@ -203,11 +216,12 @@ def main(argv=None):
     try:
         for epoch in range(start_epoch, training["epochs"]):
             epoch_started = time.perf_counter()
-            model.set_shared_trainable(True)
-            model.train()
-            if policy["freeze_bn_statistics"]:
-                freeze_backbone_bn_statistics(model)
-            bn_before = backbone_bn_buffers(model) if policy["freeze_bn_statistics"] else {}
+            apply_generalization_training_policy(model, policy)
+            weight_frozen = protocol == WEIGHT_FROZEN_PROTOCOL
+            backbone_weights_before = ({name: parameter.detach().clone()
+                                       for name, parameter in model.backbone.named_parameters()}
+                                      if weight_frozen else {})
+            bn_before = backbone_bn_buffers(model) if policy["freeze_bn_statistics"] or weight_frozen else {}
             train_loader = make_loader(train_data, batch_size=training["batch_size"], workers=training["workers"],
                                        shuffle=True, seed=seed + epoch, device=device)
             if device.type == "cuda":
@@ -271,9 +285,20 @@ def main(argv=None):
             if len(rows) != 1506 or {row["sample_id"] for row in rows} != {row["sample_id"] for row in val_data.rows}:
                 raise RuntimeError("validation population is incomplete")
             validation_seconds = time.perf_counter() - validation_started
-            bn_after = backbone_bn_buffers(model) if policy["freeze_bn_statistics"] else {}
-            if bn_before.keys() != bn_after.keys() or any(not torch.equal(value, bn_after[key]) for key, value in bn_before.items()):
+            bn_after = backbone_bn_buffers(model) if policy["freeze_bn_statistics"] or weight_frozen else {}
+            if policy["freeze_bn_statistics"] and (bn_before.keys() != bn_after.keys()
+                    or any(not torch.equal(value, bn_after[key]) for key, value in bn_before.items())):
                 raise RuntimeError("frozen backbone BatchNorm running statistics changed")
+            if weight_frozen:
+                if any(not torch.equal(backbone_weights_before[name], parameter.detach())
+                       for name, parameter in model.backbone.named_parameters()):
+                    raise RuntimeError("frozen backbone parameters changed")
+                bn_counters = [key for key in bn_before if key.endswith(".num_batches_tracked")]
+                bn_running_changed = sum(not torch.equal(value, bn_after[key])
+                                         for key, value in bn_before.items() if key not in bn_counters)
+                if (not bn_counters or not bn_running_changed
+                        or any(not torch.equal(bn_after[key], bn_before[key] + batches) for key in bn_counters)):
+                    raise RuntimeError("source BatchNorm running statistics did not update with the training batches")
             summary = validation_summary(rows)
             improved = summary["nmae"] < best_nmae
             if improved:
@@ -289,13 +314,21 @@ def main(argv=None):
                       "amp_skipped_updates": skips, "global_step": totals["optimizer_updates"],
                       "losses": {key: value / (donor_seen + recipient_seen) for key, value in sums.items()},
                       "validation": summary, "best_nmae": best_nmae, "best_epoch": best_epoch,
-                      "frozen_bn_buffers_checked": len(bn_before),
+                      "frozen_bn_buffers_checked": len(bn_before) if policy["freeze_bn_statistics"] else 0,
                       "frozen_bn_statistics_unchanged": True if policy["freeze_bn_statistics"] else None,
                       "training_seconds": training_seconds, "validation_seconds": validation_seconds,
                       "elapsed_seconds": time.perf_counter() - epoch_started,
                       "learning_rates": [group["lr"] for group in optimizer.param_groups],
                       "peak_cuda_memory_bytes": torch.cuda.max_memory_allocated(device) if device.type == "cuda" else None,
                       "peak_cuda_reserved_bytes": torch.cuda.max_memory_reserved(device) if device.type == "cuda" else None}
+            if weight_frozen:
+                record.update(frozen_backbone_parameter_tensors_checked=len(backbone_weights_before),
+                              frozen_backbone_parameters_unchanged=True,
+                              source_bn_buffers_checked=len(bn_before),
+                              source_bn_running_buffers_changed=bn_running_changed,
+                              source_bn_counters_checked=len(bn_counters),
+                              source_bn_batches_tracked_increment=batches,
+                              source_bn_counters_advanced=True)
             history.append(record)
             checkpoint = {"protocol": protocol, "reader_protocol": reader_protocol, "config": config,
                           "data_contract": data_contract, "initialization": initialization,

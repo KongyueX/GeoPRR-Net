@@ -24,13 +24,20 @@ def load(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--home", type=Path, default=Path("/root/autodl-tmp/geoprrnet"))
-    parser.add_argument("--study", choices=("normalization", "roi_padding", "endpoints", "local_endpoints"), default="normalization")
+    parser.add_argument("--study", choices=("normalization", "roi_padding", "endpoints", "local_endpoints", "cnn_weights_fixed"), default="normalization")
     args = parser.parse_args()
     home = args.home
     roi_study = args.study == "roi_padding"
     endpoint_study = args.study == "endpoints"
     local_endpoint_study = args.study == "local_endpoints"
-    if local_endpoint_study:
+    cnn_fixed_study = args.study == "cnn_weights_fixed"
+    if cnn_fixed_study:
+        arms = ("feedback_cnnfixed", "local_cnnfixed")
+        config_prefix = "geoprr_v2_generalization_v13"
+        iteration = "iteration_v13_cnn_weight_freeze_20261023"
+        protocol_name = "geoprr_v2_cnn_weight_freeze_generalization_matched_screen_v1"
+        preflight_name = "geoprr_generalization_v13_cnn_fixed_preflight_20261023"
+    elif local_endpoint_study:
         arms = ("local_control", "local_endpoint")
         config_prefix = "geoprr_v2_generalization_v12"
         iteration = "iteration_v12_local_endpoints_20261023"
@@ -54,7 +61,7 @@ def main():
         iteration = "iteration_v9_20261023"
         protocol_name = PROTOCOL
         preflight_name = "geoprr_generalization_v9_preflight_20261023"
-    source = home / ("rendering/generalization_endpoints_v11_20261023" if endpoint_study
+    source = home / ("rendering/generalization_endpoints_v11_20261023" if endpoint_study or cnn_fixed_study
                      else "rendering/compositional_source_v1")
     sources = {arm: source for arm in arms}
     if local_endpoint_study:
@@ -64,6 +71,9 @@ def main():
     anchor = home / "runs/geoprr_v2_tail/iteration_v6_reference_feedback/readers/feedback_s20262020/best.pt"
     if local_endpoint_study:
         anchor = home / "runs/geoprr_v2_tail/iteration_v5_reference_relation/readers/joint_s20262020/best.pt"
+    anchors = {arm: anchor for arm in arms}
+    if cnn_fixed_study:
+        anchors["local_cnnfixed"] = home / "runs/geoprr_v2_tail/iteration_v5_reference_relation/readers/joint_s20262020/best.pt"
     output.mkdir(parents=True, exist_ok=True)
     with (output / "queue.lock").open("w") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -90,9 +100,30 @@ def main():
                         or config["model"] != {"bins": 256, "decoder_dim": 64, "token_dim": 16, "coupling": "joint"}
                         or config["generalization"] != expected_policy):
                     raise ValueError("local endpoint arms differ from the frozen native reader or source intervention")
+        if cnn_fixed_study:
+            from experiments.geoprr_v2_endpoint_source import REPLACEMENT
+            expected_policy = {"freeze_backbone_weights": True, "freeze_bn_statistics": False,
+                               "mixstyle_module_names": [], "mixstyle_p": .5, "mixstyle_alpha": .1,
+                               "source_replacement": REPLACEMENT}
+            for arm, config in configs.items():
+                feedback = arm == "feedback_cnnfixed"
+                expected_model = {"bins": 256, "decoder_dim": 64, "token_dim": 16, "coupling": "joint"}
+                if feedback:
+                    expected_model["reference_normalization"] = "global"
+                expected_reader = ("geoprr_v2_reference_feedback_source_only_v1" if feedback
+                                   else "geoprr_v2_reference_relation_source_only_v1")
+                expected_initialization = "strict_full_feedback48" if feedback else "strict_full_local57"
+                if (config["protocol"] != "geoprr_v2_endpoint_backbone_weight_freeze_source_only_v1"
+                        or config["reader_protocol"] != expected_reader or config["model"] != expected_model
+                        or config["initialization"] != expected_initialization
+                        or config["generalization"] != expected_policy):
+                    raise ValueError("CNN weight-freeze arms differ from the frozen family, source or weight policy")
         common = []
         for config in configs.values():
-            excluded = ("name", "generalization", "protocol") if local_endpoint_study else ("name", "generalization")
+            if cnn_fixed_study:
+                excluded = ("name", "generalization", "model", "reader_protocol", "initialization")
+            else:
+                excluded = ("name", "generalization", "protocol") if local_endpoint_study else ("name", "generalization")
             common.append({key: value for key, value in config.items() if key not in excluded})
         if not all(value == common[0] for value in common):
             raise ValueError("matched arms differ beyond the generalization policy")
@@ -101,7 +132,7 @@ def main():
             raise ValueError("existing-family screen is incomplete")
         if args.study != "normalization" and load(home / "runs/geoprr_generalization/iteration_v9_20261023/matched_training/queue_state.json")["status"] != "complete":
             raise ValueError("normalization/style study is incomplete")
-        if endpoint_study or local_endpoint_study:
+        if endpoint_study or local_endpoint_study or cnn_fixed_study:
             from experiments.geoprr_v2_endpoint_source import DATA_PROTOCOL
             endpoint_source = home / "rendering/generalization_endpoints_v11_20261023"
             if (load(endpoint_source / "queue_state.json")["status"] != "complete"
@@ -113,6 +144,19 @@ def main():
                 raise ValueError("feedback endpoint study is incomplete")
             for directory, module in ((prior, b"experiments.run_geoprr_v2_generalization"),
                                       (endpoint_source, b"experiments.run_geoprr_v2_endpoint_source")):
+                pid = int((directory / "pipeline.pid").read_text())
+                command_path = Path(f"/proc/{pid}/cmdline")
+                if command_path.exists() and module in command_path.read_bytes().split(b"\0"):
+                    raise RuntimeError("prior endpoint controller is still active")
+        if cnn_fixed_study:
+            prior_studies = [home / f"runs/geoprr_generalization/{name}/matched_training" for name in
+                             ("iteration_v11_endpoints_20261023", "iteration_v12_local_endpoints_20261023")]
+            for directory in prior_studies:
+                if load(directory / "queue_state.json")["status"] != "complete":
+                    raise ValueError("matched endpoint control study is incomplete")
+            for directory, module in [(directory, b"experiments.run_geoprr_v2_generalization")
+                                      for directory in prior_studies] + [
+                                          (endpoint_source, b"experiments.run_geoprr_v2_endpoint_source")]:
                 pid = int((directory / "pipeline.pid").read_text())
                 command_path = Path(f"/proc/{pid}/cmdline")
                 if command_path.exists() and module in command_path.read_bytes().split(b"\0"):
@@ -132,6 +176,13 @@ def main():
                     "exposure_each_epoch": {"unique": 18590, "donors": 22686, "recipients": 8192, "batches": 709},
                     "preflight": {"status": preflight["status"], "counts": preflight["counts"],
                                   identity_key: preflight[identity_key]}}
+        if cnn_fixed_study:
+            protocol.pop("anchor")
+            protocol.update(anchors={arm: str(path) for arm, path in anchors.items()},
+                            anchor_selection="existing task-specialized feedback48 and local57; constrain CNN weight updates within each family",
+                            prior_controls={"feedback_cnnfixed": "v11 endpoint normal BN, same feedback48 anchor and endpoint source",
+                                            "local_cnnfixed": "v12 local_endpoint normal BN, same local57 anchor and endpoint source"},
+                            intervention="CNN parameters including BN affine fixed; source BN buffers update; lateral/refine/head train")
         protocol_path = output / "protocol.json"
         if protocol_path.exists() and load(protocol_path) != protocol:
             raise ValueError("stored protocol differs; do not overwrite a partial experiment")
@@ -144,7 +195,7 @@ def main():
                          "geoprr_v2_reference_relation.py", "geoprr_v2_role_triangle.py", "geoprr_v2_data.py"]
             if roi_study:
                 names.append("geoprr_v2_roi_generalization_data.py")
-            if endpoint_study or local_endpoint_study:
+            if endpoint_study or local_endpoint_study or cnn_fixed_study:
                 names.append("geoprr_v2_endpoint_source.py")
             for name in names:
                 shutil.copy2(repo / "experiments" / name, snapshot / name)
@@ -162,7 +213,7 @@ def main():
                            "--train-manifest", str(arm_source / "manifests/train.jsonl"),
                            "--val-manifest", str(home / "runs/geoprr_v2/manifests/validation.jsonl"),
                            "--pair-manifest", str(arm_source / "manifests/train_edges.jsonl"),
-                           "--init-checkpoint", str(anchor), "--output", str(reader)]
+                           "--init-checkpoint", str(anchors[arm]), "--output", str(reader)]
                 if (reader / "latest.pt").exists() and not (reader / "completed.json").exists():
                     command += ["--resume", str(reader / "latest.pt")]
                 if compute_processes():
