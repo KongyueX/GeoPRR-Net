@@ -1,0 +1,99 @@
+{
+  "protocol": "geoprr_v2_endpoint_source_v11",
+  "status": "complete",
+  "scope": "physical source data generation and saved metadata extraction; no learned performance",
+  "completed_at_utc": "2026-10-22T20:49:00.328203+00:00",
+  "first_launched_at_utc": "2026-10-22T20:09:13.429560+00:00",
+  "resumed_at_utc": "2026-10-22T20:15:25.729990+00:00",
+  "revisions": {
+    "source_protocol": "26ff0b9c4bcc93e00fd79ab49078e649b2c1637e",
+    "execution": "f078b5cbe9f621595f7185cdeac55189fa834b30",
+    "upstream_vendor": "337b868f0f5495b31acc383433cac44040247bf2"
+  },
+  "groups": 128,
+  "new_rgb_images": 512,
+  "states": [
+    {
+      "normalized_state": 0.0,
+      "new_images": 128
+    },
+    {
+      "normalized_state": 0.005,
+      "new_images": 128
+    },
+    {
+      "normalized_state": 0.02,
+      "new_images": 128
+    },
+    {
+      "normalized_state": 1.0,
+      "new_images": 128
+    }
+  ],
+  "state_definition": "0 is normalized scale start and 1 is normalized full scale; normalized 0 need not mean physical reading 0.",
+  "replacement": {
+    "groups": 128,
+    "replaced_unique_images": 512,
+    "retained_unique_images": 18078,
+    "recipient_images": 8192
+  },
+  "per_epoch": {
+    "unique_images": 18590,
+    "donor_images": 22686,
+    "recipient_images": 8192,
+    "image_forwards_per_epoch": 30878,
+    "batches_per_epoch": 709,
+    "validation_images": 1506
+  },
+  "render_settings": {
+    "width": 1920,
+    "height": 1080,
+    "samples": 200,
+    "threads": 4,
+    "device": "CUDA",
+    "image_format": "JPEG",
+    "image_quality": 95
+  },
+  "blender_version": "4.5.14",
+  "saved_group_checks": {
+    "completed_groups": 128,
+    "all_saved_step_exit_codes_zero": true,
+    "fixed_field_and_camera_equal_groups": 128,
+    "fixed_scene_equal_groups_after_declared_representation_normalization": 128,
+    "finite_virtual_role_groups": 128,
+    "geometry_records": 512,
+    "gt_composition_records": 2048,
+    "role_records": 512,
+    "training_edges": 1024,
+    "heldout_edges": 512,
+    "maximum_gt_composed_error_percent_fs": 0.8030667632210284,
+    "minimum_gt_support_mass": 0.27811339497566223,
+    "source_checks_reexecuted_for_this_record": false
+  },
+  "cost": {
+    "units": "seconds",
+    "render_subprocess_wall_seconds": 1757.4905539999997,
+    "successful_preparation_subprocess_wall_seconds": 259.155746,
+    "assembly_subprocess_wall_seconds": 6.273075,
+    "initial_failed_preparation_subprocess_wall_seconds": 1.898383,
+    "initial_controller_observed_wall_seconds": 21.175808,
+    "resumed_controller_observed_wall_seconds": 2014.598213,
+    "stopped_interval_between_controllers_seconds": 351.124622,
+    "first_launch_to_complete_wall_seconds": 2386.898643,
+    "render_processes": 128,
+    "successful_preparation_processes": 128,
+    "failed_preparation_processes": 1,
+    "assembly_processes": 1,
+    "first_group_render_reused": true,
+    "model_cnn_images": 0,
+    "model_backward_calls": 0,
+    "optimizer_updates": 0,
+    "accounting_note": "Subprocess wall times include process startup and are not GPU kernel time or CPU core time. The initial failed preparation is counted separately. End-to-end time includes the stopped interval.",
+    "total_recorded_subprocess_wall_seconds": 2024.817758,
+    "total_controller_observed_active_wall_seconds": 2035.774021
+  },
+  "limitations": [
+    "This stage changes state coverage in existing source scenes; it adds no background diversity.",
+    "The result records source data integrity and execution costs, not a model generalization result."
+  ]
+}

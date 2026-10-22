@@ -1,0 +1,36 @@
+{
+  "study": "v11 endpoint/endpoint_bnfixed matched4epochs",
+  "status": "started",
+  "code_revision": "f078b5cbe9f621595f7185cdeac55189fa834b30",
+  "launched_at_utc": "2026-10-22T21:05:05.584868+00:00",
+  "launched_at_beijing": "2026-10-23 05:05:05",
+  "parent_pid": 382807,
+  "initial_child_pid": 382812,
+  "arms": [
+    "endpoint",
+    "endpoint_bnfixed"
+  ],
+  "epochs_each": 4,
+  "sole_GPU_process_verified_at_utc": "2026-10-22T21:05:48.079338+00:00",
+  "first_training_batch": {
+    "epoch": 1,
+    "batch": 1,
+    "loss": 0.09095343202352524,
+    "donor_images": 32,
+    "recipient_images": 11,
+    "finite": true
+  },
+  "preflight_optimizer_updates": 0,
+  "new_physical_RGB_replacement_rows": 512,
+  "source_population_counts": [
+    18590,
+    22686,
+    8192,
+    30878,
+    709,
+    1506
+  ],
+  "source_train_contract_equal_to_anchor": false,
+  "exact_source_replacement_verified": true,
+  "formal_results": "pending"
+}

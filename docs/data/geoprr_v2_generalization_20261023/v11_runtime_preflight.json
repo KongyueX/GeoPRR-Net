@@ -1,0 +1,193 @@
+{
+  "status": "passed",
+  "observed_at_utc": "2026-10-22T21:03:59.227758+00:00",
+  "configs": {
+    "endpoint": {
+      "name": "mobilenetv4_feedback_generalization_v11_endpoint",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "coupling": "joint",
+        "reference_normalization": "global"
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 4,
+        "warmup_epochs": 0,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 1e-05,
+        "head_lr": 5e-05,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "samefeedback48,optimizer/seed/4epochs/loss/exposure; first128 sourcequartile groups replaced by physicalendpoint RGB, controls v9 normalBN/bnfixed reused; viewed externaldevelopment",
+      "protocol": "geoprr_v2_endpoint_generalization_source_only_v1",
+      "initialization": "strict_full_feedback48",
+      "reader_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+      "generalization": {
+        "freeze_bn_statistics": false,
+        "mixstyle_module_names": [],
+        "mixstyle_p": 0.5,
+        "mixstyle_alpha": 0.1,
+        "source_replacement": {
+          "groups": 128,
+          "states": [
+            0,
+            0.005,
+            0.02,
+            1
+          ],
+          "protocol": "geoprr_v2_endpoint_source_v11"
+        }
+      }
+    },
+    "endpoint_bnfixed": {
+      "name": "mobilenetv4_feedback_generalization_v11_endpoint_bnfixed",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "coupling": "joint",
+        "reference_normalization": "global"
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 4,
+        "warmup_epochs": 0,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 1e-05,
+        "head_lr": 5e-05,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "samefeedback48,optimizer/seed/4epochs/loss/exposure; first128 sourcequartile groups replaced by physicalendpoint RGB, controls v9 normalBN/bnfixed reused; viewed externaldevelopment",
+      "protocol": "geoprr_v2_endpoint_generalization_source_only_v1",
+      "initialization": "strict_full_feedback48",
+      "reader_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+      "generalization": {
+        "freeze_bn_statistics": true,
+        "mixstyle_module_names": [],
+        "mixstyle_p": 0.5,
+        "mixstyle_alpha": 0.1,
+        "source_replacement": {
+          "groups": 128,
+          "states": [
+            0,
+            0.005,
+            0.02,
+            1
+          ],
+          "protocol": "geoprr_v2_endpoint_source_v11"
+        }
+      }
+    }
+  },
+  "initialization": {
+    "source_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+    "source_epoch": 48,
+    "loaded_full_tensors": 496,
+    "parameters": 7461060,
+    "strict_state_load": true,
+    "preserved_all_trained_weights": true,
+    "optimizer": "fresh AdamW; anchor optimizer, scheduler and scaler are not continued",
+    "source_replacement": {
+      "protocol": "geoprr_v2_endpoint_source_v11",
+      "groups": 128,
+      "replaced_unique_images": 512,
+      "unchanged_validation": true,
+      "exact_source_replacement_verified": true
+    }
+  },
+  "source_population_actual": [
+    18590,
+    22686,
+    8192,
+    1506
+  ],
+  "source_train_contract_equal_to_anchor": false,
+  "exact_source_replacement_verified": true,
+  "unchanged_original_and_unselected_rows": 18078,
+  "new_physical_RGB_replacement_rows": 512,
+  "unique_RGB_images": 2,
+  "normalized_training_states": [
+    0.0,
+    1.0
+  ],
+  "distinct_endpoint_RGB": true,
+  "validation_input_exact_identity": true,
+  "validation_identity_samples": 2,
+  "results": {
+    "endpoint": {
+      "loss": 0.07013764977455139,
+      "gradient_finite": true,
+      "BN_buffers_stationary": false,
+      "BN_buffers_checked": 228,
+      "evaluation_reader_strict_load": true,
+      "seconds": 3.2023721262812614
+    },
+    "endpoint_bnfixed": {
+      "loss": 0.069834865629673,
+      "gradient_finite": true,
+      "BN_buffers_stationary": true,
+      "BN_buffers_checked": 228,
+      "evaluation_reader_strict_load": true,
+      "seconds": 1.5388942658901215
+    }
+  },
+  "counts": {
+    "cnn_calls": 2,
+    "cnn_images": 4,
+    "backward_calls": 2,
+    "optimizer_updates": 0
+  },
+  "parameters": 7461060,
+  "state_tensors": 496,
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "peak_allocated_bytes": 1328038912,
+  "peak_reserved_bytes": 1797259264,
+  "scope": "actual new physical endpoint RGB and changed-source contract runtime witness; not learned performance or formal cost"
+}
