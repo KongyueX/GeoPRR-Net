@@ -1,0 +1,36 @@
+{
+  "train": {
+    "n": 18590,
+    "minimum": 0.00011136304022540955,
+    "maximum": 0.9999425817312968,
+    "exact_zero": 0,
+    "below_1_percent_fs": 190,
+    "below_5_percent_fs": 868,
+    "above_95_percent_fs": 935,
+    "exact_one": 0
+  },
+  "validation": {
+    "n": 1506,
+    "minimum": 2.6649185874694226e-05,
+    "maximum": 0.9998212620777702,
+    "exact_zero": 0,
+    "below_1_percent_fs": 15,
+    "below_5_percent_fs": 73,
+    "above_95_percent_fs": 86,
+    "exact_one": 0
+  },
+  "external": {
+    "industrial": {
+      "n": 1395,
+      "exact_zero": 588,
+      "zero_fraction": 0.421505376344086,
+      "zero_target_mean_error_percent_fs": 29.538677205038294,
+      "nonzero_target_mean_error_percent_fs": 15.170164777559162
+    },
+    "rf100": {
+      "n": 151,
+      "exact_zero": 6
+    }
+  },
+  "scope": "existing label contracts only; target coverage mismatch is observed, not proof of its isolated causal effect; no target labels used for training"
+}

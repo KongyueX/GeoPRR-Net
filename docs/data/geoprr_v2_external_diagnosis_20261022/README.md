@@ -61,3 +61,5 @@ RF23与同组RF71的对照，以及清晰零位的Industrial327，提示新版�
 人口、group、标签已按公开别名规则逐行对齐；当前组件manifest与ROI索引支持相同原生ROI来源，但历史fulltrain实际执行输入manifest缺失，尚未完成历史像素级同一性复核。当前项目也没有旧完整GeoPRR pipeline权重，不能在当前ROI上重放旧模型补齐该证据；因此这些是人口匹配、ROI来源一致的历史预测比较，不冒充一次新执行的严格同像素对照。历史数据已有开发可见性，训练人口／预算和模型配方也不同；不将结果归因于某一个结构，不报告新显著性或盲测结论。8张重放排除广泛运行时失配，不能鉴别所有局部数值情形。没有扩seed、训练、目标适配或新模块。
 
 逐图比较与协议分类见`baseline_comparison.json`／`.csv`；输入核对见`input_consistency_summary.json`；运行时重放见`source_runtime_replay.json`；典型标量案例见`failure_cases.json`；保存输出诊断见`saved_output_diagnostics.json`。所有原图、权重、原始几何和来源私有记录不在公开包中。
+
+训练曲线的过拟合判断、源边界覆盖与固定1:1融合结果，及尚未执行的最小改进方向见[后续分析](improvement_options_cn.md)。
