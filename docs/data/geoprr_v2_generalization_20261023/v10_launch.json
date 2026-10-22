@@ -1,0 +1,26 @@
+{
+  "study": "v10 source ROI padding",
+  "status": "started",
+  "code_revision": "13bf11526d9ffdbf119b4870601dd4d7e8e5a77b",
+  "launched_at_utc": "2026-10-22T19:08:26.828068+00:00",
+  "launched_at_beijing": "2026-10-23 03:08:26",
+  "parent_pid": 289979,
+  "initial_child_pid": 289984,
+  "arms": [
+    "roi",
+    "roi_bnfixed"
+  ],
+  "epochs_each": 4,
+  "sole_GPU_process_verified_at_utc": "2026-10-22T19:09:29.884348+00:00",
+  "first_training_batch": {
+    "epoch": 1,
+    "batch": 1,
+    "loss": 3.4025778770446777,
+    "donor_images": 32,
+    "recipient_images": 11,
+    "finite": true
+  },
+  "preflight_optimizer_updates": 0,
+  "formal_results": "pending; best-source and last evaluated after each complete arm",
+  "preserves_v9_results": true
+}
