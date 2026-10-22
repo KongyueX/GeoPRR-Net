@@ -1,0 +1,186 @@
+{
+  "protocol": "geoprr_v9_public_training_record_v1",
+  "config": {
+    "name": "mobilenetv4_feedback_generalization_v9_bnfixed",
+    "model": {
+      "bins": 256,
+      "decoder_dim": 64,
+      "token_dim": 16,
+      "coupling": "joint",
+      "reference_normalization": "global"
+    },
+    "data": {
+      "image_size": 768,
+      "output_size": 192
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 4,
+      "warmup_epochs": 0,
+      "batch_size": 32,
+      "workers": 8,
+      "backbone_lr": 1e-05,
+      "head_lr": 5e-05,
+      "min_lr": 1e-06,
+      "weight_decay": 0.01,
+      "gradient_clip": 5.0,
+      "amp": true,
+      "validation_batch_size": 16
+    },
+    "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+    "state_grid": {
+      "absolute_roles": "circular [0,2pi),256",
+      "delta": "circular [0,2pi),256",
+      "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+    },
+    "exposure": {
+      "donor_items": 22686,
+      "recipient_images": 8192,
+      "total_images": 30878,
+      "optimizer_batches": 709
+    },
+    "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+    "control": "samefullfeedback48,sourcesupervision/exposure,lowLR,freshoptimizer; BNstatistics andearlytrainonlystyle interventions; externals are vieweddevelopment",
+    "protocol": "geoprr_v2_generalization_source_only_v1",
+    "initialization": "strict_full_feedback48",
+    "reader_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+    "generalization": {
+      "freeze_bn_statistics": true,
+      "mixstyle_module_names": [],
+      "mixstyle_p": 0.5,
+      "mixstyle_alpha": 0.1
+    }
+  },
+  "initialization": {
+    "source_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+    "source_epoch": 48,
+    "loaded_full_tensors": 496,
+    "parameters": 7461060,
+    "strict_state_load": true,
+    "preserved_all_trained_weights": true,
+    "optimizer": "fresh AdamW; anchor optimizer, scheduler and scaler are not continued"
+  },
+  "parameters": 7461060,
+  "state_tensors": 496,
+  "completed": {
+    "protocol": "geoprr_v2_generalization_source_only_v1",
+    "reader_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+    "epochs": 4,
+    "best_epoch": 1,
+    "best_nmae": 0.0006369609314174672,
+    "totals": {
+      "train_batches": 2836,
+      "optimizer_updates": 2835,
+      "amp_skipped_updates": 1,
+      "donor_images": 90744,
+      "recipient_images": 32768,
+      "validation_images": 6024,
+      "training_wall_seconds": 962.9468785785139,
+      "validation_wall_seconds": 33.04193368181586
+    },
+    "current_process_wall_seconds": 1006.3418672904372,
+    "checkpointed_process_wall_seconds_before_resume": 0.0,
+    "uncheckpointed_work_after_interruptions": "not included in checkpointed counters; use controller process logs",
+    "seed": 20262020,
+    "seed_expansion": false
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "optimizer_updates": 709,
+      "amp_skipped_updates": 0,
+      "losses": {
+        "role_nll_raw": 1.4705120046735312,
+        "role_nll_normalized": 0.08839584948050211,
+        "field_l1": 0.00017763252954990119,
+        "reading_cdf": 0.0024452862110681374,
+        "total": 0.09101876810499984,
+        "invalid_mass": 2.650595380493276e-07,
+        "outside_arc_mass": 0.0015562245982313652,
+        "reference_entropy": 0.48280793474555844,
+        "reference_max": 0.7559898833828861,
+        "joint_vs_product_state_l1": 0.3436961677295802
+      },
+      "frozen_bn_buffers_checked": 228,
+      "frozen_bn_statistics_unchanged": true,
+      "training_seconds": 353.79684771597385,
+      "validation_seconds": 13.346047639846802,
+      "peak_cuda_memory_bytes": 18898678784,
+      "peak_cuda_reserved_bytes": 35374759936,
+      "validation_nmae_percent_fs": 0.06369609314174672
+    },
+    {
+      "epoch": 2,
+      "optimizer_updates": 709,
+      "amp_skipped_updates": 0,
+      "losses": {
+        "role_nll_raw": 1.4697980957602936,
+        "role_nll_normalized": 0.08835293507488545,
+        "field_l1": 0.00017100321216050648,
+        "reading_cdf": 0.002419640311160539,
+        "total": 0.09094357858797732,
+        "invalid_mass": 1.429648570739118e-07,
+        "outside_arc_mass": 0.0015515846678328354,
+        "reference_entropy": 0.4828871504168211,
+        "reference_max": 0.755931848626934,
+        "joint_vs_product_state_l1": 0.3439163453324416
+      },
+      "frozen_bn_buffers_checked": 228,
+      "frozen_bn_statistics_unchanged": true,
+      "training_seconds": 213.34614528343081,
+      "validation_seconds": 6.392487987875938,
+      "peak_cuda_memory_bytes": 19967755264,
+      "peak_cuda_reserved_bytes": 38512099328,
+      "validation_nmae_percent_fs": 0.07884093606221788
+    },
+    {
+      "epoch": 3,
+      "optimizer_updates": 709,
+      "amp_skipped_updates": 0,
+      "losses": {
+        "role_nll_raw": 1.468573536984205,
+        "role_nll_normalized": 0.08827932388511174,
+        "field_l1": 0.0001647347438658195,
+        "reading_cdf": 0.0024387135355636155,
+        "total": 0.0908827721026364,
+        "invalid_mass": 1.80416483634517e-06,
+        "outside_arc_mass": 0.0015602209417536566,
+        "reference_entropy": 0.4822807498346208,
+        "reference_max": 0.7562113847863189,
+        "joint_vs_product_state_l1": 0.34359279392304387
+      },
+      "frozen_bn_buffers_checked": 228,
+      "frozen_bn_statistics_unchanged": true,
+      "training_seconds": 193.95058247447014,
+      "validation_seconds": 6.917217820882797,
+      "peak_cuda_memory_bytes": 18965471232,
+      "peak_cuda_reserved_bytes": 38512099328,
+      "validation_nmae_percent_fs": 0.07776486278466421
+    },
+    {
+      "epoch": 4,
+      "optimizer_updates": 708,
+      "amp_skipped_updates": 1,
+      "losses": {
+        "role_nll_raw": 1.4693907075722343,
+        "role_nll_normalized": 0.08832844587473511,
+        "field_l1": 0.00016143742442434753,
+        "reading_cdf": 0.0024360022474091123,
+        "total": 0.09092588562030227,
+        "invalid_mass": 1.254484914354437e-07,
+        "outside_arc_mass": 0.0015617448651637886,
+        "reference_entropy": 0.4825631935465281,
+        "reference_max": 0.7560434600017302,
+        "joint_vs_product_state_l1": 0.3437131145608665
+      },
+      "frozen_bn_buffers_checked": 228,
+      "frozen_bn_statistics_unchanged": true,
+      "training_seconds": 201.85330310463905,
+      "validation_seconds": 6.386180233210325,
+      "peak_cuda_memory_bytes": 19265879040,
+      "peak_cuda_reserved_bytes": 38512099328,
+      "validation_nmae_percent_fs": 0.07348558561875779
+    }
+  ],
+  "prediction_units": "target, prediction and absolute_error are normalized full-scale fractions; multiply by 100 for percent full scale."
+}

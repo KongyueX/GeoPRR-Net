@@ -1,6 +1,8 @@
-# MobileNetV4泛化迭代：已有模型定位与首批匹配短训练
+# MobileNetV4泛化迭代：完整短训练结果与已有模型定位
 
-2026-10-23。相同的Industrial1395与RF100151原生ROI比较表明，源开发集改进没有带来一致的外部改进。当前角度模型中，feedback48的Industrial均值最低，local57的RF100均值最低；v7／v8的源域精度优势不等于跨域优势。
+2026-10-23。首批三个4轮训练臂均已完整收尾，没有一臂相对初始化feedback48同时改善Industrial与RF100。固定BN best1在RF100的NMAE降至9.473928%FS（相对下降13.39%），Industrial升至18.709661%FS（相对上升4.75%）；MixStyle未取得一致跨域增量。保留全部模型与负结果，不直接延长本轮训练。完整比较、普通与严重样本统计、成本和公开文件清单见[v9完整结果](v9_completed/report_cn.md)。
+
+相同的Industrial1395与RF100151原生ROI比较中，已有角度模型feedback48的Industrial均值最低，local57的RF100均值最低；v7／v8的源域精度优势不等于跨域优势。
 
 | 已有模型 | Industrial NMAE %FS | RF100 NMAE %FS |
 |---|---:|---:|
@@ -13,7 +15,7 @@
 
 10份新评估均正常退出，共7730张CNN图像前向／490次调用，0反传／0更新；v7复用既有同人口结果，没有重复推理。逐图与组／子集统计的一次独立CPU核对通过。每张ROI、FP32 target、group、component与既有v7人口一致，失败样本保留全分母，未改变各模型的原生读出。
 
-## 首批训练合同
+## 已完成的首批训练合同
 
 共同初始化选择v6 feedback best48，理由是它在已查看的两套外部开发人口上均优于v7，同时保留local57在RF100上的优势作为比较。外部开发选锚点这一事实明确记录；不是源域盲选或新盲测。
 
@@ -25,7 +27,9 @@
 
 两项干预均无新增参数；MixStyle在eval时严格identity。CPU定向5项检查与实际RGB／反传检查通过：2张unique RGB、5次CNN调用／10图像前向、3次反传、0optimizer更新；三臂梯度有限，固定BN两臂228个buffers保持不变，参照发生预期变化。这个小batch witness不是正式成本或性能结果。
 
-每臂完整4轮后保留best-source与last，分别在两个外部开发人口评估；所选epoch与末轮相同时复用结果，防止重复调用。评价连续误差、普通／近零／尾部和实际成本，允许局部回退，不以原零新增错门槛一票否决。
+每臂完整4轮，best-source分别为control第1轮、bnfixed第1轮、MixStyle第3轮；末轮均为第4轮。两种checkpoint分别完成两个外部开发人口评估，合计12份外评、9,276张CNN图像／588次调用、0反传／0更新。一次独立CPU核对35,216项比较全部通过。评价连续误差、普通／近零／尾部和实际成本，允许局部回退，不以原零新增错门槛一票否决。
+
+下一步计划在独立协议下检验几何一致的源ROI留边与偏移覆盖，网络和loss不变。准备阶段不作为正式训练收益。
 
 ## 文献依据
 
@@ -37,4 +41,4 @@
 
 Industrial与RF100已经用于开发观察；结果不称新盲测。各已有版本训练历史不同，本表不能单因素归因结构。短训练是单seed开发筛选，不承诺外域收益、显著性或论文录用。归一化／风格干预不能补造缺失零位，端点与几何一致的ROI覆盖仍是后续候选。原14494／1506／4000与原门槛失败、旧模型和负结果均保留。RGB、权重、run.json原始几何与private trace不进入公开包。
 
-执行细节见[泛化协议](../../GEOPRR_V2_GENERALIZATION_ITERATION_PROTOCOL_CN.md)。本包保存family逐图与标量；短训练结果按实际完整阶段另行追加，不能将准入检查当作训练收益。
+执行细节见[泛化协议](../../GEOPRR_V2_GENERALIZATION_ITERATION_PROTOCOL_CN.md)。本包保存family逐图与标量，以及[v9完整结果](v9_completed/report_cn.md)、[已核对的完整指标](v9_completed/metrics.json)、[数值与执行核对](v9_completed/numeric_execution_audit.json)和[公开文件清单](v9_completed/public_allowlist.json)。

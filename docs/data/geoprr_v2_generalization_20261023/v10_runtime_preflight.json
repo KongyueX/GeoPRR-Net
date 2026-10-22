@@ -1,0 +1,537 @@
+{
+  "status": "passed",
+  "configs": {
+    "roi": {
+      "name": "mobilenetv4_feedback_generalization_v10_roi",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "coupling": "joint",
+        "reference_normalization": "global"
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 4,
+        "warmup_epochs": 0,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 1e-05,
+        "head_lr": 5e-05,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "samefeedback48,originalphysicalsource/exposure,optimizer/seed/4epochs/loss; actualsourceROI expansion plus synchronizedlabels; comparev9matchedBNcontrols;externalvieweddevelopment",
+      "protocol": "geoprr_v2_roi_generalization_source_only_v1",
+      "initialization": "strict_full_feedback48",
+      "reader_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+      "generalization": {
+        "freeze_bn_statistics": false,
+        "mixstyle_module_names": [],
+        "mixstyle_p": 0.5,
+        "mixstyle_alpha": 0.1,
+        "roi_padding": {
+          "probability": 0.8,
+          "max_padding": 0.3
+        }
+      }
+    },
+    "roi_bnfixed": {
+      "name": "mobilenetv4_feedback_generalization_v10_roi_bnfixed",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "coupling": "joint",
+        "reference_normalization": "global"
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 4,
+        "warmup_epochs": 0,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 1e-05,
+        "head_lr": 5e-05,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "samefeedback48,originalphysicalsource/exposure,optimizer/seed/4epochs/loss; actualsourceROI expansion plus synchronizedlabels; comparev9matchedBNcontrols;externalvieweddevelopment",
+      "protocol": "geoprr_v2_roi_generalization_source_only_v1",
+      "initialization": "strict_full_feedback48",
+      "reader_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+      "generalization": {
+        "freeze_bn_statistics": true,
+        "mixstyle_module_names": [],
+        "mixstyle_p": 0.5,
+        "mixstyle_alpha": 0.1,
+        "roi_padding": {
+          "probability": 0.8,
+          "max_padding": 0.3
+        }
+      }
+    }
+  },
+  "initialization": {
+    "source_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+    "source_epoch": 48,
+    "loaded_full_tensors": 496,
+    "parameters": 7461060,
+    "strict_state_load": true,
+    "preserved_all_trained_weights": true,
+    "optimizer": "fresh AdamW; anchor optimizer, scheduler and scaler are not continued"
+  },
+  "source_population_actual": [
+    18590,
+    22686,
+    8192,
+    1506
+  ],
+  "source_data_contract_equal": true,
+  "unique_RGB_images": 2,
+  "witness_view_padding": [
+    [
+      0.3,
+      0.3,
+      0.3,
+      0.3
+    ],
+    [
+      0.3,
+      0.0,
+      0.1,
+      0.25
+    ]
+  ],
+  "formal_random_padding_policy_unchanged": true,
+  "validation_input_exact_identity": true,
+  "data_check": {
+    "status": "passed",
+    "configs": {
+      "roi": {
+        "name": "mobilenetv4_feedback_generalization_v10_roi",
+        "model": {
+          "bins": 256,
+          "decoder_dim": 64,
+          "token_dim": 16,
+          "coupling": "joint",
+          "reference_normalization": "global"
+        },
+        "data": {
+          "image_size": 768,
+          "output_size": 192
+        },
+        "training": {
+          "seed": 20262020,
+          "epochs": 4,
+          "warmup_epochs": 0,
+          "batch_size": 32,
+          "workers": 8,
+          "backbone_lr": 1e-05,
+          "head_lr": 5e-05,
+          "min_lr": 1e-06,
+          "weight_decay": 0.01,
+          "gradient_clip": 5.0,
+          "amp": true,
+          "validation_batch_size": 16
+        },
+        "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+        "state_grid": {
+          "absolute_roles": "circular [0,2pi),256",
+          "delta": "circular [0,2pi),256",
+          "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+        },
+        "exposure": {
+          "donor_items": 22686,
+          "recipient_images": 8192,
+          "total_images": 30878,
+          "optimizer_batches": 709
+        },
+        "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+        "control": "samefeedback48,originalphysicalsource/exposure,optimizer/seed/4epochs/loss; actualsourceROI expansion plus synchronizedlabels; comparev9matchedBNcontrols;externalvieweddevelopment",
+        "protocol": "geoprr_v2_roi_generalization_source_only_v1",
+        "initialization": "strict_full_feedback48",
+        "reader_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+        "generalization": {
+          "freeze_bn_statistics": false,
+          "mixstyle_module_names": [],
+          "mixstyle_p": 0.5,
+          "mixstyle_alpha": 0.1,
+          "roi_padding": {
+            "probability": 0.8,
+            "max_padding": 0.3
+          }
+        }
+      },
+      "roi_bnfixed": {
+        "name": "mobilenetv4_feedback_generalization_v10_roi_bnfixed",
+        "model": {
+          "bins": 256,
+          "decoder_dim": 64,
+          "token_dim": 16,
+          "coupling": "joint",
+          "reference_normalization": "global"
+        },
+        "data": {
+          "image_size": 768,
+          "output_size": 192
+        },
+        "training": {
+          "seed": 20262020,
+          "epochs": 4,
+          "warmup_epochs": 0,
+          "batch_size": 32,
+          "workers": 8,
+          "backbone_lr": 1e-05,
+          "head_lr": 5e-05,
+          "min_lr": 1e-06,
+          "weight_decay": 0.01,
+          "gradient_clip": 5.0,
+          "amp": true,
+          "validation_batch_size": 16
+        },
+        "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+        "state_grid": {
+          "absolute_roles": "circular [0,2pi),256",
+          "delta": "circular [0,2pi),256",
+          "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+        },
+        "exposure": {
+          "donor_items": 22686,
+          "recipient_images": 8192,
+          "total_images": 30878,
+          "optimizer_batches": 709
+        },
+        "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+        "control": "samefeedback48,originalphysicalsource/exposure,optimizer/seed/4epochs/loss; actualsourceROI expansion plus synchronizedlabels; comparev9matchedBNcontrols;externalvieweddevelopment",
+        "protocol": "geoprr_v2_roi_generalization_source_only_v1",
+        "initialization": "strict_full_feedback48",
+        "reader_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+        "generalization": {
+          "freeze_bn_statistics": true,
+          "mixstyle_module_names": [],
+          "mixstyle_p": 0.5,
+          "mixstyle_alpha": 0.1,
+          "roi_padding": {
+            "probability": 0.8,
+            "max_padding": 0.3
+          }
+        }
+      }
+    },
+    "scope": "newsourceROI-onlyinput/label integrity; no CNN oroptimizer",
+    "source_counts": [
+      18590,
+      22686,
+      8192,
+      1506
+    ],
+    "original_source_supervision_contract_unchanged": true,
+    "actual_unique_source_RGB": 16,
+    "distinct_augmented_views_checked": 32,
+    "augmented_dataset_fetches": 64,
+    "validation_identity_samples": 2,
+    "actual_crop_clipping_used": true,
+    "cases": [
+      {
+        "sample_id": "sync_12097",
+        "view": 0,
+        "coordinate_max_residual": 2.7883479303270065e-08,
+        "GT_support_mass": 0.6089766025543213,
+        "GT_field_error_percent_fs": 0.37860107549931854
+      },
+      {
+        "sample_id": "sync_12097",
+        "view": 1,
+        "coordinate_max_residual": 1.3940172682858076e-08,
+        "GT_support_mass": 0.4801290035247803,
+        "GT_field_error_percent_fs": 0.420976648456417
+      },
+      {
+        "sample_id": "sync_1070",
+        "view": 0,
+        "coordinate_max_residual": 1.0104382175413207e-07,
+        "GT_support_mass": 0.478610098361969,
+        "GT_field_error_percent_fs": 0.3190338611602783
+      },
+      {
+        "sample_id": "sync_1070",
+        "view": 1,
+        "coordinate_max_residual": 1.293729727791515e-07,
+        "GT_support_mass": 0.3115481734275818,
+        "GT_field_error_percent_fs": 0.4224836826324463
+      },
+      {
+        "sample_id": "sync_0",
+        "view": 0,
+        "coordinate_max_residual": 7.329859808002936e-08,
+        "GT_support_mass": 0.9999999403953552,
+        "GT_field_error_percent_fs": 0.0036478042602539062
+      },
+      {
+        "sample_id": "sync_0",
+        "view": 1,
+        "coordinate_max_residual": 4.5030366102594144e-08,
+        "GT_support_mass": 1.0000001192092896,
+        "GT_field_error_percent_fs": 0.000476837158203125
+      },
+      {
+        "sample_id": "sync_11414",
+        "view": 0,
+        "coordinate_max_residual": 7.005800495285541e-08,
+        "GT_support_mass": 0.9999999403953552,
+        "GT_field_error_percent_fs": 0.001615285873413086
+      },
+      {
+        "sample_id": "sync_11414",
+        "view": 1,
+        "coordinate_max_residual": 5.30748289762073e-08,
+        "GT_support_mass": 1.0,
+        "GT_field_error_percent_fs": 0.0006735324859619141
+      },
+      {
+        "sample_id": "sync_1284",
+        "view": 0,
+        "coordinate_max_residual": 9.158593972102835e-08,
+        "GT_support_mass": 1.0,
+        "GT_field_error_percent_fs": 0.02194046974182129
+      },
+      {
+        "sample_id": "sync_1284",
+        "view": 1,
+        "coordinate_max_residual": 7.2912339277309e-08,
+        "GT_support_mass": 0.9999999403953552,
+        "GT_field_error_percent_fs": 0.0021576881408691406
+      },
+      {
+        "sample_id": "sync_14267",
+        "view": 0,
+        "coordinate_max_residual": 2.7890555531762118e-08,
+        "GT_support_mass": 1.0000001192092896,
+        "GT_field_error_percent_fs": 0.0012516975402832031
+      },
+      {
+        "sample_id": "sync_14267",
+        "view": 1,
+        "coordinate_max_residual": 2.6852192691606547e-08,
+        "GT_support_mass": 1.0,
+        "GT_field_error_percent_fs": 0.0018954277038574219
+      },
+      {
+        "sample_id": "sync_15679",
+        "view": 0,
+        "coordinate_max_residual": 3.5067562187407475e-08,
+        "GT_support_mass": 1.0,
+        "GT_field_error_percent_fs": 0.027450919151306152
+      },
+      {
+        "sample_id": "sync_15679",
+        "view": 1,
+        "coordinate_max_residual": 1.6265104108015294e-07,
+        "GT_support_mass": 1.0,
+        "GT_field_error_percent_fs": 0.0001385807991027832
+      },
+      {
+        "sample_id": "sync_2679",
+        "view": 0,
+        "coordinate_max_residual": 5.146022230562153e-08,
+        "GT_support_mass": 0.9987970590591431,
+        "GT_field_error_percent_fs": 0.026460597291588783
+      },
+      {
+        "sample_id": "sync_2679",
+        "view": 1,
+        "coordinate_max_residual": 1.4866298636562192e-07,
+        "GT_support_mass": 0.9768348336219788,
+        "GT_field_error_percent_fs": 0.014148745685815811
+      },
+      {
+        "sample_id": "sync_4113",
+        "view": 0,
+        "coordinate_max_residual": 8.316559885201968e-08,
+        "GT_support_mass": 1.0,
+        "GT_field_error_percent_fs": 0.03695935010910034
+      },
+      {
+        "sample_id": "sync_4113",
+        "view": 1,
+        "coordinate_max_residual": 5.207660480621712e-08,
+        "GT_support_mass": 1.0,
+        "GT_field_error_percent_fs": 0.0075623393058776855
+      },
+      {
+        "sample_id": "sync_5527",
+        "view": 0,
+        "coordinate_max_residual": 6.862741797064587e-08,
+        "GT_support_mass": 0.9999999403953552,
+        "GT_field_error_percent_fs": 0.015656650066375732
+      },
+      {
+        "sample_id": "sync_5527",
+        "view": 1,
+        "coordinate_max_residual": 6.240423378045534e-08,
+        "GT_support_mass": 1.0,
+        "GT_field_error_percent_fs": 0.0005111098289489746
+      },
+      {
+        "sample_id": "sync_6954",
+        "view": 0,
+        "coordinate_max_residual": 1.1178569359060475e-07,
+        "GT_support_mass": 1.0,
+        "GT_field_error_percent_fs": 0.047007203102111816
+      },
+      {
+        "sample_id": "sync_6954",
+        "view": 1,
+        "coordinate_max_residual": 7.507836841114113e-08,
+        "GT_support_mass": 1.0,
+        "GT_field_error_percent_fs": 0.009429454803466797
+      },
+      {
+        "sample_id": "sync_8376",
+        "view": 0,
+        "coordinate_max_residual": 4.97592350656717e-08,
+        "GT_support_mass": 1.0,
+        "GT_field_error_percent_fs": 0.0036597251892089844
+      },
+      {
+        "sample_id": "sync_8376",
+        "view": 1,
+        "coordinate_max_residual": 2.428316481228876e-08,
+        "GT_support_mass": 1.0,
+        "GT_field_error_percent_fs": 0.003832578659057617
+      },
+      {
+        "sample_id": "sync_98",
+        "view": 0,
+        "coordinate_max_residual": 4.433401823433769e-08,
+        "GT_support_mass": 1.0,
+        "GT_field_error_percent_fs": 0.013270974159240723
+      },
+      {
+        "sample_id": "sync_98",
+        "view": 1,
+        "coordinate_max_residual": 8.64153473223439e-08,
+        "GT_support_mass": 1.0,
+        "GT_field_error_percent_fs": 0.011155009269714355
+      },
+      {
+        "sample_id": "geoprr_compositional_v1_g0308_s03",
+        "view": 0,
+        "coordinate_max_residual": 5.8063126306961976e-08,
+        "GT_support_mass": 1.0,
+        "GT_field_error_percent_fs": 0.023746490478515625
+      },
+      {
+        "sample_id": "geoprr_compositional_v1_g0308_s03",
+        "view": 1,
+        "coordinate_max_residual": 4.133993680710546e-08,
+        "GT_support_mass": 1.0,
+        "GT_field_error_percent_fs": 0.002473592758178711
+      },
+      {
+        "sample_id": "geoprr_compositional_v1_g0666_s01",
+        "view": 0,
+        "coordinate_max_residual": 1.1593498117079548e-07,
+        "GT_support_mass": 1.0,
+        "GT_field_error_percent_fs": 0.021982192993164062
+      },
+      {
+        "sample_id": "geoprr_compositional_v1_g0666_s01",
+        "view": 1,
+        "coordinate_max_residual": 4.928384522706608e-08,
+        "GT_support_mass": 1.0,
+        "GT_field_error_percent_fs": 0.003674626350402832
+      },
+      {
+        "sample_id": "geoprr_compositional_v1_g1023_s03",
+        "view": 0,
+        "coordinate_max_residual": 4.3821190232051777e-08,
+        "GT_support_mass": 1.0,
+        "GT_field_error_percent_fs": 0.0020563602447509766
+      },
+      {
+        "sample_id": "geoprr_compositional_v1_g1023_s03",
+        "view": 1,
+        "coordinate_max_residual": 7.731813100875229e-08,
+        "GT_support_mass": 0.9999999403953552,
+        "GT_field_error_percent_fs": 0.001519918441772461
+      }
+    ],
+    "maximum_coordinate_residual": 1.6265104108015294e-07,
+    "maximum_GT_field_error_percent_fs": 0.4224836826324463,
+    "minimum_GT_support_mass": 0.3115481734275818,
+    "CNN_image_forwards": 0,
+    "optimizer_updates": 0
+  },
+  "results": {
+    "roi": {
+      "loss": 2.0373239517211914,
+      "gradient_finite": true,
+      "BN_buffers_stationary": false,
+      "BN_buffers_checked": 228,
+      "evaluation_reader_strict_load": true,
+      "seconds": 3.3712852001190186
+    },
+    "roi_bnfixed": {
+      "loss": 2.2507107257843018,
+      "gradient_finite": true,
+      "BN_buffers_stationary": true,
+      "BN_buffers_checked": 228,
+      "evaluation_reader_strict_load": true,
+      "seconds": 1.544567871838808
+    }
+  },
+  "counts": {
+    "cnn_calls": 2,
+    "cnn_images": 4,
+    "backward_calls": 2,
+    "optimizer_updates": 0
+  },
+  "parameters": 7461060,
+  "state_tensors": 496,
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "peak_allocated_bytes": 1328038912,
+  "peak_reserved_bytes": 1797259264
+}

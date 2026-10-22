@@ -34,6 +34,7 @@ REFERENCE_PROTOCOLS = (
 TRIANGLE_PROTOCOL = "geoprr_v2_role_triangle_source_only_v1"
 PAIR_PROTOCOL = "geoprr_v2_reference_pair_update_source_only_v1"
 GENERALIZATION_PROTOCOL = "geoprr_v2_generalization_source_only_v1"
+ROI_GENERALIZATION_PROTOCOL = "geoprr_v2_roi_generalization_source_only_v1"
 
 
 def reader_from_checkpoint(checkpoint):
@@ -41,8 +42,9 @@ def reader_from_checkpoint(checkpoint):
     config, protocol = checkpoint["config"], checkpoint["protocol"]
     if config.get("protocol", protocol) != protocol:
         raise ValueError("checkpoint and saved config protocols differ")
-    architecture_protocol = config.get("reader_protocol") if protocol == GENERALIZATION_PROTOCOL else protocol
-    if protocol == GENERALIZATION_PROTOCOL and architecture_protocol not in (*REFERENCE_PROTOCOLS, TRIANGLE_PROTOCOL):
+    generalization = protocol in (GENERALIZATION_PROTOCOL, ROI_GENERALIZATION_PROTOCOL)
+    architecture_protocol = config.get("reader_protocol") if generalization else protocol
+    if generalization and architecture_protocol not in (*REFERENCE_PROTOCOLS, TRIANGLE_PROTOCOL):
         raise ValueError("generalization checkpoint must declare its original angular reader protocol")
     if checkpoint.get("smoke_only", False):
         raise ValueError("smoke-only checkpoints are not full-population candidates")

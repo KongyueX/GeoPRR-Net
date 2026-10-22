@@ -27,6 +27,7 @@ from experiments.train_geoprr_v2_reference_relation import (
 
 
 PROTOCOL = "geoprr_v2_generalization_source_only_v1"
+ROI_PROTOCOL = "geoprr_v2_roi_generalization_source_only_v1"
 REFERENCE_PROTOCOLS = (
     "geoprr_v2_reference_relation_source_only_v1",
     "geoprr_v2_reference_feedback_source_only_v1",
@@ -35,7 +36,7 @@ TRIANGLE_PROTOCOL = "geoprr_v2_role_triangle_source_only_v1"
 
 
 def reader_and_loss(config):
-    if config["protocol"] != PROTOCOL:
+    if config["protocol"] not in (PROTOCOL, ROI_PROTOCOL):
         raise ValueError("requires the frozen generalization training protocol")
     required = {"seed": 20262020, "epochs": 4, "warmup_epochs": 0, "batch_size": 32,
                 "workers": 8, "validation_batch_size": 16, "backbone_lr": 1e-5,
@@ -47,6 +48,8 @@ def reader_and_loss(config):
             or not isinstance(policy["mixstyle_module_names"], list)
             or policy["mixstyle_p"] != .5 or policy["mixstyle_alpha"] != .1):
         raise ValueError("generalization policy differs from the frozen interventions")
+    if config["protocol"] == ROI_PROTOCOL and policy.get("roi_padding") != {"probability": .8, "max_padding": .3}:
+        raise ValueError("ROI padding differs from the frozen source-view intervention")
     reader_protocol = config["reader_protocol"]
     if reader_protocol in REFERENCE_PROTOCOLS:
         if reader_protocol == REFERENCE_PROTOCOLS[1] and "reference_normalization" not in config["model"]:
@@ -95,6 +98,7 @@ def main(argv=None):
     process_started = time.perf_counter()
     args = build_parser().parse_args(argv)
     config = json.loads(args.config.read_text())
+    protocol = config["protocol"]
     training, policy = config["training"], config["generalization"]
     seed = int(training["seed"])
     seed_everything(seed)
@@ -107,8 +111,14 @@ def main(argv=None):
         raise ValueError("resume requires this output directory's latest.pt")
     if args.resume is None and any((args.output / name).exists() for name in ("latest.pt", "history.jsonl", "completed.json")):
         raise FileExistsError("training artifacts already exist; use --resume")
-    train_data = ReferenceRelationDataset(args.train_manifest, data_root=args.data_root,
-                                         data_config=config["data"], augment=True, pair_manifest=args.pair_manifest)
+    dataset_options = dict(data_root=args.data_root, data_config=config["data"],
+                           augment=True, pair_manifest=args.pair_manifest)
+    if protocol == ROI_PROTOCOL:
+        from experiments.geoprr_v2_roi_generalization_data import ROIPaddingReferenceRelationDataset
+        train_data = ROIPaddingReferenceRelationDataset(args.train_manifest, **dataset_options,
+                                                        roi_policy=policy["roi_padding"])
+    else:
+        train_data = ReferenceRelationDataset(args.train_manifest, **dataset_options)
     val_data = ReferenceRelationDataset(args.val_manifest, data_root=args.data_root,
                                        data_config=config["data"], augment=False)
     if (len(train_data.rows), len(train_data), len(train_data.edges), len(val_data)) != (18590, 22686, 8192, 1506):
@@ -118,6 +128,8 @@ def main(argv=None):
              ("train_manifest", "val_manifest", "pair_manifest", "init_checkpoint")}
     data_contract = {"paths": paths, "train": train_data.supervision_contract(),
                      "validation": val_data.supervision_contract(), "exposure_edges": train_data.edges}
+    if protocol == ROI_PROTOCOL:
+        data_contract["training_input_intervention"] = policy["roi_padding"]
     initialization = None
     if args.resume is None:
         initialization = initialize_from_anchor(model, args.init_checkpoint, config, data_contract)
@@ -136,7 +148,7 @@ def main(argv=None):
     history, checkpointed_process_seconds = [], 0.0
     if args.resume is not None:
         checkpoint = torch.load(args.resume, map_location="cpu", weights_only=False)
-        if (checkpoint["protocol"] != PROTOCOL or checkpoint["reader_protocol"] != reader_protocol
+        if (checkpoint["protocol"] != protocol or checkpoint["reader_protocol"] != reader_protocol
                 or checkpoint["config"] != config or checkpoint["data_contract"] != data_contract):
             raise ValueError("resume protocol/config/source supervision or exposure differs")
         model.load_state_dict(checkpoint["model"], strict=True)
@@ -149,7 +161,7 @@ def main(argv=None):
         initialization = checkpoint["initialization"]
         restore_rng(checkpoint["rng"])
     args.output.mkdir(parents=True, exist_ok=True)
-    run = {"protocol": PROTOCOL, "reader_protocol": reader_protocol, "config": config,
+    run = {"protocol": protocol, "reader_protocol": reader_protocol, "config": config,
            "data_contract": data_contract, "generalization": policy, "initialization": initialization,
            "train_unique_images": len(train_data.rows), "train_items": len(train_data),
            "expected_full_epoch": {"donor_images": 22686, "recipient_images": 8192,
@@ -270,7 +282,7 @@ def main(argv=None):
                       "peak_cuda_memory_bytes": torch.cuda.max_memory_allocated(device) if device.type == "cuda" else None,
                       "peak_cuda_reserved_bytes": torch.cuda.max_memory_reserved(device) if device.type == "cuda" else None}
             history.append(record)
-            checkpoint = {"protocol": PROTOCOL, "reader_protocol": reader_protocol, "config": config,
+            checkpoint = {"protocol": protocol, "reader_protocol": reader_protocol, "config": config,
                           "data_contract": data_contract, "initialization": initialization,
                           "model": model.state_dict(), "optimizer": optimizer.state_dict(),
                           "scheduler": scheduler.state_dict(), "scaler": scaler.state_dict(), "rng": rng_state(),
@@ -289,7 +301,7 @@ def main(argv=None):
     finally:
         for handle in handles:
             handle.remove()
-    write_json(args.output / "completed.json", {"protocol": PROTOCOL, "reader_protocol": reader_protocol,
+    write_json(args.output / "completed.json", {"protocol": protocol, "reader_protocol": reader_protocol,
                "epochs": training["epochs"], "best_epoch": best_epoch, "best_nmae": best_nmae, "totals": totals,
                "current_process_wall_seconds": time.perf_counter() - process_started,
                "checkpointed_process_wall_seconds_before_resume": checkpointed_process_seconds,
