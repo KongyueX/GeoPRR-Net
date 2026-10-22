@@ -1,12 +1,13 @@
 """CPU checks for the frozen endpoint plan and exact source replacement."""
 from copy import deepcopy
+import gzip
 import json
 from pathlib import Path
 import tempfile
 import unittest
 
 from experiments.geoprr_v2_endpoint_source import (
-    DATA_PROTOCOL, REPLACEMENT, endpoint_generation_plan, replace_source_population,
+    DATA_PROTOCOL, REPLACEMENT, compare_fixed_factors, endpoint_generation_plan, replace_source_population,
     verify_endpoint_training_contract,
 )
 
@@ -263,6 +264,85 @@ class EndpointTrainingContractTests(unittest.TestCase):
                 candidate["train"][key] = value
                 with self.assertRaises(ValueError):
                     verify_endpoint_training_contract(candidate, self.anchor)
+
+
+class EndpointFixedFactorTests(unittest.TestCase):
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        root = Path(temporary.name)
+        self.old_root, self.new_root = root / "old", root / "new"
+        self.old_root.mkdir()
+        self.new_root.mkdir()
+        mesh = {"vertices": [[0., 0., 0.], [1., 0., 0.], [1., 1., 0.], [0., 1., 0.]],
+                "polygons": [[[0, 1, 2], 0, False], [[0, 2, 3], 1, True]],
+                "uv_layers": {"UVMap": [[.1, .2], [.3, .4], [.5, .6], [.7, .8], [.9, 1.], [1.1, 1.2]],
+                              "SecondUV": [[1.1, 2.2], [3.3, 4.4], [5.5, 6.6],
+                                           [7.7, 8.8], [9.9, 10.], [11.1, 12.2]]}}
+        self.fixed = {"g": {"meshes": {"Circle": deepcopy(mesh), "OtherMesh": deepcopy(mesh)}},
+                      "a": {"render": {"samples": 200, "quality": 95}}, "c": {"location": [0., 0., 2.]}}
+        with gzip.open(self.old_root / "factors.json.gz", "wt") as handle:
+            json.dump({"fixed_factors": self.fixed}, handle)
+
+    def compare(self, fixed):
+        with gzip.open(self.new_root / "factors.json.gz", "wt") as handle:
+            json.dump({"fixed_factors": fixed}, handle)
+        return compare_fixed_factors(self.old_root, self.new_root)
+
+    def reverse_faces(self, fixed, *, mesh_name="Circle", carry_uv=True):
+        mesh = fixed["g"]["meshes"][mesh_name]
+        mesh["polygons"].reverse()
+        if carry_uv:
+            for name, values in mesh["uv_layers"].items():
+                mesh["uv_layers"][name] = values[3:] + values[:3]
+
+    def test_circle_face_reordering_keeps_material_smoothing_and_corner_uv(self):
+        fixed = deepcopy(self.fixed)
+        self.reverse_faces(fixed)
+        report = self.compare(fixed)
+        self.assertTrue(report["fixed_g_a_c_equal_after_declared_representation_normalization"])
+        self.assertFalse(report["numerical_or_render_setting_normalization"])
+
+    def test_reordering_faces_without_their_corner_uv_is_rejected(self):
+        fixed = deepcopy(self.fixed)
+        self.reverse_faces(fixed, carry_uv=False)
+        with self.assertRaises(ValueError):
+            self.compare(fixed)
+
+    def test_circle_uv_material_smoothing_winding_and_vertices_remain_exact(self):
+        for kind in ("uv", "material", "smooth", "winding", "vertex"):
+            with self.subTest(kind=kind):
+                fixed = deepcopy(self.fixed)
+                mesh = fixed["g"]["meshes"]["Circle"]
+                if kind == "uv":
+                    mesh["uv_layers"]["SecondUV"][0][0] += .01
+                elif kind == "material":
+                    mesh["polygons"][0][1] = 2
+                elif kind == "smooth":
+                    mesh["polygons"][0][2] = True
+                elif kind == "winding":
+                    mesh["polygons"][0][0].reverse()
+                    for values in mesh["uv_layers"].values():
+                        values[:3] = values[:3][::-1]
+                else:
+                    mesh["vertices"][0][2] += .001
+                with self.assertRaises(ValueError):
+                    self.compare(fixed)
+
+    def test_other_mesh_face_order_is_unchanged(self):
+        fixed = deepcopy(self.fixed)
+        self.reverse_faces(fixed, mesh_name="OtherMesh")
+        with self.assertRaises(ValueError):
+            self.compare(fixed)
+
+    def test_circle_uv_layer_must_contain_every_face_corner(self):
+        for delta in (-1, 1):
+            with self.subTest(delta=delta):
+                fixed = deepcopy(self.fixed)
+                values = fixed["g"]["meshes"]["Circle"]["uv_layers"]["UVMap"]
+                values.pop() if delta == -1 else values.append([0., 0.])
+                with self.assertRaises(ValueError):
+                    self.compare(fixed)
 
 
 if __name__ == "__main__":

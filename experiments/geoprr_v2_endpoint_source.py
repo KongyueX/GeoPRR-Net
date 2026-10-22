@@ -143,20 +143,54 @@ def _normalize_asset_paths(value, asset_shim, changes, location=""):
     return value
 
 
+def _circle_face_records(mesh):
+    """Associate every ordered face corner with its actual mesh-loop UV."""
+    count = sum(len(face[0]) for face in mesh["polygons"])
+    if any(len(values) != count for values in mesh["uv_layers"].values()):
+        raise ValueError("Circle UV layer length does not match its polygon corners")
+    offset, records = 0, []
+    for vertices, material, smooth in mesh["polygons"]:
+        end = offset + len(vertices)
+        uv = tuple((name, tuple(tuple(value) for value in values[offset:end]))
+                   for name, values in sorted(mesh["uv_layers"].items()))
+        records.append((tuple(vertices), material, smooth, uv))
+        offset = end
+    return sorted(records)
+
+
+def _canonical_circle_faces(fixed):
+    meshes = fixed["g"]["meshes"]
+    if "Circle" not in meshes:
+        return None
+    mesh = meshes["Circle"]
+    records = _circle_face_records(mesh)
+    original = deepcopy(mesh["polygons"])
+    mesh["polygons"] = [[list(vertices), material, smooth] for vertices, material, smooth, _uv in records]
+    mesh["uv_layers"] = {name: [list(value) for _vertices, _material, _smooth, layers in records
+                               for layer, values in layers if layer == name for value in values]
+                         for name in mesh["uv_layers"]}
+    return {"mesh": "Circle", "faces": len(records), "face_enumeration_changed": original != mesh["polygons"]}
+
+
 def compare_fixed_factors(old_root, new_root):
     snapshots = []
     path_changes = []
+    face_changes = []
     for root in (old_root, new_root):
         with gzip.open(root / "factors.json.gz", "rt") as handle:
             fixed = json.load(handle)["fixed_factors"]
         changes = []
-        snapshots.append(_normalize_asset_paths(fixed, root / "asset_shim", changes))
+        normalized = _normalize_asset_paths(fixed, root / "asset_shim", changes)
+        face_changes.append(_canonical_circle_faces(normalized))
+        snapshots.append(normalized)
         path_changes.append(changes)
     if snapshots[0] != snapshots[1]:
-        raise ValueError("endpoint rendering changed fixed g/a/c beyond resolved asset-shim paths")
-    return {"fixed_g_a_c_equal_after_asset_path_resolution": True,
-            "normalization": "only strings containing each output asset_shim path are resolved through actual symlinks",
+        raise ValueError("endpoint rendering changed fixed g/a/c beyond asset paths and Circle face enumeration")
+    return {"fixed_g_a_c_equal_after_declared_representation_normalization": True,
+            "normalization": "asset_shim paths resolve through actual symlinks; only g/meshes/Circle face enumeration is sorted as complete vertex-winding/material/smooth/per-layer ordered-corner-UV records",
             "asset_path_resolutions": {"old": path_changes[0], "new": path_changes[1]},
+            "circle_face_enumeration": {"old": face_changes[0], "new": face_changes[1]},
+            "face_corner_uv_associations_and_vertex_winding": "exact; no cyclic rotation, reversal or numeric tolerance",
             "numerical_or_render_setting_normalization": False}
 
 

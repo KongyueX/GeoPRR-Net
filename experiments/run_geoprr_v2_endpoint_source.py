@@ -20,6 +20,7 @@ from experiments.run_geoprr_v2_render_probe import compute_processes
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--home", type=Path, default=Path(os.environ.get("GEOPRR_HOME", "/root/autodl-tmp/geoprrnet")))
+    parser.add_argument("--resume-factor-order-repair", action="store_true")
     args = parser.parse_args()
     revision = os.environ.get("GEOPRR_ENDPOINT_REVISION")
     if not revision:
@@ -43,17 +44,39 @@ def main():
                     "upstream_revision": "337b868f0f5495b31acc383433cac44040247bf2", "blender": "4.5.14",
                     "failure_policy": "stop and retain partial output; no seed/state resampling or weakened geometry thresholds",
                     "training_launched": False}
+        repair = None
         for name, value in (("generation_plan.json", plan), ("protocol.json", protocol)):
             path = output / name
             if path.exists() and read_json(path) != value:
-                raise ValueError(f"stored endpoint {name} differs")
+                original = read_json(path)
+                if (name != "protocol.json" or not args.resume_factor_order_repair
+                        or {key: item for key, item in original.items() if key != "implementation_revision"}
+                        != {key: item for key, item in value.items() if key != "implementation_revision"}):
+                    raise ValueError(f"stored endpoint {name} differs")
+                repair = {"original_revision": original["implementation_revision"], "active_revision": revision,
+                          "repair": "Circle face enumeration comparison with exact ordered corner UV association",
+                          "data_and_render_recipe_changed": False, "original_protocol_and_snapshot_preserved": True}
+                repair_path = output / "factor_order_repair.json"
+                if repair_path.exists():
+                    if read_json(repair_path) != repair:
+                        raise ValueError("stored factor-order repair version differs")
+                else:
+                    failed = read_json(output / "queue_state.json")
+                    if (failed["status"] != "failed" or failed.get("current_step") != "prepare_g0000"
+                            or failed["steps"]["render_g0000"]["status"] != "complete"
+                            or failed.get("completed_groups", 0) != 0):
+                        raise ValueError("factor-order repair requires the retained first-group preparation failure")
+                    write_json(output / "failure_before_factor_order_repair.json", failed)
+                    write_json(repair_path, repair)
             if not path.exists():
                 write_json(path, value)
         run = OptimizationRun(home, output, [20262020])
         run.state.update(protocol=DATA_PROTOCOL, implementation_revision=revision, status="running", current_step=None)
+        if repair is not None:
+            run.state["factor_order_repair"] = repair
         run.save()
         (output / "pipeline.pid").write_text(str(os.getpid()) + "\n")
-        snapshot = output / "source_snapshot"
+        snapshot = output / ("factor_order_repair_snapshot" if repair is not None else "source_snapshot")
         snapshot.mkdir(exist_ok=True)
         for name in ("render_geoprr_v2_state_group.py", "geoprr_v2_endpoint_source.py", "run_geoprr_v2_endpoint_source.py"):
             destination = snapshot / name
