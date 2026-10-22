@@ -1,0 +1,23 @@
+{
+  "epoch": 2,
+  "samples": 1506,
+  "groups": 70,
+  "nmae": 0.00058898092213799,
+  "nmae_percent_fs": 0.058898092213799,
+  "acc_at_1": 0.9966799468791501,
+  "acc_at_2": 0.99933598937583,
+  "acc_at_5": 1.0,
+  "coverage": 1.0,
+  "failed": 0,
+  "median_error": 0.0003109276294708252,
+  "p90_error": 0.0012124180793762207,
+  "p95_error": 0.0018198192119598389,
+  "tail10_nmae": 0.0027865699520414587,
+  "maximum_error": 0.03327047824859619,
+  "errors_above_2_percent_fs": 1,
+  "errors_above_5_percent_fs": 0,
+  "input_failures": 0,
+  "errors_above_1_percent_fs": 5,
+  "mean_invalid_mass": 7.835444624743258e-06,
+  "mean_outside_arc_mass": 0.0015381575922510144
+}

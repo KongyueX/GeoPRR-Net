@@ -1,0 +1,193 @@
+{
+  "status": "running",
+  "verification_utc": "2026-10-22T05:58:02.150396+00:00",
+  "started_at": "2026-10-22T05:55:59.824928+00:00",
+  "continuation_parent_pid": 234666,
+  "global_child_pid": 234669,
+  "actual_commands_match": true,
+  "GPU_compute_apps": "234669, /root/autodl-tmp/geoprrnet/code/../.venv/bin/python, 9592 MiB",
+  "complete_epochs": 0,
+  "latest_batch": {
+    "event": "training_batch",
+    "epoch": 1,
+    "batch": 1,
+    "stage": "head_warmup",
+    "loss": 0.09018106013536453,
+    "donor_images": 32,
+    "recipient_images": 11
+  },
+  "orchestration_revision": "e5bbd5f",
+  "formal_method_revision": "d6376a0",
+  "original_files_exactly_unchanged": {
+    "protocol.json": true,
+    "queue_state.json": true,
+    "validation_decision.json": true
+  },
+  "record": {
+    "protocol": "geoprr_v2_reference_pair_global_paper_continuation_v1",
+    "created_at": "2026-10-22T05:55:59.824387+00:00",
+    "policy_revision": "docs/GEOPRR_V2_PAPER_EVIDENCE_AMENDMENT_CN.md",
+    "code_revision": "d6376a0",
+    "continuation_code_revision": "e5bbd5f",
+    "authoritative_old_gate": {
+      "decision": "reference_pair_update_validation_rejected",
+      "original_G1": {
+        "G0_label_gate_passed": true,
+        "RGB_checks": {
+          "all1506_valid": true,
+          "nmae_no_worse_r8": true,
+          "tail10_no_worse_r8": true,
+          "maximum_below_both": true,
+          "old_severe_union_rescued": true,
+          "no_new_above1_2_5": false,
+          "ordinary_nmae_percent_fs_protected": true,
+          "ordinary_median_percent_fs_protected": true,
+          "ordinary_p90_percent_fs_protected": true,
+          "r8_ordinary_mean_protected": true
+        },
+        "gate_passed": false
+      },
+      "best48_protection": {
+        "checks": {
+          "nmae_no_worse_best48": true,
+          "no_new_above2_5_vs_best48": false,
+          "r8_ordinary_mean_protected_vs_best48": true,
+          "ordinary_nmae_percent_fs_protected_vs_best48": true,
+          "ordinary_median_percent_fs_protected_vs_best48": true,
+          "ordinary_p90_percent_fs_protected_vs_best48": true
+        },
+        "gate_passed": false
+      },
+      "best64_protection": {
+        "checks": {
+          "nmae_no_worse_best64": true,
+          "no_new_above2_5_vs_best64": true,
+          "r8_ordinary_mean_protected_vs_best64": true,
+          "ordinary_nmae_percent_fs_protected_vs_best64": true,
+          "ordinary_median_percent_fs_protected_vs_best64": true,
+          "ordinary_p90_percent_fs_protected_vs_best64": false
+        },
+        "gate_passed": false
+      }
+    },
+    "eligibility_revision": "run the one frozen matched global65 after preserving the original strict-gate rejection",
+    "original_queue": "/root/autodl-tmp/geoprrnet/runs/geoprr_v2_tail/iteration_v8_reference_pair_update/queue_state.json",
+    "cwd": "/root/autodl-tmp/geoprrnet/code",
+    "original_validation_decision": "/root/autodl-tmp/geoprrnet/runs/geoprr_v2_tail/iteration_v8_reference_pair_update/validation_decision.json",
+    "base_command": [
+      "/root/autodl-tmp/geoprrnet/code/../.venv/bin/python",
+      "-m",
+      "experiments.train_geoprr_v2_reference_pair_update",
+      "--config",
+      "/root/autodl-tmp/geoprrnet/code/experiments/configs/geoprr_v2_reference_pair_update_global.json",
+      "--train-manifest",
+      "/root/autodl-tmp/geoprrnet/rendering/compositional_source_v1/manifests/train.jsonl",
+      "--val-manifest",
+      "/root/autodl-tmp/geoprrnet/runs/geoprr_v2/manifests/validation.jsonl",
+      "--pair-manifest",
+      "/root/autodl-tmp/geoprrnet/rendering/compositional_source_v1/manifests/train_edges.jsonl",
+      "--init-checkpoint",
+      "/root/autodl-tmp/geoprrnet/runs/geoprr_v2_tail/iteration_v7_role_triangle/readers/full_s20262020/best.pt",
+      "--output",
+      "/root/autodl-tmp/geoprrnet/runs/geoprr_v2_tail/iteration_v8_reference_pair_update/readers/global_s20262020"
+    ],
+    "global_output": "/root/autodl-tmp/geoprrnet/runs/geoprr_v2_tail/iteration_v8_reference_pair_update/readers/global_s20262020",
+    "expected": "/root/autodl-tmp/geoprrnet/runs/geoprr_v2_tail/iteration_v8_reference_pair_update/readers/global_s20262020/completed.json",
+    "resume_checkpoint": "/root/autodl-tmp/geoprrnet/runs/geoprr_v2_tail/iteration_v8_reference_pair_update/readers/global_s20262020/latest.pt",
+    "snapshot_files_equal": [
+      "geoprr_v2_reference_pair_reader.py",
+      "geoprr_v2_reference_pair_update.py",
+      "train_geoprr_v2_reference_pair_update.py",
+      "train_geoprr_v2_reference_relation.py",
+      "geoprr_v2_reference_relation.py",
+      "geoprr_v2_role_triangle.py",
+      "geoprr_v2_data.py",
+      "geoprr_v2_model.py",
+      "train_geoprr_v2.py",
+      "run_geoprr_v2_optimization.py",
+      "run_geoprr_v2_render_probe.py",
+      "run_geoprr_v2_role_triangle.py",
+      "run_geoprr_v2_reference_feedback.py",
+      "summarize_geoprr_v2_relative_state.py",
+      "run_geoprr_v2_reference_pair_update.py",
+      "geoprr_v2_reference_pair_update_global.json"
+    ],
+    "eligibility_checks": {
+      "original_validation_rejected": true,
+      "preserve_complete": true,
+      "old_parent_child_exited": true,
+      "GPU0_idle": true,
+      "old_global_step_absent": true,
+      "frozen_snapshot_equal": true
+    },
+    "scope": "one frozen global65 only; no model, loss, seed, epoch or matrix extension"
+  },
+  "global_run_metadata": {
+    "protocol": "geoprr_v2_reference_pair_update_source_only_v1",
+    "config": {
+      "name": "mobilenetv4_reference_pair_update_global",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "tile": 16,
+        "reference_update": "global"
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 65,
+        "warmup_epochs": 5,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 0.0001,
+        "head_lr": 0.0005,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "three_role_joint_cross_entropy/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "same full best64 initialization, ordered reference evidence, parameters, original supervision, executed batches and exposure; pair-preserving versus global reference update; actual effective optimizer updates and AMP skips recorded separately",
+      "protocol": "geoprr_v2_reference_pair_update_source_only_v1",
+      "initialization": "full_best64"
+    },
+    "initialization": {
+      "source_epoch": 64,
+      "loaded_full_tensors": 497,
+      "preserved_all_trained_weights": true,
+      "new_parameters": 4672,
+      "new_zero_parameter": "state_head.reference_verifier.last.weight"
+    },
+    "parameters": 7465988,
+    "shared_parameters": 7431248,
+    "head_parameters": 34740,
+    "train_unique_images": 18590,
+    "expected_full_epoch": {
+      "donor_images": 22686,
+      "recipient_images": 8192,
+      "total_image_forwards": 30878,
+      "optimizer_batches": 709
+    },
+    "validation_images": 1506,
+    "model_selection": "full1506_native_nmae_earliest_tie",
+    "inference_input": "RGB only; H/span/y and virtual role phases are training/scoring labels"
+  },
+  "scope": "startup snapshot only, not later progress; one frozen global65, no extra training/module/seed/loss/epochs"
+}

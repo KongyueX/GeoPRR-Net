@@ -1,4 +1,8 @@
-# 配对守恒参考更新：CPU实现准入
+# 配对守恒参考更新：完整候选与匹配对照
+
+候选已于2026-10-22北京时间13:53:01完整65轮结束，最终best2，NMAE0.058898092%FS／max3.327047825%FS／>1、2、5为5、1、0。原G1=10／11、best48／best64保护各5／6，原controller拒绝保留。独立完整性审计PASS。唯一冻结global65已按论文证据修订于13:55:59独立启动；没有延长候选、修改方法或补旧control。
+
+最终逐图、普通样本与完整成本见[正式候选报告](formal_preserve_report_cn.md)、[summary](formal_preserve_summary.json)、[独立审计](formal_preserve_independent_audit.json)。以下CPU／资源／初始启动部分保留阶段记录，后续状态以正式结果与实际queue／history为准。
 
 精确算子、匹配global算子和RGB Reader已实现。新增CPU检查及有界实际RGB／GPU资源准入均PASS；CPU／资源准入阶段没有optimizer更新；正式候选已按最新授权启动，正式训练成本和结果单独记录。
 
