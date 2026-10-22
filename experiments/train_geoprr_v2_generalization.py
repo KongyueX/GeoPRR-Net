@@ -28,6 +28,7 @@ from experiments.train_geoprr_v2_reference_relation import (
 
 PROTOCOL = "geoprr_v2_generalization_source_only_v1"
 ROI_PROTOCOL = "geoprr_v2_roi_generalization_source_only_v1"
+ENDPOINT_PROTOCOL = "geoprr_v2_endpoint_generalization_source_only_v1"
 REFERENCE_PROTOCOLS = (
     "geoprr_v2_reference_relation_source_only_v1",
     "geoprr_v2_reference_feedback_source_only_v1",
@@ -36,7 +37,7 @@ TRIANGLE_PROTOCOL = "geoprr_v2_role_triangle_source_only_v1"
 
 
 def reader_and_loss(config):
-    if config["protocol"] not in (PROTOCOL, ROI_PROTOCOL):
+    if config["protocol"] not in (PROTOCOL, ROI_PROTOCOL, ENDPOINT_PROTOCOL):
         raise ValueError("requires the frozen generalization training protocol")
     required = {"seed": 20262020, "epochs": 4, "warmup_epochs": 0, "batch_size": 32,
                 "workers": 8, "validation_batch_size": 16, "backbone_lr": 1e-5,
@@ -50,6 +51,10 @@ def reader_and_loss(config):
         raise ValueError("generalization policy differs from the frozen interventions")
     if config["protocol"] == ROI_PROTOCOL and policy.get("roi_padding") != {"probability": .8, "max_padding": .3}:
         raise ValueError("ROI padding differs from the frozen source-view intervention")
+    if config["protocol"] == ENDPOINT_PROTOCOL:
+        from experiments.geoprr_v2_endpoint_source import REPLACEMENT
+        if policy.get("source_replacement") != REPLACEMENT or policy["mixstyle_module_names"]:
+            raise ValueError("endpoint source replacement differs from the frozen data intervention")
     reader_protocol = config["reader_protocol"]
     if reader_protocol in REFERENCE_PROTOCOLS:
         if reader_protocol == REFERENCE_PROTOCOLS[1] and "reference_normalization" not in config["model"]:
@@ -68,22 +73,30 @@ def initialize_from_anchor(model, path, config, data_contract):
             or source["config"]["data"] != config["data"]
             or source["config"]["training"]["seed"] != 20262020):
         raise ValueError("anchor protocol, architecture, source data configuration or seed differs")
-    for key in ("train", "validation", "exposure_edges"):
-        if source["data_contract"][key] != data_contract[key]:
-            raise ValueError("anchor source supervision or exposure differs")
-    for key in ("train_manifest", "val_manifest", "pair_manifest"):
-        if source["data_contract"]["paths"][key] != data_contract["paths"][key]:
-            raise ValueError("anchor source manifest path differs")
+    source_replacement = None
+    if config["protocol"] == ENDPOINT_PROTOCOL:
+        from experiments.geoprr_v2_endpoint_source import verify_endpoint_training_contract
+        source_replacement = verify_endpoint_training_contract(data_contract, source["data_contract"])
+    else:
+        for key in ("train", "validation", "exposure_edges"):
+            if source["data_contract"][key] != data_contract[key]:
+                raise ValueError("anchor source supervision or exposure differs")
+        for key in ("train_manifest", "val_manifest", "pair_manifest"):
+            if source["data_contract"]["paths"][key] != data_contract["paths"][key]:
+                raise ValueError("anchor source manifest path differs")
     model.load_state_dict(source["model"], strict=True)
     loaded = model.state_dict()
     if any(loaded[key].dtype != value.dtype or not torch.equal(loaded[key], value)
            for key, value in source["model"].items()):
         raise ValueError("full anchor loading changed a trained tensor")
-    return {"source_checkpoint": str(path.resolve()), "source_protocol": source["protocol"],
+    initialization = {"source_checkpoint": str(path.resolve()), "source_protocol": source["protocol"],
             "source_epoch": int(source["epoch"]), "loaded_full_tensors": len(loaded),
             "parameters": sum(parameter.numel() for parameter in model.parameters()),
             "strict_state_load": True, "preserved_all_trained_weights": True,
             "optimizer": "fresh AdamW; anchor optimizer, scheduler and scaler are not continued"}
+    if source_replacement is not None:
+        initialization["source_replacement"] = source_replacement
+    return initialization
 
 
 def backbone_bn_buffers(model):
@@ -130,6 +143,8 @@ def main(argv=None):
                      "validation": val_data.supervision_contract(), "exposure_edges": train_data.edges}
     if protocol == ROI_PROTOCOL:
         data_contract["training_input_intervention"] = policy["roi_padding"]
+    if protocol == ENDPOINT_PROTOCOL:
+        data_contract["training_source_intervention"] = policy["source_replacement"]
     initialization = None
     if args.resume is None:
         initialization = initialize_from_anchor(model, args.init_checkpoint, config, data_contract)

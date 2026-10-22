@@ -172,6 +172,7 @@ def main(argv=None):
     parser.add_argument("--source-root", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--role", choices=("geometry_diagnostic", "source_training"), default="geometry_diagnostic")
+    parser.add_argument("--state-policy", choices=("interior", "endpoint_v11"), default="interior")
     parser.add_argument("--layout-id")
     parser.add_argument("--seed", type=int, default=20262020)
     parser.add_argument("--states", type=float, nargs="+", default=[0.15, 0.35, 0.65, 0.85])
@@ -182,7 +183,10 @@ def main(argv=None):
     parser.add_argument("--device", choices=("CPU", "CUDA"), default="CPU")
     parser.add_argument("--image-format", choices=("PNG", "JPEG"), default="PNG")
     args = parser.parse_args(argv)
-    if len(args.states) < 2 or len(set(args.states)) != len(args.states) or any(not 0 < state < 1 for state in args.states):
+    if args.state_policy == "endpoint_v11":
+        if args.role != "source_training" or args.states != [0., .005, .02, 1.]:
+            parser.error("endpoint_v11 requires source_training and exactly 0 .005 .02 1")
+    elif len(args.states) < 2 or len(set(args.states)) != len(args.states) or any(not 0 < state < 1 for state in args.states):
         parser.error("states must be distinct normalized values strictly between zero and one")
     if min(args.width, args.height, args.threads, args.samples) < 1:
         parser.error("dimensions, threads, and samples must be positive")
@@ -221,6 +225,8 @@ def main(argv=None):
     dial = {key: plain(value) for key, value in dial.items()}
     model = {key: plain(value) for key, value in model.items()}
     span = dial["long_interval_degree"] * dial["long_num"]
+    if args.state_policy == "endpoint_v11" and not 0 < span < 360:
+        raise ValueError("endpoint_v11 requires distinct start/end directions on an arc below 360 degrees")
     dial["pointer_rotate_degree"] = args.states[0] * span
     model["img_output_format"] = args.image_format
     model["img_output_path"] = str(output / "images" / f"{names[0]}.{extension}")
@@ -256,6 +262,8 @@ def main(argv=None):
                   "image_format": args.image_format, "image_quality": scene.render.image_settings.quality,
                   "intervention": "same selected pointer rotation only", "longmark_projection_size": [args.width, args.height],
                   "virtual_q_semantics": "Virtual radius-one dial-plane readout point is derived by GeoPRRV2Dataset; Pointer.outside_kp is the physical pointer tip, not Q."}
+    if args.state_policy == "endpoint_v11":
+        provenance["state_policy"] = args.state_policy
     images = []
     try:
         vendor.sync_gauge(**dial, **model, project_root=str(output / "asset_shim"))

@@ -24,14 +24,31 @@ def load(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--home", type=Path, default=Path("/root/autodl-tmp/geoprrnet"))
-    parser.add_argument("--study", choices=("normalization", "roi_padding"), default="normalization")
+    parser.add_argument("--study", choices=("normalization", "roi_padding", "endpoints"), default="normalization")
     args = parser.parse_args()
     home = args.home
     roi_study = args.study == "roi_padding"
-    arms = ("roi", "roi_bnfixed") if roi_study else ARMS
-    config_prefix = "geoprr_v2_generalization_v10" if roi_study else "geoprr_v2_generalization_v9"
-    iteration = "iteration_v10_roi_padding_20261023" if roi_study else "iteration_v9_20261023"
-    protocol_name = "geoprr_v2_roi_generalization_matched_screen_v1" if roi_study else PROTOCOL
+    endpoint_study = args.study == "endpoints"
+    if endpoint_study:
+        arms = ("endpoint", "endpoint_bnfixed")
+        config_prefix = "geoprr_v2_generalization_v11"
+        iteration = "iteration_v11_endpoints_20261023"
+        protocol_name = "geoprr_v2_endpoint_generalization_matched_screen_v1"
+        preflight_name = "geoprr_generalization_v11_endpoint_preflight_20261023"
+    elif roi_study:
+        arms = ("roi", "roi_bnfixed")
+        config_prefix = "geoprr_v2_generalization_v10"
+        iteration = "iteration_v10_roi_padding_20261023"
+        protocol_name = "geoprr_v2_roi_generalization_matched_screen_v1"
+        preflight_name = "geoprr_generalization_v10_roi_preflight_20261023"
+    else:
+        arms = ARMS
+        config_prefix = "geoprr_v2_generalization_v9"
+        iteration = "iteration_v9_20261023"
+        protocol_name = PROTOCOL
+        preflight_name = "geoprr_generalization_v9_preflight_20261023"
+    source = home / ("rendering/generalization_endpoints_v11_20261023" if endpoint_study
+                     else "rendering/compositional_source_v1")
     repo = Path(__file__).resolve().parents[1]
     output = home / f"runs/geoprr_generalization/{iteration}/matched_training"
     anchor = home / "runs/geoprr_v2_tail/iteration_v6_reference_feedback/readers/feedback_s20262020/best.pt"
@@ -41,11 +58,10 @@ def main():
         if compute_processes():
             raise RuntimeError("GPU has an active compute process")
         configs = {arm: load(repo / f"experiments/configs/{config_prefix}_{arm}.json") for arm in arms}
-        preflight_name = "geoprr_generalization_v10_roi_preflight_20261023" if roi_study else "geoprr_generalization_v9_preflight_20261023"
         preflight = load(home / f"diagnostics/{preflight_name}/result.json")
         if preflight["status"] != "passed" or preflight["configs"] != configs or preflight["counts"]["optimizer_updates"]:
             raise ValueError("targeted runtime witness or frozen configs differ")
-        identity_key = "validation_input_exact_identity" if roi_study else "eval_MixStyle_exact_identity"
+        identity_key = "eval_MixStyle_exact_identity" if args.study == "normalization" else "validation_input_exact_identity"
         if preflight[identity_key] is not True:
             raise ValueError("evaluation identity witness failed")
         common = []
@@ -56,14 +72,20 @@ def main():
         family = load(home / "runs/geoprr_generalization/iteration_v9_20261023/family_screen/queue_state.json")
         if family["status"] != "complete":
             raise ValueError("existing-family screen is incomplete")
-        if roi_study and load(home / "runs/geoprr_generalization/iteration_v9_20261023/matched_training/queue_state.json")["status"] != "complete":
+        if args.study != "normalization" and load(home / "runs/geoprr_generalization/iteration_v9_20261023/matched_training/queue_state.json")["status"] != "complete":
             raise ValueError("normalization/style study is incomplete")
+        if endpoint_study:
+            from experiments.geoprr_v2_endpoint_source import DATA_PROTOCOL
+            if (load(source / "queue_state.json")["status"] != "complete"
+                    or load(source / "prepared.json")["protocol"] != DATA_PROTOCOL):
+                raise ValueError("physical endpoint source generation is incomplete")
         revision = os.environ["GEOPRR_GENERALIZATION_REVISION"]
         protocol = {"protocol": protocol_name, "code_revision": revision, "anchor": str(anchor),
                     "anchor_selection": "viewed external development: feedback48 improves both domains versus v7best64; local57 retains RF100 advantage",
                     "configs": configs, "arms": list(arms), "epochs_each": 4, "seed": 20262020,
                     "study": args.study,
-                    "prior_controls": "v9 control/bnfixed reused; same initialization, optimizer, seed and source exposures" if roi_study else None,
+                    "prior_controls": "v9 control/bnfixed reused; same initialization, optimizer, seed and exposure counts" if args.study != "normalization" else None,
+                    "source_data": str(source),
                     "checkpoint_selection": "within run source1506 NMAE; evaluate source-best and last externally",
                     "external_scope": "viewed development, not blind or target-supervised training",
                     "external_training_labels_used": False, "official_test_used": False,
@@ -82,6 +104,8 @@ def main():
                          "geoprr_v2_reference_relation.py", "geoprr_v2_role_triangle.py", "geoprr_v2_data.py"]
             if roi_study:
                 names.append("geoprr_v2_roi_generalization_data.py")
+            if endpoint_study:
+                names.append("geoprr_v2_endpoint_source.py")
             for name in names:
                 shutil.copy2(repo / "experiments" / name, snapshot / name)
         run = OptimizationRun(home, output, [20262020])
@@ -94,9 +118,9 @@ def main():
                 reader = output / "readers" / arm
                 config = repo / f"experiments/configs/{config_prefix}_{arm}.json"
                 command = [sys.executable, "-m", "experiments.train_geoprr_v2_generalization", "--config", str(config),
-                           "--train-manifest", str(home / "rendering/compositional_source_v1/manifests/train.jsonl"),
+                           "--train-manifest", str(source / "manifests/train.jsonl"),
                            "--val-manifest", str(home / "runs/geoprr_v2/manifests/validation.jsonl"),
-                           "--pair-manifest", str(home / "rendering/compositional_source_v1/manifests/train_edges.jsonl"),
+                           "--pair-manifest", str(source / "manifests/train_edges.jsonl"),
                            "--init-checkpoint", str(anchor), "--output", str(reader)]
                 if (reader / "latest.pt").exists() and not (reader / "completed.json").exists():
                     command += ["--resume", str(reader / "latest.pt")]

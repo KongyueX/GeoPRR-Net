@@ -1,6 +1,8 @@
 # MobileNetV4泛化迭代：完整短训练结果与已有模型定位
 
-2026-10-23。首批三个4轮训练臂均已完整收尾，没有一臂相对初始化feedback48同时改善Industrial与RF100。固定BN best1在RF100的NMAE降至9.473928%FS（相对下降13.39%），Industrial升至18.709661%FS（相对上升4.75%）；MixStyle未取得一致跨域增量。保留全部模型与负结果，不直接延长本轮训练。完整比较、普通与严重样本统计、成本和公开文件清单见[v9完整结果](v9_completed/report_cn.md)。
+2026-10-23。**v10源域ROI留边两臂均完整4轮，最终best都是第2轮；源域与两个外部数据集同时回退，本配方不保留、不延长。** roi best2的源／Industrial／RF100为0.353982／25.110669／13.071708%FS；roi_bnfixed best2为0.445157／19.146629／14.433665%FS，均劣于feedback48及对应v9控制。完整逐图、普通／严重错误、重点样本和成本见[v10完整结果](v10_completed/report_cn.md)、[完整指标](v10_completed/metrics.json)与[公开文件清单](v10_completed/public_allowlist.json)。
+
+v9三个4轮试验的局部权衡保留：固定BN best1将RF100 NMAE降至9.473928%FS（相对feedback48下降13.39%），Industrial升至18.709661%FS（相对上升4.75%）；MixStyle未取得一致跨域增量。尚无一个新配方同时改善两域，不以新增模块或直接延长训练掩盖负结果。见[v9完整结果](v9_completed/report_cn.md)。
 
 相同的Industrial1395与RF100151原生ROI比较中，已有角度模型feedback48的Industrial均值最低，local57的RF100均值最低；v7／v8的源域精度优势不等于跨域优势。
 
@@ -29,7 +31,9 @@
 
 每臂完整4轮，best-source分别为control第1轮、bnfixed第1轮、MixStyle第3轮；末轮均为第4轮。两种checkpoint分别完成两个外部开发人口评估，合计12份外评、9,276张CNN图像／588次调用、0反传／0更新。一次独立CPU核对35,216项比较全部通过。评价连续误差、普通／近零／尾部和实际成本，允许局部回退，不以原零新增错门槛一票否决。
 
-下一轮几何一致的源ROI留边与偏移实验已于北京时间2026-10-23 03:08:26启动：两臂各4轮，网络和loss不变，复用本轮对应控制；实际父子进程和唯一GPU已核实，首批训练loss有限。目前尚无完整性能结果。见[ROI协议](../../GEOPRR_V2_ROI_GENERALIZATION_PROTOCOL_CN.md)、[输入／运行见证](v10_runtime_preflight.json)和[启动记录](v10_launch.json)。
+v10几何一致的源ROI留边实验现已完整结束：两臂各4轮、8份外评，网络和loss不变，复用v9对应控制。一次独立CPU核对80,618项比较全部通过，性能回退按原值保留。见[ROI协议](../../GEOPRR_V2_ROI_GENERALIZATION_PROTOCOL_CN.md)、[v10完整结果](v10_completed/report_cn.md)、[输入／运行见证](v10_runtime_preflight.json)和[启动记录](v10_launch.json)。
+
+下一独立方向正在准备真实端点源状态覆盖与新数据合同，计划将首128个quartile源组重新渲染为真实RGB状态[0,0.005,0.02,1]，保持18590人口与原曝光预算。该方向尚未启动，无性能结论；端点必须经过真实物理标签和执行完整性检查。
 
 ## 文献依据
 
@@ -39,6 +43,6 @@
 
 ## Limitations
 
-Industrial与RF100已经用于开发观察；结果不称新盲测。各已有版本训练历史不同，本表不能单因素归因结构。短训练是单seed开发筛选，不承诺外域收益、显著性或论文录用。归一化／风格干预不能补造缺失零位，端点与几何一致的ROI覆盖仍是后续候选。原14494／1506／4000与原门槛失败、旧模型和负结果均保留。RGB、权重、run.json原始几何与private trace不进入公开包。
+Industrial与RF100已经用于开发观察；结果不称新盲测。各已有版本训练历史不同，本表不能单因素归因结构。短训练是单seed开发筛选，不承诺外域收益、显著性或论文录用。归一化／风格与本轮ROI干预均未补充缺失零位，真实端点源覆盖正在准备。原14494／1506／4000与原门槛失败、旧模型和负结果均保留。RGB、权重、run.json原始几何与private trace不进入公开包。
 
-执行细节见[泛化协议](../../GEOPRR_V2_GENERALIZATION_ITERATION_PROTOCOL_CN.md)。本包保存family逐图与标量，以及[v9完整结果](v9_completed/report_cn.md)、[已核对的完整指标](v9_completed/metrics.json)、[数值与执行核对](v9_completed/numeric_execution_audit.json)和[公开文件清单](v9_completed/public_allowlist.json)。
+执行细节见[泛化协议](../../GEOPRR_V2_GENERALIZATION_ITERATION_PROTOCOL_CN.md)。本包保存family逐图与标量、[v10完整结果](v10_completed/report_cn.md)，以及[v9完整结果](v9_completed/report_cn.md)、[已核对的完整指标](v9_completed/metrics.json)、[数值与执行核对](v9_completed/numeric_execution_audit.json)和[公开文件清单](v9_completed/public_allowlist.json)。
