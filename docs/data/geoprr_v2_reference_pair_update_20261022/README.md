@@ -27,7 +27,7 @@
 
 有界实际RGB／资源检查已按[冻结合同](../../GEOPRR_V2_REFERENCE_PAIR_RESOURCE_CONTRACT_CN.md)完成，执行前已核对GPU／实际进程为空；结果见下节。用户已明确授权候选65轮及通过原11／best48／best64保护后的匹配global65；[正式合同](../../GEOPRR_V2_REFERENCE_PAIR_UPDATE_PROTOCOL_CN.md)、两份配置和训练／控制器入口已冻结，启动状态单独记录。没有新的已完成训练成绩。
 
-Reader继承旧full前向，会先计算原生J／读数再作新更新；未来实际成本需要包括这部分计算，不能只报新算子速度。原11门槛、best48／best64保护、冻结人口与模型seed不变；当前继续遵守不训练、不加loss、不扩seed。
+Reader继承旧full前向，会先计算原生J／读数再作新更新；未来实际成本需要包括这部分计算，不能只报新算子速度。原11门槛、best48／best64保护、冻结人口与模型seed不变；正式候选按最新授权运行，继续不加loss、不扩seed。
 
 结构公式、匹配global对照、原CE及研究边界见[设计合同](../../GEOPRR_V2_REFERENCE_PAIR_PRESERVING_DESIGN_CN.md)。一般KL投影／局部MLP不作为新定理，新机制收益与创新尚未由匹配训练验证。
 
@@ -64,3 +64,5 @@ Reader继承旧full前向，会先计算原生J／读数再作新更新；未来
 2026-10-22北京时间04:29:20启动preserve候选65轮，训练代码d6376a0。父193689／子193692实际命令核对一致，GPU只有该候选；global未启动。首批epoch1／head_warmup实际32donor＋11recipient，loss0.0901810601有限；启动核验时完整history为0轮，这不是后续实时进度或方法结论。实际最新进度以服务器history／latest和当前step日志为准。
 
 [启动标量记录](formal_launch_state.json)保留同best64初始化、曝光、三组gate和进程；全部权重／原始run.json只在server／private归档。保留v6best48、v7best64及旧失败结果。候选完整65轮通过原11＋best48／best64保护后才matched global65；否则归档负结果并跳过global。
+
+[北京时间2026-10-22 10:01当前best2逐图比较](interim_best2_20261022_1001.md)：完成38轮、正在39，非最终65轮门槛；不覆盖正式结果。
