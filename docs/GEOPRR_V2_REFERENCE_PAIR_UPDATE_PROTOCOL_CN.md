@@ -64,3 +64,7 @@
 启动前source服务器项目env并核对实际进程／GPU空闲；pipeline lock、pipeline.pid、queue_state与当前step原日志共同判定，不重复活任务，DataLoader workers不是新模型。best不更新不代表停滞。真实失败先读原日志与活命令，修真实实现／环境问题并必要针对检查，同output恢复；保留partial与负结果，不删覆盖，实质方法／config／名单改变另开实验。
 
 只使用项目venv和已有main，不建分支，不更改系统Python／CUDA／conda或其他项目、不买算力、不向第三方发消息。RGB／权重／vendor／.aris／private trace／原H／C／XYZ／像素及矩阵不公开；run.json／data_contract含原几何只private，公开使用显式allowlist。所有旧模型保留。
+
+## 论文目标的前瞻性续跑修订
+
+用户已在当前候选完成前明确以数据改进与方法贡献支持论文为主要目标。原G1／anchor／G2分数和判定保留，不再用零新增错误阻断必要机制对照；当前65轮与两臂配置不变，续跑规则见[论文证据修订](GEOPRR_V2_PAPER_EVIDENCE_AMENDMENT_CN.md)。原controller不在live期间改写；如其按原gate退出，matched global按单独修订记录继续，禁止重复活job。

@@ -66,3 +66,7 @@ Reader继承旧full前向，会先计算原生J／读数再作新更新；未来
 [启动标量记录](formal_launch_state.json)保留同best64初始化、曝光、三组gate和进程；全部权重／原始run.json只在server／private归档。保留v6best48、v7best64及旧失败结果。候选完整65轮通过原11＋best48／best64保护后才matched global65；否则归档负结果并跳过global。
 
 [北京时间2026-10-22 10:01当前best2逐图比较](interim_best2_20261022_1001.md)：完成38轮、正在39，非最终65轮门槛；不覆盖正式结果。
+
+## 论文证据目标
+
+用户在候选完成前明确：严格鲁棒门槛不是论文的一票否决条件，优先建立数据改进与方法机制的匹配证据。[前瞻性续跑修订](../../GEOPRR_V2_PAPER_EVIDENCE_AMENDMENT_CN.md)保留原gate结果及当前65轮配置，仅允许必要的已冻结global对照在原严格gate未全过时按独立记录续跑；不把原失败改成通过。
