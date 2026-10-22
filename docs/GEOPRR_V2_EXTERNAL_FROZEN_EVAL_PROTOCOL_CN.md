@@ -20,11 +20,15 @@
 
 Pointer-10K现有固定单针438图只有针的方向点和bbox，缺少本模型可直接计分的标量读数／量程；虚拟P相位也不是物理针尖。本阶段不构造其NMAE或把虚拟角色冒充方向输出。原SyncG officialtest不复跑。
 
+当前项目内未找到旧全图仪表检测器`utils/angleDetect/yoloDetection/result/yolo_findMeter.pt`、其训练来源记录或完整1797 ROI／sidecar。SyncG的YOLO11s-Pose-4KP代码先使用GT dial ROI，再以整张ROI为bbox训练四点，不能替代全图定位检测器。RPM恢复条件是原ROI、完整pass／fail sidecar及来源，或真实全图检测器权重及训练／推理来源；本轮不下载替代检测器、不新训练、不将原图冒充ROI。
+
 ## 执行与报告
 
 推理仅原ROI RGB，使用所选模型原768／192处理、ImageNet归一化、eval模式和原生全质量读数。不得读取GT H、center、SPD、起止方向或针尖作为模型输入。采用对应结构Reader严格加载checkpoint，不能将新checkpoint协议改写后塞进旧模型loader。
 
 0反传、0optimizer、0目标训练／适配。首轮仅clean单图，不扩退化、路由、窗口或模型矩阵。完整人口逐图保存prediction／target／valid／failure；图像或前端失败按原error=1计分，不删失败样本。报告NMAE%FS、Acc@1／2／5、阈值数量、分位、最差10%、max及ID、组和子集结果、实际CNN图像前向／wall／峰值。
+
+执行入口为`experiments.evaluate_geoprr_v2_role_external`，严格加载原`RoleTriangleReader`及checkpoint协议、epoch64、seed20262020和7,461,316参数。Industrial与RF100依次执行，batch16、workers4，使用原checkpoint的AMP设置。输入加载复用`GeoPRRV2Dataset(require_geometry=False, augment=False)`，计分复用原`validation_rows`／`validation_summary`和FP32 target约定。单个ROI读取失败保留该行并使用占位输入，失败error=1；模型运行异常不生成完整summary。实际ROI前向和失败占位前向分别记录。
 
 Industrial／RF100已有历史结果被查看；本次不称全新盲测。ROI来源、RF100标注派生目标及RPM detector来源分别披露。只有人口、输入与计分均一致的历史结果才可作比较，不将不同辅助条件混成一个排名。外部结果不反向用于当前方法选型或追加训练。
 

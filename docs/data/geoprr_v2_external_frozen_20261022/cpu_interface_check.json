@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "input_fixture_rows": 2,
+  "input_fixture_failures": 1,
+  "input_fixture_nmae_percent_fs": 50.0,
+  "checkpoint_epoch": 64,
+  "checkpoint_protocol": "geoprr_v2_role_triangle_source_only_v1",
+  "state_tensors": 497,
+  "parameters": 7461316,
+  "populations": {
+    "industrial": {
+      "samples": 1395,
+      "groups": 52
+    },
+    "rf100": {
+      "samples": 151,
+      "groups": 35
+    }
+  },
+  "actual_model_forward_calls": 0,
+  "actual_CNN_calls": 0,
+  "backward_calls": 0,
+  "optimizer_updates": 0
+}
