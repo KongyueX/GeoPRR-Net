@@ -1,0 +1,49 @@
+{
+  "status": "running",
+  "method_revision": "1b7e43b5d938857036fa7a953008db3422e5e5eb",
+  "started_at_utc": "2026-10-22T23:08:12.369501+00:00",
+  "started_at_beijing": "2026-10-23 07:08:12",
+  "entrypoint": "experiments.run_geoprr_v2_generalization --study cnn_weights_fixed",
+  "output": "runs/geoprr_generalization/iteration_v13_cnn_weight_freeze_20261023/matched_training",
+  "parent_pid": 394447,
+  "initial_child_pid": 394452,
+  "verified_at_utc": "2026-10-22T23:08:30.983623+00:00",
+  "first_batch": {
+    "arm": "feedback_cnnfixed",
+    "epoch": 1,
+    "batch": 1,
+    "loss": 0.09095343202352524,
+    "donor_images": 32,
+    "recipient_images": 11
+  },
+  "sole_gpu_child_verified": true,
+  "epochs_each": 4,
+  "arms": [
+    "feedback_cnnfixed",
+    "local_cnnfixed"
+  ],
+  "parameters_total_each": 7461060,
+  "frozen_cnn_parameters_each": 7203152,
+  "trainable_decoder_parameters_each": 228096,
+  "trainable_head_parameters_each": 29812,
+  "trainable_parameters_each": 257908,
+  "source_bn_statistics_update": true,
+  "target_bn_adaptation": false,
+  "model_modules_added": 0,
+  "loss_terms_added": 0,
+  "rendered_images_added": 0,
+  "reused_controls": {
+    "feedback_cnnfixed": "v11 endpoint normal BN",
+    "local_cnnfixed": "v12 local_endpoint normal BN"
+  },
+  "runtime_witness": {
+    "status": "passed",
+    "cnn_calls": 2,
+    "cnn_images": 4,
+    "backward_calls": 2,
+    "optimizer_updates": 0,
+    "unique_endpoint_RGB": 2,
+    "validation_input_exact_identity": true
+  },
+  "scope": "launch and implementation witness; no performance conclusion"
+}

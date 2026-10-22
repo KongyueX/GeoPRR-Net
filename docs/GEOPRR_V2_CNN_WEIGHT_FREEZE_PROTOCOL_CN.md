@@ -1,6 +1,6 @@
 # MobileNetV4固定CNN权重的端点覆盖匹配实验
 
-2026-10-23。状态：v12完整数值／执行核对通过，独立协议与两份配置已冻结，等待本轮实际输入运行见证；尚未启动训练。承接用户授权的跨数据集自主迭代，复用v11已完成的128组／512张真实端点源图，不新增渲染或数据替换。全部旧模型、失败和负结果保留。
+2026-10-23。状态：v12完整核对通过，独立协议／配置与实际输入运行见证通过后，两臂串行训练于北京时间2026-10-23 07:08:12启动。承接用户授权的跨数据集自主迭代，复用v11已完成的128组／512张真实端点源图，不新增渲染或数据替换。全部旧模型、失败和负结果保留。
 
 ## 问题与选择依据
 
@@ -36,6 +36,8 @@ v12完整数值／执行核对通过，local端点版best1的源NMAE为0.083392%
 独立入口为`experiments.run_geoprr_v2_generalization --study cnn_weights_fixed`，输出`runs/geoprr_generalization/iteration_v13_cnn_weight_freeze_20261023/matched_training`。队列记录每臂原生配置与锚点映射、共同源数据、版本、PID、独立锁和代码快照。正式运行要求v11、v12和端点源队列全部complete，对应父子controller已退出，实际GPU空闲，并已完成v12唯一一次必要CPU数值／执行核对。旧队列、协议和代码快照不覆盖。
 
 随后对精确两份新配置执行一次实际输入运行见证：完整496 state严格初始化；512精确替换和验证identity成立；源RGB loss／梯度有限；CNN参数包括BN affine均不更新，lateral／refine／head有可训练梯度，源BN统计仍更新；外评Reader按新协议及原生家族严格加载。结果写入`diagnostics/geoprr_generalization_v13_cnn_fixed_preflight_20261023/result.json`，要求`status=passed`、精确configs、`counts.optimizer_updates=0`、`validation_input_exact_identity=true`；不预先生成通过记录。小批见证不替代正式性能或成本。
+
+实际运行见证已通过：2张独立真实端点RGB、2 CNN calls／4图／2 backward／0 optimizer；两臂全部496 state严格初始化。每臂固定CNN参数7203152个，lateral／refine可训练228096个、head可训练29812个，合计257908个可训练参数；228个BN buffers中152个running统计变化、76个计数器各前进1。两臂全部decoder／head梯度有限且非零，CNN参数及BN affine无梯度并逐项不变；2个验证输入identity、外评Reader严格加载及原生global／local模式均通过。见[运行记录](data/geoprr_v2_generalization_20261023/v13_runtime_preflight.json)。代码1b7e43b，父394447、初始feedback子394452及唯一GPU进程已核实，首批32 donor＋11 recipient、loss 0.0909534320有限；见[启动记录](data/geoprr_v2_generalization_20261023/v13_launch.json)。
 
 两臂串行训练和外评，live期间只监控，不改模型／配置／名单／标签或额外启动GPU。完整阶段后收齐protocol、config、run、history、best／latest逐图、completed及两外域逐图与成本，只进行一次必要独立CPU数值／执行核对。分别与本家族初始化及对应v11／v12端点控制比较连续误差、Acc、零位／近零／非零、组、尾部／最大误差、源普通1495／1497、严重6、3172／2810／3663／9323和救回／新增严重错误。无增量则保留负结果并结束该配方，不延长4轮或旧65轮。
 

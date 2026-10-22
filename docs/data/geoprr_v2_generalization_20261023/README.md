@@ -39,7 +39,7 @@ v11将首128个quartile源组重新渲染为真实RGB状态[0,0.005,0.02,1]，�
 
 v12原生v5 local57的正常BN原源控制与端点源两臂均完整4轮、best均为第1轮；8份实际外评共6184张CNN图像／392次调用，无别名或重复推理。一次独立CPU数值与执行核对303124项全部通过。输入metadata确认8192条实际训练配对在512-ID映射下顺序精确保留；保存的data_contract.edges按新ID规范排序，与loader采样顺序不同，不能据此推断实际训练配对顺序改变。见[完整结果](v12_completed/report_cn.md)、[local端点协议](../../GEOPRR_V2_LOCAL_ENDPOINT_GENERALIZATION_PROTOCOL_CN.md)和[运行见证](v12_runtime_preflight.json)。
 
-下一独立v13计划在feedback48与local57两个原生家族中仅固定CNN权重，源BN运行统计继续更新，decoder和head继续训练；使用同一端点源，各4轮，匹配控制复用v11／v12正常BN全量微调结果。v13尚未启动，协议／代码和新运行见证正在准备；固定已特化CNN权重不等于恢复ImageNet通用表征。
+下一独立v13计划在feedback48与local57两个原生家族中仅固定CNN权重，源BN运行统计继续更新，decoder和head继续训练；使用同一端点源，各4轮，匹配控制复用v11／v12正常BN全量微调结果。v13的两臂实际输入运行见证通过后已于北京时间2026-10-23 07:08:12启动；每臂固定7203152个CNN参数，训练257908个decoder／head参数，源BN统计更新。见[协议](../../GEOPRR_V2_CNN_WEIGHT_FREEZE_PROTOCOL_CN.md)、[运行见证](v13_runtime_preflight.json)与[启动记录](v13_launch.json)；固定已特化CNN权重不等于恢复ImageNet通用表征。
 
 ## 文献依据
 

@@ -1,0 +1,365 @@
+{
+  "status": "passed",
+  "observed_at_utc": "2026-10-22T23:07:49.733730+00:00",
+  "configs": {
+    "feedback_cnnfixed": {
+      "name": "mobilenetv4_feedback_generalization_v13_feedback_cnnfixed",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "coupling": "joint",
+        "reference_normalization": "global"
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 4,
+        "warmup_epochs": 0,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 1e-05,
+        "head_lr": 5e-05,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "same native full family anchor, endpoint source, freshoptimizer/seed/4epochs/loss/exposure and sourceBN updates; CNN parameters fixed versus completed corresponding v11/v12 endpoint control; viewed externaldevelopment",
+      "protocol": "geoprr_v2_endpoint_backbone_weight_freeze_source_only_v1",
+      "initialization": "strict_full_feedback48",
+      "reader_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+      "generalization": {
+        "freeze_backbone_weights": true,
+        "freeze_bn_statistics": false,
+        "mixstyle_module_names": [],
+        "mixstyle_p": 0.5,
+        "mixstyle_alpha": 0.1,
+        "source_replacement": {
+          "groups": 128,
+          "states": [
+            0,
+            0.005,
+            0.02,
+            1
+          ],
+          "protocol": "geoprr_v2_endpoint_source_v11"
+        }
+      }
+    },
+    "local_cnnfixed": {
+      "name": "mobilenetv4_local_generalization_v13_local_cnnfixed",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "coupling": "joint"
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 4,
+        "warmup_epochs": 0,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 1e-05,
+        "head_lr": 5e-05,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "same native full family anchor, endpoint source, freshoptimizer/seed/4epochs/loss/exposure and sourceBN updates; CNN parameters fixed versus completed corresponding v11/v12 endpoint control; viewed externaldevelopment",
+      "protocol": "geoprr_v2_endpoint_backbone_weight_freeze_source_only_v1",
+      "initialization": "strict_full_local57",
+      "reader_protocol": "geoprr_v2_reference_relation_source_only_v1",
+      "generalization": {
+        "freeze_backbone_weights": true,
+        "freeze_bn_statistics": false,
+        "mixstyle_module_names": [],
+        "mixstyle_p": 0.5,
+        "mixstyle_alpha": 0.1,
+        "source_replacement": {
+          "groups": 128,
+          "states": [
+            0,
+            0.005,
+            0.02,
+            1
+          ],
+          "protocol": "geoprr_v2_endpoint_source_v11"
+        }
+      }
+    }
+  },
+  "initializations": {
+    "feedback_cnnfixed": {
+      "source_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+      "source_epoch": 48,
+      "loaded_full_tensors": 496,
+      "parameters": 7461060,
+      "strict_state_load": true,
+      "preserved_all_trained_weights": true,
+      "optimizer": "fresh AdamW; anchor optimizer, scheduler and scaler are not continued",
+      "source_replacement": {
+        "protocol": "geoprr_v2_endpoint_source_v11",
+        "groups": 128,
+        "replaced_unique_images": 512,
+        "unchanged_validation": true,
+        "exact_source_replacement_verified": true
+      }
+    },
+    "local_cnnfixed": {
+      "source_protocol": "geoprr_v2_reference_relation_source_only_v1",
+      "source_epoch": 57,
+      "loaded_full_tensors": 496,
+      "parameters": 7461060,
+      "strict_state_load": true,
+      "preserved_all_trained_weights": true,
+      "optimizer": "fresh AdamW; anchor optimizer, scheduler and scaler are not continued",
+      "source_replacement": {
+        "protocol": "geoprr_v2_endpoint_source_v11",
+        "groups": 128,
+        "replaced_unique_images": 512,
+        "unchanged_validation": true,
+        "exact_source_replacement_verified": true
+      }
+    }
+  },
+  "source_population_actual_each": [
+    18590,
+    22686,
+    8192,
+    1506
+  ],
+  "validation_input_exact_identity": true,
+  "validation_identity_samples": 2,
+  "training_witness_unique_RGB_images": 2,
+  "training_RGB_ids": [
+    "geoprr_generalization_endpoint_v11_g0000_s00",
+    "geoprr_generalization_endpoint_v11_g0000_s03",
+    "geoprr_generalization_endpoint_v11_g0000_s00",
+    "geoprr_generalization_endpoint_v11_g0000_s03"
+  ],
+  "results": {
+    "feedback_cnnfixed": {
+      "loss": 0.07013764977455139,
+      "loss_terms": {
+        "role_nll_raw": 1.1490440368652344,
+        "role_nll_normalized": 0.06907167285680771,
+        "field_l1": 0.00020412105368450284,
+        "reading_cdf": 0.0008618542342446744,
+        "total": 0.07013764977455139
+      },
+      "parameter_counts": {
+        "frozen_backbone_parameters": 7203152,
+        "trainable_backbone_parameters": 0,
+        "trainable_decoder_parameters": 228096,
+        "trainable_head_parameters": 29812,
+        "trainable_parameters": 257908
+      },
+      "backbone_parameters_require_grad": false,
+      "backbone_gradients_none": true,
+      "backbone_parameter_tensors_checked": 228,
+      "backbone_parameters_unchanged": true,
+      "remaining_gradient_reports": {
+        "decoder": {
+          "trainable_parameter_tensors": 20,
+          "finite_gradient_tensors": 20,
+          "nonzero_gradient_tensors": 20
+        },
+        "head": {
+          "trainable_parameter_tensors": 11,
+          "finite_gradient_tensors": 11,
+          "nonzero_gradient_tensors": 11
+        }
+      },
+      "optimizer_eligible_shared_parameters": 228096,
+      "optimizer_eligible_head_parameters": 29812,
+      "optimizer_excludes_backbone_parameters": true,
+      "optimizer_constructed": false,
+      "BN_buffers_stationary": false,
+      "BN_buffers_checked": 228,
+      "BN_running_buffers_changed": 152,
+      "BN_counters_checked": 76,
+      "BN_counters_increment": 1,
+      "backbone_training_mode": true,
+      "effective_reference_normalization": "global",
+      "evaluation_reader_metadata": {
+        "class": "experiments.geoprr_v2_reference_relation.ReferenceRelationReader",
+        "architecture_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+        "saved_model_options": {
+          "bins": 256,
+          "decoder_dim": 64,
+          "token_dim": 16,
+          "coupling": "joint",
+          "reference_normalization": "global"
+        },
+        "constructor_options": {
+          "bins": 256,
+          "decoder_dim": 64,
+          "token_dim": 16,
+          "coupling": "joint",
+          "reference_normalization": "global"
+        },
+        "parameters": 7461060,
+        "state_tensors": 496,
+        "strict_state_load": true,
+        "readout": "native circular full-mass progress expectation",
+        "effective_reference_normalization": "global"
+      },
+      "evaluation_reader_strict_load": true,
+      "normalized_training_states": [
+        0.0,
+        1.0
+      ],
+      "source_train_contract_equal_to_anchor": false,
+      "exact_source_replacement_verified": true,
+      "source_replaced_unique_images": 512,
+      "source_unchanged_unique_images": 18078,
+      "validation_contract_unchanged": true,
+      "training_counts": {
+        "cnn_calls": 1,
+        "cnn_images": 2,
+        "backward_calls": 1,
+        "optimizer_updates": 0
+      },
+      "seconds": 5.706421732902527
+    },
+    "local_cnnfixed": {
+      "loss": 0.07497558742761612,
+      "loss_terms": {
+        "role_nll_raw": 1.227325677871704,
+        "role_nll_normalized": 0.07377736270427704,
+        "field_l1": 0.0002991966321133077,
+        "reading_cdf": 0.000899032165762037,
+        "total": 0.07497558742761612
+      },
+      "parameter_counts": {
+        "frozen_backbone_parameters": 7203152,
+        "trainable_backbone_parameters": 0,
+        "trainable_decoder_parameters": 228096,
+        "trainable_head_parameters": 29812,
+        "trainable_parameters": 257908
+      },
+      "backbone_parameters_require_grad": false,
+      "backbone_gradients_none": true,
+      "backbone_parameter_tensors_checked": 228,
+      "backbone_parameters_unchanged": true,
+      "remaining_gradient_reports": {
+        "decoder": {
+          "trainable_parameter_tensors": 20,
+          "finite_gradient_tensors": 20,
+          "nonzero_gradient_tensors": 20
+        },
+        "head": {
+          "trainable_parameter_tensors": 11,
+          "finite_gradient_tensors": 11,
+          "nonzero_gradient_tensors": 11
+        }
+      },
+      "optimizer_eligible_shared_parameters": 228096,
+      "optimizer_eligible_head_parameters": 29812,
+      "optimizer_excludes_backbone_parameters": true,
+      "optimizer_constructed": false,
+      "BN_buffers_stationary": false,
+      "BN_buffers_checked": 228,
+      "BN_running_buffers_changed": 152,
+      "BN_counters_checked": 76,
+      "BN_counters_increment": 1,
+      "backbone_training_mode": true,
+      "effective_reference_normalization": "local",
+      "evaluation_reader_metadata": {
+        "class": "experiments.geoprr_v2_reference_relation.ReferenceRelationReader",
+        "architecture_protocol": "geoprr_v2_reference_relation_source_only_v1",
+        "saved_model_options": {
+          "bins": 256,
+          "decoder_dim": 64,
+          "token_dim": 16,
+          "coupling": "joint"
+        },
+        "constructor_options": {
+          "bins": 256,
+          "decoder_dim": 64,
+          "token_dim": 16,
+          "coupling": "joint"
+        },
+        "parameters": 7461060,
+        "state_tensors": 496,
+        "strict_state_load": true,
+        "readout": "native circular full-mass progress expectation",
+        "effective_reference_normalization": "local"
+      },
+      "evaluation_reader_strict_load": true,
+      "normalized_training_states": [
+        0.0,
+        1.0
+      ],
+      "source_train_contract_equal_to_anchor": false,
+      "exact_source_replacement_verified": true,
+      "source_replaced_unique_images": 512,
+      "source_unchanged_unique_images": 18078,
+      "validation_contract_unchanged": true,
+      "training_counts": {
+        "cnn_calls": 1,
+        "cnn_images": 2,
+        "backward_calls": 1,
+        "optimizer_updates": 0
+      },
+      "seconds": 3.8262834548950195
+    }
+  },
+  "counts": {
+    "cnn_calls": 2,
+    "cnn_images": 4,
+    "backward_calls": 2,
+    "optimizer_updates": 0
+  },
+  "training_counts": {
+    "cnn_calls": 2,
+    "cnn_images": 4,
+    "backward_calls": 2,
+    "optimizer_updates": 0
+  },
+  "parameters_each": 7461060,
+  "state_tensors_each": 496,
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "peak_allocated_bytes": 289950208,
+  "peak_reserved_bytes": 471859200,
+  "scope": "native feedback48/global and local57/implicit-local endpoint contracts, frozen CNN weights, source-updated BN and remaining finite nonzero gradients; zero optimizer updates; not learned performance"
+}
