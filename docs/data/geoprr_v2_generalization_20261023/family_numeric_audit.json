@@ -1,0 +1,69 @@
+{
+  "protocol": "geoprr_v2_family_saved_numeric_audit_v1",
+  "status": "passed",
+  "scope": "one CPU pass over saved predictions/summaries; no model execution or remote access",
+  "new_evaluations": 10,
+  "reused_v7_evaluations": 2,
+  "new_saved_prediction_rows": 7730,
+  "population_checks": {
+    "industrial": {
+      "samples": 1395,
+      "groups": 52,
+      "ordered_ids_groups_components_fp32_targets_match_prior_v7": true
+    },
+    "rf100": {
+      "samples": 151,
+      "groups": 35,
+      "ordered_ids_groups_components_fp32_targets_match_prior_v7": true
+    }
+  },
+  "numeric_checks": "per-row absolute errors; full denominator mean/counts/coverage/failures; median,linear p90/p95,ceil10percent tail mean,max andmaxIDs; invalid/outside means; by-group/by-component andgroups.csv",
+  "comparison_absolute_tolerance": 1e-12,
+  "maximum_absolute_differences": {
+    "saved_row_absolute_error": 0.0,
+    "summary_samples": 0.0,
+    "summary_groups": 0.0,
+    "summary_nmae": 0.0,
+    "summary_nmae_percent_fs": 0.0,
+    "summary_coverage": 0.0,
+    "summary_failed": 0.0,
+    "summary_median_error": 0.0,
+    "summary_p90_error": 1.1102230246251565e-16,
+    "summary_p95_error": 1.1102230246251565e-16,
+    "summary_tail10_nmae": 0.0,
+    "summary_maximum_error": 0.0,
+    "summary_input_failures": 0.0,
+    "summary_count_at_1_percent_fs": 0.0,
+    "summary_acc_at_1": 0.0,
+    "summary_acc_at_1_percent": 1.4210854715202004e-14,
+    "summary_errors_above_1_percent_fs": 0.0,
+    "summary_count_at_2_percent_fs": 0.0,
+    "summary_acc_at_2": 0.0,
+    "summary_acc_at_2_percent": 1.4210854715202004e-14,
+    "summary_errors_above_2_percent_fs": 0.0,
+    "summary_count_at_5_percent_fs": 0.0,
+    "summary_acc_at_5": 0.0,
+    "summary_acc_at_5_percent": 1.4210854715202004e-14,
+    "summary_errors_above_5_percent_fs": 0.0,
+    "summary_median_error_percent_fs": 0.0,
+    "summary_p90_error_percent_fs": 1.4210854715202004e-14,
+    "summary_p95_error_percent_fs": 7.105427357601002e-15,
+    "summary_tail10_nmae_percent_fs": 0.0,
+    "summary_maximum_error_percent_fs": 0.0,
+    "summary_mean_invalid_mass": 3.469446951953614e-18,
+    "summary_mean_outside_arc_mass": 2.7755575615628914e-17
+  },
+  "recorded_new_forward_and_update_totals": {
+    "model_forward_calls": 490,
+    "cnn_forward_calls": 490,
+    "cnn_image_forwards": 7730,
+    "roi_image_forwards": 7730,
+    "failed_input_placeholder_forwards": 0,
+    "optimizer_updates": 0,
+    "backward_calls": 0
+  },
+  "v7_new_evaluation_jobs": 0,
+  "assertions": 128890,
+  "failures": [],
+  "development_scope": "viewed external development; feedback48 chosen after seeing these results as the anchor for the matched BN/style study; no untouched-test or target-free selection claim"
+}

@@ -1,0 +1,223 @@
+{
+  "status": "passed",
+  "configs": {
+    "control": {
+      "name": "mobilenetv4_feedback_generalization_v9_control",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "coupling": "joint",
+        "reference_normalization": "global"
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 4,
+        "warmup_epochs": 0,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 1e-05,
+        "head_lr": 5e-05,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "samefullfeedback48,sourcesupervision/exposure,lowLR,freshoptimizer; BNstatistics andearlytrainonlystyle interventions; externals are vieweddevelopment",
+      "protocol": "geoprr_v2_generalization_source_only_v1",
+      "initialization": "strict_full_feedback48",
+      "reader_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+      "generalization": {
+        "freeze_bn_statistics": false,
+        "mixstyle_module_names": [],
+        "mixstyle_p": 0.5,
+        "mixstyle_alpha": 0.1
+      }
+    },
+    "bnfixed": {
+      "name": "mobilenetv4_feedback_generalization_v9_bnfixed",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "coupling": "joint",
+        "reference_normalization": "global"
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 4,
+        "warmup_epochs": 0,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 1e-05,
+        "head_lr": 5e-05,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "samefullfeedback48,sourcesupervision/exposure,lowLR,freshoptimizer; BNstatistics andearlytrainonlystyle interventions; externals are vieweddevelopment",
+      "protocol": "geoprr_v2_generalization_source_only_v1",
+      "initialization": "strict_full_feedback48",
+      "reader_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+      "generalization": {
+        "freeze_bn_statistics": true,
+        "mixstyle_module_names": [],
+        "mixstyle_p": 0.5,
+        "mixstyle_alpha": 0.1
+      }
+    },
+    "mixstyle": {
+      "name": "mobilenetv4_feedback_generalization_v9_mixstyle",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "coupling": "joint",
+        "reference_normalization": "global"
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 4,
+        "warmup_epochs": 0,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 1e-05,
+        "head_lr": 5e-05,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "samefullfeedback48,sourcesupervision/exposure,lowLR,freshoptimizer; BNstatistics andearlytrainonlystyle interventions; externals are vieweddevelopment",
+      "protocol": "geoprr_v2_generalization_source_only_v1",
+      "initialization": "strict_full_feedback48",
+      "reader_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+      "generalization": {
+        "freeze_bn_statistics": true,
+        "mixstyle_module_names": [
+          "blocks.0",
+          "blocks.1"
+        ],
+        "mixstyle_p": 0.5,
+        "mixstyle_alpha": 0.1
+      }
+    }
+  },
+  "initialization": {
+    "source_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+    "source_epoch": 48,
+    "loaded_full_tensors": 496,
+    "parameters": 7461060,
+    "strict_state_load": true,
+    "preserved_all_trained_weights": true,
+    "optimizer": "fresh AdamW; anchor optimizer, scheduler and scaler are not continued"
+  },
+  "source_population_actual": [
+    18590,
+    22686,
+    8192,
+    1506
+  ],
+  "source_data_contract_equal": true,
+  "unique_RGB_images": 2,
+  "RGB_ids": [
+    "sync_3172",
+    "sync_9323"
+  ],
+  "eval_MixStyle_exact_identity": true,
+  "actual_early_module_reductions": [
+    4,
+    8
+  ],
+  "training_witness_MixStyle": "p1,forcedreversepairing,lambda.25/.75; formalp.5unchanged",
+  "results": {
+    "control": {
+      "loss": 0.4593196213245392,
+      "gradient_finite": true,
+      "BN_buffers_stationary": false,
+      "BN_buffers_checked": 228,
+      "seconds": 6.72980722412467
+    },
+    "bnfixed": {
+      "loss": 0.3953416645526886,
+      "gradient_finite": true,
+      "BN_buffers_stationary": true,
+      "BN_buffers_checked": 228,
+      "seconds": 0.06188669428229332
+    },
+    "mixstyle": {
+      "loss": 0.38657766580581665,
+      "gradient_finite": true,
+      "BN_buffers_stationary": true,
+      "BN_buffers_checked": 228,
+      "seconds": 0.04601362720131874
+    }
+  },
+  "counts": {
+    "cnn_calls": 5,
+    "cnn_images": 10,
+    "backward_calls": 3,
+    "optimizer_updates": 0
+  },
+  "parameters": 7461060,
+  "state_tensors": 496,
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "peak_allocated_bytes": 815336960,
+  "peak_reserved_bytes": 916455424
+}

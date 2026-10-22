@@ -25,7 +25,8 @@
       "cnn_image_forwards": 1395,
       "forward_ms_per_declared_image": 7.177013455219166,
       "pipeline_ms_per_declared_image": 9.81009918729037,
-      "full_process_seconds": 16.238833975046873
+      "full_process_seconds": 16.238833975046873,
+      "cnn_image_forwards_new_this_screen": 1395
     },
     {
       "candidate": "basefield61",
@@ -50,7 +51,8 @@
       "cnn_image_forwards": 151,
       "forward_ms_per_declared_image": 57.756184396759565,
       "pipeline_ms_per_declared_image": 61.546909147935196,
-      "full_process_seconds": 11.743946220725775
+      "full_process_seconds": 11.743946220725775,
+      "cnn_image_forwards_new_this_screen": 151
     },
     {
       "candidate": "ordinary63",
@@ -75,7 +77,8 @@
       "cnn_image_forwards": 1395,
       "forward_ms_per_declared_image": 7.004490994103921,
       "pipeline_ms_per_declared_image": 9.662820794035458,
-      "full_process_seconds": 16.032283391803503
+      "full_process_seconds": 16.032283391803503,
+      "cnn_image_forwards_new_this_screen": 1395
     },
     {
       "candidate": "ordinary63",
@@ -100,7 +103,8 @@
       "cnn_image_forwards": 151,
       "forward_ms_per_declared_image": 58.11614846650338,
       "pipeline_ms_per_declared_image": 61.82758586592232,
-      "full_process_seconds": 11.791375428438187
+      "full_process_seconds": 11.791375428438187,
+      "cnn_image_forwards_new_this_screen": 151
     },
     {
       "candidate": "local57",
@@ -125,7 +129,8 @@
       "cnn_image_forwards": 1395,
       "forward_ms_per_declared_image": 7.154046773483249,
       "pipeline_ms_per_declared_image": 10.130151708386705,
-      "full_process_seconds": 17.29318368807435
+      "full_process_seconds": 17.29318368807435,
+      "cnn_image_forwards_new_this_screen": 1395
     },
     {
       "candidate": "local57",
@@ -150,7 +155,8 @@
       "cnn_image_forwards": 151,
       "forward_ms_per_declared_image": 57.79299791285534,
       "pipeline_ms_per_declared_image": 62.51852493116398,
-      "full_process_seconds": 12.411836937069893
+      "full_process_seconds": 12.411836937069893,
+      "cnn_image_forwards_new_this_screen": 151
     },
     {
       "candidate": "feedback48",
@@ -175,7 +181,8 @@
       "cnn_image_forwards": 1395,
       "forward_ms_per_declared_image": 6.909520101589969,
       "pipeline_ms_per_declared_image": 9.806985263862918,
-      "full_process_seconds": 16.718712829053402
+      "full_process_seconds": 16.718712829053402,
+      "cnn_image_forwards_new_this_screen": 1395
     },
     {
       "candidate": "feedback48",
@@ -200,7 +207,8 @@
       "cnn_image_forwards": 151,
       "forward_ms_per_declared_image": 57.981057277578394,
       "pipeline_ms_per_declared_image": 62.38603500636997,
-      "full_process_seconds": 12.351717103272676
+      "full_process_seconds": 12.351717103272676,
+      "cnn_image_forwards_new_this_screen": 151
     },
     {
       "candidate": "global2",
@@ -225,7 +233,8 @@
       "cnn_image_forwards": 1395,
       "forward_ms_per_declared_image": 9.083687535430368,
       "pipeline_ms_per_declared_image": 9.943053780597598,
-      "full_process_seconds": 16.872787095606327
+      "full_process_seconds": 16.872787095606327,
+      "cnn_image_forwards_new_this_screen": 1395
     },
     {
       "candidate": "global2",
@@ -250,7 +259,8 @@
       "cnn_image_forwards": 151,
       "forward_ms_per_declared_image": 60.76971394632826,
       "pipeline_ms_per_declared_image": 64.52978567670513,
-      "full_process_seconds": 12.679147209972143
+      "full_process_seconds": 12.679147209972143,
+      "cnn_image_forwards_new_this_screen": 151
     },
     {
       "candidate": "v7best64",
