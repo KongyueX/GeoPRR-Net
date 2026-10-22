@@ -1,0 +1,197 @@
+{
+  "status": "passed",
+  "observed_at_utc": "2026-10-22T21:52:14.461623+00:00",
+  "configs": {
+    "local_control": {
+      "name": "mobilenetv4_local_generalization_v12_local_control",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "coupling": "joint"
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 4,
+        "warmup_epochs": 0,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 1e-05,
+        "head_lr": 5e-05,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "same full local57, freshoptimizer/seed/4epochs/loss/exposure and normalBN; new original-source control versus existing physical endpoint replacement; viewed externaldevelopment",
+      "protocol": "geoprr_v2_generalization_source_only_v1",
+      "initialization": "strict_full_local57",
+      "reader_protocol": "geoprr_v2_reference_relation_source_only_v1",
+      "generalization": {
+        "freeze_bn_statistics": false,
+        "mixstyle_module_names": [],
+        "mixstyle_p": 0.5,
+        "mixstyle_alpha": 0.1
+      }
+    },
+    "local_endpoint": {
+      "name": "mobilenetv4_local_generalization_v12_local_endpoint",
+      "model": {
+        "bins": 256,
+        "decoder_dim": 64,
+        "token_dim": 16,
+        "coupling": "joint"
+      },
+      "data": {
+        "image_size": 768,
+        "output_size": 192
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 4,
+        "warmup_epochs": 0,
+        "batch_size": 32,
+        "workers": 8,
+        "backbone_lr": 1e-05,
+        "head_lr": 5e-05,
+        "min_lr": 1e-06,
+        "weight_decay": 0.01,
+        "gradient_clip": 5.0,
+        "amp": true,
+        "validation_batch_size": 16
+      },
+      "objective": "role_conditional_nll/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+      "state_grid": {
+        "absolute_roles": "circular [0,2pi),256",
+        "delta": "circular [0,2pi),256",
+        "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+      },
+      "exposure": {
+        "donor_items": 22686,
+        "recipient_images": 8192,
+        "total_images": 30878,
+        "optimizer_batches": 709
+      },
+      "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+      "control": "same full local57, freshoptimizer/seed/4epochs/loss/exposure and normalBN; new original-source control versus existing physical endpoint replacement; viewed externaldevelopment",
+      "protocol": "geoprr_v2_endpoint_generalization_source_only_v1",
+      "initialization": "strict_full_local57",
+      "reader_protocol": "geoprr_v2_reference_relation_source_only_v1",
+      "generalization": {
+        "freeze_bn_statistics": false,
+        "mixstyle_module_names": [],
+        "mixstyle_p": 0.5,
+        "mixstyle_alpha": 0.1,
+        "source_replacement": {
+          "groups": 128,
+          "states": [
+            0,
+            0.005,
+            0.02,
+            1
+          ],
+          "protocol": "geoprr_v2_endpoint_source_v11"
+        }
+      }
+    }
+  },
+  "initializations": {
+    "local_control": {
+      "source_protocol": "geoprr_v2_reference_relation_source_only_v1",
+      "source_epoch": 57,
+      "loaded_full_tensors": 496,
+      "parameters": 7461060,
+      "strict_state_load": true,
+      "preserved_all_trained_weights": true,
+      "optimizer": "fresh AdamW; anchor optimizer, scheduler and scaler are not continued"
+    },
+    "local_endpoint": {
+      "source_protocol": "geoprr_v2_reference_relation_source_only_v1",
+      "source_epoch": 57,
+      "loaded_full_tensors": 496,
+      "parameters": 7461060,
+      "strict_state_load": true,
+      "preserved_all_trained_weights": true,
+      "optimizer": "fresh AdamW; anchor optimizer, scheduler and scaler are not continued",
+      "source_replacement": {
+        "protocol": "geoprr_v2_endpoint_source_v11",
+        "groups": 128,
+        "replaced_unique_images": 512,
+        "unchanged_validation": true,
+        "exact_source_replacement_verified": true
+      }
+    }
+  },
+  "source_population_actual_each": [
+    18590,
+    22686,
+    8192,
+    1506
+  ],
+  "validation_input_exact_identity": true,
+  "validation_identity_samples": 2,
+  "training_witness_unique_RGB_images": 4,
+  "results": {
+    "local_control": {
+      "loss": 0.05632089823484421,
+      "gradient_finite": true,
+      "BN_buffers_stationary": false,
+      "BN_buffers_checked": 228,
+      "effective_reference_normalization": "local",
+      "evaluation_reader_strict_load": true,
+      "normalized_training_states": [
+        0.0851324126124382,
+        0.8243650794029236
+      ],
+      "source_train_contract_equal_to_anchor": true,
+      "exact_source_replacement_verified": null,
+      "seconds": 6.080592911690474
+    },
+    "local_endpoint": {
+      "loss": 0.07497558742761612,
+      "gradient_finite": true,
+      "BN_buffers_stationary": false,
+      "BN_buffers_checked": 228,
+      "effective_reference_normalization": "local",
+      "evaluation_reader_strict_load": true,
+      "normalized_training_states": [
+        0.0,
+        1.0
+      ],
+      "source_train_contract_equal_to_anchor": false,
+      "exact_source_replacement_verified": true,
+      "seconds": 4.181767702102661
+    }
+  },
+  "counts": {
+    "cnn_calls": 2,
+    "cnn_images": 4,
+    "backward_calls": 2,
+    "optimizer_updates": 0
+  },
+  "parameters_each": 7461060,
+  "state_tensors_each": 496,
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "peak_allocated_bytes": 1329369088,
+  "peak_reserved_bytes": 1797259264,
+  "scope": "native local57 original/physical-endpoint source contracts and finite backward; not learned performance"
+}

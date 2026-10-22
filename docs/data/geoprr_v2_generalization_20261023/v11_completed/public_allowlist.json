@@ -1,0 +1,36 @@
+{
+  "protocol": "geoprr_v11_public_allowlist_v1",
+  "files": [
+    "comparison.csv",
+    "endpoint_bnfixed_training_record.json",
+    "endpoint_training_record.json",
+    "external_aliases.json",
+    "external_endpoint_best_source_industrial_predictions.csv.gz",
+    "external_endpoint_best_source_industrial_summary.json",
+    "external_endpoint_best_source_rf100_predictions.csv.gz",
+    "external_endpoint_best_source_rf100_summary.json",
+    "external_endpoint_bnfixed_best_source_industrial_predictions.csv.gz",
+    "external_endpoint_bnfixed_best_source_industrial_summary.json",
+    "external_endpoint_bnfixed_best_source_rf100_predictions.csv.gz",
+    "external_endpoint_bnfixed_best_source_rf100_summary.json",
+    "external_endpoint_last_industrial_predictions.csv.gz",
+    "external_endpoint_last_industrial_summary.json",
+    "external_endpoint_last_rf100_predictions.csv.gz",
+    "external_endpoint_last_rf100_summary.json",
+    "metrics.json",
+    "numeric_execution_audit.json",
+    "public_allowlist.json",
+    "report_cn.md",
+    "source_endpoint_best_source_predictions.csv.gz",
+    "source_endpoint_bnfixed_best_source_predictions.csv.gz",
+    "source_endpoint_bnfixed_last_predictions.csv.gz",
+    "source_endpoint_last_predictions.csv.gz"
+  ],
+  "excluded": [
+    "raw run.json and data_contract",
+    "RGB and weights",
+    "H/C/XYZ and pixel matrices",
+    "private server paths and trace"
+  ],
+  "external_alias_policy": "endpoint_bnfixed last uses best_source epoch4 external results; no duplicate inference files or compute."
+}

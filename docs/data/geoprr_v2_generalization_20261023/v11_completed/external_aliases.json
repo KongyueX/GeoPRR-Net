@@ -1,0 +1,35 @@
+{
+  "protocol": "geoprr_v11_external_checkpoint_alias_v1",
+  "aliases": [
+    {
+      "arm": "endpoint_bnfixed",
+      "checkpoint": "last",
+      "checkpoint_epoch": 4,
+      "dataset": "industrial",
+      "result_alias_of": "external_endpoint_bnfixed_best_source_industrial",
+      "additional_CNN_images": 0,
+      "additional_CNN_calls": 0,
+      "additional_backward_calls": 0,
+      "additional_optimizer_updates": 0
+    },
+    {
+      "arm": "endpoint_bnfixed",
+      "checkpoint": "last",
+      "checkpoint_epoch": 4,
+      "dataset": "rf100",
+      "result_alias_of": "external_endpoint_bnfixed_best_source_rf100",
+      "additional_CNN_images": 0,
+      "additional_CNN_calls": 0,
+      "additional_backward_calls": 0,
+      "additional_optimizer_updates": 0
+    }
+  ],
+  "unique_external_evaluations": 6,
+  "unique_external_prediction_rows": 4638,
+  "recorded_external_CNN_images": 4638,
+  "recorded_external_CNN_calls": 294,
+  "external_backward_calls": 0,
+  "external_optimizer_updates": 0,
+  "source_best_and_latest_prediction_tables_retained": true,
+  "reason": "The frozen-BN run selected epoch4 as best_source; best and last refer to the same checkpoint. Existing results are reused without duplicate inference."
+}

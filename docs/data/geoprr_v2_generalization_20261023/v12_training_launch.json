@@ -1,0 +1,32 @@
+{
+  "study": "v12 native local57 original-source versus endpoint-source",
+  "status": "started",
+  "code_revision": "f45b9ce04851b57c731181bb201857eea8fd1897",
+  "launched_at_utc": "2026-10-22T21:53:31.848771+00:00",
+  "launched_at_beijing": "2026-10-23 05:53:31",
+  "parent_pid": 388069,
+  "initial_child_pid": 388074,
+  "arms": [
+    "local_control",
+    "local_endpoint"
+  ],
+  "epochs_each": 4,
+  "normalization": "native implicit local, exact original four-field model config",
+  "shared_anchor_epoch": 57,
+  "model_parameters_each": 7461060,
+  "state_tensors_each": 496,
+  "BN": "normalupdateboth",
+  "new_rendering": false,
+  "preflight_optimizer_updates": 0,
+  "v11_numeric_audit_before_launch": "PASS245849checks",
+  "first_training_batch": {
+    "epoch": 1,
+    "batch": 1,
+    "loss": 0.09043612331151962,
+    "donor_images": 32,
+    "recipient_images": 11,
+    "finite": true
+  },
+  "sole_GPU_verified_at_utc": "2026-10-22T21:54:12.107055+00:00",
+  "formal_performance_results": "pending"
+}
