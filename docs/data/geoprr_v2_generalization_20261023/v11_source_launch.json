@@ -1,0 +1,27 @@
+{
+  "stage": "v11 physical endpoint source generation; model training pending",
+  "data_recipe_revision": "26ff0b9c4bcc93e00fd79ab49078e649b2c1637e",
+  "active_execution_revision": "f078b5cbe9f621595f7185cdeac55189fa834b30",
+  "source_started_at_utc": "2026-10-22T20:09:13.429560+00:00",
+  "parent_pid": 296954,
+  "parent_started_at_utc": "2026-10-22T20:15:25.729990+00:00",
+  "snapshot_observed_at_utc": "2026-10-22T20:16:17.287949+00:00",
+  "completed_groups_snapshot": 4,
+  "total_groups": 128,
+  "planned_new_RGB": 512,
+  "first_real_group": {
+    "images": 4,
+    "states": [
+      0,
+      0.005,
+      0.02,
+      1
+    ],
+    "minimum_gt_support_mass": 0.37645748257637024,
+    "maximum_gt_composed_error_percent_fs": 0.31710461146444724,
+    "cross_old_fixed_gac_exact_after_declared_representation_normalization": true,
+    "numerical_tolerance_added": false
+  },
+  "model_training_started": false,
+  "new_model_optimizer_updates": 0
+}
