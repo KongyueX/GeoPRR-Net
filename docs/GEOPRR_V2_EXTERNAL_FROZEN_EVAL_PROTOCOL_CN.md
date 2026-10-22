@@ -16,7 +16,7 @@
 | RF100-VL | 151张、35组 | 原有ROI RGB；目标由四点标注离线派生，明确标注派生目标来源，不称官方标量读数benchmark |
 | RPM-10K单针子集 | 原冻结规则选出的1797张，来自官方test 2000行 | reading/range归一化；先确认已有detector ROI与完整sidecar来源，失败保留全分母；ROI合同未确认前不推理 |
 
-服务器已确认Industrial与RF100各自input_manifest／labels的ID集合相同、完整ROI文件存在，未运行新模型。RPM原test标签存在，ROI与sidecar的现状仍需核对，不能直接将旧1775成功／22失败数字冒充本次实际输入。
+服务器已确认Industrial与RF100各自input_manifest／labels的ID集合相同、完整ROI文件存在，未运行新模型。2026-10-22的只读盘点确认RPM原test有2000行，按既有规则得到1797个唯一合法单scalar样本，所选原图全部存在；当前未找到该人口的detector ROI输入清单或完整失败sidecar。test_drive_index只有下载id／size，不是检测结果。旧1775成功／22失败属于旧Windows记录，不能当作当前服务器产物。先推进Industrial与RF100；RPM须恢复原ROI产物和来源，或在推理前另冻结一次ROI准备合同及1797全分母失败表。当前不启动detector，不把原图直接改当ROI。
 
 Pointer-10K现有固定单针438图只有针的方向点和bbox，缺少本模型可直接计分的标量读数／量程；虚拟P相位也不是物理针尖。本阶段不构造其NMAE或把虚拟角色冒充方向输出。原SyncG officialtest不复跑。
 
