@@ -1,0 +1,48 @@
+{
+  "decision": "pair_preserving_reference_update_not_selected_for_final_main_method_or_main_contribution",
+  "scope": "completed65/65 matched source-development comparison, seed20262020",
+  "reason": "No practical incremental benefit demonstrated relative to matched global update.",
+  "evidence": {
+    "global_nmae_percent_fs": 0.05888429830454958,
+    "preserve_nmae_percent_fs": 0.058898092213799,
+    "global_better_worse_equal_vs_preserve": [
+      842,
+      660,
+      4
+    ],
+    "threshold_ids_identical_at_1_2_5": true,
+    "preserve_tail151_percent_fs": 0.2786569952041459,
+    "global_tail151_percent_fs": 0.27906093015816386,
+    "preserve_observed_process_overhead_percent": 13.186684356081146
+  },
+  "old_controller_rejection_preserved": true,
+  "original_G1_each": "10/11; not passed",
+  "best48_protection_each": "5/6; not passed",
+  "best64_protection_each": "5/6; not passed",
+  "original_G2_result": "not_passed_under_original_protocol_due_failed_G1_or_anchor_eligibility",
+  "mechanism_screen": {
+    "checks": {
+      "preserve_nmae_at_least5_percent_better_than_global": false,
+      "preserve_tail_not_worse": true,
+      "preserve_above5_not_worse": true
+    },
+    "passed": false,
+    "original_G2_result": "not_passed_under_original_protocol_due_failed_G1_or_anchor_eligibility",
+    "publication_gate": false,
+    "preserve_relative_mean_improvement_vs_global_percent": -0.023425445571372477
+  },
+  "publication_veto": false,
+  "external_checkpoint_remains_frozen_best64": true,
+  "retention": [
+    "code",
+    "weights",
+    "all positive and negative results"
+  ],
+  "additional_architecture_loss_seed_epoch_extension": false,
+  "limitations": [
+    "single model seed",
+    "repeatedly viewed source development",
+    "separate observed runs; process cost is not a pure operator benchmark",
+    "effective update counts differ by2 due recorded AMP skips; selected best2 checkpoints each have1418 updates"
+  ]
+}

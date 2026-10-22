@@ -1,0 +1,2081 @@
+{
+  "status": "PASS",
+  "audit_date": "2026-10-22",
+  "scope": "Independent bounded CPU-only numeric and exported-evidence audit of frozen v7 full best64 Industrial-1395 and RF100-VL; no model execution or change",
+  "method": {
+    "runtime": "bundled Python; standard library and NumPy only",
+    "recomputation": "Full denominator; Acc: valid and error<=threshold; linear median/p90/p95; worst ceil(0.1*N) errors; max IDs in manifest order",
+    "target_check": "Exact physical normalization then exact float32 target",
+    "error_check": "Exact abs(prediction-target) for valid rows;1 for invalid",
+    "metric_absolute_tolerance": 2e-12,
+    "metrics_compared": 5760,
+    "maximum_observed_metric_absolute_difference": 0.0
+  },
+  "results": {
+    "industrial": {
+      "summary": {
+        "samples": 1395,
+        "groups": 52,
+        "nmae": 0.2122657001580843,
+        "nmae_percent_fs": 21.22657001580843,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.14496542513370514,
+        "p90_error": 0.5075247466564179,
+        "p95_error": 0.5927621828392148,
+        "tail10_nmae": 0.6321911584718951,
+        "maximum_error": 0.9933776259422302,
+        "input_failures": 0,
+        "mean_invalid_mass": 0.014114412478571934,
+        "mean_outside_arc_mass": 0.33141716919582315,
+        "maximum_error_ids": [
+          "field_xm2_r00329_86f268c9c15d"
+        ],
+        "acc_at_1": 0.07741935483870968,
+        "acc_at_1_percent": 7.741935483870968,
+        "count_at_1_percent_fs": 108,
+        "errors_above_1_percent_fs": 1287,
+        "acc_at_2": 0.12616487455197134,
+        "acc_at_2_percent": 12.616487455197134,
+        "count_at_2_percent_fs": 176,
+        "errors_above_2_percent_fs": 1219,
+        "acc_at_5": 0.25448028673835127,
+        "acc_at_5_percent": 25.448028673835125,
+        "count_at_5_percent_fs": 355,
+        "errors_above_5_percent_fs": 1040,
+        "median_error_percent_fs": 14.496542513370514,
+        "p90_error_percent_fs": 50.75247466564179,
+        "p95_error_percent_fs": 59.27621828392148,
+        "tail10_nmae_percent_fs": 63.219115847189514,
+        "maximum_error_percent_fs": 99.33776259422302
+      },
+      "components": {
+        "field_gauge_roi_test_a": {
+          "samples": 434,
+          "groups": 11,
+          "nmae": 0.21123774072863083,
+          "nmae_percent_fs": 21.123774072863082,
+          "coverage": 1.0,
+          "failed": 0,
+          "median_error": 0.1683792546391487,
+          "p90_error": 0.4943291783332824,
+          "p95_error": 0.5671917676925655,
+          "tail10_nmae": 0.5933729762380774,
+          "maximum_error": 0.9167255759239197,
+          "input_failures": 0,
+          "mean_invalid_mass": 0.010773702203656447,
+          "mean_outside_arc_mass": 0.34479576478624796,
+          "maximum_error_ids": [
+            "field_xm2_r00583_4b23732f27cc"
+          ],
+          "acc_at_1": 0.1382488479262673,
+          "acc_at_1_percent": 13.82488479262673,
+          "count_at_1_percent_fs": 60,
+          "errors_above_1_percent_fs": 374,
+          "acc_at_2": 0.2073732718894009,
+          "acc_at_2_percent": 20.737327188940093,
+          "count_at_2_percent_fs": 90,
+          "errors_above_2_percent_fs": 344,
+          "acc_at_5": 0.3294930875576037,
+          "acc_at_5_percent": 32.94930875576037,
+          "count_at_5_percent_fs": 143,
+          "errors_above_5_percent_fs": 291,
+          "median_error_percent_fs": 16.83792546391487,
+          "p90_error_percent_fs": 49.43291783332824,
+          "p95_error_percent_fs": 56.71917676925655,
+          "tail10_nmae_percent_fs": 59.337297623807736,
+          "maximum_error_percent_fs": 91.67255759239197
+        },
+        "field_gauge_roi_test_b": {
+          "samples": 814,
+          "groups": 20,
+          "nmae": 0.21789570245920412,
+          "nmae_percent_fs": 21.789570245920412,
+          "coverage": 1.0,
+          "failed": 0,
+          "median_error": 0.13732394576072693,
+          "p90_error": 0.5340100273489953,
+          "p95_error": 0.6205320931971072,
+          "tail10_nmae": 0.6672341573256545,
+          "maximum_error": 0.9933776259422302,
+          "input_failures": 0,
+          "mean_invalid_mass": 0.015977739336384068,
+          "mean_outside_arc_mass": 0.3323201064497464,
+          "maximum_error_ids": [
+            "field_xm2_r00329_86f268c9c15d"
+          ],
+          "acc_at_1": 0.05528255528255528,
+          "acc_at_1_percent": 5.528255528255528,
+          "count_at_1_percent_fs": 45,
+          "errors_above_1_percent_fs": 769,
+          "acc_at_2": 0.10073710073710074,
+          "acc_at_2_percent": 10.073710073710075,
+          "count_at_2_percent_fs": 82,
+          "errors_above_2_percent_fs": 732,
+          "acc_at_5": 0.23832923832923833,
+          "acc_at_5_percent": 23.832923832923832,
+          "count_at_5_percent_fs": 194,
+          "errors_above_5_percent_fs": 620,
+          "median_error_percent_fs": 13.732394576072693,
+          "p90_error_percent_fs": 53.40100273489953,
+          "p95_error_percent_fs": 62.053209319710724,
+          "tail10_nmae_percent_fs": 66.72341573256546,
+          "maximum_error_percent_fs": 99.33776259422302
+        },
+        "field_gauge_external_roi": {
+          "samples": 147,
+          "groups": 21,
+          "nmae": 0.1841249689966643,
+          "nmae_percent_fs": 18.41249689966643,
+          "coverage": 1.0,
+          "failed": 0,
+          "median_error": 0.14920881390571594,
+          "p90_error": 0.38870994448661805,
+          "p95_error": 0.4336400806903839,
+          "tail10_nmae": 0.47644416491190594,
+          "maximum_error": 0.7230161875486374,
+          "input_failures": 0,
+          "mean_invalid_mass": 0.01365944783268243,
+          "mean_outside_arc_mass": 0.2869185201418238,
+          "maximum_error_ids": [
+            "xm1_t1779402865074_e8300f3ac50c7edc"
+          ],
+          "acc_at_1": 0.02040816326530612,
+          "acc_at_1_percent": 2.0408163265306123,
+          "count_at_1_percent_fs": 3,
+          "errors_above_1_percent_fs": 144,
+          "acc_at_2": 0.027210884353741496,
+          "acc_at_2_percent": 2.7210884353741496,
+          "count_at_2_percent_fs": 4,
+          "errors_above_2_percent_fs": 143,
+          "acc_at_5": 0.12244897959183673,
+          "acc_at_5_percent": 12.244897959183673,
+          "count_at_5_percent_fs": 18,
+          "errors_above_5_percent_fs": 129,
+          "median_error_percent_fs": 14.920881390571594,
+          "p90_error_percent_fs": 38.870994448661804,
+          "p95_error_percent_fs": 43.36400806903839,
+          "tail10_nmae_percent_fs": 47.6444164911906,
+          "maximum_error_percent_fs": 72.30161875486374
+        }
+      },
+      "group_count": 52,
+      "group_metrics_recomputed": 52,
+      "csv_group_metrics_recomputed": 52,
+      "target_rows_exact": 1395,
+      "absolute_error_rows_exact": 1395,
+      "prediction_range": [
+        2.7122632673126645e-06,
+        0.9933776259422302
+      ],
+      "forward_counts": {
+        "model_forward_calls": 88,
+        "cnn_forward_calls": 88,
+        "cnn_image_forwards": 1395,
+        "roi_image_forwards": 1395,
+        "failed_input_placeholder_forwards": 0
+      },
+      "timing": {
+        "batch_size": 16,
+        "workers": 4,
+        "backbone_amp": true,
+        "head_precision": "float32, inherited from the frozen reader",
+        "pipeline_seconds": 16.01278407126665,
+        "pipeline_ms_per_declared_image": 11.47869825897251,
+        "forward_seconds": 11.57116050645709,
+        "forward_ms_per_declared_image": 8.294738714306158,
+        "pipeline_boundary": "ROI read/prepare, transfer, model forward and prediction collection; batched throughput",
+        "warmup_excluded": false
+      },
+      "child_wall_seconds": 20.4853,
+      "peak_cuda_memory_bytes": 1267317248,
+      "peak_cuda_reserved_bytes": 1960837120,
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition"
+    },
+    "rf100": {
+      "summary": {
+        "samples": 151,
+        "groups": 35,
+        "nmae": 0.12691067318090496,
+        "nmae_percent_fs": 12.691067318090496,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.029485046863555908,
+        "p90_error": 0.3843076229095459,
+        "p95_error": 0.5076863267458975,
+        "tail10_nmae": 0.5332060743239708,
+        "maximum_error": 0.8610965721309185,
+        "input_failures": 0,
+        "mean_invalid_mass": 0.014317008201289014,
+        "mean_outside_arc_mass": 0.11966482511081498,
+        "maximum_error_ids": [
+          "rf100_test_000023"
+        ],
+        "acc_at_1": 0.2251655629139073,
+        "acc_at_1_percent": 22.516556291390728,
+        "count_at_1_percent_fs": 34,
+        "errors_above_1_percent_fs": 117,
+        "acc_at_2": 0.4370860927152318,
+        "acc_at_2_percent": 43.70860927152318,
+        "count_at_2_percent_fs": 66,
+        "errors_above_2_percent_fs": 85,
+        "acc_at_5": 0.5761589403973509,
+        "acc_at_5_percent": 57.615894039735096,
+        "count_at_5_percent_fs": 87,
+        "errors_above_5_percent_fs": 64,
+        "median_error_percent_fs": 2.948504686355591,
+        "p90_error_percent_fs": 38.43076229095459,
+        "p95_error_percent_fs": 50.76863267458975,
+        "tail10_nmae_percent_fs": 53.32060743239708,
+        "maximum_error_percent_fs": 86.10965721309185
+      },
+      "components": {
+        "rf100": {
+          "samples": 151,
+          "groups": 35,
+          "nmae": 0.12691067318090496,
+          "nmae_percent_fs": 12.691067318090496,
+          "coverage": 1.0,
+          "failed": 0,
+          "median_error": 0.029485046863555908,
+          "p90_error": 0.3843076229095459,
+          "p95_error": 0.5076863267458975,
+          "tail10_nmae": 0.5332060743239708,
+          "maximum_error": 0.8610965721309185,
+          "input_failures": 0,
+          "mean_invalid_mass": 0.014317008201289014,
+          "mean_outside_arc_mass": 0.11966482511081498,
+          "maximum_error_ids": [
+            "rf100_test_000023"
+          ],
+          "acc_at_1": 0.2251655629139073,
+          "acc_at_1_percent": 22.516556291390728,
+          "count_at_1_percent_fs": 34,
+          "errors_above_1_percent_fs": 117,
+          "acc_at_2": 0.4370860927152318,
+          "acc_at_2_percent": 43.70860927152318,
+          "count_at_2_percent_fs": 66,
+          "errors_above_2_percent_fs": 85,
+          "acc_at_5": 0.5761589403973509,
+          "acc_at_5_percent": 57.615894039735096,
+          "count_at_5_percent_fs": 87,
+          "errors_above_5_percent_fs": 64,
+          "median_error_percent_fs": 2.948504686355591,
+          "p90_error_percent_fs": 38.43076229095459,
+          "p95_error_percent_fs": 50.76863267458975,
+          "tail10_nmae_percent_fs": 53.32060743239708,
+          "maximum_error_percent_fs": 86.10965721309185
+        }
+      },
+      "group_count": 35,
+      "group_metrics_recomputed": 35,
+      "csv_group_metrics_recomputed": 35,
+      "target_rows_exact": 151,
+      "absolute_error_rows_exact": 151,
+      "prediction_range": [
+        0.01024504005908966,
+        0.998529314994812
+      ],
+      "forward_counts": {
+        "model_forward_calls": 10,
+        "cnn_forward_calls": 10,
+        "cnn_image_forwards": 151,
+        "roi_image_forwards": 151,
+        "failed_input_placeholder_forwards": 0
+      },
+      "timing": {
+        "batch_size": 16,
+        "workers": 4,
+        "backbone_amp": true,
+        "head_precision": "float32, inherited from the frozen reader",
+        "pipeline_seconds": 9.66286962106824,
+        "pipeline_ms_per_declared_image": 63.99251404680953,
+        "forward_seconds": 9.09763354435563,
+        "forward_ms_per_declared_image": 60.24922877056709,
+        "pipeline_boundary": "ROI read/prepare, transfer, model forward and prediction collection; batched throughput",
+        "warmup_excluded": false
+      },
+      "child_wall_seconds": 13.739412,
+      "peak_cuda_memory_bytes": 1265482240,
+      "peak_cuda_reserved_bytes": 1954545664,
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition"
+    }
+  },
+  "checks": [
+    {
+      "name": "industrial_population",
+      "status": "PASS",
+      "detail": {
+        "samples": 1395,
+        "unique_ids": 1395,
+        "groups": 52
+      }
+    },
+    {
+      "name": "industrial_manifest_labels",
+      "status": "PASS",
+      "detail": {
+        "manifest_order_preserved": true,
+        "unique_input_ids": 1395,
+        "unique_label_ids": 1395,
+        "all_exported_roi_exists": true
+      }
+    },
+    {
+      "name": "industrial_targets_exact",
+      "status": "PASS",
+      "detail": {
+        "physical_normalized_max_abs_difference": 0.0,
+        "mismatched_ids": []
+      }
+    },
+    {
+      "name": "industrial_errors_exact",
+      "status": "PASS",
+      "detail": {
+        "mismatched_ids": [],
+        "denominator": 1395,
+        "failed": 0,
+        "input_failures": 0
+      }
+    },
+    {
+      "name": "industrial_identity",
+      "status": "PASS",
+      "detail": {
+        "mismatched_ids": []
+      }
+    },
+    {
+      "name": "industrial_overall",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_population",
+      "status": "PASS",
+      "detail": {
+        "groups": 52,
+        "group_order_preserved": true
+      }
+    },
+    {
+      "name": "industrial_group_summary_02-111",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_02-111",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_07-152",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_07-152",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_18-184",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_18-184",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_19-185",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_19-185",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_20-187",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_20-187",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_21-188",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_21-188",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_22-190",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_22-190",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_23-193",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_23-193",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_30-227",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_30-227",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_32-229",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_32-229",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_38-263",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_38-263",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_实际值0.42-222",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_实际值0.42-222",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_06-151",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_06-151",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_07-153",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_07-153",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_07-154",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_07-154",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_09-162",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_09-162",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_10-165",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_10-165",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_20-186",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_20-186",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_21-191",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_21-191",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_22-192",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_22-192",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_24-194",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_24-194",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_27-221",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_27-221",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_28-223",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_28-223",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_28-224",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_28-224",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_29-226",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_29-226",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_31-228",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_31-228",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_31-236",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_31-236",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_36-260",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_36-260",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_37-261",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_37-261",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_37-262",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_37-262",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_38-264",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_38-264",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_001",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_001",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_002",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_002",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_003",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_003",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_004",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_004",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_005",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_005",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_006",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_006",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_007",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_007",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_008",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_008",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_009",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_009",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_010",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_010",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_011",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_011",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_012",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_012",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_013",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_013",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_014",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_014",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_015",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_015",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_016",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_016",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_017",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_017",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_018",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_018",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_019",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_019",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_020",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_020",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_summary_xm1_capture_session_021",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_group_csv_xm1_capture_session_021",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_components",
+      "status": "PASS",
+      "detail": {
+        "counts": {
+          "field_gauge_roi_test_a": 434,
+          "field_gauge_roi_test_b": 814,
+          "field_gauge_external_roi": 147
+        }
+      }
+    },
+    {
+      "name": "industrial_component_field_gauge_roi_test_a",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_component_field_gauge_roi_test_b",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_component_field_gauge_external_roi",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "industrial_fixed_component_counts",
+      "status": "PASS",
+      "detail": {
+        "field_gauge_roi_test_a": 434,
+        "field_gauge_roi_test_b": 814,
+        "field_gauge_external_roi": 147
+      }
+    },
+    {
+      "name": "industrial_checkpoint",
+      "status": "PASS",
+      "detail": {
+        "epoch": 64,
+        "best_epoch": 64,
+        "seed": 20262020,
+        "parameters": 7461316,
+        "selection": "v7 full best64; source full1506 native NMAE, earliest tie; fixed before external inference",
+        "source_best_nmae_percent_fs": 0.059146231062577756
+      }
+    },
+    {
+      "name": "industrial_exposure_and_no_training",
+      "status": "PASS",
+      "detail": {
+        "forward_counts": {
+          "model_forward_calls": 88,
+          "cnn_forward_calls": 88,
+          "cnn_image_forwards": 1395,
+          "roi_image_forwards": 1395,
+          "failed_input_placeholder_forwards": 0
+        },
+        "backward_calls": 0,
+        "optimizer_updates": 0
+      }
+    },
+    {
+      "name": "industrial_completion_and_timing",
+      "status": "PASS",
+      "detail": {
+        "exit_code": 0,
+        "child_wall_seconds": 20.4853,
+        "timing": {
+          "batch_size": 16,
+          "workers": 4,
+          "backbone_amp": true,
+          "head_precision": "float32, inherited from the frozen reader",
+          "pipeline_seconds": 16.01278407126665,
+          "pipeline_ms_per_declared_image": 11.47869825897251,
+          "forward_seconds": 11.57116050645709,
+          "forward_ms_per_declared_image": 8.294738714306158,
+          "pipeline_boundary": "ROI read/prepare, transfer, model forward and prediction collection; batched throughput",
+          "warmup_excluded": false
+        }
+      }
+    },
+    {
+      "name": "industrial_disclosure",
+      "status": "PASS",
+      "detail": {
+        "target_source": "provided physical/normalized reading labels",
+        "historical_results_previously_viewed": true,
+        "model_inputs": "original ROI RGB only; OpenCV linear resize768; ImageNet normalization",
+        "readout": "native full-mass reading; no additional clipping, thresholds, routing or fitting"
+      }
+    },
+    {
+      "name": "rf100_population",
+      "status": "PASS",
+      "detail": {
+        "samples": 151,
+        "unique_ids": 151,
+        "groups": 35
+      }
+    },
+    {
+      "name": "rf100_manifest_labels",
+      "status": "PASS",
+      "detail": {
+        "manifest_order_preserved": true,
+        "unique_input_ids": 151,
+        "unique_label_ids": 151,
+        "all_exported_roi_exists": true
+      }
+    },
+    {
+      "name": "rf100_targets_exact",
+      "status": "PASS",
+      "detail": {
+        "physical_normalized_max_abs_difference": 0.0,
+        "mismatched_ids": []
+      }
+    },
+    {
+      "name": "rf100_errors_exact",
+      "status": "PASS",
+      "detail": {
+        "mismatched_ids": [],
+        "denominator": 151,
+        "failed": 0,
+        "input_failures": 0
+      }
+    },
+    {
+      "name": "rf100_identity",
+      "status": "PASS",
+      "detail": {
+        "mismatched_ids": []
+      }
+    },
+    {
+      "name": "rf100_overall",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_population",
+      "status": "PASS",
+      "detail": {
+        "groups": 35,
+        "group_order_preserved": true
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_meter_a",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_meter_a",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-02-17",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-02-17",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_meter_c_1",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_meter_c_1",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-02-07",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-02-07",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-01-07",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-01-07",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_meter_c_2",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_meter_c_2",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_man3cropclipscale",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_man3cropclipscale",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-02-09",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-02-09",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-02-04",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-02-04",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-02-13",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-02-13",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_camera_img",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_camera_img",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_meter_b",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_meter_b",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-02-19",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-02-19",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-01-08",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-01-08",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-02-16",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-02-16",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-02-18",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-02-18",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-01-16",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-01-16",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_file_a13_48_0_10-2_0_jpg",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_file_a13_48_0_10-2_0_jpg",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_meter_d_1",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_meter_d_1",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-02-10",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-02-10",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_meter_c",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_meter_c",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_needle-on-pressure-gauge-falling-to-zero_4jbbfrx4__045f403a66b4ad9933e64f7201f975a4__p360",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_needle-on-pressure-gauge-falling-to-zero_4jbbfrx4__045f403a66b4ad9933e64f7201f975a4__p360",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-02-05",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-02-05",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-01-27",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-01-27",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_meter_d_2",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_meter_d_2",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-01-06",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-01-06",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_meter_f",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_meter_f",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-02-08",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-02-08",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-02-06",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-02-06",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-01-22",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-01-22",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_file_locyite-gun-pressure-_jpg",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_file_locyite-gun-pressure-_jpg",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-01-23",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-01-23",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-02-14",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-02-14",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-02-03",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-02-03",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_summary_rf100_whatsapp_2024-02-11",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_group_csv_rf100_whatsapp_2024-02-11",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_components",
+      "status": "PASS",
+      "detail": {
+        "counts": {
+          "rf100": 151
+        }
+      }
+    },
+    {
+      "name": "rf100_component_rf100",
+      "status": "PASS",
+      "detail": {
+        "fields": 32,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "rf100_checkpoint",
+      "status": "PASS",
+      "detail": {
+        "epoch": 64,
+        "best_epoch": 64,
+        "seed": 20262020,
+        "parameters": 7461316,
+        "selection": "v7 full best64; source full1506 native NMAE, earliest tie; fixed before external inference",
+        "source_best_nmae_percent_fs": 0.059146231062577756
+      }
+    },
+    {
+      "name": "rf100_exposure_and_no_training",
+      "status": "PASS",
+      "detail": {
+        "forward_counts": {
+          "model_forward_calls": 10,
+          "cnn_forward_calls": 10,
+          "cnn_image_forwards": 151,
+          "roi_image_forwards": 151,
+          "failed_input_placeholder_forwards": 0
+        },
+        "backward_calls": 0,
+        "optimizer_updates": 0
+      }
+    },
+    {
+      "name": "rf100_completion_and_timing",
+      "status": "PASS",
+      "detail": {
+        "exit_code": 0,
+        "child_wall_seconds": 13.739412,
+        "timing": {
+          "batch_size": 16,
+          "workers": 4,
+          "backbone_amp": true,
+          "head_precision": "float32, inherited from the frozen reader",
+          "pipeline_seconds": 9.66286962106824,
+          "pipeline_ms_per_declared_image": 63.99251404680953,
+          "forward_seconds": 9.09763354435563,
+          "forward_ms_per_declared_image": 60.24922877056709,
+          "pipeline_boundary": "ROI read/prepare, transfer, model forward and prediction collection; batched throughput",
+          "warmup_excluded": false
+        }
+      }
+    },
+    {
+      "name": "rf100_disclosure",
+      "status": "PASS",
+      "detail": {
+        "target_source": "offline target derived from four annotated points; not an official scalar-reading benchmark",
+        "historical_results_previously_viewed": true,
+        "model_inputs": "original ROI RGB only; OpenCV linear resize768; ImageNet normalization",
+        "readout": "native full-mass reading; no additional clipping, thresholds, routing or fitting"
+      }
+    },
+    {
+      "name": "source_strict_cpu_load_inference",
+      "status": "PASS",
+      "detail": {
+        "strict_load_source": true,
+        "checkpoint_initial_device": "cpu",
+        "model_argument": "batch[image]",
+        "geometry_required": false,
+        "augmentation": false,
+        "inference_mode": true,
+        "backward_or_step_calls_in_evaluator": 0
+      }
+    },
+    {
+      "name": "cpu_interface_and_failure_fixture_evidence",
+      "status": "PASS",
+      "detail": {
+        "recorded_result": {
+          "status": "PASS",
+          "input_fixture_rows": 2,
+          "input_fixture_failures": 1,
+          "input_fixture_nmae_percent_fs": 50.0,
+          "checkpoint_epoch": 64,
+          "checkpoint_protocol": "geoprr_v2_role_triangle_source_only_v1",
+          "state_tensors": 497,
+          "parameters": 7461316,
+          "populations": {
+            "industrial": {
+              "samples": 1395,
+              "groups": 52
+            },
+            "rf100": {
+              "samples": 151,
+              "groups": 35
+            }
+          },
+          "actual_model_forward_calls": 0,
+          "actual_CNN_calls": 0,
+          "backward_calls": 0,
+          "optimizer_updates": 0
+        },
+        "failure_denominator_arithmetic_percent_fs": 50.0,
+        "evidence_mode": "Exported CPU interface record plus evaluator source; no independent torch/checkpoint/fixture execution in this audit"
+      }
+    },
+    {
+      "name": "queue_fixed_checkpoint_and_completion",
+      "status": "PASS",
+      "detail": {
+        "status": "complete",
+        "industrial_exit": 0,
+        "rf100_exit": 0,
+        "single_seed": [
+          20262020
+        ],
+        "checkpoint": "/root/autodl-tmp/geoprrnet/runs/geoprr_v2_tail/iteration_v7_role_triangle/readers/full_s20262020/best.pt",
+        "code_revision": "c82f8e1"
+      }
+    },
+    {
+      "name": "documented_provenance_claim_scope",
+      "status": "PASS",
+      "detail": {
+        "industrial": "fixed original ROI population; provided physical/normalized labels",
+        "rf100": "four-point-derived offline target, not official scalar-reading benchmark",
+        "historical_results": "previously viewed; not a new blind test",
+        "selection": "documented source full1506 NMAE; fixed checkpoint, no target selection/adaptation during evaluation",
+        "rpm10k": "not run; pending detector/ROI sidecar provenance"
+      }
+    }
+  ],
+  "blockers": [],
+  "claim_supported": "Complete descriptive frozen external evaluation only. Poor external NMAEs do not support strong external generalization or reverse the matched mechanism conclusion.",
+  "limitations": [
+    "Audit uses the supplied scalar contract export rather than reopening server image/geometry assets; ROI existence and annotation provenance are exported/documented evidence.",
+    "Strict CPU state loading, 497 tensors and the 50% failure fixture are verified from evaluator source and exported CPU interface evidence; this audit did not load checkpoint tensors, import torch, execute models, or recreate the fixture.",
+    "Source selection is documented and consistently fixed across evaluator/protocol/queue. This bounded audit does not reconstruct earlier training or all historical target-viewing decisions.",
+    "Timing is recorded GPU batched throughput without warm-up exclusion. Pipeline timing excludes checkpoint loading and process start, which are included in child wall time."
+  ],
+  "public_inputs": [
+    "industrial_summary.json",
+    "industrial_predictions.csv.gz",
+    "industrial_groups.csv",
+    "rf100_summary.json",
+    "rf100_predictions.csv.gz",
+    "rf100_groups.csv",
+    "cpu_interface_check.json",
+    "execution.json"
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "status": "PASS",
+  "scope": "Independent local CPU saved-record and saved-prediction audit. No torch, checkpoint loading, CNN/model evaluation, SSH, GPU, old tests, training, extra seed or fresh review loop.",
+  "checked_at_utc": "2026-10-22T14:27:53.108236+00:00",
+  "complete_execution_integrity_verified": true,
+  "normal_process_exit": 0,
+  "full_started_at_utc": "2026-10-22T05:55:59.824928+00:00",
+  "full_finished_at_utc": "2026-10-22T14:14:02.012788+00:00",
+  "best_epoch": 2,
+  "best_selection": "earliest strict full65 complete1506 native NMAE minimum",
+  "state_count_CPU_metadata": 500,
+  "checks": {
+    "history_65_sequential_epochs": true,
+    "completed_65_seed20262020": true,
+    "config_exact_to_frozen_protocol_and_repo": true,
+    "config_exact_in_run_and_best_metadata": true,
+    "parameter_metadata_exact": true,
+    "CPU_best_checkpoint_metadata_500_states_no_forward": true,
+    "same_full_best64_initialization": true,
+    "train_contract_exact_equal_preserve": true,
+    "validation_contract_exact_equal_preserve": true,
+    "pair_contract_exact_equal_preserve": true,
+    "full_data_contract_exact_equal_preserve": true,
+    "expected_full_epoch_population": true,
+    "all_epoch_population_and_exposure": true,
+    "all_epoch_full_valid": true,
+    "all_epoch_update_accounting": true,
+    "all_epoch_stages": true,
+    "earliest_strict_minimum_running_best_exact": true,
+    "best_metadata_updates_match_history": true,
+    "completed_totals_exact_history": true,
+    "expected_65_full_exposure": true,
+    "normal_controller_exit_complete": true,
+    "queue_command_exact_frozen_no_resume": true,
+    "completion_probe_processes_exited": true,
+    "train_log_65_epoch_records_exact_history": true,
+    "old_rejection_preserved": true,
+    "saved_1506_unique_original_IDs": true,
+    "saved_groups_targets_exact_frozen": true,
+    "saved_predictions_all_valid_finite": true,
+    "saved_error_recompute": true,
+    "frozen_cohort_counts_exact": true,
+    "frozen_cohort_flags_match_original_errors": true,
+    "final_evaluation_metrics_match_saved_predictions": true,
+    "best_validation_metrics_match_saved_predictions": true,
+    "global_best2_final_gates_exact_independent_recompute": true,
+    "preserve_best2_final_gates_exact_independent_recompute": true,
+    "mechanism_screen_exact_independent_recompute": true,
+    "performance_rejection_not_relabelled": true,
+    "completed_full_wall_contains_epoch_work": true
+  },
+  "blockers": [],
+  "population": {
+    "samples": 1506,
+    "groups": 70,
+    "cohorts": {
+      "all1506": 1506,
+      "common_ordinary1495": 1495,
+      "r8_ordinary1497": 1497,
+      "old_severe_union6": 6
+    },
+    "all_saved_predictions_valid": true,
+    "saved_error_recompute_max": 0.0
+  },
+  "original_gates": {
+    "global_best2": {
+      "original_G1": {
+        "G0_reused": true,
+        "RGB_checks": {
+          "all1506_valid": true,
+          "nmae_no_worse_r8": true,
+          "tail10_no_worse_r8": true,
+          "maximum_below_both": true,
+          "old_severe_union_rescued": true,
+          "no_new_above1_2_5": false,
+          "ordinary_nmae_percent_fs_protected": true,
+          "ordinary_median_percent_fs_protected": true,
+          "ordinary_p90_percent_fs_protected": true,
+          "r8_ordinary_mean_protected": true
+        },
+        "passed_count_including_G0": 10,
+        "total": 11,
+        "gate_passed": false
+      },
+      "best48_protection": {
+        "checks": {
+          "nmae_no_worse_best48": true,
+          "no_new_above2_5_vs_best48": false,
+          "r8_ordinary_mean_protected_vs_best48": true,
+          "ordinary_nmae_percent_fs_protected_vs_best48": true,
+          "ordinary_median_percent_fs_protected_vs_best48": true,
+          "ordinary_p90_percent_fs_protected_vs_best48": true
+        },
+        "passed_count": 5,
+        "total": 6,
+        "gate_passed": false
+      },
+      "best64_protection": {
+        "checks": {
+          "nmae_no_worse_best64": true,
+          "no_new_above2_5_vs_best64": true,
+          "r8_ordinary_mean_protected_vs_best64": true,
+          "ordinary_nmae_percent_fs_protected_vs_best64": true,
+          "ordinary_median_percent_fs_protected_vs_best64": true,
+          "ordinary_p90_percent_fs_protected_vs_best64": false
+        },
+        "passed_count": 5,
+        "total": 6,
+        "gate_passed": false
+      }
+    },
+    "preserve_best2": {
+      "original_G1": {
+        "G0_reused": true,
+        "RGB_checks": {
+          "all1506_valid": true,
+          "nmae_no_worse_r8": true,
+          "tail10_no_worse_r8": true,
+          "maximum_below_both": true,
+          "old_severe_union_rescued": true,
+          "no_new_above1_2_5": false,
+          "ordinary_nmae_percent_fs_protected": true,
+          "ordinary_median_percent_fs_protected": true,
+          "ordinary_p90_percent_fs_protected": true,
+          "r8_ordinary_mean_protected": true
+        },
+        "passed_count_including_G0": 10,
+        "total": 11,
+        "gate_passed": false
+      },
+      "best48_protection": {
+        "checks": {
+          "nmae_no_worse_best48": true,
+          "no_new_above2_5_vs_best48": false,
+          "r8_ordinary_mean_protected_vs_best48": true,
+          "ordinary_nmae_percent_fs_protected_vs_best48": true,
+          "ordinary_median_percent_fs_protected_vs_best48": true,
+          "ordinary_p90_percent_fs_protected_vs_best48": true
+        },
+        "passed_count": 5,
+        "total": 6,
+        "gate_passed": false
+      },
+      "best64_protection": {
+        "checks": {
+          "nmae_no_worse_best64": true,
+          "no_new_above2_5_vs_best64": true,
+          "r8_ordinary_mean_protected_vs_best64": true,
+          "ordinary_nmae_percent_fs_protected_vs_best64": true,
+          "ordinary_median_percent_fs_protected_vs_best64": true,
+          "ordinary_p90_percent_fs_protected_vs_best64": false
+        },
+        "passed_count": 5,
+        "total": 6,
+        "gate_passed": false
+      }
+    }
+  },
+  "matched_mechanism": {
+    "checks": {
+      "preserve_nmae_at_least5_percent_better_than_global": false,
+      "preserve_tail_not_worse": true,
+      "preserve_above5_not_worse": true
+    },
+    "passed": false,
+    "original_G2_result": "not_passed_under_original_protocol_due_failed_G1_or_anchor_eligibility",
+    "publication_gate": false,
+    "preserve_relative_mean_improvement_vs_global_percent": -0.023425445571372477
+  },
+  "costs": {
+    "epochs": 65,
+    "train_batches": 46085,
+    "optimizer_updates": 46067,
+    "amp_skipped_updates": 18,
+    "donor_images": 1474590,
+    "recipient_images": 532480,
+    "validation_images": 97890,
+    "training_wall_seconds": 29345.398238737136,
+    "validation_wall_seconds": 476.49743643403053,
+    "training_CNN_image_forwards": 2007070,
+    "epoch_elapsed_sum_seconds": 29822.093170832843,
+    "full_process_wall_seconds": 29878.235787525773,
+    "checkpointed_before_resume_seconds": 0.0,
+    "controller_elapsed_seconds": 29882.18786,
+    "peak_allocated_bytes_all_history": 21082012672,
+    "peak_allocated_epoch": 50,
+    "peak_reserved_bytes_all_history": 27239907328,
+    "peak_reserved_epoch": 38,
+    "parameters": 7465988,
+    "shared_parameters": 7431248,
+    "head_parameters": 34740
+  },
+  "checkpoint_metadata_scope": "500 states and 1418 updates from supplied CPU checkpoint metadata; no checkpoint reloading or inference in this public archive task"
+}

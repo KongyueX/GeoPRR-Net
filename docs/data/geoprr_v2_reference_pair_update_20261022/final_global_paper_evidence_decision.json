@@ -1,0 +1,141 @@
+{
+  "decision": "matched_paper_evidence_complete",
+  "original_G2_result": "not_passed_under_original_protocol_due_failed_G1_or_anchor_eligibility",
+  "screen_passed": false,
+  "recomputed_original_G2_all_checks_passed": false,
+  "publication_gate": false,
+  "test_used": false,
+  "seed_expansion": false,
+  "mechanism_screen_checks": {
+    "preserve_nmae_at_least5_percent_better_than_global": false,
+    "preserve_tail_not_worse": true,
+    "preserve_above5_not_worse": true
+  },
+  "preserve": {
+    "samples": 1506,
+    "nmae_percent_fs": 0.058898092213799,
+    "median_percent_fs": 0.03109276294708252,
+    "p90_percent_fs": 0.12124180793762207,
+    "p95_percent_fs": 0.1819819211959839,
+    "tail10_percent_fs": 0.2786569952041459,
+    "maximum_percent_fs": 3.327047824859619,
+    "maximum_error_id": "sync_3172",
+    "acc_at_1_percent": 99.66799468791501,
+    "acc_at_2_percent": 99.933598937583,
+    "acc_at_5_percent": 100.0,
+    "above_1_percent_fs": 5,
+    "above_2_percent_fs": 1,
+    "above_5_percent_fs": 0
+  },
+  "global": {
+    "samples": 1506,
+    "nmae_percent_fs": 0.05888429830454958,
+    "median_percent_fs": 0.031034275889396667,
+    "p90_percent_fs": 0.12121647596359253,
+    "p95_percent_fs": 0.18201395869255066,
+    "tail10_percent_fs": 0.27906093015816386,
+    "maximum_percent_fs": 3.3178240060806274,
+    "maximum_error_id": "sync_3172",
+    "acc_at_1_percent": 99.66799468791501,
+    "acc_at_2_percent": 99.933598937583,
+    "acc_at_5_percent": 100.0,
+    "above_1_percent_fs": 5,
+    "above_2_percent_fs": 1,
+    "above_5_percent_fs": 0
+  },
+  "original_gates": {
+    "global_best2": {
+      "original_G1": {
+        "G0_reused": true,
+        "RGB_checks": {
+          "all1506_valid": true,
+          "nmae_no_worse_r8": true,
+          "tail10_no_worse_r8": true,
+          "maximum_below_both": true,
+          "old_severe_union_rescued": true,
+          "no_new_above1_2_5": false,
+          "ordinary_nmae_percent_fs_protected": true,
+          "ordinary_median_percent_fs_protected": true,
+          "ordinary_p90_percent_fs_protected": true,
+          "r8_ordinary_mean_protected": true
+        },
+        "passed_count_including_G0": 10,
+        "total": 11,
+        "gate_passed": false
+      },
+      "best48_protection": {
+        "checks": {
+          "nmae_no_worse_best48": true,
+          "no_new_above2_5_vs_best48": false,
+          "r8_ordinary_mean_protected_vs_best48": true,
+          "ordinary_nmae_percent_fs_protected_vs_best48": true,
+          "ordinary_median_percent_fs_protected_vs_best48": true,
+          "ordinary_p90_percent_fs_protected_vs_best48": true
+        },
+        "passed_count": 5,
+        "total": 6,
+        "gate_passed": false
+      },
+      "best64_protection": {
+        "checks": {
+          "nmae_no_worse_best64": true,
+          "no_new_above2_5_vs_best64": true,
+          "r8_ordinary_mean_protected_vs_best64": true,
+          "ordinary_nmae_percent_fs_protected_vs_best64": true,
+          "ordinary_median_percent_fs_protected_vs_best64": true,
+          "ordinary_p90_percent_fs_protected_vs_best64": false
+        },
+        "passed_count": 5,
+        "total": 6,
+        "gate_passed": false
+      }
+    },
+    "preserve_best2": {
+      "original_G1": {
+        "G0_reused": true,
+        "RGB_checks": {
+          "all1506_valid": true,
+          "nmae_no_worse_r8": true,
+          "tail10_no_worse_r8": true,
+          "maximum_below_both": true,
+          "old_severe_union_rescued": true,
+          "no_new_above1_2_5": false,
+          "ordinary_nmae_percent_fs_protected": true,
+          "ordinary_median_percent_fs_protected": true,
+          "ordinary_p90_percent_fs_protected": true,
+          "r8_ordinary_mean_protected": true
+        },
+        "passed_count_including_G0": 10,
+        "total": 11,
+        "gate_passed": false
+      },
+      "best48_protection": {
+        "checks": {
+          "nmae_no_worse_best48": true,
+          "no_new_above2_5_vs_best48": false,
+          "r8_ordinary_mean_protected_vs_best48": true,
+          "ordinary_nmae_percent_fs_protected_vs_best48": true,
+          "ordinary_median_percent_fs_protected_vs_best48": true,
+          "ordinary_p90_percent_fs_protected_vs_best48": true
+        },
+        "passed_count": 5,
+        "total": 6,
+        "gate_passed": false
+      },
+      "best64_protection": {
+        "checks": {
+          "nmae_no_worse_best64": true,
+          "no_new_above2_5_vs_best64": true,
+          "r8_ordinary_mean_protected_vs_best64": true,
+          "ordinary_nmae_percent_fs_protected_vs_best64": true,
+          "ordinary_median_percent_fs_protected_vs_best64": true,
+          "ordinary_p90_percent_fs_protected_vs_best64": false
+        },
+        "passed_count": 5,
+        "total": 6,
+        "gate_passed": false
+      }
+    }
+  },
+  "scope": "single seed, repeatedly viewed source development; preserve original eligibility failures; mechanism screen is not a publication veto"
+}

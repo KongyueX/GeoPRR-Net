@@ -1,0 +1,20 @@
+{
+  "protocol": "geoprr_v2_reference_pair_update_source_only_v1",
+  "epochs": 65,
+  "best_epoch": 2,
+  "best_nmae": 0.0005888429830454958,
+  "current_process_wall_seconds": 29878.235787525773,
+  "checkpointed_process_wall_seconds_before_resume": 0.0,
+  "seed": 20262020,
+  "seed_expansion": false,
+  "totals": {
+    "train_batches": 46085,
+    "optimizer_updates": 46067,
+    "amp_skipped_updates": 18,
+    "donor_images": 1474590,
+    "recipient_images": 532480,
+    "validation_images": 97890,
+    "training_wall_seconds": 29345.398238737136,
+    "validation_wall_seconds": 476.49743643403053
+  }
+}

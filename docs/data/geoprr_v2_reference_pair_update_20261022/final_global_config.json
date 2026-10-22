@@ -1,0 +1,44 @@
+{
+  "name": "mobilenetv4_reference_pair_update_global",
+  "objective": "three_role_joint_cross_entropy/(3*log(256)) + gauge_aligned_field_l1 + progress_cdf",
+  "inference_input": "RGB only; virtual role phases and H-derived angular calibration are training labels",
+  "control": "same full best64 initialization, ordered reference evidence, parameters, original supervision, executed batches and exposure; pair-preserving versus global reference update; actual effective optimizer updates and AMP skips recorded separately",
+  "protocol": "geoprr_v2_reference_pair_update_source_only_v1",
+  "initialization": "full_best64",
+  "model": {
+    "bins": 256,
+    "decoder_dim": 64,
+    "token_dim": 16,
+    "tile": 16,
+    "reference_update": "global"
+  },
+  "data": {
+    "image_size": 768,
+    "output_size": 192
+  },
+  "training": {
+    "seed": 20262020,
+    "epochs": 65,
+    "warmup_epochs": 5,
+    "batch_size": 32,
+    "workers": 8,
+    "backbone_lr": 0.0001,
+    "head_lr": 0.0005,
+    "min_lr": 1e-06,
+    "weight_decay": 0.01,
+    "gradient_clip": 5.0,
+    "amp": true,
+    "validation_batch_size": 16
+  },
+  "state_grid": {
+    "absolute_roles": "circular [0,2pi),256",
+    "delta": "circular [0,2pi),256",
+    "span": "circular [0,2pi),256; zero/fullturn alias uniform"
+  },
+  "exposure": {
+    "donor_items": 22686,
+    "recipient_images": 8192,
+    "total_images": 30878,
+    "optimizer_batches": 709
+  }
+}

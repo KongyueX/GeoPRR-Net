@@ -1,0 +1,222 @@
+{
+  "scope": "公开字段allowlist与既有独立PASS审计的人口计数",
+  "record_types": [
+    "scalar configuration",
+    "scalar validation metrics and costs",
+    "65 per-epoch scalar records",
+    "existing independent audit flags",
+    "normalized predictions and targets",
+    "paired threshold sample IDs",
+    "method selection"
+  ],
+  "excluded": [
+    "raw run.json",
+    "raw H/C/XYZ",
+    "image pixels",
+    "geometry arrays or matrices",
+    "model weights",
+    "source images",
+    "absolute server or image paths"
+  ],
+  "config": {
+    "top_level": [
+      "name",
+      "objective",
+      "inference_input",
+      "control",
+      "protocol",
+      "initialization",
+      "model",
+      "data",
+      "training",
+      "state_grid",
+      "exposure"
+    ],
+    "model": [
+      "bins",
+      "decoder_dim",
+      "token_dim",
+      "tile",
+      "reference_update"
+    ],
+    "data": [
+      "image_size",
+      "output_size"
+    ],
+    "training": [
+      "seed",
+      "epochs",
+      "warmup_epochs",
+      "batch_size",
+      "workers",
+      "backbone_lr",
+      "head_lr",
+      "min_lr",
+      "weight_decay",
+      "gradient_clip",
+      "amp",
+      "validation_batch_size"
+    ],
+    "state_grid": [
+      "absolute_roles",
+      "delta",
+      "span"
+    ],
+    "exposure": [
+      "donor_items",
+      "recipient_images",
+      "total_images",
+      "optimizer_batches"
+    ]
+  },
+  "best_metadata": [
+    "epoch",
+    "best_epoch",
+    "seed",
+    "protocol",
+    "states",
+    "best_nmae",
+    "optimizer_updates_at_checkpoint",
+    "config"
+  ],
+  "history": {
+    "records": 65,
+    "fields": [
+      "epoch",
+      "stage",
+      "train_batches",
+      "donor_images",
+      "recipient_images",
+      "total_image_forwards",
+      "optimizer_updates",
+      "amp_skipped_updates",
+      "global_step",
+      "best_nmae",
+      "best_epoch",
+      "training_seconds",
+      "validation_seconds",
+      "elapsed_seconds",
+      "peak_cuda_memory_bytes",
+      "peak_cuda_reserved_bytes",
+      "losses",
+      "validation",
+      "learning_rates"
+    ],
+    "losses": [
+      "role_nll_raw",
+      "role_nll_normalized",
+      "field_l1",
+      "reading_cdf",
+      "total",
+      "reference_ce_correction",
+      "invalid_mass",
+      "outside_arc_mass",
+      "reference_entropy",
+      "reference_max",
+      "joint_vs_product_state_l1"
+    ],
+    "learning_rates": "two scalar optimizer group rates"
+  },
+  "validation_metric_fields": [
+    "epoch",
+    "samples",
+    "groups",
+    "nmae",
+    "nmae_percent_fs",
+    "acc_at_1",
+    "acc_at_2",
+    "acc_at_5",
+    "coverage",
+    "failed",
+    "median_error",
+    "p90_error",
+    "p95_error",
+    "tail10_nmae",
+    "maximum_error",
+    "errors_above_1_percent_fs",
+    "errors_above_2_percent_fs",
+    "errors_above_5_percent_fs",
+    "input_failures",
+    "mean_invalid_mass",
+    "mean_outside_arc_mass"
+  ],
+  "predictions": {
+    "records": 1506,
+    "fields": [
+      "sample_id",
+      "group_id",
+      "target",
+      "prediction",
+      "valid",
+      "input_valid",
+      "absolute_error",
+      "invalid_mass",
+      "outside_arc_mass",
+      "failure",
+      "reference_entropy",
+      "reference_max",
+      "joint_vs_product_state_l1"
+    ],
+    "units": "target and prediction normalized; absolute_error is full-scale fraction"
+  },
+  "paired_rows": {
+    "records": 1506,
+    "fields": [
+      "sample_id",
+      "group_id",
+      "target",
+      "global_prediction",
+      "global_error_percent_fs",
+      "global_valid",
+      "preserve_prediction",
+      "preserve_error_percent_fs",
+      "preserve_valid",
+      "best64_prediction",
+      "best64_error_percent_fs",
+      "best48_prediction",
+      "best48_error_percent_fs",
+      "native_prediction",
+      "native_error_percent_fs",
+      "r8_prediction",
+      "r8_error_percent_fs",
+      "common_ordinary1495",
+      "r8_ordinary1497",
+      "old_severe_union6"
+    ],
+    "units": "predictions normalized; named percent_fs errors are fractions multiplied by100"
+  },
+  "metric_csv": {
+    "rows": 24,
+    "models": 6,
+    "cohorts": 4
+  },
+  "existing_integrity_audit": {
+    "status": "PASS",
+    "checks_passed": 38,
+    "checks_total": 38,
+    "saved_population": 1506,
+    "saved_groups": 70,
+    "cohort_counts": [
+      1506,
+      1495,
+      1497,
+      6
+    ]
+  },
+  "public_files": [
+    "final_global_config.json",
+    "final_global_best_validation.json",
+    "final_global_best_metadata.json",
+    "final_global_completed.json",
+    "final_global_history.jsonl",
+    "final_global_summary.json",
+    "final_global_metrics.csv",
+    "final_global_predictions.csv.gz",
+    "final_global_paired_rows.csv.gz",
+    "final_global_independent_audit.json",
+    "final_global_paper_evidence_decision.json",
+    "final_global_report_cn.md",
+    "final_global_allowlist_checks.json",
+    "final_method_selection.json"
+  ]
+}
