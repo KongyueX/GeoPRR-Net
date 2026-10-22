@@ -1,0 +1,13 @@
+# v8唯一global匹配对照的独立续跑
+
+日期：2026-10-22。配对守恒候选完整65轮结束，最终best为第2轮。原controller按冻结合同记录validation_rejected：原G1为10／11，best48保护5／6，best64保护5／6。原protocol、queue及validation_decision保留，不覆盖为通过。
+
+用户在候选完成前已按论文证据目标授权必要的同信息global65，并再次明确只完成这一匹配对照；无增量则删除配对守恒扩展，不追加模块或延长训练。执行依据为[前瞻性论文证据修订](GEOPRR_V2_PAPER_EVIDENCE_AMENDMENT_CN.md)。
+
+新入口`experiments.run_geoprr_v2_reference_pair_global_continuation`只编排原已冻结global命令，训练器、模型、global配置、完整best64初始化、seed20262020、原三项loss和65轮曝光不变。formal方法代码版本仍为d6376a0；新编排版本单独记录于GEOPRR_CONTINUATION_REVISION。
+
+global模型输出仍为`iteration_v8_reference_pair_update/readers/global_s20262020`；新增queue、PID、日志、续跑依据和机制比较均写入`iteration_v8_reference_pair_update/paper_continuation/global65_20261022`。入口同时持有独立锁及只读打开的原queue.lock；原父子退出、GPU空闲、无原global任务、完整候选合同及原代码snapshot直接比对均通过后才启动。不重复准入、旧CPU测试、教师诊断或模型评估。
+
+首次从完整best64和fresh optimizer启动，不携带候选训练状态；真实中断才在同global output从latest恢复，保留partial。完成后记录原G1、两组anchor保护、三项连续机制比较及原G2筛选，不把新续跑冒称原gate通过，也不以5%筛选作为论文发表充分或必要条件。是否保留配对守恒由实际增量、尾部和成本共同判断，结果无益则作为负对照保留。
+
+其他数据集的评估属于用户另行授权的冻结推理，排在本对照之后，见[外部评估合同](GEOPRR_V2_EXTERNAL_FROZEN_EVAL_PROTOCOL_CN.md)，不改变本次匹配训练。
