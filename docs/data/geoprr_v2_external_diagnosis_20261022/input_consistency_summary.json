@@ -1,0 +1,190 @@
+{
+  "date": "2026-10-22",
+  "scope": "Static input/model/metric path checks plus eight fixed source-validation runtime replays; no training or parameter changes",
+  "verdict": "No concrete external input/evaluator inconsistency identified in inspected supported paths",
+  "checks": [
+    {
+      "area": "RGB and normalization",
+      "verdict": "consistent",
+      "finding": "Source validation and external evaluation share GeoPRRV2Dataset._sample: cv2 IMREAD_COLOR, BGR to RGB, float32 /255, ImageNet mean [0.485,0.456,0.406] and std [0.229,0.224,0.225]. External augment=False."
+    },
+    {
+      "area": "Resize, aspect, ROI crop",
+      "verdict": "consistent_model_preprocessing_with_source_to_external_crop_domain_change",
+      "finding": "Both v7 paths perform direct cv2 INTER_LINEAR resize768 square with no letterbox. Source train/validation rows have image_path plus GT dial_bbox and are cropped before resize. External roi_path makes bbox=None and consumes the complete supplied native ROI. This obeys the model ROI interface; source tight annotation crop versus external existing crop can still be a real domain shift."
+    },
+    {
+      "area": "Checkpoint and architecture",
+      "verdict": "consistent_by_code_and_saved_interface_metadata",
+      "finding": "Original RoleTriangleReader, strict full497-state best64 loading, seed20262020, association full, data768/192 and7461316parameters; fixed8 source runtime replay reproduces saved predictions with max normalized difference2.980232238769531e-7."
+    },
+    {
+      "area": "Evaluation mode, precision and batching",
+      "verdict": "same_declared_eval_and_AMP_path_with_reproducibility_flag_difference",
+      "finding": "Source validation and external use eval, inference_mode, configured backbone AMP andFP32 heads. Source sets deterministic CuDNN flags while external defaults differ; the fixed8 current-path source replay nevertheless agrees within2.980232238769531e-7 normalized, with alltargets exact. No large runtime discrepancy was observed."
+    },
+    {
+      "area": "Readout and target scoring",
+      "verdict": "consistent",
+      "finding": "External reuses original validation_rows/validation_summary and original model reading. CircularProgressPushforward retains all circular mass, uniformly transports zero-span atoms, and clips atoms/progress internally as in training; external adds no readout fitting or clipping. Target converts physical(value-start)/(end-start) toFP32 and absolute normalized error; percentFS scales error by100. Zero values are processed directly, with no truthiness fallback."
+    },
+    {
+      "area": "Geometry and target information",
+      "verdict": "RGB_only_forward",
+      "finding": "Source validation constructs H/span/field labels but calls model(batch[image]) only. External require_geometry=False, only image/y/id/group/failure retained, forward only image. Group IDs and scalar labels remain scoring metadata. Source GT bbox is an upstream ROI selection and should remain disclosed separately from a GT matrix or endpoints passed to model."
+    },
+    {
+      "area": "Existing external ROI provenance",
+      "verdict": "metadata_supports_existing_native_ROI_input",
+      "finding": "Remote input manifests contain only sample_id and roi_path. Industrial index records1395/1395 workbook-embedded ROI decoded pixel matches,1248 byte matches and147 differing containers with decoded pixel match. All source_kind descriptions identify embedded native ROIs, not full frames. RF100 index maps native existing ROI to source jpg and crop coordinates. These are recorded metadata assertions; this diagnosis did not decode or compare historical original Windows ROI bytes."
+    },
+    {
+      "area": "Old GeoPRR preprocessing",
+      "verdict": "intentional_architecture_difference_not_v7_evaluator_bug",
+      "finding": "Old unified reader consumes whole supplied ROI pixels, RGB ImageNet normalized, but resizes to256 using AREA for downsample and LINEAR otherwise. It derives its SARN/support/H from image pixels and has multiple expert/readout routes. These are part of the old model. Copying them into v7 would change its trained inference path. Old clean explicitly sets SARN active=false."
+    },
+    {
+      "area": "Old native versus pooled robustness numbers",
+      "verdict": "comparison_boundary",
+      "finding": "New external is native only. Old original external entry points evaluate six conditions (clean,blur_moderate,blur_severe,perspective_moderate,perspective_severe,combined_severe); comparison must select old clean or explicitly identify pooled rows. New native corresponds semantically to old clean without synthetic degradation, not old all_conditions or new source modal_r8."
+    }
+  ],
+  "native_size_aspect_metadata": {
+    "source_train": {
+      "samples": 18590,
+      "native_width": {
+        "min": 353,
+        "p25": 487.5,
+        "median": 594.0,
+        "p75": 739.0,
+        "max": 1101
+      },
+      "native_height": {
+        "min": 330,
+        "p25": 483.0,
+        "median": 589.0,
+        "p75": 731.0,
+        "max": 1080
+      },
+      "width_over_height": {
+        "min": 0.9979591836734694,
+        "p25": 1.0,
+        "median": 1.0,
+        "p75": 1.0,
+        "max": 1.1138392857142858
+      },
+      "area_pixels": {
+        "min": 117150,
+        "p25": 235225.0,
+        "median": 349281.0,
+        "p75": 538388.25,
+        "max": 1189080
+      },
+      "boundary": "GT dial_bbox native crop prior to linear768 resize"
+    },
+    "source_validation": {
+      "samples": 1506,
+      "native_width": {
+        "min": 355,
+        "p25": 489.0,
+        "median": 591.0,
+        "p75": 737.0,
+        "max": 1101
+      },
+      "native_height": {
+        "min": 327,
+        "p25": 485.0,
+        "median": 585.0,
+        "p75": 731.0,
+        "max": 1080
+      },
+      "width_over_height": {
+        "min": 0.998730964467005,
+        "p25": 1.0,
+        "median": 1.0,
+        "p75": 1.0,
+        "max": 1.112621359223301
+      },
+      "area_pixels": {
+        "min": 116085,
+        "p25": 237169.0,
+        "median": 344569.0,
+        "p75": 540024.0,
+        "max": 1189080
+      },
+      "boundary": "GT dial_bbox native crop prior to linear768 resize"
+    },
+    "Industrial-1395": {
+      "samples": 1395,
+      "native_width": {
+        "min": 132,
+        "p25": 299.0,
+        "median": 356,
+        "p75": 462.0,
+        "max": 843
+      },
+      "native_height": {
+        "min": 106,
+        "p25": 304.0,
+        "median": 376,
+        "p75": 506.0,
+        "max": 974
+      },
+      "width_over_height": {
+        "min": 0.34108527131782945,
+        "p25": 0.9748314555902449,
+        "median": 1.0,
+        "p75": 1.02743489387325,
+        "max": 2.9245283018867925
+      },
+      "area_pixels": {
+        "min": 32860,
+        "p25": 92263.5,
+        "median": 129958,
+        "p75": 218076.0,
+        "max": 725823
+      },
+      "boundary": "whole supplied native ROI prior to linear768 resize",
+      "image_pixel_decodes": 0
+    },
+    "RF100-VL": {
+      "samples": 151,
+      "native_width": {
+        "min": 216,
+        "p25": 454.0,
+        "median": 522,
+        "p75": 668.0,
+        "max": 2563
+      },
+      "native_height": {
+        "min": 219,
+        "p25": 404.0,
+        "median": 527,
+        "p75": 683.5,
+        "max": 2665
+      },
+      "width_over_height": {
+        "min": 0.7155756207674944,
+        "p25": 0.9963436928702011,
+        "median": 1.00990099009901,
+        "p75": 1.0334400834140167,
+        "max": 1.363888888888889
+      },
+      "area_pixels": {
+        "min": 47304,
+        "p25": 169009.5,
+        "median": 275094,
+        "p75": 458748.0,
+        "max": 6830395
+      },
+      "boundary": "whole supplied native ROI prior to linear768 resize",
+      "image_pixel_decodes": 0
+    }
+  },
+  "runtime_probe": "source_runtime_replay.json",
+  "new_CNN_images": 8,
+  "backward_calls": 0,
+  "optimizer_updates": 0,
+  "historical_old_ROI_pixel_equality": "not reauthenticated: historical fulltrain execution manifest and weights unavailable",
+  "cause_boundary": "Current evidence supports failure of frozen transfer under the declared ROI protocol; it does not identify the erroneous latent role, rectifier, or training factor."
+}

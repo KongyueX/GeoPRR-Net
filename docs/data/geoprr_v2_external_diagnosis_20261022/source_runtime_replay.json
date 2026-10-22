@@ -1,0 +1,93 @@
+{
+  "scope": "fixed8 source validation saved-prediction runtime replay; not a new accuracy estimate",
+  "sample_selection": "first6 publicpairedIDs then3172/9323 fixed before replay",
+  "checkpoint_epoch": 64,
+  "checkpoint_seed": 20262020,
+  "pipeline": "unchanged external dataset preprocessing, strict RoleTriangleReader, eval, AMP, FP32 head",
+  "cudnn_deterministic": false,
+  "cudnn_benchmark": false,
+  "max_absolute_normalized_prediction_difference": 2.980232238769531e-07,
+  "max_difference_percent_fs": 2.9802322387695312e-05,
+  "targets_exact": true,
+  "all_valid": true,
+  "cnn_calls": 1,
+  "cnn_image_forwards": 8,
+  "backward_calls": 0,
+  "optimizer_updates": 0,
+  "synchronized_forward_seconds": 4.6532668098807335,
+  "rows": [
+    {
+      "sample_id": "sync_10",
+      "saved_prediction": 0.5099132061004639,
+      "replay_prediction": 0.5099132657051086,
+      "absolute_normalized_difference": 5.960464477539063e-08,
+      "saved_target": 0.5121922492980957,
+      "replay_target": 0.5121922492980957,
+      "valid": true
+    },
+    {
+      "sample_id": "sync_10005",
+      "saved_prediction": 0.9210889339447021,
+      "replay_prediction": 0.9210888743400574,
+      "absolute_normalized_difference": 5.960464477539063e-08,
+      "saved_target": 0.920735239982605,
+      "replay_target": 0.920735239982605,
+      "valid": true
+    },
+    {
+      "sample_id": "sync_10012",
+      "saved_prediction": 0.20296570658683777,
+      "replay_prediction": 0.20296570658683777,
+      "absolute_normalized_difference": 0.0,
+      "saved_target": 0.2033998817205429,
+      "replay_target": 0.2033998817205429,
+      "valid": true
+    },
+    {
+      "sample_id": "sync_10019",
+      "saved_prediction": 0.9741279482841492,
+      "replay_prediction": 0.9741279482841492,
+      "absolute_normalized_difference": 0.0,
+      "saved_target": 0.9742900133132935,
+      "replay_target": 0.9742900133132935,
+      "valid": true
+    },
+    {
+      "sample_id": "sync_10037",
+      "saved_prediction": 0.688658595085144,
+      "replay_prediction": 0.688658595085144,
+      "absolute_normalized_difference": 0.0,
+      "saved_target": 0.6885501146316528,
+      "replay_target": 0.6885501146316528,
+      "valid": true
+    },
+    {
+      "sample_id": "sync_10055",
+      "saved_prediction": 0.05111903324723244,
+      "replay_prediction": 0.05111902952194214,
+      "absolute_normalized_difference": 3.725290298461914e-09,
+      "saved_target": 0.05149355158209801,
+      "replay_target": 0.05149355158209801,
+      "valid": true
+    },
+    {
+      "sample_id": "sync_3172",
+      "saved_prediction": 0.28218963742256165,
+      "replay_prediction": 0.2821896970272064,
+      "absolute_normalized_difference": 5.960464477539063e-08,
+      "saved_target": 0.31569457054138184,
+      "replay_target": 0.31569457054138184,
+      "valid": true
+    },
+    {
+      "sample_id": "sync_9323",
+      "saved_prediction": 0.9971413612365723,
+      "replay_prediction": 0.9971410632133484,
+      "absolute_normalized_difference": 2.980232238769531e-07,
+      "saved_target": 0.9969997406005859,
+      "replay_target": 0.9969997406005859,
+      "valid": true
+    }
+  ],
+  "status": "reproduced_within_1e-5_normalized"
+}

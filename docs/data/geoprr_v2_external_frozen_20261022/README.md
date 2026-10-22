@@ -21,6 +21,8 @@ Industrial误差>1／2／5%FS分别为1287／1219／1040张，最大误差ID为`
 
 独立CPU核对PASS：1546张的ID与顺序、物理量归一化到FP32 target、逐图误差及全人口／子集／87组的5760个统计字段均一致，最大数值残差为0。两套子进程均正常退出。该核对未重跑模型。
 
+与旧GeoPRR的人口匹配比较、输入流程核对、固定8张源样本运行时重放和典型失败分析见[外部诊断报告](../geoprr_v2_external_diagnosis_20261022/README.md)。旧历史执行像素同一性尚未复核，其限制单独保留。
+
 ## 冻结模型与成本
 
 执行使用事先选定的v7 full best64、epoch64、seed20262020、7,461,316参数、497个state tensors。源开发1506 NMAE为0.059146231063%FS。原`RoleTriangleReader`严格加载权重，输入仅已有ROI RGB，沿用768／192、ImageNet归一化及checkpoint AMP设置，输出原生全质量读数。目标按原FP32约定计分，单图失败error=1，不从分母剔除。

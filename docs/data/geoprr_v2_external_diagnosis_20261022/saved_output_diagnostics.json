@@ -1,0 +1,28 @@
+{
+  "industrial": {
+    "native_mean_percent_fs": 21.22657001580843,
+    "counterfactual_same_joint_marginal_product_mean_percent_fs": 24.10865481343623,
+    "native_vs_counterfactual_mean_abs_reading_percent_fs": 6.407948351222941,
+    "native_vs_counterfactual_max_abs_reading_percent_fs": 34.688643366098404,
+    "outside_arc_mass_mean": 0.33141716919582315,
+    "outside_arc_mass_above_half": 390,
+    "zero_targets": 588,
+    "zero_target_mean_error_percent_fs": 29.538677205038294,
+    "nonzero_target_mean_error_percent_fs": 15.170164777559162,
+    "above10": 838,
+    "above50": 143
+  },
+  "rf100": {
+    "native_mean_percent_fs": 12.691067318090496,
+    "counterfactual_same_joint_marginal_product_mean_percent_fs": 12.913737369378234,
+    "native_vs_counterfactual_mean_abs_reading_percent_fs": 1.9396553112082924,
+    "native_vs_counterfactual_max_abs_reading_percent_fs": 17.76859164237976,
+    "outside_arc_mass_mean": 0.11966482511081498,
+    "outside_arc_mass_above_half": 11,
+    "zero_targets": 6,
+    "zero_target_mean_error_percent_fs": 10.637698695063591,
+    "nonzero_target_mean_error_percent_fs": 12.776034295595059,
+    "above10": 50,
+    "above50": 8
+  }
+}

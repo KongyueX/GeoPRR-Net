@@ -1,0 +1,90 @@
+{
+  "selection": "maximum error per Industrial fixed component; RF maximum and maximum in another group; minimum-error control per dataset; saved predictions only",
+  "scope": "Seven native ROI images inspected privately; observations do not identify latent role or rectifier errors. No images published.",
+  "cases": [
+    {
+      "dataset": "industrial",
+      "sample_id": "industrial_001387",
+      "selection": "max_field_gauge_external_roi",
+      "target": 0.20000000298023224,
+      "new_prediction": 0.9230161905288696,
+      "old_prediction": 0.46579432487487793,
+      "new_error_percent_fs": 72.30161875486374,
+      "old_error_percent_fs": 26.579432487487793,
+      "new_outside_arc_mass": 0.7711089253425598,
+      "visual_observation": "blurred/noisy colored gauge with obscured scale; both models inaccurate"
+    },
+    {
+      "dataset": "industrial",
+      "sample_id": "industrial_000580",
+      "selection": "max_field_gauge_roi_test_a",
+      "target": 0.0,
+      "new_prediction": 0.9167255759239197,
+      "old_prediction": 0.13458235561847687,
+      "new_error_percent_fs": 91.67255759239197,
+      "old_error_percent_fs": 13.458235561847687,
+      "new_outside_arc_mass": 0.6756783723831177,
+      "visual_observation": "very dark low-contrast gauge; new output near full scale despite zero target"
+    },
+    {
+      "dataset": "industrial",
+      "sample_id": "industrial_000327",
+      "selection": "max_field_gauge_roi_test_b",
+      "target": 0.0,
+      "new_prediction": 0.9933776259422302,
+      "old_prediction": 0.0419401153922081,
+      "new_error_percent_fs": 99.33776259422302,
+      "old_error_percent_fs": 4.19401153922081,
+      "new_outside_arc_mass": 0.996209442615509,
+      "visual_observation": "clear native zero-position gauge with visible pointer/counterweight; new output near full scale"
+    },
+    {
+      "dataset": "industrial",
+      "sample_id": "industrial_000072",
+      "selection": "accurate_control",
+      "target": 0.0,
+      "new_prediction": 2.7122632673126645e-06,
+      "old_prediction": 0.03740531951189041,
+      "new_error_percent_fs": 0.00027122632673126645,
+      "old_error_percent_fs": 3.740531951189041,
+      "new_outside_arc_mass": 0.5938641428947449,
+      "visual_observation": "zero-position control with reflection and oblique view; new reading accurate despite substantial outside-arc mass"
+    },
+    {
+      "dataset": "rf100",
+      "sample_id": "rf100_test_000023",
+      "selection": "maximum",
+      "target": 0.03303127363324165,
+      "new_prediction": 0.8941278457641602,
+      "old_prediction": 0.049561236053705215,
+      "new_error_percent_fs": 86.10965721309185,
+      "old_error_percent_fs": 1.652996281422351,
+      "new_outside_arc_mass": 0.8805525302886963,
+      "visual_observation": "clear low-position meter_a gauge; new prediction near high end"
+    },
+    {
+      "dataset": "rf100",
+      "sample_id": "rf100_test_000088",
+      "selection": "max_other_group",
+      "target": 0.08959093689918518,
+      "new_prediction": 0.7885229587554932,
+      "old_prediction": 0.21624648571014404,
+      "new_error_percent_fs": 69.8932021856308,
+      "old_error_percent_fs": 12.665555093312358,
+      "new_outside_arc_mass": 0.6333780288696289,
+      "visual_observation": "oblique multi-scale gauge with watermark and thick counterweight; new output far above low target"
+    },
+    {
+      "dataset": "rf100",
+      "sample_id": "rf100_test_000071",
+      "selection": "accurate_control",
+      "target": 0.49642959237098694,
+      "new_prediction": 0.49485349655151367,
+      "old_prediction": 0.4982535243034363,
+      "new_error_percent_fs": 0.15760958194732666,
+      "old_error_percent_fs": 0.1823921555843877,
+      "new_outside_arc_mass": 0.0010196167277172208,
+      "visual_observation": "same meter_a group as RF23, middle-position control; both models accurate"
+    }
+  ]
+}
