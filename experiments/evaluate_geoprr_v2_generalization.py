@@ -37,6 +37,7 @@ GENERALIZATION_PROTOCOL = "geoprr_v2_generalization_source_only_v1"
 ROI_GENERALIZATION_PROTOCOL = "geoprr_v2_roi_generalization_source_only_v1"
 ENDPOINT_GENERALIZATION_PROTOCOL = "geoprr_v2_endpoint_generalization_source_only_v1"
 WEIGHT_FROZEN_PROTOCOL = "geoprr_v2_endpoint_backbone_weight_freeze_source_only_v1"
+ANCHOR_INTERPOLATION_PROTOCOL = "geoprr_v2_task_anchor_half_interpolation_v1"
 
 
 def reader_from_checkpoint(checkpoint):
@@ -45,7 +46,8 @@ def reader_from_checkpoint(checkpoint):
     if config.get("protocol", protocol) != protocol:
         raise ValueError("checkpoint and saved config protocols differ")
     generalization = protocol in (GENERALIZATION_PROTOCOL, ROI_GENERALIZATION_PROTOCOL,
-                                  ENDPOINT_GENERALIZATION_PROTOCOL, WEIGHT_FROZEN_PROTOCOL)
+                                  ENDPOINT_GENERALIZATION_PROTOCOL, WEIGHT_FROZEN_PROTOCOL,
+                                  ANCHOR_INTERPOLATION_PROTOCOL)
     architecture_protocol = config.get("reader_protocol") if generalization else protocol
     if generalization and architecture_protocol not in (*REFERENCE_PROTOCOLS, TRIANGLE_PROTOCOL):
         raise ValueError("generalization checkpoint must declare its original angular reader protocol")
@@ -202,6 +204,8 @@ def evaluate(*, dataset_root, dataset_name, checkpoint_path, output_dir, device_
         "peak_cuda_memory_bytes": torch.cuda.max_memory_allocated(device) if device.type == "cuda" else None,
         "peak_cuda_reserved_bytes": torch.cuda.max_memory_reserved(device) if device.type == "cuda" else None,
     }
+    if "posthoc_interpolation" in checkpoint:
+        result["checkpoint_transformation"] = checkpoint["posthoc_interpolation"]
     output_dir.mkdir(parents=True, exist_ok=True)
     write_csv(output_dir / "predictions.csv", rows)
     write_csv(output_dir / "groups.csv", [{"group_id": key, **value} for key, value in result["by_group"].items()])

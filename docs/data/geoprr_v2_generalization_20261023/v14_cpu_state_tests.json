@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "observed_at_utc": "2026-10-23T00:00:53.929281+00:00",
+  "scope": "three synthetic CPU state-contract tests, not native model performance",
+  "command": "CUDA_VISIBLE_DEVICES=\"\" ../.venv/bin/python -m unittest experiments.test_geoprr_v2_anchor_interpolation -v",
+  "tests": 3,
+  "failures": 0,
+  "seconds": 0.024,
+  "counts": {
+    "CNN_calls": 0,
+    "CNN_images": 0,
+    "backward_calls": 0,
+    "optimizer_updates": 0
+  },
+  "covered": [
+    "learned parameters and BN moments average exactly; integer BN counter copies anchor",
+    "identical endpoints preserve all tensors",
+    "changed constructor buffers, dtype mismatch, negative variance and nonfinite states rejected"
+  ],
+  "v13_prior_audit": {
+    "status": "PASS",
+    "checks": 267479,
+    "failures": 0
+  }
+}
