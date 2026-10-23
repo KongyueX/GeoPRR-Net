@@ -1,0 +1,85 @@
+{
+  "protocol": "geoprr_v2_semantic_role_field_aux_source_only_v1",
+  "initialization": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "ImageNet_pretrained": true,
+    "existing_cached_weights_only": true,
+    "retained_complete_encoder_state_tensors": 462,
+    "new_point_parameter_tensors": 2,
+    "base_and_point_created_before_auxiliary_modules": true,
+    "old_task_checkpoint_used": false
+  },
+  "model_metadata": {
+    "class": "__main__.SemanticAuxReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "point_parameters": 1281,
+    "parameters": 8693701,
+    "state_tensors": 498,
+    "active_inference_parameters": 8435793,
+    "active_inference_state_tensors": 464,
+    "auxiliary_parameters": 257908,
+    "auxiliary_only_during_training": true,
+    "direct_readout": "complete semantic1280 to linear1 sigmoid",
+    "auxiliary_feature_modules": [
+      "blocks.0",
+      "blocks.1",
+      "blocks.2",
+      "blocks.4"
+    ],
+    "auxiliary_feature_channels": [
+      48,
+      80,
+      160,
+      960
+    ],
+    "auxiliary_feature_reductions": [
+      4,
+      8,
+      16,
+      32
+    ],
+    "auxiliary_reference_normalization": "local",
+    "deployment_uses_geometry_readout": false
+  },
+  "train_unique_images": 18590,
+  "validation_images": 1506,
+  "epoch_exposure": {
+    "train_images": 18590,
+    "train_batches": 291,
+    "validation_images": 1506,
+    "validation_batches": 24
+  },
+  "inference_input": "ROI RGB, linear resize256, ImageNet normalization; direct semantic scalar only; no auxiliary decoder or GT geometry input",
+  "comparison": "fresh cached complete ImageNet semantic representation; source auxiliary U/M/H/role loss, direct-only evaluation",
+  "source_only_loss": "SmoothL1(beta=.05)+.1*(role_NLL/(3log256)+field_L1)",
+  "source_population_summary": {
+    "train_images": 18590,
+    "validation_images": 1506,
+    "train_groups": 1679,
+    "validation_groups": 70,
+    "RGB_contract_exact_v16": true,
+    "image_size": 256,
+    "auxiliary_contract": "source_analytic_role_field_supervision_256_64_v1",
+    "Gaussian_Q_or_GT_readout_constructed": false,
+    "IDs_and_groups_disjoint": true,
+    "unique_exposure": true,
+    "auxiliary_in_model_inputs": false,
+    "auxiliary_used_only_for_source_training_loss": true,
+    "virtual_P_definition": "radius-one virtual dial-plane state; not the entity needle tip"
+  },
+  "saved_preflight_initialization_relation": {
+    "reference": "same-seed fresh v16 ImageNet initialization",
+    "fresh_direct_initialization_state_tensors_compared": 464,
+    "fresh_direct_initialization_exactly_preserved": true,
+    "new_auxiliary_state_tensors": 34,
+    "evidence": "../runtime_preflight.json",
+    "scope": "saved source preflight relation; no model checkpoint loaded in the completion artifact audit"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "checks": 44027,
+  "failed_checks": 0,
+  "failures": [],
+  "maximum_numeric_difference": 1.7852722633548979e-09,
+  "maximum_loss_decomposition_difference": 1.7852722633548979e-09,
+  "scope": "one bounded independent CPU saved-artifact audit; no GPU/checkpoint/RGB load, inference/backprop, old GT or tests",
+  "audited_at_utc": "2026-10-23T08:08:46.173713+00:00",
+  "new_source_saved_rows": 3012,
+  "new_external_saved_rows": 1546,
+  "full_source_epochs": 60,
+  "best_epoch": 58,
+  "exact_parent_RGB_contract_equal": true,
+  "separate_new_auxiliary_contract": true,
+  "Gaussian_Q_or_GT_readout_constructed": false,
+  "best58_last60_decompressed_CSV_equal": false,
+  "counts": {
+    "cnn_image_forwards": 1207306,
+    "cnn_forward_calls": 18925,
+    "source_backward_calls": 17460,
+    "source_optimizer_updates": 17453,
+    "source_amp_skipped_updates": 7,
+    "source_auxiliary_forward_calls": 17460,
+    "source_auxiliary_backward_attempts": 17460,
+    "target_auxiliary_forward_calls": 0,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  }
+}

@@ -1,17 +1,37 @@
 {
   "protocol": "geoprr_v18_public_allowlist_v1",
+  "status": "complete",
   "files": [
     "README.md",
     "analytic_source_contract.json",
+    "completed/comparison.csv",
+    "completed/completed_record.json",
+    "completed/config.json",
+    "completed/history.jsonl",
+    "completed/industrial_groups.csv",
+    "completed/industrial_predictions.csv.gz",
+    "completed/industrial_summary.json",
+    "completed/initialization_record.json",
+    "completed/metrics.json",
+    "completed/numeric_execution_audit.json",
+    "completed/protocol.json",
+    "completed/public_allowlist.json",
+    "completed/report_cn.md",
+    "completed/rf100_groups.csv",
+    "completed/rf100_predictions.csv.gz",
+    "completed/rf100_summary.json",
+    "completed/source_best58_predictions.csv.gz",
+    "completed/source_last60_predictions.csv.gz",
     "cpu_checks.json",
     "launch.json",
-    "runtime_preflight.json",
-    "public_allowlist.json"
+    "public_allowlist.json",
+    "runtime_preflight.json"
   ],
+  "completed_allowlist": "completed/public_allowlist.json",
   "excluded": [
     "raw source contracts and private paths/bbox",
     "RGB and model weights",
     "original H/C/XYZ and U/M/feature matrices",
-    "private trace"
+    "complete source ID population arrays and private trace"
   ]
 }

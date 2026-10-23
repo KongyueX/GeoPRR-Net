@@ -1,0 +1,167 @@
+{
+  "protocol": "geoprr_v2_semantic_role_field_aux_source_only_v1",
+  "code_revision": "46a0637d4f1e02276c524b03cbda89023637491d",
+  "config": {
+    "protocol": "geoprr_v2_semantic_role_field_aux_source_only_v1",
+    "model": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "num_classes": 0,
+      "readout": "sigmoid(linear(full encoder semantic output)); semantic conv_head and norm_head retained",
+      "point_initialization_std": 0.001,
+      "point_initialization_bias": 0.0,
+      "auxiliary_decoder": "four-scale64-channel FPN and local ReferenceRelationStateHead256/64/16; training only",
+      "feature_modules": [
+        "blocks.0",
+        "blocks.1",
+        "blocks.2",
+        "blocks.4"
+      ],
+      "feature_channels": [
+        48,
+        80,
+        160,
+        960
+      ],
+      "feature_reductions": [
+        4,
+        8,
+        16,
+        32
+      ]
+    },
+    "data": {
+      "image_size": 256,
+      "output_size": 64
+    },
+    "source": {
+      "unique_training_images": 18590,
+      "validation_images": 1506,
+      "source_replacement": {
+        "groups": 128,
+        "states": [
+          0.0,
+          0.005,
+          0.02,
+          1.0
+        ],
+        "protocol": "geoprr_v2_endpoint_source_v11"
+      },
+      "require_geometry": "analytic U/M/H and role source supervision only; no Gaussian Q or GT readout",
+      "pair_manifest": null,
+      "analytic_label_contract": "analytic_U_M_role_no_Gaussian_Q_v1",
+      "analytic_data": {
+        "image_size": 256,
+        "output_size": 64
+      },
+      "analytic_geometry_config": {
+        "max_radial_error": 0.02,
+        "max_anchor_progress_error": 0.01,
+        "max_center_error": 0.05,
+        "max_readout_error": 0.01,
+        "ring_half_width": 0.2,
+        "point_sigma": 1.0,
+        "min_support_mass": 0.15
+      }
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 60,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "weight_decay": 0.0001,
+      "loss": "SmoothL1(beta=.05)+.1*(role_NLL/(3log256)+field_L1)",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0,
+      "learning_rate": "epoch1..30 cosine3e-4; epoch31..60 cosine3e-5; phase position0..29/30",
+      "auxiliary_weight": 0.1,
+      "role_normalization": "local",
+      "auxiliary_reading_cdf": false
+    },
+    "checkpoint_selection": "earliest minimum normalized scalar NMAE on complete source1506 within60epochs",
+    "external_checkpoint": "source-selected best only after all60epochs complete",
+    "inference_input": "ROI RGB, linear resize256, ImageNet normalization; direct semantic scalar only; no auxiliary decoder or GT geometry input",
+    "external_training_or_adaptation": false
+  },
+  "initialization": "fresh complete cached ImageNet encoder and new point created first, then new FPN/local role auxiliary; no trained task weights",
+  "old_task_checkpoint_or_teacher_used": false,
+  "new_weight_download_authorized": false,
+  "model_inputs": "ROI RGB, linear resize256, ImageNet normalization; direct semantic scalar only; no auxiliary decoder or GT geometry input",
+  "checkpoint_selection": "earliest minimum normalized scalar NMAE on complete source1506 within60epochs",
+  "auxiliary_labels": "source-only analytic U/M/H/span and virtual A/P/B role supervision; no Gaussian Q or GT readout",
+  "expected_training": {
+    "images": 1115400,
+    "CNN_calls": 17460,
+    "backward_attempts": 17460,
+    "auxiliary_forward_calls": 17460,
+    "auxiliary_backward_attempts": 17460
+  },
+  "expected_validation": {
+    "images": 90360,
+    "CNN_calls": 1440,
+    "auxiliary_forward_calls": 0
+  },
+  "expected_external": {
+    "images": 1546,
+    "CNN_calls": 25,
+    "auxiliary_forward_calls": 0,
+    "backward_calls": 0,
+    "optimizer_updates": 0
+  },
+  "expected_complete_CNN": {
+    "images": 1207306,
+    "calls": 18925
+  },
+  "external_scope": "previously viewed Industrial1395/52 and RF100151/35 development; source-selected direct best after complete60source epochs",
+  "training_or_adaptation_on_target": false,
+  "comparison_scope": "same RGB population/256 direct evaluation and60epoch budget asv16; additional source auxiliary branch incurs extra compute",
+  "witness": {
+    "status": "passed",
+    "counts": {
+      "CNN_calls": 2,
+      "CNN_images": 8,
+      "CNN_backward_calls": 1,
+      "combined_backward_calls": 1,
+      "optimizer_updates": 0
+    },
+    "validation_input_matches_declared256_pipeline": true,
+    "source_analytic_contract_verified": true
+  },
+  "analytic_contract_audit": {
+    "status": "passed",
+    "samples": 18590
+  },
+  "status": "complete",
+  "source_population": "Existing endpoint-replacement source18590 unique; original validation1506 unchanged; RGB contract exactly equals v16 and the analytic auxiliary contract is new and separate.",
+  "completed_source_epochs": 60,
+  "source_selected_best_epoch": 58,
+  "last_source_epoch": 60,
+  "formal_complete_counts": {
+    "cnn_image_forwards": 1207306,
+    "cnn_forward_calls": 18925,
+    "source_backward_calls": 17460,
+    "source_optimizer_updates": 17453,
+    "source_amp_skipped_updates": 7,
+    "source_auxiliary_forward_calls": 17460,
+    "source_auxiliary_backward_attempts": 17460,
+    "target_auxiliary_forward_calls": 0,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  }
+}
