@@ -1,15 +1,41 @@
 {
+  "protocol": "geoprr_v16_public_root_allowlist_v1",
   "files": [
+    "README.md",
+    "completed/comparison.csv",
+    "completed/completed_record.json",
+    "completed/config.json",
+    "completed/history.jsonl",
+    "completed/industrial_groups.csv",
+    "completed/industrial_predictions.csv.gz",
+    "completed/industrial_summary.json",
+    "completed/initialization_record.json",
+    "completed/metrics.json",
+    "completed/numeric_execution_audit.json",
+    "completed/protocol.json",
+    "completed/public_allowlist.json",
+    "completed/report_cn.md",
+    "completed/rf100_groups.csv",
+    "completed/rf100_predictions.csv.gz",
+    "completed/rf100_summary.json",
+    "completed/source_best59_predictions.csv.gz",
+    "completed/source_last60_predictions.csv.gz",
     "cpu_checks.json",
     "launch.json",
     "public_allowlist.json",
     "runtime_preflight.json"
   ],
+  "preserved_existing_files": [
+    "cpu_checks.json",
+    "runtime_preflight.json",
+    "launch.json"
+  ],
+  "scope": "Full60epoch source-only semantic direct model completed, best59 frozen external evaluation and one CPU completed-artifact audit.",
   "excluded": [
     "RGB",
     "ImageNet/model/checkpoint weights",
-    "raw source data_contract/paths/bbox",
-    "private trace"
-  ],
-  "scope": "new model preflight and source-only launch; final results pending"
+    "raw run/source_data_contract/private paths/bbox",
+    "complete ID population arrays",
+    "H/C/XYZ/features/private trace"
+  ]
 }

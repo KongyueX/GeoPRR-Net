@@ -1,0 +1,214 @@
+{
+  "protocol": "geoprr_v2_full_semantic_direct_source_only_v1",
+  "config": {
+    "protocol": "geoprr_v2_full_semantic_direct_source_only_v1",
+    "model": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "num_classes": 0,
+      "readout": "sigmoid(linear(full encoder semantic output)); semantic conv_head and norm_head retained",
+      "point_initialization_std": 0.001,
+      "point_initialization_bias": 0.0
+    },
+    "data": {
+      "image_size": 256,
+      "output_size": 64
+    },
+    "source": {
+      "unique_training_images": 18590,
+      "validation_images": 1506,
+      "source_replacement": {
+        "groups": 128,
+        "states": [
+          0.0,
+          0.005,
+          0.02,
+          1.0
+        ],
+        "protocol": "geoprr_v2_endpoint_source_v11"
+      },
+      "require_geometry": false,
+      "pair_manifest": null
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 60,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "weight_decay": 0.0001,
+      "loss": "smooth_l1",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0,
+      "learning_rate": "epoch1..30 cosine3e-4; epoch31..60 cosine3e-5; phase position0..29/30"
+    },
+    "checkpoint_selection": "earliest minimum normalized scalar NMAE on complete source1506 within60epochs",
+    "external_checkpoint": "source-selected best only after all60epochs complete",
+    "inference_input": "ROI RGB, linear resize256, ImageNet normalization; no GT geometry or target scalar input",
+    "external_training_or_adaptation": false
+  },
+  "status": "complete",
+  "epochs": 60,
+  "best_epoch": 59,
+  "best_nmae": 0.005262168472809196,
+  "best_validation": {
+    "samples": 1506,
+    "groups": 70,
+    "nmae": 0.005262168472809196,
+    "nmae_percent_fs": 0.5262168472809196,
+    "acc_at_1": 0.9156706507304117,
+    "acc_at_2": 0.9734395750332006,
+    "acc_at_5": 0.9913678618857902,
+    "coverage": 1.0,
+    "failed": 0,
+    "median_error": 0.0023693442344665527,
+    "p90_error": 0.008976683020591736,
+    "p95_error": 0.013908319175243378,
+    "tail10_nmae": 0.029033823012041285,
+    "maximum_error": 0.6595393121242523,
+    "errors_above_2_percent_fs": 40,
+    "errors_above_5_percent_fs": 13,
+    "input_failures": 0,
+    "errors_above_1_percent_fs": 127,
+    "mean_invalid_mass": null,
+    "mean_outside_arc_mass": null,
+    "maximum_error_ids": [
+      "sync_8195"
+    ],
+    "median_error_percent_fs": 0.23693442344665527,
+    "p90_error_percent_fs": 0.8976683020591736,
+    "p95_error_percent_fs": 1.3908319175243378,
+    "tail10_nmae_percent_fs": 2.9033823012041284,
+    "maximum_error_percent_fs": 65.95393121242523,
+    "acc_at_1_percent": 91.56706507304116,
+    "count_at_1_percent_fs": 1379,
+    "acc_at_2_percent": 97.34395750332006,
+    "count_at_2_percent_fs": 1466,
+    "acc_at_5_percent": 99.13678618857902,
+    "count_at_5_percent_fs": 1493
+  },
+  "last_validation": {
+    "samples": 1506,
+    "groups": 70,
+    "nmae": 0.005417365223220838,
+    "nmae_percent_fs": 0.5417365223220838,
+    "acc_at_1": 0.9096945551128818,
+    "acc_at_2": 0.9701195219123506,
+    "acc_at_5": 0.9913678618857902,
+    "coverage": 1.0,
+    "failed": 0,
+    "median_error": 0.002577025443315506,
+    "p90_error": 0.009289242327213287,
+    "p95_error": 0.014597617089748383,
+    "tail10_nmae": 0.029153842724927558,
+    "maximum_error": 0.6601896584033966,
+    "errors_above_2_percent_fs": 45,
+    "errors_above_5_percent_fs": 13,
+    "input_failures": 0,
+    "errors_above_1_percent_fs": 136,
+    "mean_invalid_mass": null,
+    "mean_outside_arc_mass": null,
+    "maximum_error_ids": [
+      "sync_8195"
+    ],
+    "median_error_percent_fs": 0.2577025443315506,
+    "p90_error_percent_fs": 0.9289242327213287,
+    "p95_error_percent_fs": 1.4597617089748383,
+    "tail10_nmae_percent_fs": 2.915384272492756,
+    "maximum_error_percent_fs": 66.01896584033966,
+    "acc_at_1_percent": 90.96945551128817,
+    "count_at_1_percent_fs": 1370,
+    "acc_at_2_percent": 97.01195219123507,
+    "count_at_2_percent_fs": 1461,
+    "acc_at_5_percent": 99.13678618857902,
+    "count_at_5_percent_fs": 1493
+  },
+  "totals": {
+    "train_batches": 17460,
+    "train_cnn_image_forwards": 1115400,
+    "train_cnn_forward_calls": 17460,
+    "backward_calls": 17460,
+    "optimizer_updates": 17454,
+    "amp_skipped_updates": 6,
+    "validation_images": 90360,
+    "validation_cnn_forward_calls": 1440,
+    "training_seconds": 2761.0258493237197,
+    "validation_seconds": 183.3174392953515
+  },
+  "model_metadata": {
+    "class": "__main__.SemanticDirectReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "point_parameters": 1281,
+    "parameters": 8435793,
+    "state_tensors": 464
+  },
+  "initialization": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "ImageNet_pretrained": true,
+    "existing_cached_weights_only": true,
+    "retained_complete_encoder_state_tensors": 462,
+    "new_point_parameter_tensors": 2,
+    "old_task_checkpoint_used": false
+  },
+  "resume_from_epoch": 0,
+  "runtime": {
+    "process_seconds": 2972.2243499159813,
+    "full_process_seconds": 2973.16363677755,
+    "full_process_boundary": "module entry before torch import through saved source/external predictions; excludes final completion JSON",
+    "device": "cuda",
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "peak_cuda_memory_bytes": 2218448384,
+    "peak_cuda_reserved_bytes": 2837446656
+  },
+  "checkpointed_process_seconds_before_resume": 0.0,
+  "checkpointed_process_seconds": 2972.224627699703,
+  "formal_complete_counts": {
+    "cnn_image_forwards": 1207306,
+    "cnn_forward_calls": 18925,
+    "source_backward_calls": 17460,
+    "source_optimizer_updates": 17454,
+    "source_amp_skipped_updates": 6,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  },
+  "stage_wall_seconds": {
+    "train_source": 2973.988755,
+    "eval_industrial": 12.111239,
+    "eval_rf100": 10.986934
+  },
+  "controller_end_to_end_seconds": 2997.258767,
+  "source_population_summary": {
+    "train_images": 18590,
+    "validation_images": 1506,
+    "train_groups": 1679,
+    "validation_groups": 70,
+    "IDs_and_groups_disjoint": true,
+    "require_geometry": false,
+    "unique_exposure": true,
+    "image_size": 256
+  }
+}

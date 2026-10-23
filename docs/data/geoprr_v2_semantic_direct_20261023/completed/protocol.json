@@ -1,0 +1,104 @@
+{
+  "protocol": "geoprr_v2_full_semantic_direct_source_only_v1",
+  "code_revision": "16d41e45968e97ae0d64db7711b09a39712dbdee",
+  "config": {
+    "protocol": "geoprr_v2_full_semantic_direct_source_only_v1",
+    "model": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "num_classes": 0,
+      "readout": "sigmoid(linear(full encoder semantic output)); semantic conv_head and norm_head retained",
+      "point_initialization_std": 0.001,
+      "point_initialization_bias": 0.0
+    },
+    "data": {
+      "image_size": 256,
+      "output_size": 64
+    },
+    "source": {
+      "unique_training_images": 18590,
+      "validation_images": 1506,
+      "source_replacement": {
+        "groups": 128,
+        "states": [
+          0.0,
+          0.005,
+          0.02,
+          1.0
+        ],
+        "protocol": "geoprr_v2_endpoint_source_v11"
+      },
+      "require_geometry": false,
+      "pair_manifest": null
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 60,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "weight_decay": 0.0001,
+      "loss": "smooth_l1",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0,
+      "learning_rate": "epoch1..30 cosine3e-4; epoch31..60 cosine3e-5; phase position0..29/30"
+    },
+    "checkpoint_selection": "earliest minimum normalized scalar NMAE on complete source1506 within60epochs",
+    "external_checkpoint": "source-selected best only after all60epochs complete",
+    "inference_input": "ROI RGB, linear resize256, ImageNet normalization; no GT geometry or target scalar input",
+    "external_training_or_adaptation": false
+  },
+  "initialization": "fresh complete cached ImageNet encoder, num_classes0, including conv_head and norm_head; new scalar point head",
+  "old_task_checkpoint_or_teacher_used": false,
+  "new_weight_download_authorized": false,
+  "model_inputs": "ROI RGB, linear resize256, ImageNet normalization; no GT geometry or target scalar input",
+  "checkpoint_selection": "earliest minimum normalized scalar NMAE on complete source1506 within60epochs",
+  "expected_training": {
+    "images": 1115400,
+    "CNN_calls": 17460,
+    "backward_attempts": 17460
+  },
+  "expected_validation": {
+    "images": 90360,
+    "CNN_calls": 1440
+  },
+  "expected_external": {
+    "images": 1546,
+    "CNN_calls": 25,
+    "backward_calls": 0,
+    "optimizer_updates": 0
+  },
+  "expected_complete_CNN": {
+    "images": 1207306,
+    "calls": 18925
+  },
+  "external_scope": "previously viewed Industrial1395/52 and RF100151/35 development; source-selected best only after complete60 source epochs",
+  "training_or_adaptation_on_target": false,
+  "comparison_scope": "independent full semantic representation, scalar loss and256 RGB pipeline; not matched old768 geometry training",
+  "witness": {
+    "status": "passed",
+    "counts": {
+      "CNN_calls": 1,
+      "CNN_images": 4,
+      "CNN_backward_calls": 1,
+      "optimizer_updates": 0
+    },
+    "validation_input_matches_declared256_pipeline": true
+  },
+  "source_population": "Existing endpoint-replacement source18590 unique; original validation1506 unchanged."
+}

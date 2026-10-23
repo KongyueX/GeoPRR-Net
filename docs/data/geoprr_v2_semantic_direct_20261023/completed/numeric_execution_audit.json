@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "checks": 81479,
+  "failed_checks": 0,
+  "failures": [],
+  "maximum_numeric_difference": 1.4210854715202004e-14,
+  "audited_at_utc": "2026-10-23T05:33:41.332885+00:00",
+  "scope": "one independent bounded CPU artifact execution/scalar-row audit; no model weights loaded, no GPU, no old GT or tests",
+  "new_source_saved_rows": 3012,
+  "new_external_saved_rows": 1546,
+  "full_source_epochs": 60,
+  "best_epoch": 59,
+  "counts": {
+    "cnn_image_forwards": 1207306,
+    "cnn_forward_calls": 18925,
+    "source_backward_calls": 17460,
+    "source_optimizer_updates": 17454,
+    "source_amp_skipped_updates": 6,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  }
+}
