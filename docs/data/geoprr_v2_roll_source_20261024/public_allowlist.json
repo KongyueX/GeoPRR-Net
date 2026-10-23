@@ -1,0 +1,24 @@
+{
+  "protocol": "geoprr_v22_public_allowlist_v1",
+  "status": "independent_protocol_and_runtime_config_frozen_generation_runtime_training_records_pending",
+  "files": [
+    "../../GEOPRR_V2_ROLL_SOURCE_ZERO_SHOT_PROTOCOL_CN.md",
+    "README.md",
+    "config.json",
+    "public_allowlist.json"
+  ],
+  "training_protocol": "geoprr_v2_roll_source_full_semantic_direct_source_only_v1",
+  "source_controller_protocol": "geoprr_v2_camera_roll_source_v22",
+  "code_revision": null,
+  "model_configuration": "full cached ImageNet semantic direct reader; actual runtime metadata to be recorded before training",
+  "current_evidence": "source coverage plan, independent source-validation and adaptive stopping rules frozen; no new model performance claimed",
+  "budget_matching_required": false,
+  "notification_policy": "notify only after complete research result or genuine fault/user action; no routine launch or intermediate updates",
+  "excluded": [
+    "RGB and model/ImageNet/checkpoint weights",
+    "raw H/C/XYZ/field/bbox, pixel and feature matrices",
+    "private per-image paths, complete source contracts and1152-row generation plans",
+    "raw run, private trace and complete source population arrays"
+  ],
+  "future_records": "Add only normalized actual generation-completion, targeted CPU/runtime, launch and complete-result evidence after those stages occur."
+}
