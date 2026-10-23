@@ -1,0 +1,21 @@
+{
+  "protocol": "geoprr_v20_public_allowlist_v1",
+  "status": "protocol_and_implementation_frozen_CPU_passed_runtime_pending",
+  "files": [
+    "../../GEOPRR_V2_SEMANTIC_RELATION_ZERO_SHOT_PROTOCOL_CN.md",
+    "README.md",
+    "source_role_mapping_feasibility.json",
+    "public_allowlist.json",
+    "cpu_checks.json"
+  ],
+  "current_evidence": "completed ideal source-label mapping, four targeted CPU checks and actual model construction; no runtime witness, training or accuracy result",
+  "model_counts_status": "actual_CPU_construction_confirmed8762052parameters502state",
+  "code_revision": null,
+  "excluded": [
+    "per-source18590row mapping table and complete source ID arrays",
+    "raw H/U/M, physical labels, bbox, source manifest paths and contracts",
+    "RGB, ImageNet or task weights, pixel and feature matrices",
+    "raw run, private paths and trace"
+  ],
+  "future_records": "Only normalized targeted CPU, actual source runtime witness and launch records may be added after those actions occur."
+}

@@ -1,0 +1,60 @@
+{
+  "status": "passed",
+  "tests": 4,
+  "seconds": 0.205,
+  "device": "cpu",
+  "scope": "new synthetic relation deployment checks plus actual untrained full-model construction; not training or accuracy",
+  "checks": [
+    "one CNN and deployed relation path in train/eval with semantic context gradients and strict reload",
+    "GT changes loss while RGB-only forward is unchanged",
+    "loss exactly reuses source SmoothL1 and role/field formula without CDF",
+    "failed-input full denominator and one state/relation/readout invocation per eval batch"
+  ],
+  "actual_model_metadata": {
+    "class": "experiments.geoprr_v2_semantic_relation.SemanticRelationReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "non_CNN_parameters": 327540,
+    "parameters": 8762052,
+    "state_tensors": 502,
+    "context_input_dim": 1280,
+    "point_head_present": false,
+    "reference_normalization": "local",
+    "feature_modules": [
+      "blocks.0",
+      "blocks.1",
+      "blocks.2",
+      "blocks.4"
+    ],
+    "feature_channels": [
+      48,
+      80,
+      160,
+      960
+    ],
+    "feature_reductions": [
+      4,
+      8,
+      16,
+      32
+    ],
+    "deployment_uses_geometry_readout": true,
+    "geometry_labels_in_model_inputs": false,
+    "training_only_auxiliary_modules": false,
+    "deployed_readout": "full conditional J to unchanged CircularProgressPushforward256"
+  },
+  "actual_tensor_counts": {
+    "parameters": 8762052,
+    "state_tensors": 502,
+    "parameter_tensors": 262,
+    "non_CNN_parameter_tensors": 31
+  },
+  "real_model_CNN_forwards": 0,
+  "real_optimizer_updates": 0
+}
