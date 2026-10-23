@@ -1,0 +1,124 @@
+{
+  "status": "passed",
+  "observed_at_utc": "2026-10-23T04:18:44.652437+00:00",
+  "config": {
+    "protocol": "geoprr_v2_full_semantic_direct_source_only_v1",
+    "model": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "num_classes": 0,
+      "readout": "sigmoid(linear(full encoder semantic output)); semantic conv_head and norm_head retained",
+      "point_initialization_std": 0.001,
+      "point_initialization_bias": 0.0
+    },
+    "data": {
+      "image_size": 256,
+      "output_size": 64
+    },
+    "source": {
+      "unique_training_images": 18590,
+      "validation_images": 1506,
+      "source_replacement": {
+        "groups": 128,
+        "states": [
+          0.0,
+          0.005,
+          0.02,
+          1.0
+        ],
+        "protocol": "geoprr_v2_endpoint_source_v11"
+      },
+      "require_geometry": false,
+      "pair_manifest": null
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 60,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "weight_decay": 0.0001,
+      "loss": "smooth_l1",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0,
+      "learning_rate": "epoch1..30 cosine3e-4; epoch31..60 cosine3e-5; phase position0..29/30"
+    },
+    "checkpoint_selection": "earliest minimum normalized scalar NMAE on complete source1506 within60epochs",
+    "external_checkpoint": "source-selected best only after all60epochs complete",
+    "inference_input": "ROI RGB, linear resize256, ImageNet normalization; no GT geometry or target scalar input",
+    "external_training_or_adaptation": false
+  },
+  "model_metadata": {
+    "class": "experiments.geoprr_v2_semantic_direct.SemanticDirectReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "point_parameters": 1281,
+    "parameters": 8435793,
+    "state_tensors": 464
+  },
+  "declared_RGB_shape": [
+    4,
+    3,
+    256,
+    256
+  ],
+  "semantic_point_input_shape": [
+    4,
+    1280
+  ],
+  "validation_input_matches_declared256_pipeline": true,
+  "validation_identity_samples": 2,
+  "old768_input_identity_claimed": false,
+  "source_unique": 18590,
+  "source_validation": 1506,
+  "source_probe_states": [
+    0.0,
+    1.0,
+    0.0,
+    1.0
+  ],
+  "ImageNet_cached_only": true,
+  "target_datasets_used": false,
+  "loss": 0.47488605976104736,
+  "all_gradients_finite": true,
+  "encoder_gradient_nonzero": true,
+  "semantic_neck_gradient_nonzero": true,
+  "point_gradient_nonzero": true,
+  "parameter_tensors_unchanged_without_optimizer": 233,
+  "source_BN_counter_tensors_checked": 77,
+  "source_BN_counter_increment": 1,
+  "strict_eval_state_reload": true,
+  "counts": {
+    "CNN_calls": 1,
+    "CNN_images": 4,
+    "CNN_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "seconds": 13.689548932015896,
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "peak_allocated_bytes": 201783296,
+  "peak_reserved_bytes": 211812352,
+  "scope": "new complete semantic model and declared256 source RGB kernel witness; not trained performance"
+}

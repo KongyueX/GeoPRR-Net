@@ -1,6 +1,6 @@
 # MobileNetV4完整语义特征与直接进度：独立源域训练
 
-2026-10-23。用户要求继续提高zero-shot表现，不限定旧GeoPRR方法，Industrial与RF100不得用于训练。本轮为独立新模型，不延长v15的20轮缓存线性头，也不恢复旧65轮任务。状态：配方冻结，代码及新256源输入运行检查准备中，尚未启动正式训练。
+2026-10-23。用户要求继续提高zero-shot表现，不限定旧GeoPRR方法，Industrial与RF100不得用于训练。本轮为独立新模型，不延长v15的20轮缓存线性头，也不恢复旧65轮任务。状态：4项针对性CPU检查及新256源输入运行检查通过后，正式源训练于北京时间2026-10-23 12:19:44启动，旧目标域评估尚未开始。
 
 ## 证据与本轮问题
 
@@ -51,6 +51,8 @@ Industrial1395／52组与RF100151／35组不参与梯度、损失、早停、che
 针对CPU检查覆盖full encoder保留semantic neck、point形状／梯度、四个LR端点、全分母scalar失败规则。真实源RGB检查确认新256输入合同一致、完整ImageNetencoder保留、1280embedding／标量输出、所有训练分支梯度有限且有非零信号，0 optimizer；不复跑旧GT、teacher或旧完整tests。
 
 完成后收齐config／protocol／初始化记录／run／history／best与last源逐图／completed／两外域逐图和真实成本，只做一次必要独立CPU数值／执行核对。报告source／Industrial／RF100 NMAE、Acc、zero／nearzero／nonzero、组、tail／max、ordinary1495／1497、严重6和3172／2810／3663／9323。比较旧GeoPRR历史、同像素当前几何family及v15探针，但保留各自训练预算和输入配置差异。
+
+实际启动记录：代码16d41e4，父407625／初始训练子407644，唯一GPU进程与首批64图、loss0.2343196869、有限梯度已核实；见[启动记录](data/geoprr_v2_semantic_direct_20261023/launch.json)。新4张源RGB见证实际执行1280维semantic→point，1次CNN／4图／1次反传／0optimizer，233个参数tensor在无optimizer时逐项保持、77个源BN计数器各+1，464 state严格reload、2个验证输入符合声明256流程；见[运行检查](data/geoprr_v2_semantic_direct_20261023/runtime_preflight.json)。这些只证明实现与输入，不是性能成绩。
 
 ## 限制
 

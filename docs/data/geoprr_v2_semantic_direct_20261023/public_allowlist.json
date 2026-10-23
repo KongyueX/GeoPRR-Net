@@ -1,0 +1,15 @@
+{
+  "files": [
+    "cpu_checks.json",
+    "launch.json",
+    "public_allowlist.json",
+    "runtime_preflight.json"
+  ],
+  "excluded": [
+    "RGB",
+    "ImageNet/model/checkpoint weights",
+    "raw source data_contract/paths/bbox",
+    "private trace"
+  ],
+  "scope": "new model preflight and source-only launch; final results pending"
+}

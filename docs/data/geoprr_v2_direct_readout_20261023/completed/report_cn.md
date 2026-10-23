@@ -107,7 +107,7 @@ Industrial零位／非零为588／807、正近零99；RF100为6／145、正近�
 
 结束这一个冻结GAP线性头探针，保留source-best19、last20和全部负结果，不机械延长20轮。结果只表明当前冻结特征＋小线性头未在源上学好；它不支持“已学好源域但仅在zero-shot翻车”的解释，也不否定完整语义表示与端到端直接读数训练。
 
-用户最新要求继续0目标监督的泛化迭代，不限于旧GeoPRR。下一独立v16计划使用既有ImageNet缓存的完整MobileNetV4语义encoder，恢复features_only丢弃的conv_head960→1280和norm_head共6个state／1231360参数；离线CPU构造确认去分类器encoder8434512参数／462state、实际embedding1280，新增1281参数point head后8435793参数／464state。它是新源域256 RGB、60轮、SmoothL1(beta0.05)端到端训练合同，不是延长v15，也不使用Industrial／RF100拟合。当前仅为已冻结计划，正式新输入运行见证与训练尚未开始，没有性能结论。见[完整语义方案协议](../../../GEOPRR_V2_FULL_SEMANTIC_ZERO_SHOT_PROTOCOL_CN.md)。
+用户最新要求继续0目标监督的泛化迭代，不限于旧GeoPRR。独立v16使用既有ImageNet缓存的完整MobileNetV4语义encoder，恢复features_only丢弃的conv_head960→1280和norm_head共6个state／1231360参数；离线CPU构造确认去分类器encoder8434512参数／462state、实际embedding1280，新增1281参数point head后8435793参数／464state。它是新源域256 RGB、60轮、SmoothL1(beta0.05)端到端训练合同，不是延长v15，也不使用Industrial／RF100拟合。4项CPU检查与4张真实源RGB运行见证通过后，v16已于北京时间2026-10-23 12:19:44启动正式源训练；两外域评估尚未开始，没有新外域性能结论。见[完整语义方案协议](../../../GEOPRR_V2_FULL_SEMANTIC_ZERO_SHOT_PROTOCOL_CN.md)。
 
 ## Limitations
 

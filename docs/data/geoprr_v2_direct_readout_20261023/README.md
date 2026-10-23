@@ -30,7 +30,7 @@ RGB和head仅使用既有端点替换源18590 unique与原验证1506；cache无�
 
 用户要求继续提高0目标监督的泛化，不限于旧GeoPRR。v16已冻结一个独立方案：使用同一已有ImageNet缓存的完整MobileNetV4分类语义通路，保留features_only丢弃的conv_head960→1280及norm_head六个state／1231360参数；离线CPU构造确认实际embedding1280，去分类器encoder8434512参数／462state，新增1281参数point head后8435793参数／464state。新方案为256 RGB、源端到端60轮、SmoothL1(beta0.05)，不是延长v15的缓存线性头，也不使用Industrial或RF100训练／适配。
 
-当前是已冻结计划，新的实际256源输入运行见证与正式训练尚未开始，没有新性能结论。详见[完整语义源域训练协议](../../GEOPRR_V2_FULL_SEMANTIC_ZERO_SHOT_PROTOCOL_CN.md)。
+4项CPU检查与新的实际256源输入运行见证通过后，正式源训练已于北京时间2026-10-23 12:19:44启动。Industrial和RF100评估只在全部60轮源训练完成后运行；当前没有新外域性能结论。详见[完整语义源域训练协议](../../GEOPRR_V2_FULL_SEMANTIC_ZERO_SHOT_PROTOCOL_CN.md)。
 
 ## Limitations
 
