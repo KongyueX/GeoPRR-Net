@@ -1,6 +1,6 @@
 # 完整语义表示与源域角色辅助监督
 
-2026-10-23。独立v18协议与预算冻结，8项新CPU检查与全18590源解析合同检查通过，真实RGB零更新检查通过，正式训练待启动；没有新训练成绩。用户授权继续zero-shot研究，Industrial1395和RF100151不得用于训练。本轮从已有ImageNet缓存重新初始化，不恢复或延长已完成v16／v17。
+2026-10-23。独立v18协议与预算冻结，8项新CPU检查与全18590源解析合同检查通过，真实RGB零更新检查通过，正式源训练于北京时间2026-10-23 15:07:10启动；没有新完整训练成绩。用户授权继续zero-shot研究，Industrial1395和RF100151不得用于训练。本轮从已有ImageNet缓存重新初始化，不恢复或延长已完成v16／v17。
 
 ## 问题与单次设计
 
@@ -55,6 +55,8 @@ v16完整语义直接读数的Industrial／RF100为11.686054／10.164776%FS；v1
 保存完整model／optimizer／scaler／RNG／history／source best与last逐图、真实累计成本和两个数据子合同。真实故障先查当前step日志与活命令，保留失败／partial，必要实现修复后在同output从latest恢复；不删样本、绕保护或静默改配置。
 
 全阶段结束后仅一次必要独立CPU数值与执行核对，再比较source／外域NMAE、Acc、zero／nearzero／nonzero、组、ordinary1495／1497、severe6、3172／2810／3663／9323／8195、tail／max／救回新增和实际成本。只公开显式allowlist的规范化结果和代码；RGB、权重、H／C／XYZ、bbox、特征、raw run／data_contract和private trace保留私有。
+
+实际执行代码46a0637，父414650／初始训练子414655；父子精确命令、唯一GPU及首批64源图有限梯度已核实。首批primary0.234319686890、normalized role0.999382257462、field0.007212311029、total0.334979146719。见[启动记录](data/geoprr_v2_semantic_aux_20261023/launch.json)及[实际源输入见证](data/geoprr_v2_semantic_aux_20261023/runtime_preflight.json)。这些是执行证据，不是训练性能。
 
 ## Limitations
 

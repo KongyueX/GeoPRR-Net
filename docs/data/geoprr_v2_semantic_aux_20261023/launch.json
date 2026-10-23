@@ -1,0 +1,32 @@
+{
+  "status": "source_training_running",
+  "observed_at_utc": "2026-10-23T07:07:59.705593+00:00",
+  "started_at_utc": "2026-10-23T07:07:10.076361+00:00",
+  "started_at_Beijing": "2026-10-23 15:07:10",
+  "code_revision": "46a0637d4f1e02276c524b03cbda89023637491d",
+  "entrypoint": "experiments.run_geoprr_v2_semantic_aux",
+  "parent_pid": 414650,
+  "initial_child_pid": 414655,
+  "parent_and_child_exact_commands_verified": true,
+  "sole_GPU_process": 414655,
+  "sole_GPU_MiB": 4018,
+  "previous_v17_queue_complete_and_parent_inactive": true,
+  "GPU_empty_before_launch": true,
+  "source_training_complete": false,
+  "external_evaluation_started": false,
+  "target_training_samples": 0,
+  "first_training_batch": {
+    "epoch": 1,
+    "batch": 1,
+    "images": 64,
+    "primary": 0.23431968688964844,
+    "role_nll_raw": 16.625255584716797,
+    "role_nll_normalized": 0.9993822574615479,
+    "field_l1": 0.007212311029434204,
+    "auxiliary": 1.0065945386886597,
+    "total": 0.3349791467189789,
+    "learning_rate": 0.0003,
+    "gradient_norm_finite": true
+  },
+  "scope": "source execution start only, not a trained performance result; fresh complete ImageNet with train-only analytic U/M/role supervision"
+}

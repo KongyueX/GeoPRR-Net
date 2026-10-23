@@ -4,6 +4,7 @@
     "README.md",
     "analytic_source_contract.json",
     "cpu_checks.json",
+    "launch.json",
     "runtime_preflight.json",
     "public_allowlist.json"
   ],

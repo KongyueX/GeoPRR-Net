@@ -1,6 +1,6 @@
 # v18完整语义与源结构辅助监督
 
-新独立源域表示实验的协议、配置和60轮预算已冻结；8项CPU检查、18590张源标签的新解析合同检查和实际源RGB零更新检查均通过，正式训练待启动。这里没有新训练性能。
+新独立源域表示实验的协议、配置和60轮预算已冻结；8项CPU检查、18590张源标签的新解析合同检查和实际源RGB零更新检查均通过，正式源训练于北京时间2026-10-23 15:07:10启动。这里没有新训练性能。
 
 使用fresh完整ImageNet MobileNetV4和直接scalar读出，同一encoder增加训练期FPN／参考角色辅助分支，以源解析进度U、ring／arc mask M及参考角色监督共享表示。推理只执行完整semantic→point，不运行辅助decoder，也不使用目标GT几何。总训练参数8693701／498 state，活动推理通路8435793／464，辅助257908参数／34 state；源loss固定SmoothL1(beta.05)+0.1*(roleNLL/(3log256)+fieldL1)，不按外域调权重。
 
@@ -10,6 +10,7 @@
 
 预算为60完整源epoch、18590unique／1506源val、256 RGB、seed20262020、train64／val64／workers4；全部60结束后只对source-selected earliest best各做一次Industrial1395／RF100151外评。两域0训练／总体统计拟合／BN适配／checkpoint和超参数选择。新增auxiliary计算成本单独记录，不将相同CNN调用称为同计算量。
 
+- [启动记录](launch.json)
 - [冻结协议](../../GEOPRR_V2_SEMANTIC_AUX_ZERO_SHOT_PROTOCOL_CN.md)
 - [全源解析合同检查](analytic_source_contract.json)
 - [实际源运行检查](runtime_preflight.json)
