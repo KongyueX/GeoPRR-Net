@@ -1,0 +1,24 @@
+{
+  "protocol": "geoprr_v21_public_allowlist_v1",
+  "status": "protocol_implementation_CPU_passed_runtime_pending",
+  "files": [
+    "../../GEOPRR_V2_SEMANTIC_ROLE_ZERO_SHOT_PROTOCOL_CN.md",
+    "README.md",
+    "public_allowlist.json",
+    "cpu_checks.json"
+  ],
+  "code_revision": null,
+  "model_counts_status": "actual_CPU_confirmed8823492parameters503state263paramtensors",
+  "current_evidence": "six targeted synthetic CPU checks and actual full-model construction passed; no real RGB witness, training or performance result",
+  "reused_source_evidence": [
+    "../geoprr_v2_semantic_relation_20261023/source_role_mapping_feasibility.json",
+    "../geoprr_v2_semantic_aux_20261023/analytic_source_contract.json"
+  ],
+  "excluded": [
+    "raw source contracts, source paths/bbox and complete source ID population arrays",
+    "H/C/XYZ/U/M and raw geometry or feature matrices",
+    "RGB, ImageNet or task weights, pixel matrices",
+    "raw run, private paths and trace"
+  ],
+  "future_records": "Add only normalized actual CPU checks, source runtime witness and launch evidence after those actions occur."
+}

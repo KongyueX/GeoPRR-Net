@@ -1,0 +1,71 @@
+{
+  "status": "passed",
+  "tests": 6,
+  "seconds": 0.194,
+  "device": "cpu",
+  "scope": "new synthetic semantic-role path checks and actual full-model construction only; not training or accuracy",
+  "checks": [
+    "zero query preserves parent role outputs and reading for partial batches",
+    "existing modules, parameter objects and state keys preserved with one new weight",
+    "nonzero semantic queries change role scores with fixed spatial tokens and calibration",
+    "query formula, circular relative gather and shared-reference joint remain correct",
+    "finite query gradient, image-only GT isolation and strict state reload",
+    "semantic query executes once per evaluation batch and failed original remains in denominator"
+  ],
+  "actual_model_metadata": {
+    "class": "experiments.geoprr_v2_semantic_relation.SemanticRelationReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "non_CNN_parameters": 388980,
+    "parameters": 8823492,
+    "state_tensors": 503,
+    "context_input_dim": 1280,
+    "point_head_present": false,
+    "reference_normalization": "local",
+    "feature_modules": [
+      "blocks.0",
+      "blocks.1",
+      "blocks.2",
+      "blocks.4"
+    ],
+    "feature_channels": [
+      48,
+      80,
+      160,
+      960
+    ],
+    "feature_reductions": [
+      4,
+      8,
+      16,
+      32
+    ],
+    "deployment_uses_geometry_readout": true,
+    "geometry_labels_in_model_inputs": false,
+    "training_only_auxiliary_modules": false,
+    "deployed_readout": "full conditional J to unchanged CircularProgressPushforward256",
+    "semantic_role_conditioning": true,
+    "semantic_query_input_dim": 1280,
+    "semantic_query_roles": 3,
+    "semantic_query_token_dim": 16,
+    "semantic_query_parameters": 61440,
+    "semantic_query_parameter_tensors": 1,
+    "semantic_query_initialization": "zero after all502 fresh v20 states are constructed; trained values may differ",
+    "preserved_base_initial_state_tensors": 502,
+    "semantic_role_head_class": "experiments.geoprr_v2_semantic_role.SemanticRoleStateHead"
+  },
+  "actual_tensor_counts": {
+    "parameters": 8823492,
+    "state_tensors": 503,
+    "parameter_tensors": 263,
+    "non_CNN_parameter_tensors": 32
+  },
+  "real_model_CNN_forwards": 0,
+  "real_optimizer_updates": 0
+}
