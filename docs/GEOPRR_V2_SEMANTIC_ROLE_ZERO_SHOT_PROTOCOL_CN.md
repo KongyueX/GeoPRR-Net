@@ -1,6 +1,6 @@
 # 完整语义直接条件角色能量：独立zero-shot协议
 
-2026-10-23。v21按本文件冻结一个独立源域结构与60轮预算；实际模型构造与6项新CPU检查已通过，8823492参数／503 state／263参数tensor已核实；源RGB零更新见证及启动尚待完成，没有新性能或启动结论。代码SHA在本轮实现提交后记录。Industrial1395与RF100151不得用于训练、适配或选择模型／训练超参数；全部旧模型、原G1／anchor失败、65轮与配对守恒负结果保留。
+2026-10-23。v21按本文件冻结一个独立源域结构与60轮预算；实际模型构造与6项新CPU检查已通过，8823492参数／503 state／263参数tensor已核实；源RGB零更新见证也已通过，唯一正式源训练于北京时间2026-10-23 19:27:44启动，尚无完整性能结果。执行代码422825b9013d5d16f6a0238f2bfa10475f449bdb已推现有main。Industrial1395与RF100151不得用于训练、适配或选择模型／训练超参数；全部旧模型、原G1／anchor失败、65轮与配对守恒负结果保留。
 
 ## 可检验问题
 
@@ -24,7 +24,7 @@
 
 `RGB → 一次完整encoder → semantic校准context + semantic角色query + 多尺度空间tokens → 原local条件联合J → 原全质量运输 → reading`。
 
-query全零时，原502项state和初始reading必须与同seed fresh v20精确一致，须由实际构造／运行记录验证后才标为已通过。实际CPU构造核实完整8823492参数／503 state／263个参数tensor，非CNN388980参数／32个tensor。所有CNN、FPN、校准、原角色与新增query参数均参加源训练。初始W=0时，首先学习的是W的梯度；不能声称新query已经向semantic encoder贡献非零梯度，encoder仍通过原有校准／空间路径学习。
+实际运行记录确认query全零时原502项state与同seed fresh v20逐项相等，角色分布与J差为0；reading最大差2.384186e-7、读数分布最大差4.172325e-7，均在预设1e-6容差内，不声明通用逐位相同。实际CPU构造核实完整8823492参数／503 state／263个参数tensor，非CNN388980参数／32个tensor。所有CNN、FPN、校准、原角色与新增query参数均参加源训练。初始W=0时，首先学习的是W的梯度；不能声称新query已经向semantic encoder贡献非零梯度，encoder仍通过原有校准／空间路径学习。
 
 模型训练、验证和外域均只接收RGB并执行同一部署函数。每图query是在固定权重下读取该图RGB的条件计算，不是目标域适配或总体统计拟合。BN只由源训练更新，eval固定；没有新scalar point、融合MLP、router、C4轨道、CDF、confidence门控或GT推理输入。只用已有ImageNet缓存fresh初始化，HF_HUB_OFFLINE=1，不下载新foundation。
 
@@ -50,7 +50,7 @@ H／span、64网格解析field U和ring／arc mask M、虚拟A／P／B角色只�
 
 ## 必要新检查与执行
 
-计划模块`experiments.geoprr_v2_semantic_role`，入口`experiments.run_geoprr_v2_semantic_role`，独立输出`runs/geoprr_generalization/iteration_v21_semantic_role_conditioning_20261023/source_only_training`。新入口已实现并通过6项针对性CPU检查（0.194秒），尚未做真实源RGB运行见证或启动训练；代码SHA由正式提交确定。
+计划模块`experiments.geoprr_v2_semantic_role`，入口`experiments.run_geoprr_v2_semantic_role`，独立输出`runs/geoprr_generalization/iteration_v21_semantic_role_conditioning_20261023/source_only_training`。新入口已实现并通过6项针对性CPU检查（0.194秒），真实源RGB运行见证也已通过，唯一源队列已启动；执行代码422825b已冻结。
 
 新结构CPU检查只针对真实变化：零query时能量／J／reading与fresh v20一致；共同A和相对gather、partial batch保持；固定空间tokens及校准时，非零semantic query能实际改变角色能量；新增query梯度、RGB-only输入与失败分母符合声明。实际参数／state计数须核实，不重复旧GT／G0／教师／完整审计或评分评审循环。
 
@@ -61,6 +61,10 @@ H／span、64网格解析field U和ring／arc mask M、虚拟A／P／B角色只�
 保存原protocol／snapshot、全部503 state与optimizer／scaler／RNG、history、源best／latest和各1506逐图、两套完整外域逐图／组／summary及真实成本。真实实现故障先查看当前step日志及活命令，保留partial与失败，在同output从latest恢复；实质方法／配置／人口变化另立独立实验，不删行或绕保护。
 
 全阶段完成后仅一次必要独立CPU数值与执行核对，再比较v20／v16／v18及原几何和旧GeoPRR保存参照的各域NMAE／Acc、zero／nonzero／nearzero、组、ordinary1495／1497、severe6、3172／2810／3663／9323／8195、sync9／4025、RF41／6／46／140、tail／max／救回新增及成本。只公开本任务代码和显式规范化allowlist，RGB、权重、H／C／XYZ／U／M、bbox、特征矩阵、raw run／data_contract与private trace保留私有；只推现有main，不建branch。
+
+实际源见证已通过：4次CNN／10图呈现／1次combined反传／0optimizer，6张unique图；全部263参数tensor无optimizer未改变、77个BN counter源train+1／eval额外0，503 state严格加载，源合同与原256验证输入保持，实际1280query输入、新W梯度及所有必要梯度有限非零。该检查不代表训练准确率或zero-shot效果，见[运行记录](data/geoprr_v2_semantic_role_20261023/runtime_preflight.json)。
+
+实际启动父426967／初始训练子426974，2026-10-23 11:28:28 UTC核实精确命令匹配，唯一GPU进程426974。首批64源图loss0.334367245、梯度范数有限；这只是执行快照，不是准确率。见[启动记录](data/geoprr_v2_semantic_role_20261023/launch.json)。
 
 ## Limitations
 

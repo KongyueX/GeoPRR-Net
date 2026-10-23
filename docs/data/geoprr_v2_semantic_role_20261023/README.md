@@ -1,6 +1,6 @@
 # v21完整语义直接条件角色能量
 
-**独立源域结构与60轮预算已冻结，6项新CPU检查通过，实际构造核实8823492参数／503 state／263个参数tensor；源RGB运行见证与启动尚待完成，没有新模型性能。** 本轮在完整fresh v20的502项base state之后增加一个全零、无bias的Linear1280→3×16；每图semantic query与原角度角色token点积后加入unary，原local共享A条件联合与全质量读出不变。实际新增61440参数／1 state。
+**独立源域结构与60轮预算已冻结，6项新CPU检查通过，实际构造核实8823492参数／503 state／263个参数tensor；实际源RGB零更新见证也已通过，唯一正式源训练于北京时间2026-10-23 19:27:44启动，暂无完整性能结果。** 本轮在完整fresh v20的502项base state之后增加一个全零、无bias的Linear1280→3×16；每图semantic query与原角度角色token点积后加入unary，原local共享A条件联合与全质量读出不变。实际新增61440参数／1 state。
 
 query全零时原502项初始化与初始reading必须匹配同seed fresh v20，不加载训练好的旧checkpoint。新query在固定参数下按每图RGB计算，不是目标适配；没有新scalar point、fusion、router、CDF或GT输入。P仍为半径1虚拟盘面状态点，源H／span／U／M和角色只进loss。固定loss沿用v20：SmoothL1(reading,y,beta=.05)+0.1×(roleNLL/(3log256)+fieldL1)。
 
@@ -10,6 +10,8 @@ query全零时原502项初始化与初始reading必须匹配同seed fresh v20，
 
 - [冻结协议](../../GEOPRR_V2_SEMANTIC_ROLE_ZERO_SHOT_PROTOCOL_CN.md)
 - [新CPU检查与实际模型计数](cpu_checks.json)
+- [实际源RGB运行见证](runtime_preflight.json)
+- [唯一源队列启动快照](launch.json)
 - [公开allowlist](public_allowlist.json)
 
 ## Limitations

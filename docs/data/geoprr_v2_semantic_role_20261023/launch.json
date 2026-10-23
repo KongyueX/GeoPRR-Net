@@ -1,0 +1,40 @@
+{
+  "status": "source_training_running",
+  "code_revision": "422825b9013d5d16f6a0238f2bfa10475f449bdb",
+  "started_at_utc": "2026-10-23T11:27:44.990590+00:00",
+  "started_at_beijing": "2026-10-23 19:27:44",
+  "parent_pid": 426967,
+  "initial_training_child_pid": 426974,
+  "entrypoint": "experiments.run_geoprr_v2_semantic_role",
+  "training_entrypoint": "experiments.geoprr_v2_semantic_role",
+  "output_relative": "runs/geoprr_generalization/iteration_v21_semantic_role_conditioning_20261023/source_only_training",
+  "verified_at_utc": "2026-10-23T11:28:28.371378+00:00",
+  "actual_parent_command_matches": true,
+  "actual_training_child_command_matches": true,
+  "sole_GPU_compute_pid": 426974,
+  "GPU_memory_MiB": 4022,
+  "current_step": "train_source",
+  "completed_source_epochs_at_snapshot": 0,
+  "first_training_batch": {
+    "epoch": 1,
+    "batch": 1,
+    "images": 64,
+    "losses": {
+      "primary": 0.2339426577091217,
+      "role_nll_raw": 16.62539291381836,
+      "role_nll_normalized": 0.9993904829025269,
+      "field_l1": 0.004855446517467499,
+      "auxiliary": 1.0042458772659302,
+      "total": 0.3343672454357147
+    },
+    "learning_rate": 0.0003,
+    "gradient_norm_finite": true
+  },
+  "source_runtime_witness": "passed",
+  "target_training_or_adaptation": false,
+  "target_datasets_not_evaluated_before_source_completion": true,
+  "planned_source_epochs": 60,
+  "planned_complete_CNN_images": 1207306,
+  "planned_complete_CNN_calls": 18925,
+  "scope": "launch/execution snapshot only, no completed model accuracy"
+}

@@ -1,15 +1,17 @@
 {
   "protocol": "geoprr_v21_public_allowlist_v1",
-  "status": "protocol_implementation_CPU_passed_runtime_pending",
+  "status": "source_training_running",
   "files": [
     "../../GEOPRR_V2_SEMANTIC_ROLE_ZERO_SHOT_PROTOCOL_CN.md",
     "README.md",
     "public_allowlist.json",
-    "cpu_checks.json"
+    "cpu_checks.json",
+    "runtime_preflight.json",
+    "launch.json"
   ],
-  "code_revision": null,
+  "code_revision": "422825b9013d5d16f6a0238f2bfa10475f449bdb",
   "model_counts_status": "actual_CPU_confirmed8823492parameters503state263paramtensors",
-  "current_evidence": "six targeted synthetic CPU checks and actual full-model construction passed; no real RGB witness, training or performance result",
+  "current_evidence": "six CPU checks, actual503-state source RGB zero-update witness and unique source60 launch verified; no complete performance result",
   "reused_source_evidence": [
     "../geoprr_v2_semantic_relation_20261023/source_role_mapping_feasibility.json",
     "../geoprr_v2_semantic_aux_20261023/analytic_source_contract.json"
