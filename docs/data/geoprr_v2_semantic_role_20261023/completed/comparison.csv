@@ -1,0 +1,8 @@
+model,source_nmae_percent_fs,industrial_nmae_percent_fs,rf100_nmae_percent_fs,active_inference_parameters,scope
+v21_source_best42,0.2589474502918933,23.978973541075074,14.008518129017434,8823492,"full60 source-selected best; matched-v20 means improve, external tail10 worsens; not default"
+v21_last60,0.2970724546657453,,,8823492,source only; no extra external evaluation
+v20_source_best16,0.28331462226947196,29.257524457875316,16.22409464905905,8762052,primary matched-base reference; fresh source run; saved source-selected checkpoint
+v16_source_best59,0.5262168472809196,11.686054081188708,10.16477580956686,8435793,saved256 direct reader; different readout/supervision
+v18_source_best58,0.4465994424053873,13.194496363445642,9.929752397286977,8435793,saved256 direct inference reader; auxiliary branch training only
+v12_local_endpoint_best1,0.0833923887720102,20.539124658463546,7.659157217015351,7461060,saved native768 and four-epoch source protocol; different history
+historical_old_GeoPRR_source_only,,11.643617857033954,6.6070791714191,,historical same-population source-only result; executed pixels/full weight chain not recertified

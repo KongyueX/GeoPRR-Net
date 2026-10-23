@@ -1,0 +1,522 @@
+{
+  "formal_counts": {
+    "cnn_image_forwards": 1207306,
+    "cnn_forward_calls": 18925,
+    "source_backward_calls": 17460,
+    "source_optimizer_updates": 17453,
+    "source_amp_skipped_updates": 7,
+    "source_relation_forward_calls": 17460,
+    "source_relation_backward_attempts": 17460,
+    "source_readout_forward_calls": 17460,
+    "source_semantic_query_forward_calls": 17460,
+    "source_semantic_query_backward_attempts": 17460,
+    "validation_relation_forward_calls": 1440,
+    "validation_readout_forward_calls": 1440,
+    "validation_semantic_query_forward_calls": 1440,
+    "target_relation_forward_calls": 25,
+    "target_readout_forward_calls": 25,
+    "target_semantic_query_forward_calls": 25,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  },
+  "formal_costs": {
+    "industrial": {
+      "timing": {
+        "counts": {
+          "cnn_forward_calls": 22,
+          "cnn_image_forwards": 1395,
+          "semantic_query_forward_calls": 22,
+          "state_head_forward_calls": 22,
+          "relation_forward_calls": 22,
+          "readout_forward_calls": 22,
+          "backward_calls": 0,
+          "optimizer_updates": 0,
+          "failed_input_placeholder_forwards": 0
+        },
+        "pipeline_seconds": 8.46988794952631,
+        "forward_seconds": 7.222705204039812,
+        "batch_size": 64,
+        "workers": 4
+      },
+      "runtime": {
+        "process_seconds": 10.479309361428022,
+        "full_process_seconds": 11.435527671128511,
+        "full_process_boundary": "module entry before torch import through saved source/external predictions; excludes final completion JSON",
+        "device": "cuda",
+        "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+        "torch": "2.11.0+cu128",
+        "cuda": "12.8",
+        "peak_cuda_memory_bytes": 643145216,
+        "peak_cuda_reserved_bytes": 1019215872
+      },
+      "forward_counts": {
+        "cnn_forward_calls": 22,
+        "cnn_image_forwards": 1395,
+        "semantic_query_forward_calls": 22,
+        "state_head_forward_calls": 22,
+        "relation_forward_calls": 22,
+        "readout_forward_calls": 22,
+        "backward_calls": 0,
+        "optimizer_updates": 0,
+        "failed_input_placeholder_forwards": 0
+      }
+    },
+    "rf100": {
+      "timing": {
+        "counts": {
+          "cnn_forward_calls": 3,
+          "cnn_image_forwards": 151,
+          "semantic_query_forward_calls": 3,
+          "state_head_forward_calls": 3,
+          "relation_forward_calls": 3,
+          "readout_forward_calls": 3,
+          "backward_calls": 0,
+          "optimizer_updates": 0,
+          "failed_input_placeholder_forwards": 0
+        },
+        "pipeline_seconds": 8.642534919083118,
+        "forward_seconds": 7.887811195105314,
+        "batch_size": 64,
+        "workers": 4
+      },
+      "runtime": {
+        "process_seconds": 10.874249659478664,
+        "full_process_seconds": 11.8207288980484,
+        "full_process_boundary": "module entry before torch import through saved source/external predictions; excludes final completion JSON",
+        "device": "cuda",
+        "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+        "torch": "2.11.0+cu128",
+        "cuda": "12.8",
+        "peak_cuda_memory_bytes": 639999488,
+        "peak_cuda_reserved_bytes": 815792128
+      },
+      "forward_counts": {
+        "cnn_forward_calls": 3,
+        "cnn_image_forwards": 151,
+        "semantic_query_forward_calls": 3,
+        "state_head_forward_calls": 3,
+        "relation_forward_calls": 3,
+        "readout_forward_calls": 3,
+        "backward_calls": 0,
+        "optimizer_updates": 0,
+        "failed_input_placeholder_forwards": 0
+      }
+    },
+    "source_totals": {
+      "train_batches": 17460,
+      "train_cnn_image_forwards": 1115400,
+      "train_cnn_forward_calls": 17460,
+      "backward_calls": 17460,
+      "optimizer_updates": 17453,
+      "amp_skipped_updates": 7,
+      "relation_forward_calls": 17460,
+      "relation_backward_attempts": 17460,
+      "readout_forward_calls": 17460,
+      "semantic_query_forward_calls": 17460,
+      "semantic_query_backward_attempts": 17460,
+      "validation_images": 90360,
+      "validation_cnn_forward_calls": 1440,
+      "validation_relation_forward_calls": 1440,
+      "validation_readout_forward_calls": 1440,
+      "validation_semantic_query_forward_calls": 1440,
+      "training_seconds": 2773.254664938897,
+      "validation_seconds": 173.47069058939815
+    },
+    "source_runtime": {
+      "process_seconds": 3008.8445746041834,
+      "full_process_seconds": 3009.7728834301233,
+      "full_process_boundary": "module entry before torch import through saved source/external predictions; excludes final completion JSON",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 3049633792,
+      "peak_cuda_reserved_bytes": 3439329280
+    },
+    "stage_wall_seconds": {
+      "train_source": 3010.627388,
+      "eval_industrial": 12.212025,
+      "eval_rf100": 12.639893
+    },
+    "controller_end_to_end_seconds": 3035.589614,
+    "completed_at_utc": "2026-10-23T12:18:21.736156+00:00",
+    "source_checkpointed_process_seconds": 3008.844861112535,
+    "source_train_state_head_forward_calls": 17460,
+    "validation_state_head_forward_calls": 1440,
+    "target_state_head_forward_calls": 25
+  },
+  "saved_reference_cost_comparisons": {
+    "v20": {
+      "source_training_seconds": {
+        "v21": 2773.254664938897,
+        "reference": 2827.82918426767,
+        "difference": -54.57451932877302,
+        "ratio": 0.9807009137495317
+      },
+      "source_validation_seconds": {
+        "v21": 173.47069058939815,
+        "reference": 174.25890681892633,
+        "difference": -0.7882162295281887,
+        "ratio": 0.995476752127527
+      },
+      "source_process_seconds": {
+        "v21": 3008.8445746041834,
+        "reference": 3060.477437298745,
+        "difference": -51.63286269456148,
+        "ratio": 0.9831291477384215
+      },
+      "source_full_process_seconds": {
+        "v21": 3009.7728834301233,
+        "reference": 3061.4097052253783,
+        "difference": -51.636821795254946,
+        "ratio": 0.9831329920633888
+      },
+      "queue_wall_seconds": {
+        "v21": 3035.589614,
+        "reference": 3087.175606,
+        "difference": -51.585991999999806,
+        "ratio": 0.9832902307533976
+      },
+      "source_peak_allocated_bytes": {
+        "v21": 3049633792,
+        "reference": 3046479872,
+        "difference": 3153920,
+        "ratio": 1.0010352669745128
+      },
+      "source_peak_reserved_bytes": {
+        "v21": 3439329280,
+        "reference": 3437232128,
+        "difference": 2097152,
+        "ratio": 1.0006101281269066
+      },
+      "industrial_pipeline_seconds": {
+        "v21": 8.46988794952631,
+        "reference": 9.360190525650978,
+        "difference": -0.8903025761246681,
+        "ratio": 0.9048841395177958
+      },
+      "industrial_forward_seconds": {
+        "v21": 7.222705204039812,
+        "reference": 8.053706634789705,
+        "difference": -0.8310014307498932,
+        "ratio": 0.8968175191333385
+      },
+      "industrial_process_seconds": {
+        "v21": 10.479309361428022,
+        "reference": 11.556361518800259,
+        "difference": -1.0770521573722363,
+        "ratio": 0.906800063703437
+      },
+      "industrial_full_process_seconds": {
+        "v21": 11.435527671128511,
+        "reference": 12.493820291012526,
+        "difference": -1.0582926198840141,
+        "ratio": 0.9152947140879479
+      },
+      "industrial_peak_cuda_memory_bytes": {
+        "v21": 643145216,
+        "reference": 641891840,
+        "difference": 1253376,
+        "ratio": 1.0019526280315387
+      },
+      "industrial_peak_cuda_reserved_bytes": {
+        "v21": 1019215872,
+        "reference": 1017118720,
+        "difference": 2097152,
+        "ratio": 1.002061855670103
+      },
+      "rf100_pipeline_seconds": {
+        "v21": 8.642534919083118,
+        "reference": 7.708344459533691,
+        "difference": 0.934190459549427,
+        "ratio": 1.1211921009048862
+      },
+      "rf100_forward_seconds": {
+        "v21": 7.887811195105314,
+        "reference": 7.027428243309259,
+        "difference": 0.8603829517960548,
+        "ratio": 1.1224321219665554
+      },
+      "rf100_process_seconds": {
+        "v21": 10.874249659478664,
+        "reference": 9.62057849764824,
+        "difference": 1.2536711618304253,
+        "ratio": 1.130311411329047
+      },
+      "rf100_full_process_seconds": {
+        "v21": 11.8207288980484,
+        "reference": 10.559741478413343,
+        "difference": 1.2609874196350574,
+        "ratio": 1.1194146108797094
+      },
+      "rf100_peak_cuda_memory_bytes": {
+        "v21": 639999488,
+        "reference": 638746112,
+        "difference": 1253376,
+        "ratio": 1.001962244429286
+      },
+      "rf100_peak_cuda_reserved_bytes": {
+        "v21": 815792128,
+        "reference": 813694976,
+        "difference": 2097152,
+        "ratio": 1.0025773195876289
+      }
+    },
+    "v16": {
+      "source_training_seconds": {
+        "v21": 2773.254664938897,
+        "reference": 2761.0258493237197,
+        "difference": 12.228815615177155,
+        "ratio": 1.0044290840732883
+      },
+      "source_validation_seconds": {
+        "v21": 173.47069058939815,
+        "reference": 183.3174392953515,
+        "difference": -9.84674870595336,
+        "ratio": 0.9462858048650309
+      },
+      "source_process_seconds": {
+        "v21": 3008.8445746041834,
+        "reference": 2972.2243499159813,
+        "difference": 36.62022468820214,
+        "ratio": 1.012320814439609
+      },
+      "source_full_process_seconds": {
+        "v21": 3009.7728834301233,
+        "reference": 2973.16363677755,
+        "difference": 36.60924665257335,
+        "ratio": 1.0123132296519852
+      },
+      "queue_wall_seconds": {
+        "v21": 3035.589614,
+        "reference": 2997.258767,
+        "difference": 38.330847000000176,
+        "ratio": 1.0127886345423442
+      },
+      "source_peak_allocated_bytes": {
+        "v21": 3049633792,
+        "reference": 2218448384,
+        "difference": 831185408,
+        "ratio": 1.3746697078889532
+      },
+      "source_peak_reserved_bytes": {
+        "v21": 3439329280,
+        "reference": 2837446656,
+        "difference": 601882624,
+        "ratio": 1.2121212121212122
+      },
+      "industrial_pipeline_seconds": {
+        "v21": 8.46988794952631,
+        "reference": 8.747997410595417,
+        "difference": -0.27810946106910706,
+        "ratio": 0.9682087856207793
+      },
+      "industrial_forward_seconds": {
+        "v21": 7.222705204039812,
+        "reference": 7.333603471517563,
+        "difference": -0.11089826747775078,
+        "ratio": 0.9848780660273684
+      },
+      "industrial_process_seconds": {
+        "v21": 10.479309361428022,
+        "reference": 10.442517567425966,
+        "difference": 0.03679179400205612,
+        "ratio": 1.0035232685762314
+      },
+      "industrial_full_process_seconds": {
+        "v21": 11.435527671128511,
+        "reference": 11.406062070280313,
+        "difference": 0.029465600848197937,
+        "ratio": 1.0025833281168068
+      },
+      "industrial_peak_cuda_memory_bytes": {
+        "v21": 643145216,
+        "reference": 411719168,
+        "difference": 231426048,
+        "ratio": 1.5620968514149918
+      },
+      "industrial_peak_cuda_reserved_bytes": {
+        "v21": 1019215872,
+        "reference": 599785472,
+        "difference": 419430400,
+        "ratio": 1.6993006993006994
+      },
+      "rf100_pipeline_seconds": {
+        "v21": 8.642534919083118,
+        "reference": 7.713571108877659,
+        "difference": 0.9289638102054596,
+        "ratio": 1.1204323907944924
+      },
+      "rf100_forward_seconds": {
+        "v21": 7.887811195105314,
+        "reference": 7.005949091166258,
+        "difference": 0.8818621039390564,
+        "ratio": 1.1258733245793906
+      },
+      "rf100_process_seconds": {
+        "v21": 10.874249659478664,
+        "reference": 9.311466373503208,
+        "difference": 1.5627832859754562,
+        "ratio": 1.1678342833758737
+      },
+      "rf100_full_process_seconds": {
+        "v21": 11.8207288980484,
+        "reference": 10.302606120705605,
+        "difference": 1.5181227773427963,
+        "ratio": 1.147353277370447
+      },
+      "rf100_peak_cuda_memory_bytes": {
+        "v21": 639999488,
+        "reference": 411719168,
+        "difference": 228280320,
+        "ratio": 1.5544563812972634
+      },
+      "rf100_peak_cuda_reserved_bytes": {
+        "v21": 815792128,
+        "reference": 601882624,
+        "difference": 213909504,
+        "ratio": 1.3554006968641115
+      }
+    },
+    "v18": {
+      "source_training_seconds": {
+        "v21": 2773.254664938897,
+        "reference": 2816.7055361121893,
+        "difference": -43.4508711732924,
+        "ratio": 0.984573868082332
+      },
+      "source_validation_seconds": {
+        "v21": 173.47069058939815,
+        "reference": 173.22431213408709,
+        "difference": 0.24637845531105995,
+        "ratio": 1.001422308752598
+      },
+      "source_process_seconds": {
+        "v21": 3008.8445746041834,
+        "reference": 3059.7135350219905,
+        "difference": -50.8689604178071,
+        "ratio": 0.9833746003226927
+      },
+      "source_full_process_seconds": {
+        "v21": 3009.7728834301233,
+        "reference": 3060.6456844322383,
+        "difference": -50.87280100211501,
+        "ratio": 0.9833784089217266
+      },
+      "queue_wall_seconds": {
+        "v21": 3035.589614,
+        "reference": 3084.318233,
+        "difference": -48.72861899999998,
+        "ratio": 0.9842011701391126
+      },
+      "source_peak_allocated_bytes": {
+        "v21": 3049633792,
+        "reference": 2995077120,
+        "difference": 54556672,
+        "ratio": 1.018215448155138
+      },
+      "source_peak_reserved_bytes": {
+        "v21": 3439329280,
+        "reference": 3435134976,
+        "difference": 4194304,
+        "ratio": 1.0012210012210012
+      },
+      "industrial_pipeline_seconds": {
+        "v21": 8.46988794952631,
+        "reference": 8.183149818331003,
+        "difference": 0.2867381311953068,
+        "ratio": 1.035040068624063
+      },
+      "industrial_forward_seconds": {
+        "v21": 7.222705204039812,
+        "reference": 6.87850009649992,
+        "difference": 0.3442051075398922,
+        "ratio": 1.0500407214815681
+      },
+      "industrial_process_seconds": {
+        "v21": 10.479309361428022,
+        "reference": 10.123691976070404,
+        "difference": 0.35561738535761833,
+        "ratio": 1.0351272427290557
+      },
+      "industrial_full_process_seconds": {
+        "v21": 11.435527671128511,
+        "reference": 11.063005086034536,
+        "difference": 0.37252258509397507,
+        "ratio": 1.0336728205579722
+      },
+      "industrial_peak_cuda_memory_bytes": {
+        "v21": 643145216,
+        "reference": 413282816,
+        "difference": 229862400,
+        "ratio": 1.556186686455408
+      },
+      "industrial_peak_cuda_reserved_bytes": {
+        "v21": 1019215872,
+        "reference": 599785472,
+        "difference": 419430400,
+        "ratio": 1.6993006993006994
+      },
+      "rf100_pipeline_seconds": {
+        "v21": 8.642534919083118,
+        "reference": 7.350797314196825,
+        "difference": 1.2917376048862934,
+        "ratio": 1.175727550315055
+      },
+      "rf100_forward_seconds": {
+        "v21": 7.887811195105314,
+        "reference": 6.670908536761999,
+        "difference": 1.2169026583433151,
+        "ratio": 1.1824193288870948
+      },
+      "rf100_process_seconds": {
+        "v21": 10.874249659478664,
+        "reference": 9.218298379331827,
+        "difference": 1.6559512801468372,
+        "ratio": 1.1796374137616996
+      },
+      "rf100_full_process_seconds": {
+        "v21": 11.8207288980484,
+        "reference": 10.158705700188875,
+        "difference": 1.6620231978595257,
+        "ratio": 1.163605802442788
+      },
+      "rf100_peak_cuda_memory_bytes": {
+        "v21": 639999488,
+        "reference": 413282816,
+        "difference": 226716672,
+        "ratio": 1.5485751239170806
+      },
+      "rf100_peak_cuda_reserved_bytes": {
+        "v21": 815792128,
+        "reference": 603979776,
+        "difference": 211812352,
+        "ratio": 1.3506944444444444
+      }
+    }
+  },
+  "saved_v12_cost_context": {
+    "train_batches": 2836,
+    "optimizer_updates": 2834,
+    "amp_skipped_updates": 2,
+    "donor_images": 90744,
+    "recipient_images": 32768,
+    "validation_images": 6024,
+    "training_wall_seconds": 959.8844585716724,
+    "validation_wall_seconds": 31.58361741527915,
+    "training_CNN_images": 123512,
+    "current_process_wall_seconds": 1001.2779283300042,
+    "checkpointed_process_wall_seconds_before_resume": 0,
+    "peak_cuda_memory_bytes": 19992438784,
+    "peak_cuda_reserved_bytes": 38510002176
+  },
+  "preflight_counts": {
+    "CNN_calls": 4,
+    "CNN_images": 10,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "preflight_unique_original_images": 6,
+  "preflight_cost_additional_to_formal": true
+}

@@ -1,6 +1,6 @@
 # 完整语义直接条件角色能量：独立zero-shot协议
 
-2026-10-23。v21按本文件冻结一个独立源域结构与60轮预算；实际模型构造与6项新CPU检查已通过，8823492参数／503 state／263参数tensor已核实；源RGB零更新见证也已通过，唯一正式源训练于北京时间2026-10-23 19:27:44启动，尚无完整性能结果。执行代码422825b9013d5d16f6a0238f2bfa10475f449bdb已推现有main。Industrial1395与RF100151不得用于训练、适配或选择模型／训练超参数；全部旧模型、原G1／anchor失败、65轮与配对守恒负结果保留。
+2026-10-23。v21按下述冻结协议完成60轮与两套冻结外评，source-best为第42轮：源NMAE 0.258947%FS，Industrial 23.978974%FS，RF100 14.008518%FS。相对匹配v20的三项均值分别降低8.6007%、18.0417%、13.6561%，但两外域尾部回退且仍弱于保留参照，不作为默认／最终模型、不延长训练。唯一CPU数值执行核对54364项通过、0失败；见[完整结果](data/geoprr_v2_semantic_role_20261023/completed/report_cn.md)。执行代码422825b9013d5d16f6a0238f2bfa10475f449bdb，目标未用于训练、适配或选择超参数，全部旧资产与失败保留。
 
 ## 可检验问题
 
@@ -50,7 +50,7 @@ H／span、64网格解析field U和ring／arc mask M、虚拟A／P／B角色只�
 
 ## 必要新检查与执行
 
-计划模块`experiments.geoprr_v2_semantic_role`，入口`experiments.run_geoprr_v2_semantic_role`，独立输出`runs/geoprr_generalization/iteration_v21_semantic_role_conditioning_20261023/source_only_training`。新入口已实现并通过6项针对性CPU检查（0.194秒），真实源RGB运行见证也已通过，唯一源队列已启动；执行代码422825b已冻结。
+计划模块`experiments.geoprr_v2_semantic_role`，入口`experiments.run_geoprr_v2_semantic_role`，独立输出`runs/geoprr_generalization/iteration_v21_semantic_role_conditioning_20261023/source_only_training`。新入口已实现并通过6项针对性CPU检查（0.194秒），真实源RGB运行见证也已通过，唯一源队列已按冻结代码422825b完整结束。
 
 新结构CPU检查只针对真实变化：零query时能量／J／reading与fresh v20一致；共同A和相对gather、partial batch保持；固定空间tokens及校准时，非零semantic query能实际改变角色能量；新增query梯度、RGB-only输入与失败分母符合声明。实际参数／state计数须核实，不重复旧GT／G0／教师／完整审计或评分评审循环。
 
@@ -65,6 +65,8 @@ H／span、64网格解析field U和ring／arc mask M、虚拟A／P／B角色只�
 实际源见证已通过：4次CNN／10图呈现／1次combined反传／0optimizer，6张unique图；全部263参数tensor无optimizer未改变、77个BN counter源train+1／eval额外0，503 state严格加载，源合同与原256验证输入保持，实际1280query输入、新W梯度及所有必要梯度有限非零。该检查不代表训练准确率或zero-shot效果，见[运行记录](data/geoprr_v2_semantic_role_20261023/runtime_preflight.json)。
 
 实际启动父426967／初始训练子426974，2026-10-23 11:28:28 UTC核实精确命令匹配，唯一GPU进程426974。首批64源图loss0.334367245、梯度范数有限；这只是执行快照，不是准确率。见[启动记录](data/geoprr_v2_semantic_role_20261023/launch.json)。
+
+三阶段均正常exit0，最后RF100阶段于2026-10-23 12:18:21 UTC结束；旧父426967／训练子426974及两外评子已退出，完整结果和成本已归档。
 
 ## Limitations
 

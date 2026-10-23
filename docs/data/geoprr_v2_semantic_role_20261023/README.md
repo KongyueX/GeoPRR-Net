@@ -1,19 +1,24 @@
 # v21完整语义直接条件角色能量
 
-**独立源域结构与60轮预算已冻结，6项新CPU检查通过，实际构造核实8823492参数／503 state／263个参数tensor；实际源RGB零更新见证也已通过，唯一正式源训练于北京时间2026-10-23 19:27:44启动，暂无完整性能结果。** 本轮在完整fresh v20的502项base state之后增加一个全零、无bias的Linear1280→3×16；每图semantic query与原角度角色token点积后加入unary，原local共享A条件联合与全质量读出不变。实际新增61440参数／1 state。
+**60轮与两套冻结外评完整结束；source-best42源NMAE为0.258947%FS，Industrial为23.978974%FS，RF100为14.008518%FS。** 相对匹配base v20，均值分别降低8.6007%／18.0417%／13.6561%，这是保留的连续增量；两外域最差10%均值升高，且仍弱于v16直接读数和旧GeoPRR历史参照，因此不作为默认／最终模型、不延长训练。全部资产及结果保留。
 
-query全零时原502项初始化与初始reading必须匹配同seed fresh v20，不加载训练好的旧checkpoint。新query在固定参数下按每图RGB计算，不是目标适配；没有新scalar point、fusion、router、CDF或GT输入。P仍为半径1虚拟盘面状态点，源H／span／U／M和角色只进loss。固定loss沿用v20：SmoothL1(reading,y,beta=.05)+0.1×(roleNLL/(3log256)+fieldL1)。
+完整fresh v20的502项base state之后增加全零、无bias的Linear1280→3×16，新增61440参数／1 state；query与原角色token点积后加入unary，原local共享A联合和全质量读出保持。完整8823492参数／503 state／263个参数tensor，模型只接收RGB，源H／span／U／M／虚拟角色只进loss。每图固定权重query不是目标适配，P不是实体针尖。
 
-只用18590源训练／原1506验证、原256 LINEAR／ImageNet／光度与seed20262020，fresh AdamW、同两段30cos LR、60完整epoch；最早源NMAE最小best在全部60轮结束后才各一次冻结Industrial1395／52和RF100151／35。目标不参与训练、总体统计拟合、BN适配、checkpoint或训练超参数选择，完整失败分母error1。计划正式1207306 CNN图／18925调用，不报预算已完成；额外query／关系读出计算、时间和峰值内存另实记。
+只用18590源训练／原1506验证、原256 RGB处理与seed20262020，全部60结束后才各一次冻结source-best42外评；目标训练／统计拟合／BN适配／checkpoint及超参数选择均0。源best／last和两外域input／scalar全部有效，coverage1。源ordinary1495均值改善，但原严重6均值0.822225→11.047740%FS；best42最大45.139897%FS（sync_338），last60最大55.712643%FS（sync_4658），完整错误交换照报。
 
-[v20完成报告](../geoprr_v2_semantic_relation_20261023/completed/report_cn.md)显示源改善而两外域退化，只提供本轮结构问题的动机，不证明新query有效。既有源解析和[理想角色映射兼容性](../geoprr_v2_semantic_relation_20261023/source_role_mapping_feasibility.json)复用，不重做旧GT或新建重复数学检查。outside_arc_mass不能硬门控正确性。
+实际17460次反传尝试／17453次更新／7次AMP跳过，无resume，正式1207306 CNN图／18925调用；query／关系头／读出训练17460、验证1440、目标25次，目标反传／更新0。一次数值／执行核对54364项通过、0失败。完整逐图、组、fixed cohort、阈值救回／新增、尾部及成本已归档。
 
+- [完整报告](completed/report_cn.md)
+- [完整指标](completed/metrics.json)
+- [模型比较](completed/comparison.csv)
+- [实际成本](completed/costs.json)
+- [审计](completed/numeric_execution_audit.json)
 - [冻结协议](../../GEOPRR_V2_SEMANTIC_ROLE_ZERO_SHOT_PROTOCOL_CN.md)
-- [新CPU检查与实际模型计数](cpu_checks.json)
-- [实际源RGB运行见证](runtime_preflight.json)
-- [唯一源队列启动快照](launch.json)
+- [CPU检查](cpu_checks.json)
+- [实际源运行见证](runtime_preflight.json)
+- [启动记录](launch.json)
 - [公开allowlist](public_allowlist.json)
 
 ## Limitations
 
-零query时新W可有非零梯度，但不能声称初始encoder已从新query路径获得非零梯度；学习效果须实测。相同base初始化不等于全部随机步骤相同，常规语义角色匹配不构成新理论。两外域已查看、单seed不称新盲测或显著性；全部旧模型、原G1／anchor／65轮与负结果保留，原14494／1506／4000和普通／严重名单不变。无收益不自动升最终方法、不延长或追加seed。
+两域均值改善不等于尾部或总体最佳，单seed与已查看开发人口不称新盲测或显著性。初始reading／分布在1e-6容差内匹配，不是普适逐位保证；相同base初始化不等于后续随机轨迹相同。outside_arc_mass不能硬门控正确性。旧模型、原G1／anchor／65轮和负结果保留，原14494／1506／4000及普通／严重名单不变。RGB／权重／原始几何与合同保持私有。

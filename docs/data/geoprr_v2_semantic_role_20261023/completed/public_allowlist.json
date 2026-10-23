@@ -1,0 +1,40 @@
+{
+  "protocol": "geoprr_v21_public_allowlist_v1",
+  "status": "complete",
+  "files": [
+    "comparison.csv",
+    "completed_record.json",
+    "config.json",
+    "costs.json",
+    "history.jsonl",
+    "industrial_groups.csv",
+    "industrial_predictions.csv.gz",
+    "industrial_summary.json",
+    "initialization_record.json",
+    "metrics.json",
+    "numeric_execution_audit.json",
+    "protocol.json",
+    "public_allowlist.json",
+    "report_cn.md",
+    "rf100_groups.csv",
+    "rf100_predictions.csv.gz",
+    "rf100_summary.json",
+    "source_best42_predictions.csv.gz",
+    "source_last60_predictions.csv.gz"
+  ],
+  "reused_saved_reference_directories": [
+    "../../geoprr_v2_semantic_relation_20261023/completed/",
+    "../../geoprr_v2_semantic_direct_20261023/completed/",
+    "../../geoprr_v2_semantic_aux_20261023/completed/",
+    "../../geoprr_v2_generalization_20261023/v12_completed/"
+  ],
+  "excluded": [
+    "raw run and complete source data contracts",
+    "source image paths/bbox, H/C/XYZ/U/M and raw geometric labels",
+    "complete source ID population arrays and duplicate full fixed-cohort ID arrays",
+    "ImageNet/model/checkpoint weights and RGB",
+    "pixel and feature matrices, private paths and trace"
+  ],
+  "public_scalar_scope": "normalized per-image scalar predictions/targets/errors, scalar fixed-cohort/group/component summaries, metadata, history and costs; all full metric columns retained",
+  "audit": "one existing CPU saved-artifact audit; no new model execution, old GT check or numerical audit"
+}

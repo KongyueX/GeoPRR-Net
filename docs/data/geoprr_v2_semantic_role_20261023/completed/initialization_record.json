@@ -1,0 +1,159 @@
+{
+  "initialization": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "ImageNet_pretrained": true,
+    "existing_cached_weights_only": true,
+    "retained_complete_encoder_state_tensors": 462,
+    "new_non_CNN_parameter_tensors": 32,
+    "sigmoid_point_head_allocated": false,
+    "old_task_checkpoint_used": false,
+    "semantic_context_dimension": 1280,
+    "deployed_readout": "semantic-conditioned local conditional J to CircularProgressPushforward",
+    "fresh_v20_base_constructed_before_new_query": true,
+    "preserved_base_initial_state_tensors": 502,
+    "new_query_parameter_tensors": 1,
+    "new_query_initialization": "zero weight",
+    "trained_task_checkpoint_used": false
+  },
+  "model_metadata": {
+    "class": "experiments.geoprr_v2_semantic_relation.SemanticRelationReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "non_CNN_parameters": 388980,
+    "parameters": 8823492,
+    "state_tensors": 503,
+    "context_input_dim": 1280,
+    "point_head_present": false,
+    "reference_normalization": "local",
+    "feature_modules": [
+      "blocks.0",
+      "blocks.1",
+      "blocks.2",
+      "blocks.4"
+    ],
+    "feature_channels": [
+      48,
+      80,
+      160,
+      960
+    ],
+    "feature_reductions": [
+      4,
+      8,
+      16,
+      32
+    ],
+    "deployment_uses_geometry_readout": true,
+    "geometry_labels_in_model_inputs": false,
+    "training_only_auxiliary_modules": false,
+    "deployed_readout": "full conditional J to unchanged CircularProgressPushforward256",
+    "semantic_role_conditioning": true,
+    "semantic_query_input_dim": 1280,
+    "semantic_query_roles": 3,
+    "semantic_query_token_dim": 16,
+    "semantic_query_parameters": 61440,
+    "semantic_query_parameter_tensors": 1,
+    "semantic_query_initialization": "zero after all502 fresh v20 states are constructed; trained values may differ",
+    "preserved_base_initial_state_tensors": 502,
+    "semantic_role_head_class": "__main__.SemanticRoleStateHead"
+  },
+  "saved_runtime_evidence": {
+    "run": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "ImageNet_pretrained": true,
+      "existing_cached_weights_only": true,
+      "retained_complete_encoder_state_tensors": 462,
+      "new_non_CNN_parameter_tensors": 32,
+      "sigmoid_point_head_allocated": false,
+      "old_task_checkpoint_used": false,
+      "semantic_context_dimension": 1280,
+      "deployed_readout": "semantic-conditioned local conditional J to CircularProgressPushforward",
+      "fresh_v20_base_constructed_before_new_query": true,
+      "preserved_base_initial_state_tensors": 502,
+      "new_query_parameter_tensors": 1,
+      "new_query_initialization": "zero weight",
+      "trained_task_checkpoint_used": false
+    },
+    "model_metadata": {
+      "class": "experiments.geoprr_v2_semantic_relation.SemanticRelationReader",
+      "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+      "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "semantic_dim": 1280,
+      "encoder_reported_num_features": 960,
+      "semantic_conv_head_retained": true,
+      "semantic_norm_head_retained": true,
+      "encoder_parameters": 8434512,
+      "encoder_state_tensors": 462,
+      "non_CNN_parameters": 388980,
+      "parameters": 8823492,
+      "state_tensors": 503,
+      "context_input_dim": 1280,
+      "point_head_present": false,
+      "reference_normalization": "local",
+      "feature_modules": [
+        "blocks.0",
+        "blocks.1",
+        "blocks.2",
+        "blocks.4"
+      ],
+      "feature_channels": [
+        48,
+        80,
+        160,
+        960
+      ],
+      "feature_reductions": [
+        4,
+        8,
+        16,
+        32
+      ],
+      "deployment_uses_geometry_readout": true,
+      "geometry_labels_in_model_inputs": false,
+      "training_only_auxiliary_modules": false,
+      "deployed_readout": "full conditional J to unchanged CircularProgressPushforward256",
+      "semantic_role_conditioning": true,
+      "semantic_query_input_dim": 1280,
+      "semantic_query_roles": 3,
+      "semantic_query_token_dim": 16,
+      "semantic_query_parameters": 61440,
+      "semantic_query_parameter_tensors": 1,
+      "semantic_query_initialization": "zero after all502 fresh v20 states are constructed; trained values may differ",
+      "preserved_base_initial_state_tensors": 502,
+      "semantic_role_head_class": "__main__.SemanticRoleStateHead"
+    },
+    "initial_control_max_abs_differences": {
+      "reading": 2.384185791015625e-07,
+      "A": 0.0,
+      "P_rel": 0.0,
+      "B_rel": 0.0,
+      "log_A": 0.0,
+      "log_P_rel": 0.0,
+      "log_B_rel": 0.0,
+      "J": 0.0,
+      "distribution": 4.172325134277344e-07
+    },
+    "initial_control_tolerance": 1e-06,
+    "preflight_counts": {
+      "CNN_calls": 4,
+      "CNN_images": 10,
+      "CNN_backward_calls": 1,
+      "combined_backward_calls": 1,
+      "optimizer_updates": 0
+    }
+  },
+  "preflight_record": "../runtime_preflight.json",
+  "source_dataset_class": "experiments.geoprr_v2_role_field_data.RoleFieldRGBDataset",
+  "epoch_exposure": {
+    "train_images": 18590,
+    "train_batches": 291,
+    "validation_images": 1506,
+    "validation_batches": 24
+  }
+}

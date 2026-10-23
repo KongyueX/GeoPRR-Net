@@ -1,26 +1,46 @@
 {
   "protocol": "geoprr_v21_public_allowlist_v1",
-  "status": "source_training_running",
+  "status": "complete_audited_archived",
   "files": [
     "../../GEOPRR_V2_SEMANTIC_ROLE_ZERO_SHOT_PROTOCOL_CN.md",
     "README.md",
     "public_allowlist.json",
     "cpu_checks.json",
     "runtime_preflight.json",
-    "launch.json"
+    "launch.json",
+    "completed/comparison.csv",
+    "completed/completed_record.json",
+    "completed/config.json",
+    "completed/costs.json",
+    "completed/history.jsonl",
+    "completed/industrial_groups.csv",
+    "completed/industrial_predictions.csv.gz",
+    "completed/industrial_summary.json",
+    "completed/initialization_record.json",
+    "completed/metrics.json",
+    "completed/numeric_execution_audit.json",
+    "completed/protocol.json",
+    "completed/public_allowlist.json",
+    "completed/report_cn.md",
+    "completed/rf100_groups.csv",
+    "completed/rf100_predictions.csv.gz",
+    "completed/rf100_summary.json",
+    "completed/source_best42_predictions.csv.gz",
+    "completed/source_last60_predictions.csv.gz"
   ],
   "code_revision": "422825b9013d5d16f6a0238f2bfa10475f449bdb",
   "model_counts_status": "actual_CPU_confirmed8823492parameters503state263paramtensors",
-  "current_evidence": "six CPU checks, actual503-state source RGB zero-update witness and unique source60 launch verified; no complete performance result",
+  "current_evidence": "source60 and both frozen external source-best42 evaluations complete; one CPU audit54364PASS0fail; matched-v20 means improve across source and both external domains, external tails worsen; not default/final",
   "reused_source_evidence": [
     "../geoprr_v2_semantic_relation_20261023/source_role_mapping_feasibility.json",
     "../geoprr_v2_semantic_aux_20261023/analytic_source_contract.json"
   ],
   "excluded": [
-    "raw source contracts, source paths/bbox and complete source ID population arrays",
-    "H/C/XYZ/U/M and raw geometry or feature matrices",
-    "RGB, ImageNet or task weights, pixel matrices",
-    "raw run, private paths and trace"
+    "raw run and complete source data contracts",
+    "source image paths/bbox, H/C/XYZ/U/M and raw geometric labels",
+    "complete source ID population arrays and duplicate full fixed-cohort ID arrays",
+    "ImageNet/model/checkpoint weights and RGB",
+    "pixel and feature matrices, private paths and trace"
   ],
-  "future_records": "Add only normalized actual CPU checks, source runtime witness and launch evidence after those actions occur."
+  "completed_archive": "completed/public_allowlist.json"
 }
