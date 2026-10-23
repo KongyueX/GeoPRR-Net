@@ -1,0 +1,87 @@
+{
+  "protocol": "geoprr_v2_c4_orbit_semantic_source_only_v1",
+  "model": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "num_classes": 0,
+    "readout": "sigmoid(linear(mean_k(full encoder(rot90_k RGB)))); full semantic neck retained",
+    "point_initialization_std": 0.001,
+    "point_initialization_bias": 0.0
+  },
+  "data": {
+    "image_size": 256,
+    "output_size": 64
+  },
+  "source": {
+    "unique_training_images": 18590,
+    "validation_images": 1506,
+    "source_replacement": {
+      "groups": 128,
+      "states": [
+        0.0,
+        0.005,
+        0.02,
+        1.0
+      ],
+      "protocol": "geoprr_v2_endpoint_source_v11"
+    },
+    "require_geometry": false,
+    "pair_manifest": null
+  },
+  "photometric": {
+    "contrast": [
+      0.8,
+      1.2
+    ],
+    "brightness": [
+      -0.1,
+      0.1
+    ],
+    "saturation": [
+      0.8,
+      1.2
+    ]
+  },
+  "training": {
+    "seed": 20262020,
+    "epochs": 15,
+    "batch_size": 16,
+    "validation_batch_size": 16,
+    "workers": 4,
+    "amp": true,
+    "optimizer": "AdamW",
+    "weight_decay": 0.0001,
+    "loss": "smooth_l1",
+    "smooth_l1_beta": 0.05,
+    "gradient_clip": 5.0,
+    "learning_rate": "attempt i maps to virtual epoch1+floor(i*60/17430); use v16 two-phase cosine at that virtual epoch"
+  },
+  "checkpoint_selection": "earliest minimum direct scalar NMAE on complete source1506 within15 orbit epochs",
+  "external_checkpoint": "source-selected best only after all15 orbit epochs complete; no incumbent alias",
+  "inference_input": "native ROI RGB, linear resize256, ImageNet normalization, fixed C4 tensor orbit and semantic mean; no GT geometry or target scalar input",
+  "external_training_or_adaptation": false,
+  "orbit": {
+    "quarter_turns": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "input_order": "k-major concatenation of rotated original RGB tensors",
+    "rotation": "torch.rot90 on spatial dimensions before the encoder; no interpolation or reflection",
+    "pooling": "float32 arithmetic mean of four semantic vectors before the linear scalar logit",
+    "label": "one unchanged physical scalar per original ROI",
+    "geometry_input": false,
+    "CNN_views_per_original": 4,
+    "train_validation_external_policy_identical": true
+  },
+  "comparison": {
+    "matched_training_CNN_views": 1115400,
+    "v16_training_epochs": 60,
+    "orbit_training_epochs": 15,
+    "source_photometric_draws_per_unique_image": 15,
+    "source_validation_checkpoint_choices": 15,
+    "BN_training_batch": "16 original ROIs with4 correlated orientations each; not64 independent ROIs",
+    "external_CNN_views_per_original": 4,
+    "equal_CNN_view_count_is_not_equal_compute": true
+  }
+}

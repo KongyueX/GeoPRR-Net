@@ -1,0 +1,161 @@
+{
+  "protocol": "geoprr_v2_c4_orbit_semantic_source_only_v1",
+  "code_revision": "1eca0bd2470a6c414a8b5c781b1d9741a8eac154",
+  "config": {
+    "protocol": "geoprr_v2_c4_orbit_semantic_source_only_v1",
+    "model": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "num_classes": 0,
+      "readout": "sigmoid(linear(mean_k(full encoder(rot90_k RGB)))); full semantic neck retained",
+      "point_initialization_std": 0.001,
+      "point_initialization_bias": 0.0
+    },
+    "data": {
+      "image_size": 256,
+      "output_size": 64
+    },
+    "source": {
+      "unique_training_images": 18590,
+      "validation_images": 1506,
+      "source_replacement": {
+        "groups": 128,
+        "states": [
+          0.0,
+          0.005,
+          0.02,
+          1.0
+        ],
+        "protocol": "geoprr_v2_endpoint_source_v11"
+      },
+      "require_geometry": false,
+      "pair_manifest": null
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 15,
+      "batch_size": 16,
+      "validation_batch_size": 16,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "weight_decay": 0.0001,
+      "loss": "smooth_l1",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0,
+      "learning_rate": "attempt i maps to virtual epoch1+floor(i*60/17430); use v16 two-phase cosine at that virtual epoch"
+    },
+    "checkpoint_selection": "earliest minimum direct scalar NMAE on complete source1506 within15 orbit epochs",
+    "external_checkpoint": "source-selected best only after all15 orbit epochs complete; no incumbent alias",
+    "inference_input": "native ROI RGB, linear resize256, ImageNet normalization, fixed C4 tensor orbit and semantic mean; no GT geometry or target scalar input",
+    "external_training_or_adaptation": false,
+    "orbit": {
+      "quarter_turns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "input_order": "k-major concatenation of rotated original RGB tensors",
+      "rotation": "torch.rot90 on spatial dimensions before the encoder; no interpolation or reflection",
+      "pooling": "float32 arithmetic mean of four semantic vectors before the linear scalar logit",
+      "label": "one unchanged physical scalar per original ROI",
+      "geometry_input": false,
+      "CNN_views_per_original": 4,
+      "train_validation_external_policy_identical": true
+    },
+    "comparison": {
+      "matched_training_CNN_views": 1115400,
+      "v16_training_epochs": 60,
+      "orbit_training_epochs": 15,
+      "source_photometric_draws_per_unique_image": 15,
+      "source_validation_checkpoint_choices": 15,
+      "BN_training_batch": "16 original ROIs with4 correlated orientations each; not64 independent ROIs",
+      "external_CNN_views_per_original": 4,
+      "equal_CNN_view_count_is_not_equal_compute": true
+    }
+  },
+  "initialization": "fresh complete cached ImageNet encoder and scalar point created exactly asv16 before parameter-free C4 wrapper",
+  "old_task_checkpoint_or_teacher_used": false,
+  "new_weight_download_authorized": false,
+  "model_inputs": "native ROI RGB, linear resize256, ImageNet normalization, fixed C4 tensor orbit and semantic mean; no GT geometry or target scalar input",
+  "checkpoint_selection": "earliest minimum direct scalar NMAE on complete source1506 within15 orbit epochs",
+  "expected_training": {
+    "original_presentations": 278850,
+    "CNN_views": 1115400,
+    "CNN_calls": 17430,
+    "backward_attempts": 17430
+  },
+  "expected_validation": {
+    "original_presentations": 22590,
+    "CNN_views": 90360,
+    "CNN_calls": 1425
+  },
+  "expected_external": {
+    "original_inputs": 1546,
+    "CNN_views": 6184,
+    "CNN_calls": 98,
+    "backward_calls": 0,
+    "optimizer_updates": 0
+  },
+  "expected_complete_CNN": {
+    "images": 1211944,
+    "calls": 18953
+  },
+  "external_scope": "viewed Industrial1395/52 and RF100151/35 development; source-selected best only after15 complete orbit epochs",
+  "training_or_adaptation_on_target": false,
+  "comparison_scope": {
+    "matched_training_CNN_views": 1115400,
+    "v16_training_epochs": 60,
+    "orbit_training_epochs": 15,
+    "source_photometric_draws_per_unique_image": 15,
+    "source_validation_checkpoint_choices": 15,
+    "BN_training_batch": "16 original ROIs with4 correlated orientations each; not64 independent ROIs",
+    "external_CNN_views_per_original": 4,
+    "equal_CNN_view_count_is_not_equal_compute": true
+  },
+  "witness": {
+    "status": "passed",
+    "counts": {
+      "original_image_presentations": 12,
+      "CNN_calls": 3,
+      "CNN_images": 48,
+      "CNN_backward_calls": 1,
+      "combined_backward_calls": 1,
+      "optimizer_updates": 0
+    },
+    "base_RGB_preprocessing_matches_v16": true,
+    "orbit_source_eval_contract_verified": true,
+    "eval_C4_invariance_verified": true
+  },
+  "status": "complete",
+  "completed_source_epochs": 15,
+  "source_selected_best_epoch": 6,
+  "last_source_epoch": 15,
+  "formal_complete_counts": {
+    "cnn_image_forwards": 1211944,
+    "cnn_forward_calls": 18953,
+    "source_train_original_presentations": 278850,
+    "source_validation_original_presentations": 22590,
+    "target_original_inputs": 1546,
+    "source_backward_calls": 17430,
+    "source_optimizer_updates": 17423,
+    "source_amp_skipped_updates": 7,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  },
+  "source_population": "Existing endpoint-replacement source18590 unique; original validation1506 unchanged; base RGB contract exactly equals v16, while the fixed C4 model-input and inference contract differs."
+}

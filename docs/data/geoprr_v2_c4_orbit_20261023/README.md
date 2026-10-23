@@ -1,20 +1,24 @@
 # v19固定C4轨道语义池化
 
-独立15轮轨道模型协议已冻结，5项新CPU检查与真实源RGB零更新见证通过，正式源训练于北京时间2026-10-23 16:42:41启动，没有新完整性能结果。
+**15轮与两套冻结外评完整结束，source-best6源NMAE为25.208096%FS，Industrial为39.098746%FS，RF100为24.328313%FS。** 99.0027%的有限源预测落在0.5±0.01，源均值未优于固定0.5常数25.165799%FS。这一配方没有学好源读数，也没有改善zero-shot；完整负结果保留，不作为默认模型，不延长训练。
 
-每张256 ROI固定生成0/90/180/270度四个张量旋转，同一完整ImageNet MobileNetV4一次编码4B视图，在1280维semantic上取FP32均值后执行同一个point和sigmoid。训练、验证、外域均使用这一个函数。原图物理scalar不变，无插值/裁剪/反射/GT几何，不选择角度或权重。模型8435793参数/464 state，新增参数0。
+每张256 ROI固定生成0／90／180／270度四个张量旋转，共享完整ImageNet MobileNetV4，在1280维semantic上取FP32均值，再执行point和sigmoid。训练、验证、外域使用同一函数，参数8435793／464 state，新增参数0。源18590／验证1506保持，只在完成全部15轮后各评估一次冻结source-best6；Industrial1395与RF100151没有用于训练或适配。
 
-15轨道epoch固定训练CNN视图1115400，等于v16训练视图预算；原图scalar呈现278850、17430次反传尝试，验证22590原图行/90360视图/1425调用。两套外域1546原图/6184视图/98调用；正式总1211944视图/18953encoder调用。每原图推理四视图，推理成本增加必须记录。源15次光度抽样/选择机会与16原图×4相关方向BN batch不同于v16，不声称优化完全匹配。
+正式17430次反传尝试／17423次有效更新／7次AMP跳过，1211944 CNN视图／18953次调用，目标反传与更新均0。训练CNN视图数与v16相同，但15轮独立光度抽样、checkpoint机会、相关方向BN batch和四视图部署成本不同。
 
-实际见证使用4张unique源0/1 RGB：新模型464初始state与同seed fresh direct参照相同；训练一次4原图→16 CNN视图、finite fullencoder/neck/point梯度，0optimizer；eval两次分别原图/90度输入，观测到scalar及pooledsemantic差均0。理论C4不变性仍以浮点容差声明，不能把4例观测扩成逐位保证。共3次CNN/48视图/12原图呈现/1次反传/0optimizer，77BNcounter源+1/eval额外0，464state严格reload。正式训练重新初始化，不使用见证BN。
+源1506、Industrial1395、RF100151分别保留2／19／1个无效scalar，每个原图按error=1计分，输入失败均0。一次源16图批次的AMP／FP32诊断确认一个AMP激活非有限样本在FP32下恢复有限但仍预测错误，其余15图仍接近0.5；诊断没有更改正式预测或精度策略。保存工件的一次数值／执行审计27706项通过、0失败。
 
-只用18590源训练/1506源验证，全部15轮后才各做一次source-selected best冻结外评。源RGB基础子合同与v16相同，整个模型输入合同已改变为固定C4轨道；source和external同策略，不做目标训练、BN适配、总体统计拟合或checkpoint/角度策略选择。
-
-- [启动记录](launch.json)
+- [完整报告](completed/report_cn.md)
+- [完整指标](completed/metrics.json)
+- [模型比较](completed/comparison.csv)
+- [源精度诊断](completed/source_precision_probe.json)
+- [实际成本](completed/costs.json)
+- [审计](completed/numeric_execution_audit.json)
 - [冻结协议](../../GEOPRR_V2_C4_ORBIT_ZERO_SHOT_PROTOCOL_CN.md)
+- [启动记录](launch.json)
 - [实际源运行检查](runtime_preflight.json)
 - [新CPU检查](cpu_checks.json)
 
 ## Limitations
 
-C4约束只处理90度整数倍整图roll，不解决所有透视、刻度方向或连续旋转；池化可能丢失有用表示，当前没有泛化收益证据。CNN视图预算相同不等于相同独立光度抽样、BN统计、选择机会或计算时间，目标推理有四倍视图成本。两外域已查看，0目标训练不等于新盲测；单seed不作显著性声明。全部旧模型与负结果保留。
+本次只约束固定C4 semantic均值配方；整数90度整图roll不覆盖所有透视、刻度方向或连续旋转。源训练拟合不足与至少一个已检查的AMP数值问题并存，不能从一个源批次推断全部无效预测的原因。两外域已查看、单seed，不称新盲测或显著性。完整旧模型和负结果保留，RGB／权重／原始几何与合同不公开。

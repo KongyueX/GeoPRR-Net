@@ -1,16 +1,38 @@
 {
   "protocol": "geoprr_v19_public_allowlist_v1",
+  "status": "complete",
   "files": [
     "README.md",
+    "completed/comparison.csv",
+    "completed/completed_record.json",
+    "completed/config.json",
+    "completed/costs.json",
+    "completed/history.jsonl",
+    "completed/industrial_groups.csv",
+    "completed/industrial_predictions.csv.gz",
+    "completed/industrial_summary.json",
+    "completed/initialization_record.json",
+    "completed/metrics.json",
+    "completed/numeric_execution_audit.json",
+    "completed/protocol.json",
+    "completed/public_allowlist.json",
+    "completed/report_cn.md",
+    "completed/rf100_groups.csv",
+    "completed/rf100_predictions.csv.gz",
+    "completed/rf100_summary.json",
+    "completed/source_best6_predictions.csv.gz",
+    "completed/source_last15_predictions.csv.gz",
+    "completed/source_precision_probe.json",
     "cpu_checks.json",
     "launch.json",
-    "runtime_preflight.json",
-    "public_allowlist.json"
+    "public_allowlist.json",
+    "runtime_preflight.json"
   ],
   "excluded": [
-    "raw source contracts and private paths/bbox",
-    "RGB and weights",
-    "original H/C/XYZ and feature matrices",
-    "private trace"
+    "raw reader/run.json and source data contracts",
+    "source paths/bbox and complete source ID population arrays",
+    "ImageNet/model/checkpoint weights and RGB",
+    "original H/C/XYZ, geometric, pixel or feature matrices",
+    "private paths and trace"
   ]
 }

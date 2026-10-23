@@ -1,0 +1,8 @@
+model,source_nmae_percent_fs,industrial_nmae_percent_fs,rf100_nmae_percent_fs,CNN_views_per_original,source_epochs,scope
+v19_C4_orbit_source_best6,25.20809606007564,39.098746015833804,24.32831347041489,4,15,formal AMP; source-selected best; source underfit; invalid scalars retained error1
+v19_last15,25.61938653461839,,,4,15,source only; not externally evaluated
+v16_source_best59,0.5262168472809196,11.686054081188708,10.16477580956686,1,60,saved source-selected checkpoint; native protocol
+v18_source_best58,0.4465994424053873,13.194496363445642,9.929752397286977,1,60,saved source-selected checkpoint; native protocol
+v12_local_endpoint_best1,,20.539124658463546,7.659157217015351,1,4,saved source-selected checkpoint; native protocol
+historical_old_GeoPRR_source_only,,11.643617857033954,6.6070791714191,,,saved reference; native model input and training history differ; historical executed pixel and weight chain not recertified
+fixed_half_unfitted_descriptive,25.16579859951138,36.84774493852023,23.0683159241368,0,0,fixed0.5 descriptive constant; no source or target fitting; not a learned model

@@ -28,4 +28,4 @@ RF100最差10%均值44.210096→47.466550%FS，max54.413070→68.731612%FS；新
 
 ## Limitations
 
-本轮只有一个源seed20262020，Industrial／RF100是已查看开发集，没有新盲测、SD或显著性证据，RF100 scalar为四点离线派生。该结果只约束本次固定权重辅助方案；下一独立[C4轨道语义方案](../../../GEOPRR_V2_C4_ORBIT_ZERO_SHOT_PROTOCOL_CN.md)已冻结协议，尚无新性能结果。新解析合同未构造Gaussian Q或Q×M×U GT读出，不继承旧Q支持／读数审计保证。审计使用保存预测、日志与元数据，未加载checkpoint或执行新RGB／CNN／旧GT审计；历史参照的像素与完整权重链未重新认证。RGB、权重、H／field／bbox、原始合同、完整源人口数组和特征矩阵不公开。
+本轮只有一个源seed20262020，Industrial／RF100是已查看开发集，没有新盲测、SD或显著性证据，RF100 scalar为四点离线派生。该结果只约束本次固定权重辅助方案；独立[C4轨道语义方案的完成结果](../../geoprr_v2_c4_orbit_20261023/completed/report_cn.md)另列。新解析合同未构造Gaussian Q或Q×M×U GT读出，不继承旧Q支持／读数审计保证。审计使用保存预测、日志与元数据，未加载checkpoint或执行新RGB／CNN／旧GT审计；历史参照的像素与完整权重链未重新认证。RGB、权重、H／field／bbox、原始合同、完整源人口数组和特征矩阵不公开。

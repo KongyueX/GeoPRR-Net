@@ -1,0 +1,585 @@
+{
+  "status": "complete",
+  "observed_at_utc": "2026-10-23T09:10:56.309754+00:00",
+  "protocol": "geoprr_v2_c4_orbit_semantic_source_only_v1",
+  "training_code_revision": "1eca0bd2470a6c414a8b5c781b1d9741a8eac154",
+  "checkpoint_epoch": 6,
+  "source_completed_epochs": 15,
+  "checkpoint_state_tensors": 464,
+  "checkpoint_all_states_finite": true,
+  "nonfinite_state_elements_by_tensor": {},
+  "model_state_unchanged_after_probe": true,
+  "population_scope": "one original ordered source-validation batch containing the first saved valid-input invalid scalar; not full1506 metrics",
+  "source_batch_start_index": 448,
+  "source_batch_stop_index_exclusive": 464,
+  "first_saved_invalid_scalar_sample_id": "sync_1434",
+  "stored_batch_invalid_sample_ids": [
+    "sync_1434"
+  ],
+  "AMP_reproduction_finite_pairs": 15,
+  "AMP_reproduction_finite_prediction_max_abs_difference": 0.0,
+  "AMP_invalid_set_matches_saved_batch": true,
+  "saved_AMP_failures_finite_under_FP32": [
+    "sync_1434"
+  ],
+  "subset_fixed_half_nmae_percent_fs": 24.538241419941187,
+  "modes": {
+    "formal_fp16_AMP": {
+      "seconds": 3.761670980602503,
+      "activations": {
+        "encoder_semantic": {
+          "shape": [
+            64,
+            1280
+          ],
+          "dtype": "torch.float16",
+          "elements": 81920,
+          "finite": 80640,
+          "nan": 1280,
+          "positive_inf": 0,
+          "negative_inf": 0,
+          "finite_abs_max": 3822.0,
+          "finite_min": 0.0,
+          "finite_max": 3822.0,
+          "finite_mean": 4.564250644853723
+        },
+        "pooled_semantic": {
+          "shape": [
+            16,
+            1280
+          ],
+          "dtype": "torch.float32",
+          "elements": 20480,
+          "finite": 19200,
+          "nan": 1280,
+          "positive_inf": 0,
+          "negative_inf": 0,
+          "finite_abs_max": 0.3673095703125,
+          "finite_min": 0.0,
+          "finite_max": 0.3673095703125,
+          "finite_mean": 0.10633936386865875
+        },
+        "point_logit": {
+          "shape": [
+            16,
+            1
+          ],
+          "dtype": "torch.float16",
+          "elements": 16,
+          "finite": 15,
+          "nan": 1,
+          "positive_inf": 0,
+          "negative_inf": 0,
+          "finite_abs_max": 0.00882720947265625,
+          "finite_min": -0.00882720947265625,
+          "finite_max": -0.004364013671875,
+          "finite_mean": -0.005058797200520833
+        }
+      },
+      "scalar_output": {
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32",
+        "elements": 16,
+        "finite": 15,
+        "nan": 1,
+        "positive_inf": 0,
+        "negative_inf": 0,
+        "finite_abs_max": 0.49890899658203125,
+        "finite_min": 0.49779319763183594,
+        "finite_max": 0.49890899658203125,
+        "finite_mean": 0.4987353046735128
+      },
+      "rows": [
+        {
+          "sample_id": "sync_14205",
+          "group_id": "temperature::small_empty_room_1_4k",
+          "target": 0.0931994765996933,
+          "prediction": 0.49890899658203125,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.40570951998233795,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14212",
+          "group_id": "pressure::modern_buildings_2_4k",
+          "target": 0.35562920570373535,
+          "prediction": 0.49886319041252136,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.143233984708786,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14217",
+          "group_id": "oil::zwartkops_pit_4k",
+          "target": 0.8323745131492615,
+          "prediction": 0.4981899559497833,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.33418455719947815,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14218",
+          "group_id": "bar::lonely_road_afternoon_puresky_4k",
+          "target": 0.39140236377716064,
+          "prediction": 0.49885085225105286,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.10744848847389221,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_1423",
+          "group_id": "pressure::small_empty_room_1_4k",
+          "target": 0.11215034127235413,
+          "prediction": 0.49886223673820496,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.38671189546585083,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_1425",
+          "group_id": "bar::lonely_road_afternoon_puresky_4k",
+          "target": 0.6421686410903931,
+          "prediction": 0.49889469146728516,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.1432739496231079,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14260",
+          "group_id": "temperature::belfast_sunset_puresky_4k",
+          "target": 0.8248512744903564,
+          "prediction": 0.4988536834716797,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.32599759101867676,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14289",
+          "group_id": "pressure::studio_garden_4k",
+          "target": 0.6578937768936157,
+          "prediction": 0.49881649017333984,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.15907728672027588,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14294",
+          "group_id": "sf6gas::small_empty_room_1_4k",
+          "target": 0.6410293579101562,
+          "prediction": 0.4988212287425995,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.14220812916755676,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14296",
+          "group_id": "sf6gas::modern_buildings_2_4k",
+          "target": 0.4864194095134735,
+          "prediction": 0.4988260567188263,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.012406647205352783,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14308",
+          "group_id": "bar::DayEnvironmentHDRI043_4K-HDR",
+          "target": 0.948170006275177,
+          "prediction": 0.49779319763183594,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.45037680864334106,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14319",
+          "group_id": "temperature::qwantani_late_afternoon_4k",
+          "target": 0.39428848028182983,
+          "prediction": 0.4988756477832794,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.10458716750144958,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_1434",
+          "group_id": "bar::evening_road_01_puresky_4k",
+          "target": 0.8759464621543884,
+          "prediction": null,
+          "valid": false,
+          "input_valid": true,
+          "absolute_error": 1.0,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": "invalid_scalar_prediction"
+        },
+        {
+          "sample_id": "sync_14347",
+          "group_id": "sf6gas::zwartkops_pit_4k",
+          "target": 0.8665024042129517,
+          "prediction": 0.4988555908203125,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.36764681339263916,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14358",
+          "group_id": "bar::modern_buildings_2_4k",
+          "target": 0.7751351594924927,
+          "prediction": 0.4987993538379669,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.27633580565452576,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14361",
+          "group_id": "sf6gas::DayEnvironmentHDRI043_4K-HDR",
+          "target": 0.30486369132995605,
+          "prediction": 0.49881839752197266,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.1939547061920166,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        }
+      ],
+      "counts": {
+        "cnn_forward_calls": 1,
+        "cnn_image_forwards": 64
+      },
+      "invalid_sample_ids": [
+        "sync_1434"
+      ],
+      "subset_nmae_percent_fs": 28.457208443433046
+    },
+    "FP32_diagnostic_only": {
+      "seconds": 0.04122193157672882,
+      "activations": {
+        "encoder_semantic": {
+          "shape": [
+            64,
+            1280
+          ],
+          "dtype": "torch.float32",
+          "elements": 81920,
+          "finite": 81920,
+          "nan": 0,
+          "positive_inf": 0,
+          "negative_inf": 0,
+          "finite_abs_max": 28937.56640625,
+          "finite_min": 0.0,
+          "finite_max": 28937.56640625,
+          "finite_mean": 37.994298324456985
+        },
+        "pooled_semantic": {
+          "shape": [
+            16,
+            1280
+          ],
+          "dtype": "torch.float32",
+          "elements": 20480,
+          "finite": 20480,
+          "nan": 0,
+          "positive_inf": 0,
+          "negative_inf": 0,
+          "finite_abs_max": 8190.232421875,
+          "finite_min": 0.0,
+          "finite_max": 8190.232421875,
+          "finite_mean": 37.994298271004006
+        },
+        "point_logit": {
+          "shape": [
+            16,
+            1
+          ],
+          "dtype": "torch.float32",
+          "elements": 16,
+          "finite": 16,
+          "nan": 0,
+          "positive_inf": 0,
+          "negative_inf": 0,
+          "finite_abs_max": 407.9612121582031,
+          "finite_min": -0.008833655156195164,
+          "finite_max": 407.9612121582031,
+          "finite_mean": 25.492831856856355
+        }
+      },
+      "scalar_output": {
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32",
+        "elements": 16,
+        "finite": 16,
+        "nan": 0,
+        "positive_inf": 0,
+        "negative_inf": 0,
+        "finite_abs_max": 1.0,
+        "finite_min": 0.4977916181087494,
+        "finite_max": 1.0,
+        "finite_mean": 0.530064020305872
+      },
+      "rows": [
+        {
+          "sample_id": "sync_14205",
+          "group_id": "temperature::small_empty_room_1_4k",
+          "target": 0.0931994765996933,
+          "prediction": 0.4989093542098999,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.4057098776102066,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14212",
+          "group_id": "pressure::modern_buildings_2_4k",
+          "target": 0.35562920570373535,
+          "prediction": 0.49886319041252136,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.143233984708786,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14217",
+          "group_id": "oil::zwartkops_pit_4k",
+          "target": 0.8323745131492615,
+          "prediction": 0.4981897175312042,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.33418479561805725,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14218",
+          "group_id": "bar::lonely_road_afternoon_puresky_4k",
+          "target": 0.39140236377716064,
+          "prediction": 0.4988507330417633,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.10744836926460266,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_1423",
+          "group_id": "pressure::small_empty_room_1_4k",
+          "target": 0.11215034127235413,
+          "prediction": 0.49886175990104675,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.3867114186286926,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_1425",
+          "group_id": "bar::lonely_road_afternoon_puresky_4k",
+          "target": 0.6421686410903931,
+          "prediction": 0.49889427423477173,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.14327436685562134,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14260",
+          "group_id": "temperature::belfast_sunset_puresky_4k",
+          "target": 0.8248512744903564,
+          "prediction": 0.49885326623916626,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.3259980082511902,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14289",
+          "group_id": "pressure::studio_garden_4k",
+          "target": 0.6578937768936157,
+          "prediction": 0.49881595373153687,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.15907782316207886,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14294",
+          "group_id": "sf6gas::small_empty_room_1_4k",
+          "target": 0.6410293579101562,
+          "prediction": 0.4988209009170532,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.14220845699310303,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14296",
+          "group_id": "sf6gas::modern_buildings_2_4k",
+          "target": 0.4864194095134735,
+          "prediction": 0.49882546067237854,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.01240605115890503,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14308",
+          "group_id": "bar::DayEnvironmentHDRI043_4K-HDR",
+          "target": 0.948170006275177,
+          "prediction": 0.4977916181087494,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.4503783881664276,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14319",
+          "group_id": "temperature::qwantani_late_afternoon_4k",
+          "target": 0.39428848028182983,
+          "prediction": 0.4988756477832794,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.10458716750144958,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_1434",
+          "group_id": "bar::evening_road_01_puresky_4k",
+          "target": 0.8759464621543884,
+          "prediction": 1.0,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.12405353784561157,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14347",
+          "group_id": "sf6gas::zwartkops_pit_4k",
+          "target": 0.8665024042129517,
+          "prediction": 0.49885499477386475,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.3676474094390869,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14358",
+          "group_id": "bar::modern_buildings_2_4k",
+          "target": 0.7751351594924927,
+          "prediction": 0.49879899621009827,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.2763361632823944,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        },
+        {
+          "sample_id": "sync_14361",
+          "group_id": "sf6gas::DayEnvironmentHDRI043_4K-HDR",
+          "target": 0.30486369132995605,
+          "prediction": 0.49881845712661743,
+          "valid": true,
+          "input_valid": true,
+          "absolute_error": 0.19395476579666138,
+          "invalid_mass": null,
+          "outside_arc_mass": null,
+          "failure": ""
+        }
+      ],
+      "counts": {
+        "cnn_forward_calls": 1,
+        "cnn_image_forwards": 64
+      },
+      "invalid_sample_ids": [],
+      "subset_nmae_percent_fs": 22.98256615176797
+    }
+  },
+  "target_datasets_used": false,
+  "target_statistics_used": false,
+  "GT_geometry_constructed": false,
+  "BN_adaptation": false,
+  "optimizer_constructed": false,
+  "formal_predictions_or_selection_modified": false,
+  "precision_policy_selected_or_changed": false,
+  "counts": {
+    "cnn_forward_calls": 2,
+    "cnn_image_forwards": 128,
+    "unique_original_source_images": 16,
+    "original_image_presentations": 32,
+    "CNN_backward_calls": 0,
+    "optimizer_updates": 0
+  },
+  "peak_allocated_bytes": 743068672,
+  "peak_reserved_bytes": 1222639616,
+  "scope": "bounded source-only precision diagnosis of actual nonfinite formal predictions; no repair, retraining or external reevaluation",
+  "finite_pair_AMP_FP32_prediction_max_abs_difference": 1.5795230865478516e-06
+}

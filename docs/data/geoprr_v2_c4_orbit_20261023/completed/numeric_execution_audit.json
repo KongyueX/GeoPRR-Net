@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "checks": 27706,
+  "failed_checks": 0,
+  "failures": [],
+  "maximum_numeric_difference": 1.4210854715202004e-14,
+  "audited_at_utc": "2026-10-23T09:10:06.132604+00:00",
+  "scope": "one bounded CPU saved-artifact audit; no weights/RGB/features/GPU/inference/backprop/old GT/tests",
+  "raw_scalar_files": 17,
+  "new_source_saved_rows": 3012,
+  "new_external_saved_rows": 1546,
+  "full_source_epochs": 15,
+  "best_epoch": 6,
+  "exact_v16_source_RGB_contract_equal": true,
+  "whole_C4_inference_contract_changed": true,
+  "best6_last15_decompressed_CSV_equal": false,
+  "counts": {
+    "cnn_image_forwards": 1211944,
+    "cnn_forward_calls": 18953,
+    "source_train_original_presentations": 278850,
+    "source_validation_original_presentations": 22590,
+    "target_original_inputs": 1546,
+    "source_backward_calls": 17430,
+    "source_optimizer_updates": 17423,
+    "source_amp_skipped_updates": 7,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  }
+}
