@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "tests": 4,
+  "seconds": 0.722,
+  "scope": "new synthetic CPU structural tests; toy optimizer step is not a real model update",
+  "checks": [
+    "zero residual equals parent sigmoid for normal and extreme logits",
+    "one encoder forward; declared spatial and semantic shapes; attention normalized",
+    "initial final-layer gradient and nonzero-upstream gradient after temporary output perturbation",
+    "optimizer contains only new branch; frozen parent parameters and BN unchanged"
+  ]
+}

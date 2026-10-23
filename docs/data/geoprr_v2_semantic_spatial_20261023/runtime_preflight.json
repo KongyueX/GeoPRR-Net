@@ -1,0 +1,222 @@
+{
+  "status": "passed",
+  "observed_at_utc": "2026-10-23T05:48:00.518660+00:00",
+  "config": {
+    "protocol": "geoprr_v2_semantic_spatial_residual_source_only_v1",
+    "parent_protocol": "geoprr_v2_full_semantic_direct_source_only_v1",
+    "parent_epoch": 59,
+    "model": {
+      "parent": "complete source-selected v16 semantic scalar reader, all parameters and BN buffers frozen",
+      "local_feature": "encoder.blocks.1, reduction8,80channels,32x32 at256input",
+      "spatial_tokens": 3,
+      "token_dim": 32,
+      "semantic_dim": 1280,
+      "local_normalization": "per-example per-location layer_norm80",
+      "semantic_normalization": "per-example layer_norm1280",
+      "coordinates": "regular32x32 pixel-center xy in[-1,1]; no GT geometry",
+      "residual": "three semantic-conditioned attention pools of projected local32+xy2; MLP102->32 GELU->1",
+      "initialization": "final residual linear weight and bias zero; exact parent reading at epoch0"
+    },
+    "data": {
+      "image_size": 256,
+      "output_size": 64
+    },
+    "source": {
+      "unique_training_images": 18590,
+      "validation_images": 1506,
+      "source_replacement": {
+        "groups": 128,
+        "states": [
+          0.0,
+          0.005,
+          0.02,
+          1.0
+        ],
+        "protocol": "geoprr_v2_endpoint_source_v11"
+      },
+      "require_geometry": false,
+      "pair_manifest": null
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 8,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "weight_decay": 0.0001,
+      "lr": 0.001,
+      "min_lr": 1e-05,
+      "cosine_position": "(epoch-1)/8",
+      "loss": "smooth_l1",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0
+    },
+    "checkpoint_selection": "earliest minimum source1506 scalar NMAE over incumbent0 and all8 complete new epochs",
+    "external_checkpoint": "source-selected best only after all8 epochs; incumbent0 reuses exact v16 external artifacts",
+    "inference_input": "ROI RGB, linear resize256, ImageNet normalization; no GT geometry or target scalar input",
+    "external_training_or_adaptation": false
+  },
+  "model_metadata": {
+    "class": "experiments.geoprr_v2_semantic_spatial.SemanticSpatialReader",
+    "parent": {
+      "class": "experiments.geoprr_v2_semantic_direct.SemanticDirectReader",
+      "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+      "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "semantic_dim": 1280,
+      "encoder_reported_num_features": 960,
+      "semantic_conv_head_retained": true,
+      "semantic_norm_head_retained": true,
+      "encoder_parameters": 8434512,
+      "encoder_state_tensors": 462,
+      "point_parameters": 1281,
+      "parameters": 8435793,
+      "state_tensors": 464
+    },
+    "branch_parameters": 129057,
+    "parameters": 8564850,
+    "state_tensors": 474,
+    "trainable_parameters": 129057,
+    "CNN_passes_per_image": 1,
+    "local_feature": "blocks.1:80x32x32",
+    "spatial_tokens": "three generic learned tokens; no annotated role identity"
+  },
+  "declared_RGB_shape": [
+    4,
+    3,
+    256,
+    256
+  ],
+  "unique_source_RGB_images": 4,
+  "source_probe_states": [
+    0.0,
+    1.0,
+    0.0,
+    1.0
+  ],
+  "local_feature_shapes": [
+    [
+      4,
+      80,
+      32,
+      32
+    ],
+    [
+      4,
+      80,
+      32,
+      32
+    ]
+  ],
+  "semantic_point_input_shapes": [
+    [
+      4,
+      1280
+    ],
+    [
+      4,
+      1280
+    ]
+  ],
+  "zero_initialized_residual_parent_prediction_exact_identity": true,
+  "validation_input_matches_declared256_pipeline": true,
+  "validation_identity_samples": 2,
+  "source_unique": 18590,
+  "source_validation": 1506,
+  "source_contract_exactly_matches_parent": true,
+  "source_require_geometry": false,
+  "target_datasets_used": false,
+  "target_statistics_used": false,
+  "first_loss": 0.00013605767162516713,
+  "temporary_readout_loss": 0.0001360393362119794,
+  "gradient_check_loss_scale": 65536.0,
+  "all_new_branch_gradients_finite": true,
+  "first_gradient_nonzero": {
+    "scores": false,
+    "local.weight": false,
+    "local.bias": false,
+    "position.weight": false,
+    "queries.weight": false,
+    "queries.bias": false,
+    "residual.0.weight": false,
+    "residual.0.bias": false,
+    "residual.2.weight": true,
+    "residual.2.bias": true
+  },
+  "first_upstream_zero_gradients_expected": true,
+  "temporary_readout_gradient_nonzero": {
+    "scores": true,
+    "local.weight": true,
+    "local.bias": true,
+    "position.weight": true,
+    "queries.weight": true,
+    "queries.bias": true,
+    "residual.0.weight": true,
+    "residual.0.bias": true,
+    "residual.2.weight": true,
+    "residual.2.bias": true
+  },
+  "temporary_readout_restored_all_branch_states": true,
+  "restored_branch_state_tensors": 10,
+  "attention_checks": [
+    {
+      "shape": [
+        4,
+        3,
+        1024
+      ],
+      "sum_error": 1.1920928955078125e-07,
+      "finite": true
+    },
+    {
+      "shape": [
+        4,
+        3,
+        1024
+      ],
+      "sum_error": 1.1920928955078125e-07,
+      "finite": true
+    }
+  ],
+  "frozen_base_evidence": {
+    "parent_state_tensors_compared": 464,
+    "all_parent_state_tensors_unchanged": true,
+    "BN_counters_compared": 77,
+    "BN_counter_increment": 0,
+    "cnn_backward_calls": 0,
+    "parent_optimizer_updates": 0
+  },
+  "source_BN_counter_tensors_checked": 77,
+  "source_BN_counter_increment": 0,
+  "strict_full_state_reload": true,
+  "full_state_tensors": 474,
+  "counts": {
+    "CNN_calls": 2,
+    "CNN_images": 8,
+    "CNN_backward_calls": 0,
+    "branch_backward_calls": 2,
+    "optimizer_updates": 0
+  },
+  "seconds": 6.859712585806847,
+  "full_process_seconds": 8.037045005708933,
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "peak_allocated_bytes": 77943296,
+  "peak_reserved_bytes": 100663296,
+  "scope": "new source RGB implementation witness with temporary readout gradient check; not trained performance"
+}
