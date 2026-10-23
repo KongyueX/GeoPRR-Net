@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "recorded_at_utc": "2026-10-23T21:21:58.134195+00:00",
+  "code_revision": "2bd5558b8c4d4e22cc7cd76786e263e85ec67c12",
+  "training_protocol": "geoprr_v2_roll_source_full_semantic_direct_source_only_v1",
+  "targeted_CPU_tests": 16,
+  "new_training_CPU_cases": 7,
+  "new_source_CPU_cases": 9,
+  "source_plan_checked_against_actual_existing_manifests": true,
+  "retained_source_images": 18590,
+  "original_validation_images": 1506,
+  "new_training_start_states": 128,
+  "roll_range_degrees": [
+    -179.87944090247586,
+    179.89513002425133
+  ],
+  "roll_validation_generated_seed_range": [
+    20270000,
+    20270127
+  ],
+  "existing_rows_without_recorded_seed": 20096,
+  "roll_validation_background_independent": false,
+  "configuration_matches_public_file": true,
+  "RGB_decodes": 0,
+  "CNN_calls": 0,
+  "GPU_model_work": 0,
+  "backward_calls": 0,
+  "optimizer_updates": 0,
+  "scope": "16 targeted CPU cases and actual immutable source-generation plan entry passed; 0RGB/CNN/GPU/backward/optimizer work. Not learned accuracy.",
+  "planned_new_train_groups": 1024,
+  "planned_new_train_RGB": 4096,
+  "planned_new_validation_groups": 128,
+  "planned_new_validation_RGB": 512
+}

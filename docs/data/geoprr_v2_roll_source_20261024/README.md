@@ -19,3 +19,5 @@
 ## Limitations
 
 新数据、重复采样、端点曝光、新源验证和adaptive stopping共同改变，不作单camera因果声明。新rollval只在新布局／generated seed／ID／group层面独立，共享HDR，不能冒称原14494历史seed全链已认证或新域盲测。源score改善不保证外域收益；已查看两外域和单seed不称显著性或普适机制。原14494／1506／4000、旧模型与失败全部保留，RGB／权重／原几何／完整计划及合同不公开，不删旧资产。
+
+当前已完成16项针对性CPU检查及实际生成计划入口检查，首个正式roll源组的4张RGB与16次GT组合检查通过，唯一串行队列已启动源生成。见[cpu_checks.json](cpu_checks.json)、[source_entry_witness.json](source_entry_witness.json)与[launch.json](launch.json)。完整源、模型运行见证、正式训练和外域结果尚待执行完成；这些启动材料不是性能结果。

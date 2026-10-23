@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "scope": "first formal new source group only; no separate diagnostic re-render, no CNN or model performance",
+  "new_RGB_images": 4,
+  "states": [
+    0.0,
+    0.005,
+    0.02,
+    1.0
+  ],
+  "roll_degrees": 93.0193462430866,
+  "minimum_GT_support_mass": 0.41722816228866577,
+  "maximum_GT_composed_error_percent_fs": 0.26010226606648895,
+  "optical_axis_max_abs_difference": 0.0,
+  "GT_cross_state_compositions": 16,
+  "retained_thresholds": {
+    "minimum_support_mass": 0.15,
+    "maximum_normalized_readout_error": 0.01
+  },
+  "parent_nonroll_factors_equal": true,
+  "CNN_calls": 0,
+  "backward_calls": 0,
+  "optimizer_updates": 0,
+  "GT_image_size": 768,
+  "GT_output_size": 192
+}

@@ -1,17 +1,20 @@
 {
   "protocol": "geoprr_v22_public_allowlist_v1",
-  "status": "independent_protocol_and_runtime_config_frozen_generation_runtime_training_records_pending",
+  "status": "source_generation_running_model_runtime_and_performance_pending",
   "files": [
     "../../GEOPRR_V2_ROLL_SOURCE_ZERO_SHOT_PROTOCOL_CN.md",
     "README.md",
     "config.json",
-    "public_allowlist.json"
+    "public_allowlist.json",
+    "cpu_checks.json",
+    "launch.json",
+    "source_entry_witness.json"
   ],
   "training_protocol": "geoprr_v2_roll_source_full_semantic_direct_source_only_v1",
   "source_controller_protocol": "geoprr_v2_camera_roll_source_v22",
-  "code_revision": null,
+  "code_revision": "2bd5558b8c4d4e22cc7cd76786e263e85ec67c12",
   "model_configuration": "full cached ImageNet semantic direct reader; actual runtime metadata to be recorded before training",
-  "current_evidence": "source coverage plan, independent source-validation and adaptive stopping rules frozen; no new model performance claimed",
+  "current_evidence": "16 new CPU cases and actual source-plan checks passed; first formal rolled physical group passed; one serialized source→preflight→training→external queue launched.",
   "budget_matching_required": false,
   "notification_policy": "notify only after complete research result or genuine fault/user action; no routine launch or intermediate updates",
   "excluded": [
