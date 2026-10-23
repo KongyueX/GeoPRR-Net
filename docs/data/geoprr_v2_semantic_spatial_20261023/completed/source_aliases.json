@@ -1,0 +1,24 @@
+{
+  "protocol": "geoprr_v17_source_checkpoint_alias_v1",
+  "best_source_epoch": 8,
+  "last_epoch": 8,
+  "prediction_file": "source_best8_last8_predictions.csv.gz",
+  "source_rows": 1506,
+  "decompressed_CSV_bytes_equal": true,
+  "gzip_container_bytes_equal": false,
+  "logical_saved_source_rows_in_private": 3012,
+  "public_source_rows": 1506,
+  "source_only_alias": true,
+  "external_evaluations": {
+    "industrial": {
+      "actual_new_CNN_images": 1395,
+      "actual_new_CNN_calls": 22
+    },
+    "rf100": {
+      "actual_new_CNN_images": 151,
+      "actual_new_CNN_calls": 3
+    }
+  },
+  "external_alias_to_parent": false,
+  "reason": "best8 and last8 use identical saved source CSV contents; each external domain was newly evaluated once with the selected epoch8 weights."
+}

@@ -1,0 +1,71 @@
+{
+  "protocol": "geoprr_v2_semantic_spatial_residual_source_only_v1",
+  "parent_protocol": "geoprr_v2_full_semantic_direct_source_only_v1",
+  "parent_epoch": 59,
+  "model": {
+    "parent": "complete source-selected v16 semantic scalar reader, all parameters and BN buffers frozen",
+    "local_feature": "encoder.blocks.1, reduction8,80channels,32x32 at256input",
+    "spatial_tokens": 3,
+    "token_dim": 32,
+    "semantic_dim": 1280,
+    "local_normalization": "per-example per-location layer_norm80",
+    "semantic_normalization": "per-example layer_norm1280",
+    "coordinates": "regular32x32 pixel-center xy in[-1,1]; no GT geometry",
+    "residual": "three semantic-conditioned attention pools of projected local32+xy2; MLP102->32 GELU->1",
+    "initialization": "final residual linear weight and bias zero; exact parent reading at epoch0"
+  },
+  "data": {
+    "image_size": 256,
+    "output_size": 64
+  },
+  "source": {
+    "unique_training_images": 18590,
+    "validation_images": 1506,
+    "source_replacement": {
+      "groups": 128,
+      "states": [
+        0.0,
+        0.005,
+        0.02,
+        1.0
+      ],
+      "protocol": "geoprr_v2_endpoint_source_v11"
+    },
+    "require_geometry": false,
+    "pair_manifest": null
+  },
+  "photometric": {
+    "contrast": [
+      0.8,
+      1.2
+    ],
+    "brightness": [
+      -0.1,
+      0.1
+    ],
+    "saturation": [
+      0.8,
+      1.2
+    ]
+  },
+  "training": {
+    "seed": 20262020,
+    "epochs": 8,
+    "batch_size": 64,
+    "validation_batch_size": 64,
+    "workers": 4,
+    "amp": true,
+    "optimizer": "AdamW",
+    "weight_decay": 0.0001,
+    "lr": 0.001,
+    "min_lr": 1e-05,
+    "cosine_position": "(epoch-1)/8",
+    "loss": "smooth_l1",
+    "smooth_l1_beta": 0.05,
+    "gradient_clip": 5.0
+  },
+  "checkpoint_selection": "earliest minimum source1506 scalar NMAE over incumbent0 and all8 complete new epochs",
+  "external_checkpoint": "source-selected best only after all8 epochs; incumbent0 reuses exact v16 external artifacts",
+  "inference_input": "ROI RGB, linear resize256, ImageNet normalization; no GT geometry or target scalar input",
+  "external_training_or_adaptation": false
+}

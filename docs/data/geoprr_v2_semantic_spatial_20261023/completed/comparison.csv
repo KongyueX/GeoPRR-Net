@@ -1,0 +1,5 @@
+model,checkpoint_epoch,source_nmae_percent_fs,industrial_nmae_percent_fs,rf100_nmae_percent_fs,source_maximum_error_percent_fs,source_errors_above_1_percent_fs,source_errors_above_2_percent_fs,source_errors_above_5_percent_fs
+v16_parent_best59,59,0.5262168472809196,11.686054081188708,10.16477580956686,65.95393121242523,127,40,13
+v17_best8_equals_last8,8,0.5194329084960401,11.690235422259883,10.182051525072701,65.9449964761734,127,40,13
+historical_old_geoprr_clean_source_only,,,11.643617857033954,6.6070791714191,,,,
+v12_local_endpoint_best1,1,0.0833923887720102,20.539124658463546,7.659157217015351,18.67758482694626,4,3,1

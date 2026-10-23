@@ -1,0 +1,113 @@
+{
+  "protocol": "geoprr_v2_semantic_spatial_residual_source_only_v1",
+  "code_revision": "c5e98a451bdda9c891eee46dcb3225b71386195b",
+  "config": {
+    "protocol": "geoprr_v2_semantic_spatial_residual_source_only_v1",
+    "parent_protocol": "geoprr_v2_full_semantic_direct_source_only_v1",
+    "parent_epoch": 59,
+    "model": {
+      "parent": "complete source-selected v16 semantic scalar reader, all parameters and BN buffers frozen",
+      "local_feature": "encoder.blocks.1, reduction8,80channels,32x32 at256input",
+      "spatial_tokens": 3,
+      "token_dim": 32,
+      "semantic_dim": 1280,
+      "local_normalization": "per-example per-location layer_norm80",
+      "semantic_normalization": "per-example layer_norm1280",
+      "coordinates": "regular32x32 pixel-center xy in[-1,1]; no GT geometry",
+      "residual": "three semantic-conditioned attention pools of projected local32+xy2; MLP102->32 GELU->1",
+      "initialization": "final residual linear weight and bias zero; exact parent reading at epoch0"
+    },
+    "data": {
+      "image_size": 256,
+      "output_size": 64
+    },
+    "source": {
+      "unique_training_images": 18590,
+      "validation_images": 1506,
+      "source_replacement": {
+        "groups": 128,
+        "states": [
+          0.0,
+          0.005,
+          0.02,
+          1.0
+        ],
+        "protocol": "geoprr_v2_endpoint_source_v11"
+      },
+      "require_geometry": false,
+      "pair_manifest": null
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 8,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "weight_decay": 0.0001,
+      "lr": 0.001,
+      "min_lr": 1e-05,
+      "cosine_position": "(epoch-1)/8",
+      "loss": "smooth_l1",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0
+    },
+    "checkpoint_selection": "earliest minimum source1506 scalar NMAE over incumbent0 and all8 complete new epochs",
+    "external_checkpoint": "source-selected best only after all8 epochs; incumbent0 reuses exact v16 external artifacts",
+    "inference_input": "ROI RGB, linear resize256, ImageNet normalization; no GT geometry or target scalar input",
+    "external_training_or_adaptation": false
+  },
+  "selection": "source minimum over saved exact parent incumbent0 and all8 complete new source epochs; earliest tie",
+  "inference": "one frozen full semantic encoder pass; native parent logit plus learned generic spatial residual",
+  "parent_parameters_and_buffers": "all464 state tensors frozen including77 BN counters; compare directly each epoch",
+  "trainable_branch_parameters": 129057,
+  "source_only_training": true,
+  "expected_training": {
+    "images": 148720,
+    "CNN_calls": 2328,
+    "branch_backward_attempts": 2328,
+    "CNN_backward_calls": 0
+  },
+  "expected_validation": {
+    "images": 12048,
+    "CNN_calls": 192
+  },
+  "expected_incumbent0_extra_source_CNN_calls": 0,
+  "expected_complete_CNN_if_parent_selected": {
+    "images": 160768,
+    "calls": 2520
+  },
+  "expected_complete_CNN_if_new_branch_selected": {
+    "images": 162314,
+    "calls": 2545
+  },
+  "external_scope": "previously viewed Industrial1395/52 and RF100151/35 development; no fitting or adaptation; parent0 reuses exact saved external artifacts",
+  "comparison_scope": "new source-only spatial branch on a frozen scalar parent; no GT role or geometry input",
+  "witness": {
+    "status": "passed",
+    "counts": {
+      "CNN_calls": 2,
+      "CNN_images": 8,
+      "CNN_backward_calls": 0,
+      "branch_backward_calls": 2,
+      "optimizer_updates": 0
+    },
+    "validation_input_matches_declared256_pipeline": true
+  },
+  "parent_identifier": "v16 full semantic source-best59"
+}
