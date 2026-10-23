@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "tests": 5,
+  "scope": "new synthetic CPU tests in project venv; not source accuracy or formal optimizer updates",
+  "checks": [
+    "k-major view grouping and float32 semantic mean before sigmoid, not mean probabilities",
+    "non-invariant encoder becomes C4-invariant by input orbit pooling",
+    "partial original batches retain every view",
+    "failed original gets four placeholders but one error1 row",
+    "attempt-based virtual LR boundaries/reset/resume including AMP skips"
+  ]
+}

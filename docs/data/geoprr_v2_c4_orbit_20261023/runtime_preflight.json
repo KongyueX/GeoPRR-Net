@@ -1,0 +1,231 @@
+{
+  "status": "passed",
+  "observed_at_utc": "2026-10-23T08:37:13.036255+00:00",
+  "config": {
+    "protocol": "geoprr_v2_c4_orbit_semantic_source_only_v1",
+    "model": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "num_classes": 0,
+      "readout": "sigmoid(linear(mean_k(full encoder(rot90_k RGB)))); full semantic neck retained",
+      "point_initialization_std": 0.001,
+      "point_initialization_bias": 0.0
+    },
+    "data": {
+      "image_size": 256,
+      "output_size": 64
+    },
+    "source": {
+      "unique_training_images": 18590,
+      "validation_images": 1506,
+      "source_replacement": {
+        "groups": 128,
+        "states": [
+          0.0,
+          0.005,
+          0.02,
+          1.0
+        ],
+        "protocol": "geoprr_v2_endpoint_source_v11"
+      },
+      "require_geometry": false,
+      "pair_manifest": null
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 15,
+      "batch_size": 16,
+      "validation_batch_size": 16,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "weight_decay": 0.0001,
+      "loss": "smooth_l1",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0,
+      "learning_rate": "attempt i maps to virtual epoch1+floor(i*60/17430); use v16 two-phase cosine at that virtual epoch"
+    },
+    "checkpoint_selection": "earliest minimum direct scalar NMAE on complete source1506 within15 orbit epochs",
+    "external_checkpoint": "source-selected best only after all15 orbit epochs complete; no incumbent alias",
+    "inference_input": "native ROI RGB, linear resize256, ImageNet normalization, fixed C4 tensor orbit and semantic mean; no GT geometry or target scalar input",
+    "external_training_or_adaptation": false,
+    "orbit": {
+      "quarter_turns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "input_order": "k-major concatenation of rotated original RGB tensors",
+      "rotation": "torch.rot90 on spatial dimensions before the encoder; no interpolation or reflection",
+      "pooling": "float32 arithmetic mean of four semantic vectors before the linear scalar logit",
+      "label": "one unchanged physical scalar per original ROI",
+      "geometry_input": false,
+      "CNN_views_per_original": 4,
+      "train_validation_external_policy_identical": true
+    },
+    "comparison": {
+      "matched_training_CNN_views": 1115400,
+      "v16_training_epochs": 60,
+      "orbit_training_epochs": 15,
+      "source_photometric_draws_per_unique_image": 15,
+      "source_validation_checkpoint_choices": 15,
+      "BN_training_batch": "16 original ROIs with4 correlated orientations each; not64 independent ROIs",
+      "external_CNN_views_per_original": 4,
+      "equal_CNN_view_count_is_not_equal_compute": true
+    }
+  },
+  "model_metadata": {
+    "class": "experiments.geoprr_v2_c4_orbit.C4OrbitReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "point_parameters": 1281,
+    "parameters": 8435793,
+    "state_tensors": 464,
+    "orbit": {
+      "quarter_turns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "input_order": "k-major concatenation of rotated original RGB tensors",
+      "rotation": "torch.rot90 on spatial dimensions before the encoder; no interpolation or reflection",
+      "pooling": "float32 arithmetic mean of four semantic vectors before the linear scalar logit",
+      "label": "one unchanged physical scalar per original ROI",
+      "geometry_input": false,
+      "CNN_views_per_original": 4,
+      "train_validation_external_policy_identical": true
+    },
+    "new_parameters": 0,
+    "inference_CNN_views_per_original": 4,
+    "deployment_auxiliary_modules": 0
+  },
+  "source_unique": 18590,
+  "source_validation": 1506,
+  "source_probe_states": [
+    0.0,
+    1.0,
+    0.0,
+    1.0
+  ],
+  "unique_source_RGB_images": 4,
+  "declared_original_RGB_shape": [
+    4,
+    3,
+    256,
+    256
+  ],
+  "actual_encoder_input_shapes": [
+    [
+      16,
+      3,
+      256,
+      256
+    ],
+    [
+      16,
+      3,
+      256,
+      256
+    ],
+    [
+      16,
+      3,
+      256,
+      256
+    ]
+  ],
+  "semantic_point_input_shapes": [
+    [
+      4,
+      1280
+    ],
+    [
+      4,
+      1280
+    ],
+    [
+      4,
+      1280
+    ]
+  ],
+  "base_RGB_preprocessing_matches_v16": true,
+  "validation_RGB_identity_samples": 2,
+  "source_RGB_contract_matches_v16": true,
+  "whole_orbit_inference_contract_changed": true,
+  "old768_or_full_v16_model_input_identity_claimed": false,
+  "orbit_source_eval_contract_verified": true,
+  "encoder_inputs_exact_k_major_tensor_rotations": true,
+  "physical_scalar_labels_unchanged": true,
+  "GT_geometry_constructed": false,
+  "model_forward_inputs": [
+    "image"
+  ],
+  "semantic_pool_before_point_exact": true,
+  "pooled_semantic_dtype": "float32",
+  "point_sigmoid_prediction_exact": true,
+  "probability_averaging_used": false,
+  "eval_C4_invariance_verified": true,
+  "eval_invariance_prediction_max_abs_error": 0.0,
+  "eval_invariance_semantic_max_abs_error": 0.0,
+  "eval_invariance_tolerances": {
+    "prediction": 1e-06,
+    "semantic_pool": 1e-05
+  },
+  "bitwise_C4_output_invariance_claimed": false,
+  "fresh_direct_initialization_state_tensors_compared": 464,
+  "fresh_direct_initialization_exactly_preserved": true,
+  "ImageNet_cached_only": true,
+  "old_task_checkpoint_used": false,
+  "target_datasets_used": false,
+  "target_statistics_used": false,
+  "loss": 0.4762294888496399,
+  "all_gradients_finite": true,
+  "gradient_groups_nonzero": {
+    "encoder_body": true,
+    "semantic_conv_head": true,
+    "point": true
+  },
+  "parameter_tensors_unchanged_without_optimizer": 233,
+  "source_BN_counter_tensors_checked": 77,
+  "source_BN_counter_increment_training": 1,
+  "source_BN_counter_additional_increment_eval": 0,
+  "encoder_buffers_unchanged_during_eval": true,
+  "strict_full_state_reload": true,
+  "full_state_tensors": 464,
+  "counts": {
+    "original_image_presentations": 12,
+    "CNN_calls": 3,
+    "CNN_images": 48,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "seconds": 13.669844333082438,
+  "full_process_seconds": 14.73847185075283,
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "peak_allocated_bytes": 622082048,
+  "peak_reserved_bytes": 727711744,
+  "scope": "new fixed C4 semantic pooling on actual source RGB, zero-update execution witness; not trained performance"
+}
