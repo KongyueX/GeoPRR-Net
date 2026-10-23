@@ -55,7 +55,7 @@ class RollSourceTests(unittest.TestCase):
         self.assertNotEqual(batches[0],next(iter(changed)))
 
     def test_equal_population_source_score_and_minimum_stop_boundaries(self):
-        self.assertEqual(selection_score(validation(.1,.7)),.4)
+        self.assertAlmostEqual(selection_score(validation(.1,.7)),.4,places=15)
         with self.assertRaises(ValueError): selection_score({**validation(.1,.2),"industrial":{"samples":1395,"nmae":0.}})
         partial = validation(.1,.2); partial["roll"]["samples"] = 511
         with self.assertRaises(ValueError): selection_score(partial)
