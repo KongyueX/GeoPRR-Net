@@ -1,6 +1,6 @@
 # 完整语义条件关系读出：独立zero-shot协议
 
-2026-10-23。v20按本文件冻结一个独立源域模型及60轮预算；当前只有源角色标签到读出的数学兼容性记录，模型已实现并通过4项新CPU检查，实际构造核实8762052参数／502 state；源RGB零更新见证已通过，唯一正式源训练于北京时间2026-10-23 17:41:09启动，尚无完整性能结果。执行代码9494af66d04ea3ce0da68f7fd8d579c154814087已推送现有main。Industrial1395与RF100151不得用于训练、适配或选择训练超参数。全部旧模型、65轮结果、原G1／anchor失败和配对守恒负结果保留。
+2026-10-23。v20按下述冻结协议完成60轮与两套冻结外评，source-best为第16轮：源NMAE 0.283315%FS，Industrial 29.257524%FS，RF100 16.224095%FS。相对v16源均值降低46.1601%，但两个外域均退化，本配方不作为默认模型、不延长训练。一次独立CPU核对54062项通过、0失败；见[完整结果](data/geoprr_v2_semantic_relation_20261023/completed/report_cn.md)。执行代码9494af66d04ea3ce0da68f7fd8d579c154814087。目标域未用于训练、适配或训练超参数选择，全部旧模型、原G1／anchor／65轮和负结果保留。
 
 ## 可检验问题
 
@@ -54,7 +54,7 @@ Industrial／RF100不得用于训练loss、总体特征统计拟合、BN适配�
 
 ## 实现、运行见证与归档
 
-入口`experiments.run_geoprr_v2_semantic_relation`，独立输出`runs/geoprr_generalization/iteration_v20_semantic_relation_20261023/source_only_training`。执行代码9494af6已冻结并已启动唯一源队列。4项新CPU检查已通过（0.205秒），实际模型参数构造已核实。真实源RGB见证也已通过：4张训练源0／1图加2张原256验证图，共2次CNN／6图／1次combined反传／0optimizer；完整462项缓存ImageNet初始encoder相同，1280上下文实际输入与各必要模块梯度有限非零，77个BN counter源+1／eval额外0，完整502 state严格加载，验证输入256 identity，纯RGB接口拒绝GT几何。见[实际运行记录](data/geoprr_v2_semantic_relation_20261023/runtime_preflight.json)。复用v18解析源合同记录和上面的理想联合映射记录，不重新执行旧GT／教师／完整数学检查。
+入口`experiments.run_geoprr_v2_semantic_relation`，独立输出`runs/geoprr_generalization/iteration_v20_semantic_relation_20261023/source_only_training`。执行代码9494af6按冻结配置完成唯一源队列。4项新CPU检查已通过（0.205秒），实际模型参数构造已核实。真实源RGB见证也已通过：4张训练源0／1图加2张原256验证图，共2次CNN／6图／1次combined反传／0optimizer；完整462项缓存ImageNet初始encoder相同，1280上下文实际输入与各必要模块梯度有限非零，77个BN counter源+1／eval额外0，完整502 state严格加载，验证输入256 identity，纯RGB接口拒绝GT几何。见[实际运行记录](data/geoprr_v2_semantic_relation_20261023/runtime_preflight.json)。复用v18解析源合同记录和上面的理想联合映射记录，不重新执行旧GT／教师／完整数学检查。
 
 实现后只做新结构必要的针对性CPU检查及一次实际源RGB零更新见证：真实0／1源图、单CNN多尺度和semantic1280确实进入context、RGB-only接口、部署reading及loss有限、encoder／neck／FPN／context／role梯度有限且实际相连、源BN更新／eval固定、256验证输入identity、配置精确和完整实际state严格reload。见证0optimizer，正式训练fresh重新初始化，不沿用见证BN状态；实际参数与state以构造核实记录为准。
 
@@ -65,6 +65,8 @@ Industrial／RF100不得用于训练loss、总体特征统计拟合、BN适配�
 整个阶段完成后仅一次必要独立CPU数值与执行核对，再按各域连续NMAE／Acc、zero／nonzero／nearzero、组、ordinary1495／1497、severe6、3172／2810／3663／9323／8195及sync9／RF41、tail／max／救回新增与成本比较v16、v18、v12及旧GeoPRR保存参照，不重跑旧模型。仅本任务代码和显式规范化allowlist可推现有main，不建branch；RGB、权重、bbox、H／C／XYZ／U／M、特征矩阵、raw run／data_contract和private trace保留私有。
 
 实际启动父421867／初始源训练子421874，2026-10-23 09:41:48 UTC核实精确命令匹配，唯一GPU进程为421874；首批64源图loss0.334367186、梯度范数有限。这只证明任务正常执行，不是准确率结论。见[启动快照](data/geoprr_v2_semantic_relation_20261023/launch.json)。
+
+三阶段均正常exit0，最后RF100阶段于2026-10-23 10:32:37 UTC结束；旧父421867与源训练子421874已退出，完整结果及实际成本已归档。
 
 ## Limitations
 

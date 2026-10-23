@@ -1,0 +1,327 @@
+{
+  "protocol": "geoprr_v2_full_semantic_relation_source_only_v1",
+  "config": {
+    "protocol": "geoprr_v2_full_semantic_relation_source_only_v1",
+    "model": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "num_classes": 0,
+      "semantic_context": "full encoder1280 semantic output into predicted center/SPD context",
+      "readout": "predicted local conditional A/P_rel/B_rel to full J to unchanged CircularProgressPushforward",
+      "bins": 256,
+      "decoder_dim": 64,
+      "token_dim": 16,
+      "reference_normalization": "local",
+      "feature_modules": [
+        "blocks.0",
+        "blocks.1",
+        "blocks.2",
+        "blocks.4"
+      ],
+      "feature_channels": [
+        48,
+        80,
+        160,
+        960
+      ],
+      "feature_reductions": [
+        4,
+        8,
+        16,
+        32
+      ],
+      "point_head": false,
+      "relation_deployed_during_training_and_inference": true
+    },
+    "data": {
+      "image_size": 256,
+      "output_size": 64
+    },
+    "source": {
+      "unique_training_images": 18590,
+      "validation_images": 1506,
+      "source_replacement": {
+        "groups": 128,
+        "states": [
+          0.0,
+          0.005,
+          0.02,
+          1.0
+        ],
+        "protocol": "geoprr_v2_endpoint_source_v11"
+      },
+      "require_geometry": "analytic U/M/H/span and virtual role labels for source loss only; no GT model input",
+      "pair_manifest": null,
+      "analytic_label_contract": "analytic_U_M_role_no_Gaussian_Q_v1",
+      "analytic_data": {
+        "image_size": 256,
+        "output_size": 64
+      },
+      "analytic_geometry_config": {
+        "max_radial_error": 0.02,
+        "max_anchor_progress_error": 0.01,
+        "max_center_error": 0.05,
+        "max_readout_error": 0.01,
+        "ring_half_width": 0.2,
+        "point_sigma": 1.0,
+        "min_support_mass": 0.15
+      }
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 60,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "weight_decay": 0.0001,
+      "loss": "SmoothL1(beta=.05)+.1*(role_NLL/(3log256)+field_L1)",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0,
+      "learning_rate": "epoch1..30 cosine3e-4; epoch31..60 cosine3e-5; phase position0..29/30",
+      "auxiliary_weight": 0.1,
+      "role_normalization": "local",
+      "reading_cdf": false
+    },
+    "checkpoint_selection": "earliest minimum deployed relation NMAE on complete source1506 within60epochs",
+    "external_checkpoint": "source-selected best only after all60epochs complete",
+    "inference_input": "ROI RGB, linear resize256, ImageNet normalization; full semantic context and predicted local relation circular reading; no GT geometry or target scalar input",
+    "external_training_or_adaptation": false
+  },
+  "status": "complete",
+  "epochs": 60,
+  "best_epoch": 16,
+  "best_nmae": 0.0028331462226947194,
+  "best_validation": {
+    "samples": 1506,
+    "groups": 70,
+    "nmae": 0.0028331462226947194,
+    "nmae_percent_fs": 0.28331462226947196,
+    "acc_at_1": 0.9727755644090306,
+    "acc_at_2": 0.9900398406374502,
+    "acc_at_5": 0.9946879150066401,
+    "coverage": 1.0,
+    "failed": 0,
+    "median_error": 0.0010889619588851929,
+    "p90_error": 0.004320858046412468,
+    "p95_error": 0.006985865533351898,
+    "tail10_nmae": 0.01737991745648474,
+    "maximum_error": 0.5366640165448189,
+    "errors_above_2_percent_fs": 15,
+    "errors_above_5_percent_fs": 8,
+    "input_failures": 0,
+    "errors_above_1_percent_fs": 41,
+    "mean_invalid_mass": 0.00010423836929878208,
+    "mean_outside_arc_mass": 0.0038399608492325167,
+    "maximum_error_ids": [
+      "sync_9"
+    ],
+    "median_error_percent_fs": 0.10889619588851929,
+    "p90_error_percent_fs": 0.4320858046412468,
+    "p95_error_percent_fs": 0.6985865533351898,
+    "tail10_nmae_percent_fs": 1.7379917456484741,
+    "maximum_error_percent_fs": 53.66640165448189,
+    "acc_at_1_percent": 97.27755644090306,
+    "count_at_1_percent_fs": 1465,
+    "acc_at_2_percent": 99.00398406374502,
+    "count_at_2_percent_fs": 1491,
+    "acc_at_5_percent": 99.46879150066401,
+    "count_at_5_percent_fs": 1498
+  },
+  "last_validation": {
+    "samples": 1506,
+    "groups": 70,
+    "nmae": 0.003191948560617088,
+    "nmae_percent_fs": 0.3191948560617088,
+    "acc_at_1": 0.9807436918990704,
+    "acc_at_2": 0.9913678618857902,
+    "acc_at_5": 0.9940239043824701,
+    "coverage": 1.0,
+    "failed": 0,
+    "median_error": 0.0010561645030975342,
+    "p90_error": 0.003715723752975464,
+    "p95_error": 0.005640238523483276,
+    "tail10_nmae": 0.02152391592740692,
+    "maximum_error": 0.8897699490189552,
+    "errors_above_2_percent_fs": 13,
+    "errors_above_5_percent_fs": 9,
+    "input_failures": 0,
+    "errors_above_1_percent_fs": 29,
+    "mean_invalid_mass": 6.087526676323338e-06,
+    "mean_outside_arc_mass": 0.0022636049692783176,
+    "maximum_error_ids": [
+      "sync_4025"
+    ],
+    "median_error_percent_fs": 0.10561645030975342,
+    "p90_error_percent_fs": 0.3715723752975464,
+    "p95_error_percent_fs": 0.5640238523483276,
+    "tail10_nmae_percent_fs": 2.152391592740692,
+    "maximum_error_percent_fs": 88.97699490189552,
+    "acc_at_1_percent": 98.07436918990705,
+    "count_at_1_percent_fs": 1477,
+    "acc_at_2_percent": 99.13678618857902,
+    "count_at_2_percent_fs": 1493,
+    "acc_at_5_percent": 99.40239043824701,
+    "count_at_5_percent_fs": 1497
+  },
+  "totals": {
+    "train_batches": 17460,
+    "train_cnn_image_forwards": 1115400,
+    "train_cnn_forward_calls": 17460,
+    "backward_calls": 17460,
+    "optimizer_updates": 17453,
+    "amp_skipped_updates": 7,
+    "relation_forward_calls": 17460,
+    "relation_backward_attempts": 17460,
+    "readout_forward_calls": 17460,
+    "validation_images": 90360,
+    "validation_cnn_forward_calls": 1440,
+    "validation_relation_forward_calls": 1440,
+    "validation_readout_forward_calls": 1440,
+    "training_seconds": 2827.82918426767,
+    "validation_seconds": 174.25890681892633
+  },
+  "model_metadata": {
+    "class": "__main__.SemanticRelationReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "non_CNN_parameters": 327540,
+    "parameters": 8762052,
+    "state_tensors": 502,
+    "context_input_dim": 1280,
+    "point_head_present": false,
+    "reference_normalization": "local",
+    "feature_modules": [
+      "blocks.0",
+      "blocks.1",
+      "blocks.2",
+      "blocks.4"
+    ],
+    "feature_channels": [
+      48,
+      80,
+      160,
+      960
+    ],
+    "feature_reductions": [
+      4,
+      8,
+      16,
+      32
+    ],
+    "deployment_uses_geometry_readout": true,
+    "geometry_labels_in_model_inputs": false,
+    "training_only_auxiliary_modules": false,
+    "deployed_readout": "full conditional J to unchanged CircularProgressPushforward256"
+  },
+  "initialization": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "ImageNet_pretrained": true,
+    "existing_cached_weights_only": true,
+    "retained_complete_encoder_state_tensors": 462,
+    "new_non_CNN_parameter_tensors": 31,
+    "sigmoid_point_head_allocated": false,
+    "old_task_checkpoint_used": false,
+    "semantic_context_dimension": 1280,
+    "deployed_readout": "local conditional J to CircularProgressPushforward"
+  },
+  "resume_from_epoch": 0,
+  "runtime": {
+    "process_seconds": 3060.477437298745,
+    "full_process_seconds": 3061.4097052253783,
+    "full_process_boundary": "module entry before torch import through saved source/external predictions; excludes final completion JSON",
+    "device": "cuda",
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "peak_cuda_memory_bytes": 3046479872,
+    "peak_cuda_reserved_bytes": 3437232128
+  },
+  "checkpointed_process_seconds_before_resume": 0.0,
+  "checkpointed_process_seconds": 3060.477739110589,
+  "formal_complete_counts": {
+    "cnn_image_forwards": 1207306,
+    "cnn_forward_calls": 18925,
+    "source_backward_calls": 17460,
+    "source_optimizer_updates": 17453,
+    "source_amp_skipped_updates": 7,
+    "source_relation_forward_calls": 17460,
+    "source_relation_backward_attempts": 17460,
+    "source_readout_forward_calls": 17460,
+    "validation_relation_forward_calls": 1440,
+    "validation_readout_forward_calls": 1440,
+    "target_relation_forward_calls": 25,
+    "target_readout_forward_calls": 25,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  },
+  "stage_wall_seconds": {
+    "train_source": 3062.30087,
+    "eval_industrial": 13.453631,
+    "eval_rf100": 11.278892
+  },
+  "controller_end_to_end_seconds": 3087.175606,
+  "completed_at_utc": "2026-10-23T10:32:37.650164+00:00",
+  "source_population_summary": {
+    "train_images": 18590,
+    "validation_images": 1506,
+    "image_size": 256,
+    "RGB_contract_exact_v16": true,
+    "analytic_source_labels_reused_from_v18": true,
+    "model_inputs_RGB_only": true,
+    "deployed_relation_and_readout": true
+  },
+  "source_saved_prediction_records": {
+    "best_source": {
+      "epoch": 16,
+      "rows": 1506,
+      "file": "source_best16_predictions.csv.gz"
+    },
+    "last60": {
+      "epoch": 60,
+      "rows": 1506,
+      "file": "source_last60_predictions.csv.gz"
+    },
+    "decompressed_csv_equal": false
+  },
+  "stages": {
+    "train_source": {
+      "status": "complete",
+      "started_at": "2026-10-23T09:41:10.474558+00:00",
+      "finished_at": "2026-10-23T10:32:12.775428+00:00",
+      "exit_code": 0
+    },
+    "eval_industrial": {
+      "status": "complete",
+      "started_at": "2026-10-23T10:32:12.827030+00:00",
+      "finished_at": "2026-10-23T10:32:26.280661+00:00",
+      "exit_code": 0
+    },
+    "eval_rf100": {
+      "status": "complete",
+      "started_at": "2026-10-23T10:32:26.371272+00:00",
+      "finished_at": "2026-10-23T10:32:37.650164+00:00",
+      "exit_code": 0
+    }
+  }
+}

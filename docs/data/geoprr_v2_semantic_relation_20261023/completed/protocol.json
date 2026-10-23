@@ -1,0 +1,190 @@
+{
+  "protocol": "geoprr_v2_full_semantic_relation_source_only_v1",
+  "code_revision": "9494af66d04ea3ce0da68f7fd8d579c154814087",
+  "config": {
+    "protocol": "geoprr_v2_full_semantic_relation_source_only_v1",
+    "model": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "num_classes": 0,
+      "semantic_context": "full encoder1280 semantic output into predicted center/SPD context",
+      "readout": "predicted local conditional A/P_rel/B_rel to full J to unchanged CircularProgressPushforward",
+      "bins": 256,
+      "decoder_dim": 64,
+      "token_dim": 16,
+      "reference_normalization": "local",
+      "feature_modules": [
+        "blocks.0",
+        "blocks.1",
+        "blocks.2",
+        "blocks.4"
+      ],
+      "feature_channels": [
+        48,
+        80,
+        160,
+        960
+      ],
+      "feature_reductions": [
+        4,
+        8,
+        16,
+        32
+      ],
+      "point_head": false,
+      "relation_deployed_during_training_and_inference": true
+    },
+    "data": {
+      "image_size": 256,
+      "output_size": 64
+    },
+    "source": {
+      "unique_training_images": 18590,
+      "validation_images": 1506,
+      "source_replacement": {
+        "groups": 128,
+        "states": [
+          0.0,
+          0.005,
+          0.02,
+          1.0
+        ],
+        "protocol": "geoprr_v2_endpoint_source_v11"
+      },
+      "require_geometry": "analytic U/M/H/span and virtual role labels for source loss only; no GT model input",
+      "pair_manifest": null,
+      "analytic_label_contract": "analytic_U_M_role_no_Gaussian_Q_v1",
+      "analytic_data": {
+        "image_size": 256,
+        "output_size": 64
+      },
+      "analytic_geometry_config": {
+        "max_radial_error": 0.02,
+        "max_anchor_progress_error": 0.01,
+        "max_center_error": 0.05,
+        "max_readout_error": 0.01,
+        "ring_half_width": 0.2,
+        "point_sigma": 1.0,
+        "min_support_mass": 0.15
+      }
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 60,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "weight_decay": 0.0001,
+      "loss": "SmoothL1(beta=.05)+.1*(role_NLL/(3log256)+field_L1)",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0,
+      "learning_rate": "epoch1..30 cosine3e-4; epoch31..60 cosine3e-5; phase position0..29/30",
+      "auxiliary_weight": 0.1,
+      "role_normalization": "local",
+      "reading_cdf": false
+    },
+    "checkpoint_selection": "earliest minimum deployed relation NMAE on complete source1506 within60epochs",
+    "external_checkpoint": "source-selected best only after all60epochs complete",
+    "inference_input": "ROI RGB, linear resize256, ImageNet normalization; full semantic context and predicted local relation circular reading; no GT geometry or target scalar input",
+    "external_training_or_adaptation": false
+  },
+  "initialization": "fresh complete cached ImageNet encoder, new FPN and semantic-conditioned local relation; no point head or trained task weights",
+  "old_task_checkpoint_or_teacher_used": false,
+  "new_weight_download_authorized": false,
+  "model_inputs": "ROI RGB, linear resize256, ImageNet normalization; full semantic context and predicted local relation circular reading; no GT geometry or target scalar input",
+  "checkpoint_selection": "earliest minimum deployed relation NMAE on complete source1506 within60epochs",
+  "source_loss_labels": "analytic U/M/H/span and virtual A/P/B role supervision; labels never model inputs",
+  "deployed_readout": "predicted local conditional J through unchanged CircularProgressPushforward256",
+  "expected_training": {
+    "images": 1115400,
+    "CNN_calls": 17460,
+    "backward_attempts": 17460,
+    "relation_forward_calls": 17460,
+    "relation_backward_attempts": 17460,
+    "readout_forward_calls": 17460
+  },
+  "expected_validation": {
+    "images": 90360,
+    "CNN_calls": 1440,
+    "relation_forward_calls": 1440,
+    "readout_forward_calls": 1440
+  },
+  "expected_external": {
+    "images": 1546,
+    "CNN_calls": 25,
+    "relation_forward_calls": 25,
+    "readout_forward_calls": 25,
+    "backward_calls": 0,
+    "optimizer_updates": 0
+  },
+  "expected_complete_CNN": {
+    "images": 1207306,
+    "calls": 18925
+  },
+  "external_scope": "previously viewed Industrial1395/52 and RF100151/35 development; source-selected deployed relation best after complete60source epochs",
+  "training_or_adaptation_on_target": false,
+  "comparison_scope": "same source RGB population/256 preprocessing/60epoch CNN exposure asv16; semantic-conditioned relation replaces point and incurs deployed decoder/readout compute",
+  "witness": {
+    "status": "passed",
+    "counts": {
+      "CNN_calls": 2,
+      "CNN_images": 6,
+      "CNN_backward_calls": 1,
+      "combined_backward_calls": 1,
+      "optimizer_updates": 0
+    },
+    "validation_input_matches_declared256_pipeline": true,
+    "source_analytic_contract_verified": true,
+    "semantic_context_1280_used": true,
+    "deployed_relation_readout_verified": true,
+    "GT_isolated_from_model_input": true,
+    "strict_model_reload": true
+  },
+  "analytic_contract_audit": {
+    "status": "passed",
+    "samples": 18590
+  },
+  "ideal_role_transport_proof": {
+    "status": "complete",
+    "source_population": 18590,
+    "maximum_error_percent_fs": 0.4307687282562256,
+    "errors_above_original_1_percent_fs": 0,
+    "target_datasets_used": false
+  },
+  "status": "complete",
+  "completed_source_epochs": 60,
+  "source_selected_best_epoch": 16,
+  "last_source_epoch": 60,
+  "formal_complete_counts": {
+    "cnn_image_forwards": 1207306,
+    "cnn_forward_calls": 18925,
+    "source_backward_calls": 17460,
+    "source_optimizer_updates": 17453,
+    "source_amp_skipped_updates": 7,
+    "source_relation_forward_calls": 17460,
+    "source_relation_backward_attempts": 17460,
+    "source_readout_forward_calls": 17460,
+    "validation_relation_forward_calls": 1440,
+    "validation_readout_forward_calls": 1440,
+    "target_relation_forward_calls": 25,
+    "target_readout_forward_calls": 25,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  },
+  "source_population": "Existing18590 unique endpoint-replacement source and original1506 validation; base256 RGB contract retained; deployed predicted relation differs from v16/v18 point readout."
+}

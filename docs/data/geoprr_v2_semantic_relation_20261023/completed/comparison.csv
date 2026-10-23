@@ -1,0 +1,7 @@
+model,source_nmae_percent_fs,industrial_nmae_percent_fs,rf100_nmae_percent_fs,parameters,scope
+v20_source_best16,0.28331462226947196,29.257524457875316,16.22409464905905,8762052,full60 source-selected best; deployed relation; target no training/adaptation
+v20_last60,0.3191948560617088,,,8762052,source only; not externally evaluated
+v16_source_best59,0.5262168472809196,11.686054081188708,10.16477580956686,8435793,saved native source-selected checkpoint; input and training history retained; v18 parameters are active inference only
+v18_source_best58,0.4465994424053873,13.194496363445642,9.929752397286977,8435793,saved native source-selected checkpoint; input and training history retained; v18 parameters are active inference only
+v12_local_endpoint_best1,0.0833923887720102,20.539124658463546,7.659157217015351,7461060,saved native source-selected checkpoint; input and training history retained; v18 parameters are active inference only
+historical_old_GeoPRR_source_only,,11.643617857033954,6.6070791714191,,historical same-population result; executed pixels and weight chain not recertified
