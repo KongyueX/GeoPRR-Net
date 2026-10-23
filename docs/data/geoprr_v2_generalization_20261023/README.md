@@ -1,8 +1,10 @@
 # MobileNetV4泛化迭代：完整短训练结果与已有模型定位
 
-2026-10-23。**真实端点源覆盖的匹配收益已在两个原生读出家族得到支持。v12 local端点best1的Industrial／RF100为20.539125／7.659157%FS，相对同local57初始化和相同四轮预算的原源控制分别降低12.6263%／19.8292%；预先固定的last4比较也降低6.2913%／10.8692%。** 相对原local57，best1两域降低6.3916%／16.3796%，但源1506均值0.083392%FS上升8.1298%；3172由5.908847恶化至18.677585%FS，是原有>5%FS成员，未新增该阈值成员。完整best／last、普通与严重错误、零位／非零、逐图／组效应和真实成本见[v12完整结果](v12_completed/report_cn.md)、[完整指标](v12_completed/metrics.json)、[303124项数值与执行核对](v12_completed/numeric_execution_audit.json)与[28文件公开清单](v12_completed/public_allowlist.json)。
+2026-10-23。本轮夜间自主迭代已完整收尾，全部既定队列结束，没有追加训练或alpha扩展排队。**真实端点源覆盖的匹配收益已在两个原生读出家族得到支持。v12 local端点best1的Industrial／RF100为20.539125／7.659157%FS，相对同local57初始化和相同四轮预算的原源控制分别降低12.6263%／19.8292%；预先固定的last4比较也降低6.2913%／10.8692%。** 相对原local57，best1两域降低6.3916%／16.3796%，但源1506均值0.083392%FS上升8.1298%；3172由5.908847恶化至18.677585%FS，是原有>5%FS成员，未新增该阈值成员。完整best／last、普通与严重错误、零位／非零、逐图／组效应和真实成本见[v12完整结果](v12_completed/report_cn.md)、[完整指标](v12_completed/metrics.json)、[303124项数值与执行核对](v12_completed/numeric_execution_audit.json)与[28文件公开清单](v12_completed/public_allowlist.json)。
 
 v11 feedback端点best1的Industrial17.353598%FS仍更低，v12 local端点best1的RF1007.659157%FS更低；保留各自源尾部代价，不将一个模型称为所有数据集最优。v11相对匹配正常BN控制两域均值降低4.7510%／5.3492%，源均值相对feedback48上升7.6628%，2810新增>5%FS。其固定BN臂源均值更低，但两域均差于匹配固定BN控制。见[v11完整结果](v11_completed/report_cn.md)与[完整指标](v11_completed/metrics.json)。端点数据带来的开发增量不自动构成算法创新认证。
+
+v14固定alpha0.5中点完成后，提供了源／外域的另一种权衡：feedback中点为源0.064807／Industrial17.548032／RF10010.244465%FS，local中点为0.079489／21.120151／8.198358%FS；源max相对完整微调分别从9.506392降至5.829561、18.677585降至12.290969%FS，但两套外域均值均差于各自完整微调端点best1，相对原任务锚点的源max也仍更差。保留折中结果，不扩展alpha或追加实验。见[v14完整结果](v14_completed/report_cn.md)、[完整指标](v14_completed/metrics.json)、[142810项核对](v14_completed/numeric_execution_audit.json)与[20文件清单](v14_completed/public_allowlist.json)。
 
 v13固定CNN权重、更新源BN的两臂已完整结束：feedback best1的Industrial／RF100为18.384623／10.710380%FS，local best4为21.581871／9.174795%FS，均劣于本家族完整微调端点控制的best；last对last也均回退。源均值和记录的训练资源成本有所改善，但源严重错误没有全部消失，因此结束本配方，不延长。完整结果与别名／成本见[v13报告](v13_completed/report_cn.md)、[完整指标](v13_completed/metrics.json)、[267479项数值与执行核对](v13_completed/numeric_execution_audit.json)及[23文件清单](v13_completed/public_allowlist.json)。
 
@@ -43,7 +45,9 @@ v12原生v5 local57的正常BN原源控制与端点源两臂均完整4轮、best
 
 v13在两个原生家族中固定7203152个CNN参数，源BN运行统计继续更新，decoder和head的257908参数训练；各4轮已完整结束，匹配控制复用v11／v12正常BN完整微调结果。两臂4／4轮均记录228个CNN参数tensor未变，源BN的152个running buffers更新、76个counters每轮增加709；不能将固定CNN参数写成全部CNN state不变。实际6份外评共4638张CNN图像／294次调用，local best4=last4的源表和外评复用。见[协议](../../GEOPRR_V2_CNN_WEIGHT_FREEZE_PROTOCOL_CN.md)、[完整结果](v13_completed/report_cn.md)、[运行见证](v13_runtime_preflight.json)和[别名记录](v13_completed/checkpoint_aliases.json)。
 
-下一独立v14计划在每个原生家族内，将任务锚点与本家族完整微调端点source-best1按预先固定alpha=0.5插值；BN mean／variance各取一半，BN counters保留任务锚点，其他静态buffers精确相等后复制。v14固定中点评估已于北京时间2026-10-23 08:01:21启动，不新增训练、不做alpha扫描或目标域调参，也不作foundation表征恢复的主张。见[锚点插值协议](../../GEOPRR_V2_ANCHOR_INTERPOLATION_PROTOCOL_CN.md)。
+v14在每个原生家族内，将任务锚点与本家族完整微调端点source-best1按预先固定alpha=0.5插值；259个learned floating tensors和152个BN moments各取中点，76个BN counters复制任务锚点，9个静态buffers要求精确相等后复制。两个新checkpoint的epoch／best_epoch／best_nmae均为空，完整496 state、7461060参数。两候选完整评估源1506及Industrial1395／RF100151，共6104张CNN图像／386次调用，0新训练／反传／更新／渲染。没有alpha扫描、目标适配或额外端点评分，不作zero-shot foundation表征恢复的主张。见[协议](../../GEOPRR_V2_ANCHOR_INTERPOLATION_PROTOCOL_CN.md)和[完整结果](v14_completed/report_cn.md)。
+
+本轮可审阅结论为：端点覆盖在两个原生家族带来匹配跨域增量，固定CNN未保留这些收益，固定中点提供有界折中；源严重错误和更广泛跨域问题仍开放。所有模型、负结果和完整成本保留，本轮不再追加训练、模块、alpha或新数据集评分。
 
 ## 文献依据
 
@@ -53,7 +57,7 @@ v13在两个原生家族中固定7203152个CNN参数，源BN运行统计继续�
 
 ## Limitations
 
-Industrial与RF100已经用于开发观察；结果不称新盲测。各已有版本训练历史不同，本表不能单因素归因结构。短训练是单seed开发筛选，不承诺外域收益、显著性或论文录用。v9归一化／风格和v10 ROI干预未补充缺失零位；v11／v12真实端点覆盖取得匹配跨域正结果，同时保留源严重错误代价，未证明所有零位或背景偏移已经解决。原14494／1506／4000与原门槛失败、旧模型和负结果均保留。RGB、权重、run.json原始几何与private trace不进入公开包。
+Industrial与RF100已经用于开发观察；结果不称新盲测。各已有版本训练历史不同，本表不能单因素归因结构。短训练是单seed开发筛选，不承诺外域收益、显著性或论文录用。v9归一化／风格和v10 ROI干预未补充缺失零位；v11／v12真实端点覆盖取得匹配跨域正结果，同时保留源严重错误代价，未证明所有零位或背景偏移已经解决。第三套候选数据目前存在同一PNG键对应QA与raw JSON标量来源不一致，当前PNG对应标签的权威来源未明确；尚未下载该批图像或新增评分，不能把这一差异直接判为标签已证实错误。原14494／1506／4000与原门槛失败、旧模型和负结果均保留。RGB、权重、run.json原始几何与private trace不进入公开包。
 
 执行细节见[泛化协议](../../GEOPRR_V2_GENERALIZATION_ITERATION_PROTOCOL_CN.md)。本包保存family逐图与标量、[v10完整结果](v10_completed/report_cn.md)，以及[v9完整结果](v9_completed/report_cn.md)、[已核对的完整指标](v9_completed/metrics.json)、[数值与执行核对](v9_completed/numeric_execution_audit.json)和[公开文件清单](v9_completed/public_allowlist.json)。
 

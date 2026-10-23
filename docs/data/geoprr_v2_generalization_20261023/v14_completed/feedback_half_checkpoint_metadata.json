@@ -1,0 +1,71 @@
+{
+  "protocol": "geoprr_v2_task_anchor_half_interpolation_v1",
+  "arm": "feedback_half",
+  "checkpoint_transformation": {
+    "type": "fixed_half_task_anchor_weight_interpolation",
+    "alpha": 0.5,
+    "component_epochs": {
+      "task_anchor": 48,
+      "endpoint_source_best": 1
+    },
+    "endpoint_selection": "existing source1506 NMAE best; fixed epoch1, no target checkpoint search",
+    "state_policy": {
+      "learned_float_parameters": "half anchor plus half endpoint, including CNN, BN affine, decoder and head",
+      "BN_running_mean_and_variance": "half anchor plus half endpoint",
+      "BN_num_batches_tracked": "copy task anchor; evaluation only",
+      "constructor_fixed_buffers": "require exact component and native-template equality; copy anchor"
+    },
+    "state_tensor_counts": {
+      "learned_parameter_tensors_averaged": 259,
+      "BN_running_moment_tensors_averaged": 152,
+      "BN_counter_tensors_copied_from_anchor": 76,
+      "constructor_fixed_tensors_copied_from_anchor": 9
+    },
+    "optimizer_updates": 0,
+    "backward_calls": 0,
+    "BN_recalibration": false,
+    "new_training": false,
+    "reference": "https://arxiv.org/abs/2109.01903v3",
+    "reference_scope": "WiSE-FT motivates weight interpolation; this anchor is task-trained, not a zero-shot model",
+    "component_identifiers": {
+      "task_anchor": "v6 feedback best48",
+      "task_anchor_epoch": 48,
+      "endpoint_source_best": "v11 normal-BN endpoint best1",
+      "endpoint_source_best_epoch": 1
+    }
+  },
+  "model_metadata": {
+    "class": "experiments.geoprr_v2_reference_relation.ReferenceRelationReader",
+    "architecture_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+    "saved_model_options": {
+      "bins": 256,
+      "decoder_dim": 64,
+      "token_dim": 16,
+      "coupling": "joint",
+      "reference_normalization": "global"
+    },
+    "constructor_options": {
+      "bins": 256,
+      "decoder_dim": 64,
+      "token_dim": 16,
+      "coupling": "joint",
+      "reference_normalization": "global"
+    },
+    "parameters": 7461060,
+    "state_tensors": 496,
+    "strict_state_load": true,
+    "readout": "native circular full-mass progress expectation",
+    "effective_reference_normalization": "global"
+  },
+  "parameters": 7461060,
+  "state_tensors": 496,
+  "cnn_image_forwards": 0,
+  "backward_calls": 0,
+  "optimizer_updates": 0,
+  "preparation_seconds": 2.4472344368696213,
+  "full_process_seconds": 3.397783726453781,
+  "new_checkpoint_epoch": null,
+  "new_checkpoint_best_epoch": null,
+  "new_checkpoint_best_nmae": null,
+  "record_scope": "CPU checkpoint construction metadata only; no weight tensors in this public record."
+}

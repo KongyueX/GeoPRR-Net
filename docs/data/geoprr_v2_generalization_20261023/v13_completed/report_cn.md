@@ -117,7 +117,7 @@
 
 ## 后续
 
-结束CNN权重冻结这组配方，保留源精度／资源代价权衡及完整负结果，不追加轮次。下一独立v14计划在每个原生家族中，将任务锚点与本家族完整微调端点source-best1按预先固定alpha=0.5作权重插值：BN mean／variance各取一半，BN counters保留任务锚点，其他静态buffer要求精确相同后复制。只比较这一冻结alpha，不训练、不恢复foundation模型、不做alpha扫描或目标域调参。当前为计划、固定中点评估已于北京时间2026-10-23 08:01:21启动，见[锚点插值协议](../../../GEOPRR_V2_ANCHOR_INTERPOLATION_PROTOCOL_CN.md)。
+结束CNN权重冻结这组配方，保留源精度／资源代价权衡及完整负结果，不追加轮次。独立v14已完成任务锚点与本家族完整微调端点source-best1的固定alpha=0.5权重插值及完整评估：源均值与最大误差有所恢复，但两个外域均值均差于完整微调参照。没有追加训练、alpha扫描或目标域调参，见[完整中点结果](../v14_completed/report_cn.md)与[锚点插值协议](../../../GEOPRR_V2_ANCHOR_INTERPOLATION_PROTOCOL_CN.md)。
 
 ## Limitations
 

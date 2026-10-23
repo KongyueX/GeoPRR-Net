@@ -1,6 +1,6 @@
 # MobileNetV4任务锚点与端点微调模型的固定中点检验
 
-2026-10-23。状态：v13完整数值／执行核对267479项及本轮3项CPU state检查通过后，固定中点评估于北京时间2026-10-23 08:01:21启动。承接用户授权的跨数据集自主迭代，保留全部原模型、失败与负结果。
+2026-10-23。状态：两个候选及全部6份完整推理已结束，一次独立CPU数值／执行核对142810项通过；见[完整结果](data/geoprr_v2_generalization_20261023/v14_completed/report_cn.md)。承接用户授权的跨数据集自主迭代，保留全部原模型、失败与负结果。
 
 ## 问题和依据
 
@@ -31,6 +31,8 @@ Wortsman等的[Robust fine-tuning of zero-shot models，CVPR 2022](https://arxiv
 
 计划共6104张CNN图像、386次CNN调用、0 backward、0 optimizer；实际调用用hook记录，时间和峰值内存按真实边界保存。每个候选推理只需要单模型一次前向；参数插值不是两模型输出集成。没有新增训练、渲染、模块、loss或参数。
 
+实际完成6104张CNN图像／386次调用，0 backward／0 optimizer。两臂CPU准备各确认259个可学习参数tensor、152个BN moment取中点，76个BN counter复制锚点，9个构造期buffer在两端及原生模板逐项相等后复制；原生496 state严格加载。
+
 原两端与v13逐图均复用，不新增端点评估。本轮只在alpha0.5进行新的完整推理；不根据结果改alpha或另挑checkpoint。全分母保留失败，按normalized error1计；RF100目标沿用四点离线派生标量并披露。
 
 独立输出为`runs/geoprr_generalization/iteration_v14_anchor_half_20261023/frozen_evaluation`，入口`experiments.run_geoprr_v2_anchor_interpolation`。启动前要求v13完整核对通过、v11／v12／v13队列complete、原父子退出、实际GPU空闲，以及本轮CPU state检查通过。固定代码版本和协议后串行完成两个候选的全部评估，保留协议、组件来源、state策略、逐图、组、摘要和实际成本。
@@ -39,4 +41,4 @@ Wortsman等的[Robust fine-tuning of zero-shot models，CVPR 2022](https://arxiv
 
 ## 限制
 
-两个外域已反复查看，属于开发结果；单seed既有模型的确定插值不构成新盲测、显著性或新算法认证。两个家族锚点训练史不同，只作家族内匹配判断。同轨迹、同架构不保证非线性读出和BN中点函数良好，也不保证严重样本随alpha平滑变化。没有新增背景多样性或解决数据覆盖全部缺口；本轮不证明恢复ImageNet表征。原14494／1506／4000、旧名单、G1／anchor失败及配对守恒负结果保留。RGB、权重、原H／C／XYZ、raw run／data_contract与private trace不上传，公开仅显式allowlist中的规范化标量与逐图结果。
+独立CPU核对复用保存的准备和运行证据，未重新读取checkpoint tensor内容。两个外域已反复查看，属于开发结果；单seed既有模型的确定插值不构成新盲测、显著性或新算法认证。两个家族锚点训练史不同，只作家族内匹配判断。同轨迹、同架构不保证非线性读出和BN中点函数良好，也不保证严重样本随alpha平滑变化。没有新增背景多样性或解决数据覆盖全部缺口；本轮不证明恢复ImageNet表征。原14494／1506／4000、旧名单、G1／anchor失败及配对守恒负结果保留。RGB、权重、原H／C／XYZ、raw run／data_contract与private trace不上传，公开仅显式allowlist中的规范化标量与逐图结果。

@@ -1,0 +1,39 @@
+{
+  "protocol": "geoprr_v14_public_allowlist_v1",
+  "files": [
+    "comparison.csv",
+    "feedback_half_checkpoint_metadata.json",
+    "industrial_feedback_half_predictions.csv.gz",
+    "industrial_feedback_half_summary.json",
+    "industrial_local_half_predictions.csv.gz",
+    "industrial_local_half_summary.json",
+    "local_half_checkpoint_metadata.json",
+    "metrics.json",
+    "numeric_execution_audit.json",
+    "protocol.json",
+    "public_allowlist.json",
+    "report_cn.md",
+    "rf100_feedback_half_predictions.csv.gz",
+    "rf100_feedback_half_summary.json",
+    "rf100_local_half_predictions.csv.gz",
+    "rf100_local_half_summary.json",
+    "source_feedback_half_predictions.csv.gz",
+    "source_feedback_half_summary.json",
+    "source_local_half_predictions.csv.gz",
+    "source_local_half_summary.json"
+  ],
+  "reused_public_reference_directories": [
+    "../v11_completed/",
+    "../v12_completed/",
+    "../v13_completed/"
+  ],
+  "new_checkpoint_weights_published": false,
+  "reference_evaluations_repeated": false,
+  "excluded": [
+    "checkpoint weights",
+    "raw run.json and data_contract",
+    "RGB",
+    "H/C/XYZ and pixel matrices",
+    "private component/server paths and trace"
+  ]
+}

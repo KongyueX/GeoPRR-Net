@@ -1,0 +1,129 @@
+{
+  "protocol": "geoprr_v2_task_anchor_half_interpolation_v1",
+  "status": "complete",
+  "checkpoint_epoch": null,
+  "checkpoint_best_epoch": null,
+  "checkpoint_source_best_nmae": null,
+  "checkpoint_transformation": {
+    "type": "fixed_half_task_anchor_weight_interpolation",
+    "alpha": 0.5,
+    "component_epochs": {
+      "task_anchor": 48,
+      "endpoint_source_best": 1
+    },
+    "endpoint_selection": "existing source1506 NMAE best; fixed epoch1, no target checkpoint search",
+    "state_policy": {
+      "learned_float_parameters": "half anchor plus half endpoint, including CNN, BN affine, decoder and head",
+      "BN_running_mean_and_variance": "half anchor plus half endpoint",
+      "BN_num_batches_tracked": "copy task anchor; evaluation only",
+      "constructor_fixed_buffers": "require exact component and native-template equality; copy anchor"
+    },
+    "state_tensor_counts": {
+      "learned_parameter_tensors_averaged": 259,
+      "BN_running_moment_tensors_averaged": 152,
+      "BN_counter_tensors_copied_from_anchor": 76,
+      "constructor_fixed_tensors_copied_from_anchor": 9
+    },
+    "optimizer_updates": 0,
+    "backward_calls": 0,
+    "BN_recalibration": false,
+    "new_training": false,
+    "reference": "https://arxiv.org/abs/2109.01903v3",
+    "reference_scope": "WiSE-FT motivates weight interpolation; this anchor is task-trained, not a zero-shot model",
+    "component_identifiers": {
+      "task_anchor": "v6 feedback best48",
+      "task_anchor_epoch": 48,
+      "endpoint_source_best": "v11 normal-BN endpoint best1",
+      "endpoint_source_best_epoch": 1
+    }
+  },
+  "model_metadata": {
+    "class": "experiments.geoprr_v2_reference_relation.ReferenceRelationReader",
+    "architecture_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+    "saved_model_options": {
+      "bins": 256,
+      "decoder_dim": 64,
+      "token_dim": 16,
+      "coupling": "joint",
+      "reference_normalization": "global"
+    },
+    "constructor_options": {
+      "bins": 256,
+      "decoder_dim": 64,
+      "token_dim": 16,
+      "coupling": "joint",
+      "reference_normalization": "global"
+    },
+    "parameters": 7461060,
+    "state_tensors": 496,
+    "strict_state_load": true,
+    "readout": "native circular full-mass progress expectation",
+    "effective_reference_normalization": "global"
+  },
+  "config": {
+    "protocol": "geoprr_v2_task_anchor_half_interpolation_v1",
+    "reader_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+    "model": {
+      "bins": 256,
+      "decoder_dim": 64,
+      "token_dim": 16,
+      "coupling": "joint",
+      "reference_normalization": "global"
+    },
+    "data": {
+      "image_size": 768,
+      "output_size": 192
+    },
+    "training": {
+      "seed": 20262020,
+      "amp": true
+    }
+  },
+  "declared_samples": 1506,
+  "source_model_inputs": "original validation ROI RGB only; geometry and scalar labels used for scoring",
+  "summary": {
+    "samples": 1506,
+    "groups": 70,
+    "nmae": 0.0006480705480805516,
+    "nmae_percent_fs": 0.06480705480805515,
+    "acc_at_1": 0.99734395750332,
+    "acc_at_2": 0.99867197875166,
+    "acc_at_5": 0.99933598937583,
+    "coverage": 1.0,
+    "failed": 0,
+    "median_error": 0.00032921135425567627,
+    "p90_error": 0.001253511756658554,
+    "p95_error": 0.0019378513097763062,
+    "tail10_nmae": 0.0031182245015499562,
+    "maximum_error": 0.058295607566833496,
+    "errors_above_2_percent_fs": 2,
+    "errors_above_5_percent_fs": 1,
+    "input_failures": 0,
+    "errors_above_1_percent_fs": 4,
+    "mean_invalid_mass": 3.4716309631590204e-06,
+    "mean_outside_arc_mass": 0.0016153241943501456
+  },
+  "forward_counts": {
+    "model_forward_calls": 95,
+    "cnn_forward_calls": 95,
+    "cnn_image_forwards": 1506
+  },
+  "backward_calls": 0,
+  "optimizer_updates": 0,
+  "training_or_adaptation_during_evaluation": false,
+  "failure_policy": "retain all1506; original validation_rows assigns normalized error1 to input/invalid prediction failures",
+  "timing": {
+    "batch_size": 16,
+    "workers": 4,
+    "backbone_amp": true,
+    "pipeline_seconds": 17.267488412559032,
+    "forward_seconds": 9.280031710863113,
+    "evaluation_seconds": 18.66406674310565,
+    "full_process_seconds": 19.58545971289277
+  },
+  "peak_cuda_memory_bytes": 1267677696,
+  "peak_cuda_reserved_bytes": 1977614336,
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "checkpoint_selection": "Fixed alpha0.5 candidate; no training epoch, new best selection, alpha search or target checkpoint selection."
+}

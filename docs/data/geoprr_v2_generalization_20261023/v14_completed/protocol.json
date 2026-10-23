@@ -1,0 +1,37 @@
+{
+  "protocol": "geoprr_v2_task_anchor_half_frozen_evaluation_v1",
+  "code_revision": "44b5b61313c6ec2e3db00098841f64e814c82149",
+  "arms": [
+    "feedback_half",
+    "local_half"
+  ],
+  "alpha": 0.5,
+  "components": {
+    "feedback_half": {
+      "task_anchor": "v6 feedback best48",
+      "task_anchor_epoch": 48,
+      "endpoint_source_best": "v11 normal-BN endpoint best1",
+      "endpoint_source_best_epoch": 1
+    },
+    "local_half": {
+      "task_anchor": "v5 local joint best57",
+      "task_anchor_epoch": 57,
+      "endpoint_source_best": "v12 normal-BN local_endpoint best1",
+      "endpoint_source_best_epoch": 1
+    }
+  },
+  "checkpoint_protocol": "geoprr_v2_task_anchor_half_interpolation_v1",
+  "new_training": false,
+  "optimizer_updates": 0,
+  "selection": "two fixed source-selected epoch1 endpoints; no alpha or target checkpoint search",
+  "populations": {
+    "source": 1506,
+    "industrial": 1395,
+    "rf100": 151
+  },
+  "expected_total_CNN_images": 6104,
+  "expected_total_CNN_calls": 386,
+  "external_scope": "previously viewed development; original ROI pipeline; no target supervision",
+  "reference": "https://arxiv.org/abs/2109.01903v3",
+  "reference_scope": "task-trained anchor interpolation; not preservation of a zero-shot foundation model"
+}
