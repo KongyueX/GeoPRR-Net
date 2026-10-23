@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "observed_at_utc": "2026-10-23T03:51:40.677413+00:00",
+  "command": "CUDA_VISIBLE_DEVICES=\"\" ../.venv/bin/python -m unittest experiments.test_geoprr_v2_direct_readout -v",
+  "tests": 4,
+  "failures": 0,
+  "seconds": 0.731,
+  "scope": "synthetic CPU new-readout and terminal-cache-resume tests; no native model or actual 1460-update training",
+  "real_native_CNN_images": 0,
+  "real_model_optimizer_updates": 0,
+  "terminal_resume_fixture": "saved counters are unit fixture values, not experimental updates"
+}
