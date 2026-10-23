@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "checks": 142946,
+  "failed_checks": 0,
+  "failures": [],
+  "maximum_numeric_difference": 1.4210854715202004e-14,
+  "audited_at_utc": "2026-10-23T04:02:26.675117+00:00",
+  "scope": "one bounded independent CPU saved-row/metadata/head-statistics execution audit after all formal steps complete; no native CNN weights, GPU, old GT or old tests",
+  "source_combined_rows": 3012,
+  "external_combined_rows": 1546,
+  "readouts_per_combined_row": 3,
+  "source_statistics_proof": {
+    "status": "passed",
+    "scope": "independent CPU cached-feature/head proof; no native CNN state load or forward, no optimizer",
+    "source_train_shape": [
+      18590,
+      960
+    ],
+    "source_validation_shape": [
+      1506,
+      960
+    ],
+    "source_train_unique_ids": 18590,
+    "source_validation_unique_ids": 1506,
+    "source_train_validation_ids_disjoint": true,
+    "source_train_validation_groups_disjoint": true,
+    "source_train_group_count": 1679,
+    "source_validation_group_count": 70,
+    "all_source_inputs_valid": true,
+    "all_source_features_finite": true,
+    "exact_train_mean_equal": true,
+    "exact_train_std_unbiased_false_clamp_1e6_equal": true,
+    "source_validation_mean_is_not_saved_mean": true,
+    "source_train_plus_validation_mean_is_not_saved_mean": true,
+    "maximum_train_vs_validation_mean_difference": 0.0038715526461601257,
+    "maximum_train_vs_combined_mean_difference": 0.0002901330590248108,
+    "feature_stats_fit_rows": 18590,
+    "head_trainable_parameters": 961,
+    "head_state_tensors": 4,
+    "best_epoch": 19,
+    "best_source_nmae": 0.1717866706616608,
+    "best_history_epochs_in_checkpoint": 19,
+    "source_predictions_rows": 1506,
+    "independent_affine_sigmoid_prediction_max_difference": 0.0,
+    "checkpoint_and_source_cache_parent_exactly_equal": true,
+    "parent_parameters": 7461060,
+    "parent_state_tensors": 496,
+    "parent_feature_dim": 960,
+    "parent_epoch": 48,
+    "parent_seed": 20262020,
+    "CNN_checkpoint_loads": 0,
+    "CNN_forward_calls": 0,
+    "head_backward_calls": 0,
+    "optimizer_updates": 0,
+    "loaded_artifacts": [
+      "source_cache/train.pt",
+      "source_cache/validation.pt",
+      "head/best.pt"
+    ],
+    "source_cache_files_loaded_once_each": true,
+    "proof_seconds": 0.24324950948357582
+  },
+  "counts": {
+    "cnn_image_forwards": 21642,
+    "cnn_forward_calls": 774,
+    "cnn_backward_calls": 0,
+    "cnn_optimizer_updates": 0,
+    "CPU_head_backward_calls": 1460,
+    "CPU_head_optimizer_updates": 1460,
+    "source_feature_presentations": 371800
+  }
+}

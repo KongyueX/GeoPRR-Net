@@ -1,0 +1,42 @@
+{
+  "protocol": "geoprr_v2_frozen_rgb_direct_readout_source_only_v1",
+  "parent_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+  "parent_epoch": 48,
+  "data": {
+    "image_size": 768,
+    "output_size": 192
+  },
+  "features": "last native CNN feature map, global average pooling; float32 cache",
+  "normalization": {
+    "fit_population": "source_train_unique_only",
+    "std_unbiased": false,
+    "epsilon": 1e-06
+  },
+  "head": "sigmoid(linear(standardized_global_feature)); zero weight and bias initialization",
+  "training": {
+    "seed": 20262020,
+    "epochs": 20,
+    "batch_size": 256,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "min_lr": 1e-05,
+    "loss": "normalized L1",
+    "device": "cpu"
+  },
+  "cache": {
+    "source_train_batch_size": 32,
+    "source_validation_batch_size": 16,
+    "external_batch_size": 16,
+    "workers": 4,
+    "amp": true,
+    "augment": false
+  },
+  "checkpoint_selection": "earliest minimum direct-head NMAE on complete source1506 within20epochs",
+  "readouts": [
+    "geometry",
+    "direct",
+    "fixed_half"
+  ],
+  "fixed_half_alpha": 0.5,
+  "external_training_or_adaptation": false
+}

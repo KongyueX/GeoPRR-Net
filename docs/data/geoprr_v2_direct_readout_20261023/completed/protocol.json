@@ -1,0 +1,79 @@
+{
+  "protocol": "geoprr_v2_frozen_rgb_direct_readout_source_only_v1",
+  "code_revision": "e45e8a98dec4c1eb20b96ff05ccb9b6862319061",
+  "config": {
+    "protocol": "geoprr_v2_frozen_rgb_direct_readout_source_only_v1",
+    "parent_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+    "parent_epoch": 48,
+    "data": {
+      "image_size": 768,
+      "output_size": 192
+    },
+    "features": "last native CNN feature map, global average pooling; float32 cache",
+    "normalization": {
+      "fit_population": "source_train_unique_only",
+      "std_unbiased": false,
+      "epsilon": 1e-06
+    },
+    "head": "sigmoid(linear(standardized_global_feature)); zero weight and bias initialization",
+    "training": {
+      "seed": 20262020,
+      "epochs": 20,
+      "batch_size": 256,
+      "lr": 0.001,
+      "weight_decay": 0.0001,
+      "min_lr": 1e-05,
+      "loss": "normalized L1",
+      "device": "cpu"
+    },
+    "cache": {
+      "source_train_batch_size": 32,
+      "source_validation_batch_size": 16,
+      "external_batch_size": 16,
+      "workers": 4,
+      "amp": true,
+      "augment": false
+    },
+    "checkpoint_selection": "earliest minimum direct-head NMAE on complete source1506 within20epochs",
+    "readouts": [
+      "geometry",
+      "direct",
+      "fixed_half"
+    ],
+    "fixed_half_alpha": 0.5,
+    "external_training_or_adaptation": false
+  },
+  "expected_source_cache": {
+    "images": 20096,
+    "CNN_calls": 676
+  },
+  "expected_complete_CNN": {
+    "images": 21642,
+    "calls": 774,
+    "backward": 0,
+    "optimizer_updates": 0
+  },
+  "expected_head_fit": {
+    "feature_epochs": 20,
+    "feature_presentations": 371800,
+    "CPU_backward_calls": 1460,
+    "CPU_optimizer_updates": 1460
+  },
+  "comparison_scope": "independent frozen-feature capacity probe; no claim of matched donor/recipient exposure or end-to-end improvement",
+  "source_selection": "minimum direct1506 NMAE, earliest tie, complete20 head epochs; same selected head for all readouts",
+  "external_scope": "previously viewed Industrial1395/52 and RF100151/35 development, no fitting or adaptation",
+  "inference": "one native ROI RGB CNN pass shared by geometry, direct sigmoid and their fixed half; no target GT geometry input",
+  "witness": {
+    "status": "passed",
+    "counts": {
+      "cnn_calls": 1,
+      "cnn_images": 2,
+      "CNN_backward_calls": 0,
+      "head_CPU_backward_calls": 1,
+      "optimizer_updates": 0
+    },
+    "validation_input_exact_identity": true
+  },
+  "parent_identifier": "v6 feedback source-best48, seed20262020",
+  "source_population": "Existing endpoint-replacement source18590; original validation1506 unchanged."
+}

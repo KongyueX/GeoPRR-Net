@@ -1,0 +1,110 @@
+{
+  "status": "passed",
+  "observed_at_utc": "2026-10-23T03:52:14.671926+00:00",
+  "config": {
+    "protocol": "geoprr_v2_frozen_rgb_direct_readout_source_only_v1",
+    "parent_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+    "parent_epoch": 48,
+    "data": {
+      "image_size": 768,
+      "output_size": 192
+    },
+    "features": "last native CNN feature map, global average pooling; float32 cache",
+    "normalization": {
+      "fit_population": "source_train_unique_only",
+      "std_unbiased": false,
+      "epsilon": 1e-06
+    },
+    "head": "sigmoid(linear(standardized_global_feature)); zero weight and bias initialization",
+    "training": {
+      "seed": 20262020,
+      "epochs": 20,
+      "batch_size": 256,
+      "lr": 0.001,
+      "weight_decay": 0.0001,
+      "min_lr": 1e-05,
+      "loss": "normalized L1",
+      "device": "cpu"
+    },
+    "cache": {
+      "source_train_batch_size": 32,
+      "source_validation_batch_size": 16,
+      "external_batch_size": 16,
+      "workers": 4,
+      "amp": true,
+      "augment": false
+    },
+    "checkpoint_selection": "earliest minimum direct-head NMAE on complete source1506 within20epochs",
+    "readouts": [
+      "geometry",
+      "direct",
+      "fixed_half"
+    ],
+    "fixed_half_alpha": 0.5,
+    "external_training_or_adaptation": false
+  },
+  "parent_metadata": {
+    "class": "experiments.geoprr_v2_reference_relation.ReferenceRelationReader",
+    "architecture_protocol": "geoprr_v2_reference_feedback_source_only_v1",
+    "saved_model_options": {
+      "bins": 256,
+      "decoder_dim": 64,
+      "token_dim": 16,
+      "coupling": "joint",
+      "reference_normalization": "global"
+    },
+    "constructor_options": {
+      "bins": 256,
+      "decoder_dim": 64,
+      "token_dim": 16,
+      "coupling": "joint",
+      "reference_normalization": "global"
+    },
+    "parameters": 7461060,
+    "state_tensors": 496,
+    "strict_state_load": true,
+    "readout": "native circular full-mass progress expectation",
+    "effective_reference_normalization": "global",
+    "feature_dim": 960,
+    "parent_epoch": 48,
+    "parent_seed": 20262020
+  },
+  "frozen_native_evidence": {
+    "state_tensors_compared": 496,
+    "all_native_state_tensors_unchanged": true,
+    "native_training": false,
+    "native_backward_calls": 0,
+    "native_optimizer_updates": 0
+  },
+  "validation_input_exact_identity": true,
+  "validation_identity_samples": 2,
+  "source_probe_normalized_states": [
+    0.0,
+    1.0
+  ],
+  "source_probe_unique_RGB": 2,
+  "probe_feature_stats_samples": 2,
+  "formal_feature_stats_samples_planned": 18590,
+  "feature_shape": [
+    2,
+    960
+  ],
+  "source_probe_L1": 0.5,
+  "new_head_parameters": 961,
+  "combined_parameters": 7462021,
+  "combined_state_tensors": 500,
+  "head_gradients_finite_nonzero": true,
+  "head_strict_state_reload_identity": true,
+  "native_output_single_CNN_pass": true,
+  "target_datasets_used": false,
+  "counts": {
+    "cnn_calls": 1,
+    "cnn_images": 2,
+    "CNN_backward_calls": 0,
+    "head_CPU_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "scope": "new direct readout source-input runtime witness; zero optimizer; not learned performance"
+}

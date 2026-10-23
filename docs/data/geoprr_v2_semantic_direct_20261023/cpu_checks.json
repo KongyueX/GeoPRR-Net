@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "observed_at_utc": "2026-10-23T04:17:48.243506+00:00",
+  "tests": 4,
+  "failures": 0,
+  "seconds": 0.06,
+  "command": "CUDA_VISIBLE_DEVICES=\"\" ../.venv/bin/python -m unittest experiments.test_geoprr_v2_semantic_direct -v",
+  "scope": "synthetic CPU full-neck, scalar-gradient, RGB-only input and LR/failure rules; no nativeCNN or real optimizer updates"
+}

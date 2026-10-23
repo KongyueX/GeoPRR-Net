@@ -1,0 +1,29 @@
+{
+  "protocol": "geoprr_v15_public_allowlist_v1",
+  "files": [
+    "comparison.csv",
+    "config.json",
+    "head_record.json",
+    "industrial_combined_predictions.csv.gz",
+    "industrial_combined_summary.json",
+    "metrics.json",
+    "numeric_execution_audit.json",
+    "protocol.json",
+    "public_allowlist.json",
+    "report_cn.md",
+    "rf100_combined_predictions.csv.gz",
+    "rf100_combined_summary.json",
+    "source_best19_combined_predictions.csv.gz",
+    "source_cache_completed.json",
+    "source_last20_combined_predictions.csv.gz",
+    "source_statistics_proof.json"
+  ],
+  "combined_prediction_schema": "Each row contains geometry, direct and fixed_half scalar readouts from one shared CNN pass.",
+  "excluded": [
+    "native/head checkpoint weights",
+    "feature caches or feature/statistic vectors",
+    "raw run/data_contract/H/C/XYZ",
+    "RGB and pixel matrices",
+    "private server paths and trace"
+  ]
+}

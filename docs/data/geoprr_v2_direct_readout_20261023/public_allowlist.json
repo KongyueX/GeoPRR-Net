@@ -1,0 +1,35 @@
+{
+  "protocol": "geoprr_v15_public_root_allowlist_v1",
+  "files": [
+    "README.md",
+    "completed/comparison.csv",
+    "completed/config.json",
+    "completed/head_record.json",
+    "completed/industrial_combined_predictions.csv.gz",
+    "completed/industrial_combined_summary.json",
+    "completed/metrics.json",
+    "completed/numeric_execution_audit.json",
+    "completed/protocol.json",
+    "completed/public_allowlist.json",
+    "completed/report_cn.md",
+    "completed/rf100_combined_predictions.csv.gz",
+    "completed/rf100_combined_summary.json",
+    "completed/source_best19_combined_predictions.csv.gz",
+    "completed/source_cache_completed.json",
+    "completed/source_last20_combined_predictions.csv.gz",
+    "completed/source_statistics_proof.json",
+    "cpu_checks.json",
+    "public_allowlist.json",
+    "runtime_preflight.json"
+  ],
+  "preserved_existing_files": [
+    "cpu_checks.json",
+    "runtime_preflight.json"
+  ],
+  "excluded": [
+    "feature and statistic vectors",
+    "RGB and model/head weights",
+    "raw H/data_contract/private trace"
+  ],
+  "completed_scope": "20-epoch frozen-GAP linear-head source-only capacity probe; no target fitting."
+}
