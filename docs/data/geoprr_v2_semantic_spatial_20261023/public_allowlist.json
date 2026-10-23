@@ -4,6 +4,7 @@
     "README.md",
     "cpu_checks.json",
     "runtime_preflight.json",
+    "launch.json",
     "public_allowlist.json"
   ],
   "excluded": [

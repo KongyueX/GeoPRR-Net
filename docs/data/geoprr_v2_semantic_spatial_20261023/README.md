@@ -1,6 +1,6 @@
 # v17完整语义与空间残差读出
 
-独立结构实验协议已冻结，新CPU和真实源RGB运行检查通过，正式训练尚未启动。本目录暂不包含本轮训练性能。
+独立结构实验协议已冻结，新CPU和真实源RGB运行检查通过，正式源训练已于北京时间2026-10-23 13:49:51启动。本目录暂不包含本轮完整训练性能。
 
 完整冻结v16 source-best59，保留原语义和标量通路，在同一次CNN前向的stride8局部特征上增加3个通用空间token和零初始化logit残差。仅新增129057可训练参数；完整模型8564850参数／474 state。原父模型464 state及77个BN counter逐项保持，初始预测与父模型精确相同。
 
@@ -8,6 +8,7 @@
 
 4项新CPU检查通过（0.722秒）。真实源运行检查使用4张unique端点RGB，2次CNN／8图前向／2次branch反传／0次CNN反传／0optimizer；初始identity、attention有限归一化、全部父state及BN不变、临时非零输出层的上游梯度和474 state严格reload通过。临时分支变化已全部恢复，正式训练重新初始化，不使用检查后的状态。
 
+- [启动记录](launch.json)
 - [冻结协议](../../GEOPRR_V2_SEMANTIC_SPATIAL_ZERO_SHOT_PROTOCOL_CN.md)
 - [实际源运行检查](runtime_preflight.json)
 - [新CPU检查](cpu_checks.json)

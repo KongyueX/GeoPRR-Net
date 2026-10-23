@@ -1,6 +1,6 @@
 # 完整语义表示与空间残差读出：独立源域实验
 
-2026-10-23。状态：协议、代码及预算已冻结，4项新CPU检查和真实源输入零更新检查通过，正式训练待启动，尚无本轮性能结果。用户要求继续zero-shot结构迭代，Industrial与RF100不用于训练。本轮不延长v16的60轮，不改变既有模型、数据、失败记录或officialtest。
+2026-10-23。状态：协议、代码及预算已冻结，4项新CPU检查和真实源输入零更新检查通过，正式源训练于北京时间2026-10-23 13:49:51启动，尚无本轮完整性能结果。用户要求继续zero-shot结构迭代，Industrial与RF100不用于训练。本轮不延长v16的60轮，不改变既有模型、数据、失败记录或officialtest。
 
 ## 已有证据与可检验问题
 
@@ -48,6 +48,8 @@ v16完整60轮及两套冻结外评的一次独立CPU核对为81479项通过、0
 独立入口`experiments.run_geoprr_v2_semantic_spatial`，输出`runs/geoprr_generalization/iteration_v17_semantic_spatial_20261023/source_only_training`。启动前确认v16整个队列complete、父子退出、GPU实际空闲，并通过本轮唯一新源输入检查。训练保存完整model／optimizer／scaler／RNG／history／累计成本；真故障保留partial和失败日志，在同output从latest恢复，不删样本或放宽保护。
 
 完成后收齐配置、完整history、best/last源CSV、冻结两外域逐图／分组／summary和实际成本，仅一次必要独立CPU数值与执行核对。报告每域连续误差、Acc、zero／nearzero／nonzero、组、普通1495／1497、严重6、重点3172／2810／3663／9323和新增8195、tail／max／救回新增，不按单个域宣布统一最佳。
+
+实际启动代码c5e98a4、父412238／初始训练子412241。父子精确命令与唯一GPU进程已核实，首批64张源图loss0.00047157992958且梯度有限。见[启动记录](data/geoprr_v2_semantic_spatial_20261023/launch.json)与[零更新运行检查](data/geoprr_v2_semantic_spatial_20261023/runtime_preflight.json)；启动和小kernel不作为性能成绩。
 
 ## 限制
 

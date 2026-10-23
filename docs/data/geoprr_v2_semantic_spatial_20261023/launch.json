@@ -1,0 +1,28 @@
+{
+  "status": "source_training_running",
+  "observed_at_utc": "2026-10-23T05:50:07.761531+00:00",
+  "started_at_utc": "2026-10-23T05:49:51.650198+00:00",
+  "started_at_Beijing": "2026-10-23 13:49:51",
+  "code_revision": "c5e98a451bdda9c891eee46dcb3225b71386195b",
+  "entrypoint": "experiments.run_geoprr_v2_semantic_spatial",
+  "parent_pid": 412238,
+  "initial_child_pid": 412241,
+  "parent_and_child_exact_commands_verified": true,
+  "sole_GPU_process": 412241,
+  "sole_GPU_MiB": 1254,
+  "previous_v16_queue_complete_and_parent_inactive": true,
+  "GPU_empty_before_launch": true,
+  "first_training_batch": {
+    "epoch": 1,
+    "batch": 1,
+    "images": 64,
+    "loss": 0.000471579929580912,
+    "learning_rate": 0.001,
+    "gradient_norm_finite": true
+  },
+  "source_training_complete": false,
+  "external_evaluation_started": false,
+  "target_training_samples": 0,
+  "new_structure": "single frozen full semantic parent plus source-trained generic spatial residual; no extra CNN",
+  "scope": "execution start only; not new trained performance"
+}
