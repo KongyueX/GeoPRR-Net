@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "tests": 8,
+  "seconds": 0.245,
+  "scope": "new synthetic CPU data and model/loss checks only, not formal source performance or updates",
+  "data_checks": [
+    "exact half-pixel crop matrix",
+    "analytic U/M equality without Gaussian Q construction",
+    "distinct physical endpoints and virtual role positions",
+    "reject empty support or outside virtual point"
+  ],
+  "model_checks": [
+    "direct-only eval identity without auxiliary execution",
+    "one-pass multi-scale shapes and gradient paths",
+    "role/field loss parity excluding CDF",
+    "GT isolated from RGB forward"
+  ]
+}

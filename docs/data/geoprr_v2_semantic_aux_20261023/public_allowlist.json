@@ -1,0 +1,16 @@
+{
+  "protocol": "geoprr_v18_public_allowlist_v1",
+  "files": [
+    "README.md",
+    "analytic_source_contract.json",
+    "cpu_checks.json",
+    "runtime_preflight.json",
+    "public_allowlist.json"
+  ],
+  "excluded": [
+    "raw source contracts and private paths/bbox",
+    "RGB and model weights",
+    "original H/C/XYZ and U/M/feature matrices",
+    "private trace"
+  ]
+}

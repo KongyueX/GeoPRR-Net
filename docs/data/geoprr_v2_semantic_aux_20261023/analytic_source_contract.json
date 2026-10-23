@@ -1,0 +1,64 @@
+{
+  "status": "passed",
+  "label_contract": "analytic_U_M_role_no_Gaussian_Q_v1",
+  "source_manifest_relative": "rendering/generalization_endpoints_v11_20261023/manifests/train.jsonl",
+  "source_validation_manifest_relative": "runs/geoprr_v2/manifests/validation.jsonl",
+  "data_config": {
+    "image_size": 256,
+    "output_size": 64
+  },
+  "geometry_config": {
+    "max_radial_error": 0.02,
+    "max_anchor_progress_error": 0.01,
+    "max_center_error": 0.05,
+    "max_readout_error": 0.01,
+    "ring_half_width": 0.2,
+    "point_sigma": 1.0,
+    "min_support_mass": 0.15
+  },
+  "GT_Q_constructed": false,
+  "old_Q_support_readout_integrity_claimed": false,
+  "analytic_U_M_constructed": true,
+  "role_P_semantics": "radius-one virtual dial-plane state, not entity needle tip",
+  "source_RGB_contract_same_v16": true,
+  "all_source_rows_retained": true,
+  "samples": 18590,
+  "validation_samples": 1506,
+  "exact_zero_samples": 128,
+  "exact_one_samples": 128,
+  "minimum_mask_support_pixels": 193,
+  "maximum_calibration_audit": {
+    "radial_error": 0.006647233621385418,
+    "center_error": 0.006559089300597325,
+    "anchor_progress_error": 0.0038230334308104624,
+    "arc_relative_error": 0.005514856767290539,
+    "physical_progress_error": 6.661338147750939e-16
+  },
+  "role_probability_max_mass_error": 0.0,
+  "role_physical_phase_max_error_radians": 0.0,
+  "role_minimum_SPD_eigenvalue": 0.9802053666405166,
+  "counts": {
+    "analytic_rows_checked": 18590,
+    "role_rows_checked": 18590,
+    "role_label_batch_calls": 146,
+    "RGB_decodes": 0,
+    "CNN_calls": 0,
+    "CNN_images": 0,
+    "backward_calls": 0,
+    "optimizer_updates": 0
+  },
+  "torch": "2.11.0+cu128",
+  "device": "cpu",
+  "target_datasets_used": false,
+  "source_dimensions": [
+    1920,
+    1080
+  ],
+  "source_train_validation_ID_and_group_disjoint": true,
+  "role_label_dtype": "FP32 H/y/span into existing double-precision reference_geometry_targets",
+  "Q_specific_thresholds_applied": false,
+  "scope": "new256/64 analytic source U/M/role labels only; no Gaussian Q or old Q/M/U readout audit",
+  "observed_at_utc": "2026-10-23T07:00:07.375680+00:00",
+  "cpu_seconds": 16.808492746204138,
+  "all_virtual_points_inside_source_ROI": true
+}
