@@ -4,6 +4,8 @@
 
 v11 feedback端点best1的Industrial17.353598%FS仍更低，v12 local端点best1的RF1007.659157%FS更低；保留各自源尾部代价，不将一个模型称为所有数据集最优。v11相对匹配正常BN控制两域均值降低4.7510%／5.3492%，源均值相对feedback48上升7.6628%，2810新增>5%FS。其固定BN臂源均值更低，但两域均差于匹配固定BN控制。见[v11完整结果](v11_completed/report_cn.md)与[完整指标](v11_completed/metrics.json)。端点数据带来的开发增量不自动构成算法创新认证。
 
+v13固定CNN权重、更新源BN的两臂已完整结束：feedback best1的Industrial／RF100为18.384623／10.710380%FS，local best4为21.581871／9.174795%FS，均劣于本家族完整微调端点控制的best；last对last也均回退。源均值和记录的训练资源成本有所改善，但源严重错误没有全部消失，因此结束本配方，不延长。完整结果与别名／成本见[v13报告](v13_completed/report_cn.md)、[完整指标](v13_completed/metrics.json)、[267479项数值与执行核对](v13_completed/numeric_execution_audit.json)及[23文件清单](v13_completed/public_allowlist.json)。
+
 v9固定BN best1的局部收益保留：RF100为9.473928%FS、Industrial为18.709661%FS；MixStyle未取得一致增量。v10 ROI留边两臂均使源域及两外域回退，不保留、不延长。所有旧模型和负结果均保留，分别见[v9完整结果](v9_completed/report_cn.md)与[v10完整结果](v10_completed/report_cn.md)。
 
 相同的Industrial1395与RF100151原生ROI比较中，已有角度模型feedback48的Industrial均值最低，local57的RF100均值最低；v7／v8的源域精度优势不等于跨域优势。
@@ -39,7 +41,9 @@ v11将首128个quartile源组重新渲染为真实RGB状态[0,0.005,0.02,1]，�
 
 v12原生v5 local57的正常BN原源控制与端点源两臂均完整4轮、best均为第1轮；8份实际外评共6184张CNN图像／392次调用，无别名或重复推理。一次独立CPU数值与执行核对303124项全部通过。输入metadata确认8192条实际训练配对在512-ID映射下顺序精确保留；保存的data_contract.edges按新ID规范排序，与loader采样顺序不同，不能据此推断实际训练配对顺序改变。见[完整结果](v12_completed/report_cn.md)、[local端点协议](../../GEOPRR_V2_LOCAL_ENDPOINT_GENERALIZATION_PROTOCOL_CN.md)和[运行见证](v12_runtime_preflight.json)。
 
-下一独立v13计划在feedback48与local57两个原生家族中仅固定CNN权重，源BN运行统计继续更新，decoder和head继续训练；使用同一端点源，各4轮，匹配控制复用v11／v12正常BN全量微调结果。v13的两臂实际输入运行见证通过后已于北京时间2026-10-23 07:08:12启动；每臂固定7203152个CNN参数，训练257908个decoder／head参数，源BN统计更新。见[协议](../../GEOPRR_V2_CNN_WEIGHT_FREEZE_PROTOCOL_CN.md)、[运行见证](v13_runtime_preflight.json)与[启动记录](v13_launch.json)；固定已特化CNN权重不等于恢复ImageNet通用表征。
+v13在两个原生家族中固定7203152个CNN参数，源BN运行统计继续更新，decoder和head的257908参数训练；各4轮已完整结束，匹配控制复用v11／v12正常BN完整微调结果。两臂4／4轮均记录228个CNN参数tensor未变，源BN的152个running buffers更新、76个counters每轮增加709；不能将固定CNN参数写成全部CNN state不变。实际6份外评共4638张CNN图像／294次调用，local best4=last4的源表和外评复用。见[协议](../../GEOPRR_V2_CNN_WEIGHT_FREEZE_PROTOCOL_CN.md)、[完整结果](v13_completed/report_cn.md)、[运行见证](v13_runtime_preflight.json)和[别名记录](v13_completed/checkpoint_aliases.json)。
+
+下一独立v14计划在每个原生家族内，将任务锚点与本家族完整微调端点source-best1按预先固定alpha=0.5插值；BN mean／variance各取一半，BN counters保留任务锚点，其他静态buffers精确相等后复制。v14固定中点评估已于北京时间2026-10-23 08:01:21启动，不新增训练、不做alpha扫描或目标域调参，也不作foundation表征恢复的主张。见[锚点插值协议](../../GEOPRR_V2_ANCHOR_INTERPOLATION_PROTOCOL_CN.md)。
 
 ## 文献依据
 

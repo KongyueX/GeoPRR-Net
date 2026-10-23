@@ -1,0 +1,46 @@
+{
+  "protocol": "geoprr_v13_public_allowlist_v1",
+  "files": [
+    "checkpoint_aliases.json",
+    "comparison.csv",
+    "external_feedback_cnnfixed_best_source_industrial_predictions.csv.gz",
+    "external_feedback_cnnfixed_best_source_industrial_summary.json",
+    "external_feedback_cnnfixed_best_source_rf100_predictions.csv.gz",
+    "external_feedback_cnnfixed_best_source_rf100_summary.json",
+    "external_feedback_cnnfixed_last_industrial_predictions.csv.gz",
+    "external_feedback_cnnfixed_last_industrial_summary.json",
+    "external_feedback_cnnfixed_last_rf100_predictions.csv.gz",
+    "external_feedback_cnnfixed_last_rf100_summary.json",
+    "external_local_cnnfixed_best_source_industrial_predictions.csv.gz",
+    "external_local_cnnfixed_best_source_industrial_summary.json",
+    "external_local_cnnfixed_best_source_rf100_predictions.csv.gz",
+    "external_local_cnnfixed_best_source_rf100_summary.json",
+    "feedback_cnnfixed_training_record.json",
+    "local_cnnfixed_training_record.json",
+    "metrics.json",
+    "numeric_execution_audit.json",
+    "public_allowlist.json",
+    "report_cn.md",
+    "source_feedback_cnnfixed_best_source_predictions.csv.gz",
+    "source_feedback_cnnfixed_last_predictions.csv.gz",
+    "source_local_cnnfixed_best_source_predictions.csv.gz"
+  ],
+  "reused_public_source_controls": [
+    "../v11_completed/source_endpoint_best_source_predictions.csv.gz",
+    "../v11_completed/source_endpoint_last_predictions.csv.gz",
+    "../v12_completed/source_local_endpoint_best_source_predictions.csv.gz",
+    "../v12_completed/source_local_endpoint_last_predictions.csv.gz",
+    "../v12_completed/source_local57_anchor_predictions.csv.gz"
+  ],
+  "reused_public_external_controls": [
+    "../v11_completed/",
+    "../v12_completed/"
+  ],
+  "aliases": "local_cnnfixed last4 aliases best_source4 for source CSV and external results; no additional inference.",
+  "excluded": [
+    "raw run.json and data_contract",
+    "RGB and weights",
+    "H/C/XYZ and pixel matrices",
+    "private server paths and trace"
+  ]
+}

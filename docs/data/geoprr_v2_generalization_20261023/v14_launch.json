@@ -1,0 +1,46 @@
+{
+  "status": "launched",
+  "started_at_utc": "2026-10-23T00:01:21.862425+00:00",
+  "started_at_beijing": "2026-10-23 08:01:21",
+  "parent_pid": 399785,
+  "entrypoint": "experiments.run_geoprr_v2_anchor_interpolation",
+  "method_revision": "44b5b61313c6ec2e3db00098841f64e814c82149",
+  "output": "runs/geoprr_generalization/iteration_v14_anchor_half_20261023/frozen_evaluation",
+  "arms": [
+    "feedback_half",
+    "local_half"
+  ],
+  "alpha": 0.5,
+  "new_training": false,
+  "component_epochs": {
+    "feedback_half": [
+      48,
+      1
+    ],
+    "local_half": [
+      57,
+      1
+    ]
+  },
+  "state_counts_each": {
+    "learned_float_parameter_tensors_averaged": 259,
+    "BN_running_moments_averaged": 152,
+    "BN_integer_counters_copied_from_anchor": 76,
+    "constructor_fixed_buffers_exact_equal_copied": 9
+  },
+  "parameters_each": 7461060,
+  "states_each": 496,
+  "epoch": null,
+  "best_epoch": null,
+  "best_nmae": null,
+  "planned_CNN_images": 6104,
+  "planned_CNN_calls": 386,
+  "backward_calls": 0,
+  "optimizer_updates": 0,
+  "prior_v13_audit": {
+    "status": "PASS",
+    "checks": 267479,
+    "failures": 0
+  },
+  "scope": "fixed half inference, not a new trained epoch or performance conclusion"
+}

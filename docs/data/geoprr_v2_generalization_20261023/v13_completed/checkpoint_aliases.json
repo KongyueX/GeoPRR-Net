@@ -1,0 +1,45 @@
+{
+  "protocol": "geoprr_v13_checkpoint_alias_v1",
+  "source_aliases": [
+    {
+      "arm": "local_cnnfixed",
+      "checkpoint": "last",
+      "checkpoint_epoch": 4,
+      "prediction_file_alias_of": "source_local_cnnfixed_best_source_predictions.csv.gz",
+      "additional_inference": false
+    }
+  ],
+  "external_aliases": [
+    {
+      "arm": "local_cnnfixed",
+      "checkpoint": "last",
+      "checkpoint_epoch": 4,
+      "dataset": "industrial",
+      "result_alias_of": "external_local_cnnfixed_best_source_industrial",
+      "additional_CNN_images": 0,
+      "additional_CNN_calls": 0,
+      "additional_backward_calls": 0,
+      "additional_optimizer_updates": 0
+    },
+    {
+      "arm": "local_cnnfixed",
+      "checkpoint": "last",
+      "checkpoint_epoch": 4,
+      "dataset": "rf100",
+      "result_alias_of": "external_local_cnnfixed_best_source_rf100",
+      "additional_CNN_images": 0,
+      "additional_CNN_calls": 0,
+      "additional_backward_calls": 0,
+      "additional_optimizer_updates": 0
+    }
+  ],
+  "unique_public_source_tables": 3,
+  "public_source_table_rows": 4518,
+  "logical_source_saved_rows_in_private_and_metrics": 6024,
+  "unique_external_evaluations": 6,
+  "unique_external_CNN_images": 4638,
+  "unique_external_CNN_calls": 294,
+  "external_backward_calls": 0,
+  "external_optimizer_updates": 0,
+  "reason": "Local best and last are the same epoch4 weights; source CSV and external results are aliased, with no duplicate inference or duplicate public table."
+}
