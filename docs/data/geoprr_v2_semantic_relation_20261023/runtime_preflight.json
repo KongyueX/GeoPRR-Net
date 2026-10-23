@@ -1,0 +1,296 @@
+{
+  "status": "passed",
+  "observed_at_utc": "2026-10-23T09:38:36.669770+00:00",
+  "config": {
+    "protocol": "geoprr_v2_full_semantic_relation_source_only_v1",
+    "model": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "num_classes": 0,
+      "semantic_context": "full encoder1280 semantic output into predicted center/SPD context",
+      "readout": "predicted local conditional A/P_rel/B_rel to full J to unchanged CircularProgressPushforward",
+      "bins": 256,
+      "decoder_dim": 64,
+      "token_dim": 16,
+      "reference_normalization": "local",
+      "feature_modules": [
+        "blocks.0",
+        "blocks.1",
+        "blocks.2",
+        "blocks.4"
+      ],
+      "feature_channels": [
+        48,
+        80,
+        160,
+        960
+      ],
+      "feature_reductions": [
+        4,
+        8,
+        16,
+        32
+      ],
+      "point_head": false,
+      "relation_deployed_during_training_and_inference": true
+    },
+    "data": {
+      "image_size": 256,
+      "output_size": 64
+    },
+    "source": {
+      "unique_training_images": 18590,
+      "validation_images": 1506,
+      "source_replacement": {
+        "groups": 128,
+        "states": [
+          0.0,
+          0.005,
+          0.02,
+          1.0
+        ],
+        "protocol": "geoprr_v2_endpoint_source_v11"
+      },
+      "require_geometry": "analytic U/M/H/span and virtual role labels for source loss only; no GT model input",
+      "pair_manifest": null,
+      "analytic_label_contract": "analytic_U_M_role_no_Gaussian_Q_v1",
+      "analytic_data": {
+        "image_size": 256,
+        "output_size": 64
+      },
+      "analytic_geometry_config": {
+        "max_radial_error": 0.02,
+        "max_anchor_progress_error": 0.01,
+        "max_center_error": 0.05,
+        "max_readout_error": 0.01,
+        "ring_half_width": 0.2,
+        "point_sigma": 1.0,
+        "min_support_mass": 0.15
+      }
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 60,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "weight_decay": 0.0001,
+      "loss": "SmoothL1(beta=.05)+.1*(role_NLL/(3log256)+field_L1)",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0,
+      "learning_rate": "epoch1..30 cosine3e-4; epoch31..60 cosine3e-5; phase position0..29/30",
+      "auxiliary_weight": 0.1,
+      "role_normalization": "local",
+      "reading_cdf": false
+    },
+    "checkpoint_selection": "earliest minimum deployed relation NMAE on complete source1506 within60epochs",
+    "external_checkpoint": "source-selected best only after all60epochs complete",
+    "inference_input": "ROI RGB, linear resize256, ImageNet normalization; full semantic context and predicted local relation circular reading; no GT geometry or target scalar input",
+    "external_training_or_adaptation": false
+  },
+  "model_metadata": {
+    "class": "experiments.geoprr_v2_semantic_relation.SemanticRelationReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "non_CNN_parameters": 327540,
+    "parameters": 8762052,
+    "state_tensors": 502,
+    "context_input_dim": 1280,
+    "point_head_present": false,
+    "reference_normalization": "local",
+    "feature_modules": [
+      "blocks.0",
+      "blocks.1",
+      "blocks.2",
+      "blocks.4"
+    ],
+    "feature_channels": [
+      48,
+      80,
+      160,
+      960
+    ],
+    "feature_reductions": [
+      4,
+      8,
+      16,
+      32
+    ],
+    "deployment_uses_geometry_readout": true,
+    "geometry_labels_in_model_inputs": false,
+    "training_only_auxiliary_modules": false,
+    "deployed_readout": "full conditional J to unchanged CircularProgressPushforward256"
+  },
+  "source_unique": 18590,
+  "source_validation": 1506,
+  "source_probe_states": [
+    0.0,
+    1.0,
+    0.0,
+    1.0
+  ],
+  "unique_RGB_images": 6,
+  "source_analytic_contract_verified": true,
+  "source_analytic_payload_equal_v18": true,
+  "source_RGB_contract_equal_v18": true,
+  "whole_deployment_contract_changed": true,
+  "GT_Gaussian_Q_constructed": false,
+  "old_GT_or_teacher_reaudit_performed": false,
+  "validation_input_matches_declared256_pipeline": true,
+  "validation_RGB_identity_samples": 2,
+  "old768_input_identity_claimed": false,
+  "fresh_ImageNet_encoder_state_tensors_compared": 462,
+  "fresh_ImageNet_encoder_exactly_preserved": true,
+  "ImageNet_cached_only": true,
+  "old_task_checkpoint_used": false,
+  "semantic_context_1280_used": true,
+  "full_semantic_context_verified": true,
+  "semantic_context_input_shapes": [
+    [
+      4,
+      1280
+    ],
+    [
+      2,
+      1280
+    ]
+  ],
+  "feature_shapes": {
+    "blocks.0": [
+      [
+        4,
+        48,
+        64,
+        64
+      ],
+      [
+        2,
+        48,
+        64,
+        64
+      ]
+    ],
+    "blocks.1": [
+      [
+        4,
+        80,
+        32,
+        32
+      ],
+      [
+        2,
+        80,
+        32,
+        32
+      ]
+    ],
+    "blocks.2": [
+      [
+        4,
+        160,
+        16,
+        16
+      ],
+      [
+        2,
+        160,
+        16,
+        16
+      ]
+    ],
+    "blocks.4": [
+      [
+        4,
+        960,
+        8,
+        8
+      ],
+      [
+        2,
+        960,
+        8,
+        8
+      ]
+    ]
+  },
+  "deployed_relation_readout_verified": true,
+  "training_and_eval_use_same_J_readout": true,
+  "distribution_mass_preserved": true,
+  "zero_span_mass_uniformly_transported": true,
+  "outside_arc_hard_gate_used": false,
+  "GT_isolated_from_model_input": true,
+  "GT_isolation_verified": true,
+  "GT_keyword_rejected_before_CNN": true,
+  "model_forward_inputs": [
+    "image"
+  ],
+  "target_datasets_used": false,
+  "target_statistics_used": false,
+  "direct_point_head_present": false,
+  "losses": {
+    "primary": 0.4750138819217682,
+    "role_nll_raw": 16.591819763183594,
+    "role_nll_normalized": 0.9973723292350769,
+    "field_l1": 0.0009565037325955927,
+    "auxiliary": 0.9983288049697876,
+    "total": 0.5748467445373535
+  },
+  "loss_decomposition_verified": true,
+  "all_gradients_finite": true,
+  "gradient_groups_nonzero": {
+    "encoder_body": true,
+    "semantic_conv_head": true,
+    "semantic_norm_head": true,
+    "lateral": true,
+    "refine": true,
+    "relation": true,
+    "semantic_context": true,
+    "radial_embedding": true
+  },
+  "parameter_tensors_unchanged_without_optimizer": 262,
+  "source_BN_counter_tensors_checked": 77,
+  "source_BN_counter_increment_training": 1,
+  "source_BN_counter_additional_increment_eval": 0,
+  "eval_model_buffers_unchanged": true,
+  "state_head_forward_calls": 2,
+  "readout_forward_calls": 2,
+  "strict_model_reload": true,
+  "strict_model_reload_verified": true,
+  "full_state_tensors": 502,
+  "counts": {
+    "CNN_calls": 2,
+    "CNN_images": 6,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "seconds": 19.15354849025607,
+  "full_process_seconds": 21.018892493098974,
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "peak_allocated_bytes": 239283200,
+  "peak_reserved_bytes": 257949696,
+  "scope": "new deployed semantic-conditioned relative J readout on actual source RGB; zero-update witness, not performance",
+  "execution_code_revision": "9494af66d04ea3ce0da68f7fd8d579c154814087"
+}
