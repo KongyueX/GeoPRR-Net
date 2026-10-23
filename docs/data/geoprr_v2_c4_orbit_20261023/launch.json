@@ -1,0 +1,31 @@
+{
+  "status": "source_training_running",
+  "started_at_utc": "2026-10-23T08:42:41.605652+00:00",
+  "started_at_Beijing": "2026-10-23 16:42:41",
+  "observed_at_utc": "2026-10-23T08:43:36.520457+00:00",
+  "code_revision": "1eca0bd2470a6c414a8b5c781b1d9741a8eac154",
+  "entrypoint": "experiments.run_geoprr_v2_c4_orbit",
+  "parent_pid": 419406,
+  "initial_child_pid": 419411,
+  "parent_and_child_exact_commands_verified": true,
+  "sole_GPU_process": 419411,
+  "sole_GPU_MiB": 3370,
+  "previous_v18_queue_complete_and_parent_inactive": true,
+  "GPU_empty_before_launch": true,
+  "source_training_complete": false,
+  "external_evaluation_started": false,
+  "target_training_samples": 0,
+  "first_training_batch": {
+    "orbit_epoch": 1,
+    "batch": 1,
+    "original_images": 16,
+    "CNN_views": 64,
+    "loss": 0.18986842036247253,
+    "global_attempt_index": 0,
+    "virtual_epoch": 1,
+    "learning_rate": 0.0003,
+    "gradient_norm_finite": false
+  },
+  "first_gradient_note": "AMP scaler handles overflowing gradient attempts by skipping updates; actual skip/update counts are recorded separately",
+  "scope": "execution start only; no trained accuracy or zero-shot gain claim"
+}

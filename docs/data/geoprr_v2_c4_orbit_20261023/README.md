@@ -1,6 +1,6 @@
 # v19固定C4轨道语义池化
 
-独立15轮轨道模型协议已冻结，5项新CPU检查与真实源RGB零更新见证通过，正式训练待启动，没有新性能结果。
+独立15轮轨道模型协议已冻结，5项新CPU检查与真实源RGB零更新见证通过，正式源训练于北京时间2026-10-23 16:42:41启动，没有新完整性能结果。
 
 每张256 ROI固定生成0/90/180/270度四个张量旋转，同一完整ImageNet MobileNetV4一次编码4B视图，在1280维semantic上取FP32均值后执行同一个point和sigmoid。训练、验证、外域均使用这一个函数。原图物理scalar不变，无插值/裁剪/反射/GT几何，不选择角度或权重。模型8435793参数/464 state，新增参数0。
 
@@ -10,6 +10,7 @@
 
 只用18590源训练/1506源验证，全部15轮后才各做一次source-selected best冻结外评。源RGB基础子合同与v16相同，整个模型输入合同已改变为固定C4轨道；source和external同策略，不做目标训练、BN适配、总体统计拟合或checkpoint/角度策略选择。
 
+- [启动记录](launch.json)
 - [冻结协议](../../GEOPRR_V2_C4_ORBIT_ZERO_SHOT_PROTOCOL_CN.md)
 - [实际源运行检查](runtime_preflight.json)
 - [新CPU检查](cpu_checks.json)

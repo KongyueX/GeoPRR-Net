@@ -3,6 +3,7 @@
   "files": [
     "README.md",
     "cpu_checks.json",
+    "launch.json",
     "runtime_preflight.json",
     "public_allowlist.json"
   ],
