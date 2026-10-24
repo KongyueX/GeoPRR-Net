@@ -1,6 +1,6 @@
 # 全语义与多尺度空间latent tokens：zero-shot协议
 
-2026-10-24。v23冻结一个独立、端到端的表示与读出实验，重点降低大错、严重尾部并改善整体外域均值。源选择预先同时考虑mean与tail；不追加数据或仅延长旧模型。本文没有新模型性能或启动结论，实际零前向CPU构造确认9374417参数／293个parameter tensor／528 state，代码SHA在实现冻结后记录。两外域严格只在源训练完成后评估冻结best，全部旧模型与失败保留。
+2026-10-24。独立v23按以下冻结结构与source mean-tail R规则完整完成117轮和两套冻结外评，最早source-best97；两域mean、最差10%及max未超过v16或旧GeoPRR历史参照，不自动升模型或延长。唯一保存工件CPU审计73780项通过、0失败，完整结果见[完成报告](data/geoprr_v2_semantic_tokens_20261024/completed/report_cn.md)。实际模型9374417参数／293个parameter tensor／528 state，执行版本90d932cc850f4e963c89e23b766daf19fe6f5ca4。本文保留执行前冻结的方法与选择规则；两外域仅在全部source结束后评估锁定best，全部旧模型和失败保留。
 
 ## 可证伪问题
 
@@ -22,7 +22,7 @@ fresh已有缓存的完整`mobilenetv4_conv_medium.e500_r224_in1k`，`num_classe
 
 `ROI RGB → 一个完整encoder → semantic条件queries＋多尺度空间memory → 两层decoder → 四token联合scalar读出`。
 
-全部CNN、token projection、query、decoder与readout从源数据端到端学习，BN只在源训练更新，eval固定。部署也走完整新通路，不是v17冻结encoder的小残差；没有v16 scalar残差／融合、几何校准／ring／GT角色头、router、CDF、teacher、confidence门控或TTA。每图按固定权重计算query属于普通RGB条件推理，不是目标域适配。实际零前向CPU构造确认encoder8434512参数／462 state，新readout939905参数／62个parameter tensor，完整9374417参数／293个parameter tensor／528 state（含4个固定位置buffer）。这只认证构造；真实RGB的shape、梯度及AMP路径仍须运行见证。
+全部CNN、token projection、query、decoder与readout从源数据端到端学习，BN只在源训练更新，eval固定。部署也走完整新通路，不是v17冻结encoder的小残差；没有v16 scalar残差／融合、几何校准／ring／GT角色头、router、CDF、teacher、confidence门控或TTA。每图按固定权重计算query属于普通RGB条件推理，不是目标域适配。实际零前向CPU构造确认encoder8434512参数／462 state，新readout939905参数／62个parameter tensor，完整9374417参数／293个parameter tensor／528 state（含4个固定位置buffer）。实际RGB零更新见证已记录3次CNN／8图／1次反传／0更新，shape、有限梯度与AMP路径通过、完整528 state严格reload；该见证不是准确率。
 
 ## 完全复用已完成源数据
 
@@ -56,7 +56,7 @@ E轮实际预算为train34974E图／547E次CNN及反传尝试，validation2018E�
 
 ## 执行与归档
 
-固定训练ID为`geoprr_v2_semantic_tokens_source_only_v1`，模块`experiments.geoprr_v2_semantic_tokens`，入口`experiments.run_geoprr_v2_semantic_tokens`，独立输出`runs/geoprr_generalization/iteration_v23_semantic_tokens_20261024/source_only_training`。[配置](data/geoprr_v2_semantic_tokens_20261024/config.json)从实际训练器CONFIG表达式静态规范化；代码／配置／协议先冻结，实际参数和state由新CPU构造记录补充。
+固定训练ID为`geoprr_v2_semantic_tokens_source_only_v1`，模块`experiments.geoprr_v2_semantic_tokens`，入口`experiments.run_geoprr_v2_semantic_tokens`，独立输出`runs/geoprr_generalization/iteration_v23_semantic_tokens_20261024/source_only_training`。[配置](data/geoprr_v2_semantic_tokens_20261024/config.json)从实际训练器CONFIG表达式静态规范化；代码／配置／协议在实际运行前冻结；实际参数及state见保存的CPU／RGB运行记录。
 
 必要CPU检查只针对新结构与新R接口：四尺度unshuffle／memory顺序和shape、固定规则位置、独立decoder层、partial batch、RGB-only、R的ceil-tail／失败分母／strict best与patience、完整checkpoint严格加载。不重跑旧GT／G0、旧模型、v22预检或完整审计，不追加评分／查新／评审循环。
 

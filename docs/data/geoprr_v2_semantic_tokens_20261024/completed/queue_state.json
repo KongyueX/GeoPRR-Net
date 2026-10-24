@@ -1,0 +1,36 @@
+{
+  "protocol": "geoprr_v2_semantic_tokens_source_only_v1",
+  "seeds": [
+    20262020
+  ],
+  "status": "complete",
+  "updated_at": "2026-10-24T09:36:22.254300+00:00",
+  "code_revision": "90d932cc850f4e963c89e23b766daf19fe6f5ca4",
+  "current_step": null,
+  "steps": {
+    "preflight": {
+      "status": "complete",
+      "started_at": "2026-10-24T06:42:45.728231+00:00",
+      "finished_at": "2026-10-24T06:43:07.748357+00:00",
+      "exit_code": 0
+    },
+    "train_source": {
+      "status": "complete",
+      "started_at": "2026-10-24T06:43:07.830959+00:00",
+      "finished_at": "2026-10-24T09:35:59.773196+00:00",
+      "exit_code": 0
+    },
+    "eval_industrial": {
+      "status": "complete",
+      "started_at": "2026-10-24T09:35:59.858651+00:00",
+      "finished_at": "2026-10-24T09:36:11.584452+00:00",
+      "exit_code": 0
+    },
+    "eval_rf100": {
+      "status": "complete",
+      "started_at": "2026-10-24T09:36:11.629967+00:00",
+      "finished_at": "2026-10-24T09:36:22.234975+00:00",
+      "exit_code": 0
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "initialization": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "ImageNet_pretrained": true,
+    "existing_cached_weights_only": true,
+    "retained_complete_encoder_state_tensors": 462,
+    "all_cached_encoder_state_tensors_retained": true,
+    "new_readout_parameter_tensors": 62,
+    "old_task_checkpoint_used": false
+  },
+  "model_metadata": {
+    "class": "__main__.SemanticTokenReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "readout_parameters": 939905,
+    "readout_parameter_tensors": 62,
+    "parameters": 9374417,
+    "trainable_parameters": 9374417,
+    "parameter_tensors": 293,
+    "state_tensors": 528,
+    "feature_shapes_per_image": [
+      [
+        48,
+        64,
+        64
+      ],
+      [
+        80,
+        32,
+        32
+      ],
+      [
+        160,
+        16,
+        16
+      ],
+      [
+        960,
+        8,
+        8
+      ]
+    ],
+    "memory_shape_per_image": [
+      2368,
+      128
+    ],
+    "query_shape_per_image": [
+      4,
+      128
+    ],
+    "fine_stage_rearrangement": "pixel_unshuffle2",
+    "CNN_passes_per_image": 1,
+    "generic_queries_without_annotated_roles": true
+  }
+}

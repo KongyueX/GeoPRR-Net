@@ -1,21 +1,26 @@
-# v23全语义与多尺度空间latent tokens
+# v23全语义与多尺度latent tokens：完整结果
 
-**独立表示／读出与源风险选择规则已冻结，尚无新模型性能或启动结论；实际参数与state数待CPU构造后记录。** 单次完整MobileNetV4前向取得semantic1280及四尺度空间特征，stride4先pixel-unshuffle保留有序2×2 pattern，四级投影形成2368个128维memory token。4个semantic条件通用query经两层独立标准Transformer decoder，最后LN／flatten512→128→1与float sigmoid输出唯一reading。全部CNN与读出端到端训练，没有旧point残差、几何角色头、融合router或teacher。
+**117轮源训练及两套冻结外评已完成，source-R最早最优为best97；Industrial NMAE为21.426597%FS，RF100为13.046721%FS。** 两域mean、最差10%及max均弱于v16和旧GeoPRR历史参照，未达到整体泛化与严重尾部目标，不自动升模型、不延长。RF100最差10%相对v22下降，但均值与max升高，局部取舍保留，不能写成统一收益或所有attention无效。
 
-数据完全复用v22：22686 unique，旧18590一次＋roll4096各4次＝34974曝光／547批，源验证1506＋512＝2018／32调用，无新渲染、名单或增强改变。唯一训练loss为source SmoothL1 beta.05。四个query没有实体针尖／量程start／end认证，位置只来自规则ROI cell；模型只收RGB，不输入GT几何。
+best97原1506 mean／tail为0.490210／2.440468%FS，roll512为0.740396／3.029107%FS，四项等权R=1.675045%FS。last117 R=1.975943%FS；best97之后20完整轮无严格新R，按预声明source patience停止。全部source后才各一次锁定best97外评，last仅源记录；两外域无训练、统计／BN适配或选择，全部input／scalar有效、coverage1。
 
-预先固定R=(mean_original＋mean_roll＋tail10_original＋tail10_roll)／4，tail复用完整误差top ceil10%（151／52行，失败error1包含）。同一R用于最早strict best、LR plateau及20轮patience；min60／max160，不强凑旧114轮，也不根据目标挑权重。新结构与source-tail选择一起改变，不作纯结构单因素解释。
+实际9374417参数／293个parameter tensor／528 state，单CNN完整semantic1280加四尺度memory2368×128、四通用query与两独立decoder，全部端到端训练。没有旧point残差、GT角色、几何router或teacher，规则cell位置不是GT针尖。源数据与256 RGB处理完全复用v22，无新增渲染；结构与mean-tail source selector一起改变，不作纯attention因果解释。
 
-source结束后冻结best，各一次Industrial1395／52与RF100151／35；目标不训练、拟合统计、适配BN或选择checkpoint／epoch／LR／阈值／ROI／温度。E轮正式图数36992E＋1546、CNN调用579E＋25，updates＋AMP skip=547E；decoder额外计算／时间／显存另记，不报计划已完成。新结构实际见证计划3CNN／8图／1back／0opt，不重跑旧GT／预检；全部完成后再通知完整结果。
+正式4091958训练图／63999反传尝试＝63974更新＋25 AMP跳过，验证236106／3744调用，外域1546／25／0back／0update，总4329610图／67768 CNN，无resume。一次独立CPU保存工件核对73780项通过、0失败；四份源best／last、两外域逐图／组、117轮history与全部成本归档。
 
+- [完整报告](completed/report_cn.md)
+- [完整指标](completed/metrics.json)
+- [模型与分位／准确率比较](completed/comparison.csv)
+- [实际成本](completed/costs.json)
+- [审计](completed/numeric_execution_audit.json)
+- [117轮history](completed/history.jsonl)
+- [best源R分量](completed/best_validation.json)
+- [last源R分量](completed/latest_validation.json)
 - [冻结协议](../../GEOPRR_V2_SEMANTIC_TOKENS_ZERO_SHOT_PROTOCOL_CN.md)
-- [实际训练器CONFIG对应配置](config.json)
-- [初始公开allowlist](public_allowlist.json)
-- [复用的v22源完成记录](../geoprr_v2_roll_source_20261024/source_completed.json)
-- [v22完整结果](../geoprr_v2_roll_source_20261024/completed/report_cn.md)
+- [配置](config.json)
+- [实际模型预检](runtime_preflight.json)
+- [公开allowlist](public_allowlist.json)
 
 ## Limitations
 
-目标是mean与严重尾部同时改善，不能只拿Acc收益替代；源R也不保证外域改善。roll512共享HDR、精确0／1人数0，20096原metadata无seed，非全历史seed认证或新域盲测。两外域已查看、单seed不称显著性；常规attention与论文动机不是本任务有效证据。原14494／1506／4000、普通／严重名单和全部旧模型／失败保留，不预先promotion或机械延长。
-
-实际构造为9374417参数／293个parameter tensor／528 state，其中新读出939905参数。7项新CPU toy检查通过；实际新结构AMP运行见证3次CNN／8图／1次反传／0更新通过，完整cached encoder462 state保留、四尺度与2368memory／4query路径及必要梯度通过、77 BN source+1／eval0、528 state严格加载。当前独立源训练已启动，外域尚未评估；见[cpu_checks.json](cpu_checks.json)、[runtime_preflight.json](runtime_preflight.json)与[launch.json](launch.json)。这些是运行证据，不是泛化性能结果。
+单seed、已查看两外域不构成显著性或新盲测；roll512只在布局／ID／group／声明seed层面独立且共享HDR，端点人数0，历史metadata seed链未认证。原fixed cohorts、615及其他大错均保留，不删行重分人口；旧历史模型像素／完整权重链未重新认证。全部旧模型与负结果留存，不能用局部Acc或单个case替代整体mean／tail目标，原始RGB／权重／几何／特征和完整合同继续私有。

@@ -1,0 +1,255 @@
+{
+  "formal_counts": {
+    "cnn_image_forwards": 4329610,
+    "cnn_forward_calls": 67768,
+    "source_backward_calls": 63999,
+    "source_optimizer_updates": 63974,
+    "source_amp_skipped_updates": 25,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  },
+  "actual_formal_costs": {
+    "industrial": {
+      "timing": {
+        "counts": {
+          "cnn_forward_calls": 22,
+          "cnn_image_forwards": 1395,
+          "backward_calls": 0,
+          "optimizer_updates": 0,
+          "failed_input_placeholder_forwards": 0
+        },
+        "pipeline_seconds": 8.254722382873297,
+        "forward_seconds": 6.953838285058737,
+        "batch_size": 64,
+        "workers": 4
+      },
+      "runtime": {
+        "process_seconds": 10.030095394700766,
+        "full_process_seconds": 10.998160231858492,
+        "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+        "device": "cuda",
+        "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+        "torch": "2.11.0+cu128",
+        "cuda": "12.8",
+        "peak_cuda_memory_bytes": 417734656,
+        "peak_cuda_reserved_bytes": 683671552
+      },
+      "forward_counts": {
+        "cnn_forward_calls": 22,
+        "cnn_image_forwards": 1395,
+        "backward_calls": 0,
+        "optimizer_updates": 0,
+        "failed_input_placeholder_forwards": 0
+      }
+    },
+    "rf100": {
+      "timing": {
+        "counts": {
+          "cnn_forward_calls": 3,
+          "cnn_image_forwards": 151,
+          "backward_calls": 0,
+          "optimizer_updates": 0,
+          "failed_input_placeholder_forwards": 0
+        },
+        "pipeline_seconds": 7.355067286640406,
+        "forward_seconds": 6.6515343971550465,
+        "batch_size": 64,
+        "workers": 4
+      },
+      "runtime": {
+        "process_seconds": 8.969633586704731,
+        "full_process_seconds": 9.907323814928532,
+        "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+        "device": "cuda",
+        "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+        "torch": "2.11.0+cu128",
+        "cuda": "12.8",
+        "peak_cuda_memory_bytes": 417734656,
+        "peak_cuda_reserved_bytes": 685768704
+      },
+      "forward_counts": {
+        "cnn_forward_calls": 3,
+        "cnn_image_forwards": 151,
+        "backward_calls": 0,
+        "optimizer_updates": 0,
+        "failed_input_placeholder_forwards": 0
+      }
+    },
+    "source_totals": {
+      "train_batches": 63999,
+      "train_cnn_image_forwards": 4091958,
+      "train_cnn_forward_calls": 63999,
+      "backward_calls": 63999,
+      "optimizer_updates": 63974,
+      "amp_skipped_updates": 25,
+      "validation_images": 236106,
+      "validation_cnn_forward_calls": 3744,
+      "training_seconds": 9784.711778588593,
+      "validation_seconds": 503.0759307220578
+    },
+    "source_runtime": {
+      "process_seconds": 10370.041267327964,
+      "full_process_seconds": 10371.028453789651,
+      "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 2669980672,
+      "peak_cuda_reserved_bytes": 3158310912
+    },
+    "stage_wall_seconds": {
+      "preflight": 22.020126,
+      "train_source": 10371.942237,
+      "eval_industrial": 11.725801,
+      "eval_rf100": 10.605008
+    },
+    "controller_end_to_end_seconds": 10394.404016,
+    "preflight_through_external_wall_seconds": 10416.506744,
+    "completed_at_utc": "2026-10-24T09:36:22.234975+00:00",
+    "source_checkpointed_process_seconds": 10370.041559215635,
+    "controller_end_to_end_boundary": "train_source supervisor start through final external exit; excludes preceding new preflight",
+    "preflight_cost_record": "../runtime_preflight.json",
+    "reused_source_generation_record": "../../geoprr_v2_roll_source_20261024/source_completed.json",
+    "new_source_generation_cost": 0
+  },
+  "saved_reference_cost_comparisons": {
+    "v16": {
+      "source_training_seconds": {
+        "v23": 9784.711778588593,
+        "reference": 2761.0258493237197,
+        "difference": 7023.685929264873,
+        "ratio": 3.543868226002028
+      },
+      "source_validation_seconds": {
+        "v23": 503.0759307220578,
+        "reference": 183.3174392953515,
+        "difference": 319.7584914267063,
+        "ratio": 2.7442884466192443
+      },
+      "source_process_seconds": {
+        "v23": 10370.041267327964,
+        "reference": 2972.2243499159813,
+        "difference": 7397.816917411983,
+        "ratio": 3.4889833493293008
+      },
+      "source_full_process_seconds": {
+        "v23": 10371.028453789651,
+        "reference": 2973.16363677755,
+        "difference": 7397.864817012101,
+        "ratio": 3.4882131361697413
+      },
+      "queue_wall_seconds": {
+        "v23": 10394.404016,
+        "reference": 2997.258767,
+        "difference": 7397.145249000001,
+        "ratio": 3.467970176763854
+      }
+    },
+    "v18": {
+      "source_training_seconds": {
+        "v23": 9784.711778588593,
+        "reference": 2816.7055361121893,
+        "difference": 6968.006242476404,
+        "ratio": 3.47381423196055
+      },
+      "source_validation_seconds": {
+        "v23": 503.0759307220578,
+        "reference": 173.22431213408709,
+        "difference": 329.85161858797073,
+        "ratio": 2.90418778128929
+      },
+      "source_process_seconds": {
+        "v23": 10370.041267327964,
+        "reference": 3059.7135350219905,
+        "difference": 7310.327732305974,
+        "ratio": 3.389219660151431
+      },
+      "source_full_process_seconds": {
+        "v23": 10371.028453789651,
+        "reference": 3060.6456844322383,
+        "difference": 7310.382769357413,
+        "ratio": 3.388509982237136
+      },
+      "queue_wall_seconds": {
+        "v23": 10394.404016,
+        "reference": 3084.318233,
+        "difference": 7310.085783,
+        "ratio": 3.3700815644725983
+      }
+    },
+    "v21": {
+      "source_training_seconds": {
+        "v23": 9784.711778588593,
+        "reference": 2773.254664938897,
+        "difference": 7011.457113649696,
+        "ratio": 3.5282413484389394
+      },
+      "source_validation_seconds": {
+        "v23": 503.0759307220578,
+        "reference": 173.47069058939815,
+        "difference": 329.6052401326597,
+        "ratio": 2.900062996306558
+      },
+      "source_process_seconds": {
+        "v23": 10370.041267327964,
+        "reference": 3008.8445746041834,
+        "difference": 7361.196692723781,
+        "ratio": 3.446519423055328
+      },
+      "source_full_process_seconds": {
+        "v23": 10371.028453789651,
+        "reference": 3009.7728834301233,
+        "difference": 7361.255570359528,
+        "ratio": 3.445784401502809
+      },
+      "queue_wall_seconds": {
+        "v23": 10394.404016,
+        "reference": 3035.589614,
+        "difference": 7358.814402,
+        "ratio": 3.424179595312056
+      }
+    },
+    "v22": {
+      "source_training_seconds": {
+        "v23": 9784.711778588593,
+        "reference": 9585.050050370395,
+        "difference": 199.66172821819782,
+        "ratio": 1.020830535799913
+      },
+      "source_validation_seconds": {
+        "v23": 503.0759307220578,
+        "reference": 483.78070947155356,
+        "difference": 19.295221250504255,
+        "ratio": 1.039884230339777
+      },
+      "source_process_seconds": {
+        "v23": 10370.041267327964,
+        "reference": 10146.579224005342,
+        "difference": 223.46204332262278,
+        "ratio": 1.02202338723123
+      },
+      "source_full_process_seconds": {
+        "v23": 10371.028453789651,
+        "reference": 10147.539110802114,
+        "difference": 223.48934298753738,
+        "ratio": 1.022023994246017
+      },
+      "queue_wall_seconds": {
+        "v23": 10394.404016,
+        "reference": 10171.255716,
+        "difference": 223.14830000000075,
+        "ratio": 1.0219391101974729
+      }
+    }
+  },
+  "preflight_counts_separate": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "new_source_generation_cost": 0,
+  "reused_source_generation_record": "../../geoprr_v2_roll_source_20261024/source_completed.json"
+}

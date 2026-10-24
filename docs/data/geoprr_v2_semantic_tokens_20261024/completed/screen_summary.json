@@ -1,0 +1,130 @@
+{
+  "protocol": "geoprr_v2_semantic_tokens_source_only_v1",
+  "config": {
+    "protocol": "geoprr_v2_semantic_tokens_source_only_v1",
+    "model": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "num_classes": 0,
+      "semantic_dim": 1280,
+      "initialization": "fresh complete cached ImageNet encoder, including conv_head and norm_head; new token readout",
+      "feature_stages": [
+        "blocks.0:48x64x64",
+        "blocks.1:80x32x32",
+        "blocks.2:160x16x16",
+        "blocks.4:960x8x8"
+      ],
+      "fine_stage": "pixel_unshuffle2:48x64x64 to192x32x32, preserving each ordered2x2 pattern",
+      "projection_channels": [
+        192,
+        80,
+        160,
+        960
+      ],
+      "token_dim": 128,
+      "memory_tokens": 2368,
+      "memory_levels": 4,
+      "memory_normalization": "independent1x1 projections and per-token LayerNorm128 at each level",
+      "position_encoding": "fixed deterministic2D sine/cosine ROI cell centers normalized per axis to[0,2pi],128channels; four learned level embeddings",
+      "queries": "four generic learned128 embeddings plus one shared Linear1280to128 semantic context; no annotated roles",
+      "decoder": {
+        "layers": 2,
+        "d_model": 128,
+        "nhead": 4,
+        "dim_feedforward": 512,
+        "dropout": 0.1,
+        "activation": "gelu",
+        "batch_first": true,
+        "norm_first": true,
+        "initialization": "two separately constructed TransformerDecoderLayer instances"
+      },
+      "scalar_readout": "LayerNorm128, flatten4x128, Linear512to128, GELU, Linear128to1, float sigmoid",
+      "CNN_passes_per_image": 1,
+      "joint_encoder_training": true
+    },
+    "data": {
+      "image_size": 256,
+      "output_size": 64
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "source": {
+      "old_unique": 18590,
+      "roll_unique": 4096,
+      "roll_repeat": 4,
+      "total_unique": 22686,
+      "train_presentations": 34974,
+      "original_validation": 1506,
+      "roll_validation": 512,
+      "require_geometry": false,
+      "pair_manifest": null,
+      "roll_validation_split": "independent layout/seed/ID/group; same available HDR background"
+    },
+    "training": {
+      "seed": 20262020,
+      "min_epochs": 60,
+      "max_epochs": 160,
+      "early_stopping_patience": 20,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "loss": "smooth_l1",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0,
+      "scheduler": {
+        "mode": "min",
+        "factor": 0.3,
+        "patience": 8,
+        "threshold": 0.0,
+        "threshold_mode": "abs",
+        "cooldown": 0,
+        "min_lr": 1e-06,
+        "eps": 1e-08
+      }
+    },
+    "checkpoint_selection": "earliest strict minimum R=(original1506 mean NMAE + roll512 mean NMAE + original1506 worst10percent NMAE + roll512 worst10percent NMAE)/4; each worst tail uses ceil(.1*N), including failed inputs/scalars at error1",
+    "external_checkpoint": "source-selected best only after source stopping rule completes",
+    "inference_input": "ROI RGB, linear resize256, ImageNet normalization; one RGB forward, no GT geometry or target scalar input",
+    "external_training_or_adaptation": false
+  },
+  "status": "complete",
+  "epochs": 117,
+  "counts": {
+    "cnn_image_forwards": 4329610,
+    "cnn_forward_calls": 67768,
+    "source_backward_calls": 63999,
+    "source_optimizer_updates": 63974,
+    "source_amp_skipped_updates": 25,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  },
+  "preflight_counts_separate": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "scope": "complete source-only multiscale semantic-token reader; no automatic promotion",
+  "stage_status": {
+    "preflight": "complete",
+    "train_source": "complete",
+    "eval_industrial": "complete",
+    "eval_rf100": "complete"
+  }
+}
