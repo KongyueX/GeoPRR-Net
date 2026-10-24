@@ -1,0 +1,27 @@
+{
+  "protocol": "geoprr_v2_ordinal_distribution_source_only_v1",
+  "status": "source_training_running",
+  "code_revision": "3f571abcfc2791b7700605a5bd42c66f601822b2",
+  "started_at_utc": "2026-10-24T13:13:52.451927+00:00",
+  "started_at_beijing": "2026-10-24 21:13:52",
+  "entrypoint": "experiments.run_geoprr_v2_ordinal_distribution",
+  "pipeline_pid_at_launch": 253663,
+  "training_child_pid_at_verification": 253683,
+  "verification_at_utc": "2026-10-24T13:14:31.006690+00:00",
+  "parent_and_training_commands_verified": true,
+  "sole_GPU_compute_pid_at_verification": 253683,
+  "GPU_memory_MiB_at_verification": 3402,
+  "prelaunch_GPU_compute_processes": 0,
+  "previous_V24_complete_all_four_stages_exit0": true,
+  "runtime_preflight_status": "passed",
+  "model_training_started": true,
+  "first_training_batch": {
+    "images": 64,
+    "source_CDF_log_score": 0.4999626874923706,
+    "learning_rate": 0.0003,
+    "gradient_norm_finite": true
+  },
+  "external_evaluation_started": false,
+  "source_BN_update_policy": "source train only; all evaluation frozen",
+  "scope": "new ordinal representation/loss runtime and initial source-learning execution only; no generalization result"
+}

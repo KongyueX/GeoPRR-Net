@@ -1,0 +1,162 @@
+{
+  "protocol": "geoprr_v2_ordinal_distribution_source_only_v1",
+  "status": "passed",
+  "model_metadata": {
+    "class": "__main__.OrdinalDistributionReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "head_parameters": 327936,
+    "head_shape": [
+      1280,
+      256
+    ],
+    "parameters": 8762448,
+    "trainable_parameters": 8762448,
+    "parameter_tensors": 233,
+    "state_tensors": 465,
+    "node_buffer_shape": [
+      256
+    ],
+    "node_buffer_dtype": "torch.float32",
+    "CNN_passes_per_image": 1
+  },
+  "initialization": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "ImageNet_pretrained": true,
+    "existing_cached_weights_only": true,
+    "retained_complete_encoder_state_tensors": 462,
+    "all_cached_encoder_state_tensors_retained": true,
+    "new_head_parameter_tensors": 2,
+    "head_initialization_std": 0.001,
+    "head_initialization_bias_zero": true,
+    "fixed_nodes_saved_as_buffer": true,
+    "old_task_checkpoint_used": false
+  },
+  "source_generation_complete": true,
+  "source_unique": 22686,
+  "retained_source_unique": 18590,
+  "new_roll_source_unique": 4096,
+  "source_presentations_per_epoch": 34974,
+  "source_batches_per_epoch": 547,
+  "source_validation_populations": {
+    "original": 1506,
+    "roll": 512
+  },
+  "source_validation_batches_per_epoch": 32,
+  "roll_validation_background_independent": false,
+  "source_probe_states": [
+    0.0,
+    1.0,
+    0.0,
+    1.0
+  ],
+  "validation_input_matches_declared256_pipeline": true,
+  "ImageNet_cached_only": true,
+  "old_task_checkpoint_used": false,
+  "model_forward_inputs": [
+    "image"
+  ],
+  "model_log_distribution_inputs": [
+    "image"
+  ],
+  "target_datasets_used": false,
+  "target_statistics_used": false,
+  "source_selection_criterion": "earliest strict minimum R=(original1506 mean NMAE + roll512 mean NMAE + original1506 worst10percent NMAE + roll512 worst10percent NMAE)/4; each worst tail uses ceil(.1*N), including failed inputs/scalars at error1",
+  "source_BN_counter_tensors_checked": 77,
+  "source_BN_counter_increment_training": 1,
+  "source_BN_counter_additional_increment_eval": 0,
+  "eval_model_buffers_unchanged": true,
+  "parameter_tensors_unchanged_without_optimizer": 233,
+  "strict_model_reload": true,
+  "full_state_tensors": 465,
+  "observed_head_shapes_and_dtypes": [
+    {
+      "semantic_shape": [
+        4,
+        1280
+      ],
+      "head_logits_shape": [
+        4,
+        256
+      ],
+      "semantic_dtype": "torch.float16",
+      "head_logits_dtype": "torch.float16"
+    },
+    {
+      "semantic_shape": [
+        2,
+        1280
+      ],
+      "head_logits_shape": [
+        2,
+        256
+      ],
+      "semantic_dtype": "torch.float16",
+      "head_logits_dtype": "torch.float16"
+    },
+    {
+      "semantic_shape": [
+        2,
+        1280
+      ],
+      "head_logits_shape": [
+        2,
+        256
+      ],
+      "semantic_dtype": "torch.float16",
+      "head_logits_dtype": "torch.float16"
+    }
+  ],
+  "head_counts": {
+    "head_forward_calls": 3,
+    "head_image_forwards": 8
+  },
+  "log_probability_dtype": "torch.float32",
+  "CDF_dtype": "torch.float32",
+  "source_readout_dtype": "torch.float32",
+  "source_loss_dtype": "torch.float32",
+  "log_probability_finite": true,
+  "probability_mass_sums": [
+    1.0000001192092896,
+    0.9999997615814209,
+    1.000000238418579,
+    0.9999998807907104
+  ],
+  "probability_normalized": true,
+  "all_gradients_finite": true,
+  "gradient_groups_nonzero": {
+    "encoder": true,
+    "encoder_stem": true,
+    "semantic_conv_head": true,
+    "semantic_norm_head": true,
+    "ordered_head": true
+  },
+  "source_cdf_log_score": 0.9892677068710327,
+  "autocast_dtype": "float16",
+  "preflight_backward_loss_scale": 128.0,
+  "counts": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "runtime": {
+    "process_seconds": 18.450725853443146,
+    "full_process_seconds": 19.403165366500616,
+    "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+    "device": "cuda",
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "peak_cuda_memory_bytes": 245772800,
+    "peak_cuda_reserved_bytes": 264241152
+  },
+  "scope": "new ordered readout and CDF log-score with reused source RGB"
+}
