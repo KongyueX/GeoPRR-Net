@@ -1,0 +1,42 @@
+{
+  "status": "source_training_running",
+  "protocol": "geoprr_v2_semantic_tokens_source_only_v1",
+  "code_revision": "90d932cc850f4e963c89e23b766daf19fe6f5ca4",
+  "started_at_utc": "2026-10-24T06:42:44.553551+00:00",
+  "started_at_beijing": "2026-10-24 14:42:44",
+  "entrypoint": "experiments.run_geoprr_v2_semantic_tokens",
+  "pipeline_pid_at_launch": 231688,
+  "training_child_pid_at_verification": 231710,
+  "parent_and_training_commands_verified": true,
+  "verification_at_utc": "2026-10-24T06:45:15.110649+00:00",
+  "sole_GPU_compute_pid_at_verification": 231710,
+  "GPU_memory_MiB_at_verification": 3694,
+  "new_source_generation": false,
+  "runtime_preflight_status": "passed",
+  "model_training_started": true,
+  "external_evaluation_started": false,
+  "first_training_batch": {
+    "images": 64,
+    "source_loss": 0.21450646221637726,
+    "learning_rate": 0.0003,
+    "gradient_norm_finite_before_initial_AMP_scale_reduction": false
+  },
+  "first_complete_source_epoch": {
+    "epoch": 1,
+    "learning_rate": 0.0003,
+    "next_learning_rate": 0.0003,
+    "selection_score": 0.11524547615651862,
+    "best_score": 0.11524547615651862,
+    "best_epoch": 1,
+    "train_counts": {
+      "cnn_forward_calls": 547,
+      "cnn_image_forwards": 34974
+    },
+    "optimizer_updates": 544,
+    "amp_skipped_updates": 3,
+    "training_seconds": 111.06193064898252
+  },
+  "AMP_scope": "Default fresh GradScaler skipped3 overflow updates in the first547 attempts,544 updates were effective; this is distinct from the fixed128 loss-scale zero-update witness. No precision/scale sweep or modified formal scaler configuration.",
+  "target_training_or_adaptation": false,
+  "scope": "verified architecture/initial source-learning execution only; no zero-shot performance result"
+}

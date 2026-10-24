@@ -1,0 +1,66 @@
+{
+  "status": "passed",
+  "recorded_at_utc": "2026-10-24T06:40:06.424940+00:00",
+  "protocol": "geoprr_v2_semantic_tokens_source_only_v1",
+  "targeted_CPU_toy_tests": 7,
+  "configuration_matches_public_file": true,
+  "actual_model_metadata": {
+    "class": "experiments.geoprr_v2_semantic_tokens.SemanticTokenReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "readout_parameters": 939905,
+    "readout_parameter_tensors": 62,
+    "parameters": 9374417,
+    "trainable_parameters": 9374417,
+    "parameter_tensors": 293,
+    "state_tensors": 528,
+    "feature_shapes_per_image": [
+      [
+        48,
+        64,
+        64
+      ],
+      [
+        80,
+        32,
+        32
+      ],
+      [
+        160,
+        16,
+        16
+      ],
+      [
+        960,
+        8,
+        8
+      ]
+    ],
+    "memory_shape_per_image": [
+      2368,
+      128
+    ],
+    "query_shape_per_image": [
+      4,
+      128
+    ],
+    "fine_stage_rearrangement": "pixel_unshuffle2",
+    "CNN_passes_per_image": 1,
+    "generic_queries_without_annotated_roles": true
+  },
+  "real_model_CPU_construction_pretrained": false,
+  "real_model_CNN_calls": 0,
+  "real_model_backward_calls": 0,
+  "real_model_optimizer_updates": 0,
+  "RGB_decodes": 0,
+  "target_data_used": false,
+  "elapsed_seconds": 4.04323672503233,
+  "scope": "new toy architecture/gradient/source-risk checks and real architecture zero-forward CPU construction; not source RGB execution, pretrained-state evidence or model performance",
+  "execution_code_revision": "90d932cc850f4e963c89e23b766daf19fe6f5ca4"
+}

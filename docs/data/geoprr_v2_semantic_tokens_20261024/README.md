@@ -17,3 +17,5 @@ source结束后冻结best，各一次Industrial1395／52与RF100151／35；目�
 ## Limitations
 
 目标是mean与严重尾部同时改善，不能只拿Acc收益替代；源R也不保证外域改善。roll512共享HDR、精确0／1人数0，20096原metadata无seed，非全历史seed认证或新域盲测。两外域已查看、单seed不称显著性；常规attention与论文动机不是本任务有效证据。原14494／1506／4000、普通／严重名单和全部旧模型／失败保留，不预先promotion或机械延长。
+
+实际构造为9374417参数／293个parameter tensor／528 state，其中新读出939905参数。7项新CPU toy检查通过；实际新结构AMP运行见证3次CNN／8图／1次反传／0更新通过，完整cached encoder462 state保留、四尺度与2368memory／4query路径及必要梯度通过、77 BN source+1／eval0、528 state严格加载。当前独立源训练已启动，外域尚未评估；见[cpu_checks.json](cpu_checks.json)、[runtime_preflight.json](runtime_preflight.json)与[launch.json](launch.json)。这些是运行证据，不是泛化性能结果。
