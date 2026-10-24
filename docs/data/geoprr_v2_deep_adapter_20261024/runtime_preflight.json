@@ -1,0 +1,224 @@
+{
+  "protocol": "geoprr_v2_deep_adapter_source_only_v1",
+  "status": "passed",
+  "model_metadata": {
+    "class": "__main__.DeepAdapterReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "original_encoder_state_keys_retained": true,
+    "adapter_parameters": {
+      "2": 13000,
+      "4": 462000
+    },
+    "point_parameters": 1281,
+    "parameters": 8910793,
+    "trainable_parameters": 476281,
+    "trainable_parameter_tensors": 10,
+    "parameter_tensors": 241,
+    "state_tensors": 472,
+    "adapter_stage_shapes_per_image": {
+      "2": [
+        160,
+        16,
+        16
+      ],
+      "4": [
+        960,
+        8,
+        8
+      ]
+    },
+    "adapter_hidden_channels": {
+      "2": 40,
+      "4": 240
+    },
+    "CNN_passes_per_image": 1,
+    "original_encoder_always_eval": true,
+    "original_encoder_parameter_gradients": false
+  },
+  "initialization": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "ImageNet_pretrained": true,
+    "existing_cached_weights_only": true,
+    "retained_complete_encoder_state_tensors": 462,
+    "all_cached_encoder_state_tensors_retained": true,
+    "new_trainable_parameter_tensors": 10,
+    "new_point_initialization_std": 0.001,
+    "adapter_up_weights_and_biases_zero": true,
+    "adapter_down_biases_zero": true,
+    "old_task_checkpoint_used": false,
+    "frozen_encoder": {
+      "original_state_tensors_compared": 462,
+      "all_original_state_tensors_unchanged": true,
+      "original_encoder_parameters_frozen": true,
+      "original_parameter_gradients": 0,
+      "BN_counter_tensors_compared": 77,
+      "BN_counter_increment": 0,
+      "all_encoder_submodules_eval": true
+    }
+  },
+  "source_generation_complete": true,
+  "source_unique": 22686,
+  "retained_source_unique": 18590,
+  "new_roll_source_unique": 4096,
+  "source_presentations_per_epoch": 34974,
+  "source_batches_per_epoch": 547,
+  "source_validation_populations": {
+    "original": 1506,
+    "roll": 512
+  },
+  "source_validation_batches_per_epoch": 32,
+  "roll_validation_background_independent": false,
+  "source_probe_states": [
+    0.0,
+    1.0,
+    0.0,
+    1.0
+  ],
+  "validation_input_matches_declared256_pipeline": true,
+  "ImageNet_cached_only": true,
+  "old_task_checkpoint_used": false,
+  "model_forward_inputs": [
+    "image"
+  ],
+  "target_datasets_used": false,
+  "target_statistics_used": false,
+  "source_selection_criterion": "earliest strict minimum R=(original1506 mean NMAE + roll512 mean NMAE + original1506 worst10percent NMAE + roll512 worst10percent NMAE)/4; each worst tail uses ceil(.1*N), including failed inputs/scalars at error1",
+  "source_BN_counter_tensors_checked": 77,
+  "source_BN_counter_increment_training": 0,
+  "source_BN_counter_additional_increment_eval": 0,
+  "frozen_encoder_after_train": {
+    "original_state_tensors_compared": 462,
+    "all_original_state_tensors_unchanged": true,
+    "original_encoder_parameters_frozen": true,
+    "original_parameter_gradients": 0,
+    "BN_counter_tensors_compared": 77,
+    "BN_counter_increment": 0,
+    "all_encoder_submodules_eval": true
+  },
+  "frozen_encoder_after_eval": {
+    "original_state_tensors_compared": 462,
+    "all_original_state_tensors_unchanged": true,
+    "original_encoder_parameters_frozen": true,
+    "original_parameter_gradients": 0,
+    "BN_counter_tensors_compared": 77,
+    "BN_counter_increment": 0,
+    "all_encoder_submodules_eval": true
+  },
+  "parameter_tensors_unchanged_without_optimizer": 241,
+  "new_parameter_tensors_unchanged_without_optimizer": 10,
+  "strict_model_reload": true,
+  "full_state_tensors": 472,
+  "observed_shapes": [
+    {
+      "adapters": {
+        "2": [
+          4,
+          160,
+          16,
+          16
+        ],
+        "4": [
+          4,
+          960,
+          8,
+          8
+        ]
+      },
+      "semantic": [
+        4,
+        1280
+      ]
+    },
+    {
+      "adapters": {
+        "2": [
+          2,
+          160,
+          16,
+          16
+        ],
+        "4": [
+          2,
+          960,
+          8,
+          8
+        ]
+      },
+      "semantic": [
+        2,
+        1280
+      ]
+    },
+    {
+      "adapters": {
+        "2": [
+          2,
+          160,
+          16,
+          16
+        ],
+        "4": [
+          2,
+          960,
+          8,
+          8
+        ]
+      },
+      "semantic": [
+        2,
+        1280
+      ]
+    }
+  ],
+  "adapter_hook_counts": {
+    "2": {
+      "calls": 3,
+      "images": 8
+    },
+    "4": {
+      "calls": 3,
+      "images": 8
+    }
+  },
+  "autocast_dtype": "float16",
+  "preflight_backward_loss_scale": 128.0,
+  "all_trainable_gradients_finite": true,
+  "gradient_groups_nonzero": {
+    "point": true,
+    "adapter_2_up": true,
+    "adapter_4_up": true
+  },
+  "initial_down_gradients_exist_and_zero": {
+    "adapter_2_down": true,
+    "adapter_4_down": true
+  },
+  "source_loss": 0.4754020869731903,
+  "first_adapter_up_backward_calls": 1,
+  "counts": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "source_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "backward_scope": "new adapter and point parameters through fixed downstream operations; original encoder parameter gradients0",
+  "runtime": {
+    "process_seconds": 13.249965991824865,
+    "full_process_seconds": 14.19372507929802,
+    "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+    "device": "cuda",
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "peak_cuda_memory_bytes": 173419008,
+    "peak_cuda_reserved_bytes": 192937984
+  },
+  "scope": "new fixed-encoder deep-adapter architecture and reused source RGB execution witness"
+}
