@@ -1,6 +1,6 @@
 # 固定完整预训练表示的深层适配：zero-shot协议
 
-2026-10-24。V24是独立fresh源域结构／表示实验。固定完整缓存ImageNet MobileNetV4原始参数与所有BN状态，在两个深层空间表示内部插入可训练残差adapter，以完整1280维语义形成唯一标量。数据、光度、scalar loss及源mean-tail风险选择沿用V23；不继续堆latent queries，不追加源图或续训旧模型。实际CPU零前向构造已确认8910793参数、476281可训练参数、241个参数tensor（10个可训练）与472个state；真实RGB执行仍待本轮见证，本文不预报性能。
+2026-10-24。V24已完整98轮／best78结束，唯一72401项CPU数字与执行核对通过；[完整结果](data/geoprr_v2_deep_adapter_20261024/completed/report_cn.md)保留RF局部改善与Industrial退化。V24是独立fresh源域结构／表示实验。固定完整缓存ImageNet MobileNetV4原始参数与所有BN状态，在两个深层空间表示内部插入可训练残差adapter，以完整1280维语义形成唯一标量。数据、光度、scalar loss及源mean-tail风险选择沿用V23；不继续堆latent queries，不追加源图或续训旧模型。实际CPU零前向构造已确认8910793参数、476281可训练参数、241个参数tensor（10个可训练）与472个state；真实RGB执行仍待本轮见证，本文不预报性能。
 
 ## 源证据与可证伪问题
 

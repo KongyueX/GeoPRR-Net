@@ -1,0 +1,64 @@
+{
+  "initialization": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "ImageNet_pretrained": true,
+    "existing_cached_weights_only": true,
+    "retained_complete_encoder_state_tensors": 462,
+    "all_cached_encoder_state_tensors_retained": true,
+    "new_trainable_parameter_tensors": 10,
+    "new_point_initialization_std": 0.001,
+    "adapter_up_weights_and_biases_zero": true,
+    "adapter_down_biases_zero": true,
+    "old_task_checkpoint_used": false,
+    "frozen_encoder": {
+      "original_state_tensors_compared": 462,
+      "all_original_state_tensors_unchanged": true,
+      "original_encoder_parameters_frozen": true,
+      "original_parameter_gradients": 0,
+      "BN_counter_tensors_compared": 77,
+      "BN_counter_increment": 0,
+      "all_encoder_submodules_eval": true
+    }
+  },
+  "model_metadata": {
+    "class": "__main__.DeepAdapterReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "original_encoder_state_keys_retained": true,
+    "adapter_parameters": {
+      "2": 13000,
+      "4": 462000
+    },
+    "point_parameters": 1281,
+    "parameters": 8910793,
+    "trainable_parameters": 476281,
+    "trainable_parameter_tensors": 10,
+    "parameter_tensors": 241,
+    "state_tensors": 472,
+    "adapter_stage_shapes_per_image": {
+      "2": [
+        160,
+        16,
+        16
+      ],
+      "4": [
+        960,
+        8,
+        8
+      ]
+    },
+    "adapter_hidden_channels": {
+      "2": 40,
+      "4": 240
+    },
+    "CNN_passes_per_image": 1,
+    "original_encoder_always_eval": true,
+    "original_encoder_parameter_gradients": false
+  }
+}

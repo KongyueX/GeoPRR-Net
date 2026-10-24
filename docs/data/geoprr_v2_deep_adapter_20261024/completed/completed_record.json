@@ -1,0 +1,385 @@
+{
+  "protocol": "geoprr_v2_deep_adapter_source_only_v1",
+  "config": {
+    "protocol": "geoprr_v2_deep_adapter_source_only_v1",
+    "model": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "num_classes": 0,
+      "semantic_dim": 1280,
+      "initialization": "fresh complete cached ImageNet encoder, including conv_head and norm_head; new point then new adapters",
+      "encoder_policy": "all original weights, BN affine and buffers fixed; encoder always eval; retain downstream input autograd",
+      "adapters": {
+        "2": {
+          "channels": 160,
+          "height": 16,
+          "width": 16,
+          "hidden": 40
+        },
+        "4": {
+          "channels": 960,
+          "height": 8,
+          "width": 8,
+          "hidden": 240
+        }
+      },
+      "adapter_transform": "out + Conv1x1(C/4,C,bias=True)(GELU(Conv1x1(C,C/4,bias=True)(out))); replacement hooks, no inplace",
+      "adapter_initialization": "down weight default Conv2d; down bias zero; up weight and bias zero",
+      "adapter_registration": "reader ModuleDict outside encoder; original encoder state keys retained",
+      "point_initialization_std": 0.001,
+      "point_initialization_bias": 0.0,
+      "scalar_readout": "new Linear1280to1 on complete semantic output, float sigmoid",
+      "CNN_passes_per_image": 1
+    },
+    "data": {
+      "image_size": 256,
+      "output_size": 64
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "source": {
+      "old_unique": 18590,
+      "roll_unique": 4096,
+      "roll_repeat": 4,
+      "total_unique": 22686,
+      "train_presentations": 34974,
+      "original_validation": 1506,
+      "roll_validation": 512,
+      "require_geometry": false,
+      "pair_manifest": null,
+      "roll_validation_split": "independent layout/seed/ID/group; same available HDR background"
+    },
+    "training": {
+      "seed": 20262020,
+      "min_epochs": 60,
+      "max_epochs": 160,
+      "early_stopping_patience": 20,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "optimizer_scope": "new point and two adapters only",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "loss": "smooth_l1",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0,
+      "scheduler": {
+        "mode": "min",
+        "factor": 0.3,
+        "patience": 8,
+        "threshold": 0.0,
+        "threshold_mode": "abs",
+        "cooldown": 0,
+        "min_lr": 1e-06,
+        "eps": 1e-08
+      }
+    },
+    "checkpoint_selection": "earliest strict minimum R=(original1506 mean NMAE + roll512 mean NMAE + original1506 worst10percent NMAE + roll512 worst10percent NMAE)/4; each worst tail uses ceil(.1*N), including failed inputs/scalars at error1",
+    "external_checkpoint": "source-selected best only after source stopping rule completes",
+    "inference_input": "ROI RGB, linear resize256, ImageNet normalization; one RGB forward, no GT geometry or target scalar input",
+    "external_training_or_adaptation": false
+  },
+  "status": "complete",
+  "epochs": 98,
+  "completion_reason": "source_score_patience",
+  "best_epoch": 78,
+  "best_score": 0.07457782751184505,
+  "totals": {
+    "train_batches": 53606,
+    "train_cnn_image_forwards": 3427452,
+    "train_cnn_forward_calls": 53606,
+    "backward_calls": 53606,
+    "optimizer_updates": 53586,
+    "amp_skipped_updates": 20,
+    "validation_images": 197764,
+    "validation_cnn_forward_calls": 3136,
+    "training_seconds": 8439.410359308124,
+    "validation_seconds": 422.064306627959
+  },
+  "model_metadata": {
+    "class": "__main__.DeepAdapterReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "original_encoder_state_keys_retained": true,
+    "adapter_parameters": {
+      "2": 13000,
+      "4": 462000
+    },
+    "point_parameters": 1281,
+    "parameters": 8910793,
+    "trainable_parameters": 476281,
+    "trainable_parameter_tensors": 10,
+    "parameter_tensors": 241,
+    "state_tensors": 472,
+    "adapter_stage_shapes_per_image": {
+      "2": [
+        160,
+        16,
+        16
+      ],
+      "4": [
+        960,
+        8,
+        8
+      ]
+    },
+    "adapter_hidden_channels": {
+      "2": 40,
+      "4": 240
+    },
+    "CNN_passes_per_image": 1,
+    "original_encoder_always_eval": true,
+    "original_encoder_parameter_gradients": false
+  },
+  "initialization": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "ImageNet_pretrained": true,
+    "existing_cached_weights_only": true,
+    "retained_complete_encoder_state_tensors": 462,
+    "all_cached_encoder_state_tensors_retained": true,
+    "new_trainable_parameter_tensors": 10,
+    "new_point_initialization_std": 0.001,
+    "adapter_up_weights_and_biases_zero": true,
+    "adapter_down_biases_zero": true,
+    "old_task_checkpoint_used": false,
+    "frozen_encoder": {
+      "original_state_tensors_compared": 462,
+      "all_original_state_tensors_unchanged": true,
+      "original_encoder_parameters_frozen": true,
+      "original_parameter_gradients": 0,
+      "BN_counter_tensors_compared": 77,
+      "BN_counter_increment": 0,
+      "all_encoder_submodules_eval": true
+    }
+  },
+  "epoch_exposure": {
+    "train_unique_images": 22686,
+    "old_train_images": 18590,
+    "roll_unique_images": 4096,
+    "roll_repetitions": 4,
+    "train_images": 34974,
+    "train_batches": 547,
+    "original_validation_images": 1506,
+    "roll_validation_images": 512,
+    "validation_images": 2018,
+    "validation_batches": 32
+  },
+  "frozen_encoder": {
+    "original_state_tensors_compared": 462,
+    "all_original_state_tensors_unchanged": true,
+    "original_encoder_parameters_frozen": true,
+    "original_parameter_gradients": 0,
+    "BN_counter_tensors_compared": 77,
+    "BN_counter_increment": 0,
+    "all_encoder_submodules_eval": true
+  },
+  "backward_scope": "source loss backward attempts through adapters and fixed downstream operations; original encoder parameters fixed",
+  "resume_from_epoch": 0,
+  "runtime": {
+    "process_seconds": 8926.789751820266,
+    "full_process_seconds": 8927.727020017803,
+    "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+    "device": "cuda",
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "peak_cuda_memory_bytes": 664222720,
+    "peak_cuda_reserved_bytes": 815792128
+  },
+  "checkpointed_process_seconds_before_resume": 0.0,
+  "checkpointed_process_seconds": 8926.790010582656,
+  "best_validation": {
+    "original": {
+      "samples": 1506,
+      "groups": 70,
+      "nmae": 0.021801232491578636,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.012434691190719604,
+      "p90_error": 0.04647141695022583,
+      "p95_error": 0.06932970881462097,
+      "tail10_nmae": 0.09578513371101303,
+      "maximum_error": 0.5494552701711655,
+      "maximum_error_ids": [
+        "sync_8532"
+      ],
+      "nmae_percent_fs": 2.1801232491578637,
+      "errors_above_1_percent_fs": 860,
+      "acc_at_1": 0.42895086321381143,
+      "acc_at_1_percent": 42.89508632138114,
+      "count_at_1_percent_fs": 646,
+      "errors_above_2_percent_fs": 486,
+      "acc_at_2": 0.6772908366533864,
+      "acc_at_2_percent": 67.72908366533864,
+      "count_at_2_percent_fs": 1020,
+      "errors_above_5_percent_fs": 134,
+      "acc_at_5": 0.9110225763612217,
+      "acc_at_5_percent": 91.10225763612218,
+      "count_at_5_percent_fs": 1372,
+      "median_error_percent_fs": 1.2434691190719604,
+      "p90_error_percent_fs": 4.647141695022583,
+      "p95_error_percent_fs": 6.932970881462097,
+      "tail10_nmae_percent_fs": 9.578513371101304,
+      "maximum_error_percent_fs": 54.94552701711655,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    },
+    "roll": {
+      "samples": 512,
+      "groups": 128,
+      "nmae": 0.03952898137060856,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.028403475880622864,
+      "p90_error": 0.0806060314178467,
+      "p95_error": 0.11635246109217405,
+      "tail10_nmae": 0.14119596247417995,
+      "maximum_error": 0.4032096564769745,
+      "maximum_error_ids": [
+        "geoprr_roll_v22_validation_g0015_s03"
+      ],
+      "nmae_percent_fs": 3.9528981370608562,
+      "errors_above_1_percent_fs": 410,
+      "acc_at_1": 0.19921875,
+      "acc_at_1_percent": 19.921875,
+      "count_at_1_percent_fs": 102,
+      "errors_above_2_percent_fs": 317,
+      "acc_at_2": 0.380859375,
+      "acc_at_2_percent": 38.0859375,
+      "count_at_2_percent_fs": 195,
+      "errors_above_5_percent_fs": 126,
+      "acc_at_5": 0.75390625,
+      "acc_at_5_percent": 75.390625,
+      "count_at_5_percent_fs": 386,
+      "median_error_percent_fs": 2.8403475880622864,
+      "p90_error_percent_fs": 8.06060314178467,
+      "p95_error_percent_fs": 11.635246109217405,
+      "tail10_nmae_percent_fs": 14.119596247417995,
+      "maximum_error_percent_fs": 40.32096564769745,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    }
+  },
+  "last_validation": {
+    "original": {
+      "samples": 1506,
+      "groups": 70,
+      "nmae": 0.021636194879903578,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.011985512683168054,
+      "p90_error": 0.04619951546192169,
+      "p95_error": 0.06720911338925362,
+      "tail10_nmae": 0.09608645078229613,
+      "maximum_error": 0.5345150232315063,
+      "maximum_error_ids": [
+        "sync_8195"
+      ],
+      "nmae_percent_fs": 2.1636194879903576,
+      "errors_above_1_percent_fs": 848,
+      "acc_at_1": 0.43691899070385126,
+      "acc_at_1_percent": 43.691899070385126,
+      "count_at_1_percent_fs": 658,
+      "errors_above_2_percent_fs": 464,
+      "acc_at_2": 0.6918990703851262,
+      "acc_at_2_percent": 69.18990703851262,
+      "count_at_2_percent_fs": 1042,
+      "errors_above_5_percent_fs": 131,
+      "acc_at_5": 0.9130146082337317,
+      "acc_at_5_percent": 91.30146082337318,
+      "count_at_5_percent_fs": 1375,
+      "median_error_percent_fs": 1.1985512683168054,
+      "p90_error_percent_fs": 4.619951546192169,
+      "p95_error_percent_fs": 6.720911338925362,
+      "tail10_nmae_percent_fs": 9.608645078229614,
+      "maximum_error_percent_fs": 53.451502323150635,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    },
+    "roll": {
+      "samples": 512,
+      "groups": 128,
+      "nmae": 0.040521442029898935,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.028184056282043457,
+      "p90_error": 0.08339849710464482,
+      "p95_error": 0.1201914675533771,
+      "tail10_nmae": 0.14748688857071102,
+      "maximum_error": 0.43822363018989563,
+      "maximum_error_ids": [
+        "geoprr_roll_v22_validation_g0015_s03"
+      ],
+      "nmae_percent_fs": 4.0521442029898935,
+      "errors_above_1_percent_fs": 389,
+      "acc_at_1": 0.240234375,
+      "acc_at_1_percent": 24.0234375,
+      "count_at_1_percent_fs": 123,
+      "errors_above_2_percent_fs": 319,
+      "acc_at_2": 0.376953125,
+      "acc_at_2_percent": 37.6953125,
+      "count_at_2_percent_fs": 193,
+      "errors_above_5_percent_fs": 130,
+      "acc_at_5": 0.74609375,
+      "acc_at_5_percent": 74.609375,
+      "count_at_5_percent_fs": 382,
+      "median_error_percent_fs": 2.8184056282043457,
+      "p90_error_percent_fs": 8.339849710464483,
+      "p95_error_percent_fs": 12.01914675533771,
+      "tail10_nmae_percent_fs": 14.748688857071102,
+      "maximum_error_percent_fs": 43.82236301898956,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    }
+  },
+  "formal_complete_counts": {
+    "cnn_image_forwards": 3626762,
+    "cnn_forward_calls": 56767,
+    "source_backward_calls": 53606,
+    "source_optimizer_updates": 53586,
+    "source_amp_skipped_updates": 20,
+    "original_encoder_parameter_backward_calls": 0,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  },
+  "source_saved_prediction_records": {
+    "best_source": {
+      "epoch": 78,
+      "original_rows": 1506,
+      "roll_rows": 512,
+      "original_file": "source_best78_original_predictions.csv.gz",
+      "roll_file": "source_best78_roll_predictions.csv.gz"
+    },
+    "last_source": {
+      "epoch": 98,
+      "original_rows": 1506,
+      "roll_rows": 512,
+      "original_file": "source_last98_original_predictions.csv.gz",
+      "roll_file": "source_last98_roll_predictions.csv.gz"
+    }
+  },
+  "completed_at_utc": "2026-10-24T12:40:50.095903+00:00"
+}

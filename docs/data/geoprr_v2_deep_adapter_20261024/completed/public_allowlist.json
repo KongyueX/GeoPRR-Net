@@ -1,0 +1,38 @@
+{
+  "protocol": "geoprr_v24_completed_public_allowlist_v1",
+  "status": "complete_audited_not_promoted",
+  "files": [
+    "best_validation.json",
+    "comparison.csv",
+    "completed_record.json",
+    "config.json",
+    "costs.json",
+    "history.jsonl",
+    "industrial_groups.csv",
+    "industrial_predictions.csv.gz",
+    "industrial_summary.json",
+    "initialization_record.json",
+    "latest_validation.json",
+    "metrics.json",
+    "numeric_execution_audit.json",
+    "protocol.json",
+    "queue_state.json",
+    "report_cn.md",
+    "rf100_groups.csv",
+    "rf100_predictions.csv.gz",
+    "rf100_summary.json",
+    "run_metadata.json",
+    "screen_summary.json",
+    "source_best78_original_predictions.csv.gz",
+    "source_best78_roll_predictions.csv.gz",
+    "source_last98_original_predictions.csv.gz",
+    "source_last98_roll_predictions.csv.gz",
+    "public_allowlist.json"
+  ],
+  "audit": {
+    "status": "passed",
+    "checks": 72401,
+    "failed_checks": 0
+  },
+  "public_scope": "normalized saved scalars and execution metadata only; no private paths, raw run, contracts, weights, RGB, geometry or full source arrays"
+}

@@ -1,0 +1,36 @@
+{
+  "protocol": "geoprr_v2_deep_adapter_source_only_v1",
+  "seeds": [
+    20262020
+  ],
+  "status": "complete",
+  "updated_at": "2026-10-24T12:40:50.112278+00:00",
+  "code_revision": "e8bf854783228ff91b0159c39bc55ab534f7b847",
+  "current_step": null,
+  "steps": {
+    "preflight": {
+      "status": "complete",
+      "started_at": "2026-10-24T10:11:24.061731+00:00",
+      "finished_at": "2026-10-24T10:11:38.939223+00:00",
+      "exit_code": 0
+    },
+    "train_source": {
+      "status": "complete",
+      "started_at": "2026-10-24T10:11:38.981873+00:00",
+      "finished_at": "2026-10-24T12:40:27.573366+00:00",
+      "exit_code": 0
+    },
+    "eval_industrial": {
+      "status": "complete",
+      "started_at": "2026-10-24T12:40:27.661022+00:00",
+      "finished_at": "2026-10-24T12:40:39.392568+00:00",
+      "exit_code": 0
+    },
+    "eval_rf100": {
+      "status": "complete",
+      "started_at": "2026-10-24T12:40:39.460694+00:00",
+      "finished_at": "2026-10-24T12:40:50.095903+00:00",
+      "exit_code": 0
+    }
+  }
+}
