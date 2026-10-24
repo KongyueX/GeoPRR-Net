@@ -1,0 +1,37 @@
+{
+  "protocol": "geoprr_v2_fixed_bn_semantic_source_only_v1",
+  "status": "source_training_failed",
+  "code_revision": "b30d7683c00ed9de00609a5721059840069214f1",
+  "started_at_utc": "2026-10-24T21:04:34.768445+00:00",
+  "entrypoint": "experiments.run_geoprr_v2_fixed_bn_semantic",
+  "pipeline_pid_at_launch": 302854,
+  "source_training_child_pid": 302897,
+  "previous_V26_complete_all_four_stages_exit0": true,
+  "prelaunch_GPU_compute_processes": 0,
+  "prelaunch_free_disk_bytes": 3872534528,
+  "runtime_preflight_status": "passed",
+  "runtime_preflight_finished_at_utc": "2026-10-24T21:04:58.080218+00:00",
+  "source_training_started_at_utc": "2026-10-24T21:04:58.140152+00:00",
+  "source_training_finished_at_utc": "2026-10-24T21:05:28.692328+00:00",
+  "source_training_exit_code": 1,
+  "first_training_batch": {
+    "epoch": 1,
+    "batch": 1,
+    "images": 64,
+    "loss": 0.21415004134178162,
+    "learning_rate": 0.0003,
+    "gradient_norm_finite": true
+  },
+  "failure_epoch": 1,
+  "failure_batch": 36,
+  "error": "FloatingPointError: nonfinite scalar loss",
+  "completed_source_epochs": 0,
+  "external_evaluations_started": false,
+  "last_execution_observation": {
+    "observed_at_utc": "2026-10-24T21:07:49.360497+00:00",
+    "parent_exited": true,
+    "training_child_exited": true,
+    "GPU_compute_processes": 0
+  },
+  "scope": "failed incomplete source training after passed zero-update preflight; no external result"
+}

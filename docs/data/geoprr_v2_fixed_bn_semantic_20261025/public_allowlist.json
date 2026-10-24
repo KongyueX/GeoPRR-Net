@@ -1,12 +1,16 @@
 {
   "protocol": "geoprr_v27_public_allowlist_v1",
-  "status": "new_CPU_checks_passed_runtime_pending",
+  "status": "source_training_failed",
   "files": [
     "../../GEOPRR_V2_FIXED_BN_SEMANTIC_ZERO_SHOT_PROTOCOL_CN.md",
     "README.md",
     "config.json",
     "cpu_checks.json",
-    "public_allowlist.json"
+    "public_allowlist.json",
+    "runtime_preflight.json",
+    "launch.json",
+    "failure_record.json",
+    "report_cn.md"
   ],
   "training_protocol": "geoprr_v2_fixed_bn_semantic_source_only_v1",
   "actual_model_metadata": {
@@ -41,7 +45,15 @@
   "excluded": [
     "RGB/checkpoint/weights",
     "BN_reference_values/geometry/features/bbox",
-    "rawrun/fullcontracts/fullsourcearrays/privatepaths"
+    "rawrun/fullcontracts/fullsourcearrays/privatepaths",
+    "raw logs and traceback"
   ],
-  "external_training_or_adaptation": false
+  "external_training_or_adaptation": false,
+  "code_revision": "b30d7683c00ed9de00609a5721059840069214f1",
+  "runtime_evidence": "3CNN/8images/1combinedback/0optimizer; all231BN buffers exact; all154BNaffine gradient tensors finite/nonzero;464strictreload; actual512 input",
+  "current_evidence": "Passed zero-update source preflight; formal source epoch1 batch36 nonfinite scalar loss, exit1; 0 completed source epochs, no best/latest/history, I/R not started; parent/trainer exited and GPU empty at saved observation",
+  "formal_optimizer_updates": null,
+  "formal_AMP_skipped_updates": null,
+  "external_results_available": false,
+  "automatic_promotion": false
 }

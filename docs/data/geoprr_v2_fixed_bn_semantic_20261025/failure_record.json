@@ -1,0 +1,116 @@
+{
+  "protocol": "geoprr_v2_fixed_bn_semantic_source_only_v1",
+  "status": "source_training_failed",
+  "code_revision": "b30d7683c00ed9de00609a5721059840069214f1",
+  "failure": {
+    "stage": "train_source",
+    "epoch": 1,
+    "batch": 36,
+    "error": "FloatingPointError: nonfinite scalar loss",
+    "finished_at_utc": "2026-10-24T21:05:28.692328+00:00",
+    "exit_code": 1,
+    "root_cause": null
+  },
+  "source": {
+    "training_started": true,
+    "completed_epochs": 0,
+    "completed_record_exists": false,
+    "history_exists": false,
+    "latest_exists": false,
+    "best_exists": false,
+    "source_selected_best_epoch": null,
+    "source_validation_R": null,
+    "strict_resume_checkpoint_available": false,
+    "first_training_batch": {
+      "epoch": 1,
+      "batch": 1,
+      "images": 64,
+      "loss": 0.21415004134178162,
+      "learning_rate": 0.0003,
+      "gradient_norm_finite": true
+    }
+  },
+  "actual_formal_source_totals": {
+    "CNN_forward_calls": null,
+    "CNN_image_forwards": null,
+    "point_forward_calls": null,
+    "point_image_forwards": null,
+    "backward_attempts": null,
+    "optimizer_updates": null,
+    "AMP_skipped_updates": null,
+    "scope": "No completed epoch or epoch checkpoint saved these formal counters. Null means unknown, not zero."
+  },
+  "code_implied_partial_execution": {
+    "complete_backward_attempts_before_failing_batch": 35,
+    "failing_forward_batch_number": 36,
+    "images_per_batch": 64,
+    "failing_batch_backward_attempted": false,
+    "scope": "Inferred only from the saved epoch1 batch36 loss failure and the frozen sequential training code path. These are not saved-counter-observed totals and are not a complete formal budget."
+  },
+  "external": {
+    "industrial_status": "not_started",
+    "rf100_status": "not_started",
+    "results_available": false,
+    "training_or_adaptation": false,
+    "checkpoint_or_hyperparameter_selection": false
+  },
+  "preflight": {
+    "status": "passed",
+    "counts": {
+      "CNN_calls": 3,
+      "CNN_images": 8,
+      "CNN_backward_calls": 1,
+      "combined_backward_calls": 1,
+      "optimizer_updates": 0
+    },
+    "point_counts": {
+      "point_forward_calls": 3,
+      "point_image_forwards": 8
+    },
+    "fixed_BN_buffers_before": {
+      "buffer_tensors_checked": 231,
+      "all_equal_original_cached_ImageNet": true
+    },
+    "fixed_BN_buffers_after_training": {
+      "buffer_tensors_checked": 231,
+      "all_equal_original_cached_ImageNet": true
+    },
+    "fixed_BN_buffers_after_validation": {
+      "buffer_tensors_checked": 231,
+      "all_equal_original_cached_ImageNet": true
+    },
+    "source_BN_counter_increment_training": 0,
+    "source_BN_counter_additional_increment_eval": 0,
+    "BN_affine_tensors": 154,
+    "all_BN_affine_gradient_tensors_finite_nonzero": true,
+    "strict_model_reload": true,
+    "full_state_tensors": 464,
+    "runtime": {
+      "process_seconds": 20.476757999509573,
+      "full_process_seconds": 21.42031529545784,
+      "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 630159872,
+      "peak_cuda_reserved_bytes": 725614592
+    }
+  },
+  "last_execution_observation": {
+    "observed_at_utc": "2026-10-24T21:07:49.360497+00:00",
+    "parent_exited": true,
+    "training_child_exited": true,
+    "GPU_compute_processes": 0
+  },
+  "preservation": {
+    "all_existing_assets_retained": true,
+    "raw_run_contracts_logs_weights_RGB_BN_values_and_private_paths": "private"
+  },
+  "decision": {
+    "automatic_promotion": false,
+    "same_formula_restart": false,
+    "learning_rate_or_precision_or_BN_protection_relaxation": false
+  },
+  "evidence_scope": "Normalized saved failure and execution metadata only; incomplete-source archive, no completed-stage numeric audit or external comparison."
+}

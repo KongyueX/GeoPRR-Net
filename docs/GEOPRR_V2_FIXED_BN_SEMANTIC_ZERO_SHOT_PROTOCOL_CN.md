@@ -54,6 +54,12 @@ E轮train34974E图／547E CNN及loss backward尝试，updates＋AMPskip=547E；v
 
 完整报告mean／Acc1/2/5／median/p90/p95／tail10／max、与v16／旧GeoPRR／v24／v25／v26和保存参照的>1/2/5新增救回、逐图与组改善恶化、zero／nonzero／nearzero、ordinary1495／1497／severe6及固定focus。两域均值、尾部、max和新增大错共同判断，源R或单域收益不能代表整体成功，不自动升级模型。所有旧资产与正负结果保留，归档后继续独立源域结构／表示研究。
 
+## 实际结果：源训练失败
+
+V27真实源AMP零更新见证通过（3CNN／8图／1combinedback／0optimizer；231固定BN buffer、154 affine gradient tensors有限非零、464 strict reload）。正式首批64图loss0.21415004134178162、LR3e-4、gradient norm finite；随后在epoch1 batch36因nonfinite scalar loss失败，2026-10-24T21:05:28.692328+00:00源阶段exit1。完成源epoch为0，没有history／latest／best／completed checkpoint，Industrial／RF100均未启动，没有外域结果。保存检查时parent／trainer已退出、GPU空闲。
+
+实际optimizer updates与AMP skips总计未知，记null而非0。代码只推出失败前35次完整backward尝试与第36批64图forward失败；该partial code-implied信息不是保存counter观测总量或完整正式预算。根因尚未确定，不认定FP16 overflow。全部资产保留，不以同配方重启、不改变LR／precision或放松BN统计保护，不自动升级模型。[失败报告](data/geoprr_v2_fixed_bn_semantic_20261025/report_cn.md)、[失败记录](data/geoprr_v2_fixed_bn_semantic_20261025/failure_record.json)与[9项显式allowlist](data/geoprr_v2_fixed_bn_semantic_20261025/public_allowlist.json)记录实际结果；本轮不产生完整阶段数字审计或外域比较。
+
 ## Limitations
 
 固定BN运行统计约束归一化通路，卷积与affine仍变化；不能认证预训练语义保持、错误成因或必然泛化。只运行单seed，两个已查看开发域不是新盲测，不报告SD、显著性、普适性或新理论。共享HDR源验证与历史seed缺失边界保留，旧GeoPRR历史pixel／完整权重链未重新认证。RGB／weights／BN参考值／H/C/XYZ/U/M／bbox／features／rawrun／fullcontracts／完整源数组／privatepaths留私有，仅公开规范化标量与必要执行metadata。
