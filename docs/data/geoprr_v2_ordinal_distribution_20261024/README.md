@@ -1,7 +1,7 @@
-# V25 有序读数分布源域实验
+# V25 有序读数分布：完整结果
 
-[独立协议](../../GEOPRR_V2_ORDINAL_DISTRIBUTION_ZERO_SHOT_PROTOCOL_CN.md)与[实际配置](config.json)：fresh完整cachedImageNet MobileNetV4的semantic1280→单个256节点head，唯一稳定左右logcumsumexp CDF Bernoulli log-score，全质量归一期望部署。全部CNN/head源训练、BN仅源更新；无旧task、adapter、query、几何分支或额外loss。
+[完整报告](completed/report_cn.md)、[完整规范化指标](completed/metrics.json)与[比较表](completed/comparison.csv)已归档。60完整源epoch／source-best37，仅源R选择后两外域各冻结评估一次。Industrial mean21.972040／tail60.546531%FS，较V24改善但明显弱于v16及旧GeoPRR；RF100 mean9.626736／tail42.779526%FS，较v16小幅改善但低阈值准确率下降、max增大，mean／tail仍弱于旧GeoPRR及V24。源拟合改善未达到两个外域整体超越目标，不升级默认。
 
-7项新CPU toy检查与真实模型零forward构造通过，实际8762448参数／233参数tensor／465state，head327936参数，全部参数trainable。CPU未加载cached权重或RGB，无GPU／optimizer；实际源AMP见证3CNN／8图／1back／0optimizer已通过，完整cached462 state保留、233参数无optimizer不变、77BN源+1／eval额外0、FP32 logp／CDF／期望及全部必要梯度已核实；正式fresh源训练已启动。见[runtime](runtime_preflight.json)与[启动记录](launch.json)。无外域性能或泛化结论。
+唯一独立CPU数字／执行核对68292PASS／0fail。完整cached462 encoder state仅在初始化逐项保留；8762448参数／233参数tensor／465 state的全部CNN与有序256节点head共同源训练，BN仅源更新、eval冻结。唯一稳定CDF log-score与部署全质量期望见[独立协议](../../GEOPRR_V2_ORDINAL_DISTRIBUTION_ZERO_SHOT_PROTOCOL_CN.md)、[配置](config.json)、[CPU](cpu_checks.json)、[runtime](runtime_preflight.json)、[启动记录](launch.json)及[显式allowlist](public_allowlist.json)。source_training_cdf_log_score不与旧SmoothL1数值排序。
 
-完整源停止后只best各一次冻结Industrial／RF100，两域不训练或调参。只显式allowlist规范化标量／元数据公开，RGB、weights、geometry、features、rawrun、fullcontracts和privatepaths私有。
+全部源best／last原1506＋roll512及Industrial1395／RF100151标量、group、history、counts、AMPskip、time与peak保留。所有旧模型／负结果和fixedcohorts保留；RGB、weights、geometry、features、rawrun、fullcontracts、完整源数组和privatepaths不公开。

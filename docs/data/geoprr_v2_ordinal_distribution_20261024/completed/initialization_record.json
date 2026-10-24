@@ -1,0 +1,39 @@
+{
+  "initialization": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "ImageNet_pretrained": true,
+    "existing_cached_weights_only": true,
+    "retained_complete_encoder_state_tensors": 462,
+    "all_cached_encoder_state_tensors_retained": true,
+    "new_head_parameter_tensors": 2,
+    "head_initialization_std": 0.001,
+    "head_initialization_bias_zero": true,
+    "fixed_nodes_saved_as_buffer": true,
+    "old_task_checkpoint_used": false
+  },
+  "model_metadata": {
+    "class": "__main__.OrdinalDistributionReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "head_parameters": 327936,
+    "head_shape": [
+      1280,
+      256
+    ],
+    "parameters": 8762448,
+    "trainable_parameters": 8762448,
+    "parameter_tensors": 233,
+    "state_tensors": 465,
+    "node_buffer_shape": [
+      256
+    ],
+    "node_buffer_dtype": "torch.float32",
+    "CNN_passes_per_image": 1
+  }
+}

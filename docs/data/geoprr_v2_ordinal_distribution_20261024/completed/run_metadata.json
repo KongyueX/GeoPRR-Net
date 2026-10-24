@@ -1,0 +1,194 @@
+{
+  "protocol": "geoprr_v2_ordinal_distribution_source_only_v1",
+  "config": {
+    "protocol": "geoprr_v2_ordinal_distribution_source_only_v1",
+    "model": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "num_classes": 0,
+      "semantic_dim": 1280,
+      "initialization": "fresh complete cached ImageNet encoder, including conv_head and norm_head; new ordered distribution head",
+      "head": "Linear1280to256",
+      "head_initialization_std": 0.001,
+      "head_initialization_bias": 0.0,
+      "nodes": "fixed float32 linspace(0,1,256), saved buffer; no circular adjacency",
+      "distribution": "float32 log_softmax of the single head output",
+      "readout": "float32 sum(exp(logp)*all256nodes)/sum(exp(logp)); no clipping or peak selection",
+      "encoder_and_head_precision": "AMP float16; log probability, CDF log-score and expectation float32 with autocast disabled",
+      "CNN_passes_per_image": 1,
+      "joint_encoder_training": true,
+      "source_training_BN_updates": true
+    },
+    "data": {
+      "image_size": 256,
+      "output_size": 64
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "source": {
+      "old_unique": 18590,
+      "roll_unique": 4096,
+      "roll_repeat": 4,
+      "total_unique": 22686,
+      "train_presentations": 34974,
+      "original_validation": 1506,
+      "roll_validation": 512,
+      "require_geometry": false,
+      "pair_manifest": null,
+      "roll_validation_split": "independent layout/seed/ID/group; same available HDR background"
+    },
+    "training": {
+      "seed": 20262020,
+      "min_epochs": 60,
+      "max_epochs": 160,
+      "early_stopping_patience": 20,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "loss": "cdf_bernoulli_log_score",
+      "target_cdf": "G_j=clamp(j+1-255*y,0,1), j=0..254; source scalar loss side only",
+      "loss_formula": "-mean_B,j(G_j*logF_j+(1-G_j)*logS_j); left and right logcumsumexp of logp",
+      "gradient_clip": 5.0,
+      "scheduler": {
+        "mode": "min",
+        "factor": 0.3,
+        "patience": 8,
+        "threshold": 0.0,
+        "threshold_mode": "abs",
+        "cooldown": 0,
+        "min_lr": 1e-06,
+        "eps": 1e-08
+      }
+    },
+    "checkpoint_selection": "earliest strict minimum R=(original1506 mean NMAE + roll512 mean NMAE + original1506 worst10percent NMAE + roll512 worst10percent NMAE)/4; each worst tail uses ceil(.1*N), including failed inputs/scalars at error1",
+    "external_checkpoint": "source-selected best only after source stopping rule completes",
+    "inference_input": "ROI RGB, linear resize256, ImageNet normalization; one RGB forward, no GT geometry or target scalar input",
+    "external_training_or_adaptation": false
+  },
+  "initialization": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "ImageNet_pretrained": true,
+    "existing_cached_weights_only": true,
+    "retained_complete_encoder_state_tensors": 462,
+    "all_cached_encoder_state_tensors_retained": true,
+    "new_head_parameter_tensors": 2,
+    "head_initialization_std": 0.001,
+    "head_initialization_bias_zero": true,
+    "fixed_nodes_saved_as_buffer": true,
+    "old_task_checkpoint_used": false
+  },
+  "model_metadata": {
+    "class": "__main__.OrdinalDistributionReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "head_parameters": 327936,
+    "head_shape": [
+      1280,
+      256
+    ],
+    "parameters": 8762448,
+    "trainable_parameters": 8762448,
+    "parameter_tensors": 233,
+    "state_tensors": 465,
+    "node_buffer_shape": [
+      256
+    ],
+    "node_buffer_dtype": "torch.float32",
+    "CNN_passes_per_image": 1
+  },
+  "epoch_exposure": {
+    "train_unique_images": 22686,
+    "old_train_images": 18590,
+    "roll_unique_images": 4096,
+    "roll_repetitions": 4,
+    "train_images": 34974,
+    "train_batches": 547,
+    "original_validation_images": 1506,
+    "roll_validation_images": 512,
+    "validation_images": 2018,
+    "validation_batches": 32
+  },
+  "inference_input": "ROI RGB, linear resize256, ImageNet normalization; one RGB forward, no GT geometry or target scalar input",
+  "source_only_loss": "ordered CDF Bernoulli log-score on source scalar two-hot CDF",
+  "executed_snapshot_matches_current_code": {
+    "geoprr_v2_ordinal_distribution.py": true,
+    "run_geoprr_v2_ordinal_distribution.py": true,
+    "geoprr_v2_deep_adapter.py": true,
+    "geoprr_v2_roll_source.py": true,
+    "geoprr_v2_semantic_tokens.py": true,
+    "geoprr_v2_semantic_direct.py": true,
+    "geoprr_v2_data.py": true,
+    "evaluate_geoprr_v2_role_external.py": true,
+    "train_geoprr_v2.py": true,
+    "train_geoprr_v2_reference_relation.py": true,
+    "geoprr_v2_endpoint_source.py": true,
+    "run_geoprr_v2_optimization.py": true,
+    "test_geoprr_v2_ordinal_distribution.py": true
+  },
+  "checkpoint_state_evidence": {
+    "checkpoint_contents_verified_without_loading": false,
+    "best_latest_exist": true,
+    "checkpoint_file_metadata": {
+      "best": {
+        "bytes": 118546189,
+        "mtime_utc": "2026-10-24T14:08:21.962417+00:00"
+      },
+      "latest": {
+        "bytes": 118643189,
+        "mtime_utc": "2026-10-24T14:41:32.567106+00:00"
+      }
+    }
+  },
+  "source_data_contract_evidence": {
+    "counts": {
+      "original_train": 18590,
+      "roll_train": 4096,
+      "original_validation": 1506,
+      "roll_validation": 512
+    },
+    "unique_ID_counts": {
+      "original_train": 18590,
+      "roll_train": 4096,
+      "original_validation": 1506,
+      "roll_validation": 512
+    },
+    "four_populations_ID_disjoint": true,
+    "completion_source_IDs_exact_contract": true,
+    "full_contract_exact_saved_V22": true,
+    "source_validation_order_matches_contract": {
+      "best_original": true,
+      "best_roll": true,
+      "latest_original": true,
+      "latest_roll": true
+    },
+    "targets_disjoint_from_all_source_IDs": {
+      "industrial": true,
+      "rf100": true
+    }
+  },
+  "training_log_execution": {
+    "completed_epoch_event_count": 60,
+    "training_first_batch_event_count": 60
+  }
+}

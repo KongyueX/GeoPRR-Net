@@ -1,0 +1,36 @@
+{
+  "protocol": "geoprr_v2_ordinal_distribution_source_only_v1",
+  "seeds": [
+    20262020
+  ],
+  "status": "complete",
+  "updated_at": "2026-10-24T14:41:55.910078+00:00",
+  "code_revision": "3f571abcfc2791b7700605a5bd42c66f601822b2",
+  "current_step": null,
+  "steps": {
+    "preflight": {
+      "status": "complete",
+      "started_at": "2026-10-24T13:13:53.562204+00:00",
+      "finished_at": "2026-10-24T13:14:13.713429+00:00",
+      "exit_code": 0
+    },
+    "train_source": {
+      "status": "complete",
+      "started_at": "2026-10-24T13:14:13.771628+00:00",
+      "finished_at": "2026-10-24T14:41:33.376549+00:00",
+      "exit_code": 0
+    },
+    "eval_industrial": {
+      "status": "complete",
+      "started_at": "2026-10-24T14:41:33.460751+00:00",
+      "finished_at": "2026-10-24T14:41:45.230887+00:00",
+      "exit_code": 0
+    },
+    "eval_rf100": {
+      "status": "complete",
+      "started_at": "2026-10-24T14:41:45.274803+00:00",
+      "finished_at": "2026-10-24T14:41:55.895579+00:00",
+      "exit_code": 0
+    }
+  }
+}

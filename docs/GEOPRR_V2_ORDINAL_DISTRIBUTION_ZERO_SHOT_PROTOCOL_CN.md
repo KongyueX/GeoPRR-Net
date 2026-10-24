@@ -1,6 +1,6 @@
 # 直接有序读数分布与CDF log-score：zero-shot协议
 
-2026-10-24。V25为新的源域表示／监督实验：完整fresh缓存ImageNet MobileNetV4端到端学习，完整semantic1280接唯一256节点读数分布头，使用唯一有序CDF Bernoulli log-score，部署固定全质量连续期望。已有数据、光度、源R和停止规则保持，不复用旧task权重、adapter、query或几何读出。实际CPU零前向构造已确认8762448参数／233个参数tensor／465 state；真实RGB见证仍待执行，不预报效果。
+2026-10-24。V25为独立源域表示／监督实验：完整fresh缓存ImageNet MobileNetV4端到端学习，完整semantic1280接唯一256节点读数分布头，使用唯一有序CDF Bernoulli log-score，部署固定全质量连续期望。已有数据、光度、源R和停止规则保持，不复用旧task权重、adapter、query或几何读出。实际CPU零前向构造、一次真实源AMP零更新见证及完整60轮源训练已执行；实际8762448参数／233个参数tensor／465 state。仅源R选择的best37已在完整源停止后各一次冻结外评，完整结果见[归档报告](data/geoprr_v2_ordinal_distribution_20261024/completed/report_cn.md)。
 
 ## 源证据与问题
 
@@ -59,6 +59,8 @@ V24完整ONE核对与规范化归档后，确认实际GPU空闲和本轮代码�
 E轮实记train34974E图／547E CNN和backward尝试、val2018E图／32E调用，updates＋AMPskip=547E；外域1546／25／0back／0update，总36992E＋1546图／579E＋25调用。每次head实际执行，分布／CDF额外计算、time／peak另记，一个CNN不等于相同成本。pref单列，旧源生成不重复算新费用。
 
 完整结果后仅ONE新鲜独立CPU保存数字／执行核对，规范化显式allowlist归档现有main。报告mean／Acc1/2/5／median/p90/p95／tail10／max、>1/2/5新增救回、组／zero／非zero／近zero、ordinary1495/1497/severe6和固定focus；roll512单报不补评旧模型。rawrun／fullcontracts／sourcearrays／RGB／weights／H/C/XYZ/U/M／bbox／features／privatepaths私有。真人授权单轮完成后持续推进新独立源域表示迭代，不重跑completed job。
+
+本轮于2026-10-24T14:41:55.895579UTC四阶段complete／exit0，60−37=23满足min60与源停止条件，无resume。唯一独立保存标量／执行核对68292PASS／0fail，审计未加载weights或RGB；checkpoint完整保存机制属于代码与metadata证据。Industrial mean21.972040／tail60.546531%FS，RF100 mean9.626736／tail42.779526%FS；源拟合改善未达到两个外域整体超越目标，不自动promote。完整四份源标量、外域scalar／group、history、counts、AMPskip、time／peak及[显式allowlist](data/geoprr_v2_ordinal_distribution_20261024/public_allowlist.json)保留。
 
 ## Limitations
 
