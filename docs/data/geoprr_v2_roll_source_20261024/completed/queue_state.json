@@ -1,0 +1,42 @@
+{
+  "protocol": "geoprr_v2_roll_source_full_semantic_direct_source_only_v1",
+  "seeds": [
+    20262020
+  ],
+  "status": "complete",
+  "updated_at": "2026-10-24T05:33:17.317203+00:00",
+  "code_revision": "2bd5558b8c4d4e22cc7cd76786e263e85ec67c12",
+  "current_step": null,
+  "steps": {
+    "source_data": {
+      "status": "complete",
+      "started_at": "2026-10-23T21:22:31.774927+00:00",
+      "finished_at": "2026-10-24T02:43:36.989601+00:00",
+      "exit_code": 0
+    },
+    "preflight": {
+      "status": "complete",
+      "started_at": "2026-10-24T02:43:37.055697+00:00",
+      "finished_at": "2026-10-24T02:43:46.003973+00:00",
+      "exit_code": 0
+    },
+    "train_source": {
+      "status": "complete",
+      "started_at": "2026-10-24T02:43:46.045420+00:00",
+      "finished_at": "2026-10-24T05:32:54.460920+00:00",
+      "exit_code": 0
+    },
+    "eval_industrial": {
+      "status": "complete",
+      "started_at": "2026-10-24T05:32:54.524764+00:00",
+      "finished_at": "2026-10-24T05:33:06.720914+00:00",
+      "exit_code": 0
+    },
+    "eval_rf100": {
+      "status": "complete",
+      "started_at": "2026-10-24T05:33:06.761513+00:00",
+      "finished_at": "2026-10-24T05:33:17.301136+00:00",
+      "exit_code": 0
+    }
+  }
+}

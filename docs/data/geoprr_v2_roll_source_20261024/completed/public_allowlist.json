@@ -1,0 +1,52 @@
+{
+  "protocol": "geoprr_v22_public_allowlist_v1",
+  "status": "complete",
+  "files": [
+    "best_validation.json",
+    "comparison.csv",
+    "completed_record.json",
+    "config.json",
+    "costs.json",
+    "history.jsonl",
+    "industrial_groups.csv",
+    "industrial_predictions.csv.gz",
+    "industrial_summary.json",
+    "initialization_record.json",
+    "latest_validation.json",
+    "metrics.json",
+    "numeric_execution_audit.json",
+    "protocol.json",
+    "public_allowlist.json",
+    "queue_state.json",
+    "report_cn.md",
+    "rf100_groups.csv",
+    "rf100_predictions.csv.gz",
+    "rf100_summary.json",
+    "run_metadata.json",
+    "screen_summary.json",
+    "source_best94_original_predictions.csv.gz",
+    "source_best94_roll_predictions.csv.gz",
+    "source_last114_original_predictions.csv.gz",
+    "source_last114_roll_predictions.csv.gz"
+  ],
+  "raw_saved_scalar_scope": "4036 source rows: best94 and last114 each original1506 plus roll512; external1395 plus151; no old-model inference on new roll512",
+  "normalization": "Explicit metadata and full scalar metric fields only. Private population arrays and rescue/new ID lists are excluded; necessary maximum/focus IDs and normalized per-image prediction rows are retained.",
+  "reused_reference_directories": [
+    "../../geoprr_v2_semantic_direct_20261023/completed/",
+    "../../geoprr_v2_semantic_aux_20261023/completed/",
+    "../../geoprr_v2_semantic_role_20261023/completed/",
+    "../../geoprr_v2_generalization_20261023/v12_completed/"
+  ],
+  "source_generation_and_preflight_records": [
+    "../source_completed.json",
+    "../runtime_preflight.json"
+  ],
+  "excluded": [
+    "raw run, complete data contracts and source generation plans",
+    "absolute per-image paths, bbox, H/C/XYZ/U/M, pixel and feature matrices",
+    "complete source population and fixed-cohort ID arrays",
+    "private full rescued/new/threshold ID arrays; public paired counts retained",
+    "RGB, ImageNet/model/checkpoint weights and private trace"
+  ],
+  "audit": "One completed independent saved-scalar/execution audit73060PASS0fail; no new model execution or old-GT audit."
+}

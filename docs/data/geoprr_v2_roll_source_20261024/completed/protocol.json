@@ -1,0 +1,122 @@
+{
+  "protocol": "geoprr_v2_roll_source_full_semantic_direct_source_only_v1",
+  "code_revision": "2bd5558b8c4d4e22cc7cd76786e263e85ec67c12",
+  "config": {
+    "protocol": "geoprr_v2_roll_source_full_semantic_direct_source_only_v1",
+    "model": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "num_classes": 0,
+      "readout": "sigmoid(linear(full encoder semantic output)); semantic conv_head and norm_head retained",
+      "point_initialization_std": 0.001,
+      "point_initialization_bias": 0.0
+    },
+    "data": {
+      "image_size": 256,
+      "output_size": 64
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "source": {
+      "old_unique": 18590,
+      "roll_unique": 4096,
+      "roll_repeat": 4,
+      "total_unique": 22686,
+      "train_presentations": 34974,
+      "original_validation": 1506,
+      "roll_validation": 512,
+      "require_geometry": false,
+      "pair_manifest": null,
+      "roll_validation_split": "independent layout/seed/ID/group; same available HDR background"
+    },
+    "training": {
+      "seed": 20262020,
+      "min_epochs": 60,
+      "max_epochs": 160,
+      "early_stopping_patience": 20,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "loss": "smooth_l1",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0,
+      "scheduler": {
+        "mode": "min",
+        "factor": 0.3,
+        "patience": 8,
+        "threshold": 0.0,
+        "threshold_mode": "abs",
+        "cooldown": 0,
+        "min_lr": 1e-06,
+        "eps": 1e-08
+      }
+    },
+    "checkpoint_selection": "earliest strict minimum .5*(original1506 mean NMAE + roll512 mean NMAE)",
+    "external_checkpoint": "source-selected best only after source stopping rule completes",
+    "inference_input": "ROI RGB, linear resize256, ImageNet normalization; no GT geometry or target scalar input",
+    "external_training_or_adaptation": false
+  },
+  "initialization": "fresh complete cached ImageNet1280 semantic encoder and scalar point head",
+  "old_task_checkpoint_or_teacher_used": false,
+  "new_weight_download_authorized": false,
+  "model_inputs": "ROI RGB, linear resize256, ImageNet normalization; no GT geometry or target scalar input",
+  "checkpoint_selection": "earliest strict minimum .5*(original1506 mean NMAE + roll512 mean NMAE)",
+  "epoch_exposure": {
+    "unique_train_images": 22686,
+    "old_images_once": 18590,
+    "roll_images_four_times": 16384,
+    "train_images": 34974,
+    "train_CNN_calls": 547,
+    "validation_images": 2018,
+    "validation_CNN_calls": 32
+  },
+  "source_stopping": "complete epoch; >=60 and20 epochs without strict source score improvement, maximum160",
+  "expected_external": {
+    "images": 1546,
+    "CNN_calls": 25,
+    "backward_calls": 0,
+    "optimizer_updates": 0
+  },
+  "preflight_budget": {
+    "CNN_images": 8,
+    "CNN_calls": 3,
+    "backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "roll_validation_background_independent": false,
+  "original_source_validation_scene_guard_retained": true,
+  "external_scope": "viewed Industrial1395/52 and RF100151/35; source-selected best once each after complete source training",
+  "training_or_adaptation_on_target": false,
+  "automatic_promotion": false,
+  "status": "complete",
+  "completed_source_epochs": 114,
+  "source_selected_best_epoch": 94,
+  "source_selected_best_score": 0.005804030769073267,
+  "completion_reason": "source_score_patience",
+  "formal_complete_counts": {
+    "cnn_image_forwards": 4218634,
+    "cnn_forward_calls": 66031,
+    "source_backward_calls": 62358,
+    "source_optimizer_updates": 62337,
+    "source_amp_skipped_updates": 21,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  },
+  "source_generation_record": "../source_completed.json",
+  "source_validation_scope": "original1506 retains old scene guard; roll512 independently generated layouts/IDs/groups/recorded seeds with shared source HDR; not background holdout"
+}
