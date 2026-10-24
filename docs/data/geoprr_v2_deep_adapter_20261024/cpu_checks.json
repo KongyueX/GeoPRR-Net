@@ -1,0 +1,54 @@
+{
+  "status": "passed",
+  "protocol": "geoprr_v2_deep_adapter_source_only_v1",
+  "tests": 6,
+  "seconds": 0.8990760892629623,
+  "CPU_toy_log": "test_batch_and_partial_batch_readings_do_not_couple_and_bn_stays_fixed (experiments.test_geoprr_v2_deep_adapter.DeepAdapterTests) ... ok\ntest_down_gradients_become_nonzero_when_independent_toy_ups_are_nonzero (experiments.test_geoprr_v2_deep_adapter.DeepAdapterTests) ... ok\ntest_first_backward_reaches_both_ups_and_point_through_frozen_downstream_chain (experiments.test_geoprr_v2_deep_adapter.DeepAdapterTests) ... ok\ntest_full_state_strict_reload_keeps_original_keys_and_checks_fresh_reference (experiments.test_geoprr_v2_deep_adapter.DeepAdapterTests) ... ok\ntest_optimizer_has_only_ten_new_tensors_and_rgb_only_rejects_gt_before_cnn (experiments.test_geoprr_v2_deep_adapter.DeepAdapterTests) ... ok\ntest_zero_up_preserves_native_reading_and_nonzero_up_changes_downstream_output (experiments.test_geoprr_v2_deep_adapter.DeepAdapterTests) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.899s\n\nOK\n",
+  "real_model_metadata": {
+    "class": "experiments.geoprr_v2_deep_adapter.DeepAdapterReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "original_encoder_state_keys_retained": true,
+    "adapter_parameters": {
+      "2": 13000,
+      "4": 462000
+    },
+    "point_parameters": 1281,
+    "parameters": 8910793,
+    "trainable_parameters": 476281,
+    "trainable_parameter_tensors": 10,
+    "parameter_tensors": 241,
+    "state_tensors": 472,
+    "adapter_stage_shapes_per_image": {
+      "2": [
+        160,
+        16,
+        16
+      ],
+      "4": [
+        960,
+        8,
+        8
+      ]
+    },
+    "adapter_hidden_channels": {
+      "2": 40,
+      "4": 240
+    },
+    "CNN_passes_per_image": 1,
+    "original_encoder_always_eval": true,
+    "original_encoder_parameter_gradients": false
+  },
+  "real_model_forward_calls": 0,
+  "RGB_images": 0,
+  "cached_weights_loaded": false,
+  "GPU_calls": 0,
+  "backward_calls": "toy only",
+  "optimizer_updates": 0
+}

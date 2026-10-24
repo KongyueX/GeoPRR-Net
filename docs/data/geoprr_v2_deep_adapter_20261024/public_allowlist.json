@@ -1,0 +1,59 @@
+{
+  "protocol": "geoprr_v24_public_allowlist_v1",
+  "status": "CPU_checks_passed_runtime_witness_pending",
+  "files": [
+    "../../GEOPRR_V2_DEEP_ADAPTER_ZERO_SHOT_PROTOCOL_CN.md",
+    "README.md",
+    "config.json",
+    "cpu_checks.json",
+    "public_allowlist.json"
+  ],
+  "training_protocol": "geoprr_v2_deep_adapter_source_only_v1",
+  "actual_model_metadata": {
+    "class": "experiments.geoprr_v2_deep_adapter.DeepAdapterReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "original_encoder_state_keys_retained": true,
+    "adapter_parameters": {
+      "2": 13000,
+      "4": 462000
+    },
+    "point_parameters": 1281,
+    "parameters": 8910793,
+    "trainable_parameters": 476281,
+    "trainable_parameter_tensors": 10,
+    "parameter_tensors": 241,
+    "state_tensors": 472,
+    "adapter_stage_shapes_per_image": {
+      "2": [
+        160,
+        16,
+        16
+      ],
+      "4": [
+        960,
+        8,
+        8
+      ]
+    },
+    "adapter_hidden_channels": {
+      "2": 40,
+      "4": 240
+    },
+    "CNN_passes_per_image": 1,
+    "original_encoder_always_eval": true,
+    "original_encoder_parameter_gradients": false
+  },
+  "excluded": [
+    "RGB/model/checkpoint weights",
+    "raw geometry/feature/bbox",
+    "raw run/full source contracts/population arrays/private paths"
+  ],
+  "external_training_or_adaptation": false
+}
