@@ -1,0 +1,78 @@
+{
+  "status": "passed",
+  "protocol": "geoprr_v2_high_resolution_direct_source_only_v1",
+  "tests": 6,
+  "seconds": 0.2252284623682499,
+  "CPU_toy_log": "test512_dataset_uses_declared_native_crop_linear_rgb_normalization_without_geometry (experiments.test_geoprr_v2_high_resolution_direct.HighResolutionDirectTests) ... ok\ntest512_failed_source_and_external_inputs_keep512_placeholders_and_failure_mass (experiments.test_geoprr_v2_high_resolution_direct.HighResolutionDirectTests) ... ok\ntest512_model_has_one_semantic_point_pass_and_eval_partial_batch_consistency (experiments.test_geoprr_v2_high_resolution_direct.HighResolutionDirectTests) ... ok\ntest512_training_preserves_existing_photometric_transform (experiments.test_geoprr_v2_high_resolution_direct.HighResolutionDirectTests) ... ok\ntest_scalar_state_reload_is_strict_and_resume_rejects_old256_input_contract (experiments.test_geoprr_v2_high_resolution_direct.HighResolutionDirectTests) ... ok\ntest_source_rebuild_preserves_four_rosters_exposure_and_separate_rgb512_contract (experiments.test_geoprr_v2_high_resolution_direct.HighResolutionDirectTests) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.225s\n\nOK\n",
+  "real_model_metadata": {
+    "class": "experiments.geoprr_v2_semantic_direct.SemanticDirectReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "point_parameters": 1281,
+    "point_shape": [
+      1280,
+      1
+    ],
+    "parameters": 8435793,
+    "trainable_parameters": 8435793,
+    "parameter_tensors": 233,
+    "state_tensors": 464,
+    "input_contract": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "CNN_passes_per_image": 1
+  },
+  "real_model_forward_calls": 0,
+  "real_RGB_images": 0,
+  "cached_weights_loaded": false,
+  "GPU_calls": 0,
+  "backward_calls": "toy only",
+  "optimizer_updates": 0,
+  "RGB_input_contract": {
+    "data": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "native_ROI": "same provided roi_path or existing source dial_bbox; no new crop",
+    "resize": "OpenCV INTER_LINEAR to512x512",
+    "color": "BGR to RGB, float32 /255",
+    "normalization_mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "normalization_std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "source_photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "require_geometry": false,
+    "pair_manifest": null,
+    "failure_placeholder_shape": [
+      3,
+      512,
+      512
+    ]
+  }
+}
