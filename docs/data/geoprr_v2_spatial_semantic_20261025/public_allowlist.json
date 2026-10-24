@@ -1,0 +1,52 @@
+{
+  "protocol": "geoprr_v28_public_allowlist_v1",
+  "status": "new_CPU_checks_passed_runtime_pending",
+  "files": [
+    "../../GEOPRR_V2_SPATIAL_SEMANTIC_ZERO_SHOT_PROTOCOL_CN.md",
+    "README.md",
+    "config.json",
+    "cpu_checks.json",
+    "public_allowlist.json"
+  ],
+  "training_protocol": "geoprr_v2_spatial_semantic_source_only_v1",
+  "actual_model_metadata": {
+    "class": "experiments.geoprr_v2_spatial_semantic.SpatialSemanticReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_cell_dim": 1280,
+    "readout_dim": 5120,
+    "pool_output_size": [
+      2,
+      2
+    ],
+    "pool_parameters": 0,
+    "pool_state_tensors": 0,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "point_parameters": 5121,
+    "point_shape": [
+      5120,
+      1
+    ],
+    "parameters": 8439633,
+    "trainable_parameters": 8439633,
+    "parameter_tensors": 233,
+    "state_tensors": 464,
+    "trainable_parameter_tensors": 233,
+    "BN_modules": 77,
+    "input_contract": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "CNN_passes_per_image": 1
+  },
+  "excluded": [
+    "RGB/checkpoint/weights",
+    "geometry/features/bbox",
+    "rawrun/fullcontracts/fullsourcearrays/privatepaths"
+  ],
+  "external_training_or_adaptation": false
+}
