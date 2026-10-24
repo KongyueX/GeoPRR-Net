@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "protocol": "geoprr_v2_ordinal_distribution_source_only_v1",
+  "tests": 7,
+  "seconds": 0.18145352974534035,
+  "CPU_toy_log": "test_both_rgb_only_entries_reject_gt_before_cnn_and_new_state_reload_is_strict (experiments.test_geoprr_v2_ordinal_distribution.OrdinalDistributionTests) ... ok\ntest_extreme_finite_wrong_logits_keep_finite_loss_and_corrective_main_gradient (experiments.test_geoprr_v2_ordinal_distribution.OrdinalDistributionTests) ... ok\ntest_full_mass_decode_is_continuous_and_bimodal_expectation_remains_between_peaks (experiments.test_geoprr_v2_ordinal_distribution.OrdinalDistributionTests) ... ok\ntest_log_cdf_and_loss_match_direct_moderate_probability_formula (experiments.test_geoprr_v2_ordinal_distribution.OrdinalDistributionTests) ... ok\ntest_log_distribution_and_forward_share_one_head_and_partial_batch_readout (experiments.test_geoprr_v2_ordinal_distribution.OrdinalDistributionTests) ... ok\ntest_single_cdf_training_pass_reaches_encoder_neck_and_new_head (experiments.test_geoprr_v2_ordinal_distribution.OrdinalDistributionTests) ... ok\ntest_target_cdf_matches_two_hot_mass_at_endpoints_and_continuous_values (experiments.test_geoprr_v2_ordinal_distribution.OrdinalDistributionTests) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.181s\n\nOK\n",
+  "real_model_metadata": {
+    "class": "experiments.geoprr_v2_ordinal_distribution.OrdinalDistributionReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "head_parameters": 327936,
+    "head_shape": [
+      1280,
+      256
+    ],
+    "parameters": 8762448,
+    "trainable_parameters": 8762448,
+    "parameter_tensors": 233,
+    "state_tensors": 465,
+    "node_buffer_shape": [
+      256
+    ],
+    "node_buffer_dtype": "torch.float32",
+    "CNN_passes_per_image": 1
+  },
+  "real_model_forward_calls": 0,
+  "RGB_images": 0,
+  "cached_weights_loaded": false,
+  "GPU_calls": 0,
+  "backward_calls": "toy only",
+  "optimizer_updates": 0
+}

@@ -1,0 +1,80 @@
+{
+  "protocol": "geoprr_v2_ordinal_distribution_source_only_v1",
+  "model": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "num_classes": 0,
+    "semantic_dim": 1280,
+    "initialization": "fresh complete cached ImageNet encoder, including conv_head and norm_head; new ordered distribution head",
+    "head": "Linear1280to256",
+    "head_initialization_std": 0.001,
+    "head_initialization_bias": 0.0,
+    "nodes": "fixed float32 linspace(0,1,256), saved buffer; no circular adjacency",
+    "distribution": "float32 log_softmax of the single head output",
+    "readout": "float32 sum(exp(logp)*all256nodes)/sum(exp(logp)); no clipping or peak selection",
+    "encoder_and_head_precision": "AMP float16; log probability, CDF log-score and expectation float32 with autocast disabled",
+    "CNN_passes_per_image": 1,
+    "joint_encoder_training": true,
+    "source_training_BN_updates": true
+  },
+  "data": {
+    "image_size": 256,
+    "output_size": 64
+  },
+  "photometric": {
+    "contrast": [
+      0.8,
+      1.2
+    ],
+    "brightness": [
+      -0.1,
+      0.1
+    ],
+    "saturation": [
+      0.8,
+      1.2
+    ]
+  },
+  "source": {
+    "old_unique": 18590,
+    "roll_unique": 4096,
+    "roll_repeat": 4,
+    "total_unique": 22686,
+    "train_presentations": 34974,
+    "original_validation": 1506,
+    "roll_validation": 512,
+    "require_geometry": false,
+    "pair_manifest": null,
+    "roll_validation_split": "independent layout/seed/ID/group; same available HDR background"
+  },
+  "training": {
+    "seed": 20262020,
+    "min_epochs": 60,
+    "max_epochs": 160,
+    "early_stopping_patience": 20,
+    "batch_size": 64,
+    "validation_batch_size": 64,
+    "workers": 4,
+    "amp": true,
+    "optimizer": "AdamW",
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0001,
+    "loss": "cdf_bernoulli_log_score",
+    "target_cdf": "G_j=clamp(j+1-255*y,0,1), j=0..254; source scalar loss side only",
+    "loss_formula": "-mean_B,j(G_j*logF_j+(1-G_j)*logS_j); left and right logcumsumexp of logp",
+    "gradient_clip": 5.0,
+    "scheduler": {
+      "mode": "min",
+      "factor": 0.3,
+      "patience": 8,
+      "threshold": 0.0,
+      "threshold_mode": "abs",
+      "cooldown": 0,
+      "min_lr": 1e-06,
+      "eps": 1e-08
+    }
+  },
+  "checkpoint_selection": "earliest strict minimum R=(original1506 mean NMAE + roll512 mean NMAE + original1506 worst10percent NMAE + roll512 worst10percent NMAE)/4; each worst tail uses ceil(.1*N), including failed inputs/scalars at error1",
+  "external_checkpoint": "source-selected best only after source stopping rule completes",
+  "inference_input": "ROI RGB, linear resize256, ImageNet normalization; one RGB forward, no GT geometry or target scalar input",
+  "external_training_or_adaptation": false
+}
