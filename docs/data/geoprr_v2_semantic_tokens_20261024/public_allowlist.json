@@ -1,0 +1,24 @@
+{
+  "protocol": "geoprr_v23_public_allowlist_v1",
+  "status": "independent_structure_and_source_mean_tail_rule_frozen_model_runtime_and_launch_pending",
+  "files": [
+    "../../GEOPRR_V2_SEMANTIC_TOKENS_ZERO_SHOT_PROTOCOL_CN.md",
+    "README.md",
+    "config.json",
+    "public_allowlist.json"
+  ],
+  "training_protocol": "geoprr_v2_semantic_tokens_source_only_v1",
+  "code_revision": null,
+  "model_counts_status": "pending actual CPU construction; no parameter/state count invented",
+  "current_evidence": "frozen one source-only structure and mean-tail selection; no new performance or launch claim",
+  "reused_source_record": "../geoprr_v2_roll_source_20261024/source_completed.json",
+  "source_selector": "R=(mean_original+mean_roll+tail10_original+tail10_roll)/4; full errors including failures; tail topceil10%",
+  "excluded": [
+    "RGB, model/ImageNet/checkpoint weights",
+    "raw H/C/XYZ/field/bbox, pixel and feature matrices",
+    "complete source contracts, private per-image paths and population arrays",
+    "raw run and private trace"
+  ],
+  "future_records": "Add normalized actual CPU/model metadata, source RGB witness and launch/result records only after those actions occur.",
+  "runtime_CONFIG_source": "AST-extracted actual experiments/geoprr_v2_semantic_tokens.py CONFIG; no module import or model construction"
+}
