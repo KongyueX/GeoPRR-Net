@@ -1,0 +1,145 @@
+{
+  "protocol": "geoprr_v2_camera_roll_source_v22",
+  "status": "complete",
+  "record_scope": "normalized saved source-generation completion metadata and queue timestamp collection only; not a completed-model performance result or independent experiment-level numeric audit",
+  "collected_at_utc": "2026-10-24T02:49:55.927884+00:00",
+  "implementation_revision": "2bd5558b8c4d4e22cc7cd76786e263e85ec67c12",
+  "source_preparation": {
+    "protocol": "geoprr_v2_camera_roll_source_v22",
+    "status": "complete",
+    "original_training_images": 18590,
+    "train_roll_images": 4096,
+    "combined_training_images": 22686,
+    "roll_validation_images": 512,
+    "original_validation_images": 1506,
+    "original_source_rows_exactly_preserved": true,
+    "source_original_validation_scene_disjoint": true,
+    "roll_validation_holdout": {
+      "sample_ID_disjoint": true,
+      "layout_group_disjoint": true,
+      "generated_and_recorded_seed_disjoint": true,
+      "background_independent": false,
+      "scope": "independent new layouts and render seeds; shared actual source-training HDR",
+      "existing_rows_without_recorded_seed": 20096,
+      "all_historical_raw_seed_provenance_available": false
+    },
+    "roll_rng": {
+      "seed": 20261024,
+      "distribution_degrees": [
+        -180.0,
+        180.0
+      ],
+      "one_shared_roll_per_group": true
+    },
+    "new_group_checks": {
+      "passed_groups": 1152,
+      "minimum_gt_support_mass": 0.24524551630020142,
+      "maximum_gt_composed_error_percent_fs": 0.8006334990969027,
+      "maximum_optical_axis_error": 2.980232238769531e-07
+    },
+    "failure_policy": "retain failed groups and stop; no state/roll resampling or dropped rows",
+    "layout_and_generated_seed_counts": {
+      "training_layout_count": 1024,
+      "roll_validation_layout_count": 128,
+      "training_render_seed_count": 1024,
+      "roll_validation_render_seed_count": 128
+    }
+  },
+  "generation_protocol": {
+    "protocol": "geoprr_v2_camera_roll_source_v22",
+    "implementation_revision": "2bd5558b8c4d4e22cc7cd76786e263e85ec67c12",
+    "render_settings": {
+      "width": 1920,
+      "height": 1080,
+      "samples": 200,
+      "threads": 4,
+      "device": "CUDA",
+      "image_format": "JPEG",
+      "image_quality": 95
+    },
+    "training_layouts": 1024,
+    "training_new_RGB": 4096,
+    "heldout_layouts": 128,
+    "heldout_new_RGB": 512,
+    "retained_training_RGB": 18590,
+    "source_intervention": "independent continuous camera-local optical-axis roll; one RGB per inference",
+    "heldout_scope": "disjoint new layout IDs and render seeds; shared source-training HDR background",
+    "population_operation": "append new physical RGB; retain all18590 source and original1506 validation unchanged",
+    "failure_policy": "stop and preserve partial output; no state/seed resampling or relaxed geometry thresholds",
+    "target_data_used": false
+  },
+  "source_queue_summary": {
+    "protocol": "geoprr_v2_camera_roll_source_v22",
+    "status": "complete",
+    "updated_at": "2026-10-24T02:43:36.744643+00:00",
+    "implementation_revision": "2bd5558b8c4d4e22cc7cd76786e263e85ec67c12",
+    "planned_groups": 1152,
+    "planned_new_RGB": 4608,
+    "current_step": null,
+    "completed_groups": 1152,
+    "completed_new_RGB": 4608
+  },
+  "source_generation_cost": {
+    "by_subprocess_kind": {
+      "render": {
+        "recorded_steps": 1152,
+        "complete_exit0_steps": 1152,
+        "recorded_step_wall_microseconds": 16409698140,
+        "recorded_step_wall_seconds": 16409.69814
+      },
+      "prepare": {
+        "recorded_steps": 1152,
+        "complete_exit0_steps": 1152,
+        "recorded_step_wall_microseconds": 2646627166,
+        "recorded_step_wall_seconds": 2646.627166
+      },
+      "assemble": {
+        "recorded_steps": 1,
+        "complete_exit0_steps": 1,
+        "recorded_step_wall_microseconds": 4281975,
+        "recorded_step_wall_seconds": 4.281975
+      }
+    },
+    "recorded_subprocess_wall_sum_seconds": 19060.607281,
+    "recorded_child_envelope_start_utc": "2026-10-23T21:22:33.751508+00:00",
+    "recorded_child_envelope_end_utc": "2026-10-24T02:43:36.700746+00:00",
+    "recorded_child_serial_envelope_seconds": 19262.949238,
+    "inter_step_gaps_within_child_envelope_seconds": 202.341957,
+    "source_controller_supervisor_stage_start_utc": "2026-10-23T21:22:31.774927+00:00",
+    "source_controller_supervisor_stage_end_utc": "2026-10-24T02:43:36.989601+00:00",
+    "source_controller_supervisor_stage_wall_seconds": 19265.214674,
+    "source_queue_complete_record_utc": "2026-10-24T02:43:36.744643+00:00",
+    "startup_and_finalization_outside_child_envelope_seconds": 2.265436,
+    "boundary": "Durations from saved queue step started_at/finished_at; subprocess wall includes launch/startup/termination, not isolated render GPU kernel or CPU math. Child serial envelope includes inter-step gaps; supervisor source_data stage also includes controller startup/finalization. Excludes subsequent preflight and all model training/evaluation.",
+    "recorded_subprocess_wall_sum_microseconds": 19060607281,
+    "recorded_child_serial_envelope_microseconds": 19262949238,
+    "source_controller_supervisor_stage_wall_microseconds": 19265214674,
+    "arithmetic": "integer microseconds from saved ISO queue timestamps; sums converted to seconds only for display"
+  },
+  "supervisor_source_step": {
+    "status": "complete",
+    "started_at": "2026-10-23T21:22:31.774927+00:00",
+    "finished_at": "2026-10-24T02:43:36.989601+00:00",
+    "exit_code": 0,
+    "recorded_step_wall_seconds": 19265.214674
+  },
+  "geometry_check_contract": {
+    "applies_to": "new4608 actual physical RGB only; existing source not re-audited",
+    "preparation_image_size": 768,
+    "preparation_output_size": 192,
+    "method": "existing prepare_group complete geometry_targets and per-group16 Q*M*U cross-state checks",
+    "min_support_mass_limit": 0.15,
+    "max_readout_error_limit_normalized": 0.01,
+    "saved_results": "new_group_checks copied from prepared.json; no GT recomputation in this collection",
+    "training_image_size": 256,
+    "training_output_size": 64,
+    "training_consumes_geometry": false,
+    "claim_of_64_grid_Gaussian_Q_check": false
+  },
+  "limitations": [
+    "Roll validation has independent layout/group/sample IDs and declared generated seeds, with the same available source-training HDR background. It is not background or domain holdout.",
+    "20096 retained original train/validation metadata rows have no recorded seed. Full historical raw-seed provenance is unavailable; this is not a certification of the entire historical seed chain.",
+    "Render/prepare costs are saved subprocess queue wall intervals, not isolated GPU render time or CPU math time. Source generation, zero-update preflight and later model training are separate stages.",
+    "Only saved scalar/metadata records were read. No source plan, full ID/seed arrays, weights, RGB, H/C/XYZ/U/M, feature matrices or raw run was downloaded."
+  ]
+}

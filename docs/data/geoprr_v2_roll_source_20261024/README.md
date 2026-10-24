@@ -1,6 +1,6 @@
 # v22真实相机roll源覆盖与单图直接读数
 
-**独立性能／泛化优先协议已冻结，新增源图生成、运行见证和训练的实际状态以本轮记录为准；这里没有新性能结论。** 模型回到完整fresh缓存ImageNet MobileNetV4 semantic1280→point→sigmoid，单张256 ROI一次CNN，没有orbit均值、几何router或新loss。预算不要求与旧实验相同，源学习决定60–160完整epoch。
+**1152组／4608张新增真实源图已完整生成并通过准备，新RGB零更新运行见证通过，正式源训练正在运行；尚无完整外域性能结论。** 模型回到完整fresh缓存ImageNet MobileNetV4 semantic1280→point→sigmoid，单张256 ROI一次CNN，没有orbit均值、几何router或新loss。预算不要求与旧实验相同，源学习决定60–160完整epoch。
 
 旧18590 unique源图（v11端点保留）不改，新增1024原训练布局×4状态＝4096真实相机roll RGB。前128组使用当前[0,.005,.02,1]端点，余896沿用原quartet；每组roll在[-180,180)预先独立采样并共享四状态，以相机局部光轴quaternion组合实际渲染和重新投影，不旋转旧RGB冒充新物理图。另128新layout seed生成512源roll验证，同一现有HDR背景，不称背景／域holdout；原1506旧scene holdout保持，新val采用独立layout／ID／group／generated-seed合同，绝不伪造scene通过旧split guard。
 
@@ -14,10 +14,12 @@
 
 - [完整协议](../../GEOPRR_V2_ROLL_SOURCE_ZERO_SHOT_PROTOCOL_CN.md)
 - [与训练器实际CONFIG对齐的配置](config.json)
-- [初始4文件allowlist](public_allowlist.json)
+- [显式公开allowlist](public_allowlist.json)
+- [完整新源准备与生成成本](source_completed.json)
+- [实际新RGB零更新运行见证](runtime_preflight.json)
 
 ## Limitations
 
 新数据、重复采样、端点曝光、新源验证和adaptive stopping共同改变，不作单camera因果声明。新rollval只在新布局／generated seed／ID／group层面独立，共享HDR，不能冒称原14494历史seed全链已认证或新域盲测。源score改善不保证外域收益；已查看两外域和单seed不称显著性或普适机制。原14494／1506／4000、旧模型与失败全部保留，RGB／权重／原几何／完整计划及合同不公开，不删旧资产。
 
-当前已完成16项针对性CPU检查及实际生成计划入口检查，首个正式roll源组的4张RGB与16次GT组合检查通过，唯一串行队列已启动源生成。见[cpu_checks.json](cpu_checks.json)、[source_entry_witness.json](source_entry_witness.json)与[launch.json](launch.json)。完整源、模型运行见证、正式训练和外域结果尚待执行完成；这些启动材料不是性能结果。
+16项针对性CPU检查及实际生成计划入口检查通过。完整新增源数据保存的检查聚合为min GT support 0.2452455163、max composed error 0.8006334991%FS、max光轴误差2.980232239e-7；源生成supervisor阶段19265.214674秒，与模型运行见证及正式训练成本分开。新运行见证实际3次CNN／8图／1次反传／0更新，完整8435793参数／464 state严格加载、77 BN counters源训练+1／eval额外0、两套验证256输入identity。只有训练及两套冻结外评、唯一完成阶段CPU核对结束后才给出性能结论。
