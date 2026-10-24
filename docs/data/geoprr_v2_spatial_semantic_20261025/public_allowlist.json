@@ -1,12 +1,14 @@
 {
   "protocol": "geoprr_v28_public_allowlist_v1",
-  "status": "new_CPU_checks_passed_runtime_pending",
+  "status": "runtime_preflight_passed_source_training_running",
   "files": [
     "../../GEOPRR_V2_SPATIAL_SEMANTIC_ZERO_SHOT_PROTOCOL_CN.md",
     "README.md",
     "config.json",
     "cpu_checks.json",
-    "public_allowlist.json"
+    "public_allowlist.json",
+    "runtime_preflight.json",
+    "launch.json"
   ],
   "training_protocol": "geoprr_v2_spatial_semantic_source_only_v1",
   "actual_model_metadata": {
@@ -48,5 +50,7 @@
     "geometry/features/bbox",
     "rawrun/fullcontracts/fullsourcearrays/privatepaths"
   ],
-  "external_training_or_adaptation": false
+  "external_training_or_adaptation": false,
+  "code_revision": "e481b011a068efd06e8c26f93f6e8ab7c6ef5d78",
+  "runtime_evidence": "actual512 input/960x2x2 pool/1280x2x2 semantic neck/5120readout;3CNN8images1back0optimizer;cached462retained/finite nonzero gradients/464strictreload"
 }
