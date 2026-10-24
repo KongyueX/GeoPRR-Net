@@ -1,0 +1,33 @@
+{
+  "protocol": "geoprr_v2_high_resolution_direct_source_only_v1",
+  "status": "source_training_running",
+  "code_revision": "29d3296b050f79f265a3d49cc38fdbc44aba8903",
+  "started_at_utc": "2026-10-24T15:19:34.833300+00:00",
+  "started_at_beijing": "2026-10-24 23:19:34",
+  "entrypoint": "experiments.run_geoprr_v2_high_resolution_direct",
+  "pipeline_pid_at_launch": 260355,
+  "training_child_pid_at_verification": 260398,
+  "verification_at_utc": "2026-10-24T15:20:42.754576+00:00",
+  "parent_and_training_commands_verified": true,
+  "sole_GPU_compute_pid_at_verification": 260398,
+  "GPU_memory_MiB_at_verification": 11500,
+  "prelaunch_GPU_compute_processes": 0,
+  "prelaunch_free_disk_bytes": 4133416960,
+  "previous_V25_complete_all_four_stages_exit0": true,
+  "runtime_preflight_status": "passed",
+  "model_training_started": true,
+  "first_training_batch": {
+    "images": 64,
+    "source_smooth_l1": 0.21399979293346405,
+    "learning_rate": 0.0003,
+    "gradient_norm_finite": true
+  },
+  "external_evaluation_started": false,
+  "actual_encoder_input": [
+    3,
+    512,
+    512
+  ],
+  "source_BN_update_policy": "source train only; all evaluation frozen",
+  "scope": "real512 input representation and initial source-learning execution only; no external generalization result"
+}

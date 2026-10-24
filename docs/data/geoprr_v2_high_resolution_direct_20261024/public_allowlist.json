@@ -1,12 +1,14 @@
 {
   "protocol": "geoprr_v26_public_allowlist_v1",
-  "status": "CPU_checks_passed_runtime_witness_pending",
+  "status": "runtime_preflight_passed_source_training_running",
   "files": [
     "../../GEOPRR_V2_HIGH_RESOLUTION_DIRECT_ZERO_SHOT_PROTOCOL_CN.md",
     "README.md",
     "config.json",
     "cpu_checks.json",
-    "public_allowlist.json"
+    "public_allowlist.json",
+    "runtime_preflight.json",
+    "launch.json"
   ],
   "training_protocol": "geoprr_v2_high_resolution_direct_source_only_v1",
   "actual_model_metadata": {
@@ -79,5 +81,7 @@
     "raw geometry/feature/bbox",
     "raw run/full source contracts/population arrays/private paths"
   ],
-  "external_training_or_adaptation": false
+  "external_training_or_adaptation": false,
+  "code_revision": "29d3296b050f79f265a3d49cc38fdbc44aba8903",
+  "current_evidence": "6 new512 CPU tests/zero-forward real construction and actual512AMP source witness3CNN8images1back0optimizer PASS; sole source training active; no external result"
 }
