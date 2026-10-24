@@ -1,6 +1,6 @@
 # RGB512完整语义直接读数：zero-shot协议
 
-2026-10-24。V26检验单张原生ROI的输入与encoder空间采样表示：RGB512经fresh完整缓存ImageNet MobileNetV4，完整semantic1280接新Linear1280→1／sigmoid。全部CNN与point源训练，唯一scalar SmoothL1。源人口、光度、R及停止规则保持；不新增RGB、延长旧训练或堆模块。实际CPU零前向构造已确认8435793参数／233个参数tensor／464 state；真实512源运行仍待见证，不预报性能。
+2026-10-24。V26检验单张原生ROI的输入与encoder空间采样表示：RGB512经fresh完整缓存ImageNet MobileNetV4，完整semantic1280接新Linear1280→1／sigmoid。全部CNN与point源训练，唯一scalar SmoothL1。源人口、光度、R及停止规则保持；不新增RGB、延长旧训练或堆模块。实际8435793参数／233个参数tensor／464 state；真实512源AMP见证、完整源109轮与best89两域各一次冻结外评均已完成，唯一保存数字／执行核对73307项PASS、0失败。结果见[完整报告](data/geoprr_v2_high_resolution_direct_20261024/completed/report_cn.md)，不升级默认。
 
 ## 源证据与表示问题
 
@@ -16,7 +16,7 @@ V25源best37原1506 mean／tail10／max为0.427194／2.031386／58.511108%FS，r
 
 `native ROI → LINEAR resize512 → ImageNet normalize → 一个完整encoder → semantic1280 → 新point → reading`。
 
-静态安装版本使用adaptive global average pooling到1×1，支持空间尺寸改变而保留完整neck；实际512输入、1280语义及梯度仍须本轮见证。没有CDF／distribution、adapter、FPN、query、teacher、GT角色／几何读出、router、输出融合或TTA。模型只接受image。实际CPU零前向构造确认8435793参数／233个参数tensor／464 state，全部参数可训练。
+静态安装版本使用adaptive global average pooling到1×1，支持空间尺寸改变而保留完整neck；本轮保存见证已确认实际512输入、1280语义及必要梯度。没有CDF／distribution、adapter、FPN、query、teacher、GT角色／几何读出、router、输出融合或TTA。模型只接受image。实际CPU零前向构造确认8435793参数／233个参数tensor／464 state，全部参数可训练。
 
 新source dataset必须显式`image_size=512, output_size=128, require_geometry=False, pair_manifest=None`。128满足数据类的image_size/4接口，不生成或消费几何场，也不认证128网格的旧Gaussian Q／support。原V16 ScalarRGBDataset及其failure占位硬编码256，不可直接用于V26。新source失败占位必须3×512×512，推理和loss仍只RGB／scalar。
 
@@ -53,6 +53,16 @@ pref反传固定loss×128后grad÷128，formal default fresh GradScaler不改、
 E轮实记train34974E图／547E CNN及backward尝试，val2018E／32E调用，updates＋AMPskip=547E；外域1546／25／0back／0update，正式总36992E＋1546图／579E＋25调用。point实际hooks每次与CNN一致。512单图输入元素是256的四倍，激活、compute、数据处理及time／peak由实际记录，不称相同成本或四倍实际wall；pref单列，旧源生成只引用不重算新费用。
 
 完整后ONE新鲜独立CPU保存数字／执行核对，收齐两源best／last1506＋512及完整I/R逐图／groups／summary、source选择与外域时间隔离、actualcounts／time／peak／init／stop／resume，显式规范化allowlist推现有main。报告mean／Acc1/2/5／median/p90/p95／tail10／max、相对v16／旧GeoPRR／v24／v25及保存参照的>1/2/5新增救回、group／zero／nonzero／nearzero、fixed cohorts／focus。roll512只自身报告，不补评旧模型。原RGB／weights／H/C/XYZ/U/M／bbox／features／rawrun／fullcontracts／sourcearrays／privatepaths保持私有。
+
+## 完成记录
+
+源109轮完整结束，earliest strict source R选best89，R=0.010823831190581175（1.082383119058%FS）；109−89=20，按min60／max160与patience20停止，无resume。LR在49／82／98／107轮后下降未重置counter。两域只在源完成后各一次冻结同一best89，last109只源；四阶段complete／exit0、父进程退出，收集时GPU空闲。
+
+源best原1506 mean／tail／max为0.329670／1.376887／17.664927%FS，roll512为0.504289／2.118687／11.576979%FS。Industrial mean22.861047／tail64.456899%FS弱于v16、旧GeoPRR与V25，较V24改善；相对V25的>5总数833对917（救回191／新增107）。RF100 mean9.059529%FS、Acc@1／2／5为33.774834／54.304636／71.523179%，相对v16 >5总数43对58（救回30／新增15），但tail51.670712／max70.405841%FS升高，mean仍弱于旧GeoPRR与V24。正负结果均保留，不升级默认。
+
+正式CNN／point各4033674图／63136调用，源backward尝试59623＝59600更新＋23AMPskip；pref3CNN／8图／1back／0optimizer单列。实际512训练pipeline18503.923992秒、source full19355.291917秒，source peak allocated／reserved8262538752／11347689472bytes；一次CNN不等于同成本。完整cached462仅初始化保留，全部CNN／point随后源训练、BN源更新／eval冻结；权威RGB512／128改变输入合同，旧256／64仅历史人口provenance。
+
+唯一新鲜独立CPU保存数字／执行核对73307项通过、0失败、最大差1.4210854715202004e-14，不加载模型／weights／RGB／checkpoint，不重跑GT、旧测试或外评。[completed报告](data/geoprr_v2_high_resolution_direct_20261024/completed/report_cn.md)、[指标](data/geoprr_v2_high_resolution_direct_20261024/completed/metrics.json)、[比较表](data/geoprr_v2_high_resolution_direct_20261024/completed/comparison.csv)与[26项completed allowlist](data/geoprr_v2_high_resolution_direct_20261024/completed/public_allowlist.json)已规范化归档；[总allowlist](data/geoprr_v2_high_resolution_direct_20261024/public_allowlist.json)33项。fullcontracts、rawrun、源人口／fixed-cohort完整ID数组、完整delta／threshold／rescue／new名单、RGB、weights、geometry、features、bbox、原BN值与privatepaths保持私有。
 
 ## Limitations
 

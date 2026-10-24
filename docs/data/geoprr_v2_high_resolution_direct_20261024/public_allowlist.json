@@ -1,6 +1,6 @@
 {
   "protocol": "geoprr_v26_public_allowlist_v1",
-  "status": "runtime_preflight_passed_source_training_running",
+  "status": "complete_audited_not_promoted",
   "files": [
     "../../GEOPRR_V2_HIGH_RESOLUTION_DIRECT_ZERO_SHOT_PROTOCOL_CN.md",
     "README.md",
@@ -8,7 +8,33 @@
     "cpu_checks.json",
     "public_allowlist.json",
     "runtime_preflight.json",
-    "launch.json"
+    "launch.json",
+    "completed/best_validation.json",
+    "completed/comparison.csv",
+    "completed/completed_record.json",
+    "completed/config.json",
+    "completed/costs.json",
+    "completed/history.jsonl",
+    "completed/industrial_groups.csv",
+    "completed/industrial_predictions.csv.gz",
+    "completed/industrial_summary.json",
+    "completed/initialization_record.json",
+    "completed/latest_validation.json",
+    "completed/metrics.json",
+    "completed/numeric_execution_audit.json",
+    "completed/protocol.json",
+    "completed/public_allowlist.json",
+    "completed/queue_state.json",
+    "completed/report_cn.md",
+    "completed/rf100_groups.csv",
+    "completed/rf100_predictions.csv.gz",
+    "completed/rf100_summary.json",
+    "completed/run_metadata.json",
+    "completed/screen_summary.json",
+    "completed/source_best89_original_predictions.csv.gz",
+    "completed/source_best89_roll_predictions.csv.gz",
+    "completed/source_last109_original_predictions.csv.gz",
+    "completed/source_last109_roll_predictions.csv.gz"
   ],
   "training_protocol": "geoprr_v2_high_resolution_direct_source_only_v1",
   "actual_model_metadata": {
@@ -78,10 +104,17 @@
   },
   "excluded": [
     "RGB/model/checkpoint weights",
-    "raw geometry/feature/bbox",
-    "raw run/full source contracts/population arrays/private paths"
+    "raw geometry/feature/bbox/BN values",
+    "raw run/full source contracts/population arrays/private paths",
+    "complete population and fixed-cohort ID arrays/per-image delta maps/full improved-regressed or threshold-rescue-new ID lists"
   ],
   "external_training_or_adaptation": false,
   "code_revision": "29d3296b050f79f265a3d49cc38fdbc44aba8903",
-  "current_evidence": "6 new512 CPU tests/zero-forward real construction and actual512AMP source witness3CNN8images1back0optimizer PASS; sole source training active; no external result"
+  "current_evidence": "109 complete source epochs, source-selected best89, once-frozen Industrial/RF100 complete, one independent saved-scalar/execution audit73307PASS0fail; no automatic promotion",
+  "audit": {
+    "status": "passed",
+    "checks": 73307,
+    "failed_checks": 0
+  },
+  "normalization": "Full scalar metrics/CSV retained; complete population and fixed-cohort ID arrays, per-image delta maps, improved/regressed full-ID arrays and raw threshold/rescue/new ID lists excluded; paired counts, scalar group summaries and necessary focus/max IDs retained."
 }

@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "checks": 73307,
+  "failed_checks": 0,
+  "failures": [],
+  "maximum_numeric_difference": 1.4210854715202004e-14,
+  "audited_at_utc": "2026-10-24T20:57:47.563612+00:00",
+  "scope": "one bounded fresh independent CPU saved-scalar and execution audit",
+  "collected_files": 20,
+  "source_saved_rows": 4036,
+  "external_saved_rows": 1546,
+  "full_source_epochs": 109,
+  "best_epoch": 89,
+  "best_score": 0.010823831190581175,
+  "completion_reason": "source_score_patience",
+  "counts": {
+    "cnn_image_forwards": 4033674,
+    "cnn_forward_calls": 63136,
+    "point_image_forwards": 4033674,
+    "point_forward_calls": 63136,
+    "source_backward_calls": 59623,
+    "source_optimizer_updates": 59600,
+    "source_amp_skipped_updates": 23,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  },
+  "raw_contract_or_geometry_downloaded": false,
+  "weights_RGB_or_checkpoint_loaded": false,
+  "model_forward_backward_or_update_calls": 0,
+  "target_training": 0,
+  "automatic_promotion": false
+}
