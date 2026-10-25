@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "predicates": {
+    "mean": true,
+    "tail": true,
+    "maximum": true,
+    "counts_over_1_2_5": true
+  },
+  "limits": {
+    "baseline": "saved directFT5 source-ID292, no new baseline forward",
+    "mean_max": 0.06132800787729562,
+    "tail_strict_max": 0.25669996334860723,
+    "maximum_max": 0.5787063241004944,
+    "counts_over_1_2_5_max": [
+      245,
+      209,
+      114
+    ]
+  },
+  "mean": 0.025431218243695233,
+  "tail": 0.11800955331418664,
+  "maximum": 0.5379703640937805,
+  "counts_over_1_2_5": [
+    190,
+    110,
+    16
+  ],
+  "budget_qualification": "15vs15 scheduled epochs/82440 train images/1290 backward attempts matched to C3; actual optimizer updates and AMP skips may differ and are reported separately; one seed, source-only"
+}

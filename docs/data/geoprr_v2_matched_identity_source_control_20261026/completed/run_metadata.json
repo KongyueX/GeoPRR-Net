@@ -1,0 +1,324 @@
+{
+  "protocol": "geoprr_v2_matched_identity_source_control_v1",
+  "config": {
+    "protocol": "geoprr_v2_matched_identity_source_control_v1",
+    "model": {
+      "factory": "experiments.geoprr_v2_high_resolution_direct.create_model(pretrained=True)",
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "semantic_dim": 1280,
+      "parameters": 8435793,
+      "parameter_tensors": 233,
+      "state_tensors": 464,
+      "readout": "GAP1/full neck/Linear1280to1 std.001 bias0/float32 sigmoid",
+      "all_encoder_and_point_trainable": true,
+      "source_training_BN_updates": true
+    },
+    "data": {
+      "image_size": 512,
+      "output_size": 128,
+      "require_geometry": false,
+      "pair_manifest": null
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ]
+    },
+    "source": {
+      "heldout_pointer": "canonical_pointer_03",
+      "training_pointers": [
+        "canonical_pointer_01",
+        "canonical_pointer_02"
+      ],
+      "parent_layouts_train": 687,
+      "original_train_images": 2748,
+      "roll_train_images": 2748,
+      "train_unique_images": 5496,
+      "train_repeat": 1,
+      "train_calls_per_epoch": 86,
+      "last_train_batch": 56,
+      "ID_layouts": 73,
+      "ID_images": 292,
+      "ID_calls": 5,
+      "OOD_layouts": 55,
+      "OOD_images": 0,
+      "OOD_calls": 0,
+      "counterfactual_images": 292,
+      "counterfactual_calls": 5
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 15,
+      "max_epochs": 15,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "optimizer": "AdamW",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "gradient_clip": 5.0,
+      "loss": "SmoothL1",
+      "smooth_l1_beta": 0.05,
+      "amp": true,
+      "scheduler": null,
+      "validation_before_epoch5": false,
+      "resume": "exact new checkpoint at next complete epoch only",
+      "intermediate_validation": false
+    },
+    "learning_gate": {
+      "constant_prediction": 0.5,
+      "ratio": 0.5,
+      "failure_error": 1.0,
+      "denominator": 292,
+      "tail_count": 30
+    },
+    "checkpoint": "latest full state after each complete epoch; last15 only; no best or scheduler",
+    "external_images_calls_backward_updates": 0,
+    "preparation_protocol": "geoprr_v2_needle_holdout_source_control_v1",
+    "kind": "one fresh matched15E native-RGB deletion control; not an old checkpoint extension or model promotion",
+    "operator": {
+      "train_orders": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "order_index": "(dataset_index + epoch - 1) % 3; nominal slot only; all three slots map to identity RGB",
+      "native_order": [
+        0,
+        1,
+        2
+      ],
+      "counterfactual_order": [
+        1,
+        0,
+        2
+      ],
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "placement": "training identity returns the original normalizedFP32 RGB tensor; no affine or pixel change",
+      "normalized_affine": "zprime_c=(std_perm/std_c)*z_perm+(mean_perm-mean_c)/std_c",
+      "identity_returns_original_tensor": true,
+      "RNG_draws": 0,
+      "CNN_views_per_presentation": 1,
+      "extra_loss": null,
+      "clip_grayscale_resize_pixel_cache": false,
+      "nominal_slots_per_epoch": [
+        1832,
+        1832,
+        1832
+      ],
+      "nominal_slot_to_actual_RGB": [
+        "RGB",
+        "RGB",
+        "RGB"
+      ],
+      "history_order_exposures": "nominal slots only, never distinct actual colors",
+      "actual_RGB_GBR_BRG_per_epoch": [
+        5496,
+        0,
+        0
+      ],
+      "each_item_actual_RGB_exposure_15_epochs": 15
+    },
+    "native_primary": {
+      "baseline": "saved directFT5 source-ID292, no new baseline forward",
+      "mean_max": 0.06132800787729562,
+      "tail_strict_max": 0.25669996334860723,
+      "maximum_max": 0.5787063241004944,
+      "counts_over_1_2_5_max": [
+        245,
+        209,
+        114
+      ]
+    },
+    "counterfactual_gate": {
+      "mean_max": 0.1250446370304666,
+      "tail_max": 0.23692208052865074,
+      "mean_absolute_scalar_drift_max": 0.01,
+      "tail30_absolute_scalar_drift_max": 0.05,
+      "failed_pair_drift": 1.0,
+      "condition": "native learning AND native primary pass; same last15 only"
+    },
+    "budget_qualification": "15vs15 scheduled epochs/82440 train images/1290 backward attempts matched to C3; actual optimizer updates and AMP skips may differ and are reported separately; one seed, source-only",
+    "matched_comparison": {
+      "reference_relative": "runs/geoprr_generalization/source_cyclic_color_control_20261026/reader/completed.json",
+      "reference_science_revision": "45de72cbd7f6c0ac1e507f0e357760e77e2a3933",
+      "reference_statistics": {
+        "source_id": {
+          "nmae": 0.02583311489025332,
+          "tail10_nmae": 0.11098201560477415,
+          "maximum_error": 0.5509077310562134,
+          "count_at_5_percent_fs": 264
+        },
+        "source_counterfactual": {
+          "nmae": 0.02558655711628452,
+          "tail10_nmae": 0.1071122961739699,
+          "maximum_error": 0.5359558463096619,
+          "count_at_5_percent_fs": 261
+        }
+      },
+      "reference_drift": {
+        "mean_absolute_scalar_drift": 0.004645775858379026,
+        "tail30_absolute_scalar_drift": 0.025007127784192562,
+        "maximum_absolute_scalar_drift": 0.08187556266784668
+      },
+      "risk": "(native_mean + native_ceil30_tail + CF_mean + CF_ceil30_tail) / 4",
+      "support": "C3 risk strictly smaller; combined >5 count and both-view maximum no larger; mean and ceil30 scalar drift strictly smaller",
+      "eligible": "qualified prior C3 plus identity native learning and primary pass plus both complete292 CF observations",
+      "audit_label_scope": "Provided-label saved-number comparison only. The prior C3 audit remains149checks148PASS1FAIL: the normalized_progress/y field check was unavailable in the physical-label-triplet source contract. This is inherited raw-label-derivation coverage, not a discovered label conflict; no old audit or labels are recomputed."
+    }
+  },
+  "initialization": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "ImageNet_pretrained": true,
+    "existing_cached_weights_only": true,
+    "retained_complete_encoder_state_tensors": 462,
+    "all_cached_encoder_state_tensors_retained": true,
+    "new_point_parameter_tensors": 2,
+    "point_initialization_std": 0.001,
+    "point_initialization_bias_zero": true,
+    "old_task_checkpoint_used": false
+  },
+  "model_metadata": {
+    "class": "experiments.geoprr_v2_semantic_direct.SemanticDirectReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "point_parameters": 1281,
+    "point_shape": [
+      1280,
+      1
+    ],
+    "parameters": 8435793,
+    "trainable_parameters": 8435793,
+    "parameter_tensors": 233,
+    "state_tensors": 464,
+    "input_contract": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "CNN_passes_per_image": 1
+  },
+  "fresh_default_GradScaler": true,
+  "preflight_state_reused": false,
+  "source_unique_images": 5496,
+  "source_presentations_per_epoch": 5496,
+  "source_isolation_metadata": {
+    "source_metadata_evidence": {
+      "complete_parent_closure": true,
+      "parent_nonroll_factors_equal_saved": true,
+      "state_equality_saved": true,
+      "train_validation_layout_and_sample_disjoint": true,
+      "old14494_and_original1506_read": false,
+      "geometry_values_used": false,
+      "train_repeat": 1,
+      "RGB_input": "V26 native ROI/INTER_LINEAR512/ImageNet; geometryFalse/pairNone"
+    },
+    "source_counts": {
+      "original_traceable": {
+        "canonical_pointer_01": {
+          "layouts": 338,
+          "images": 1352
+        },
+        "canonical_pointer_02": {
+          "layouts": 349,
+          "images": 1396
+        },
+        "canonical_pointer_03": {
+          "layouts": 337,
+          "images": 1348
+        }
+      },
+      "roll_train": {
+        "canonical_pointer_01": {
+          "layouts": 338,
+          "images": 1352
+        },
+        "canonical_pointer_02": {
+          "layouts": 349,
+          "images": 1396
+        },
+        "canonical_pointer_03": {
+          "layouts": 337,
+          "images": 1348
+        }
+      },
+      "roll_validation": {
+        "canonical_pointer_01": {
+          "layouts": 31,
+          "images": 124
+        },
+        "canonical_pointer_02": {
+          "layouts": 42,
+          "images": 168
+        },
+        "canonical_pointer_03": {
+          "layouts": 55,
+          "images": 220
+        }
+      }
+    },
+    "source03_RGB_images": 0,
+    "source03_CNN_calls": 0,
+    "external_counts": {
+      "external_images": 0,
+      "external_CNN_calls": 0,
+      "external_point_calls": 0,
+      "external_backward_calls": 0,
+      "external_optimizer_updates": 0
+    },
+    "saved_current_processes": {
+      "424199": {
+        "present": false
+      },
+      "424202": {
+        "present": false
+      },
+      "424240": {
+        "present": false
+      }
+    },
+    "label_check_boundary": "Provided-label comparison only: align targets with existing C3 and directFT5 saved scalars. Raw physical-label derivation is not newly certified; prior C3 149 checks,148 PASS,1 FAIL remains unchanged."
+  },
+  "resume_metadata": {
+    "automatic_resume": false,
+    "prior_checkpointed_process_seconds": 0.0,
+    "checkpoint_policy": "latest full state after each complete epoch; last15 only; no best or scheduler"
+  },
+  "scientific_revision": "3e39174f36b342691f6ee96acdea2036ee5e8d30",
+  "recorded_runtime_revision": "54bc46f2e14534b5247eff69ebd61dcab9f4f45b"
+}

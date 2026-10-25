@@ -1,0 +1,40 @@
+{
+  "passed": true,
+  "predicates": {
+    "mean": true,
+    "tail": true,
+    "mean_drift": true,
+    "tail_drift": true
+  },
+  "limits": {
+    "mean_max": 0.1250446370304666,
+    "tail_max": 0.23692208052865074,
+    "mean_absolute_scalar_drift_max": 0.01,
+    "tail30_absolute_scalar_drift_max": 0.05,
+    "failed_pair_drift": 1.0,
+    "condition": "native learning AND native primary pass; same last15 only"
+  },
+  "denominator": 292,
+  "tail_count": 30,
+  "mean_absolute_scalar_drift": 0.008259031411361233,
+  "tail30_absolute_scalar_drift": 0.0410818395515283,
+  "maximum_absolute_scalar_drift": 0.30185824632644653,
+  "paired_error_rescues": 137,
+  "paired_error_regressions": 152,
+  "paired_error_unchanged": 3,
+  "paired_thresholds_percent_fs": {
+    "1": {
+      "rescues": 24,
+      "regressions": 22
+    },
+    "2": {
+      "rescues": 23,
+      "regressions": 16
+    },
+    "5": {
+      "rescues": 4,
+      "regressions": 5
+    }
+  },
+  "failed_pairs": 0
+}

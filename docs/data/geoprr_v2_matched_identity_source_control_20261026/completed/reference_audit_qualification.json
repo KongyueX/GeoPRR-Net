@@ -1,0 +1,23 @@
+{
+  "reference_scientific_revision": "45de72cbd7f6c0ac1e507f0e357760e77e2a3933",
+  "reference_archive_revision": "78ae50613848d313063ae554ea0d54aa429daec8",
+  "reference_C3_audit_status": "FAIL",
+  "reference_C3_check_count": 149,
+  "reference_C3_passed_check_count": 148,
+  "reference_C3_failed_check_count": 1,
+  "raw_label_derivation_scope": "Provided-label comparison only: align targets with existing C3 and directFT5 saved scalars. Raw physical-label derivation is not newly certified; prior C3 149 checks,148 PASS,1 FAIL remains unchanged.",
+  "reference_numeric_acceptance": [
+    {
+      "field": "C3.source_id.acc_at_5_percent",
+      "frozen_protocol_value": 90.41095890410959,
+      "saved_reference_value": 90.41095890410958,
+      "absolute_difference": 1.4210854715202004e-14,
+      "absolute_numeric_tolerance": 1e-12,
+      "bitwise_equal": false,
+      "classification": "accepted_roundoff"
+    }
+  ],
+  "absolute_numeric_tolerance": 1e-12,
+  "bitwise_equality_claimed": false,
+  "reference_execution_scope": "Frozen saved C3 scalar/statistics only; no old model forward, weights-content inspection or old audit execution."
+}

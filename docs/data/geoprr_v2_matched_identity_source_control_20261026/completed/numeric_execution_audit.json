@@ -1,0 +1,731 @@
+{
+  "protocol": "geoprr_v2_matched_identity_source_control_v1",
+  "audit_status": "PASS",
+  "scientific_verdict": "NO_MATCHED_SUPPORT_FOR_C3",
+  "generated_at_utc": "2026-10-25T18:58:20.197633+00:00",
+  "check_count": 171,
+  "passed_check_count": 171,
+  "failed_check_count": 0,
+  "numeric_scalar_comparisons": 13726,
+  "maximum_absolute_numeric_difference": 1.4210854715202004e-14,
+  "checks": [
+    {
+      "check": "reference_full_source_contract_equal_prepared",
+      "status": "PASS"
+    },
+    {
+      "check": "reference_qualification_exact_protocol_config_15_last_native_and_CF_pass",
+      "status": "PASS"
+    },
+    {
+      "check": "saved_revision_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "protocol_all_current_stages",
+      "status": "PASS"
+    },
+    {
+      "check": "saved_configs_equal",
+      "status": "PASS"
+    },
+    {
+      "check": "all_full_source_contracts_equal_prepared",
+      "status": "PASS"
+    },
+    {
+      "check": "source_packet_train_and_ID_manifests_equal_saved_contract",
+      "status": "PASS"
+    },
+    {
+      "check": "source_ID_292_distinct_in_exact_saved_order",
+      "status": "PASS"
+    },
+    {
+      "check": "source_ID_groups_exact_saved_order",
+      "status": "PASS"
+    },
+    {
+      "check": "source_ID_73_complete_four_state_layouts",
+      "status": "PASS"
+    },
+    {
+      "check": "train5496_only_seen_pointers",
+      "status": "PASS"
+    },
+    {
+      "check": "ID292_only_seen_pointers",
+      "status": "PASS"
+    },
+    {
+      "check": "source_train_ID_sample_disjoint",
+      "status": "PASS"
+    },
+    {
+      "check": "source_train_ID_layout_disjoint",
+      "status": "PASS"
+    },
+    {
+      "check": "prepared_no_geometry_values",
+      "status": "PASS"
+    },
+    {
+      "check": "preflight_saved_train_selection_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "preflight_saved_ID_selection_exact_lexicographic_two_per_seen",
+      "status": "PASS"
+    },
+    {
+      "check": "preflight_eight_distinct_RGB_metadata_paths",
+      "status": "PASS"
+    },
+    {
+      "check": "frozen_code_snapshot_and_deployed_source_equal",
+      "status": "PASS"
+    },
+    {
+      "check": "frozen_protocol_snapshot_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "completed_screen_source_summaries_equal_files",
+      "status": "PASS"
+    },
+    {
+      "check": "completed_screen_CF_summaries_equal_files",
+      "status": "PASS"
+    },
+    {
+      "check": "exported_config_exact_frozen",
+      "status": "PASS"
+    },
+    {
+      "check": "frozen_science_and_reference_archive_declared",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_complete292_distinct73groups_four_each",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_scalar_validity_inclusive_saturation_and_failures_error1",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_optional_masses_nullable",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_summary_recomputed",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_by_group_recomputed",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_groupCSV_distinct73",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_groupCSV_recomputed",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_source_id_complete292_distinct73groups_four_each",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_source_id_scalar_validity_inclusive_saturation_and_failures_error1",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_source_id_optional_masses_nullable",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_source_id_summary_recomputed",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_source_id_by_group_recomputed",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_source_id_groupCSV_distinct73",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_source_id_groupCSV_recomputed",
+      "status": "PASS"
+    },
+    {
+      "check": "source_counterfactual_complete292_distinct73groups_four_each",
+      "status": "PASS"
+    },
+    {
+      "check": "source_counterfactual_scalar_validity_inclusive_saturation_and_failures_error1",
+      "status": "PASS"
+    },
+    {
+      "check": "source_counterfactual_optional_masses_nullable",
+      "status": "PASS"
+    },
+    {
+      "check": "source_counterfactual_summary_recomputed",
+      "status": "PASS"
+    },
+    {
+      "check": "source_counterfactual_by_group_recomputed",
+      "status": "PASS"
+    },
+    {
+      "check": "source_counterfactual_groupCSV_distinct73",
+      "status": "PASS"
+    },
+    {
+      "check": "source_counterfactual_groupCSV_recomputed",
+      "status": "PASS"
+    },
+    {
+      "check": "native_constant_exact_ID_group_label_alignment",
+      "status": "PASS"
+    },
+    {
+      "check": "constant05_saved_rows_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "native_learning_saved_predicate_and_summaries",
+      "status": "PASS"
+    },
+    {
+      "check": "native_primary_all_fixed_predicates",
+      "status": "PASS"
+    },
+    {
+      "check": "prior_directFT5_saved292_only_exact_native_identity_group_labels",
+      "status": "PASS"
+    },
+    {
+      "check": "primary_limits_fixed_old5_reference_only",
+      "status": "PASS"
+    },
+    {
+      "check": "stored_native_CF_eligibility",
+      "status": "PASS"
+    },
+    {
+      "check": "eligible_CF_exact_three_artifacts_present",
+      "status": "PASS"
+    },
+    {
+      "check": "native_CF_exact_saved_ID_label_group_order",
+      "status": "PASS"
+    },
+    {
+      "check": "CF_saved_four_gates_drift_and_pairing",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_last15_fixed_order",
+      "status": "PASS"
+    },
+    {
+      "check": "source_counterfactual_last15_fixed_order",
+      "status": "PASS"
+    },
+    {
+      "check": "reference_saved_statistics_frozen_constants_with_numeric_tolerance",
+      "status": "PASS",
+      "evidence": {
+        "field": "C3.source_id.acc_at_5_percent",
+        "frozen_protocol_value": 90.41095890410959,
+        "saved_reference_value": 90.41095890410958,
+        "absolute_difference": 1.4210854715202004e-14,
+        "absolute_numeric_tolerance": 1e-12,
+        "bitwise_equal": false,
+        "classification": "accepted_roundoff"
+      }
+    },
+    {
+      "check": "reference_saved_drift_exact_frozen_constants",
+      "status": "PASS"
+    },
+    {
+      "check": "pref_reference_saved_qualification",
+      "status": "PASS"
+    },
+    {
+      "check": "completed_reference_saved_qualification",
+      "status": "PASS"
+    },
+    {
+      "check": "matched_file_matched_risk_count_maximum_and_strict_drift",
+      "status": "PASS"
+    },
+    {
+      "check": "completed_matched_risk_count_maximum_and_strict_drift",
+      "status": "PASS"
+    },
+    {
+      "check": "screen_matched_risk_count_maximum_and_strict_drift",
+      "status": "PASS"
+    },
+    {
+      "check": "C3_source_id_saved292_only_exact_identity_group_provided_target_alignment",
+      "status": "PASS"
+    },
+    {
+      "check": "C3_source_counterfactual_saved292_only_exact_identity_group_provided_target_alignment",
+      "status": "PASS"
+    },
+    {
+      "check": "prior_C3_audit_qualification_preserved_without_reaudit",
+      "status": "PASS"
+    },
+    {
+      "check": "completed_completion_verdict",
+      "status": "PASS"
+    },
+    {
+      "check": "screen_completion_verdict",
+      "status": "PASS"
+    },
+    {
+      "check": "queue_completion_verdict",
+      "status": "PASS"
+    },
+    {
+      "check": "completed_gates_equal_saved",
+      "status": "PASS"
+    },
+    {
+      "check": "screen_gates_equal_saved",
+      "status": "PASS"
+    },
+    {
+      "check": "history_exact_epochs1to15",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch1_fixed_counts_and_exposure",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch1_attempts_updates_plus_skips",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch2_fixed_counts_and_exposure",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch2_attempts_updates_plus_skips",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch3_fixed_counts_and_exposure",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch3_attempts_updates_plus_skips",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch4_fixed_counts_and_exposure",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch4_attempts_updates_plus_skips",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch5_fixed_counts_and_exposure",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch5_attempts_updates_plus_skips",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch6_fixed_counts_and_exposure",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch6_attempts_updates_plus_skips",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch7_fixed_counts_and_exposure",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch7_attempts_updates_plus_skips",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch8_fixed_counts_and_exposure",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch8_attempts_updates_plus_skips",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch9_fixed_counts_and_exposure",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch9_attempts_updates_plus_skips",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch10_fixed_counts_and_exposure",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch10_attempts_updates_plus_skips",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch11_fixed_counts_and_exposure",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch11_attempts_updates_plus_skips",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch12_fixed_counts_and_exposure",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch12_attempts_updates_plus_skips",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch13_fixed_counts_and_exposure",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch13_attempts_updates_plus_skips",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch14_fixed_counts_and_exposure",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch14_attempts_updates_plus_skips",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch15_fixed_counts_and_exposure",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch15_attempts_updates_plus_skips",
+      "status": "PASS"
+    },
+    {
+      "check": "formal_totals_from_history_and_saved_evaluations",
+      "status": "PASS"
+    },
+    {
+      "check": "formal1290_updates_plus_AMPskips",
+      "status": "PASS"
+    },
+    {
+      "check": "completed_CNN_point_formal_and_excluded_counts",
+      "status": "PASS"
+    },
+    {
+      "check": "screen_CNN_point_formal_and_excluded_counts",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_zero_CNN_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_five_calls292_zero_backward_updates",
+      "status": "PASS"
+    },
+    {
+      "check": "source_counterfactual_five_calls292_zero_backward_updates",
+      "status": "PASS"
+    },
+    {
+      "check": "excluded_source03_and_external_execution",
+      "status": "PASS"
+    },
+    {
+      "check": "reader_no_source03_or_external_artifacts",
+      "status": "PASS"
+    },
+    {
+      "check": "protocol_explicit_industrial_RF_source03_exclusions",
+      "status": "PASS"
+    },
+    {
+      "check": "preflight_separate_three_calls8presentations1back0updates",
+      "status": "PASS"
+    },
+    {
+      "check": "screen_pref_separate",
+      "status": "PASS"
+    },
+    {
+      "check": "pref_new_operator_identity_BN_reload_gradient_saved_witness",
+      "status": "PASS"
+    },
+    {
+      "check": "preflight_saved_encoder_pool_point_shapes_dtypes",
+      "status": "PASS"
+    },
+    {
+      "check": "pref_unchanged_original_model_saved_metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "pref_cached_complete_fresh_initialization_saved_declaration",
+      "status": "PASS"
+    },
+    {
+      "check": "run_unchanged_original_model_saved_metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "run_cached_complete_fresh_initialization_saved_declaration",
+      "status": "PASS"
+    },
+    {
+      "check": "completed_unchanged_original_model_saved_metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "completed_cached_complete_fresh_initialization_saved_declaration",
+      "status": "PASS"
+    },
+    {
+      "check": "formal_fresh_defaultScaler_no_pref_state_carry",
+      "status": "PASS"
+    },
+    {
+      "check": "saved_8_new_identity_toys_no_real_model_RGB_weights_GPU",
+      "status": "PASS"
+    },
+    {
+      "check": "fresh_no_resume_phases",
+      "status": "PASS"
+    },
+    {
+      "check": "last15_only_no_best_artifact_and_checkpoint_stats_only",
+      "status": "PASS"
+    },
+    {
+      "check": "no_active_epoch_partial_stop_marker",
+      "status": "PASS"
+    },
+    {
+      "check": "saved_log15_epoch_events_no_duplicate_restart",
+      "status": "PASS"
+    },
+    {
+      "check": "queue_serial_two_complete_exit0",
+      "status": "PASS"
+    },
+    {
+      "check": "actual_parent_and_children_gone_at_collection",
+      "status": "PASS"
+    },
+    {
+      "check": "saved_postcompletion_GPUempty_actual_three_processes_gone",
+      "status": "PASS"
+    },
+    {
+      "check": "monitor_saved_counts_agree_history",
+      "status": "PASS"
+    },
+    {
+      "check": "supervisor_starts_before_torch_import",
+      "status": "PASS"
+    },
+    {
+      "check": "pref_entry_and_phase_wall_peak_known_pointtime_unknown",
+      "status": "PASS"
+    },
+    {
+      "check": "formal_entry_and_phase_wall_peak_known_pointtime_unknown",
+      "status": "PASS"
+    },
+    {
+      "check": "supervisor_stage_wall_saved_twice",
+      "status": "PASS"
+    },
+    {
+      "check": "supervisor_wall_includes_stage_fullprocess",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_phase1_history_equal",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_phase2_history_equal",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_phase3_history_equal",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_phase4_history_equal",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_phase5_history_equal",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_phase6_history_equal",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_phase7_history_equal",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_phase8_history_equal",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_phase9_history_equal",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_phase10_history_equal",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_phase11_history_equal",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_phase12_history_equal",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_phase13_history_equal",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_phase14_history_equal",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_phase15_history_equal",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_runtime_phase_equal_saved_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "source_counterfactual_runtime_phase_equal_saved_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "static_own_entry_timer_precedes_experiment_imports",
+      "status": "PASS"
+    },
+    {
+      "check": "static_fresh_defaultScaler_and_sourceBN_train_eval",
+      "status": "PASS"
+    },
+    {
+      "check": "static_one_view_fixed_C3_index_schedule_and_no_drop_last",
+      "status": "PASS"
+    },
+    {
+      "check": "static_native_identity_and_fixedRG_after_photo_no_rng",
+      "status": "PASS"
+    },
+    {
+      "check": "static_fresh_formal_rebuild_and_resume_full_state_boundary",
+      "status": "PASS"
+    },
+    {
+      "check": "identity_actual_RGB_exposure_saved_without_color_slot_mislabel",
+      "status": "PASS"
+    },
+    {
+      "check": "identity_config_all_nominal_slots_map_to_RGB",
+      "status": "PASS"
+    },
+    {
+      "check": "pref_all_four_nominal_slots_are_actual_RGB",
+      "status": "PASS"
+    },
+    {
+      "check": "identity_observation_predicates_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "static_identity_CONTEXT_overrides_protocol_config_paths_timer_and_all_slots_then_restores",
+      "status": "PASS"
+    },
+    {
+      "check": "static_identity_and_supervisor_own_entry_timers_before_torch_import",
+      "status": "PASS"
+    },
+    {
+      "check": "static_reference_contract_isolation_and_no_prior_weights_open",
+      "status": "PASS"
+    },
+    {
+      "check": "static_shared_native_and_CF_execution_kept",
+      "status": "PASS"
+    },
+    {
+      "check": "pref_wrapper_metadata_timing_positive_and_entry_boundary",
+      "status": "PASS"
+    },
+    {
+      "check": "formal_wrapper_metadata_timing_positive_and_entry_boundary",
+      "status": "PASS"
+    },
+    {
+      "check": "scheduled15_vs15_same_factory_cached_seed_photo_loader_optimizer_and_scaler_evidence",
+      "status": "PASS"
+    }
+  ],
+  "differences": [],
+  "collection_passes": 1,
+  "audit_execution_passes": 1,
+  "review_independence": "fresh independent non-author same-family saved-evidence auditor",
+  "acceptance_status": "deterministic provided-label saved numeric and execution audit; broader scientific assurance provisional",
+  "limitations": [
+    "Provided-label saved-number audit only. New native/CF targets exactly align with existing C3/directFT5 saved targets; full contracts compare on server. Raw-label derivation is not newly certified. The prior C3 audit remains149checks148PASS1FAIL, with no observed label conflict; its absent normalized_progress/y check is not repeated or repaired.",
+    "One seed and73 source-ID layouts with four states each; equal-weight native/RGswap source views are correlated artificial interventions, not independent domains, a blind test, statistical significance or Industrial/RF generalization.",
+    "Scheduled15E/82440 training presentations/1290 backward attempts are matched. Actual optimizer updates and AMP skips are reported separately. Initialization parity is frozen factory/cache/seed/code evidence; prior weights were not reopened.",
+    "Initialization/strictreload464/BN77 training+1/eval+0/unchanged233 parameter tensors/gradient/dtype evidence are existing saved witnesses. No model construction, experimental import, RGB/feature/weight contents, forward, backward, training, new labels, tests or scoring population was run by this audit. Checkpoints were statted only.",
+    "Preflight has8 unique RGB inputs/8 CNN presentations,3 CNN/point calls,1 combined backward,0 optimizer updates. Four ID images were decoded again for native identity; CPU wall includes this work. No extra CNN call is implied.",
+    "Own entry timers begin before torch import. Wrapper metadata/reference checks are included in updated entry/full and supervisor walls; final completion JSON/downtime are excluded from child full-process boundary. Point-only and isolated operator compute time are unknown/null.",
+    "No checkpoint promotion, full-source training, additional seed/order scan, source03, Industrial or RF evaluation follows automatically. The C3 reference is frozen; no old model was evaluated or old audit repeated."
+  ],
+  "accepted_roundoff": [
+    {
+      "field": "C3.source_id.acc_at_5_percent",
+      "frozen_protocol_value": 90.41095890410959,
+      "saved_reference_value": 90.41095890410958,
+      "absolute_difference": 1.4210854715202004e-14,
+      "absolute_numeric_tolerance": 1e-12,
+      "bitwise_equal": false,
+      "classification": "accepted_roundoff"
+    }
+  ]
+}

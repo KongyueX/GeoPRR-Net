@@ -1,0 +1,38 @@
+{
+  "eligible": true,
+  "verdict": "NO_MATCHED_SUPPORT_FOR_C3",
+  "predicates": {
+    "R_view": true,
+    "combined_errors_above_5_percent_fs": false,
+    "maximum_across_both_views": false,
+    "mean_absolute_scalar_drift": true,
+    "tail30_absolute_scalar_drift": true
+  },
+  "C3": {
+    "R_view": 0.06737849594632048,
+    "combined_errors_above_5_percent_fs": 59,
+    "maximum_across_both_views": 0.5509077310562134,
+    "mean_absolute_scalar_drift": 0.004645775858379026,
+    "tail30_absolute_scalar_drift": 0.025007127784192562,
+    "maximum_absolute_scalar_drift": 0.08187556266784668
+  },
+  "identity": {
+    "R_view": 0.07481353829650483,
+    "combined_errors_above_5_percent_fs": 33,
+    "maximum_across_both_views": 0.5424728989601135,
+    "mean_absolute_scalar_drift": 0.008259031411361233,
+    "tail30_absolute_scalar_drift": 0.0410818395515283,
+    "maximum_absolute_scalar_drift": 0.30185824632644653
+  },
+  "reference_science_revision": "45de72cbd7f6c0ac1e507f0e357760e77e2a3933",
+  "reference_statistics_source": "frozen protocol constants; no prior model or scalar-array evaluation",
+  "scheduled_budget_matched": true,
+  "scheduled_train_images_each": 82440,
+  "scheduled_backward_attempts_each": 1290,
+  "identity_optimizer_updates": 1289,
+  "identity_amp_skipped_updates": 1,
+  "scope": "one-seed paired fixed source views; no significance, blind-test or real-domain conclusion",
+  "audit_label_scope": "Provided-label saved-number comparison only. The prior C3 audit remains149checks148PASS1FAIL: the normalized_progress/y field check was unavailable in the physical-label-triplet source contract. This is inherited raw-label-derivation coverage, not a discovered label conflict; no old audit or labels are recomputed.",
+  "C3_optimizer_updates": 1289,
+  "C3_amp_skipped_updates": 1
+}
