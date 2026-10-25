@@ -52,6 +52,18 @@ whole source＋I/R complete／四exit0／父子退出GPU空后才委派ONE新鲜
 
 报告mean／Acc1/2/5／median/p90/p95／tail10／max、相对v16／旧GeoPRR／v24／v25／v26／v28／v29／v30及保存参照的>1/2/5新增救回／逐图组改善恶化／zero非zero近zero／ordinary1495/1497/severe6／固定focus。roll512只自身；V27无外域结果不拼造，源R或单域收益不代表整体成功，不自动promotion。旧资产、G1／anchor／65轮／配对守恒负结果全保留，归档后持续独立源域结构／表示研究。
 
+## 完成记录
+
+源60轮完整结束，earliest strict source R选best1，R=0.3624970918530252（36.249709185303%FS），last60 R=0.36415594591138356。60−1=59≥20，因min60在第60轮停止，未在第21轮提前结束；LR在10／19／28／37／46轮后下降不重置counter，无resume。同一best1只在源停止后各冻结外评一次，last只源；最终RF于2026-10-25T12:16:48.422736+00:00结束。四阶段complete／exit0，2026-10-25T12:22:51+00:00保存检查时父进程及各阶段进程全部退出、GPU空闲。
+
+本轮保存源预测坍缩为近常数，第13至60轮未恢复有效读数。best源原1506／roll512 mean25.159314／24.600501%FS，预测范围均[0.5042189359664917,0.504226565361023]、std分别1.9063593963920542e-6／1.8330245393135286e-6；last roll保存输出std为0。第13／60轮train SmoothL1为0.24331026108168666／0.243289967727353，源R仍未低于第1轮。该负结果是保存scalar证据，不确定精确根因，不以pref通过替代学习效果。
+
+Industrial mean37.249295／tail50.422275／max50.422275%FS，Acc@1／2／5全0%；RF100 mean23.395320／tail49.616268／max50.422275%FS、Acc@5=9.271523%。相对v16 >5救回／新增为Industrial0／626、RF6／85；相对旧GeoPRR为0／641、3／94；相对V30为0／542、6／74。更低max或局部RF tail不能写成整体成功；全部正负资产保留，不升级默认。
+
+GN77／BN0／buffer0／233state，初始化只保留231个learned cached encoder tensor、移除231个原BN buffer；GN8的FP32数学转回原feature FP16后drop→act，eval正常计算单图统计但无目标人口统计拟合或参数适配。正式CNN／point各2221066图／34765调用，源backward尝试32820＝32809更新＋11AMPskip。pref3CNN／8图／1back／0optimizer及233 strictreload单列。Point／GN-only CUDA时间未记录，unknown／null而非0；完整pipeline／peak实记：训练10325.968896秒、source full10805.576444秒、peak allocated／reserved12174175232／13864271872bytes。
+
+唯一独立CPU保存数字／执行核对68416项通过、0失败、最大差1.4210854715202004e-14；未加载模型／weights／RGB／features／统计值／geometry／checkpoint或重跑GT／旧测试／外评。[报告](data/geoprr_v2_groupnorm_semantic_20261025/completed/report_cn.md)、[指标](data/geoprr_v2_groupnorm_semantic_20261025/completed/metrics.json)、[比较表](data/geoprr_v2_groupnorm_semantic_20261025/completed/comparison.csv)和[26项completed allowlist](data/geoprr_v2_groupnorm_semantic_20261025/completed/public_allowlist.json)规范化归档；[总allowlist](data/geoprr_v2_groupnorm_semantic_20261025/public_allowlist.json)33项。并列max仅保留原保存第一条ID示例，不变更数值max，完整scalar CSV保留全部逐图记录；长并列名单、完整人口／cohort ID数组、delta maps、rawthreshold-rescue-new名单、rawrun／contracts、RGB／weights／features／瞬时统计值／geometry／privatepaths私有。checkpoint／RNG保存机制为代码与metadata证据，内容未加载，不增加恢复保证。
+
 ## Limitations
 
 BN换为GN改变网络函数与预训练统计，保留学习参数不等于保持语义、输出或任务信息；单图归一化也可能移除有用信息。不能由源R差异确定BN成因或保证泛化，不作单因素因果主张。单seed、已查看开发域、sharedHDR及历史seed缺失边界保持，不报SD、显著性、新盲测、普适性或新理论；旧GeoPRR历史pixel/fullweight链未重认证。RGB／weights／features／瞬时统计实际值／H/C/XYZ/U/M／bbox／rawrun／fullcontracts／源arrays／privatepaths私有，仅公开必要规范化标量、shape／dtype和执行metadata。

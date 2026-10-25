@@ -1,0 +1,136 @@
+{
+  "protocol": "geoprr_v2_groupnorm_semantic_source_only_v1",
+  "config": {
+    "protocol": "geoprr_v2_groupnorm_semantic_source_only_v1",
+    "model": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "num_classes": 0,
+      "semantic_dim": 1280,
+      "initialization": "fresh cached ImageNet full encoder; replace all BN by GroupNorm8 retaining learned affine values; new scalar point",
+      "readout": "sigmoid(float(Linear1280to1(full semantic output)))",
+      "point_initialization_std": 0.001,
+      "point_initialization_bias": 0.0,
+      "CNN_passes_per_image": 1,
+      "joint_encoder_training": true,
+      "source_training_BN_updates": false,
+      "normalization": {
+        "replacement": "all77 BatchNormAct2d replaced before optimizer construction by GroupNormAct2d",
+        "groups": 8,
+        "epsilon": 1e-05,
+        "affine": true,
+        "statistics": "instantaneous per-image grouped channel and spatial statistics in both train and eval",
+        "batch_coupling": false,
+        "running_statistics": false,
+        "running_buffers": 0,
+        "normalization_math": "float32 feature, affine and F.group_norm inside disabled autocast; cast result to input feature dtype before original drop then act",
+        "outer_encoder_semantic_point_autocast": "float16",
+        "scalar_output": "float32 sigmoid",
+        "initialization": "all231 learned cached encoder tensors retained by direct equality;231 BN running buffers intentionally removed",
+        "drop_activation_order": "original drop then original act",
+        "pretrained_function_preserved": false,
+        "target_dataset_statistic_fitting": false,
+        "evaluation_parameter_updates": false
+      }
+    },
+    "data": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "source": {
+      "old_unique": 18590,
+      "roll_unique": 4096,
+      "roll_repeat": 4,
+      "total_unique": 22686,
+      "train_presentations": 34974,
+      "original_validation": 1506,
+      "roll_validation": 512,
+      "require_geometry": false,
+      "pair_manifest": null,
+      "roll_validation_split": "independent layout/seed/ID/group; same available HDR background",
+      "population_policy": "same four manifest rows and order as retained V22 source; authoritative RGB512 input contract"
+    },
+    "training": {
+      "seed": 20262020,
+      "min_epochs": 60,
+      "max_epochs": 160,
+      "early_stopping_patience": 20,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "loss": "smooth_l1",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0,
+      "scheduler": {
+        "mode": "min",
+        "factor": 0.3,
+        "patience": 8,
+        "threshold": 0.0,
+        "threshold_mode": "abs",
+        "cooldown": 0,
+        "min_lr": 1e-06,
+        "eps": 1e-08
+      }
+    },
+    "checkpoint_selection": "earliest strict minimum R=(original1506 mean NMAE + roll512 mean NMAE + original1506 worst10percent NMAE + roll512 worst10percent NMAE)/4; each worst tail uses ceil(.1*N), including failed inputs/scalars at error1",
+    "external_checkpoint": "source-selected best only after source stopping rule completes",
+    "inference_input": "provided native ROI RGB, linear resize512, ImageNet normalization; one RGB forward, no GT geometry or target scalar input",
+    "external_training_or_adaptation": false
+  },
+  "normalization_contract": {
+    "replacement": "all77 BatchNormAct2d replaced before optimizer construction by GroupNormAct2d",
+    "groups": 8,
+    "epsilon": 1e-05,
+    "affine": true,
+    "statistics": "instantaneous per-image grouped channel and spatial statistics in both train and eval",
+    "batch_coupling": false,
+    "running_statistics": false,
+    "running_buffers": 0,
+    "normalization_math": "float32 feature, affine and F.group_norm inside disabled autocast; cast result to input feature dtype before original drop then act",
+    "outer_encoder_semantic_point_autocast": "float16",
+    "scalar_output": "float32 sigmoid",
+    "initialization": "all231 learned cached encoder tensors retained by direct equality;231 BN running buffers intentionally removed",
+    "drop_activation_order": "original drop then original act",
+    "pretrained_function_preserved": false,
+    "target_dataset_statistic_fitting": false,
+    "evaluation_parameter_updates": false
+  },
+  "status": "complete",
+  "epochs": 60,
+  "counts": {
+    "cnn_image_forwards": 2221066,
+    "cnn_forward_calls": 34765,
+    "point_image_forwards": 2221066,
+    "point_forward_calls": 34765,
+    "source_backward_calls": 32820,
+    "source_optimizer_updates": 32809,
+    "source_amp_skipped_updates": 11,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  },
+  "preflight_counts_separate": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "scope": "complete source-only GroupNorm8 semantic scalar reader with512 RGB input; no automatic promotion"
+}

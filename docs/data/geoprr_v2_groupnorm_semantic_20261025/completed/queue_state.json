@@ -1,0 +1,49 @@
+{
+  "protocol": "geoprr_v2_groupnorm_semantic_source_only_v1",
+  "code_revision": "eaa79707c4977d9929fc20f57cd40a4ba5cf891d",
+  "pipeline_pid": 387472,
+  "status": "complete",
+  "updated_at": "2026-10-25T12:16:48.437670+00:00",
+  "current_step": null,
+  "seeds": [
+    20262020
+  ],
+  "steps": {
+    "preflight": {
+      "status": "complete",
+      "started_at": "2026-10-25T09:15:52.516798+00:00",
+      "finished_at": "2026-10-25T09:16:14.662532+00:00",
+      "exit_code": 0,
+      "interpreter_is_project_venv": true,
+      "module": "experiments.geoprr_v2_groupnorm_semantic",
+      "checkpoint_is_reader_best": true
+    },
+    "train_source": {
+      "status": "complete",
+      "started_at": "2026-10-25T09:16:14.728333+00:00",
+      "finished_at": "2026-10-25T12:16:21.456035+00:00",
+      "exit_code": 0,
+      "interpreter_is_project_venv": true,
+      "module": "experiments.geoprr_v2_groupnorm_semantic",
+      "checkpoint_is_reader_best": true
+    },
+    "eval_industrial": {
+      "status": "complete",
+      "started_at": "2026-10-25T12:16:21.618122+00:00",
+      "finished_at": "2026-10-25T12:16:36.314881+00:00",
+      "exit_code": 0,
+      "interpreter_is_project_venv": true,
+      "module": "experiments.geoprr_v2_groupnorm_semantic",
+      "checkpoint_is_reader_best": true
+    },
+    "eval_rf100": {
+      "status": "complete",
+      "started_at": "2026-10-25T12:16:36.358413+00:00",
+      "finished_at": "2026-10-25T12:16:48.422736+00:00",
+      "exit_code": 0,
+      "interpreter_is_project_venv": true,
+      "module": "experiments.geoprr_v2_groupnorm_semantic",
+      "checkpoint_is_reader_best": true
+    }
+  }
+}

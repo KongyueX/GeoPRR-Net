@@ -1,0 +1,851 @@
+{
+  "formal_counts": {
+    "cnn_image_forwards": 2221066,
+    "cnn_forward_calls": 34765,
+    "point_image_forwards": 2221066,
+    "point_forward_calls": 34765,
+    "source_backward_calls": 32820,
+    "source_optimizer_updates": 32809,
+    "source_amp_skipped_updates": 11,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  },
+  "actual_formal_costs": {
+    "industrial": {
+      "timing": {
+        "counts": {
+          "cnn_forward_calls": 22,
+          "cnn_image_forwards": 1395,
+          "backward_calls": 0,
+          "optimizer_updates": 0,
+          "failed_input_placeholder_forwards": 0
+        },
+        "pipeline_seconds": 11.102160271257162,
+        "forward_seconds": 8.708700817078352,
+        "batch_size": 64,
+        "workers": 4,
+        "point_counts": {
+          "point_forward_calls": 22,
+          "point_image_forwards": 1395
+        }
+      },
+      "runtime": {
+        "process_seconds": 12.815545205026865,
+        "full_process_seconds": 13.757201436907053,
+        "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+        "device": "cuda",
+        "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+        "torch": "2.11.0+cu128",
+        "cuda": "12.8",
+        "peak_cuda_memory_bytes": 2726746112,
+        "peak_cuda_reserved_bytes": 3846176768
+      },
+      "forward_counts": {
+        "cnn_forward_calls": 22,
+        "cnn_image_forwards": 1395,
+        "backward_calls": 0,
+        "optimizer_updates": 0,
+        "failed_input_placeholder_forwards": 0
+      }
+    },
+    "rf100": {
+      "timing": {
+        "counts": {
+          "cnn_forward_calls": 3,
+          "cnn_image_forwards": 151,
+          "backward_calls": 0,
+          "optimizer_updates": 0,
+          "failed_input_placeholder_forwards": 0
+        },
+        "pipeline_seconds": 8.737485349178314,
+        "forward_seconds": 7.522717103362083,
+        "batch_size": 64,
+        "workers": 4,
+        "point_counts": {
+          "point_forward_calls": 3,
+          "point_image_forwards": 151
+        }
+      },
+      "runtime": {
+        "process_seconds": 10.359702743589878,
+        "full_process_seconds": 11.300076927989721,
+        "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+        "device": "cuda",
+        "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+        "torch": "2.11.0+cu128",
+        "cuda": "12.8",
+        "peak_cuda_memory_bytes": 2726746112,
+        "peak_cuda_reserved_bytes": 3846176768
+      },
+      "forward_counts": {
+        "cnn_forward_calls": 3,
+        "cnn_image_forwards": 151,
+        "backward_calls": 0,
+        "optimizer_updates": 0,
+        "failed_input_placeholder_forwards": 0
+      }
+    },
+    "source_totals": {
+      "train_batches": 32820,
+      "train_cnn_image_forwards": 2098440,
+      "train_cnn_forward_calls": 32820,
+      "backward_calls": 32820,
+      "optimizer_updates": 32809,
+      "amp_skipped_updates": 11,
+      "validation_images": 121080,
+      "validation_cnn_forward_calls": 1920,
+      "train_point_forward_calls": 32820,
+      "train_point_image_forwards": 2098440,
+      "validation_point_forward_calls": 1920,
+      "validation_point_image_forwards": 121080,
+      "training_seconds": 10325.968896191567,
+      "validation_seconds": 440.1556509360671
+    },
+    "source_runtime": {
+      "process_seconds": 10804.590640228242,
+      "full_process_seconds": 10805.576443888247,
+      "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 12174175232,
+      "peak_cuda_reserved_bytes": 13864271872
+    },
+    "stage_wall_seconds": {
+      "preflight": 22.145734,
+      "train_source": 10806.727702,
+      "eval_industrial": 14.696759,
+      "eval_rf100": 12.064323
+    },
+    "controller_end_to_end_seconds": 10833.694403,
+    "preflight_through_external_wall_seconds": 10855.905938,
+    "completed_at_utc": "2026-10-25T12:16:48.422736+00:00",
+    "source_checkpointed_process_seconds": 10804.590892501175,
+    "point_head": {
+      "counts": {
+        "calls": 34765,
+        "images": 2221066
+      },
+      "source_train_forward_seconds": null,
+      "source_validation_forward_seconds": null,
+      "external_forward_seconds": null,
+      "formal_forward_seconds": null,
+      "preflight_separate": {
+        "counts": {
+          "point_forward_calls": 3,
+          "point_image_forwards": 8
+        },
+        "forward_seconds": null
+      },
+      "timing_boundary": "Separate point/GN-only time was not recorded; full model/pipeline/process time and peak memory include FP32 GroupNorm and casts"
+    },
+    "controller_end_to_end_boundary": "train_source supervisor start through final frozen external exit; excludes preceding new preflight",
+    "preflight_record": "../runtime_preflight.json",
+    "reused_source_generation_record": "../../geoprr_v2_roll_source_20261024/source_completed.json",
+    "new_source_generation_cost": 0
+  },
+  "point_execution_evidence": {
+    "source_train": {
+      "calls": 32820,
+      "images": 2098440
+    },
+    "source_validation": {
+      "calls": 1920,
+      "images": 121080
+    },
+    "external": {
+      "industrial": {
+        "point_forward_calls": 22,
+        "point_image_forwards": 1395
+      },
+      "rf100": {
+        "point_forward_calls": 3,
+        "point_image_forwards": 151
+      }
+    },
+    "preflight": {
+      "point_forward_calls": 3,
+      "point_image_forwards": 8
+    },
+    "source_loss_backward_attempts": 32820,
+    "train_model_buffers_absent": true,
+    "eval_model_buffers_absent": true
+  },
+  "GroupNorm_execution_evidence": {
+    "encoder_input": [
+      {
+        "shape": [
+          4,
+          3,
+          512,
+          512
+        ],
+        "dtype": "torch.float32"
+      },
+      {
+        "shape": [
+          2,
+          3,
+          512,
+          512
+        ],
+        "dtype": "torch.float32"
+      },
+      {
+        "shape": [
+          2,
+          3,
+          512,
+          512
+        ],
+        "dtype": "torch.float32"
+      }
+    ],
+    "pool": [
+      {
+        "before": [
+          4,
+          960,
+          16,
+          16
+        ],
+        "after": [
+          4,
+          960,
+          1,
+          1
+        ]
+      },
+      {
+        "before": [
+          2,
+          960,
+          16,
+          16
+        ],
+        "after": [
+          2,
+          960,
+          1,
+          1
+        ]
+      },
+      {
+        "before": [
+          2,
+          960,
+          16,
+          16
+        ],
+        "after": [
+          2,
+          960,
+          1,
+          1
+        ]
+      }
+    ],
+    "point": [
+      {
+        "semantic_shape": [
+          4,
+          1280
+        ],
+        "point_logit_shape": [
+          4,
+          1
+        ],
+        "semantic_dtype": "torch.float16",
+        "point_logit_dtype": "torch.float16"
+      },
+      {
+        "semantic_shape": [
+          2,
+          1280
+        ],
+        "point_logit_shape": [
+          2,
+          1
+        ],
+        "semantic_dtype": "torch.float16",
+        "point_logit_dtype": "torch.float16"
+      },
+      {
+        "semantic_shape": [
+          2,
+          1280
+        ],
+        "point_logit_shape": [
+          2,
+          1
+        ],
+        "semantic_dtype": "torch.float16",
+        "point_logit_dtype": "torch.float16"
+      }
+    ],
+    "normalization_contract": {
+      "replacement": "all77 BatchNormAct2d replaced before optimizer construction by GroupNormAct2d",
+      "groups": 8,
+      "epsilon": 1e-05,
+      "affine": true,
+      "statistics": "instantaneous per-image grouped channel and spatial statistics in both train and eval",
+      "batch_coupling": false,
+      "running_statistics": false,
+      "running_buffers": 0,
+      "normalization_math": "float32 feature, affine and F.group_norm inside disabled autocast; cast result to input feature dtype before original drop then act",
+      "outer_encoder_semantic_point_autocast": "float16",
+      "scalar_output": "float32 sigmoid",
+      "initialization": "all231 learned cached encoder tensors retained by direct equality;231 BN running buffers intentionally removed",
+      "drop_activation_order": "original drop then original act",
+      "pretrained_function_preserved": false,
+      "target_dataset_statistic_fitting": false,
+      "evaluation_parameter_updates": false
+    },
+    "formal_counts": {
+      "calls": 34765,
+      "images": 2221066
+    },
+    "norm_or_point_only_seconds": null,
+    "encoder_point_autocast_dtype": "float16",
+    "norm_math_dtype": "float32",
+    "norm_feature_output_dtype": "float16",
+    "scalar_dtype": "float32",
+    "all_gradients_finite": true,
+    "gradient_groups_nonzero": {
+      "encoder": true,
+      "encoder_stem": true,
+      "semantic_conv_head": true,
+      "semantic_norm_head": true,
+      "point": true,
+      "normalization_affine": true
+    },
+    "strict_reload_saved_witness": true,
+    "checkpoint_contents_loaded_by_audit": false
+  },
+  "normalization_contract": {
+    "replacement": "all77 BatchNormAct2d replaced before optimizer construction by GroupNormAct2d",
+    "groups": 8,
+    "epsilon": 1e-05,
+    "affine": true,
+    "statistics": "instantaneous per-image grouped channel and spatial statistics in both train and eval",
+    "batch_coupling": false,
+    "running_statistics": false,
+    "running_buffers": 0,
+    "normalization_math": "float32 feature, affine and F.group_norm inside disabled autocast; cast result to input feature dtype before original drop then act",
+    "outer_encoder_semantic_point_autocast": "float16",
+    "scalar_output": "float32 sigmoid",
+    "initialization": "all231 learned cached encoder tensors retained by direct equality;231 BN running buffers intentionally removed",
+    "drop_activation_order": "original drop then original act",
+    "pretrained_function_preserved": false,
+    "target_dataset_statistic_fitting": false,
+    "evaluation_parameter_updates": false
+  },
+  "point_or_GN_only_seconds": null,
+  "saved_reference_cost_comparisons": {
+    "v16": {
+      "source_training_seconds": {
+        "v31": 10325.968896191567,
+        "reference": 2761.0258493237197,
+        "difference": 7564.943046867847,
+        "ratio": 3.7399030142078495
+      },
+      "source_validation_seconds": {
+        "v31": 440.1556509360671,
+        "reference": 183.3174392953515,
+        "difference": 256.8382116407156,
+        "ratio": 2.401057164162714
+      },
+      "source_process_seconds": {
+        "v31": 10804.590640228242,
+        "reference": 2972.2243499159813,
+        "difference": 7832.36629031226,
+        "ratio": 3.635186771999114
+      },
+      "source_full_process_seconds": {
+        "v31": 10805.576443888247,
+        "reference": 2973.16363677755,
+        "difference": 7832.412807110697,
+        "ratio": 3.634369904913751
+      },
+      "queue_wall_seconds": {
+        "v31": 10833.694403,
+        "reference": 2997.258767,
+        "difference": 7836.435636,
+        "ratio": 3.6145342278349903
+      },
+      "source_peak_allocated_bytes": {
+        "v31": 12174175232,
+        "reference": 2218448384,
+        "difference": 9955726848,
+        "ratio": 5.487698212770318
+      },
+      "source_peak_reserved_bytes": {
+        "v31": 13864271872,
+        "reference": 2837446656,
+        "difference": 11026825216,
+        "ratio": 4.8861788617886175
+      }
+    },
+    "v18": {
+      "source_training_seconds": {
+        "v31": 10325.968896191567,
+        "reference": 2816.7055361121893,
+        "difference": 7509.263360079378,
+        "ratio": 3.665973870468611
+      },
+      "source_validation_seconds": {
+        "v31": 440.1556509360671,
+        "reference": 173.22431213408709,
+        "difference": 266.93133880198,
+        "ratio": 2.5409577068798375
+      },
+      "source_process_seconds": {
+        "v31": 10804.590640228242,
+        "reference": 3059.7135350219905,
+        "difference": 7744.877105206251,
+        "ratio": 3.531242554754587
+      },
+      "source_full_process_seconds": {
+        "v31": 10805.576443888247,
+        "reference": 3060.6456844322383,
+        "difference": 7744.930759456009,
+        "ratio": 3.5304891705858217
+      },
+      "queue_wall_seconds": {
+        "v31": 10833.694403,
+        "reference": 3084.318233,
+        "difference": 7749.37617,
+        "ratio": 3.5125086273806687
+      },
+      "source_peak_allocated_bytes": {
+        "v31": 12174175232,
+        "reference": 2995077120,
+        "difference": 9179098112,
+        "ratio": 4.064728467492683
+      },
+      "source_peak_reserved_bytes": {
+        "v31": 13864271872,
+        "reference": 3435134976,
+        "difference": 10429136896,
+        "ratio": 4.036019536019536
+      }
+    },
+    "v21": {
+      "source_training_seconds": {
+        "v31": 10325.968896191567,
+        "reference": 2773.254664938897,
+        "difference": 7552.71423125267,
+        "ratio": 3.7234117107016855
+      },
+      "source_validation_seconds": {
+        "v31": 440.1556509360671,
+        "reference": 173.47069058939815,
+        "difference": 266.68496034666896,
+        "ratio": 2.537348813454068
+      },
+      "source_process_seconds": {
+        "v31": 10804.590640228242,
+        "reference": 3008.8445746041834,
+        "difference": 7795.746065624058,
+        "ratio": 3.5909434244039
+      },
+      "source_full_process_seconds": {
+        "v31": 10805.576443888247,
+        "reference": 3009.7728834301233,
+        "difference": 7795.803560458124,
+        "ratio": 3.590163398499871
+      },
+      "queue_wall_seconds": {
+        "v31": 10833.694403,
+        "reference": 3035.589614,
+        "difference": 7798.104788999999,
+        "ratio": 3.568892960048189
+      },
+      "source_peak_allocated_bytes": {
+        "v31": 12174175232,
+        "reference": 3049633792,
+        "difference": 9124541440,
+        "ratio": 3.99201217665416
+      },
+      "source_peak_reserved_bytes": {
+        "v31": 13864271872,
+        "reference": 3439329280,
+        "difference": 10424942592,
+        "ratio": 4.03109756097561
+      }
+    },
+    "v22": {
+      "source_training_seconds": {
+        "v31": 10325.968896191567,
+        "reference": 9585.050050370395,
+        "difference": 740.918845821172,
+        "ratio": 1.0772994237826166
+      },
+      "source_validation_seconds": {
+        "v31": 440.1556509360671,
+        "reference": 483.78070947155356,
+        "difference": -43.62505853548646,
+        "ratio": 0.909824724960325
+      },
+      "source_process_seconds": {
+        "v31": 10804.590640228242,
+        "reference": 10146.579224005342,
+        "difference": 658.0114162229002,
+        "ratio": 1.064850567042944
+      },
+      "source_full_process_seconds": {
+        "v31": 10805.576443888247,
+        "reference": 10147.539110802114,
+        "difference": 658.037333086133,
+        "ratio": 1.0648469866339956
+      },
+      "queue_wall_seconds": {
+        "v31": 10833.694403,
+        "reference": 10171.255716,
+        "difference": 662.4386869999998,
+        "ratio": 1.0651285058105406
+      },
+      "source_peak_allocated_bytes": {
+        "v31": 12174175232,
+        "reference": 2218448384,
+        "difference": 9955726848,
+        "ratio": 5.487698212770318
+      },
+      "source_peak_reserved_bytes": {
+        "v31": 13864271872,
+        "reference": 2837446656,
+        "difference": 11026825216,
+        "ratio": 4.8861788617886175
+      }
+    },
+    "v23": {
+      "source_training_seconds": {
+        "v31": 10325.968896191567,
+        "reference": 9784.711778588593,
+        "difference": 541.2571176029742,
+        "ratio": 1.055316613289252
+      },
+      "source_validation_seconds": {
+        "v31": 440.1556509360671,
+        "reference": 503.0759307220578,
+        "difference": -62.920279785990715,
+        "ratio": 0.8749288607473585
+      },
+      "source_process_seconds": {
+        "v31": 10804.590640228242,
+        "reference": 10370.041267327964,
+        "difference": 434.5493729002774,
+        "ratio": 1.0419043050744048
+      },
+      "source_full_process_seconds": {
+        "v31": 10805.576443888247,
+        "reference": 10371.028453789651,
+        "difference": 434.5479900985956,
+        "ratio": 1.0419001829987082
+      },
+      "queue_wall_seconds": {
+        "v31": 10833.694403,
+        "reference": 10394.404016,
+        "difference": 439.2903869999991,
+        "ratio": 1.0422622005382707
+      },
+      "source_peak_allocated_bytes": {
+        "v31": 12174175232,
+        "reference": 2669980672,
+        "difference": 9504194560,
+        "ratio": 4.559649198838844
+      },
+      "source_peak_reserved_bytes": {
+        "v31": 13864271872,
+        "reference": 3158310912,
+        "difference": 10705960960,
+        "ratio": 4.389774236387782
+      }
+    },
+    "v24": {
+      "source_training_seconds": {
+        "v31": 10325.968896191567,
+        "reference": 8439.410359308124,
+        "difference": 1886.5585368834436,
+        "ratio": 1.2235415101959928
+      },
+      "source_validation_seconds": {
+        "v31": 440.1556509360671,
+        "reference": 422.064306627959,
+        "difference": 18.09134430810809,
+        "ratio": 1.04286395230302
+      },
+      "source_process_seconds": {
+        "v31": 10804.590640228242,
+        "reference": 8926.789751820266,
+        "difference": 1877.8008884079754,
+        "ratio": 1.2103556755131453
+      },
+      "source_full_process_seconds": {
+        "v31": 10805.576443888247,
+        "reference": 8927.727020017803,
+        "difference": 1877.8494238704443,
+        "ratio": 1.2103390280258255
+      },
+      "queue_wall_seconds": {
+        "v31": 10833.694403,
+        "reference": 8951.11403,
+        "difference": 1882.5803729999989,
+        "ratio": 1.2103179969208815
+      },
+      "source_peak_allocated_bytes": {
+        "v31": 12174175232,
+        "reference": 664222720,
+        "difference": 11509952512,
+        "ratio": 18.32845349222622
+      },
+      "source_peak_reserved_bytes": {
+        "v31": 13864271872,
+        "reference": 815792128,
+        "difference": 13048479744,
+        "ratio": 16.994858611825194
+      }
+    },
+    "v25": {
+      "source_training_seconds": {
+        "v31": 10325.968896191567,
+        "reference": 4948.06887563318,
+        "difference": 5377.900020558387,
+        "ratio": 2.086868464390606
+      },
+      "source_validation_seconds": {
+        "v31": 440.1556509360671,
+        "reference": 247.77300535142422,
+        "difference": 192.3826455846429,
+        "ratio": 1.7764471569926699
+      },
+      "source_process_seconds": {
+        "v31": 10804.590640228242,
+        "reference": 5237.863852690905,
+        "difference": 5566.726787537336,
+        "ratio": 2.062785697394078
+      },
+      "source_full_process_seconds": {
+        "v31": 10805.576443888247,
+        "reference": 5238.7860625088215,
+        "difference": 5566.7903813794255,
+        "ratio": 2.0626107489324585
+      },
+      "queue_wall_seconds": {
+        "v31": 10833.694403,
+        "reference": 5262.123951,
+        "difference": 5571.570452,
+        "ratio": 2.0588063876642804
+      },
+      "source_peak_allocated_bytes": {
+        "v31": 12174175232,
+        "reference": 2224756224,
+        "difference": 9949419008,
+        "ratio": 5.472138969954849
+      },
+      "source_peak_reserved_bytes": {
+        "v31": 13864271872,
+        "reference": 2858418176,
+        "difference": 11005853696,
+        "ratio": 4.850330154071901
+      }
+    },
+    "v26": {
+      "source_training_seconds": {
+        "v31": 10325.968896191567,
+        "reference": 18503.923991907388,
+        "difference": -8177.955095715821,
+        "ratio": 0.5580421158618888
+      },
+      "source_validation_seconds": {
+        "v31": 440.1556509360671,
+        "reference": 774.6288493834436,
+        "difference": -334.4731984473765,
+        "ratio": 0.568214895799974
+      },
+      "source_process_seconds": {
+        "v31": 10804.590640228242,
+        "reference": 19354.278957866132,
+        "difference": -8549.68831763789,
+        "ratio": 0.558253328049555
+      },
+      "source_full_process_seconds": {
+        "v31": 10805.576443888247,
+        "reference": 19355.291916746646,
+        "difference": -8549.7154728584,
+        "ratio": 0.5582750438674093
+      },
+      "queue_wall_seconds": {
+        "v31": 10833.694403,
+        "reference": 19382.631387,
+        "difference": -8548.936984000002,
+        "ratio": 0.5589382672915194
+      },
+      "source_peak_allocated_bytes": {
+        "v31": 12174175232,
+        "reference": 8262538752,
+        "difference": 3911636480,
+        "ratio": 1.4734182310555777
+      },
+      "source_peak_reserved_bytes": {
+        "v31": 13864271872,
+        "reference": 11347689472,
+        "difference": 2516582400,
+        "ratio": 1.2217704675660692
+      }
+    },
+    "v28": {
+      "source_training_seconds": {
+        "v31": 10325.968896191567,
+        "reference": 11355.16951591894,
+        "difference": -1029.2006197273731,
+        "ratio": 0.9093628132733267
+      },
+      "source_validation_seconds": {
+        "v31": 440.1556509360671,
+        "reference": 467.1808344423771,
+        "difference": -27.025183506309986,
+        "ratio": 0.9421526280319975
+      },
+      "source_process_seconds": {
+        "v31": 10804.590640228242,
+        "reference": 11873.210449688137,
+        "difference": -1068.619809459895,
+        "ratio": 0.9099974001144767
+      },
+      "source_full_process_seconds": {
+        "v31": 10805.576443888247,
+        "reference": 11874.171350043267,
+        "difference": -1068.59490615502,
+        "ratio": 0.9100067807130705
+      },
+      "queue_wall_seconds": {
+        "v31": 10833.694403,
+        "reference": 11901.541209,
+        "difference": -1067.8468060000014,
+        "ratio": 0.9102765946655303
+      },
+      "source_peak_allocated_bytes": {
+        "v31": 12174175232,
+        "reference": 8262600192,
+        "difference": 3911575040,
+        "ratio": 1.4734072748415514
+      },
+      "source_peak_reserved_bytes": {
+        "v31": 13864271872,
+        "reference": 11347689472,
+        "difference": 2516582400,
+        "ratio": 1.2217704675660692
+      }
+    },
+    "v29": {
+      "source_training_seconds": {
+        "v31": 10325.968896191567,
+        "reference": 10120.079081062227,
+        "difference": 205.8898151293397,
+        "ratio": 1.0203446844120638
+      },
+      "source_validation_seconds": {
+        "v31": 440.1556509360671,
+        "reference": 427.7224973998964,
+        "difference": 12.433153536170721,
+        "ratio": 1.0290682711612114
+      },
+      "source_process_seconds": {
+        "v31": 10804.590640228242,
+        "reference": 10589.095355667174,
+        "difference": 215.49528456106782,
+        "ratio": 1.0203506793850654
+      },
+      "source_full_process_seconds": {
+        "v31": 10805.576443888247,
+        "reference": 10590.045265104622,
+        "difference": 215.53117878362536,
+        "ratio": 1.0203522433935033
+      },
+      "queue_wall_seconds": {
+        "v31": 10833.694403,
+        "reference": 10618.928467,
+        "difference": 214.76593599999978,
+        "ratio": 1.020224821804518
+      },
+      "source_peak_allocated_bytes": {
+        "v31": 12174175232,
+        "reference": 8262579712,
+        "difference": 3911595520,
+        "ratio": 1.4734109268947893
+      },
+      "source_peak_reserved_bytes": {
+        "v31": 13864271872,
+        "reference": 11345592320,
+        "difference": 2518679552,
+        "ratio": 1.221996303142329
+      }
+    },
+    "v30": {
+      "source_training_seconds": {
+        "v31": 10325.968896191567,
+        "reference": 14485.251577306539,
+        "difference": -4159.282681114972,
+        "ratio": 0.7128608599638578
+      },
+      "source_validation_seconds": {
+        "v31": 440.1556509360671,
+        "reference": 602.0597537197173,
+        "difference": -161.90410278365016,
+        "ratio": 0.7310830000122829
+      },
+      "source_process_seconds": {
+        "v31": 10804.590640228242,
+        "reference": 15145.63760406524,
+        "difference": -4341.046963836998,
+        "ratio": 0.7133797151813657
+      },
+      "source_full_process_seconds": {
+        "v31": 10805.576443888247,
+        "reference": 15146.585475452244,
+        "difference": -4341.009031563997,
+        "ratio": 0.7134001561870574
+      },
+      "queue_wall_seconds": {
+        "v31": 10833.694403,
+        "reference": 15176.269232,
+        "difference": -4342.574829000001,
+        "ratio": 0.7138575520363435
+      },
+      "source_peak_allocated_bytes": {
+        "v31": 12174175232,
+        "reference": 8266190336,
+        "difference": 3907984896,
+        "ratio": 1.4727673495467888
+      },
+      "source_peak_reserved_bytes": {
+        "v31": 13864271872,
+        "reference": 11351883776,
+        "difference": 2512388096,
+        "ratio": 1.2213190467393313
+      }
+    }
+  },
+  "preflight_counts_separate": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "preflight_runtime": {
+    "process_seconds": 20.346803903579712,
+    "full_process_seconds": 21.281644113361835,
+    "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+    "device": "cuda",
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "peak_cuda_memory_bytes": 876723712,
+    "peak_cuda_reserved_bytes": 985661440
+  },
+  "backward_scope": "All CNN, GN-affine and scalar-point parameters trained on source SmoothL1. GN computes per-image group-channel/spatial statistics using FP32 math and casts to original feature dtype before drop-act in both train and eval. No BN buffers, target-dataset statistic fitting or eval parameter adaptation. Separate point/GN-only timing was not recorded and remains unknown/null; full model/pipeline/process time and peak include GN and casts.",
+  "new_source_generation_cost": 0
+}

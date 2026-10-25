@@ -1,6 +1,6 @@
 {
   "protocol": "geoprr_v31_public_allowlist_v1",
-  "status": "runtime_preflight_passed_source_training_running",
+  "status": "complete_audited_not_promoted",
   "files": [
     "../../GEOPRR_V2_GROUPNORM_SEMANTIC_ZERO_SHOT_PROTOCOL_CN.md",
     "README.md",
@@ -8,7 +8,33 @@
     "cpu_checks.json",
     "public_allowlist.json",
     "runtime_preflight.json",
-    "launch_verification.json"
+    "launch_verification.json",
+    "completed/best_validation.json",
+    "completed/comparison.csv",
+    "completed/completed_record.json",
+    "completed/config.json",
+    "completed/costs.json",
+    "completed/history.jsonl",
+    "completed/industrial_groups.csv",
+    "completed/industrial_predictions.csv.gz",
+    "completed/industrial_summary.json",
+    "completed/initialization_record.json",
+    "completed/latest_validation.json",
+    "completed/metrics.json",
+    "completed/numeric_execution_audit.json",
+    "completed/protocol.json",
+    "completed/public_allowlist.json",
+    "completed/queue_state.json",
+    "completed/report_cn.md",
+    "completed/rf100_groups.csv",
+    "completed/rf100_predictions.csv.gz",
+    "completed/rf100_summary.json",
+    "completed/run_metadata.json",
+    "completed/screen_summary.json",
+    "completed/source_best1_original_predictions.csv.gz",
+    "completed/source_best1_roll_predictions.csv.gz",
+    "completed/source_last60_original_predictions.csv.gz",
+    "completed/source_last60_roll_predictions.csv.gz"
   ],
   "training_protocol": "geoprr_v2_groupnorm_semantic_source_only_v1",
   "actual_model_metadata": {
@@ -66,14 +92,21 @@
     "CNN_passes_per_image": 1
   },
   "excluded": [
-    "RGB/checkpoint/weights",
-    "features/instantaneous_statistics_values/geometry/bbox",
-    "probe sample ID lists/actual state lists/full populations",
-    "rawrun/fullcontracts/fullsourcearrays/privatepaths/commands"
+    "RGB/model/checkpoint weights",
+    "feature/instantaneous statistic values/geometry/bbox",
+    "raw run/full source contracts/population arrays/private paths/commands",
+    "complete population and fixed-cohort ID arrays/per-image delta maps/full improved-regressed or threshold-rescue-new ID lists/full long maximum-tie ID rosters"
   ],
   "external_training_or_adaptation": false,
   "code_revision": "eaa79707c4977d9929fc20f57cd40a4ba5cf891d",
   "runtime_evidence": "saved actual512 source AMP witness3CNN/8images/1combinedback/0optimizer;GN77/BN0/buffers0/state233;all231 learned cached encoder parameters retained,231 original BN buffers removed;all233 parameters unchanged without optimizer,233strictreload,finite nonzero necessary gradients",
-  "current_evidence": "source training running at saved2026-10-25T09:17:58.154572+00:00 verification; sole GPU source child387513/13900MiB;first source batch64/finite gradient;0 complete source epochs;no external evaluation or generalization result",
-  "normalization_evaluation_scope": "GroupNorm computes fixed-formula per-image statistics in both training and eval. No target-dataset statistic fitting, running-buffer accumulation or evaluation parameter adaptation."
+  "current_evidence": "60 complete source epochs, source-selected best1, near-constant saved source predictions and epoch13-to60 learning plateau, once-frozen Industrial/RF100 complete, one independent saved-scalar/execution audit68416PASS0fail; no automatic promotion",
+  "normalization_evaluation_scope": "GroupNorm computes fixed-formula per-image statistics in both training and eval. No target-dataset statistic fitting, running-buffer accumulation or evaluation parameter adaptation.",
+  "audit": {
+    "status": "passed",
+    "checks": 68416,
+    "failed_checks": 0
+  },
+  "point_or_GN_only_seconds": null,
+  "normalization": "Full scalar metrics/CSV retained; complete population and fixed-cohort ID arrays, per-image delta maps, improved/regressed full-ID arrays and raw threshold/rescue/new ID lists excluded; paired counts, scalar group summaries and necessary focus IDs retained. Each maximum_error_ids field retains only the first saved maximum-ID example, without changing the numeric maximum or reordering; full tied-ID rosters omitted and full scalar CSV retained."
 }

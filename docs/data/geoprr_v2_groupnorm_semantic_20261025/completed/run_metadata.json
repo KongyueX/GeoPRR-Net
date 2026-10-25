@@ -1,0 +1,1353 @@
+{
+  "protocol": "geoprr_v2_groupnorm_semantic_source_only_v1",
+  "config": {
+    "protocol": "geoprr_v2_groupnorm_semantic_source_only_v1",
+    "model": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "num_classes": 0,
+      "semantic_dim": 1280,
+      "initialization": "fresh cached ImageNet full encoder; replace all BN by GroupNorm8 retaining learned affine values; new scalar point",
+      "readout": "sigmoid(float(Linear1280to1(full semantic output)))",
+      "point_initialization_std": 0.001,
+      "point_initialization_bias": 0.0,
+      "CNN_passes_per_image": 1,
+      "joint_encoder_training": true,
+      "source_training_BN_updates": false,
+      "normalization": {
+        "replacement": "all77 BatchNormAct2d replaced before optimizer construction by GroupNormAct2d",
+        "groups": 8,
+        "epsilon": 1e-05,
+        "affine": true,
+        "statistics": "instantaneous per-image grouped channel and spatial statistics in both train and eval",
+        "batch_coupling": false,
+        "running_statistics": false,
+        "running_buffers": 0,
+        "normalization_math": "float32 feature, affine and F.group_norm inside disabled autocast; cast result to input feature dtype before original drop then act",
+        "outer_encoder_semantic_point_autocast": "float16",
+        "scalar_output": "float32 sigmoid",
+        "initialization": "all231 learned cached encoder tensors retained by direct equality;231 BN running buffers intentionally removed",
+        "drop_activation_order": "original drop then original act",
+        "pretrained_function_preserved": false,
+        "target_dataset_statistic_fitting": false,
+        "evaluation_parameter_updates": false
+      }
+    },
+    "data": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "source": {
+      "old_unique": 18590,
+      "roll_unique": 4096,
+      "roll_repeat": 4,
+      "total_unique": 22686,
+      "train_presentations": 34974,
+      "original_validation": 1506,
+      "roll_validation": 512,
+      "require_geometry": false,
+      "pair_manifest": null,
+      "roll_validation_split": "independent layout/seed/ID/group; same available HDR background",
+      "population_policy": "same four manifest rows and order as retained V22 source; authoritative RGB512 input contract"
+    },
+    "training": {
+      "seed": 20262020,
+      "min_epochs": 60,
+      "max_epochs": 160,
+      "early_stopping_patience": 20,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "loss": "smooth_l1",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0,
+      "scheduler": {
+        "mode": "min",
+        "factor": 0.3,
+        "patience": 8,
+        "threshold": 0.0,
+        "threshold_mode": "abs",
+        "cooldown": 0,
+        "min_lr": 1e-06,
+        "eps": 1e-08
+      }
+    },
+    "checkpoint_selection": "earliest strict minimum R=(original1506 mean NMAE + roll512 mean NMAE + original1506 worst10percent NMAE + roll512 worst10percent NMAE)/4; each worst tail uses ceil(.1*N), including failed inputs/scalars at error1",
+    "external_checkpoint": "source-selected best only after source stopping rule completes",
+    "inference_input": "provided native ROI RGB, linear resize512, ImageNet normalization; one RGB forward, no GT geometry or target scalar input",
+    "external_training_or_adaptation": false
+  },
+  "normalization_contract": {
+    "replacement": "all77 BatchNormAct2d replaced before optimizer construction by GroupNormAct2d",
+    "groups": 8,
+    "epsilon": 1e-05,
+    "affine": true,
+    "statistics": "instantaneous per-image grouped channel and spatial statistics in both train and eval",
+    "batch_coupling": false,
+    "running_statistics": false,
+    "running_buffers": 0,
+    "normalization_math": "float32 feature, affine and F.group_norm inside disabled autocast; cast result to input feature dtype before original drop then act",
+    "outer_encoder_semantic_point_autocast": "float16",
+    "scalar_output": "float32 sigmoid",
+    "initialization": "all231 learned cached encoder tensors retained by direct equality;231 BN running buffers intentionally removed",
+    "drop_activation_order": "original drop then original act",
+    "pretrained_function_preserved": false,
+    "target_dataset_statistic_fitting": false,
+    "evaluation_parameter_updates": false
+  },
+  "initialization": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "ImageNet_pretrained": true,
+    "existing_cached_weights_only": true,
+    "retained_learned_encoder_parameter_tensors": 231,
+    "all_cached_learned_encoder_parameter_tensors_retained": true,
+    "original_encoder_state_tensors": 462,
+    "intentionally_removed_BN_running_buffer_tensors": 231,
+    "converted_GroupNorm_modules": 77,
+    "encoder_state_tensors_after_conversion": 231,
+    "new_point_parameter_tensors": 2,
+    "point_initialization_std": 0.001,
+    "point_initialization_bias_zero": true,
+    "old_task_checkpoint_used": false
+  },
+  "model_metadata": {
+    "class": "experiments.geoprr_v2_semantic_direct.SemanticDirectReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_parameter_tensors": 231,
+    "encoder_state_tensors": 231,
+    "point_parameters": 1281,
+    "point_shape": [
+      1280,
+      1
+    ],
+    "parameters": 8435793,
+    "trainable_parameters": 8435793,
+    "all_parameters_trainable": true,
+    "parameter_tensors": 233,
+    "state_tensors": 233,
+    "GroupNorm_modules": 77,
+    "GroupNorm_groups": [
+      8
+    ],
+    "GroupNorm_epsilons": [
+      1e-05
+    ],
+    "BatchNorm_modules": 0,
+    "buffer_tensors": 0,
+    "normalization_contract": {
+      "replacement": "all77 BatchNormAct2d replaced before optimizer construction by GroupNormAct2d",
+      "groups": 8,
+      "epsilon": 1e-05,
+      "affine": true,
+      "statistics": "instantaneous per-image grouped channel and spatial statistics in both train and eval",
+      "batch_coupling": false,
+      "running_statistics": false,
+      "running_buffers": 0,
+      "normalization_math": "float32 feature, affine and F.group_norm inside disabled autocast; cast result to input feature dtype before original drop then act",
+      "outer_encoder_semantic_point_autocast": "float16",
+      "scalar_output": "float32 sigmoid",
+      "initialization": "all231 learned cached encoder tensors retained by direct equality;231 BN running buffers intentionally removed",
+      "drop_activation_order": "original drop then original act",
+      "pretrained_function_preserved": false,
+      "target_dataset_statistic_fitting": false,
+      "evaluation_parameter_updates": false
+    },
+    "input_contract": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "CNN_passes_per_image": 1
+  },
+  "epoch_exposure": {
+    "train_unique_images": 22686,
+    "old_train_images": 18590,
+    "roll_unique_images": 4096,
+    "roll_repetitions": 4,
+    "train_images": 34974,
+    "train_batches": 547,
+    "original_validation_images": 1506,
+    "roll_validation_images": 512,
+    "validation_images": 2018,
+    "validation_batches": 32
+  },
+  "inference_input": "provided native ROI RGB, linear resize512, ImageNet normalization; one RGB forward, no GT geometry or target scalar input",
+  "source_only_loss": "scalar SmoothL1(beta=.05) on retained source labels with RGB512",
+  "RGB_input_contract": {
+    "data": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "native_ROI": "same provided roi_path or existing source dial_bbox; no new crop",
+    "resize": "OpenCV INTER_LINEAR to512x512",
+    "color": "BGR to RGB, float32 /255",
+    "normalization_mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "normalization_std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "source_photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "require_geometry": false,
+    "pair_manifest": null,
+    "failure_placeholder_shape": [
+      3,
+      512,
+      512
+    ]
+  },
+  "contract_metadata": {
+    "counts": {
+      "original_train": 18590,
+      "roll_train": 4096,
+      "original_validation": 1506,
+      "roll_validation": 512
+    },
+    "unique_ID_counts": {
+      "original_train": 18590,
+      "roll_train": 4096,
+      "original_validation": 1506,
+      "roll_validation": 512
+    },
+    "four_populations_ID_disjoint": true,
+    "completion_source_IDs_exact_contract": true,
+    "populations_exact_saved_V22": true,
+    "populations_exact_saved_V25": true,
+    "populations_exact_saved_V26": true,
+    "populations_exact_saved_V28": true,
+    "populations_exact_saved_V29": true,
+    "populations_exact_saved_V30": true,
+    "population_provenance_exact_saved_V22_without_populations": true,
+    "population_provenance_exact_saved_V25_without_populations": true,
+    "population_provenance_exact_saved_V26": true,
+    "population_provenance_exact_saved_V28": true,
+    "population_provenance_exact_saved_V29": true,
+    "population_provenance_exact_saved_V30": true,
+    "RGB_input_contract_exact_saved_V26": true,
+    "RGB_input_contract_exact_saved_V28": true,
+    "RGB_input_contract_exact_saved_V29": true,
+    "RGB_input_contract_exact_saved_V30": true,
+    "historical_population_provenance_data": {
+      "image_size": 256,
+      "output_size": 64
+    },
+    "authoritative_RGB_input_contract": {
+      "data": {
+        "image_size": 512,
+        "output_size": 128
+      },
+      "native_ROI": "same provided roi_path or existing source dial_bbox; no new crop",
+      "resize": "OpenCV INTER_LINEAR to512x512",
+      "color": "BGR to RGB, float32 /255",
+      "normalization_mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "normalization_std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "source_photometric": {
+        "contrast": [
+          0.8,
+          1.2
+        ],
+        "brightness": [
+          -0.1,
+          0.1
+        ],
+        "saturation": [
+          0.8,
+          1.2
+        ]
+      },
+      "require_geometry": false,
+      "pair_manifest": null,
+      "failure_placeholder_shape": [
+        3,
+        512,
+        512
+      ]
+    },
+    "authoritative_RGB_contract_differs_from_V25_config_data": true,
+    "source_validation_order_matches_contract": {
+      "best_original": true,
+      "best_roll": true,
+      "latest_original": true,
+      "latest_roll": true
+    },
+    "targets_disjoint_from_all_source_IDs": {
+      "industrial": true,
+      "rf100": true
+    }
+  },
+  "executed_snapshot_matches_current_code": {
+    "geoprr_v2_groupnorm_semantic.py": true,
+    "run_geoprr_v2_groupnorm_semantic.py": true,
+    "test_geoprr_v2_groupnorm_semantic.py": true,
+    "geoprr_v2_high_resolution_direct.py": true,
+    "geoprr_v2_deep_adapter.py": true,
+    "geoprr_v2_roll_source.py": true,
+    "geoprr_v2_semantic_tokens.py": true,
+    "geoprr_v2_semantic_direct.py": true,
+    "geoprr_v2_data.py": true,
+    "evaluate_geoprr_v2_role_external.py": true,
+    "train_geoprr_v2.py": true,
+    "train_geoprr_v2_reference_relation.py": true,
+    "geoprr_v2_endpoint_source.py": true,
+    "run_geoprr_v2_optimization.py": true,
+    "run_geoprr_v2_render_probe.py": true
+  },
+  "executed_code_evidence": {
+    "new_dataset_uses_CONFIG_data_geometry_false_pair_none": true,
+    "failure_placeholder_uses_new_dataset_image_size": true,
+    "retained_rows_must_match_before_new_contract": true,
+    "source_training_has_no_target_population": true,
+    "source_training_single_scalar_smooth_l1": true,
+    "source_training_complete_model_optimizer": true,
+    "checkpoint_saves_complete_state_and_rng": true,
+    "best_on_strict_improvement_latest_each_epoch": true,
+    "external_requires_completed_source_best": true,
+    "external_frozen_eval_mode": true,
+    "external_uses_CONFIG_data_and_no_training": true,
+    "reader_forward_RGB_only": true,
+    "reader_returns_FP32_sigmoid_scalar": true,
+    "complete_cached_encoder_semantic_width_from_conv_head": true,
+    "new_Linear1280to1_fixed_initialization": true,
+    "cached231_learned_encoder_parameters_equal": true,
+    "all77_BN_replaced_by_fixed_GN8_eps1e5": true,
+    "GN_keeps_affine_objects_and_dropact": true,
+    "GN_float32_math_then_feature_dtype": true,
+    "GN_has_no_training_mode_or_dataset_stat_fit_branch": true,
+    "new233state_no_BN_buffer_contract": true,
+    "resume_checks_normalization_contract": true,
+    "external_checks_normalization_contract": true,
+    "source_evaluation_frozen": true,
+    "runner_external_checkpoint_is_best": true,
+    "runner_checks_point_and_zero_target_updates": true,
+    "atomic_checkpoint_save": true,
+    "all_rng_families_saved": true
+  },
+  "training_log_execution": {
+    "completed_epoch_events": [
+      {
+        "event": "epoch_complete",
+        "epoch": 1,
+        "selection_score_percent_fs": 36.24970918530252,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 2,
+        "selection_score_percent_fs": 37.76689635199638,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 3,
+        "selection_score_percent_fs": 36.78358296198207,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 4,
+        "selection_score_percent_fs": 37.64894430993561,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 5,
+        "selection_score_percent_fs": 36.50734197232168,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 6,
+        "selection_score_percent_fs": 36.80415258910036,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 7,
+        "selection_score_percent_fs": 36.29405697426643,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 8,
+        "selection_score_percent_fs": 36.32652970559779,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 9,
+        "selection_score_percent_fs": 36.373041847279765,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 10,
+        "selection_score_percent_fs": 36.543102030991854,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 11,
+        "selection_score_percent_fs": 36.52454081984487,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 12,
+        "selection_score_percent_fs": 36.42327001741686,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 13,
+        "selection_score_percent_fs": 36.43794659508989,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 14,
+        "selection_score_percent_fs": 36.34932027634647,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 15,
+        "selection_score_percent_fs": 36.47036197330163,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 16,
+        "selection_score_percent_fs": 36.445855545766854,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 17,
+        "selection_score_percent_fs": 36.32900348946856,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 18,
+        "selection_score_percent_fs": 36.325586042689025,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 19,
+        "selection_score_percent_fs": 36.431234865490865,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 20,
+        "selection_score_percent_fs": 36.43295676740219,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 21,
+        "selection_score_percent_fs": 36.41209991528582,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 22,
+        "selection_score_percent_fs": 36.40860782420077,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 23,
+        "selection_score_percent_fs": 36.404533623097784,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 24,
+        "selection_score_percent_fs": 36.382281639858626,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 25,
+        "selection_score_percent_fs": 36.403369972084434,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 26,
+        "selection_score_percent_fs": 36.40307920158672,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 27,
+        "selection_score_percent_fs": 36.38512564935446,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 28,
+        "selection_score_percent_fs": 36.3933196720414,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 29,
+        "selection_score_percent_fs": 36.40191921707238,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 30,
+        "selection_score_percent_fs": 36.406279384129064,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 31,
+        "selection_score_percent_fs": 36.410346579840116,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 32,
+        "selection_score_percent_fs": 36.41355604386439,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 33,
+        "selection_score_percent_fs": 36.41791869784991,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 34,
+        "selection_score_percent_fs": 36.417921724815784,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 35,
+        "selection_score_percent_fs": 36.413264704344186,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 36,
+        "selection_score_percent_fs": 36.4158827768686,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 37,
+        "selection_score_percent_fs": 36.41442835535753,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 38,
+        "selection_score_percent_fs": 36.41413659040165,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 39,
+        "selection_score_percent_fs": 36.41442835535753,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 40,
+        "selection_score_percent_fs": 36.414719694877746,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 41,
+        "selection_score_percent_fs": 36.413847383384606,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 42,
+        "selection_score_percent_fs": 36.41442835535753,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 43,
+        "selection_score_percent_fs": 36.414719694877746,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 44,
+        "selection_score_percent_fs": 36.41501046537547,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 45,
+        "selection_score_percent_fs": 36.414137584859816,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 46,
+        "selection_score_percent_fs": 36.41442835535753,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 47,
+        "selection_score_percent_fs": 36.415002713619955,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 48,
+        "selection_score_percent_fs": 36.414719694877746,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 49,
+        "selection_score_percent_fs": 36.41530180489567,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 50,
+        "selection_score_percent_fs": 36.415293723881334,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 51,
+        "selection_score_percent_fs": 36.41559257539338,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 52,
+        "selection_score_percent_fs": 36.41530180489567,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 53,
+        "selection_score_percent_fs": 36.41501046537547,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 54,
+        "selection_score_percent_fs": 36.414719694877746,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 55,
+        "selection_score_percent_fs": 36.41501046537547,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 56,
+        "selection_score_percent_fs": 36.41530180489567,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 57,
+        "selection_score_percent_fs": 36.41558729469013,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 58,
+        "selection_score_percent_fs": 36.41559257539338,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 59,
+        "selection_score_percent_fs": 36.41559257539338,
+        "best_epoch": 1,
+        "completion_reason": null
+      },
+      {
+        "event": "epoch_complete",
+        "epoch": 60,
+        "selection_score_percent_fs": 36.41559459113836,
+        "best_epoch": 1,
+        "completion_reason": "source_score_patience"
+      }
+    ],
+    "training_first_batch_events": [
+      {
+        "event": "training_batch",
+        "epoch": 1,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.21511368453502655,
+        "learning_rate": 0.0003,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 2,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.2475888431072235,
+        "learning_rate": 0.0003,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 3,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.2415114790201187,
+        "learning_rate": 0.0003,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 4,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.2508983314037323,
+        "learning_rate": 0.0003,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 5,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.2427920699119568,
+        "learning_rate": 0.0003,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 6,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.23464325070381165,
+        "learning_rate": 0.0003,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 7,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.21866270899772644,
+        "learning_rate": 0.0003,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 8,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.2429804801940918,
+        "learning_rate": 0.0003,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 9,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.24998395144939423,
+        "learning_rate": 0.0003,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 10,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.28114980459213257,
+        "learning_rate": 0.0003,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 11,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.22949999570846558,
+        "learning_rate": 8.999999999999999e-05,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 12,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.2277626395225525,
+        "learning_rate": 8.999999999999999e-05,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 13,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.2525925636291504,
+        "learning_rate": 8.999999999999999e-05,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 14,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.22816063463687897,
+        "learning_rate": 8.999999999999999e-05,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 15,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.21825329959392548,
+        "learning_rate": 8.999999999999999e-05,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 16,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.2704382538795471,
+        "learning_rate": 8.999999999999999e-05,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 17,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.24725881218910217,
+        "learning_rate": 8.999999999999999e-05,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 18,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.2426375150680542,
+        "learning_rate": 8.999999999999999e-05,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 19,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.2402684986591339,
+        "learning_rate": 8.999999999999999e-05,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 20,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.24623894691467285,
+        "learning_rate": 2.6999999999999996e-05,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 21,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.23769277334213257,
+        "learning_rate": 2.6999999999999996e-05,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 22,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.23039020597934723,
+        "learning_rate": 2.6999999999999996e-05,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 23,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.21214795112609863,
+        "learning_rate": 2.6999999999999996e-05,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 24,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.2298596054315567,
+        "learning_rate": 2.6999999999999996e-05,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 25,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.24763870239257812,
+        "learning_rate": 2.6999999999999996e-05,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 26,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.21834677457809448,
+        "learning_rate": 2.6999999999999996e-05,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 27,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.23455029726028442,
+        "learning_rate": 2.6999999999999996e-05,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 28,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.24860155582427979,
+        "learning_rate": 2.6999999999999996e-05,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 29,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.24885587394237518,
+        "learning_rate": 8.099999999999999e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 30,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.21826410293579102,
+        "learning_rate": 8.099999999999999e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 31,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.24711516499519348,
+        "learning_rate": 8.099999999999999e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 32,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.2314661592245102,
+        "learning_rate": 8.099999999999999e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 33,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.28483524918556213,
+        "learning_rate": 8.099999999999999e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 34,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.23051556944847107,
+        "learning_rate": 8.099999999999999e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 35,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.2621212601661682,
+        "learning_rate": 8.099999999999999e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 36,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.2670918107032776,
+        "learning_rate": 8.099999999999999e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 37,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.24977049231529236,
+        "learning_rate": 8.099999999999999e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 38,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.25492846965789795,
+        "learning_rate": 2.4299999999999996e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 39,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.21536624431610107,
+        "learning_rate": 2.4299999999999996e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 40,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.22571347653865814,
+        "learning_rate": 2.4299999999999996e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 41,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.24121734499931335,
+        "learning_rate": 2.4299999999999996e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 42,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.26322075724601746,
+        "learning_rate": 2.4299999999999996e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 43,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.27136358618736267,
+        "learning_rate": 2.4299999999999996e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 44,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.22110484540462494,
+        "learning_rate": 2.4299999999999996e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 45,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.23025327920913696,
+        "learning_rate": 2.4299999999999996e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 46,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.2530125379562378,
+        "learning_rate": 2.4299999999999996e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 47,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.24596543610095978,
+        "learning_rate": 1e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 48,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.2262497842311859,
+        "learning_rate": 1e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 49,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.20295459032058716,
+        "learning_rate": 1e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 50,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.22181102633476257,
+        "learning_rate": 1e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 51,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.20773689448833466,
+        "learning_rate": 1e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 52,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.21641938388347626,
+        "learning_rate": 1e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 53,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.30001550912857056,
+        "learning_rate": 1e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 54,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.24460247159004211,
+        "learning_rate": 1e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 55,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.24196454882621765,
+        "learning_rate": 1e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 56,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.2658773362636566,
+        "learning_rate": 1e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 57,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.2670288383960724,
+        "learning_rate": 1e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 58,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.21711063385009766,
+        "learning_rate": 1e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 59,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.20937511324882507,
+        "learning_rate": 1e-06,
+        "gradient_norm_finite": true
+      },
+      {
+        "event": "training_batch",
+        "epoch": 60,
+        "batch": 1,
+        "images": 64,
+        "loss": 0.20966018736362457,
+        "learning_rate": 1e-06,
+        "gradient_norm_finite": true
+      }
+    ]
+  },
+  "checkpoint_state_evidence": {
+    "checkpoint_contents_verified_without_loading": false,
+    "best_latest_exist": true,
+    "checkpoint_file_metadata": {
+      "best": {
+        "bytes": 114220975,
+        "mtime_utc": "2026-10-25T09:19:46.230310+00:00"
+      },
+      "latest": {
+        "bytes": 114377159,
+        "mtime_utc": "2026-10-25T12:16:20.320657+00:00"
+      }
+    }
+  },
+  "initialization_scope": "All231 learned cached encoder parameter tensors were retained only at fresh initialization. Original231 BN running buffers were intentionally removed; the resulting encoder has231 states and the complete model has233 states,77 GN8,0 BN and0 buffers. All CNN/GN-affine/point parameters subsequently source-trained. Eval computes fixed-formula per-image GN statistics without target-dataset statistic fitting or parameter adaptation."
+}
