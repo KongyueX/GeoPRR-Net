@@ -1,0 +1,22 @@
+{
+  "status": "launched_pending_zero_update_preflight",
+  "started_at_utc": "2026-10-25T19:53:34.527781+00:00",
+  "pipeline_pid": 427975,
+  "code_revision": "743acb16b486f1f494c3b1f49fa7c4a41848887d",
+  "module": "experiments.run_geoprr_v2_mean_tail_control",
+  "prior_matched_archive_revision": "84a1dbc42968e6d71d66f5adae8dba80b383b424",
+  "prior_matched_archive_pushed": true,
+  "old_actual_commands_absent": true,
+  "prelaunch_GPU_compute_rows": [],
+  "source_control_epochs": 15,
+  "CNN_back_attempt_budget": 1290,
+  "objective": "0.5 mean +0.5 largest ceil10percent per-image SmoothL1(beta.05)",
+  "training_RGB_GBR_BRG_per_epoch": [
+    5496,
+    0,
+    0
+  ],
+  "controller_log_outside_pristine_output": true,
+  "launch_log_relative": "diagnostics/geoprr_mean_tail_launch_20261026/controller.log",
+  "real_external_and_needle03_model_calls_authorized": 0
+}
