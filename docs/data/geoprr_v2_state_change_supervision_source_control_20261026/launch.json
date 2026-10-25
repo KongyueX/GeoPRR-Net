@@ -1,0 +1,24 @@
+{
+  "protocol": "geoprr_v2_state_change_supervision_source_control_v1",
+  "observed_at_utc": "2026-10-25T23:18:47.848302+00:00",
+  "checks": {
+    "snapshot_precheck": true,
+    "new_module_processes_absent": true,
+    "GPU_idle": true,
+    "prior_image_structure_modules_absent": true,
+    "output_absent": true,
+    "pref_absent_or_empty": true,
+    "sufficient_scheduled_storage": true,
+    "frozen_code_revision_provided": true
+  },
+  "GPU_compute_rows": [],
+  "new_module_process_count": 0,
+  "source_labels_generated_before_launch": 0,
+  "models_constructed_before_launch": 0,
+  "scientific_revision": "85821b55653fbbb6e374c4ec700cae61055d7066",
+  "status": "launched_source_preparation_pending",
+  "started_at_utc": "2026-10-25T23:18:47.849380+00:00",
+  "pipeline_pid": 438380,
+  "NEWCPU_unique12_passed": true,
+  "expected_sequence": "CPUprepare -> onlyifadmitted ONEpref ->correct15/native/conditionalCF ->onlyifcorrectallpass cyclic15/native+CF"
+}

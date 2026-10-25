@@ -1,0 +1,450 @@
+{
+  "schema": "state_change_saved_metadata_audit_collection_v1",
+  "scope": "one successful stdlib metadata collection; source RGB, arrays, weights and model execution were not opened",
+  "read_allowlist": [
+    "@code/experiments/geoprr_v2_state_change_supervision_control.py",
+    "@code/experiments/run_geoprr_v2_state_change_supervision_control.py",
+    "@code/experiments/test_geoprr_v2_state_change_supervision_control.py",
+    "diagnostics/geoprr_state_change_supervision_launch_20261026/controller.log",
+    "diagnostics/geoprr_state_change_supervision_launch_20261026/launch_receipt.json",
+    "diagnostics/geoprr_state_change_supervision_launch_20261026/prelaunch.json",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/code_snapshot/docs/data/geoprr_v2_state_change_supervision_source_control_20261026/protocol.json",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/code_snapshot/geoprr_v2_state_change_supervision_control.py",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/code_snapshot/refine-logs/geoprr_research_reset_20261025/state_change_supervision_source_control_protocol.json",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/code_snapshot/run_geoprr_v2_state_change_supervision_control.py",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/code_snapshot/test_geoprr_v2_state_change_supervision_control.py",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/completed.json",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/preparation/completed.json",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/preparation/partial.json",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/preparation/started.json",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/preparation/target_contract.json",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/protocol.json",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/queue_state.json"
+  ],
+  "stat_allowlist": [
+    "diagnostics/geoprr_state_change_supervision_preflight_20261026",
+    "diagnostics/geoprr_state_change_supervision_preflight_20261026/reload.pt",
+    "diagnostics/geoprr_state_change_supervision_preflight_20261026/result.json",
+    "diagnostics/geoprr_state_change_supervision_preflight_20261026/started.json",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/cycled_state",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/cycled_state/completed.json",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/cycled_state/history.jsonl",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/cycled_state/latest.pt",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/matched_state",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/matched_state/completed.json",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/matched_state/history.jsonl",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/matched_state/latest.pt",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/preparation/qcache.npy",
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/preparation/target_contract.json"
+  ],
+  "queue": {
+    "protocol": "geoprr_v2_state_change_supervision_source_control_v1",
+    "code_revision": "85821b55653fbbb6e374c4ec700cae61055d7066",
+    "status": "complete",
+    "pipeline_pid": 438380,
+    "current_step": null,
+    "automatic_resume": false,
+    "necessary_NEWCPU_passed_explicitly": true,
+    "supervisor_started_before_torch_import": true,
+    "updated_at": "2026-10-25T23:18:54.074029+00:00",
+    "supervisor_process_seconds": 6.21332449093461,
+    "verdict": "NOT_ADMITTED_SOURCE_OBSERVATION",
+    "source_observation_admitted": false,
+    "independent_nonauthor_saved_number_CPU_audit_required": true,
+    "audit_requires_supervisor_and_all_actual_parents_exited": true,
+    "steps": {
+      "preparation": {
+        "status": "complete",
+        "started_at": "2026-10-25T23:18:47.875686+00:00",
+        "CPU_only": true,
+        "CUDA_visibility_overridden": true,
+        "pid": 438381,
+        "exit_code": 0,
+        "seconds": 4.499085124582052,
+        "finished_at": "2026-10-25T23:18:52.374934+00:00"
+      },
+      "finalize": {
+        "status": "complete",
+        "started_at": "2026-10-25T23:18:52.410588+00:00",
+        "CPU_only": true,
+        "CUDA_visibility_overridden": true,
+        "pid": 438405,
+        "exit_code": 0,
+        "seconds": 1.592880416661501,
+        "finished_at": "2026-10-25T23:18:54.003722+00:00"
+      }
+    }
+  },
+  "protocol_matches_frozen_local_protocol": true,
+  "preparation_started": {
+    "protocol": "geoprr_v2_state_change_supervision_source_control_v1",
+    "status": "started",
+    "counts": {
+      "model_constructions": 0,
+      "CNN_calls": 0,
+      "CNN_images": 0,
+      "point_calls": 0,
+      "auxiliary_calls": 0,
+      "combined_backward_calls": 0,
+      "optimizer_updates": 0,
+      "GPU_calls": 0,
+      "ID_OOD_external_RGB_reads": 0,
+      "new_RGB_files": 0
+    },
+    "config_matches_frozen_public_config": true,
+    "preflight_is_null": true,
+    "correct_is_null": true,
+    "cyclic_is_null": true,
+    "trained_model_result_is_null": true,
+    "comparison_is_null": true
+  },
+  "preparation_partial": {
+    "protocol": "geoprr_v2_state_change_supervision_source_control_v1",
+    "status": "complete",
+    "admitted": false,
+    "verdict": "NOT_ADMITTED_SOURCE_OBSERVATION",
+    "failed_predicate": "all_six_pairs_above_quantization_unit",
+    "first_failed_quartet_index": 13,
+    "counts": {
+      "model_constructions": 0,
+      "CNN_calls": 0,
+      "CNN_images": 0,
+      "point_calls": 0,
+      "auxiliary_calls": 0,
+      "combined_backward_calls": 0,
+      "optimizer_updates": 0,
+      "GPU_calls": 0,
+      "ID_OOD_external_RGB_reads": 0,
+      "new_RGB_files": 0,
+      "source_train_rows": 5496,
+      "source_train_manifest_reads": 1,
+      "source_RGB_decode_calls": 56,
+      "native_header_files": 56,
+      "quartet_operator_calls": 14,
+      "processed_quartets": 14,
+      "accepted_quartets": 13,
+      "target_maps_written": 52
+    },
+    "cost": {
+      "decode_and_native_preprocessing_seconds": 0.7790854945778847,
+      "target_build_seconds": 1.7908196970820427,
+      "header_and_alignment_seconds": 0.01877351850271225,
+      "point_forward_seconds": null,
+      "GPU_seconds": 0.0,
+      "full_entry_seconds": 3.860509477555752,
+      "process_peak_rss_native_units": 709124
+    },
+    "config_matches_frozen_public_config": true,
+    "preflight_is_null": true,
+    "correct_is_null": true,
+    "cyclic_is_null": true,
+    "trained_model_result_is_null": true,
+    "comparison_is_null": true
+  },
+  "preparation_completed": {
+    "protocol": "geoprr_v2_state_change_supervision_source_control_v1",
+    "status": "complete",
+    "admitted": false,
+    "verdict": "NOT_ADMITTED_SOURCE_OBSERVATION",
+    "failed_predicate": "all_six_pairs_above_quantization_unit",
+    "first_failed_quartet_index": 13,
+    "counts": {
+      "model_constructions": 0,
+      "CNN_calls": 0,
+      "CNN_images": 0,
+      "point_calls": 0,
+      "auxiliary_calls": 0,
+      "combined_backward_calls": 0,
+      "optimizer_updates": 0,
+      "GPU_calls": 0,
+      "ID_OOD_external_RGB_reads": 0,
+      "new_RGB_files": 0,
+      "source_train_rows": 5496,
+      "source_train_manifest_reads": 1,
+      "source_RGB_decode_calls": 56,
+      "native_header_files": 56,
+      "quartet_operator_calls": 14,
+      "processed_quartets": 14,
+      "accepted_quartets": 13,
+      "target_maps_written": 52
+    },
+    "cost": {
+      "decode_and_native_preprocessing_seconds": 0.7790854945778847,
+      "target_build_seconds": 1.7908196970820427,
+      "header_and_alignment_seconds": 0.01877351850271225,
+      "point_forward_seconds": null,
+      "GPU_seconds": 0.0,
+      "full_entry_seconds": 3.860509477555752,
+      "process_peak_rss_native_units": 709124
+    },
+    "config_matches_frozen_public_config": true,
+    "preflight_is_null": true,
+    "correct_is_null": true,
+    "cyclic_is_null": true,
+    "trained_model_result_is_null": true,
+    "comparison_is_null": true
+  },
+  "completed": {
+    "protocol": "geoprr_v2_state_change_supervision_source_control_v1",
+    "status": "complete",
+    "verdict": "NOT_ADMITTED_SOURCE_OBSERVATION",
+    "counts": {
+      "cnn_image_forwards": 0,
+      "cnn_forward_calls": 0,
+      "point_image_forwards": 0,
+      "point_forward_calls": 0,
+      "CNN_backward_calls": 0,
+      "point_backward_calls": 0,
+      "source_backward_calls": 0,
+      "optimizer_updates": 0,
+      "amp_skipped_updates": 0,
+      "source_OOD_RGB_images": 0,
+      "source_OOD_CNN_calls": 0,
+      "external_images": 0,
+      "external_CNN_calls": 0,
+      "external_point_calls": 0,
+      "external_backward_calls": 0,
+      "external_optimizer_updates": 0,
+      "auxiliary_forward_calls": 0,
+      "auxiliary_map_forwards": 0,
+      "auxiliary_backward_calls": 0,
+      "combined_backward_calls": 0
+    },
+    "runtime": {
+      "full_entry_seconds": 1.0332649238407612
+    },
+    "model_constructions": 0,
+    "correct_counts": {
+      "cnn_image_forwards": 0,
+      "cnn_forward_calls": 0,
+      "point_image_forwards": 0,
+      "point_forward_calls": 0,
+      "CNN_backward_calls": 0,
+      "point_backward_calls": 0,
+      "source_backward_calls": 0,
+      "optimizer_updates": 0,
+      "amp_skipped_updates": 0,
+      "source_OOD_RGB_images": 0,
+      "source_OOD_CNN_calls": 0,
+      "external_images": 0,
+      "external_CNN_calls": 0,
+      "external_point_calls": 0,
+      "external_backward_calls": 0,
+      "external_optimizer_updates": 0,
+      "auxiliary_forward_calls": 0,
+      "auxiliary_map_forwards": 0,
+      "auxiliary_backward_calls": 0,
+      "combined_backward_calls": 0
+    },
+    "cyclic_counts": {
+      "cnn_image_forwards": 0,
+      "cnn_forward_calls": 0,
+      "point_image_forwards": 0,
+      "point_forward_calls": 0,
+      "CNN_backward_calls": 0,
+      "point_backward_calls": 0,
+      "source_backward_calls": 0,
+      "optimizer_updates": 0,
+      "amp_skipped_updates": 0,
+      "source_OOD_RGB_images": 0,
+      "source_OOD_CNN_calls": 0,
+      "external_images": 0,
+      "external_CNN_calls": 0,
+      "external_point_calls": 0,
+      "external_backward_calls": 0,
+      "external_optimizer_updates": 0,
+      "auxiliary_forward_calls": 0,
+      "auxiliary_map_forwards": 0,
+      "auxiliary_backward_calls": 0,
+      "combined_backward_calls": 0
+    },
+    "preflight_counts_separate": {
+      "model_constructions": 0,
+      "CNN_calls": 0,
+      "CNN_images": 0,
+      "point_calls": 0,
+      "auxiliary_calls": 0,
+      "combined_backward_calls": 0,
+      "optimizer_updates": 0,
+      "GPU_calls": 0,
+      "ID_OOD_external_RGB_reads": 0,
+      "new_RGB_files": 0
+    },
+    "independent_nonauthor_saved_number_CPU_audit_required": true,
+    "audit_requires_all_actual_parents_gone_and_GPU_empty": true,
+    "config_matches_frozen_public_config": true,
+    "preflight_is_null": true,
+    "correct_is_null": true,
+    "cyclic_is_null": true,
+    "trained_model_result_is_null": true,
+    "comparison_is_null": true
+  },
+  "private_contract_projection": {
+    "source_contract_present": true,
+    "nested_population_counts": {
+      "train": 5496,
+      "id": 292,
+      "ood": 220
+    },
+    "partial_equals_preparation_completed": true,
+    "final_preparation_equals_preparation_completed": true,
+    "final_source_contract_matches_preparation": true,
+    "target_source_contract_matches_preparation": true,
+    "target_protocol_matches": true,
+    "target_frozen_protocol_matches": true,
+    "target_formula_matches_frozen_config": true,
+    "target_row_binding_count": 5496,
+    "target_cycle_binding_count": 5496,
+    "target_quartet_count": 1374,
+    "all_target_quartet_lengths_four": true,
+    "rejected_preparation_has_no_complete_target_contract": true,
+    "final_has_no_complete_target_contract": true
+  },
+  "qcache_stat_only": {
+    "exists": true,
+    "array_payload_read": false,
+    "header_read": false,
+    "storage_bytes": 5628032,
+    "mode": 420
+  },
+  "unrun_artifact_existence": {
+    "diagnostics/geoprr_state_change_supervision_preflight_20261026": false,
+    "diagnostics/geoprr_state_change_supervision_preflight_20261026/reload.pt": false,
+    "diagnostics/geoprr_state_change_supervision_preflight_20261026/result.json": false,
+    "diagnostics/geoprr_state_change_supervision_preflight_20261026/started.json": false,
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/cycled_state": false,
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/cycled_state/completed.json": false,
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/cycled_state/history.jsonl": false,
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/cycled_state/latest.pt": false,
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/matched_state": false,
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/matched_state/completed.json": false,
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/matched_state/history.jsonl": false,
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/matched_state/latest.pt": false
+  },
+  "launch_receipt": {
+    "protocol": "geoprr_v2_state_change_supervision_source_control_v1",
+    "observed_at_utc": "2026-10-25T23:18:47.848302+00:00",
+    "checks": {
+      "snapshot_precheck": true,
+      "new_module_processes_absent": true,
+      "GPU_idle": true,
+      "prior_image_structure_modules_absent": true,
+      "output_absent": true,
+      "pref_absent_or_empty": true,
+      "sufficient_scheduled_storage": true,
+      "frozen_code_revision_provided": true
+    },
+    "new_module_process_count": 0,
+    "free_bytes": 835559424,
+    "old_comparable_latest_stat_bytes": 105071349,
+    "estimated_max_new_pipeline_storage_bytes": 554503124,
+    "source_labels_generated_before_launch": 0,
+    "models_constructed_before_launch": 0,
+    "scientific_revision": "85821b55653fbbb6e374c4ec700cae61055d7066",
+    "status": "launched_source_preparation_pending",
+    "started_at_utc": "2026-10-25T23:18:47.849380+00:00",
+    "pipeline_pid": 438380,
+    "NEWCPU_unique12_passed": true,
+    "GPU_compute_row_count": 0
+  },
+  "prelaunch_numeric_boolean_projection": {
+    "checks": {
+      "snapshot_precheck": true,
+      "new_module_processes_absent": true,
+      "GPU_idle": true,
+      "prior_image_structure_modules_absent": true,
+      "output_absent": true,
+      "pref_absent_or_empty": true,
+      "sufficient_scheduled_storage": true,
+      "frozen_code_revision_provided": true
+    },
+    "GPU_compute_rows": [],
+    "prior_actual_processes": {
+      "432369": {
+        "present": false,
+        "previous_image_structure_module": false
+      },
+      "432374": {
+        "present": false,
+        "previous_image_structure_module": false
+      },
+      "432412": {
+        "present": false,
+        "previous_image_structure_module": false
+      }
+    },
+    "new_module_process_count": 0,
+    "free_bytes": 835559424,
+    "old_comparable_latest_stat_bytes": 105071349,
+    "estimated_max_new_pipeline_storage_bytes": 554503124,
+    "source_labels_generated_before_launch": 0,
+    "models_constructed_before_launch": 0
+  },
+  "controller_numeric_notices": [
+    {
+      "stage_index": 0,
+      "started": true
+    },
+    {
+      "stage_index": 0,
+      "completed": true,
+      "exit_code": 0,
+      "seconds": 4.499085124582052
+    },
+    {
+      "stage_index": 4,
+      "started": true
+    },
+    {
+      "stage_index": 4,
+      "completed": true,
+      "exit_code": 0,
+      "seconds": 1.592880416661501
+    },
+    {
+      "complete": true,
+      "source_observation_admitted": false,
+      "preflight_executed": false,
+      "cyclic_executed": false,
+      "passed": false,
+      "seconds": 6.2135750241577625
+    }
+  ],
+  "controller_non_numeric_lines_omitted": 0,
+  "snapshot_new_code": {
+    "geoprr_v2_state_change_supervision_control.py": {
+      "snapshot_matches_local_new_code": true,
+      "deployed_matches_snapshot": true,
+      "snapshot_bytes": 71689,
+      "snapshot_lines": 1108
+    },
+    "run_geoprr_v2_state_change_supervision_control.py": {
+      "snapshot_matches_local_new_code": true,
+      "deployed_matches_snapshot": true,
+      "snapshot_bytes": 14589,
+      "snapshot_lines": 278
+    },
+    "test_geoprr_v2_state_change_supervision_control.py": {
+      "snapshot_matches_local_new_code": true,
+      "deployed_matches_snapshot": true,
+      "snapshot_bytes": 16966,
+      "snapshot_lines": 302
+    }
+  },
+  "snapshot_protocol_matches": {
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/code_snapshot/refine-logs/geoprr_research_reset_20261025/state_change_supervision_source_control_protocol.json": true,
+    "runs/geoprr_generalization/source_state_change_supervision_control_20261026/code_snapshot/docs/data/geoprr_v2_state_change_supervision_source_control_20261026/protocol.json": true
+  },
+  "collector_operations": {
+    "source_RGB_reads": 0,
+    "qcache_array_reads": 0,
+    "qcache_header_reads": 0,
+    "weights_or_checkpoint_reads": 0,
+    "torch_imports": 0,
+    "model_constructions": 0,
+    "GPU_queries_or_calls": 0,
+    "GT_or_target_recomputations": 0,
+    "old_benchmark_reads": 0,
+    "tests_executed": 0
+  }
+}

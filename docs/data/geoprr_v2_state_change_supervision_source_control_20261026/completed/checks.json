@@ -1,0 +1,155 @@
+{
+  "integrity_verdict": "PASS",
+  "checks": [
+    {
+      "id": "protocol_identity",
+      "result": "PASS",
+      "evidence": "Local/public/run/snapshot protocols agree by direct comparison."
+    },
+    {
+      "id": "scientific_revision",
+      "result": "PASS",
+      "evidence": "Saved frozen, deployed and launch revision identifiers agree; no Git operation was performed."
+    },
+    {
+      "id": "new_code_snapshot",
+      "result": "PASS",
+      "evidence": "The three new static code files and frozen protocol copies match directly."
+    },
+    {
+      "id": "config_identity",
+      "result": "PASS",
+      "evidence": "Private results were projected to config equality booleans before stdout."
+    },
+    {
+      "id": "prelaunch_conditions",
+      "result": "PASS",
+      "evidence": "Saved prelaunch checks are all true; this audit did not query the GPU or repeat process inspection."
+    },
+    {
+      "id": "launch_receipt_consistency",
+      "result": "PASS",
+      "evidence": "The one server collection agrees with the existing local launch receipt."
+    },
+    {
+      "id": "necessary_CPU_evidence",
+      "result": "PASS",
+      "evidence": "Twelve unique necessary checks passed in thirteen executions; the targeted synthetic serialization evidence is accounted for."
+    },
+    {
+      "id": "CPU_asset_boundary",
+      "result": "PASS",
+      "evidence": "One isolated synthetic state read; no real weights/RGB/model/GPU witness or attempt is reported by the qualified evidence."
+    },
+    {
+      "id": "audit_completion_eligibility",
+      "result": "PASS",
+      "evidence": "The existing 2026-10-25T23:19:54.498473+00:00 whole-complete/idle witness precedes this audit."
+    },
+    {
+      "id": "executed_stages",
+      "result": "PASS",
+      "evidence": "Only preparation and finalize executed, both complete exit 0 with CPU visibility override."
+    },
+    {
+      "id": "scientific_rejection",
+      "result": "PASS",
+      "evidence": "The frozen necessary source gate stopped normally before model execution."
+    },
+    {
+      "id": "saved_source_counts",
+      "result": "PASS",
+      "evidence": "All recorded preparation counts equal the declared saved-number expectations."
+    },
+    {
+      "id": "quartet_accounting",
+      "result": "PASS",
+      "evidence": "56=14×4 decodes; 56 separate header accesses; 52=13×4 written maps; zero-based failure ordinal13 is the fourteenth quartet."
+    },
+    {
+      "id": "partial_rejected_as_population",
+      "result": "PASS",
+      "evidence": "Partial and preparation completion preserve the same unadmitted result; thirteen accepted groups do not admit the full population."
+    },
+    {
+      "id": "private_contract_bindings",
+      "result": "PASS",
+      "evidence": "Only equality booleans and binding counts were exported; private row/cycle arrays and full contracts remain private."
+    },
+    {
+      "id": "metadata_scope_recorded",
+      "result": "PASS",
+      "evidence": "The full prepared metadata and nested train/ID/OOD contract are parsed/copied privately; target construction iterates only train rows."
+    },
+    {
+      "id": "partial_cache_guard",
+      "result": "PASS",
+      "evidence": "Static admission guard refuses the partial cache before any array load and before downstream model/GPU work."
+    },
+    {
+      "id": "source_gate_precedes_target_write",
+      "result": "PASS",
+      "evidence": "The failed quartet cannot write four targets; failing pair RMSE values are not included in the returned report."
+    },
+    {
+      "id": "conditional_runner",
+      "result": "PASS",
+      "evidence": "The actual unadmitted route bypassed preflight and both arms and proceeded to normal finalize."
+    },
+    {
+      "id": "unrun_artifacts_absent",
+      "result": "PASS",
+      "evidence": "Preflight directory/result/reload and both arm directories/checkpoints/history/completions are absent."
+    },
+    {
+      "id": "unrun_results_null",
+      "result": "PASS",
+      "evidence": "No native/CF/arm/model result was emitted; unrun metrics remain null."
+    },
+    {
+      "id": "all_model_execution_zero",
+      "result": "PASS",
+      "evidence": "Model/CNN/point/auxiliary/combined-backward/update/GPU and ID/OOD/external execution counts are zero in every phase."
+    },
+    {
+      "id": "real_architecture_witness_unobserved",
+      "result": "PASS",
+      "evidence": "234 trainable tensors,465 states and77 BN modules are frozen expectations, not real-runtime observations."
+    },
+    {
+      "id": "monitor_matches_collection",
+      "result": "PASS",
+      "evidence": "The pre-existing completion witness and the one collection agree on saved counts, reason and costs."
+    },
+    {
+      "id": "saved_timing_consistency",
+      "result": "PASS",
+      "evidence": "All comparisons of the same timing boundary pass absolute tolerance1e-12."
+    },
+    {
+      "id": "controller_completion",
+      "result": "PASS",
+      "evidence": "Five numeric-only notices witness stages0/4 and whole completion, with preflight and cyclic false."
+    },
+    {
+      "id": "bounded_preparation",
+      "result": "PASS",
+      "evidence": "CPU preparation stayed within the fixed bounds; unknown point-only time remains null and GPU time is explicitly zero."
+    },
+    {
+      "id": "partial_cache_stat_only",
+      "result": "PASS",
+      "evidence": "The preallocated partial file is5628032 bytes by stat only; neither header nor array was read and file size does not certify5496 valid targets."
+    },
+    {
+      "id": "collector_scope",
+      "result": "PASS",
+      "evidence": "One successful allowlisted stdlib collection; no RGB/array/weight/model/GPU/GT/target recomputation, old benchmark or test execution."
+    },
+    {
+      "id": "safe_projection",
+      "result": "PASS",
+      "evidence": "The exported metadata has no absolute private path, full private contract, population rows, row-cycle array, target array or RGB."
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "files": [
+    "audit_result.json",
+    "report.md",
+    "checks.json",
+    "numeric_comparisons.csv",
+    "collected_metadata.json",
+    "archive_allowlist.json"
+  ],
+  "scope": "Explicit audit-only safe numeric, boolean, qualification and static-check artifacts; no private contracts, population rows, target arrays, RGB or weights."
+}

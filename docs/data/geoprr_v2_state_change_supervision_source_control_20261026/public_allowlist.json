@@ -4,7 +4,25 @@
     "protocol.json",
     "config.json",
     "cpu_checks.json",
-    "public_allowlist.json"
+    "public_allowlist.json",
+    "launch.json",
+    "completed/audit_result.json",
+    "completed/report.md",
+    "completed/checks.json",
+    "completed/numeric_comparisons.csv",
+    "completed/collected_metadata.json",
+    "completed/archive_allowlist.json"
   ],
-  "scope": "frozen source-observation-supervision contract/config/necessary synthetic CPU metadata only; no trainarrays/targets/RGB/weights/privatepaths"
+  "scope": "normalized state-change source-preparation rejection metadata and explicit six-file completed audit evidence; no private contracts, population rows, target arrays, RGB or weights",
+  "completion_status": "complete",
+  "scientific_verdict": "NOT_ADMITTED_SOURCE_OBSERVATION",
+  "integrity_verdict": "PASS",
+  "research_status": "ACTIVE",
+  "frozen_files_unchanged": [
+    "protocol.json",
+    "config.json",
+    "cpu_checks.json"
+  ],
+  "csv_storage": "plain CSV with LF line endings; original numeric strings retained",
+  "execution_check_scope": "Saved audit results and comparison evidence only; the original execution checker depends on private run context and is excluded."
 }
