@@ -1,0 +1,76 @@
+{
+  "protocol": "geoprr_v2_needle_holdout_source_control_v1",
+  "status": "passed",
+  "tests": 22,
+  "failures": 0,
+  "errors": 0,
+  "test_execution_seconds": 0.0063741132616996765,
+  "timing_scope": "new unittest execution after warm runtime imports",
+  "scope": "new selector,parent closure,needle exclusion,exposure,fixed5epoch gate and conditional OOD only; no repeated old model/GT/tests",
+  "real_model_constructions": 0,
+  "real_model_forward_calls": 0,
+  "real_RGB_reads": 0,
+  "cached_weights_loaded": false,
+  "GPU_model_calls": 0,
+  "source_metadata_preparation": {
+    "status": "complete",
+    "counts": {
+      "original_traceable": {
+        "canonical_pointer_01": {
+          "layouts": 338,
+          "images": 1352
+        },
+        "canonical_pointer_02": {
+          "layouts": 349,
+          "images": 1396
+        },
+        "canonical_pointer_03": {
+          "layouts": 337,
+          "images": 1348
+        }
+      },
+      "roll_train": {
+        "canonical_pointer_01": {
+          "layouts": 338,
+          "images": 1352
+        },
+        "canonical_pointer_02": {
+          "layouts": 349,
+          "images": 1396
+        },
+        "canonical_pointer_03": {
+          "layouts": 337,
+          "images": 1348
+        }
+      },
+      "roll_validation": {
+        "canonical_pointer_01": {
+          "layouts": 31,
+          "images": 124
+        },
+        "canonical_pointer_02": {
+          "layouts": 42,
+          "images": 168
+        },
+        "canonical_pointer_03": {
+          "layouts": 55,
+          "images": 220
+        }
+      }
+    },
+    "preparation_counts": {
+      "original_tail_rows": 4096,
+      "original_factor_snapshots": 1024,
+      "roll_rows": 4096,
+      "roll_parent_certifications": 1024,
+      "validation_rows": 512,
+      "validation_pointer_snapshots": 128,
+      "RGB_reads": 0,
+      "model_constructions": 0,
+      "GPU_calls": 0,
+      "weight_reads": 0
+    },
+    "local_wall_seconds": 25.117288167006336,
+    "source_rosters_downloaded_or_public": false
+  }
+}

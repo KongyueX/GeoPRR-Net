@@ -1,0 +1,18 @@
+{
+  "protocol": "geoprr_needle_holdout_source_control_public_allowlist_v1",
+  "status": "new_CPU_and_source_population_passed_runtime_pending",
+  "files": [
+    "../../GEOPRR_V2_NEEDLE_HOLDOUT_SOURCE_CONTROL_CN.md",
+    "README.md",
+    "config.json",
+    "cpu_checks.json",
+    "public_allowlist.json"
+  ],
+  "training_protocol": "geoprr_v2_needle_holdout_source_control_v1",
+  "Industrial_RF_forward_calls": 0,
+  "automatic_promotion": false,
+  "excluded": [
+    "source_population_ID_arrays/fullcontracts/privatepaths",
+    "RGB/checkpoints/weights/features/geometry"
+  ]
+}
