@@ -1,0 +1,18 @@
+{
+  "protocol": "geoprr_v2_mean_tail_source_control_v1",
+  "status": "passed",
+  "tests": 11,
+  "failures": 0,
+  "errors": 0,
+  "test_execution_seconds_after_warm_imports": 0.0847875140607357,
+  "forbidden_attempts": {
+    "real_model_constructions": 0,
+    "RGB_reads": 0,
+    "weight_reads": 0
+  },
+  "CUDA_available": false,
+  "CUDA_initialized": false,
+  "real_model_forward_calls": 0,
+  "cached_weights_loaded": false,
+  "scope": "new loss/k/allmean-grad/finite B1B4B56B64/context/strict objective metadata/newjoint/paired1pct guard/conditionalCF/diagnostic drift isolation only; no old tests"
+}

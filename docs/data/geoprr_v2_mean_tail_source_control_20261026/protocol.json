@@ -1,0 +1,172 @@
+{
+  "protocol_id": "geoprr_v2_mean_tail_source_control_v1",
+  "frozen_at_utc": "2026-10-25T19:31:33.884437+00:00",
+  "kind": "one matched15E source loss-aggregation control; not formalV32 or a new theory/generalization model",
+  "question": "Does equal weighting of batch mean and batch top-ceil10% per-image SmoothL1 improve native source tail without worsening mean/maximum/>5 or introducing >5 errors on previously accurate source examples, with those safeguards also holding under the fixed RGswap view?",
+  "source_evidence": [
+    "Current identity/C3 trainers minimize default batch-mean SmoothL1. Existing full-source checkpoint R and current acceptance combine mean and tail. This is an objective difference, not a proved cause.",
+    "Matched15E input-color contrast scientifically rejected C3: lower R_view/drift did not satisfy severe-count/maximum joint guards. No furtherC3/order/epoch/seed/threshold search or longC3 run.",
+    "Identity last15 source-ID292 mean/tail/max and native/CF paired results are the fixed equal-budget reference. Provided scalar labels unchanged."
+  ],
+  "feasibility": "refine-logs/geoprr_research_reset_20261025/source_tail_risk_objective_feasibility.json",
+  "literature": [
+    {
+      "title": "Learning with Average Top-k Loss",
+      "venue": "NeurIPS2017",
+      "url": "https://papers.nips.cc/paper_files/paper/2017/file/6c524f9d5d7027454a783c841250ba71-Paper.pdf",
+      "use": "standard average-top-k aggregation motivation, not a new algorithm or this task guarantee"
+    },
+    {
+      "title": "DORO: Distributional and Outlier Robust Optimization",
+      "venue": "ICML2021",
+      "url": "https://proceedings.mlr.press/v139/zhai21a.html",
+      "use": "outlier/noise sensitivity limitation only; no trimming, data deletion or DORO implementation"
+    }
+  ],
+  "model_data_optimization": "Exact freshcached completeMNV4/GAP1/semantic1280/Linear1 std.001bias0/sourceBN/AMP+F32scalar,5496train/292source-ID fixedpacket/native512 ROI/LINEAR/ImageNet/originalphoto/seed20262020/loaderseed20262020+epoch/batch64/workers4/AdamW3e-4wd1e-4clip5/defaultfreshGradScaler. ActualtrainingRGB5496/GBR0/BRG0 perE. No newhead/pool/norm/weights/seed/RGB/geometry/GT/teacher/mask/labels/input augment/pair loss.",
+  "objective": {
+    "per_image": "Existing one-scalar SmoothL1(prediction_i,y_i,beta=.05,reduction=none)",
+    "aggregation": "0.5*mean(per_image) + 0.5*mean(largest k per_image), k=ceil(.1*actual B)",
+    "fixed_weights": [
+      0.5,
+      0.5
+    ],
+    "fixed_fraction": 0.1,
+    "source_of_constants": "equal mean/tail emphasis and10% tail from existing source evaluation, not target data or paper hyperparameter tuning",
+    "k_for_B64_B56_prefB4": [
+      7,
+      6,
+      1
+    ],
+    "per_complete_epoch_tail_slots": 601,
+    "qualification": "Batch ceil(.1B) is not full-population top10%;601/5496 upweightedslots perE, all5496 still participate through mean. SmoothL1 differs from absolute-error scoring. Rank monotonicity does not prove generalization. No alpha/lambda/beta scan or outlier trimming.",
+    "logging": "Save actual composite training objective with explicit semantics; retained raw history key source_training_smooth_l1 must be declared composite risk, not primitive mean. Do not change checkpoint/history consistency. Track unweighted trainingNMAE normally.",
+    "failure": "Training input read errors already raise inaugment=True. Formal nonfinite loss is a fault; normal AMP gradient overflow remains scaler skip recorded inattempts, not an automatic fault/scale change."
+  },
+  "reference": {
+    "protocol": "geoprr_v2_matched_identity_source_control_v1",
+    "science_revision": "3e39174f36b342691f6ee96acdea2036ee5e8d30",
+    "relative_reader": "runs/geoprr_generalization/source_matched_identity_control_20261026/reader",
+    "native_statistics": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.025431218243695233,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.015494510531425476,
+      "p90_error": 0.040915115177631405,
+      "p95_error": 0.05404334664344783,
+      "tail10_nmae": 0.11800955331418664,
+      "maximum_error": 0.5379703640937805,
+      "nmae_percent_fs": 2.543121824369523,
+      "count_at_1_percent_fs": 102,
+      "acc_at_1": 0.3493150684931507,
+      "acc_at_1_percent": 34.93150684931507,
+      "errors_above_1_percent_fs": 190,
+      "count_at_2_percent_fs": 182,
+      "acc_at_2": 0.6232876712328768,
+      "acc_at_2_percent": 62.32876712328767,
+      "errors_above_2_percent_fs": 110,
+      "count_at_5_percent_fs": 276,
+      "acc_at_5": 0.9452054794520548,
+      "acc_at_5_percent": 94.52054794520548,
+      "errors_above_5_percent_fs": 16,
+      "median_error_percent_fs": 1.5494510531425476,
+      "p90_error_percent_fs": 4.0915115177631405,
+      "p95_error_percent_fs": 5.404334664344783,
+      "tail10_nmae_percent_fs": 11.800955331418663,
+      "maximum_error_percent_fs": 53.79703640937805,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    },
+    "CF_statistics": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.026353762864682596,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.01438409835100174,
+      "p90_error": 0.04164543636143209,
+      "p95_error": 0.05768549442291258,
+      "tail10_nmae": 0.12945961876345488,
+      "maximum_error": 0.5424728989601135,
+      "nmae_percent_fs": 2.6353762864682597,
+      "count_at_1_percent_fs": 104,
+      "acc_at_1": 0.3561643835616438,
+      "acc_at_1_percent": 35.61643835616438,
+      "errors_above_1_percent_fs": 188,
+      "count_at_2_percent_fs": 189,
+      "acc_at_2": 0.6472602739726028,
+      "acc_at_2_percent": 64.72602739726027,
+      "errors_above_2_percent_fs": 103,
+      "count_at_5_percent_fs": 275,
+      "acc_at_5": 0.9417808219178082,
+      "acc_at_5_percent": 94.17808219178082,
+      "errors_above_5_percent_fs": 17,
+      "median_error_percent_fs": 1.438409835100174,
+      "p90_error_percent_fs": 4.164543636143208,
+      "p95_error_percent_fs": 5.768549442291258,
+      "tail10_nmae_percent_fs": 12.945961876345487,
+      "maximum_error_percent_fs": 54.24728989601135,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    },
+    "scope": "Read only existing native/CF scalar CSVs and completed metadata after training or to validate references; no prior model/weights/forward. exact sourcecontract equality server-side. Provided-label comparison only, raw normalization/oldC3 qualification not recertified."
+  },
+  "training": {
+    "epochs": 15,
+    "max_epochs": 15,
+    "checkpoint": "last15 only",
+    "intermediate_validation": false,
+    "scheduler": null,
+    "best_selection": false,
+    "extension": false,
+    "attempts": 1290,
+    "images": 82440,
+    "calls": 1290,
+    "actual_updates_plus_AMPskip": 1290,
+    "resume": "strict newprotocol/config/complete fullstate-opt/scaler/RNG/history/totals at completeepoch only, no partial/fresh overwrite or budget reset"
+  },
+  "native_gate": {
+    "base_learning_gate": "original constant0.5 halfmean/ceil30tail unchanged, full292 failureserror1",
+    "joint": "mean<=reference native nmae; ceil30tail<reference native tail; maximum<=reference native max; >5 count<=16; no new >5 error among aligned reference native rows with absolute_error<=.01. Referenceaccurate1pct set is only this292 source-ID guard, not oldordinary1495/1497 cohort.",
+    "other": "Report allAcc1/2/5, median/p90/p95, >1/2/5 counts/new/rescue/image/group differences, no filtering. >1/2 counts are reported but not new acceptance knobs.",
+    "failure_action": "normalNOT_RETAINED, CF0CNN/no resultfile; no additionalepoch/seed/weights/loss parameter or operator retry"
+  },
+  "CF_gate": {
+    "condition": "native baselearning AND all newnative joint predicates pass; same last15 same292source rows/labels/ROI fixedRGswap[1,0,2] once",
+    "joint": "CFmean<=referenceCF nmae; CFceil30tail<=referenceCF tail; CFmax<=referenceCF max; CF>5 count<=17; no new>5 among aligned referenceCF error<=.01.",
+    "drift": "Fullmean/ceil30/max prediction drift and paired counts reported; previous color-control drift thresholds are diagnostic only, not acceptance for this loss-objective experiment.",
+    "failure_policy": "invalidinput/scalar fullerror1; valid saturation0/1 notfailure; invalidpaired drift1, no row deletion",
+    "claim": "same73source layouts artificialcondition, alreadyseen developmentview, not newblindtest/independentreal domain"
+  },
+  "verdict": "MEAN_TAIL_SOURCE_CONTROL_PASSED only if all native+CF joint predicates pass; otherwise NOT_RETAINED. Missingreference/labelalignment or budget/implementation mismatch is fault/incomplete, not scientifically passed. Success only supports considering an independent formal source protocol after audit/archive, not promotion or direct external evaluation.",
+  "NEWCPU": "Only newloss aggregation/ceilk atB1,B4,B56,B64/allmean contribution/finite autograd, loss patch/context isolation, native-CF joint/ordinary paired guard/eligibility/strict newprotocol and correctobjective metadata toys. No realmodel construction/RGB/weights/GPU, no repeatold14C3/8identity/operator/exposure/selector/GT/teacher/tests.",
+  "preflight": "One freshsame8unique sourceIDs asidentity,3CNN/8presentations/1combinedback0opt,train4actualRGB plusID4; actual newaggregatedloss differentiates, mandatoryfinite nonzero stem/neck/point grads, cached462 retained,233params0optunchanged/464strict/77BN+1eval0/native512identity/dtypes. Pref data/BN/RNG/modelstate discarded, formalfresh. No source03/CFmodel/real domains beforegate. Fixed witnessloss128 and grad/128; formaldefaultScaler unchanged.",
+  "counts": {
+    "train_images": 82440,
+    "train_CNN_point_and_backattempts": 1290,
+    "native_images": 292,
+    "native_calls": 5,
+    "CF_if_eligible_images": 292,
+    "CF_calls": 5,
+    "nativefail_total_images": 82732,
+    "nativefail_total_CNN_point_calls": 1295,
+    "CFdone_total_images": 83024,
+    "CFdone_total_CNN_point_calls": 1300,
+    "pref_separate_images": 8,
+    "pref_separate_calls": 3,
+    "source03_Industrial_RF_RGB_model_back_updates": 0
+  },
+  "execution_locations": {
+    "output": "runs/geoprr_generalization/source_mean_tail_control_20261026",
+    "pref": "diagnostics/geoprr_mean_tail_control_preflight_20261026/result.json",
+    "public_root": "docs/data/geoprr_v2_mean_tail_source_control_20261026/",
+    "public_protocol": "docs/GEOPRR_V2_MEAN_TAIL_SOURCE_CONTROL_CN.md"
+  },
+  "execution": "First archive matchedidentity final171numericPASS with oldC3 rawlabel scopequalification existingmain. Then code/protocol/config/necessaryNEWCPU freezepush explicitallowlist existingmain, scoped3newcode+3metadata precheckedbeforeoutmutation, actualoldparentchildrengoneGPUidle -> onepref->fresh15E sourcecontrol. No concurrentGPU. Livecode/model/config/data/loss/fraction/weights/BN/precision/15E/gates fixed. Truefault preservepartial/original log/actualcmd, no blindfresh; CSVwithoutsummary neversecondforward. Ownentrytimerbeforetorch plusactualphase/wall/peak; point/operator/loss-onlytimeunknownnull unlessactuallymeasured, costsnotfree.",
+  "completion": "whole2stageexit0,parentchildrengoneGPUempty -> exactlyONEfresh independent non-author stdlib saved-number/execution audit, no secondauditor/model/weights/GT/oldtest rerun. Normalizeexplicitallowlist existingmain. Fullprovided-label/errorfail/pairednew/rescue/tradeoffs and qualifiers preserved. Negativeclosesfixedobjective, no tuningtoforcepass.",
+  "privacy_and_constraints": "Onlyexistingwarmprojectvenv/assets/cache/sourcepacket; rawrun/fullcontracts/trainarrays/RGB/weights/features/geometry/privatepaths serverprivate, stdout allowlist beforetransfer, scalarCSV/groups explicitlypermitted. No branch/gitadd-A/otheruntracked/systemchanges/newseed/foundationweights/compute purchase/officialtest4000/thirdparty messages. No Industrial/RF training/adapt/statsfit/BN/checkpoint/epoch/LR/sourcehyperparam/ROI/temperature choice; no targetcase labels."
+}
