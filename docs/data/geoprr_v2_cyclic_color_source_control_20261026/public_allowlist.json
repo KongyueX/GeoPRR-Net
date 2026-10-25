@@ -1,0 +1,10 @@
+{
+  "kind": "explicit normalized source-control metadata only; raw RGB/weights/features/contracts/train arrays excluded",
+  "files": [
+    "README.md",
+    "protocol.json",
+    "config.json",
+    "cpu_checks.json",
+    "public_allowlist.json"
+  ]
+}

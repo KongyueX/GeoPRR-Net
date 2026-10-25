@@ -1,0 +1,121 @@
+{
+  "protocol_id": "geoprr_v2_cyclic_color_source_control_v1",
+  "frozen_at_utc": "2026-10-25T17:26:57.777349+00:00",
+  "kind": "bounded source-only color-cue control; not formal V32, no real external evaluation",
+  "question": "Can fixed C3 channel-order training preserve native source reading and make the same source reader stable on a preregistered channel transposition that is outside the training subgroup?",
+  "source_basis": [
+    "Existing traceable source shares one HDR and r-only groups do not add fixed-g/r/c appearance-only RGB evidence. Exact historical parent appearance replay was stopped and remains closed.",
+    "Existing scalar pipeline has mild brightness/contrast/saturation augmentation but no channel-order variation.",
+    "Source state-response is mostly ordered but does not establish visible spatial localization or any color-cue cause. This control tests one explicit input appearance nuisance without inventing physical observation labels."
+  ],
+  "literature": {
+    "primary": "https://arxiv.org/html/2311.13198v1",
+    "title": "DoubleAUG: Single-domain Generalized Object Detector in Urban via Color Perturbation and Dual-style Memory",
+    "section": "3.1 Color Perturbation",
+    "scope": "The paper randomly shuffles RGB channels for single-domain object detection. We use only a fixed C3 subset and a held-out transposition; no DSM, feature statistics/memory, teacher or paper replication claim. Object-detection results do not guarantee meter benefits.",
+    "secondary_context": "https://openreview.net/forum?id=BVSM0x3EDK6",
+    "not_used": "No random convolution or additional loss is implemented."
+  },
+  "model": "Exact fresh cached complete ImageNet MNV4 conv-medium num_classes0, GAP1/semantic1280/Linear1280->1 std.001 bias0, source BN, AMP encoder/point and FP32 sigmoid; same original scalar architecture, no head/pool/norm/teacher/adapter change.",
+  "data": {
+    "packet": "diagnostics/geoprr_source_needle_holdout_control_population_20261025",
+    "train": 5496,
+    "source_id": 292,
+    "train_parents": 687,
+    "source_id_layouts": 73,
+    "source_ood_needle03_RGB_and_model_calls": 0,
+    "real_industrial_RF_calls": 0,
+    "reuse": "Exact frozen scalar packet train and source-ID. No preparation or factor scan, no new source/label population. prepared validation may inspect existing metadata contracts server-side but no withheld RGB, model outputs or statistics enter training. All arrays/contracts remain server private.",
+    "input": "Existing native512 ROI/INTER_LINEAR/ImageNet and original train photo, no spatial transform or crop change; output128 remains API only."
+  },
+  "operator": {
+    "train_orders": [
+      [
+        0,
+        1,
+        2
+      ],
+      [
+        1,
+        2,
+        0
+      ],
+      [
+        2,
+        0,
+        1
+      ]
+    ],
+    "order_index": "(dataset_index + epoch - 1) % 3, epochs1..15; independent of labels/needle/state and no RNG draw",
+    "exposure": "5496 dataset items once per epoch, each order1832 per epoch; each raw item gets each of3 orders exactly5 times over15 epochs. One CNN view per presentation, no pair or consistency objective.",
+    "native_eval_order": [
+      0,
+      1,
+      2
+    ],
+    "counterfactual_eval_order": [
+      1,
+      0,
+      2
+    ],
+    "pipeline": "After the existing source photo transform and before encoder. If dataset yields ImageNet-normalized RGB z, compute stateless FP32 zprime_c=(std_perm/std_c)*z_perm+(mean_perm-mean_c)/std_c; identity returns input exactly. This represents raw RGB permutation followed by the unchanged ImageNet normalization. No clipping, grayscale, interpolation, feature fit, pixel/file output, cache or trainable operator.",
+    "invariance_claim": "A permutation is invertible on the full three-channel array and keeps spatial coordinates and scalar r label fixed; it is an artificial color intervention, not a certified physical relighting/new domain or proof of readability. Actual source learnability gates remain required."
+  },
+  "training": {
+    "epochs": 15,
+    "checkpoint": "last15 only, no best selection",
+    "optimizer": "fresh AdamW lr3e-4 wd1e-4 clip5, SmoothL1beta.05, default fresh AMP GradScaler",
+    "seed": 20262020,
+    "batch_size": 64,
+    "workers": 4,
+    "loader_seed": "existing20262020+epoch",
+    "scheduler": null,
+    "intermediate_validation": false,
+    "continuation": "No extension, seed/restart/hyperparameter/augmentation-order scan. True fault preserves partial/history/code snapshot. If latest exists, only exact new protocol/config/data/optimizer/scaler/RNG/history/totals resume at next epoch; no fresh overwrite or restart counters.",
+    "why15": "Five exposures per raw sample per each of three channel orders; explicitly3x the prior directFT5 raw-image/update budget, not a matched-budget causal comparison."
+  },
+  "native_gate": {
+    "full_denominator": 292,
+    "failures": "error1, keep every row, valid saturation0/1 is not failure",
+    "learning_gate": "Existing constant0.5 half-mean and half-ceil30-tail rule unchanged. Mean<=.12504463703046659 and tail<=.23692208052865073 normalized FS.",
+    "primary": "In addition, native mean<=directFT5 .06132800787729562, tail<.25669996334860723, max<=.5787063241004944 and >1/2/5 counts<=245/209/114, all simultaneously.",
+    "baseline": "Prior saved directFT5 source-ID292, no new baseline forward/training. Different15vs5 budget must be prominent, no causal augmentation improvement claim.",
+    "failure_action": "Normal native_learning_or_primary_failed; counterfactual source view0CNN and no result file. Do not extend, change gates or run source-needle03/real domains."
+  },
+  "counterfactual_gate": {
+    "condition": "native learning AND native primary pass, same last15 only",
+    "population": "same all292 source-ID rows/labels and native ROI, fixed raw-RG swap [1,0,2], exactly once; not independent layouts or a new blind test",
+    "backward_updates": 0,
+    "metrics": "Full-denominator mean/tail/max/Acc1/2/5/median/p90/p95, fail counts; paired error rescues/regressions and scalar prediction drift relative to new native condition.",
+    "accept": "counterfactual mean<=.12504463703046659 AND tail<=.23692208052865073 AND mean absolute scalar drift vs native<=.01 AND ceil30 mean absolute scalar drift<=.05. No threshold or operator search.",
+    "verdict": "Only SOURCE_COLOR_CONTROL_PASSED if all native+counterfactual predicates pass; otherwise NOT_RETAINED. A pass permits root to consider a new formal source experiment, not promotion or automatic external evaluation."
+  },
+  "necessary_new_CPU": "Only new normalized-channel operator/inverse/identity/noRNG and deterministic per-item/per-epochC3 exposure, new native-primary/counterfactual conditional gates/drift/alignment and new count/resume-contract toys. No real MNV4 construction, old selector/constant gate/GT/teacher/tests or source metadata preparation rerun.",
+  "preflight": {
+    "CNN_calls": 3,
+    "CNN_images_and_unique_RGB": 8,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0,
+    "source": "4 fixed seen training images from existing pref indices, with explicit orders0,1,2,0 for this witness; source-ID4 from lexicographically first2IDs per seen needle split into2eval batches. No needle03 or real domains.",
+    "checks": "cached462 encoder initialstates retained; model8435793params233tensors464states, source77BN+1/eval+0; new operator actual FP32 tensors and F16semantic/point/F32scalar; train3C3 shapes/finite, mandatory stem/neck/point gradients finite nonzero; all233parameters0optimizer unchanged;464 strictreload; native source-ID input identity; invert [1,0,2] only on already-read training tensors with0additionalCNN, not held-out model evaluation. Formal fresh reinitializes no prefBN/state carryover. Backward witness uses fixed loss*128 then grad/128 only for finite checks; formal defaultScaler unchanged."
+  },
+  "counts": {
+    "train_images": 82440,
+    "train_CNN_and_point_calls": 1290,
+    "back_attempts": 1290,
+    "updates_plus_AMPskip": 1290,
+    "native_images": 292,
+    "native_calls": 5,
+    "counterfactual_if_eligible_images": 292,
+    "counterfactual_if_eligible_calls": 5,
+    "formal_native_failure_images": 82732,
+    "formal_native_failure_CNN_and_point_calls": 1295,
+    "formal_counterfactual_done_images": 83024,
+    "formal_counterfactual_done_CNN_and_point_calls": 1300,
+    "pref_separate_CNN_images": 8,
+    "pref_separate_calls": 3
+  },
+  "execution": "Root launches only after necessary NEWCPU pass, code/protocol/config/CPU artifacts frozen+pushed existingmain and exact scoped deployment, original parents actually gone/GPU idle. Metadata snapshot dependencies prechecked before any output mutation; controller log/receipt outside pristineoutput. Only unique serial preflight->source control, no external steps. Full entry timer before torch import and actual phase wall/peaks/AMPskip count; unknown point-only time null. Partial CSV with no summary may not be forwarded again.",
+  "completion": "After complete and parent/children gone/GPU empty, exactly ONE fresh independent saved-scalar/execution CPU audit, author not auditor, no second audit/weights opening. Explicit-allowlist normalized archive existingmain, all failed/mixed outcomes and costs retained. No complete-run polling.",
+  "privacy": "No RGB/weights/features/source train identity arrays/fullcontracts/g/c/XYZ/mesh/private absolute paths downloaded or public; server allowlist metadata before stdout. Only explicitly permitted saved scalar CSVs/groups and normalized contracts/metadata collected. No third-party messages, packages/newweights/system changes/GPU purchase/extra seeds/officialtest4000."
+}
