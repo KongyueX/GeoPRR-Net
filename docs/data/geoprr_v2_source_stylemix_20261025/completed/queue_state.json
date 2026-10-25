@@ -1,0 +1,49 @@
+{
+  "protocol": "geoprr_v2_source_stylemix_source_only_v1",
+  "code_revision": "18f67f14a6173f4444200d0b2c7a40000d17538f",
+  "pipeline_pid": 330036,
+  "status": "complete",
+  "updated_at": "2026-10-25T03:54:10.631585+00:00",
+  "current_step": null,
+  "seeds": [
+    20262020
+  ],
+  "steps": {
+    "preflight": {
+      "status": "complete",
+      "started_at": "2026-10-25T00:56:49.315358+00:00",
+      "finished_at": "2026-10-25T00:57:11.623833+00:00",
+      "exit_code": 0,
+      "interpreter_is_project_venv": true,
+      "module": "experiments.geoprr_v2_source_stylemix",
+      "checkpoint_is_reader_best": true
+    },
+    "train_source": {
+      "status": "complete",
+      "started_at": "2026-10-25T00:57:11.688521+00:00",
+      "finished_at": "2026-10-25T03:53:43.653045+00:00",
+      "exit_code": 0,
+      "interpreter_is_project_venv": true,
+      "module": "experiments.geoprr_v2_source_stylemix",
+      "checkpoint_is_reader_best": true
+    },
+    "eval_industrial": {
+      "status": "complete",
+      "started_at": "2026-10-25T03:53:43.720399+00:00",
+      "finished_at": "2026-10-25T03:53:58.875924+00:00",
+      "exit_code": 0,
+      "interpreter_is_project_venv": true,
+      "module": "experiments.geoprr_v2_source_stylemix",
+      "checkpoint_is_reader_best": true
+    },
+    "eval_rf100": {
+      "status": "complete",
+      "started_at": "2026-10-25T03:53:58.923128+00:00",
+      "finished_at": "2026-10-25T03:54:10.616988+00:00",
+      "exit_code": 0,
+      "interpreter_is_project_venv": true,
+      "module": "experiments.geoprr_v2_source_stylemix",
+      "checkpoint_is_reader_best": true
+    }
+  }
+}

@@ -52,6 +52,16 @@ whole source＋I/R complete／四exit0／父子退出GPU空后才委派ONE新鲜
 
 报告完整mean／Acc1/2/5／median/p90/p95／tail10／max、相对v16／旧GeoPRR／v24／v25／v26／v28及保存参照的>1/2/5新增救回、逐图组改善恶化、zero／nonzero／nearzero、ordinary1495／1497／severe6与固定focus。roll512只自身，V27无外域结果不拼造；源R或单域收益不代表整体成功，不自动promotion。所有旧正负资产保留，归档后按真人授权持续独立源域结构／表示迭代。
 
+## 完成记录
+
+源60轮完整结束，earliest strict source R选best15，R=0.02109762356977877；last60 R=0.059930220630278135，均为normalized full error。60−15=45≥20，因min60在第60轮停止，未在第35轮提前结束；LR在24／33／42／51／60轮后下降不重置counter，无resume。两域只在源停止后各一次冻结同一best15，last只源；四阶段complete／exit0，最终RF于2026-10-25T03:54:10.616988+00:00结束，父进程已退出、2026-10-25T04:05:40+00:00保存检查时GPU空闲。
+
+源best原1506 mean／tail／max为0.749396／3.505846／82.507033%FS，roll512为0.910155／3.273653／13.418275%FS。Industrial mean22.354576／tail78.790409／max97.788346%FS，mean较V26小幅降低而tail／max升高，三项均弱于V28；相对V25 >5救回186／新增143，同时mean／tail升高。RF100 mean11.805282／tail51.893965／max72.905040%FS，mean弱于主要参照；tail低于V28，同时mean／max升高；相对V24 >5救回39／新增16。源与外域的混合或负结果保留，不升级默认，V27无外域结果不作为baseline。
+
+实际8435793参数／233个trainable参数tensor／464state、完整GAP1 semantic1280与point1280→1，唯一blocks[1]训练style p1／FP32 detached μσ／unbiased=False变体；eval精确identity，无目标统计或缓存。正式CNN／point各2221066图／34765调用，源backward尝试32820＝32806更新＋14AMPskip；style active32820调用／2098440图、inactive1945调用／122626图，operator forward51.958477784秒已包含pipeline、不含backward。pref3CNN／8图／1back／0optimizer，style active1次4图／inactive2次4图单列。训练pipeline10120.079081秒、source full10590.045265秒、source peak allocated／reserved8262579712／11345592320bytes；单CNN不等于同成本。
+
+唯一独立CPU保存数字／执行核对68816项通过、0失败、最大差1.4210854715202004e-14；未加载模型／weights／RGB／moments／geometry／checkpoint或重跑GT／旧测试／外评。[报告](data/geoprr_v2_source_stylemix_20261025/completed/report_cn.md)、[指标](data/geoprr_v2_source_stylemix_20261025/completed/metrics.json)、[比较表](data/geoprr_v2_source_stylemix_20261025/completed/comparison.csv)及[26项completed allowlist](data/geoprr_v2_source_stylemix_20261025/completed/public_allowlist.json)已规范化归档；[总allowlist](data/geoprr_v2_source_stylemix_20261025/public_allowlist.json)33项。checkpoint／RNG保存机制是代码与metadata证据，内容未加载，不增加恢复保证。全部原资产保留，rawrun／contracts／完整源数组和ID名单／delta maps／rawthreshold-rescue-new名单／RGB／weights／moments值／features／geometry／bbox／privatepaths私有。
+
 ## Limitations
 
 源特征的逐图均值／方差可能包含任务内容，混合可能损伤读数，不能声称只改变风格、标签语义严格保持或保证泛化。GAP／训练表示与历史相对V28同时变化，不作单因素因果；本轮固定变体不是原MixStyle完整配置的复现。单seed、已查看开发域、sharedHDR和历史seed缺失边界保持，不报SD、显著性、新盲测、普适性或新理论；旧GeoPRR历史pixel/fullweight链未重认证。RGB／weights／moments实际值／feature／geometry/H/C/XYZ/U/M／bbox／rawrun／fullcontracts／源arrays／privatepaths私有，仅公开规范化标量、形状／dtype和执行metadata。

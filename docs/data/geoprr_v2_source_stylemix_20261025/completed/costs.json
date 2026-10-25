@@ -1,0 +1,894 @@
+{
+  "formal_counts": {
+    "cnn_image_forwards": 2221066,
+    "cnn_forward_calls": 34765,
+    "point_image_forwards": 2221066,
+    "point_forward_calls": 34765,
+    "source_backward_calls": 32820,
+    "source_optimizer_updates": 32806,
+    "source_amp_skipped_updates": 14,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  },
+  "actual_formal_costs": {
+    "industrial": {
+      "timing": {
+        "counts": {
+          "cnn_forward_calls": 22,
+          "cnn_image_forwards": 1395,
+          "backward_calls": 0,
+          "optimizer_updates": 0,
+          "failed_input_placeholder_forwards": 0
+        },
+        "pipeline_seconds": 10.841217570006847,
+        "forward_seconds": 8.25239709764719,
+        "batch_size": 64,
+        "workers": 4,
+        "point_counts": {
+          "point_forward_calls": 22,
+          "point_image_forwards": 1395
+        },
+        "style_cost": {
+          "counts": {
+            "calls": 22,
+            "images": 1395,
+            "active_calls": 0,
+            "active_images": 0,
+            "inactive_calls": 22,
+            "inactive_images": 1395
+          },
+          "forward_seconds": 5.9616000740788866e-05,
+          "timing": "CUDA event elapsed",
+          "boundary": "style operator entry through return; backward and full pipeline time recorded separately"
+        }
+      },
+      "runtime": {
+        "process_seconds": 12.929377626627684,
+        "full_process_seconds": 14.24940288066864,
+        "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+        "device": "cuda",
+        "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+        "torch": "2.11.0+cu128",
+        "cuda": "12.8",
+        "peak_cuda_memory_bytes": 1519015424,
+        "peak_cuda_reserved_bytes": 2235564032
+      },
+      "forward_counts": {
+        "cnn_forward_calls": 22,
+        "cnn_image_forwards": 1395,
+        "backward_calls": 0,
+        "optimizer_updates": 0,
+        "failed_input_placeholder_forwards": 0
+      },
+      "style_cost": {
+        "counts": {
+          "calls": 22,
+          "images": 1395,
+          "active_calls": 0,
+          "active_images": 0,
+          "inactive_calls": 22,
+          "inactive_images": 1395
+        },
+        "forward_seconds": 5.9616000740788866e-05,
+        "timing": "CUDA event elapsed",
+        "boundary": "style operator entry through return; backward and full pipeline time recorded separately"
+      }
+    },
+    "rf100": {
+      "timing": {
+        "counts": {
+          "cnn_forward_calls": 3,
+          "cnn_image_forwards": 151,
+          "backward_calls": 0,
+          "optimizer_updates": 0,
+          "failed_input_placeholder_forwards": 0
+        },
+        "pipeline_seconds": 8.378999307751656,
+        "forward_seconds": 7.2450209595263,
+        "batch_size": 64,
+        "workers": 4,
+        "point_counts": {
+          "point_forward_calls": 3,
+          "point_image_forwards": 151
+        },
+        "style_cost": {
+          "counts": {
+            "calls": 3,
+            "images": 151,
+            "active_calls": 0,
+            "active_images": 0,
+            "inactive_calls": 3,
+            "inactive_images": 151
+          },
+          "forward_seconds": 4.49599998537451e-05,
+          "timing": "CUDA event elapsed",
+          "boundary": "style operator entry through return; backward and full pipeline time recorded separately"
+        }
+      },
+      "runtime": {
+        "process_seconds": 10.00339149683714,
+        "full_process_seconds": 10.936407320201397,
+        "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+        "device": "cuda",
+        "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+        "torch": "2.11.0+cu128",
+        "cuda": "12.8",
+        "peak_cuda_memory_bytes": 1519015424,
+        "peak_cuda_reserved_bytes": 2235564032
+      },
+      "forward_counts": {
+        "cnn_forward_calls": 3,
+        "cnn_image_forwards": 151,
+        "backward_calls": 0,
+        "optimizer_updates": 0,
+        "failed_input_placeholder_forwards": 0
+      },
+      "style_cost": {
+        "counts": {
+          "calls": 3,
+          "images": 151,
+          "active_calls": 0,
+          "active_images": 0,
+          "inactive_calls": 3,
+          "inactive_images": 151
+        },
+        "forward_seconds": 4.49599998537451e-05,
+        "timing": "CUDA event elapsed",
+        "boundary": "style operator entry through return; backward and full pipeline time recorded separately"
+      }
+    },
+    "source_totals": {
+      "train_batches": 32820,
+      "train_cnn_image_forwards": 2098440,
+      "train_cnn_forward_calls": 32820,
+      "backward_calls": 32820,
+      "optimizer_updates": 32806,
+      "amp_skipped_updates": 14,
+      "validation_images": 121080,
+      "validation_cnn_forward_calls": 1920,
+      "train_point_forward_calls": 32820,
+      "train_point_image_forwards": 2098440,
+      "validation_point_forward_calls": 1920,
+      "validation_point_image_forwards": 121080,
+      "training_seconds": 10120.079081062227,
+      "validation_seconds": 427.7224973998964,
+      "train_style_calls": 32820,
+      "train_style_images": 2098440,
+      "train_style_active_calls": 32820,
+      "train_style_active_images": 2098440,
+      "train_style_inactive_calls": 0,
+      "train_style_inactive_images": 0,
+      "validation_style_calls": 1920,
+      "validation_style_images": 121080,
+      "validation_style_active_calls": 0,
+      "validation_style_active_images": 0,
+      "validation_style_inactive_calls": 1920,
+      "validation_style_inactive_images": 121080,
+      "train_style_forward_seconds": 51.95686213630438,
+      "validation_style_forward_seconds": 0.001511072008695919
+    },
+    "source_runtime": {
+      "process_seconds": 10589.095355667174,
+      "full_process_seconds": 10590.045265104622,
+      "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 8262579712,
+      "peak_cuda_reserved_bytes": 11345592320
+    },
+    "stage_wall_seconds": {
+      "preflight": 22.308475,
+      "train_source": 10591.964524,
+      "eval_industrial": 15.155525,
+      "eval_rf100": 11.69386
+    },
+    "controller_end_to_end_seconds": 10618.928467,
+    "preflight_through_external_wall_seconds": 10641.30163,
+    "completed_at_utc": "2026-10-25T03:54:10.616988+00:00",
+    "source_checkpointed_process_seconds": 10589.09561991319,
+    "style_operator": {
+      "counts": {
+        "calls": 34765,
+        "images": 2221066,
+        "active_calls": 32820,
+        "active_images": 2098440,
+        "inactive_calls": 1945,
+        "inactive_images": 122626
+      },
+      "source_train_forward_seconds": 51.95686213630438,
+      "source_validation_forward_seconds": 0.001511072008695919,
+      "external_forward_seconds": 0.00010457600059453397,
+      "formal_forward_seconds": 51.95847778431367,
+      "preflight_separate": {
+        "counts": {
+          "calls": 3,
+          "images": 8,
+          "active_calls": 1,
+          "active_images": 4,
+          "inactive_calls": 2,
+          "inactive_images": 4
+        },
+        "forward_seconds": 0.20117276168800893,
+        "timing": "CUDA event elapsed",
+        "boundary": "style operator entry through return; backward and full pipeline time recorded separately"
+      }
+    },
+    "controller_end_to_end_boundary": "train_source supervisor start through final frozen external exit; excludes preceding new preflight",
+    "preflight_record": "../runtime_preflight.json",
+    "reused_source_generation_record": "../../geoprr_v2_roll_source_20261024/source_completed.json",
+    "new_source_generation_cost": 0
+  },
+  "point_execution_evidence": {
+    "source_train": {
+      "calls": 32820,
+      "images": 2098440
+    },
+    "source_validation": {
+      "calls": 1920,
+      "images": 121080
+    },
+    "external": {
+      "industrial": {
+        "point_forward_calls": 22,
+        "point_image_forwards": 1395
+      },
+      "rf100": {
+        "point_forward_calls": 3,
+        "point_image_forwards": 151
+      }
+    },
+    "preflight": {
+      "point_forward_calls": 3,
+      "point_image_forwards": 8
+    },
+    "source_loss_backward_attempts": 32820,
+    "source_BN_update_preflight": 1,
+    "eval_additional_BN_update_preflight": 0
+  },
+  "source_stylemix_execution_evidence": {
+    "encoder_input": [
+      {
+        "shape": [
+          4,
+          3,
+          512,
+          512
+        ],
+        "dtype": "torch.float32"
+      },
+      {
+        "shape": [
+          2,
+          3,
+          512,
+          512
+        ],
+        "dtype": "torch.float32"
+      },
+      {
+        "shape": [
+          2,
+          3,
+          512,
+          512
+        ],
+        "dtype": "torch.float32"
+      }
+    ],
+    "pool": [
+      {
+        "before": [
+          4,
+          960,
+          16,
+          16
+        ],
+        "after": [
+          4,
+          960,
+          1,
+          1
+        ]
+      },
+      {
+        "before": [
+          2,
+          960,
+          16,
+          16
+        ],
+        "after": [
+          2,
+          960,
+          1,
+          1
+        ]
+      },
+      {
+        "before": [
+          2,
+          960,
+          16,
+          16
+        ],
+        "after": [
+          2,
+          960,
+          1,
+          1
+        ]
+      }
+    ],
+    "point": [
+      {
+        "semantic_shape": [
+          4,
+          1280
+        ],
+        "point_logit_shape": [
+          4,
+          1
+        ],
+        "semantic_dtype": "torch.float16",
+        "point_logit_dtype": "torch.float16"
+      },
+      {
+        "semantic_shape": [
+          2,
+          1280
+        ],
+        "point_logit_shape": [
+          2,
+          1
+        ],
+        "semantic_dtype": "torch.float16",
+        "point_logit_dtype": "torch.float16"
+      },
+      {
+        "semantic_shape": [
+          2,
+          1280
+        ],
+        "point_logit_shape": [
+          2,
+          1
+        ],
+        "semantic_dtype": "torch.float16",
+        "point_logit_dtype": "torch.float16"
+      }
+    ],
+    "style": [
+      {
+        "shape": [
+          4,
+          80,
+          64,
+          64
+        ],
+        "input_dtype": "torch.float16",
+        "output_dtype": "torch.float16",
+        "active": true,
+        "exact_input_identity": false
+      },
+      {
+        "shape": [
+          2,
+          80,
+          64,
+          64
+        ],
+        "input_dtype": "torch.float16",
+        "output_dtype": "torch.float16",
+        "active": false,
+        "exact_input_identity": true
+      },
+      {
+        "shape": [
+          2,
+          80,
+          64,
+          64
+        ],
+        "input_dtype": "torch.float16",
+        "output_dtype": "torch.float16",
+        "active": false,
+        "exact_input_identity": true
+      }
+    ],
+    "moments_metadata_only": [
+      {
+        "feature_shape": [
+          4,
+          80,
+          64,
+          64
+        ],
+        "feature_dtype": "torch.float32",
+        "mean_shape": [
+          4,
+          80,
+          1,
+          1
+        ],
+        "mean_dtype": "torch.float32",
+        "sigma_shape": [
+          4,
+          80,
+          1,
+          1
+        ],
+        "sigma_dtype": "torch.float32",
+        "mean_detached": true,
+        "sigma_detached": true
+      }
+    ],
+    "formal_counts": {
+      "calls": 34765,
+      "images": 2221066,
+      "active_calls": 32820,
+      "active_images": 2098440,
+      "inactive_calls": 1945,
+      "inactive_images": 122626
+    },
+    "formal_forward_seconds": 51.95847778431367,
+    "preflight_cost_separate": {
+      "counts": {
+        "calls": 3,
+        "images": 8,
+        "active_calls": 1,
+        "active_images": 4,
+        "inactive_calls": 2,
+        "inactive_images": 4
+      },
+      "forward_seconds": 0.20117276168800893,
+      "timing": "CUDA event elapsed",
+      "boundary": "style operator entry through return; backward and full pipeline time recorded separately"
+    },
+    "train_active": true,
+    "all_source_and_target_eval_identity": true,
+    "eval_statistics_or_random_calls": 0,
+    "all_gradients_finite": true,
+    "gradient_groups_nonzero": {
+      "encoder": true,
+      "encoder_stem": true,
+      "semantic_conv_head": true,
+      "semantic_norm_head": true,
+      "point": true
+    },
+    "strict_reload_saved_witness": true,
+    "checkpoint_contents_loaded_by_audit": false
+  },
+  "saved_reference_cost_comparisons": {
+    "v16": {
+      "source_training_seconds": {
+        "v29": 10120.079081062227,
+        "reference": 2761.0258493237197,
+        "difference": 7359.053231738508,
+        "ratio": 3.6653329716348075
+      },
+      "source_validation_seconds": {
+        "v29": 427.7224973998964,
+        "reference": 183.3174392953515,
+        "difference": 244.40505810454488,
+        "ratio": 2.333234083151097
+      },
+      "source_process_seconds": {
+        "v29": 10589.095355667174,
+        "reference": 2972.2243499159813,
+        "difference": 7616.871005751193,
+        "ratio": 3.5626837375067284
+      },
+      "source_full_process_seconds": {
+        "v29": 10590.045265104622,
+        "reference": 2973.16363677755,
+        "difference": 7616.881628327072,
+        "ratio": 3.561877702965113
+      },
+      "queue_wall_seconds": {
+        "v29": 10618.928467,
+        "reference": 2997.258767,
+        "difference": 7621.6697,
+        "ratio": 3.542880108956572
+      },
+      "source_peak_allocated_bytes": {
+        "v29": 8262579712,
+        "reference": 2218448384,
+        "difference": 6044131328,
+        "ratio": 3.724485893650614
+      },
+      "source_peak_reserved_bytes": {
+        "v29": 11345592320,
+        "reference": 2837446656,
+        "difference": 8508145664,
+        "ratio": 3.998521803399852
+      }
+    },
+    "v18": {
+      "source_training_seconds": {
+        "v29": 10120.079081062227,
+        "reference": 2816.7055361121893,
+        "difference": 7303.373544950038,
+        "ratio": 3.592877903393003
+      },
+      "source_validation_seconds": {
+        "v29": 427.7224973998964,
+        "reference": 173.22431213408709,
+        "difference": 254.4981852658093,
+        "ratio": 2.4691828308073225
+      },
+      "source_process_seconds": {
+        "v29": 10589.095355667174,
+        "reference": 3059.7135350219905,
+        "difference": 7529.381820645183,
+        "ratio": 3.460812665781494
+      },
+      "source_full_process_seconds": {
+        "v29": 10590.045265104622,
+        "reference": 3060.6456844322383,
+        "difference": 7529.399580672383,
+        "ratio": 3.4600690040569386
+      },
+      "queue_wall_seconds": {
+        "v29": 10618.928467,
+        "reference": 3084.318233,
+        "difference": 7534.610234,
+        "ratio": 3.4428770524990115
+      },
+      "source_peak_allocated_bytes": {
+        "v29": 8262579712,
+        "reference": 2995077120,
+        "difference": 5267502592,
+        "ratio": 2.758720186811083
+      },
+      "source_peak_reserved_bytes": {
+        "v29": 11345592320,
+        "reference": 3435134976,
+        "difference": 7910457344,
+        "ratio": 3.3028083028083026
+      }
+    },
+    "v21": {
+      "source_training_seconds": {
+        "v29": 10120.079081062227,
+        "reference": 2773.254664938897,
+        "difference": 7346.824416123331,
+        "ratio": 3.6491704887424046
+      },
+      "source_validation_seconds": {
+        "v29": 427.7224973998964,
+        "reference": 173.47069058939815,
+        "difference": 254.25180681049824,
+        "ratio": 2.46567587842437
+      },
+      "source_process_seconds": {
+        "v29": 10589.095355667174,
+        "reference": 3008.8445746041834,
+        "difference": 7580.25078106299,
+        "ratio": 3.519322814160376
+      },
+      "source_full_process_seconds": {
+        "v29": 10590.045265104622,
+        "reference": 3009.7728834301233,
+        "difference": 7580.272381674498,
+        "ratio": 3.518552952419304
+      },
+      "queue_wall_seconds": {
+        "v29": 10618.928467,
+        "reference": 3035.589614,
+        "difference": 7583.338852999999,
+        "ratio": 3.4981436285148653
+      },
+      "source_peak_allocated_bytes": {
+        "v29": 8262579712,
+        "reference": 3049633792,
+        "difference": 5212945920,
+        "ratio": 2.7093678374350856
+      },
+      "source_peak_reserved_bytes": {
+        "v29": 11345592320,
+        "reference": 3439329280,
+        "difference": 7906263040,
+        "ratio": 3.298780487804878
+      }
+    },
+    "v22": {
+      "source_training_seconds": {
+        "v29": 10120.079081062227,
+        "reference": 9585.050050370395,
+        "difference": 535.0290306918323,
+        "ratio": 1.0558191170500104
+      },
+      "source_validation_seconds": {
+        "v29": 427.7224973998964,
+        "reference": 483.78070947155356,
+        "difference": -56.05821207165718,
+        "ratio": 0.8841247470720959
+      },
+      "source_process_seconds": {
+        "v29": 10589.095355667174,
+        "reference": 10146.579224005342,
+        "difference": 442.51613166183233,
+        "ratio": 1.0436123467715013
+      },
+      "source_full_process_seconds": {
+        "v29": 10590.045265104622,
+        "reference": 10147.539110802114,
+        "difference": 442.50615430250764,
+        "ratio": 1.0436072381166246
+      },
+      "queue_wall_seconds": {
+        "v29": 10618.928467,
+        "reference": 10171.255716,
+        "difference": 447.67275100000006,
+        "ratio": 1.0440135184386117
+      },
+      "source_peak_allocated_bytes": {
+        "v29": 8262579712,
+        "reference": 2218448384,
+        "difference": 6044131328,
+        "ratio": 3.724485893650614
+      },
+      "source_peak_reserved_bytes": {
+        "v29": 11345592320,
+        "reference": 2837446656,
+        "difference": 8508145664,
+        "ratio": 3.998521803399852
+      }
+    },
+    "v23": {
+      "source_training_seconds": {
+        "v29": 10120.079081062227,
+        "reference": 9784.711778588593,
+        "difference": 335.3673024736345,
+        "ratio": 1.0342746224991013
+      },
+      "source_validation_seconds": {
+        "v29": 427.7224973998964,
+        "reference": 503.0759307220578,
+        "difference": -75.35343332216144,
+        "ratio": 0.8502145924294018
+      },
+      "source_process_seconds": {
+        "v29": 10589.095355667174,
+        "reference": 10370.041267327964,
+        "difference": 219.05408833920956,
+        "ratio": 1.0211237431647804
+      },
+      "source_full_process_seconds": {
+        "v29": 10590.045265104622,
+        "reference": 10371.028453789651,
+        "difference": 219.01681131497025,
+        "ratio": 1.0211181381182055
+      },
+      "queue_wall_seconds": {
+        "v29": 10618.928467,
+        "reference": 10394.404016,
+        "difference": 224.52445099999932,
+        "ratio": 1.021600512223153
+      },
+      "source_peak_allocated_bytes": {
+        "v29": 8262579712,
+        "reference": 2669980672,
+        "difference": 5592599040,
+        "ratio": 3.09462154488585
+      },
+      "source_peak_reserved_bytes": {
+        "v29": 11345592320,
+        "reference": 3158310912,
+        "difference": 8187281408,
+        "ratio": 3.592297476759628
+      }
+    },
+    "v24": {
+      "source_training_seconds": {
+        "v29": 10120.079081062227,
+        "reference": 8439.410359308124,
+        "difference": 1680.668721754104,
+        "ratio": 1.199145277951846
+      },
+      "source_validation_seconds": {
+        "v29": 427.7224973998964,
+        "reference": 422.064306627959,
+        "difference": 5.65819077193737,
+        "ratio": 1.0134059921274625
+      },
+      "source_process_seconds": {
+        "v29": 10589.095355667174,
+        "reference": 8926.789751820266,
+        "difference": 1662.3056038469076,
+        "ratio": 1.1862153865008354
+      },
+      "source_full_process_seconds": {
+        "v29": 10590.045265104622,
+        "reference": 8927.727020017803,
+        "difference": 1662.318245086819,
+        "ratio": 1.1861972528236537
+      },
+      "queue_wall_seconds": {
+        "v29": 10618.928467,
+        "reference": 8951.11403,
+        "difference": 1667.814436999999,
+        "ratio": 1.1863247894519335
+      },
+      "source_peak_allocated_bytes": {
+        "v29": 8262579712,
+        "reference": 664222720,
+        "difference": 7598356992,
+        "ratio": 12.439471676006505
+      },
+      "source_peak_reserved_bytes": {
+        "v29": 11345592320,
+        "reference": 815792128,
+        "difference": 10529800192,
+        "ratio": 13.90745501285347
+      }
+    },
+    "v25": {
+      "source_training_seconds": {
+        "v29": 10120.079081062227,
+        "reference": 4948.06887563318,
+        "difference": 5172.010205429047,
+        "ratio": 2.0452583291430457
+      },
+      "source_validation_seconds": {
+        "v29": 427.7224973998964,
+        "reference": 247.77300535142422,
+        "difference": 179.94949204847217,
+        "ratio": 1.7262675439289448
+      },
+      "source_process_seconds": {
+        "v29": 10589.095355667174,
+        "reference": 5237.863852690905,
+        "difference": 5351.2315029762685,
+        "ratio": 2.021643871141691
+      },
+      "source_full_process_seconds": {
+        "v29": 10590.045265104622,
+        "reference": 5238.7860625088215,
+        "difference": 5351.2592025958,
+        "ratio": 2.0214693134525743
+      },
+      "queue_wall_seconds": {
+        "v29": 10618.928467,
+        "reference": 5262.123951,
+        "difference": 5356.804516,
+        "ratio": 2.017992842031402
+      },
+      "source_peak_allocated_bytes": {
+        "v29": 8262579712,
+        "reference": 2224756224,
+        "difference": 6037823488,
+        "ratio": 3.7139258777504605
+      },
+      "source_peak_reserved_bytes": {
+        "v29": 11345592320,
+        "reference": 2858418176,
+        "difference": 8487174144,
+        "ratio": 3.9691856199559794
+      }
+    },
+    "v26": {
+      "source_training_seconds": {
+        "v29": 10120.079081062227,
+        "reference": 18503.923991907388,
+        "difference": -8383.84491084516,
+        "ratio": 0.5469152967493922
+      },
+      "source_validation_seconds": {
+        "v29": 427.7224973998964,
+        "reference": 774.6288493834436,
+        "difference": -346.9063519835472,
+        "ratio": 0.5521644304112052
+      },
+      "source_process_seconds": {
+        "v29": 10589.095355667174,
+        "reference": 19354.278957866132,
+        "difference": -8765.183602198958,
+        "ratio": 0.5471190830058519
+      },
+      "source_full_process_seconds": {
+        "v29": 10590.045265104622,
+        "reference": 19355.291916746646,
+        "difference": -8765.246651642025,
+        "ratio": 0.5471395270428274
+      },
+      "queue_wall_seconds": {
+        "v29": 10618.928467,
+        "reference": 19382.631387,
+        "difference": -8763.702920000002,
+        "ratio": 0.5478579381188744
+      },
+      "source_peak_allocated_bytes": {
+        "v29": 8262579712,
+        "reference": 8262538752,
+        "difference": 40960,
+        "ratio": 1.0000049573141172
+      },
+      "source_peak_reserved_bytes": {
+        "v29": 11345592320,
+        "reference": 11347689472,
+        "difference": -2097152,
+        "ratio": 0.9998151912770282
+      }
+    },
+    "v28": {
+      "source_training_seconds": {
+        "v29": 10120.079081062227,
+        "reference": 11355.16951591894,
+        "difference": -1235.0904348567128,
+        "ratio": 0.8912309998432674
+      },
+      "source_validation_seconds": {
+        "v29": 427.7224973998964,
+        "reference": 467.1808344423771,
+        "difference": -39.45833704248071,
+        "ratio": 0.9155394782202959
+      },
+      "source_process_seconds": {
+        "v29": 10589.095355667174,
+        "reference": 11873.210449688137,
+        "difference": -1284.1150940209627,
+        "ratio": 0.8918476936408811
+      },
+      "source_full_process_seconds": {
+        "v29": 10590.045265104622,
+        "reference": 11874.171350043267,
+        "difference": -1284.1260849386454,
+        "ratio": 0.8918555200962326
+      },
+      "queue_wall_seconds": {
+        "v29": 10618.928467,
+        "reference": 11901.541209,
+        "difference": -1282.6127420000012,
+        "ratio": 0.8922313741156411
+      },
+      "source_peak_allocated_bytes": {
+        "v29": 8262579712,
+        "reference": 8262600192,
+        "difference": -20480,
+        "ratio": 0.9999975213613724
+      },
+      "source_peak_reserved_bytes": {
+        "v29": 11345592320,
+        "reference": 11347689472,
+        "difference": -2097152,
+        "ratio": 0.9998151912770282
+      }
+    }
+  },
+  "preflight_counts_separate": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "preflight_runtime": {
+    "process_seconds": 20.50619124993682,
+    "full_process_seconds": 21.456849083304405,
+    "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+    "device": "cuda",
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "peak_cuda_memory_bytes": 630113280,
+    "peak_cuda_reserved_bytes": 725614592
+  },
+  "preflight_style_cost_separate": {
+    "counts": {
+      "calls": 3,
+      "images": 8,
+      "active_calls": 1,
+      "active_images": 4,
+      "inactive_calls": 2,
+      "inactive_images": 4
+    },
+    "forward_seconds": 0.20117276168800893,
+    "timing": "CUDA event elapsed",
+    "boundary": "style operator entry through return; backward and full pipeline time recorded separately"
+  },
+  "backward_scope": "All CNN and new1280to1 scalar point parameters jointly trained with source-only SmoothL1. BN source training only, frozen for source validation and external inference. One blocks1 style operator is active only for source training; source validation and target eval are exact identity before statistics/random operations. Style forward operator CUDA-event time is included in pipeline time and excludes backward.",
+  "new_source_generation_cost": 0
+}

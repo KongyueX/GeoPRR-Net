@@ -1,0 +1,70 @@
+{
+  "status": "passed",
+  "checks": 68816,
+  "failed_checks": 0,
+  "failures": [],
+  "maximum_numeric_difference": 1.4210854715202004e-14,
+  "audited_at_utc": "2026-10-25T04:16:27.947815+00:00",
+  "scope": "one bounded fresh independent CPU saved-scalar and execution audit",
+  "collected_files": 20,
+  "source_saved_rows": 4036,
+  "external_saved_rows": 1546,
+  "full_source_epochs": 60,
+  "best_epoch": 15,
+  "best_score": 0.02109762356977877,
+  "completion_reason": "source_score_patience",
+  "counts": {
+    "cnn_image_forwards": 2221066,
+    "cnn_forward_calls": 34765,
+    "point_image_forwards": 2221066,
+    "point_forward_calls": 34765,
+    "source_backward_calls": 32820,
+    "source_optimizer_updates": 32806,
+    "source_amp_skipped_updates": 14,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  },
+  "style_counts": {
+    "calls": 34765,
+    "images": 2221066,
+    "active_calls": 32820,
+    "active_images": 2098440,
+    "inactive_calls": 1945,
+    "inactive_images": 122626
+  },
+  "style_forward_seconds": 51.95847778431367,
+  "raw_contract_or_geometry_downloaded": false,
+  "weights_RGB_or_checkpoint_loaded": false,
+  "feature_or_moment_values_downloaded": false,
+  "model_forward_backward_or_update_calls": 0,
+  "target_training": 0,
+  "automatic_promotion": false,
+  "review_independence": "fresh independent task; no implementation role and no second reviewer",
+  "integrity_checks": {
+    "ground_truth_provenance": {
+      "status": "passed",
+      "industrial": "saved provided scalar labels",
+      "rf100": "saved offline scalars derived from four annotated points"
+    },
+    "score_normalization": {
+      "status": "passed",
+      "details": "absolute scalar error uses fixed normalized full scale; no model-output statistic is a denominator"
+    },
+    "result_existence_and_identity": {
+      "status": "passed",
+      "details": "all allowlisted rows exist once with exact IDs, groups, targets and full failure denominators"
+    },
+    "executed_path": {
+      "status": "passed",
+      "details": "executed snapshot booleans, saved counts and preflight witnesses agree on one RGB CNN, one1280to1 point and one train-active/eval-identity blocks1 style module"
+    },
+    "scope": {
+      "status": "qualified",
+      "details": "single seed and viewed development domains; V27 is not a performance baseline"
+    },
+    "evaluation_type": {
+      "industrial": "real_gt",
+      "rf100": "real_gt_offline_annotation_derived"
+    }
+  }
+}

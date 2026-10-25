@@ -1,6 +1,6 @@
 {
   "protocol": "geoprr_v29_public_allowlist_v1",
-  "status": "runtime_preflight_passed_source_training_running",
+  "status": "complete_audited_not_promoted",
   "files": [
     "../../GEOPRR_V2_SOURCE_STYLEMIX_ZERO_SHOT_PROTOCOL_CN.md",
     "README.md",
@@ -8,7 +8,33 @@
     "cpu_checks.json",
     "public_allowlist.json",
     "runtime_preflight.json",
-    "launch.json"
+    "launch.json",
+    "completed/best_validation.json",
+    "completed/comparison.csv",
+    "completed/completed_record.json",
+    "completed/config.json",
+    "completed/costs.json",
+    "completed/history.jsonl",
+    "completed/industrial_groups.csv",
+    "completed/industrial_predictions.csv.gz",
+    "completed/industrial_summary.json",
+    "completed/initialization_record.json",
+    "completed/latest_validation.json",
+    "completed/metrics.json",
+    "completed/numeric_execution_audit.json",
+    "completed/protocol.json",
+    "completed/public_allowlist.json",
+    "completed/queue_state.json",
+    "completed/report_cn.md",
+    "completed/rf100_groups.csv",
+    "completed/rf100_predictions.csv.gz",
+    "completed/rf100_summary.json",
+    "completed/run_metadata.json",
+    "completed/screen_summary.json",
+    "completed/source_best15_original_predictions.csv.gz",
+    "completed/source_best15_roll_predictions.csv.gz",
+    "completed/source_last60_original_predictions.csv.gz",
+    "completed/source_last60_roll_predictions.csv.gz"
   ],
   "training_protocol": "geoprr_v2_source_stylemix_source_only_v1",
   "actual_model_metadata": {
@@ -42,11 +68,28 @@
     "CNN_passes_per_image": 1
   },
   "excluded": [
-    "RGB/checkpoint/weights",
-    "moments_values/features/geometry/bbox",
-    "rawrun/fullcontracts/fullsourcearrays/privatepaths"
+    "RGB/model/checkpoint weights",
+    "feature/moment values/geometry/bbox",
+    "raw run/full source contracts/population arrays/private paths",
+    "complete population and fixed-cohort ID arrays/per-image delta maps/full improved-regressed or threshold-rescue-new ID lists"
   ],
   "external_training_or_adaptation": false,
   "code_revision": "18f67f14a6173f4444200d0b2c7a40000d17538f",
-  "runtime_evidence": "3CNN8images1combinedback0optimizer;style active1/4 andinactive2/4;actual80x64x64F16/F32moments/F16out;cached462retained/finite-grad/464strictreload"
+  "runtime_evidence": "3CNN8images1combinedback0optimizer;style active1/4 andinactive2/4;actual80x64x64F16/F32moments/F16out;cached462retained/finite-grad/464strictreload",
+  "current_evidence": "60 complete source epochs, source-selected best15, once-frozen Industrial/RF100 complete, one independent saved-scalar/execution audit68816PASS0fail; no automatic promotion",
+  "audit": {
+    "status": "passed",
+    "checks": 68816,
+    "failed_checks": 0
+  },
+  "formal_style_counts": {
+    "calls": 34765,
+    "images": 2221066,
+    "active_calls": 32820,
+    "active_images": 2098440,
+    "inactive_calls": 1945,
+    "inactive_images": 122626
+  },
+  "formal_style_operator_forward_seconds": 51.95847778431367,
+  "normalization": "Full scalar metrics/CSV retained; complete population and fixed-cohort ID arrays, per-image delta maps, improved/regressed full-ID arrays and raw threshold/rescue/new ID lists excluded; paired counts, scalar group summaries and necessary focus/max IDs retained."
 }

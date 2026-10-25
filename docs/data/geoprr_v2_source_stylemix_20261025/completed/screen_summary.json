@@ -1,0 +1,134 @@
+{
+  "protocol": "geoprr_v2_source_stylemix_source_only_v1",
+  "config": {
+    "protocol": "geoprr_v2_source_stylemix_source_only_v1",
+    "model": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "num_classes": 0,
+      "semantic_dim": 1280,
+      "initialization": "fresh complete cached ImageNet encoder, including conv_head and norm_head; new scalar point",
+      "readout": "sigmoid(float(Linear1280to1(full semantic output)))",
+      "point_initialization_std": 0.001,
+      "point_initialization_bias": 0.0,
+      "CNN_passes_per_image": 1,
+      "joint_encoder_training": true,
+      "source_training_BN_updates": true,
+      "stylemix": {
+        "location": "after encoder.blocks[1]",
+        "source_training_probability": 1.0,
+        "beta_alpha": 0.1,
+        "epsilon": 1e-06,
+        "variance_unbiased": false,
+        "statistics_dtype": "float32",
+        "moments_detached": true,
+        "permutation": "current batch torch.randperm; self-permutation allowed",
+        "evaluation": "exact input identity before statistics or RNG",
+        "basis": "fixed MixStyle-inspired variant; not an exact reproduction"
+      }
+    },
+    "data": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "source": {
+      "old_unique": 18590,
+      "roll_unique": 4096,
+      "roll_repeat": 4,
+      "total_unique": 22686,
+      "train_presentations": 34974,
+      "original_validation": 1506,
+      "roll_validation": 512,
+      "require_geometry": false,
+      "pair_manifest": null,
+      "roll_validation_split": "independent layout/seed/ID/group; same available HDR background",
+      "population_policy": "same four manifest rows and order as retained V22 source; authoritative RGB512 input contract"
+    },
+    "training": {
+      "seed": 20262020,
+      "min_epochs": 60,
+      "max_epochs": 160,
+      "early_stopping_patience": 20,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "loss": "smooth_l1",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0,
+      "scheduler": {
+        "mode": "min",
+        "factor": 0.3,
+        "patience": 8,
+        "threshold": 0.0,
+        "threshold_mode": "abs",
+        "cooldown": 0,
+        "min_lr": 1e-06,
+        "eps": 1e-08
+      }
+    },
+    "checkpoint_selection": "earliest strict minimum R=(original1506 mean NMAE + roll512 mean NMAE + original1506 worst10percent NMAE + roll512 worst10percent NMAE)/4; each worst tail uses ceil(.1*N), including failed inputs/scalars at error1",
+    "external_checkpoint": "source-selected best only after source stopping rule completes",
+    "inference_input": "provided native ROI RGB, linear resize512, ImageNet normalization; one RGB forward, no GT geometry or target scalar input",
+    "external_training_or_adaptation": false
+  },
+  "status": "complete",
+  "epochs": 60,
+  "counts": {
+    "cnn_image_forwards": 2221066,
+    "cnn_forward_calls": 34765,
+    "point_image_forwards": 2221066,
+    "point_forward_calls": 34765,
+    "source_backward_calls": 32820,
+    "source_optimizer_updates": 32806,
+    "source_amp_skipped_updates": 14,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  },
+  "preflight_counts_separate": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "style_counts": {
+    "calls": 34765,
+    "images": 2221066,
+    "active_calls": 32820,
+    "active_images": 2098440,
+    "inactive_calls": 1945,
+    "inactive_images": 122626
+  },
+  "style_forward_seconds": 51.95847778431367,
+  "preflight_style_cost_separate": {
+    "counts": {
+      "calls": 3,
+      "images": 8,
+      "active_calls": 1,
+      "active_images": 4,
+      "inactive_calls": 2,
+      "inactive_images": 4
+    },
+    "forward_seconds": 0.20117276168800893,
+    "timing": "CUDA event elapsed",
+    "boundary": "style operator entry through return; backward and full pipeline time recorded separately"
+  },
+  "scope": "complete source-only semantic scalar reader with one training-only early feature moment mixture; no automatic promotion"
+}
