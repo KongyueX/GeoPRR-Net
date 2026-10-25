@@ -1,0 +1,14 @@
+{
+  "status": "launched_pending_zero_update_preflight",
+  "started_at_utc": "2026-10-25T17:42:11.206531+00:00",
+  "pipeline_pid": 420829,
+  "code_revision": "45de72cbd7f6c0ac1e507f0e357760e77e2a3933",
+  "module": "experiments.run_geoprr_v2_cyclic_color_control",
+  "old_actual_commands_absent": true,
+  "prelaunch_GPU_compute_rows": [],
+  "source_control_epochs": 15,
+  "CNN_back_attempt_budget": 1290,
+  "controller_log_outside_pristine_output": true,
+  "launch_log_relative": "diagnostics/geoprr_cyclic_color_launch_20261026/controller.log",
+  "real_external_and_needle03_model_calls_authorized": 0
+}

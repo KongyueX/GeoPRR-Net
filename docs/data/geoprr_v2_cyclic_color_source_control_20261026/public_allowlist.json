@@ -5,6 +5,8 @@
     "protocol.json",
     "config.json",
     "cpu_checks.json",
-    "public_allowlist.json"
+    "public_allowlist.json",
+    "launch.json",
+    "runtime_preflight.json"
   ]
 }
