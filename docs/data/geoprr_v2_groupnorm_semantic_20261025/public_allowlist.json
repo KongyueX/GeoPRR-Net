@@ -1,12 +1,14 @@
 {
   "protocol": "geoprr_v31_public_allowlist_v1",
-  "status": "new_CPU_checks_passed_runtime_pending",
+  "status": "runtime_preflight_passed_source_training_running",
   "files": [
     "../../GEOPRR_V2_GROUPNORM_SEMANTIC_ZERO_SHOT_PROTOCOL_CN.md",
     "README.md",
     "config.json",
     "cpu_checks.json",
-    "public_allowlist.json"
+    "public_allowlist.json",
+    "runtime_preflight.json",
+    "launch_verification.json"
   ],
   "training_protocol": "geoprr_v2_groupnorm_semantic_source_only_v1",
   "actual_model_metadata": {
@@ -66,7 +68,12 @@
   "excluded": [
     "RGB/checkpoint/weights",
     "features/instantaneous_statistics_values/geometry/bbox",
-    "rawrun/fullcontracts/fullsourcearrays/privatepaths"
+    "probe sample ID lists/actual state lists/full populations",
+    "rawrun/fullcontracts/fullsourcearrays/privatepaths/commands"
   ],
-  "external_training_or_adaptation": false
+  "external_training_or_adaptation": false,
+  "code_revision": "eaa79707c4977d9929fc20f57cd40a4ba5cf891d",
+  "runtime_evidence": "saved actual512 source AMP witness3CNN/8images/1combinedback/0optimizer;GN77/BN0/buffers0/state233;all231 learned cached encoder parameters retained,231 original BN buffers removed;all233 parameters unchanged without optimizer,233strictreload,finite nonzero necessary gradients",
+  "current_evidence": "source training running at saved2026-10-25T09:17:58.154572+00:00 verification; sole GPU source child387513/13900MiB;first source batch64/finite gradient;0 complete source epochs;no external evaluation or generalization result",
+  "normalization_evaluation_scope": "GroupNorm computes fixed-formula per-image statistics in both training and eval. No target-dataset statistic fitting, running-buffer accumulation or evaluation parameter adaptation."
 }

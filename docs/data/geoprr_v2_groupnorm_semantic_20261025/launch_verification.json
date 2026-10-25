@@ -1,0 +1,38 @@
+{
+  "protocol": "geoprr_v2_groupnorm_semantic_source_only_v1",
+  "status": "source_training_running",
+  "code_revision": "eaa79707c4977d9929fc20f57cd40a4ba5cf891d",
+  "started_at_utc": "2026-10-25T09:15:51.421030+00:00",
+  "started_at_beijing": "2026-10-25 17:15:51",
+  "entrypoint": "experiments.run_geoprr_v2_groupnorm_semantic",
+  "pipeline_pid_at_launch": 387472,
+  "training_child_pid_at_verification": 387513,
+  "verification_at_utc": "2026-10-25T09:17:58.154572+00:00",
+  "parent_and_training_commands_verified": true,
+  "sole_GPU_compute_pid_at_verification": 387513,
+  "GPU_memory_MiB_at_verification": 13900,
+  "prelaunch_GPU_compute_processes": 0,
+  "prelaunch_free_disk_bytes": 3057909760,
+  "previous_V30_complete_all_four_stages_exit0": true,
+  "runtime_preflight_status": "passed",
+  "model_training_started": true,
+  "first_training_batch": {
+    "event": "training_batch",
+    "epoch": 1,
+    "batch": 1,
+    "images": 64,
+    "loss": 0.21511368453502655,
+    "learning_rate": 0.0003,
+    "gradient_norm_finite": true
+  },
+  "actual_encoder_input": [
+    3,
+    512,
+    512
+  ],
+  "normalization": "77 GroupNorm8; FP32 normalization restored to input dtype before original drop and act; no BN or running buffers",
+  "normalization_target_scope": "ordinary per-image frozen arithmetic; no target dataset statistic fitting or parameter adaptation",
+  "external_evaluation_started": false,
+  "scope": "GroupNorm source execution only, no external generalization result",
+  "complete_source_epochs_at_verification": 0
+}
