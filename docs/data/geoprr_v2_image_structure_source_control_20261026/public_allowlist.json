@@ -1,0 +1,10 @@
+{
+  "files": [
+    "README.md",
+    "protocol.json",
+    "config.json",
+    "cpu_checks.json",
+    "public_allowlist.json"
+  ],
+  "scope": "explicit normalized source-measurement control metadata; no rawcontracts/trainarrays/RGB/weights/features"
+}

@@ -1,0 +1,232 @@
+{
+  "protocol_id": "geoprr_v2_image_structure_source_control_v1",
+  "frozen_at_utc": "2026-10-25T21:06:43.676374+00:00",
+  "kind": "one fixed observable image-measurement source control; not formalV32, physical calibration or a new theory",
+  "question": "Can a fixed multichannel gradient structure-tensor input retain sufficient source reading information to strictly reduce native tail while preserving native/CF mean,max,>5 and previously accurate examples?",
+  "source_evidence": [
+    "Visible material/keypoint/mask source supervision was not admitted; this input uses actual RGB only and no guessed visible or virtual labels.",
+    "Fixed C3 augmentation and mean-plus-tail source loss were rejected by their own joint criteria. Neither is reopened or tuned.",
+    "Identity15 shows native mean/tail/max2.5431/11.8010/53.7970%FS with sparse severe failures. This is motivation, not proof of an input-cue cause."
+  ],
+  "feasibility": "refine-logs/geoprr_research_reset_20261025/image_structure_measurement_feasibility.json",
+  "literature": [
+    {
+      "url": "https://www.sciencedirect.com/science/article/pii/0734189X86902239",
+      "scope": "Di Zenzo1986 publisherabstract supports classical multichannel tensor-gradient lineage only, not this encoding/gauge results"
+    },
+    {
+      "url": "https://arxiv.org/abs/1811.12231",
+      "scope": "GeirhosICLR2019 shape/texture reliance is general motivation, not a guarantee for local gradients or this task"
+    }
+  ],
+  "input_operator": {
+    "API": "existing float32 NCHW native ROI RGB512 after original photo and ImageNet normalization",
+    "math": "I=X*std+mean; reflectpad1; groupedfixedSobel Kx/Ky perRGB; Jxx=sum(dx²),Jyy=sum(dy²),Jxy=sum(dx*dy); E=[Jxx/48,Jyy/48,.5+Jxy/96]; encoderinput=(E-ImageNetmean)/ImageNetstd",
+    "Kx": [
+      [
+        -1,
+        0,
+        1
+      ],
+      [
+        -2,
+        0,
+        2
+      ],
+      [
+        -1,
+        0,
+        1
+      ]
+    ],
+    "Ky": [
+      [
+        -1,
+        -2,
+        -1
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        1
+      ]
+    ],
+    "filter_weight_shape": [
+      6,
+      1,
+      3,
+      3
+    ],
+    "groups": 3,
+    "gradient_order": [
+      "dxR",
+      "dyR",
+      "dxG",
+      "dyG",
+      "dxB",
+      "dyB"
+    ],
+    "padding": "onepixel torch reflect, no duplicate borderpixel; H/W/crop/ROI coordinates unchanged",
+    "precision": "entire inverseNorm/pad/groupfilter/products/reductions/measurementNorm float32 withautocastdisabled; originalencoder/pointAMP resumes afterop, scalarF32",
+    "scale": "fixed48/96 from raw[0,1], Sobelpositive/negative sums±4, no clipping/fitting/rescaling/hyperparameter scan",
+    "state": "zero newtrainableparams, exactlyonepersistent F32 kernelbuffer54values/one state; no registered mean/std buffers, no feature/moment cache",
+    "claims": "RGBpermutation invariance follows channel sum up toF32roundoff; test rawRGBpermutation+renormalize, neverdirect normalizedpermutation. No claim contrast/style/pose/needleheight/calibration/visibility/OCR invariance.",
+    "loss_of_information": "absoluteintensity/gradientpolarity/RGBidentity lost; reflection/texture/noise can produce strongfield; localtensor may not favorobjects; retainingcachedweights doesnot retainpretrainedfeaturesemantics",
+    "fixed_filter_backend": "For the CUDA fixed filter only, cuDNN allow_tf32=False in a restoring scope preserving prior enabled/benchmark/benchmark_limit/deterministic flags; original encoder/point AMP/backend policy unchanged."
+  },
+  "model": "freshcached completeImageNetMNV4 convmedium/GAP1/fullsemantic1280/Linear1280to1 std.001bias0/sourceBN/encoderpointAMP/scalarF32, meanSmoothL1beta.05; expected8435793learnedparams/all233tensors,465states includingencoder462/point2/fixedkernel1. Runtime actualcounts required; encoderweights/statevalues preserved, no unusedoldpoint/extraNN or teacher/GTinput.",
+  "data": "Exact existing frozenpacket5496train687parents/sourceID29273layouts,原photo/native512ROI/LINEAR/ImageNet/seed20262020/batch64/workers4/loaderseed20262020+epoch/AdamW3e-4wd1e-4clip5/defaultfreshScaler. NativeRGB input/schema/scalar labels unchanged; field isinside readerbeforeencoder. source03/Industrial/RF0RGB/model/back/update, no newsource/labels/weights/seed/render.",
+  "training": {
+    "epochs": 30,
+    "max_epochs": 30,
+    "checkpoint": "last30 only, no best",
+    "intermediate_validation": false,
+    "scheduler": null,
+    "extension": false,
+    "objective": "original batchmean SmoothL1beta.05, not prior rejected meanTail",
+    "why30": "Inputfeature semantics differ from pretrainedRGB. Fix2x identity15 schedule inadvance to provide cappedfeatureadaptation, not a convergence guarantee. Differenttraining/totalcompute disclosed, no matchedbudget or causalaccuracy claim and no laterextension.",
+    "actualRGBexposure": "5496once/E, eachraw30times; no C3 orderaugmentation/nominalslots required innewtrainingdata",
+    "AMP": "normalgradientoverflow retainedas skip, updates+skips=attempts; noblindscalechanges/replacementsteps",
+    "resume": "strictnewprotocol/config/data/operatorcontract/fullmodel-opt/scaler/RNG/history/totals aftercompletedepochs only; preservepartial, nofresh overwrite/no oldversion compatibility"
+  },
+  "reference": {
+    "protocol": "geoprr_v2_matched_identity_source_control_v1",
+    "science_revision": "3e39174f36b342691f6ee96acdea2036ee5e8d30",
+    "archive_revision": "84a1dbc42968e6d71d66f5adae8dba80b383b424",
+    "reader_relative": "runs/geoprr_generalization/source_matched_identity_control_20261026/reader",
+    "native_statistics": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.025431218243695233,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.015494510531425476,
+      "p90_error": 0.040915115177631405,
+      "p95_error": 0.05404334664344783,
+      "tail10_nmae": 0.11800955331418664,
+      "maximum_error": 0.5379703640937805,
+      "nmae_percent_fs": 2.543121824369523,
+      "count_at_1_percent_fs": 102,
+      "acc_at_1": 0.3493150684931507,
+      "acc_at_1_percent": 34.93150684931507,
+      "errors_above_1_percent_fs": 190,
+      "count_at_2_percent_fs": 182,
+      "acc_at_2": 0.6232876712328768,
+      "acc_at_2_percent": 62.32876712328767,
+      "errors_above_2_percent_fs": 110,
+      "count_at_5_percent_fs": 276,
+      "acc_at_5": 0.9452054794520548,
+      "acc_at_5_percent": 94.52054794520548,
+      "errors_above_5_percent_fs": 16,
+      "median_error_percent_fs": 1.5494510531425476,
+      "p90_error_percent_fs": 4.0915115177631405,
+      "p95_error_percent_fs": 5.404334664344783,
+      "tail10_nmae_percent_fs": 11.800955331418663,
+      "maximum_error_percent_fs": 53.79703640937805,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    },
+    "CF_statistics": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.026353762864682596,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.01438409835100174,
+      "p90_error": 0.04164543636143209,
+      "p95_error": 0.05768549442291258,
+      "tail10_nmae": 0.12945961876345488,
+      "maximum_error": 0.5424728989601135,
+      "nmae_percent_fs": 2.6353762864682597,
+      "count_at_1_percent_fs": 104,
+      "acc_at_1": 0.3561643835616438,
+      "acc_at_1_percent": 35.61643835616438,
+      "errors_above_1_percent_fs": 188,
+      "count_at_2_percent_fs": 189,
+      "acc_at_2": 0.6472602739726028,
+      "acc_at_2_percent": 64.72602739726027,
+      "errors_above_2_percent_fs": 103,
+      "count_at_5_percent_fs": 275,
+      "acc_at_5": 0.9417808219178082,
+      "acc_at_5_percent": 94.17808219178082,
+      "errors_above_5_percent_fs": 17,
+      "median_error_percent_fs": 1.438409835100174,
+      "p90_error_percent_fs": 4.164543636143208,
+      "p95_error_percent_fs": 5.768549442291258,
+      "tail10_nmae_percent_fs": 12.945961876345487,
+      "maximum_error_percent_fs": 54.24728989601135,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    },
+    "native_accurate_count": 102,
+    "CF_accurate_count": 104,
+    "scope": "Provided-label savedCSV/metadata only, exactrowID/group/target alignment and sourcecontract equality server-side. No oldmodel/weights/forward or physicalGTnormalization; legacyrawlabelqualification persists."
+  },
+  "native_gate": {
+    "minimum": "originalconstant0.5 halfmean/ceil30tail learninggate unchanged,full292 failureerror1,valid0/1notfailure",
+    "joint": "mean<=identitynative,ceil30tail<identitynative,max<=identitynative,>5<=16,and no new>5 amongreference nativeerror<=.01. Allsimultaneous; accurate102source-ID set isnot oldordinary1495/1497.",
+    "failure_action": "normalNOT_RETAINED,CF0images/calls/null/noresultfiles; cannotextend30/tunekernel/scale/padding/mixture/seed/input/loss/gates/cohort"
+  },
+  "CF_gate": {
+    "condition": "nativelearning ANDallnewnativejoint pass; same last30 same292sourceIDs/labels/ROI fixedrawRGswap[1,0,2] once",
+    "joint": "mean/tail/max no worse thanidentityCF,>5<=17,no new>5 amongreferenceCFerror<=.01 (itsown104set, notnative102)",
+    "diagnostics": "allpredictiondriftmean/ceil30/max and pairednew/rescues>1/2/5/image/group differences report; oldcolor driftthresholds arediagnosticnotacceptance",
+    "claim": "same source layouts/artificialknown stress view, no newindependentdomain/blindtest orrealtransfer guarantee"
+  },
+  "verdict": "IMAGE_STRUCTURE_SOURCE_CONTROL_PASSED iff native+CFalljoint pass, elseNOT_RETAINED. Finiteness/operatorinvariance/not-noop/sourcelearning alone areinsufficient. Positiveonlysupportsconsideringnewformal sourceexperimentafteraudit/archive, neverpromote shortmodel orautomaticrealeval/longrun.",
+  "NEWCPU": {
+    "scope": "fixed syntheticRGB patches only; no realMNV4construct/weights/RGB/GPU, no oldoperator/GT/teacher/gates/tests/math reruns",
+    "checks": [
+      "explicitSobel cross-correlation/reflection/coordinates onconstant/horizontal/vertical/diagonal/impulse patches",
+      "F32 finite/bounds and correctrawnormalize inverse/renormalization",
+      "all6rawRGB permutations invariance, zeroRNG, actualkernelbuffer1/nolearnableparam/strict reloadoperator",
+      "one groupedfilter call perbatch and processedimagecounts; newfixed30E counts/operator/contract/resume andnewmodelinputrepresentationmetadata toychecks"
+    ],
+    "rtol": 2e-06,
+    "atol": 2e-06,
+    "tolerance_role": "verification only, not data-fit scale or metric acceptance"
+  },
+  "preflight": {
+    "CNN_calls": 3,
+    "CNN_images_unique_RGB": 8,
+    "fixed_filter_calls": 3,
+    "fixed_filter_image_presentations": 8,
+    "combinedbackward": 1,
+    "optimizer_updates": 0,
+    "source": "samefixed4seen train andfirst2IDsperseenneedle4nativeID asidentity, actualRGB, noCFeval/needle03/real domain. No actualsourceextraoperator-only permutations; all6verifiedonsyntheticCPU.",
+    "checks": "cachedencoder462unchangedbeforeforward;465fullstates/onefixedkernel/8435793params233tensors/alltrainable/strictreloadnewmodel; operatorF32 finite/bounded andinput/outputshape/dtypeactual; onefieldpass+oneencoder+onepoint/input; actualcachedencoderstemneckpointgradfinite nonzero, kernelrequiresgradFalse;0optall233paramsunchanged/kernelunchanged/77BNsource+1eval0, sourceDatasetnative512identity (encoderinputintentionallymeasurement,notrawRGB); formal freshdefaultScalerno prefBN/RNG/statecarryover. Fixedloss128/grad128 onlywitness.",
+    "timing": "GPUCUDAeventsperoperatorforward summedafterphase sync plus fullsource phasewall/peak; events+kernel overhead retained. CPUtests time scope explicit. Unknownisolatedpointtime null, nofake0."
+  },
+  "counts": {
+    "train_images": 164880,
+    "train_encoder_point_and_fixedfilter_calls": 2580,
+    "train_back_attempts": 2580,
+    "native_images": 292,
+    "native_encoder_point_filter_calls": 5,
+    "CF_eligible_images": 292,
+    "CF_calls": 5,
+    "nativefail_total_images": 165172,
+    "nativefail_total_encoder_point_filter_calls": 2585,
+    "CFdone_total_images": 165464,
+    "CFdone_total_encoder_point_filter_calls": 2590,
+    "pref_separate_images": 8,
+    "pref_separate_calls_each": 3,
+    "source03_Industrial_RF_all": 0
+  },
+  "execution_locations": {
+    "output": "runs/geoprr_generalization/source_image_structure_control_20261026",
+    "pref": "diagnostics/geoprr_image_structure_control_preflight_20261026/result.json",
+    "public_root": "docs/data/geoprr_v2_image_structure_source_control_20261026/",
+    "public_protocol": "docs/GEOPRR_V2_IMAGE_STRUCTURE_SOURCE_CONTROL_CN.md"
+  },
+  "execution": "After allpriorcontrols archived, necessaryNEWCPU PASS thenfreezepushnewcode/protocol/config/CPUevidence explicitallowlist existingmain, scopenew3taskcode/3snapshotmetadata deployed/precheckbeforeoutmutation, actualpreviousparentsgoneGPUidle -> onlypref->fresh30 source. No installation/extraGPU/earlyCF/val/oldmodeleval. Truefaultsaveoriginal log/actualcmd/partial/failure/snapshot, targetedimplementationfix only ifmethod unchanged; nofresh firstepoch withoutlatest, noCSV withoutsummary secondforward. Fullentrytimerbeforetorchimport, allcosts counts timepeak real.",
+  "completion": "whole2stageexit0,parentchildgoneGPUempty ->ONEfreshindependentnonauthorstdlib savednumber/executionCPUaudit; nosecondauditor/weights/RGB/GT/oldtests. Referenceactualschema, floats abs1e-12/integerID/group/label/config contract, no phantomnormalizedfield orstrictdictbitwise. AllnativeCFsummary/groups/pairs/accurateguard/tradeoffs/failure/cost/source-targetisolation/protocol/data/init/stop/resume normalizedexplicitallowlist existingmain; rawsdata private. Negativeclosesfixedrepresentation notbudget/kernel/scale tuning.",
+  "constraints": "No newsource/pixel files/labels/seed/foundationweights/compute purchase/systemPythonCUDAconda/otherproject/cleanup/officialtest4000/thirdpartymessages/branch/gitadd-A/otheruntracked. Rawrun/fullcontracts/trainarrays/RGB/weights/features/instantmoments/geometry/privatepaths serverprivate; stdoutallowlistmetadata/bools/explicitlyallowedscalarCSV/groups. No targettraining/adapt/statsfit/BN/checkpoint/epoch/LR/hyperparams/ROI/threshold/temp choice/case-labeldesign. Alloldpositive/negative/assets retained; no promotion/stitching, no single-seedSD/significance/newtheory orrecertifiedlegacychain claim."
+}

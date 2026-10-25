@@ -1,0 +1,17 @@
+{
+  "protocol": "geoprr_v2_image_structure_source_control_v1",
+  "status": "passed",
+  "tests": 10,
+  "failures": 0,
+  "errors": 0,
+  "test_execution_seconds_after_warm_imports": 0.19321708008646965,
+  "forbidden_attempts": {
+    "real_MNV4_constructions": 0,
+    "RGB_reads": 0,
+    "cached_weight_or_checkpoint_reads": 0
+  },
+  "CUDA_available": false,
+  "CUDA_initialized": false,
+  "real_MNV4_forward_calls": 0,
+  "scope": "new synthetic fixedmeasurement/explicitSobel-reflect/coordinates-signs/float32bounds/rawRGBsixperms/noRNG/onebuffer-zeroParams-reload/filtercalls-toyreader-noDup/new30counts-protocol-input-resume only; no old tests"
+}
