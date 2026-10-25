@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "tests": 10,
+  "failures": 0,
+  "errors": 0,
+  "test_execution_seconds": 1.0988923087716103,
+  "execution_attempts": {
+    "real_model_constructions": 0,
+    "real_RGB_reads": 0
+  },
+  "real_model_forward_calls": 0,
+  "cached_weights_loaded": false,
+  "CUDA_available_in_CPU_process": false,
+  "GPU_model_calls": 0,
+  "protocol": "geoprr_v2_head_warmstart_source_control_v1",
+  "scope": "new LP/FT phase,BN/grad,RNG/optimizer,detached-cache and unequalCNN/point budget toys only",
+  "timing_scope": "unittest after warm imports; no real model construction",
+  "source_packet": "reuse exact frozen needle-control source packet; no prepare/factor rescan"
+}

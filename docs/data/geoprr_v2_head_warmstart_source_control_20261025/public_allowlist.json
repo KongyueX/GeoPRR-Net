@@ -1,0 +1,18 @@
+{
+  "protocol": "geoprr_head_warmstart_source_control_public_allowlist_v1",
+  "status": "new_CPU_passed_sourcepacket_reused_runtime_pending",
+  "files": [
+    "../../GEOPRR_V2_HEAD_WARMSTART_SOURCE_CONTROL_CN.md",
+    "README.md",
+    "config.json",
+    "cpu_checks.json",
+    "public_allowlist.json"
+  ],
+  "training_protocol": "geoprr_v2_head_warmstart_source_control_v1",
+  "Industrial_RF_model_calls": 0,
+  "automatic_promotion": false,
+  "excluded": [
+    "fullsourcecontracts/rosters/cachefeatures/privatepaths",
+    "RGB/weights/checkpoints/geometry"
+  ]
+}
