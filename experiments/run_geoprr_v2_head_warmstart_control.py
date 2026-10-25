@@ -17,36 +17,81 @@ from experiments.geoprr_v2_head_warmstart_control import (
     CONFIG, OUTPUT_RELATIVE, PREFLIGHT_COUNTS, PREFLIGHT_RELATIVE, PREPARED_RELATIVE,
     PROTOCOL, count_summary, validate_prepared, validate_totals,
 )
-from experiments.run_geoprr_v2_optimization import OptimizationRun, write_json
+from experiments.run_geoprr_v2_optimization import OptimizationRun, process_running, write_json
 from experiments.run_geoprr_v2_render_probe import compute_processes
+
+
+SNAPSHOT_METADATA = (
+    "refine-logs/geoprr_research_reset_20261025/head_warmstart_control_protocol.json",
+    "refine-logs/geoprr_research_reset_20261025/prior_transfer_source_evidence.json",
+    "docs/GEOPRR_V2_HEAD_WARMSTART_SOURCE_CONTROL_CN.md",
+)
 
 
 def load(path):
     return json.loads(path.read_text())
 
 
-def run(home):
+def recover_unstarted_bootstrap(output, witness, prepared):
+    """Preserve one failed bootstrap whose preflight and model stages never began."""
+    artifacts = ("queue_state.json", "protocol.json", "config.json", "pipeline.pid", "code_snapshot")
+    if set(path.name for path in output.iterdir()) != {"queue.lock", *artifacts}:
+        raise FileExistsError("recovery requires only the original zero-stage bootstrap artifacts")
+    queue, protocol = load(output / "queue_state.json"), load(output / "protocol.json")
+    if (queue.get("status") != "failed" or queue.get("steps") != {}
+            or queue.get("current_step") is not None or queue.get("protocol") != PROTOCOL
+            or protocol.get("protocol") != PROTOCOL or protocol.get("config") != CONFIG
+            or load(output / "config.json") != CONFIG
+            or protocol.get("source_contract") != prepared["source_contract"]
+            or queue.get("code_revision") != protocol.get("code_revision")):
+        raise ValueError("only the same failed, unstarted protocol/config/source contract can be recovered")
+    if ((output / "reader").exists() or (witness.parent.exists() and any(witness.parent.iterdir()))
+            or not (output / "code_snapshot").is_dir()):
+        raise FileExistsError("reader or preflight artifacts prohibit zero-stage bootstrap recovery")
+    pid = int((output / "pipeline.pid").read_text().strip())
+    if pid <= 0 or queue.get("pipeline_pid") != pid or process_running(pid):
+        raise RuntimeError("the original bootstrap parent must be recorded and actually gone")
+    if compute_processes():
+        raise RuntimeError("GPU must have no compute process before zero-stage bootstrap recovery")
+    failure = output / "bootstrap_failure"
+    failure.mkdir(exist_ok=False)
+    for name in artifacts:
+        (output / name).rename(failure / name)
+    return {"code_revision": queue["code_revision"], "pipeline_pid": pid,
+            "preserved_relative": "bootstrap_failure", "training_resume": False}
+
+
+def run(home, *, recover_unstarted=False):
     if os.environ.get("HF_HUB_OFFLINE") != "1":
         raise RuntimeError("HF_HUB_OFFLINE=1 is required for existing cached ImageNet weights")
     revision = os.environ["GEOPRR_GENERALIZATION_REVISION"]
     if not revision.strip():
         raise ValueError("GEOPRR_GENERALIZATION_REVISION must identify the frozen code")
+    repo = Path(__file__).resolve().parents[1]
+    for relative in SNAPSHOT_METADATA:
+        if not (repo / relative).is_file():
+            raise FileNotFoundError(f"required bootstrap snapshot metadata is missing: {relative}")
     prepared = validate_prepared(home)
     output, witness = home / OUTPUT_RELATIVE, home / PREFLIGHT_RELATIVE
     if witness.parent.exists() and any(witness.parent.iterdir()):
         raise FileExistsError("the head-warmstart preflight already has complete or partial outputs")
-    output.mkdir(parents=True, exist_ok=True)
+    if recover_unstarted:
+        if not output.is_dir():
+            raise FileNotFoundError("explicit zero-stage recovery requires the existing failed bootstrap output")
+    else:
+        output.mkdir(parents=True, exist_ok=False)
     with (output / "queue.lock").open("a") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        if any(path.name != "queue.lock" for path in output.iterdir()):
-            raise FileExistsError("the source control has complete or partial outputs; no rerun or resume is permitted")
+        recovered_from = recover_unstarted_bootstrap(output, witness, prepared) if recover_unstarted else None
         queue = OptimizationRun(home, output, [20262020])
-        queue.state.update(protocol=PROTOCOL, code_revision=revision, automatic_resume=False)
+        queue.state.update(protocol=PROTOCOL, code_revision=revision, automatic_resume=False,
+                           recovered_from=recovered_from)
         (output / "pipeline.pid").write_text(str(os.getpid()) + "\n")
         queue.save()
         try:
             protocol = {
                 "protocol": PROTOCOL, "code_revision": revision, "config": CONFIG,
+                "recovered_from": recovered_from,
                 "source_contract": prepared["source_contract"],
                 "preparation_protocol": prepared["protocol"], "prepared_relative": PREPARED_RELATIVE,
                 "kind": "one bounded source procedure control, not formalV32 or LP-FT paper replication",
@@ -74,7 +119,6 @@ def run(home):
             }
             write_json(output / "protocol.json", protocol)
             write_json(output / "config.json", CONFIG)
-            repo = Path(__file__).resolve().parents[1]
             snapshot = output / "code_snapshot"
             snapshot.mkdir()
             for name in (
@@ -89,11 +133,7 @@ def run(home):
                 "run_geoprr_v2_render_probe.py",
             ):
                 shutil.copy2(repo / "experiments" / name, snapshot / name)
-            for relative in (
-                "refine-logs/geoprr_research_reset_20261025/head_warmstart_control_protocol.json",
-                "refine-logs/geoprr_research_reset_20261025/prior_transfer_source_evidence.json",
-                "docs/GEOPRR_V2_HEAD_WARMSTART_SOURCE_CONTROL_CN.md",
-            ):
+            for relative in SNAPSHOT_METADATA:
                 target = snapshot / relative
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(repo / relative, target)
@@ -133,6 +173,7 @@ def run(home):
             validate_totals(control["totals"], passed)
             write_json(output / "screen_summary.json", {
                 "protocol": PROTOCOL, "config": CONFIG, "source_contract": prepared["source_contract"],
+                "code_revision": revision, "recovered_from": recovered_from,
                 "status": "complete", "epochs": 5, "completion_reason": control["completion_reason"],
                 "learning_gate": control["learning_gate"], "primary_comparison": control["primary_comparison"],
                 "counts": count_summary(control["totals"]),
@@ -155,7 +196,10 @@ def run(home):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--home", type=Path, default=Path("/root/autodl-tmp/geoprrnet"))
-    run(parser.parse_args().home)
+    parser.add_argument("--recover-unstarted", action="store_true",
+                        help="explicitly preserve and recover one failed bootstrap with no started stage")
+    args = parser.parse_args()
+    run(args.home, recover_unstarted=args.recover_unstarted)
 
 
 if __name__ == "__main__":

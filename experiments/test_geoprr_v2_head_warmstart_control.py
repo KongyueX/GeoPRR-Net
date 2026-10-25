@@ -1,8 +1,10 @@
 """CPU toy checks for the new LP/FT phase, RNG, cache and accounting boundaries."""
 from copy import deepcopy
+import json
 from pathlib import Path
 import random
 import sys
+import tempfile
 from types import ModuleType
 import unittest
 from unittest.mock import patch
@@ -18,6 +20,7 @@ from experiments.geoprr_v2_head_warmstart_control import (
     point_prediction, preflight_indices, primary_comparison, state_equal, validate_totals,
 )
 from experiments.train_geoprr_v2 import restore_rng, rng_state
+from experiments import run_geoprr_v2_head_warmstart_control as runner
 
 
 class ToyEncoder(nn.Module):
@@ -223,6 +226,69 @@ class ConditionalSourcePathTests(unittest.TestCase):
         self.assertEqual([(rows[i]["metadata"]["needle_control"]["view"],rows[i]["metadata"]["needle_control"]["slot"]) for i in indices["ft"]],[("original",3),("roll",3)]*2)
         self.assertFalse(set(indices["lp"]) & set(indices["ft"]))
         self.assertEqual(prepared,before)
+
+
+class BootstrapRecoveryTests(unittest.TestCase):
+    def failed_bootstrap(self, root):
+        output, witness = root/"output", root/"preflight"/"result.json"
+        output.mkdir()
+        (output/"queue.lock").touch()
+        prepared = {"source_contract":{"population":"toy source metadata"}}
+        queue = {"protocol":runner.PROTOCOL,"status":"failed","steps":{},
+                 "pipeline_pid":12345,"code_revision":"old-bootstrap-revision"}
+        protocol = {"protocol":runner.PROTOCOL,"config":runner.CONFIG,
+                    "source_contract":prepared["source_contract"],"code_revision":queue["code_revision"]}
+        for name,value in (("queue_state.json",queue),("protocol.json",protocol),("config.json",runner.CONFIG)):
+            (output/name).write_text(json.dumps(value))
+        (output/"pipeline.pid").write_text("12345\n")
+        (output/"code_snapshot").mkdir()
+        (output/"code_snapshot"/"partial.py").write_text("original bootstrap snapshot\n")
+        return output,witness,prepared
+
+    def test_zero_stage_recovery_preserves_original_failure_in_same_output(self):
+        with tempfile.TemporaryDirectory() as folder:
+            output,witness,prepared = self.failed_bootstrap(Path(folder))
+            originals = {path.relative_to(output):path.read_bytes() for path in output.rglob("*") if path.is_file()}
+            with patch.object(runner,"process_running",return_value=False) as alive,patch.object(runner,"compute_processes",return_value=[]) as gpu:
+                recovered = runner.recover_unstarted_bootstrap(output,witness,prepared)
+            self.assertEqual(recovered["code_revision"],"old-bootstrap-revision")
+            self.assertFalse(recovered["training_resume"])
+            alive.assert_called_once_with(12345)
+            gpu.assert_called_once_with()
+            self.assertTrue((output/"queue.lock").exists())
+            for relative,content in originals.items():
+                preserved = output/relative if relative == Path("queue.lock") else output/"bootstrap_failure"/relative
+                self.assertEqual(preserved.read_bytes(),content)
+            self.assertEqual(runner.load(output/"bootstrap_failure"/"queue_state.json")["steps"],{})
+            with self.assertRaises(FileExistsError):
+                runner.recover_unstarted_bootstrap(output,witness,prepared)
+
+    def test_nonempty_steps_refuse_without_moving_failed_bootstrap(self):
+        with tempfile.TemporaryDirectory() as folder:
+            output,witness,prepared = self.failed_bootstrap(Path(folder))
+            queue = runner.load(output/"queue_state.json")
+            queue["steps"] = {"preflight":{"status":"failed"}}
+            (output/"queue_state.json").write_text(json.dumps(queue))
+            before = (output/"queue_state.json").read_bytes()
+            with self.assertRaises(ValueError):
+                runner.recover_unstarted_bootstrap(output,witness,prepared)
+            self.assertEqual((output/"queue_state.json").read_bytes(),before)
+            self.assertFalse((output/"bootstrap_failure").exists())
+
+    def test_reader_or_preflight_started_refuse_without_archiving(self):
+        for artifact in ("reader","preflight_started"):
+            with self.subTest(artifact=artifact),tempfile.TemporaryDirectory() as folder:
+                output,witness,prepared = self.failed_bootstrap(Path(folder))
+                if artifact == "reader":
+                    (output/"reader").mkdir()
+                else:
+                    witness.parent.mkdir()
+                    (witness.parent/"started.json").write_text("{}")
+                with self.assertRaises(FileExistsError):
+                    runner.recover_unstarted_bootstrap(output,witness,prepared)
+                self.assertTrue((output/"queue_state.json").exists())
+                self.assertTrue((output/"code_snapshot"/"partial.py").exists())
+                self.assertFalse((output/"bootstrap_failure").exists())
 
 
 if __name__ == "__main__":

@@ -15,5 +15,15 @@
   "protocol": "geoprr_v2_head_warmstart_source_control_v1",
   "scope": "new LP/FT phase,BN/grad,RNG/optimizer,detached-cache and unequalCNN/point budget toys only",
   "timing_scope": "unittest after warm imports; no real model construction",
-  "source_packet": "reuse exact frozen needle-control source packet; no prepare/factor rescan"
+  "source_packet": "reuse exact frozen needle-control source packet; no prepare/factor rescan",
+  "zero_stage_bootstrap_recovery_checks": {
+    "status": "passed",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "seconds": 0.008637923747301102,
+    "scope": "only3 new zero-stage bootstrap recovery toy tests; original10 phase tests not rerun",
+    "model_RGB_weights_GPU_calls": 0,
+    "CUDA_available": false
+  }
 }

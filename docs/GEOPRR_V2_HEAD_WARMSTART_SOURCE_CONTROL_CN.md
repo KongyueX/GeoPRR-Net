@@ -27,3 +27,6 @@ lastFT5只评同292行ID一次。原constant0.5双门槛完全保持：mean和ce
 ## Limitations
 
 预训练特征适合本任务的程度仍未知；额外LP数据处理及优化是本控制的一部分，不是同总成本比较。source-ID已用于上一控制与诊断，不能称新盲测或显著性；source-OOD只是三个合成needle中的一个固定bank成员，其他layout因素混杂。源ID改善或单域结果不等于整体泛化成功，不自动升级模型、拼checkpoint或开长训练。
+
+
+启动metadata先于所有output写入检查；默认不恢复已有输出。若只在snapshot部署阶段失败且全部模型stage均未开始，root可显式恢复该zero-stage bootstrap：同protocol/config/source合同、steps空、无reader/pref、旧PID退出且GPU空，先保留原queue/protocol/config/PID/部分snapshot于同output/bootstrap_failure，再继续尚未开始的启动。任何训练或pref partial均不适用，不覆盖模型、改budget或自动resume。
