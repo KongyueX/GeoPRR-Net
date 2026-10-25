@@ -1,0 +1,497 @@
+{
+  "protocol": "geoprr_v2_needle_holdout_source_control_v1",
+  "code_revision": "f5af94bbaaaed0816da50ed44a6c803c598a8969",
+  "observed_at_utc": "2026-10-25T14:01:42.079365+00:00",
+  "audit_kind": "one_bounded_independent_CPU_saved_scalar_and_execution_audit",
+  "verdict": "PASS_WITH_QUALIFICATIONS",
+  "check_count": 49,
+  "passed_checks": 49,
+  "failed_checks": 0,
+  "checks": [
+    {
+      "check": "saved_frozen_execution_revision",
+      "status": "PASS"
+    },
+    {
+      "check": "new_three_task_code_snapshot_equal_working_files",
+      "status": "PASS"
+    },
+    {
+      "check": "protocol_identity_all_saved_stages",
+      "status": "PASS"
+    },
+    {
+      "check": "configuration_equal_all_saved_stages",
+      "status": "PASS"
+    },
+    {
+      "check": "frozen_optimizer_and_budget_config",
+      "status": "PASS"
+    },
+    {
+      "check": "frozen_input_and_photometric_config",
+      "status": "PASS"
+    },
+    {
+      "check": "source_contract_equal_server_only",
+      "status": "PASS"
+    },
+    {
+      "check": "prepared_manifests_equal_frozen_contract_server_only",
+      "status": "PASS"
+    },
+    {
+      "check": "prepared_lengths_and_unique_sample_identity",
+      "status": "PASS"
+    },
+    {
+      "check": "heldout_metadata_exclusion",
+      "status": "PASS"
+    },
+    {
+      "check": "per_needle_population_counts",
+      "status": "PASS"
+    },
+    {
+      "check": "train_views_and_complete687_parent_layouts",
+      "status": "PASS"
+    },
+    {
+      "check": "four_saved_state_slots_complete_all_subsets",
+      "status": "PASS"
+    },
+    {
+      "check": "saved_parent_factor_and_slot_equality",
+      "status": "PASS"
+    },
+    {
+      "check": "train_ID_OOD_saved_layout_disjoint",
+      "status": "PASS"
+    },
+    {
+      "check": "saved_source_scope_flags",
+      "status": "PASS"
+    },
+    {
+      "check": "preflight_deterministic_seen_only_selection",
+      "status": "PASS"
+    },
+    {
+      "check": "preflight_passed_zero_update_saved_witness",
+      "status": "PASS"
+    },
+    {
+      "check": "preflight_actual512_GAP1_semantic1280_precision_saved_witness",
+      "status": "PASS"
+    },
+    {
+      "check": "preflight_gradients_BN_and_parameters_saved_witness",
+      "status": "PASS"
+    },
+    {
+      "check": "preflight_strict_reload_saved_witness_only",
+      "status": "PASS"
+    },
+    {
+      "check": "cached462_initialization_saved_metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "unchanged_architecture_saved_metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "formal_fresh_default_scaler_no_preflight_carryover",
+      "status": "PASS"
+    },
+    {
+      "check": "five_epoch_complete_history_fixed_LR_and_exposure",
+      "status": "PASS"
+    },
+    {
+      "check": "formal_totals_match_fixed_gate_failed_budget",
+      "status": "PASS"
+    },
+    {
+      "check": "saved_ID_rows_complete_metadata_identity_order",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_same292_identity_and_saved_scalar_targets",
+      "status": "PASS"
+    },
+    {
+      "check": "each_saved_scalar_error_validity_failure_one_and_saturation_rule",
+      "status": "PASS"
+    },
+    {
+      "check": "ID_complete73_four_row_groups",
+      "status": "PASS"
+    },
+    {
+      "check": "model_summary_recomputed_from_saved_scalars",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_summary_recomputed_from_saved_scalars",
+      "status": "PASS"
+    },
+    {
+      "check": "model_saved_group_JSON_and_CSV_recomputed",
+      "status": "PASS"
+    },
+    {
+      "check": "model_saved_failure_rows_match_full_denominator",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_saved_group_JSON_and_CSV_recomputed",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_saved_failure_rows_match_full_denominator",
+      "status": "PASS"
+    },
+    {
+      "check": "predeclared292_ceil30_dual_half_constant_gate",
+      "status": "PASS"
+    },
+    {
+      "check": "completed_diagnostic_ends_on_failed_tail_gate",
+      "status": "PASS"
+    },
+    {
+      "check": "source_OOD_skipped_zero_saved_reads_forwards_no_result",
+      "status": "PASS"
+    },
+    {
+      "check": "external_all_saved_counts_zero",
+      "status": "PASS"
+    },
+    {
+      "check": "supervisor_summary_counts_and_preflight_separation",
+      "status": "PASS"
+    },
+    {
+      "check": "last_only_artifact_names_no_best_extension",
+      "status": "PASS"
+    },
+    {
+      "check": "serialized_stages_complete_exit_zero",
+      "status": "PASS"
+    },
+    {
+      "check": "owned_parent_and_stage_proc_commands_gone",
+      "status": "PASS"
+    },
+    {
+      "check": "ID_evaluation_saved_cost_counts",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_saved_compute_counts_zero",
+      "status": "PASS"
+    },
+    {
+      "check": "cost_ordering_positive_and_stage_wall_covers_runtime",
+      "status": "PASS"
+    },
+    {
+      "check": "static_import_order_confirms_recorded_full_boundary_qualification",
+      "status": "PASS"
+    },
+    {
+      "check": "static_final_ID_before_conditional_OOD_only",
+      "status": "PASS"
+    }
+  ],
+  "qualifications": [
+    {
+      "item": "recorded_full_process_boundary",
+      "status": "QUALIFIED",
+      "reason": "The new control imports torch before importing the helper that sets PROCESS_STARTED. The saved full_process_seconds starts at helper module import, after the new entry's torch import, and excludes final completion JSON; use supervisor stage wall for full child-stage elapsed time."
+    },
+    {
+      "item": "saved_reload_initialization_and_architecture_witness",
+      "status": "QUALIFIED",
+      "reason": "These checks confirm saved preflight/formal metadata and code agreement. This audit never opens checkpoint or cached weight contents, constructs a model, imports torch, or executes a forward."
+    },
+    {
+      "item": "source_metadata_scope",
+      "status": "QUALIFIED",
+      "reason": "Closure, exclusion, identity and disjointness are checked from frozen prepared metadata and server-only contract equality, without new GT, RGB, mesh or pixel verification."
+    },
+    {
+      "item": "earlier_root_collection",
+      "status": "QUALIFIED",
+      "reason": "Root recorded an earlier nested-contract collection and immediate local minimization. This independent collection strips forbidden nested material on server before stdout; it does not claim that no earlier client ever received a contract."
+    }
+  ],
+  "population_counts": {
+    "per_needle_images": {
+      "train": {
+        "canonical_pointer_01": 2704,
+        "canonical_pointer_02": 2792
+      },
+      "id": {
+        "canonical_pointer_01": 124,
+        "canonical_pointer_02": 168
+      },
+      "ood": {
+        "canonical_pointer_03": 220
+      }
+    },
+    "train_unique": 5496,
+    "original_images": 2748,
+    "roll_images": 2748,
+    "parent_layouts": 687,
+    "ID_images": 292,
+    "ID_layouts": 73,
+    "OOD_declared_images": 220,
+    "OOD_declared_layouts": 55
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.22316035591445463,
+      "source_training_nmae": 0.24694371119336792,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "backward_calls": 86,
+      "optimizer_updates": 86,
+      "amp_skipped_updates": 0,
+      "last_batch_size": 56,
+      "training_seconds": 45.86919467523694,
+      "validation_calls": 0
+    },
+    {
+      "epoch": 2,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.13327159834524083,
+      "source_training_nmae": 0.1552459924675665,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "backward_calls": 86,
+      "optimizer_updates": 86,
+      "amp_skipped_updates": 0,
+      "last_batch_size": 56,
+      "training_seconds": 28.51189061254263,
+      "validation_calls": 0
+    },
+    {
+      "epoch": 3,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.08848521058085704,
+      "source_training_nmae": 0.1097726080094883,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "backward_calls": 86,
+      "optimizer_updates": 86,
+      "amp_skipped_updates": 0,
+      "last_batch_size": 56,
+      "training_seconds": 28.73448348417878,
+      "validation_calls": 0
+    },
+    {
+      "epoch": 4,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.04723311387533878,
+      "source_training_nmae": 0.06694156417333055,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "backward_calls": 86,
+      "optimizer_updates": 86,
+      "amp_skipped_updates": 0,
+      "last_batch_size": 56,
+      "training_seconds": 30.04017996042967,
+      "validation_calls": 0
+    },
+    {
+      "epoch": 5,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.030995426493462343,
+      "source_training_nmae": 0.049319956587218126,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "backward_calls": 86,
+      "optimizer_updates": 86,
+      "amp_skipped_updates": 0,
+      "last_batch_size": 56,
+      "training_seconds": 30.40605168044567,
+      "validation_calls": 0
+    }
+  ],
+  "formal_totals": {
+    "train_batches": 430,
+    "train_cnn_image_forwards": 27480,
+    "train_cnn_forward_calls": 430,
+    "backward_calls": 430,
+    "optimizer_updates": 430,
+    "amp_skipped_updates": 0,
+    "validation_images": 292,
+    "validation_cnn_forward_calls": 5,
+    "train_point_forward_calls": 430,
+    "train_point_image_forwards": 27480,
+    "validation_point_forward_calls": 5,
+    "validation_point_image_forwards": 292,
+    "training_seconds": 163.5618004128337,
+    "validation_seconds": 4.893382981419563
+  },
+  "summary_counts": {
+    "cnn_image_forwards": 27772,
+    "cnn_forward_calls": 435,
+    "point_image_forwards": 27772,
+    "point_forward_calls": 435,
+    "source_backward_calls": 430,
+    "source_optimizer_updates": 430,
+    "source_amp_skipped_updates": 0,
+    "external_images": 0,
+    "external_CNN_calls": 0,
+    "external_backward_calls": 0,
+    "external_optimizer_updates": 0
+  },
+  "preflight_counts_separate": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "cost": {
+    "training_seconds": 163.5618004128337,
+    "source_ID_pipeline_seconds": 4.893382981419563,
+    "source_ID_forward_seconds": 3.4002205953001976,
+    "point_seconds": null,
+    "point_timing_status": "not separately measured; included in model forward",
+    "formal_recorded_runtime": {
+      "process_seconds": 171.23572536185384,
+      "full_process_seconds": 171.39292973652482,
+      "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 8262538240,
+      "peak_cuda_reserved_bytes": 11345592320
+    },
+    "preflight_recorded_runtime": {
+      "process_seconds": 16.063360936939716,
+      "full_process_seconds": 16.18448105081916,
+      "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 630110208,
+      "peak_cuda_reserved_bytes": 725614592
+    },
+    "supervisor_stage_seconds": {
+      "preflight": 17.985979,
+      "source_control": 173.437898
+    },
+    "supervisor_stages": {
+      "preflight": {
+        "status": "complete",
+        "exit_code": 0,
+        "started_at": "2026-10-25T13:47:20.021162+00:00",
+        "finished_at": "2026-10-25T13:47:38.007141+00:00",
+        "pid": 413069
+      },
+      "source_control": {
+        "status": "complete",
+        "exit_code": 0,
+        "started_at": "2026-10-25T13:47:38.110302+00:00",
+        "finished_at": "2026-10-25T13:50:31.548200+00:00",
+        "pid": 413106
+      }
+    },
+    "serialized_stage_sum_seconds": 191.423877,
+    "first_pref_start_through_control_finish_seconds": 191.527038
+  },
+  "collection": {
+    "stdlib_only": true,
+    "project_modules_imported": false,
+    "torch_imported": false,
+    "checkpoints_or_cached_weights_opened": false,
+    "new_model_constructions_forwards_or_GPU_calls": 0,
+    "source_contract_and_population_exported": false,
+    "saved_scalar_rows_exported": false,
+    "source_ID_and_train_identity_lists_exported": false,
+    "current_GPU_process_query_performed": false,
+    "GPU_empty_observation": "parent supplied completed read-only observation at 2026-10-25T13:52:29.672489+00:00",
+    "RGB_features_or_new_GT_inspected": false,
+    "geometry_values_inspected_or_used": false
+  },
+  "preflight_saved_witness": {
+    "all_gradients_finite": true,
+    "gradient_groups_nonzero": {
+      "encoder": true,
+      "encoder_stem": true,
+      "semantic_conv_head": true,
+      "semantic_norm_head": true,
+      "point": true
+    },
+    "source_BN_counter_tensors_checked": 77,
+    "source_BN_counter_increment_training": 1,
+    "source_BN_counter_additional_increment_eval": 0,
+    "eval_model_buffers_unchanged": true,
+    "parameter_tensors_unchanged_without_optimizer": 233,
+    "source_ID_pipeline_identity": true
+  },
+  "scientific_outcome": {
+    "status": "learning_gate_failed",
+    "mean_passed": true,
+    "tail_passed": false,
+    "source_OOD_evaluated": false,
+    "external_evaluated": false,
+    "supported_statement": "The unchanged reader improved source-ID mean under this fixed five-epoch subset budget, but did not meet the predeclared simultaneous mean-and-tail criterion.",
+    "unsupported_statements": [
+      "heldout-needle generalization",
+      "Industrial or RF benefit",
+      "needle identity as the cause of external errors",
+      "impossibility of learning after a different or larger budget"
+    ]
+  },
+  "metrics_file": "complete_metrics.json",
+  "timing_boundary_correction": {
+    "raw_values_retained": true,
+    "formal_recorded_process_seconds": 171.23572536185384,
+    "formal_recorded_full_process_seconds": 171.39292973652482,
+    "actual_recorded_full_boundary": "Old runtime helper module import, after the new control entry imports torch, through evaluation of runtime metadata before final completed.json write. It includes training, source-ID evaluation, scalar saves and final last.pt save.",
+    "full_child_stage_wall_seconds": 173.437898,
+    "full_child_stage_boundary": "Supervisor started_at recorded before stage launch through finished_at after process.wait returns; includes launch and teardown overhead.",
+    "point_seconds": null,
+    "point_seconds_qualification": "Not separately recorded; point is included in complete model forward."
+  }
+}

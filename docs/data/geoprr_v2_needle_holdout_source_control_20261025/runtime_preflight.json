@@ -1,0 +1,282 @@
+{
+  "protocol": "geoprr_v2_needle_holdout_source_control_v1",
+  "config": {
+    "protocol": "geoprr_v2_needle_holdout_source_control_v1",
+    "model": {
+      "factory": "experiments.geoprr_v2_high_resolution_direct.create_model(pretrained=True)",
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "semantic_dim": 1280,
+      "parameters": 8435793,
+      "parameter_tensors": 233,
+      "state_tensors": 464,
+      "readout": "GAP1/full neck/Linear1280to1 std.001 bias0/float32 sigmoid",
+      "all_encoder_and_point_trainable": true,
+      "source_training_BN_updates": true
+    },
+    "data": {
+      "image_size": 512,
+      "output_size": 128,
+      "require_geometry": false,
+      "pair_manifest": null
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ]
+    },
+    "source": {
+      "heldout_pointer": "canonical_pointer_03",
+      "training_pointers": [
+        "canonical_pointer_01",
+        "canonical_pointer_02"
+      ],
+      "parent_layouts_train": 687,
+      "original_train_images": 2748,
+      "roll_train_images": 2748,
+      "train_unique_images": 5496,
+      "train_repeat": 1,
+      "train_calls_per_epoch": 86,
+      "last_train_batch": 56,
+      "ID_layouts": 73,
+      "ID_images": 292,
+      "ID_calls": 5,
+      "OOD_layouts": 55,
+      "OOD_images": 220,
+      "OOD_calls": 4
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 5,
+      "max_epochs": 5,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "optimizer": "AdamW",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "gradient_clip": 5.0,
+      "loss": "SmoothL1",
+      "smooth_l1_beta": 0.05,
+      "amp": true,
+      "scheduler": null,
+      "validation_before_epoch5": false,
+      "resume": false
+    },
+    "learning_gate": {
+      "constant_prediction": 0.5,
+      "ratio": 0.5,
+      "failure_error": 1.0,
+      "denominator": 292,
+      "tail_count": 30
+    },
+    "checkpoint": "last5 only; full state after every complete epoch; no best selection",
+    "external_images_calls_backward_updates": 0
+  },
+  "status": "passed",
+  "model_metadata": {
+    "class": "experiments.geoprr_v2_semantic_direct.SemanticDirectReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "point_parameters": 1281,
+    "point_shape": [
+      1280,
+      1
+    ],
+    "parameters": 8435793,
+    "trainable_parameters": 8435793,
+    "parameter_tensors": 233,
+    "state_tensors": 464,
+    "input_contract": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "CNN_passes_per_image": 1
+  },
+  "initialization": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "ImageNet_pretrained": true,
+    "existing_cached_weights_only": true,
+    "retained_complete_encoder_state_tensors": 462,
+    "all_cached_encoder_state_tensors_retained": true,
+    "new_point_parameter_tensors": 2,
+    "point_initialization_std": 0.001,
+    "point_initialization_bias_zero": true,
+    "old_task_checkpoint_used": false
+  },
+  "source_ID_pipeline_identity": true,
+  "observed_encoder_inputs": [
+    {
+      "shape": [
+        4,
+        3,
+        512,
+        512
+      ],
+      "dtype": "torch.float32"
+    },
+    {
+      "shape": [
+        2,
+        3,
+        512,
+        512
+      ],
+      "dtype": "torch.float32"
+    },
+    {
+      "shape": [
+        2,
+        3,
+        512,
+        512
+      ],
+      "dtype": "torch.float32"
+    }
+  ],
+  "observed_pool_shapes": [
+    {
+      "before": [
+        4,
+        960,
+        16,
+        16
+      ],
+      "after": [
+        4,
+        960,
+        1,
+        1
+      ]
+    },
+    {
+      "before": [
+        2,
+        960,
+        16,
+        16
+      ],
+      "after": [
+        2,
+        960,
+        1,
+        1
+      ]
+    },
+    {
+      "before": [
+        2,
+        960,
+        16,
+        16
+      ],
+      "after": [
+        2,
+        960,
+        1,
+        1
+      ]
+    }
+  ],
+  "observed_point_shapes_and_dtypes": [
+    {
+      "semantic_shape": [
+        4,
+        1280
+      ],
+      "point_logit_shape": [
+        4,
+        1
+      ],
+      "semantic_dtype": "torch.float16",
+      "point_logit_dtype": "torch.float16"
+    },
+    {
+      "semantic_shape": [
+        2,
+        1280
+      ],
+      "point_logit_shape": [
+        2,
+        1
+      ],
+      "semantic_dtype": "torch.float16",
+      "point_logit_dtype": "torch.float16"
+    },
+    {
+      "semantic_shape": [
+        2,
+        1280
+      ],
+      "point_logit_shape": [
+        2,
+        1
+      ],
+      "semantic_dtype": "torch.float16",
+      "point_logit_dtype": "torch.float16"
+    }
+  ],
+  "source_BN_counter_tensors_checked": 77,
+  "source_BN_counter_increment_training": 1,
+  "source_BN_counter_additional_increment_eval": 0,
+  "eval_model_buffers_unchanged": true,
+  "parameter_tensors_unchanged_without_optimizer": 233,
+  "strict_model_reload": true,
+  "full_state_tensors": 464,
+  "all_gradients_finite": true,
+  "gradient_groups_nonzero": {
+    "encoder": true,
+    "encoder_stem": true,
+    "semantic_conv_head": true,
+    "semantic_norm_head": true,
+    "point": true
+  },
+  "preflight_backward_loss_scale": 128.0,
+  "point_counts": {
+    "point_forward_calls": 3,
+    "point_image_forwards": 8
+  },
+  "counts": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "source_OOD_RGB_reads": 0,
+  "source_OOD_forward_calls": 0,
+  "external_images_calls_backward_updates": 0,
+  "formal_fresh_rebuild_required": true,
+  "runtime": {
+    "process_seconds": 16.063360936939716,
+    "full_process_seconds": 16.18448105081916,
+    "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+    "device": "cuda",
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "peak_cuda_memory_bytes": 630110208,
+    "peak_cuda_reserved_bytes": 725614592
+  },
+  "runtime_boundary_qualification": {
+    "item": "recorded_full_process_boundary",
+    "status": "QUALIFIED",
+    "reason": "The new control imports torch before importing the helper that sets PROCESS_STARTED. The saved full_process_seconds starts at helper module import, after the new entry's torch import, and excludes final completion JSON; use supervisor stage wall for full child-stage elapsed time."
+  },
+  "authoritative_preflight_supervisor_stage_seconds": 17.985979,
+  "witness_scope": "Saved source-ID-only zero-update witness plus execution metadata agreement; not fresh checkpoint or cached-weight content verification. This public artifact contains normalized saved metadata/shapes/dtypes/booleans only."
+}

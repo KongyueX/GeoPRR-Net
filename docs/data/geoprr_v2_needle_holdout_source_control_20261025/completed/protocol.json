@@ -1,0 +1,159 @@
+{
+  "protocol": "geoprr_v2_needle_holdout_source_control_v1",
+  "code_revision": "f5af94bbaaaed0816da50ed44a6c803c598a8969",
+  "scope": "bounded source learning diagnostic; last5 on the same292 source-ID saved scalar rows; no source-OOD or external result",
+  "config": {
+    "protocol": "geoprr_v2_needle_holdout_source_control_v1",
+    "model": {
+      "factory": "experiments.geoprr_v2_high_resolution_direct.create_model(pretrained=True)",
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "semantic_dim": 1280,
+      "parameters": 8435793,
+      "parameter_tensors": 233,
+      "state_tensors": 464,
+      "readout": "GAP1/full neck/Linear1280to1 std.001 bias0/float32 sigmoid",
+      "all_encoder_and_point_trainable": true,
+      "source_training_BN_updates": true
+    },
+    "data": {
+      "image_size": 512,
+      "output_size": 128,
+      "require_geometry": false,
+      "pair_manifest": null
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ]
+    },
+    "source": {
+      "heldout_pointer": "canonical_pointer_03",
+      "training_pointers": [
+        "canonical_pointer_01",
+        "canonical_pointer_02"
+      ],
+      "parent_layouts_train": 687,
+      "original_train_images": 2748,
+      "roll_train_images": 2748,
+      "train_unique_images": 5496,
+      "train_repeat": 1,
+      "train_calls_per_epoch": 86,
+      "last_train_batch": 56,
+      "ID_layouts": 73,
+      "ID_images": 292,
+      "ID_calls": 5,
+      "OOD_layouts": 55,
+      "OOD_images": 220,
+      "OOD_calls": 4
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 5,
+      "max_epochs": 5,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "optimizer": "AdamW",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "gradient_clip": 5.0,
+      "loss": "SmoothL1",
+      "smooth_l1_beta": 0.05,
+      "amp": true,
+      "scheduler": null,
+      "validation_before_epoch5": false,
+      "resume": false
+    },
+    "learning_gate": {
+      "constant_prediction": 0.5,
+      "ratio": 0.5,
+      "failure_error": 1.0,
+      "denominator": 292,
+      "tail_count": 30
+    },
+    "checkpoint": "last5 only; full state after every complete epoch; no best selection",
+    "external_images_calls_backward_updates": 0
+  },
+  "population_counts": {
+    "per_needle_images": {
+      "train": {
+        "canonical_pointer_01": 2704,
+        "canonical_pointer_02": 2792
+      },
+      "id": {
+        "canonical_pointer_01": 124,
+        "canonical_pointer_02": 168
+      },
+      "ood": {
+        "canonical_pointer_03": 220
+      }
+    },
+    "train_unique": 5496,
+    "original_images": 2748,
+    "roll_images": 2748,
+    "parent_layouts": 687,
+    "ID_images": 292,
+    "ID_layouts": 73,
+    "OOD_declared_images": 220,
+    "OOD_declared_layouts": 55
+  },
+  "checkpoint": "last5 only; no best selection, scheduler, early stopping or extension",
+  "formal_counts": {
+    "cnn_image_forwards": 27772,
+    "cnn_forward_calls": 435,
+    "point_image_forwards": 27772,
+    "point_forward_calls": 435,
+    "source_backward_calls": 430,
+    "source_optimizer_updates": 430,
+    "source_amp_skipped_updates": 0,
+    "external_images": 0,
+    "external_CNN_calls": 0,
+    "external_backward_calls": 0,
+    "external_optimizer_updates": 0
+  },
+  "preflight_counts_separate": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "scientific_outcome": {
+    "status": "learning_gate_failed",
+    "mean_passed": true,
+    "tail_passed": false,
+    "source_OOD_evaluated": false,
+    "external_evaluated": false,
+    "supported_statement": "The unchanged reader improved source-ID mean under this fixed five-epoch subset budget, but did not meet the predeclared simultaneous mean-and-tail criterion.",
+    "unsupported_statements": [
+      "heldout-needle generalization",
+      "Industrial or RF benefit",
+      "needle identity as the cause of external errors",
+      "impossibility of learning after a different or larger budget"
+    ]
+  },
+  "source_OOD": {
+    "observed": false,
+    "RGB_images": 0,
+    "CNN_calls": 0,
+    "point_calls": 0,
+    "results": null
+  },
+  "external_counts": {
+    "images": 0,
+    "CNN_calls": 0,
+    "point_calls": 0,
+    "backward_calls": 0,
+    "optimizer_updates": 0
+  },
+  "automatic_promotion": false
+}

@@ -1,0 +1,42 @@
+{
+  "protocol": "geoprr_v2_needle_holdout_source_control_v1",
+  "seeds": [
+    20262020
+  ],
+  "pipeline_pid": 413065,
+  "status": "complete",
+  "updated_at": "2026-10-25T13:50:31.723837+00:00",
+  "code_revision": "f5af94bbaaaed0816da50ed44a6c803c598a8969",
+  "current_step": null,
+  "completion_reason": "learning_gate_failed",
+  "collection_metadata_projection": {
+    "metadata_projection": true,
+    "raw_full_file": false,
+    "scope": "Archive export of existing saved metadata only, supplementary to the frozen49-check audit; no re-audit or metric recomputation.",
+    "server_removed_material": "Full source_contract, populations, prepared manifests,5496 training identity arrays, private source packets, RGB, features, geometry, weights and checkpoint contents are omitted before stdout.",
+    "execution_code_revision": "f5af94bbaaaed0816da50ed44a6c803c598a8969"
+  },
+  "steps": {
+    "preflight": {
+      "status": "complete",
+      "started_at": "2026-10-25T13:47:20.021162+00:00",
+      "finished_at": "2026-10-25T13:47:38.007141+00:00",
+      "pid": 413069,
+      "exit_code": 0
+    },
+    "source_control": {
+      "status": "complete",
+      "started_at": "2026-10-25T13:47:38.110302+00:00",
+      "finished_at": "2026-10-25T13:50:31.548200+00:00",
+      "pid": 413106,
+      "exit_code": 0
+    }
+  },
+  "runtime_qualification": {
+    "raw_runtime_values_and_boundary_label_preserved": true,
+    "actual_full_process_boundary": "Old runtime helper module import, after the new stage entry imports torch, through runtime metadata evaluation before final completed.json write.",
+    "full_child_stage_wall_source": "queue_state steps started_at before stage launch through finished_at after process.wait; includes launch and teardown overhead.",
+    "point_seconds": null,
+    "point_timing_status": "Not separately measured; included in complete model forward."
+  }
+}

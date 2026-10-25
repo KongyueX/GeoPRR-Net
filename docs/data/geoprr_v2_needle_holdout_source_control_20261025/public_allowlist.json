@@ -1,18 +1,67 @@
 {
   "protocol": "geoprr_needle_holdout_source_control_public_allowlist_v1",
-  "status": "new_CPU_and_source_population_passed_runtime_pending",
+  "status": "complete_learning_gate_failed",
   "files": [
     "../../GEOPRR_V2_NEEDLE_HOLDOUT_SOURCE_CONTROL_CN.md",
     "README.md",
     "config.json",
     "cpu_checks.json",
-    "public_allowlist.json"
+    "public_allowlist.json",
+    "runtime_preflight.json",
+    "launch_verification.json",
+    "completed/config.json",
+    "completed/protocol.json",
+    "completed/run_metadata.json",
+    "completed/completed_record.json",
+    "completed/queue_state.json",
+    "completed/screen_summary.json",
+    "completed/initialization_record.json",
+    "completed/history.jsonl",
+    "completed/source_id_model_predictions.csv.gz",
+    "completed/source_id_constant_predictions.csv.gz",
+    "completed/source_id_model_groups.csv",
+    "completed/source_id_constant_groups.csv",
+    "completed/source_id_model_summary.json",
+    "completed/source_id_constant_summary.json",
+    "completed/learning_gate.json",
+    "completed/source_ood_status.json",
+    "completed/costs.json",
+    "completed/numeric_execution_audit.json",
+    "completed/metrics.json",
+    "completed/report_cn.md",
+    "completed/public_allowlist.json"
   ],
   "training_protocol": "geoprr_v2_needle_holdout_source_control_v1",
   "Industrial_RF_forward_calls": 0,
   "automatic_promotion": false,
   "excluded": [
-    "source_population_ID_arrays/fullcontracts/privatepaths",
-    "RGB/checkpoints/weights/features/geometry"
-  ]
+    "full source contracts/populations/source arrays/5496 training ID lists",
+    "RGB/checkpoints/weights/features/geometry",
+    "private paths/commands/raw full runs"
+  ],
+  "root_entry_files": 7,
+  "completed_artifact_files": 21,
+  "audit": {
+    "verdict": "PASS_WITH_QUALIFICATIONS",
+    "check_count": 49,
+    "passed_checks": 49,
+    "failed_checks": 0
+  },
+  "scientific_outcome": {
+    "status": "learning_gate_failed",
+    "mean_passed": true,
+    "tail_passed": false,
+    "source_OOD_evaluated": false,
+    "external_evaluated": false,
+    "supported_statement": "The unchanged reader improved source-ID mean under this fixed five-epoch subset budget, but did not meet the predeclared simultaneous mean-and-tail criterion.",
+    "unsupported_statements": [
+      "heldout-needle generalization",
+      "Industrial or RF benefit",
+      "needle identity as the cause of external errors",
+      "impossibility of learning after a different or larger budget"
+    ]
+  },
+  "cost_qualification": "Recorded helper runtime values and legacy labels retained; actual helper-import boundary after torch import is qualified. Authoritative full source-control child-stage wall is173.437898s. Point-only time remains null.",
+  "public_scope": "This public archive contains normalized saved scalar rows, scalar group summaries and metadata only. Full source contracts/populations,5496 training identity arrays, RGB, weights, features, geometry, private paths and commands are excluded. Saved model292 and constant292 scalar rows remain complete; source-OOD is skipped with null metrics and has no prediction file.",
+  "current_evidence": "Fresh source-ID-only preflight PASS; exactly5 epochs/430 updates/0 AMPskip; one last5 source-ID292 evaluation. Mean gate passed, tail gate failed; source-OOD skipped with null metrics and0 RGB/forward; Industrial/RF all calls0. Independent49/49 PASS_WITH_QUALIFICATIONS; no automatic promotion or budget extension."
 }

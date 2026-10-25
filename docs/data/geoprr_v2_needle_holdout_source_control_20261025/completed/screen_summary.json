@@ -1,0 +1,195 @@
+{
+  "protocol": "geoprr_v2_needle_holdout_source_control_v1",
+  "config": {
+    "protocol": "geoprr_v2_needle_holdout_source_control_v1",
+    "model": {
+      "factory": "experiments.geoprr_v2_high_resolution_direct.create_model(pretrained=True)",
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "semantic_dim": 1280,
+      "parameters": 8435793,
+      "parameter_tensors": 233,
+      "state_tensors": 464,
+      "readout": "GAP1/full neck/Linear1280to1 std.001 bias0/float32 sigmoid",
+      "all_encoder_and_point_trainable": true,
+      "source_training_BN_updates": true
+    },
+    "data": {
+      "image_size": 512,
+      "output_size": 128,
+      "require_geometry": false,
+      "pair_manifest": null
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ]
+    },
+    "source": {
+      "heldout_pointer": "canonical_pointer_03",
+      "training_pointers": [
+        "canonical_pointer_01",
+        "canonical_pointer_02"
+      ],
+      "parent_layouts_train": 687,
+      "original_train_images": 2748,
+      "roll_train_images": 2748,
+      "train_unique_images": 5496,
+      "train_repeat": 1,
+      "train_calls_per_epoch": 86,
+      "last_train_batch": 56,
+      "ID_layouts": 73,
+      "ID_images": 292,
+      "ID_calls": 5,
+      "OOD_layouts": 55,
+      "OOD_images": 220,
+      "OOD_calls": 4
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 5,
+      "max_epochs": 5,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "optimizer": "AdamW",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "gradient_clip": 5.0,
+      "loss": "SmoothL1",
+      "smooth_l1_beta": 0.05,
+      "amp": true,
+      "scheduler": null,
+      "validation_before_epoch5": false,
+      "resume": false
+    },
+    "learning_gate": {
+      "constant_prediction": 0.5,
+      "ratio": 0.5,
+      "failure_error": 1.0,
+      "denominator": 292,
+      "tail_count": 30
+    },
+    "checkpoint": "last5 only; full state after every complete epoch; no best selection",
+    "external_images_calls_backward_updates": 0
+  },
+  "status": "complete",
+  "epochs": 5,
+  "completion_reason": "learning_gate_failed",
+  "learning_gate": {
+    "passed": false,
+    "denominator": 292,
+    "tail_count": 30,
+    "constant_prediction": 0.5,
+    "ratio": 0.5,
+    "model": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.06132800787729562,
+      "nmae_percent_fs": 6.132800787729562,
+      "acc_at_1": 0.16095890410958905,
+      "acc_at_2": 0.2842465753424658,
+      "acc_at_5": 0.6095890410958904,
+      "coverage": 1.0,
+      "failed": 0,
+      "median_error": 0.03886425029486418,
+      "p90_error": 0.12683204412460344,
+      "p95_error": 0.17504554670304057,
+      "tail10_nmae": 0.25669996334860723,
+      "maximum_error": 0.5787063241004944,
+      "errors_above_2_percent_fs": 209,
+      "errors_above_5_percent_fs": 114,
+      "input_failures": 0,
+      "errors_above_1_percent_fs": 245,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null,
+      "maximum_error_ids": [
+        "geoprr_roll_v22_validation_g0122_s03"
+      ],
+      "median_error_percent_fs": 3.8864250294864178,
+      "p90_error_percent_fs": 12.683204412460345,
+      "p95_error_percent_fs": 17.504554670304056,
+      "tail10_nmae_percent_fs": 25.669996334860723,
+      "maximum_error_percent_fs": 57.87063241004944,
+      "acc_at_1_percent": 16.095890410958905,
+      "count_at_1_percent_fs": 47,
+      "acc_at_2_percent": 28.424657534246577,
+      "count_at_2_percent_fs": 83,
+      "acc_at_5_percent": 60.95890410958904,
+      "count_at_5_percent_fs": 178
+    },
+    "constant": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.2500892740609332,
+      "nmae_percent_fs": 25.008927406093317,
+      "acc_at_1": 0.023972602739726026,
+      "acc_at_2": 0.04794520547945205,
+      "acc_at_5": 0.0821917808219178,
+      "coverage": 1.0,
+      "failed": 0,
+      "median_error": 0.2489658147096634,
+      "p90_error": 0.4416848599910737,
+      "p95_error": 0.476235611923039,
+      "tail10_nmae": 0.4738441610573015,
+      "maximum_error": 0.4994222219684161,
+      "errors_above_2_percent_fs": 278,
+      "errors_above_5_percent_fs": 268,
+      "input_failures": 0,
+      "errors_above_1_percent_fs": 285,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null,
+      "maximum_error_ids": [
+        "geoprr_roll_v22_validation_g0036_s00"
+      ],
+      "median_error_percent_fs": 24.89658147096634,
+      "p90_error_percent_fs": 44.16848599910737,
+      "p95_error_percent_fs": 47.623561192303896,
+      "tail10_nmae_percent_fs": 47.384416105730146,
+      "maximum_error_percent_fs": 49.94222219684161,
+      "acc_at_1_percent": 2.3972602739726026,
+      "count_at_1_percent_fs": 7,
+      "acc_at_2_percent": 4.794520547945205,
+      "count_at_2_percent_fs": 14,
+      "acc_at_5_percent": 8.21917808219178,
+      "count_at_5_percent_fs": 24
+    },
+    "criteria": "model mean and tail10 each <= one half of constant0.5 on the same saved labels"
+  },
+  "counts": {
+    "cnn_image_forwards": 27772,
+    "cnn_forward_calls": 435,
+    "point_image_forwards": 27772,
+    "point_forward_calls": 435,
+    "source_backward_calls": 430,
+    "source_optimizer_updates": 430,
+    "source_amp_skipped_updates": 0,
+    "external_images": 0,
+    "external_CNN_calls": 0,
+    "external_backward_calls": 0,
+    "external_optimizer_updates": 0
+  },
+  "preflight_counts_separate": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "scope": "one bounded source needle control; no automatic promotion",
+  "collection_metadata_projection": {
+    "metadata_projection": true,
+    "raw_full_file": false,
+    "scope": "Archive export of existing saved metadata only, supplementary to the frozen49-check audit; no re-audit or metric recomputation.",
+    "server_removed_material": "Full source_contract, populations, prepared manifests,5496 training identity arrays, private source packets, RGB, features, geometry, weights and checkpoint contents are omitted before stdout.",
+    "execution_code_revision": "f5af94bbaaaed0816da50ed44a6c803c598a8969"
+  }
+}

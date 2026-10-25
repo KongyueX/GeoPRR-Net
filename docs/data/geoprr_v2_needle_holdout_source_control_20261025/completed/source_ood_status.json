@@ -1,0 +1,12 @@
+{
+  "protocol": "geoprr_v2_needle_holdout_source_control_v1",
+  "status": "skipped_learning_gate_failed",
+  "declared_images": 220,
+  "declared_layouts": 55,
+  "RGB_images": 0,
+  "CNN_calls": 0,
+  "point_calls": 0,
+  "metrics": null,
+  "result_files_created": false,
+  "reason": "The frozen simultaneous source-ID mean-and-tail gate did not pass; heldout-needle performance was not evaluated."
+}

@@ -1,0 +1,124 @@
+{
+  "formal_counts": {
+    "cnn_image_forwards": 27772,
+    "cnn_forward_calls": 435,
+    "point_image_forwards": 27772,
+    "point_forward_calls": 435,
+    "source_backward_calls": 430,
+    "source_optimizer_updates": 430,
+    "source_amp_skipped_updates": 0,
+    "external_images": 0,
+    "external_CNN_calls": 0,
+    "external_backward_calls": 0,
+    "external_optimizer_updates": 0
+  },
+  "formal_training_totals": {
+    "train_batches": 430,
+    "train_cnn_image_forwards": 27480,
+    "train_cnn_forward_calls": 430,
+    "backward_calls": 430,
+    "optimizer_updates": 430,
+    "amp_skipped_updates": 0,
+    "validation_images": 292,
+    "validation_cnn_forward_calls": 5,
+    "train_point_forward_calls": 430,
+    "train_point_image_forwards": 27480,
+    "validation_point_forward_calls": 5,
+    "validation_point_image_forwards": 292,
+    "training_seconds": 163.5618004128337,
+    "validation_seconds": 4.893382981419563
+  },
+  "preflight_counts_separate": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "actual_saved_costs": {
+    "training_seconds": 163.5618004128337,
+    "source_ID_pipeline_seconds": 4.893382981419563,
+    "source_ID_forward_seconds": 3.4002205953001976,
+    "point_seconds": null,
+    "point_timing_status": "not separately measured; included in model forward",
+    "formal_recorded_runtime": {
+      "process_seconds": 171.23572536185384,
+      "full_process_seconds": 171.39292973652482,
+      "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 8262538240,
+      "peak_cuda_reserved_bytes": 11345592320
+    },
+    "preflight_recorded_runtime": {
+      "process_seconds": 16.063360936939716,
+      "full_process_seconds": 16.18448105081916,
+      "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 630110208,
+      "peak_cuda_reserved_bytes": 725614592
+    },
+    "supervisor_stage_seconds": {
+      "preflight": 17.985979,
+      "source_control": 173.437898
+    },
+    "supervisor_stages": {
+      "preflight": {
+        "status": "complete",
+        "exit_code": 0,
+        "started_at": "2026-10-25T13:47:20.021162+00:00",
+        "finished_at": "2026-10-25T13:47:38.007141+00:00",
+        "pid": 413069
+      },
+      "source_control": {
+        "status": "complete",
+        "exit_code": 0,
+        "started_at": "2026-10-25T13:47:38.110302+00:00",
+        "finished_at": "2026-10-25T13:50:31.548200+00:00",
+        "pid": 413106
+      }
+    },
+    "serialized_stage_sum_seconds": 191.423877,
+    "first_pref_start_through_control_finish_seconds": 191.527038
+  },
+  "timing_boundary_correction": {
+    "raw_values_retained": true,
+    "formal_recorded_process_seconds": 171.23572536185384,
+    "formal_recorded_full_process_seconds": 171.39292973652482,
+    "actual_recorded_full_boundary": "Old runtime helper module import, after the new control entry imports torch, through evaluation of runtime metadata before final completed.json write. It includes training, source-ID evaluation, scalar saves and final last.pt save.",
+    "full_child_stage_wall_seconds": 173.437898,
+    "full_child_stage_boundary": "Supervisor started_at recorded before stage launch through finished_at after process.wait returns; includes launch and teardown overhead.",
+    "point_seconds": null,
+    "point_seconds_qualification": "Not separately recorded; point is included in complete model forward."
+  },
+  "qualifications": [
+    {
+      "item": "recorded_full_process_boundary",
+      "status": "QUALIFIED",
+      "reason": "The new control imports torch before importing the helper that sets PROCESS_STARTED. The saved full_process_seconds starts at helper module import, after the new entry's torch import, and excludes final completion JSON; use supervisor stage wall for full child-stage elapsed time."
+    },
+    {
+      "item": "saved_reload_initialization_and_architecture_witness",
+      "status": "QUALIFIED",
+      "reason": "These checks confirm saved preflight/formal metadata and code agreement. This audit never opens checkpoint or cached weight contents, constructs a model, imports torch, or executes a forward."
+    },
+    {
+      "item": "source_metadata_scope",
+      "status": "QUALIFIED",
+      "reason": "Closure, exclusion, identity and disjointness are checked from frozen prepared metadata and server-only contract equality, without new GT, RGB, mesh or pixel verification."
+    },
+    {
+      "item": "earlier_root_collection",
+      "status": "QUALIFIED",
+      "reason": "Root recorded an earlier nested-contract collection and immediate local minimization. This independent collection strips forbidden nested material on server before stdout; it does not claim that no earlier client ever received a contract."
+    }
+  ],
+  "point_seconds": null,
+  "point_timing_status": "not separately measured; included in model forward",
+  "cost_scope": "The recorded helper process/full-process values and their legacy labels are retained. The legacy full-process label does not measure the complete new entry import boundary. Use supervisor stage wall for complete child-stage elapsed time; stage sum and first-pref-start through control-finish have distinct saved boundaries."
+}

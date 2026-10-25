@@ -26,6 +26,16 @@ fresh既有缓存ImageNet MNV4 num_classes0、完整conv_head／norm_head／GAP1
 
 code／protocol／config／NEWCPU证据先推existing main，实际旧父子退出且GPU空后才唯一pref→fresh五轮control。保存model／optimizer／scaler／RNG／history／counts／init／新protocol与source合同，失败保留partial不fresh覆盖或自动延长；不恢复或重跑旧实验。实现者不得自行启动GPU。完成后只核对本控制保存标量与执行记录，不补评旧模型或两个真实外域，不自动开长训练。
 
+## 完成记录
+
+固定5轮完整结束，430次backward尝试＝430更新＋0AMPskip，只用last5；最后source-ID292一次冻结评估。模型mean6.132800787730%FS≤预声明上限12.504463703047%FS，tail10为25.669996334861%FS>上限23.692208052865%FS；constant0.5 mean／tail为25.008927406093／47.384416105730%FS。均值已学会改善，但尾部未同时满足一半条件，正常completion_reason为learning_gate_failed。source-OOD RGB／forward0、metrics null、无预测文件；heldout针型问题未评估，Industrial／RF全部images／calls／backward／updates0，没有外域结果。
+
+正式training27480图／430 CNN、source-ID292图／5调用，合计27772图／435 CNN，point一致；source-ID-only pref3CNN／8图／1back／0optimizer单列，未读取OOD RGB。表示仍为完整MNV4／GAP1280／新scalar point、8435793参数／233参数tensor／464state、77BN源更新／eval冻结。cached462初始化、零更新参数保持、464 strictreload及必要梯度只引用保存见证与执行metadata，未fresh检查checkpoint或cached权重内容。无best选择、scheduler、延长或重试，保持5E预算及原双门槛。
+
+唯一独立CPU保存标量／执行核对49／49 PASS、0失败，结论PASS_WITH_QUALIFICATIONS；四项qualification在[审计](data/geoprr_v2_needle_holdout_source_control_20261025/completed/numeric_execution_audit.json)完整保留。正式supervisor stage wall173.437898秒、pref17.985979秒，两stage和191.423877秒，pref起点至control结束191.527038秒。原helper process171.235725361854／recorded full171.392929736525秒保留，但新entry先lazy import torch再导入计时helper，旧full_process边界标签不是新entry完整import边界；完整child-stage elapsed采用supervisor wall，point独立计时null，不填0。两stage complete／exit0，13:52:29.672489保存观察时父413065／pref413069／control413106退出、GPU空闲。
+
+[报告](data/geoprr_v2_needle_holdout_source_control_20261025/completed/report_cn.md)、[指标](data/geoprr_v2_needle_holdout_source_control_20261025/completed/metrics.json)、[gate](data/geoprr_v2_needle_holdout_source_control_20261025/completed/learning_gate.json)、完整model292／constant292 scalar CSV和73组summary／CSV已规范化归档。根7项入口＋[completed21项](data/geoprr_v2_needle_holdout_source_control_20261025/completed/public_allowlist.json)，[总allowlist](data/geoprr_v2_needle_holdout_source_control_20261025/public_allowlist.json)28项。run／completed／queue／screen仅metadata projection，不是raw full文件。本次公开只含规范化保存标量／metadata；fullcontracts、source arrays、5496训练名单、RGB、weights、geometry、features、privatepaths及commands保持私有。全部原资产保留，不扩预算、不改门槛、不外评、不自动promotion。
+
 ## Limitations
 
 本控制只检验现有三个合成needle资产中的一个固定留出，不能证明针型是外域失败根因，也不能推断font／HDR未见、真实域收益、显著性或普适性。source-ID与OOD其他layout因素可能混杂；低预算未学会源ID时不具有可解释的OOD结论。保留全部历史失败，不把源结果或单域收益写成整体泛化成功。完整来源名单、RGB、weights、features、geometry和privatepaths保持私有。

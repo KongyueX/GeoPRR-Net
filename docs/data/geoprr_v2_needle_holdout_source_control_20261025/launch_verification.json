@@ -1,0 +1,63 @@
+{
+  "protocol": "geoprr_v2_needle_holdout_source_control_v1",
+  "status": "complete_learning_gate_failed",
+  "code_revision": "f5af94bbaaaed0816da50ed44a6c803c598a8969",
+  "started_at_utc": "2026-10-25T13:47:19.698505+00:00",
+  "started_at_beijing": "2026-10-25 21:47:19",
+  "pipeline_pid_at_launch": 413065,
+  "preflight_pid": 413069,
+  "source_control_child_at_verification": 413106,
+  "verification_at_utc": "2026-10-25T13:48:45.311295+00:00",
+  "parent_and_child_commands_verified": true,
+  "sole_GPU_compute_pid_at_verification": 413106,
+  "GPU_memory_MiB_at_verification": 11498,
+  "prelaunch_GPU_processes": 0,
+  "previous_V31_complete_all4exit0": true,
+  "runtime_preflight_status": "passed",
+  "first_complete_training_epoch": {
+    "epoch": 1,
+    "train_images": 5496,
+    "CNN_calls": 86,
+    "backward_attempts": 86,
+    "optimizer_updates": 86,
+    "AMP_skips": 0,
+    "validation_calls": 0,
+    "training_seconds": 45.86919467523694
+  },
+  "control_epochs_fixed": 5,
+  "source_OOD_RGB_before_gate": 0,
+  "Industrial_RF_all_calls_authorized": 0,
+  "scope": "bounded source control execution, no external generalization result",
+  "saved_launch_status": "source_control_running_at_verification",
+  "completion": {
+    "preflight": {
+      "status": "complete",
+      "exit_code": 0,
+      "started_at": "2026-10-25T13:47:20.021162+00:00",
+      "finished_at": "2026-10-25T13:47:38.007141+00:00",
+      "pid": 413069
+    },
+    "source_control": {
+      "status": "complete",
+      "exit_code": 0,
+      "started_at": "2026-10-25T13:47:38.110302+00:00",
+      "finished_at": "2026-10-25T13:50:31.548200+00:00",
+      "pid": 413106
+    }
+  },
+  "scientific_outcome": {
+    "status": "learning_gate_failed",
+    "mean_passed": true,
+    "tail_passed": false,
+    "source_OOD_evaluated": false,
+    "external_evaluated": false,
+    "supported_statement": "The unchanged reader improved source-ID mean under this fixed five-epoch subset budget, but did not meet the predeclared simultaneous mean-and-tail criterion.",
+    "unsupported_statements": [
+      "heldout-needle generalization",
+      "Industrial or RF benefit",
+      "needle identity as the cause of external errors",
+      "impossibility of learning after a different or larger budget"
+    ]
+  },
+  "termination_observation": "parent supplied completed read-only observation at 2026-10-25T13:52:29.672489+00:00"
+}

@@ -1,0 +1,51 @@
+{
+  "protocol": "geoprr_needle_holdout_source_control_completed_public_allowlist_v1",
+  "status": "complete_learning_gate_failed",
+  "audit": {
+    "verdict": "PASS_WITH_QUALIFICATIONS",
+    "check_count": 49,
+    "passed_checks": 49,
+    "failed_checks": 0
+  },
+  "files": [
+    "config.json",
+    "protocol.json",
+    "run_metadata.json",
+    "completed_record.json",
+    "queue_state.json",
+    "screen_summary.json",
+    "initialization_record.json",
+    "history.jsonl",
+    "source_id_model_predictions.csv.gz",
+    "source_id_constant_predictions.csv.gz",
+    "source_id_model_groups.csv",
+    "source_id_constant_groups.csv",
+    "source_id_model_summary.json",
+    "source_id_constant_summary.json",
+    "learning_gate.json",
+    "source_ood_status.json",
+    "costs.json",
+    "numeric_execution_audit.json",
+    "metrics.json",
+    "report_cn.md",
+    "public_allowlist.json"
+  ],
+  "scientific_outcome": {
+    "status": "learning_gate_failed",
+    "mean_passed": true,
+    "tail_passed": false,
+    "source_OOD_evaluated": false,
+    "external_evaluated": false,
+    "supported_statement": "The unchanged reader improved source-ID mean under this fixed five-epoch subset budget, but did not meet the predeclared simultaneous mean-and-tail criterion.",
+    "unsupported_statements": [
+      "heldout-needle generalization",
+      "Industrial or RF benefit",
+      "needle identity as the cause of external errors",
+      "impossibility of learning after a different or larger budget"
+    ]
+  },
+  "scalar_scope": "source-ID model292 and constant0.5 same292 complete scalar rows;73 scalar groups each; five saved training epochs; no source-OOD or external result",
+  "public_scope": "This public archive contains normalized saved scalar rows, scalar group summaries and metadata only. Full source contracts/populations,5496 training identity arrays, RGB, weights, features, geometry, private paths and commands are excluded. Saved model292 and constant292 scalar rows remain complete; source-OOD is skipped with null metrics and has no prediction file.",
+  "normalization": "Exact saved scalar field text retained with LF CSV line endings; run/completed/queue/screen are explicitly sanitized metadata projections, not raw full files. No metric recalculation or new prediction generation.",
+  "cost_qualification": "Recorded helper runtime values and legacy labels retained; actual helper-import boundary after torch import is qualified. Authoritative full source-control child-stage wall is173.437898s. Point-only time remains null."
+}
