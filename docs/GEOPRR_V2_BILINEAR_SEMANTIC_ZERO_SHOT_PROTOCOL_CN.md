@@ -56,6 +56,16 @@ whole source＋I/R complete、四exit0、父子退出GPU空后才委派ONE新鲜
 
 报告mean／Acc1/2/5／median/p90/p95／tail10／max、相对v16／旧GeoPRR／v24／v25／v26／v28／v29及保存参照的>1/2/5新增救回／逐图组改善恶化／zero非zero近zero／ordinary1495/1497/severe6／固定focus，roll512只自身，V27无外域结果不拼造。源R或单域收益不代表整体成功，不自动promotion；旧资产、G1／anchor／65轮／配对守恒负结果全保留，归档后继续独立源域结构／表示研究。
 
+## 完成记录
+
+源85轮完整结束，earliest strict source R选best65，R=0.02002078072040426；last85 R=0.021849794853326554，均为normalized full error。85−65=20，按min60max160与patience20停止；LR在21／30／42／74／83轮后下降不重置counter，无resume。同一best65只在源停止后各冻结外评一次，last只源；四阶段complete／exit0，最终RF于2026-10-25T08:38:14.495263+00:00结束，父进程已退出，2026-10-25T08:38:40+00:00保存检查时GPU空闲。
+
+源best原1506 mean／tail／max为0.560196／2.468517／20.804057%FS，roll512为0.975716／4.003882／31.504238%FS。Industrial mean15.418735／tail56.544002／max80.651760%FS，较V24／V25／V26／V29三项均改善，但仍弱于V28；较v16 mean／tail更高、max更低。RF100 mean12.095891%FS弱于主要参照，tail50.749786／max68.491405%FS低于V26／V28／V29。Industrial相对V26 >5救回127／新增147；RF相对V24 >5救回37／新增20，同时mean／tail升高。混合结果与全部旧资产保留，不升级默认；V27无外域结果不作baseline。
+
+实际8598481参数／234个trainable参数tensor／465state，完整encoder8434512参数／462state、semantic1280 FP16，新point163969参数／3tensor／3state。精确readout为关闭autocast后的FP32 Linear1280→128／split64／product-sum/sqrt64＋scalar bias；A std1/sqrt1280、B std.001、全部factor／output bias0，乘积stage无参数／state。cached462只在初始化保留，全部CNN／head源训练、BN仅source更新／eval冻结。正式CNN／point各3145866图／49240调用，源backward尝试46495＝46475更新＋20AMPskip；point CUDA-event forward2.315521071秒包含于full model／pipeline、不含head backward。pref3CNN／8图／1back／0optimizer与point0.052910719秒单列；训练pipeline14485.251577秒、source full15146.585475秒、source peak allocated／reserved8266190336／11351883776bytes，单CNN不等于同成本。
+
+唯一独立CPU保存数字／执行核对71441项通过、0失败、最大差1.4210854715202004e-14；未加载模型／weights／RGB／features／geometry／checkpoint或重跑GT／旧测试／外评。[报告](data/geoprr_v2_bilinear_semantic_20261025/completed/report_cn.md)、[指标](data/geoprr_v2_bilinear_semantic_20261025/completed/metrics.json)、[比较表](data/geoprr_v2_bilinear_semantic_20261025/completed/comparison.csv)与[26项completed allowlist](data/geoprr_v2_bilinear_semantic_20261025/completed/public_allowlist.json)已规范化归档；[总allowlist](data/geoprr_v2_bilinear_semantic_20261025/public_allowlist.json)33项。checkpoint／RNG保存机制为代码及metadata证据，内容未加载，不增加恢复保证。rawrun／contracts／完整源数组与ID名单／delta maps／rawthreshold-rescue-new名单／RGB／weights／latent features／geometry／bbox／privatepaths保持私有。
+
 ## Limitations
 
 因子化乘积只增加学习到的语义交互，不能认证真实几何角色、相对读数因果或尾部收益。Head参数化、初始化、FP32计算与训练历史同时变化，不作单因素因果主张。单seed、已查看开发域、sharedHDR与历史seed缺失边界保持，不报SD、显著性、新盲测、普适性或新理论；旧GeoPRR历史pixel/fullweight链未重认证。RGB／weights／features／H/C/XYZ/U/M／bbox／rawrun／fullcontracts／源arrays／privatepaths保持私有，只公开必要规范化标量、shape／dtype和执行metadata。

@@ -1,0 +1,49 @@
+{
+  "protocol": "geoprr_v2_bilinear_semantic_source_only_v1",
+  "code_revision": "393beeaa16eacdaf8b12828ee83b345a59151782",
+  "pipeline_pid": 353895,
+  "status": "complete",
+  "updated_at": "2026-10-25T08:38:14.509496+00:00",
+  "current_step": null,
+  "seeds": [
+    20262020
+  ],
+  "steps": {
+    "preflight": {
+      "status": "complete",
+      "started_at": "2026-10-25T04:24:56.042898+00:00",
+      "finished_at": "2026-10-25T04:25:18.159387+00:00",
+      "exit_code": 0,
+      "interpreter_is_project_venv": true,
+      "module": "experiments.geoprr_v2_bilinear_semantic",
+      "checkpoint_is_reader_best": true
+    },
+    "train_source": {
+      "status": "complete",
+      "started_at": "2026-10-25T04:25:18.226031+00:00",
+      "finished_at": "2026-10-25T08:37:46.301296+00:00",
+      "exit_code": 0,
+      "interpreter_is_project_venv": true,
+      "module": "experiments.geoprr_v2_bilinear_semantic",
+      "checkpoint_is_reader_best": true
+    },
+    "eval_industrial": {
+      "status": "complete",
+      "started_at": "2026-10-25T08:37:46.518360+00:00",
+      "finished_at": "2026-10-25T08:38:01.608834+00:00",
+      "exit_code": 0,
+      "interpreter_is_project_venv": true,
+      "module": "experiments.geoprr_v2_bilinear_semantic",
+      "checkpoint_is_reader_best": true
+    },
+    "eval_rf100": {
+      "status": "complete",
+      "started_at": "2026-10-25T08:38:01.693474+00:00",
+      "finished_at": "2026-10-25T08:38:14.495263+00:00",
+      "exit_code": 0,
+      "interpreter_is_project_venv": true,
+      "module": "experiments.geoprr_v2_bilinear_semantic",
+      "checkpoint_is_reader_best": true
+    }
+  }
+}

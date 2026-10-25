@@ -1,0 +1,126 @@
+{
+  "protocol": "geoprr_v2_bilinear_semantic_source_only_v1",
+  "config": {
+    "protocol": "geoprr_v2_bilinear_semantic_source_only_v1",
+    "model": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "num_classes": 0,
+      "semantic_dim": 1280,
+      "initialization": "fresh complete cached ImageNet encoder, including conv_head and norm_head; new bilinear scalar point",
+      "readout": "sigmoid(sum(A(h)*B(h),64)/sqrt(64)+output_bias); one Linear1280to128 split into factors64",
+      "rank": 64,
+      "factor_projection_width": 128,
+      "point_precision": "float32 projection, product, reduction and logit inside disabled autocast",
+      "factor_A_initialization_std": 0.02795084971874737,
+      "factor_B_initialization_std": 0.001,
+      "factor_bias_initialization": 0.0,
+      "output_bias_initialization": 0.0,
+      "normalization": "fixed1/sqrt64 dimensional normalization",
+      "CNN_passes_per_image": 1,
+      "joint_encoder_training": true,
+      "source_training_BN_updates": true
+    },
+    "data": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "source": {
+      "old_unique": 18590,
+      "roll_unique": 4096,
+      "roll_repeat": 4,
+      "total_unique": 22686,
+      "train_presentations": 34974,
+      "original_validation": 1506,
+      "roll_validation": 512,
+      "require_geometry": false,
+      "pair_manifest": null,
+      "roll_validation_split": "independent layout/seed/ID/group; same available HDR background",
+      "population_policy": "same four manifest rows and order as retained V22 source; authoritative RGB512 input contract"
+    },
+    "training": {
+      "seed": 20262020,
+      "min_epochs": 60,
+      "max_epochs": 160,
+      "early_stopping_patience": 20,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "loss": "smooth_l1",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0,
+      "scheduler": {
+        "mode": "min",
+        "factor": 0.3,
+        "patience": 8,
+        "threshold": 0.0,
+        "threshold_mode": "abs",
+        "cooldown": 0,
+        "min_lr": 1e-06,
+        "eps": 1e-08
+      }
+    },
+    "checkpoint_selection": "earliest strict minimum R=(original1506 mean NMAE + roll512 mean NMAE + original1506 worst10percent NMAE + roll512 worst10percent NMAE)/4; each worst tail uses ceil(.1*N), including failed inputs/scalars at error1",
+    "external_checkpoint": "source-selected best only after source stopping rule completes",
+    "inference_input": "provided native ROI RGB, linear resize512, ImageNet normalization; one RGB forward, no GT geometry or target scalar input",
+    "external_training_or_adaptation": false
+  },
+  "readout_contract": {
+    "semantic_dim": 1280,
+    "rank": 64,
+    "projection_shape": [
+      1280,
+      128
+    ],
+    "scalar_shape": [
+      1
+    ],
+    "formula": "sum(A(h)*B(h),dim64,keepdim=True)/sqrt64+output_bias",
+    "precision": "semantic.float(); projection, factor product, reduction and logit in disabled autocast",
+    "initialization": {
+      "factor_A_weight_std": 0.02795084971874737,
+      "factor_B_weight_std": 0.001,
+      "factor_bias": 0.0,
+      "output_bias": 0.0
+    }
+  },
+  "status": "complete",
+  "epochs": 85,
+  "counts": {
+    "cnn_image_forwards": 3145866,
+    "cnn_forward_calls": 49240,
+    "point_image_forwards": 3145866,
+    "point_forward_calls": 49240,
+    "source_backward_calls": 46495,
+    "source_optimizer_updates": 46475,
+    "source_amp_skipped_updates": 20,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  },
+  "preflight_counts_separate": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "point_forward_seconds": 2.31552107071504,
+  "scope": "complete source-only rank64 bilinear semantic scalar reader with512 RGB input; no automatic promotion"
+}

@@ -1,6 +1,6 @@
 {
   "protocol": "geoprr_v30_public_allowlist_v1",
-  "status": "runtime_preflight_passed_source_training_running",
+  "status": "complete_audited_not_promoted",
   "files": [
     "../../GEOPRR_V2_BILINEAR_SEMANTIC_ZERO_SHOT_PROTOCOL_CN.md",
     "README.md",
@@ -8,7 +8,33 @@
     "cpu_checks.json",
     "public_allowlist.json",
     "runtime_preflight.json",
-    "launch.json"
+    "launch.json",
+    "completed/best_validation.json",
+    "completed/comparison.csv",
+    "completed/completed_record.json",
+    "completed/config.json",
+    "completed/costs.json",
+    "completed/history.jsonl",
+    "completed/industrial_groups.csv",
+    "completed/industrial_predictions.csv.gz",
+    "completed/industrial_summary.json",
+    "completed/initialization_record.json",
+    "completed/latest_validation.json",
+    "completed/metrics.json",
+    "completed/numeric_execution_audit.json",
+    "completed/protocol.json",
+    "completed/public_allowlist.json",
+    "completed/queue_state.json",
+    "completed/report_cn.md",
+    "completed/rf100_groups.csv",
+    "completed/rf100_predictions.csv.gz",
+    "completed/rf100_summary.json",
+    "completed/run_metadata.json",
+    "completed/screen_summary.json",
+    "completed/source_best65_original_predictions.csv.gz",
+    "completed/source_best65_roll_predictions.csv.gz",
+    "completed/source_last85_original_predictions.csv.gz",
+    "completed/source_last85_roll_predictions.csv.gz"
   ],
   "training_protocol": "geoprr_v2_bilinear_semantic_source_only_v1",
   "actual_model_metadata": {
@@ -53,11 +79,39 @@
     "CNN_passes_per_image": 1
   },
   "excluded": [
-    "RGB/checkpoint/weights",
-    "features/geometry/bbox",
-    "rawrun/fullcontracts/fullsourcearrays/privatepaths"
+    "RGB/model/checkpoint weights",
+    "latent feature values/geometry/bbox",
+    "raw run/full source contracts/population arrays/private paths",
+    "complete population and fixed-cohort ID arrays/per-image delta maps/full improved-regressed or threshold-rescue-new ID lists"
   ],
   "external_training_or_adaptation": false,
   "code_revision": "393beeaa16eacdaf8b12828ee83b345a59151782",
-  "runtime_evidence": "3CNN8images1combinedback0optimizer;semantic1280F16/projection128-factor64-logitF32;cached462retained/finite-left-right-stem-neck-grad/465strictreload"
+  "runtime_evidence": "3CNN8images1combinedback0optimizer;semantic1280F16/projection128-factor64-logitF32;cached462retained/finite-left-right-stem-neck-grad/465strictreload",
+  "current_evidence": "85 complete source epochs, source-selected best65, once-frozen Industrial/RF100 complete, one independent saved-scalar/execution audit71441PASS0fail; no automatic promotion",
+  "audit": {
+    "status": "passed",
+    "checks": 71441,
+    "failed_checks": 0
+  },
+  "readout_contract": {
+    "semantic_dim": 1280,
+    "rank": 64,
+    "projection_shape": [
+      1280,
+      128
+    ],
+    "scalar_shape": [
+      1
+    ],
+    "formula": "sum(A(h)*B(h),dim64,keepdim=True)/sqrt64+output_bias",
+    "precision": "semantic.float(); projection, factor product, reduction and logit in disabled autocast",
+    "initialization": {
+      "factor_A_weight_std": 0.02795084971874737,
+      "factor_B_weight_std": 0.001,
+      "factor_bias": 0.0,
+      "output_bias": 0.0
+    }
+  },
+  "formal_point_forward_seconds": 2.31552107071504,
+  "normalization": "Full scalar metrics/CSV retained; complete population and fixed-cohort ID arrays, per-image delta maps, improved/regressed full-ID arrays and raw threshold/rescue/new ID lists excluded; paired counts, scalar group summaries and necessary focus/max IDs retained."
 }
