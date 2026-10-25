@@ -50,6 +50,18 @@ pref另列。每次backattempt如实分解updates+AMPskip；不调scale补齐。
 
 控制wholecomplete且父子gone/GPUempty后，仅ONEfresh独立保存数字CPU核对，作者不能审计、不并行第二审计、不打开weights。规范化explicitallowlist归档existingmain，保留失败／混合结果与全部成本。RGB、weights、features、fullcontracts、训练身份数组和geometry保持server私有，stdout前server allowlist，只收必要metadata/bool及允许的scalar CSV。
 
+## 完成记录
+
+固定15轮／last15与条件CF均完整结束，科学判定SOURCE_COLOR_CONTROL_PASSED；唯一fresh保存数字／执行审计状态FAIL，149 checks中148 PASS、1 FAIL，13617数值对比最大差1.4210854715202004e-14。审计FAIL不改为clean PASS，科学门槛与审计状态分别保留；具体字段资格见本节Limitations补充及[报告](data/geoprr_v2_cyclic_color_source_control_20261026/completed/report_cn.md)。
+
+Native mean2.583311489025／tail11.098201560477／max55.090773105621%FS，CF2.558655711628／10.711229617397／53.595584630966%FS；旧directFT5保存值6.132800787730／25.669996334861／57.870632410049%FS。旧→native图像改善215／恶化77，>1／2／5救回86／123／97、新增30／34／11；native→CF改善154／恶化133／相同5，救回9／11／4、新增12／11／7，>5净新增3。CF prediction drift mean0.464577586／ceil30 tail2.500712778／max8.187556267%FS，仍有大错，不作完全color invariance或真实域收益判断。全部条件同292行／73layout×4state，coverage1、输入／scalar失败0，source03／Industrial／RF0RGB／模型。
+
+正式83024图／1300CNN与point调用，1290back尝试＝1289更新＋1skip；pref另3CNN8unique／8presentations1back0opt，native identity验证再次decode同4ID，总decode工作与CNN呈现计数分开。cached／strict／BN／all233零更新保持仅保存见证。Whole supervisor534.320081085秒、formal full entry511.987992272秒、pref18.654737156秒；point与isolated operator timeunknown／null，phase／peak／supervisor边界保留。两stage complete／exit0，420829／420832／420870退出，17:53:12.777850 UTC保存观察GPU空。
+
+[完整scalar CSV／groups／summaries／history／gates／metadata](data/geoprr_v2_cyclic_color_source_control_20261026/completed/public_allowlist.json)按26项completed显式清单归档；根目录7项＋本独立协议1项，总[allowlist](data/geoprr_v2_cyclic_color_source_control_20261026/public_allowlist.json)34项。[source_label_field_presence_supplement](data/geoprr_v2_cyclic_color_source_control_20261026/completed/source_label_field_presence_supplement.json)保留既有字段存在性，不是数值重算或第二审计。本次公开仅规范化保存标量／metadata，rawroot config、fullcontracts、source arrays、训练身份名单、RGB／weights／features／geometry／privatepaths私有；旧控制目录不改，不新增public审计脚本、不重跑audit或模型。
+
 ## Limitations
+
+唯一失败native_labels_agree_with_existing_saved_normalized_labels保持FAIL：292行source contract均缺normalized_progress／y、均有physical label triplet，未GT归一化／重算物理标签；未观测label数值不一致。Native、旧directFT5、constant与CF保存的292行ID／group／targets精确一致PASS，不构成标签派生全链独立认证。补充仅既有字段存在性metadata，不清除原fail。
 
 这是固定15轮source控制；额外预算、C3子群和原source-ID重复使用均明确披露，不能把native改善归因于颜色算子或称新盲测。人工channel swap并不覆盖材质、光照、真实sensor或不同表结构；source门槛通过不保证真实外域提升。G1／anchor／teacher／65轮／配对守恒及全部旧结果保留。旧GeoPRR历史pixel／fullweight链仍未重新认证。无新seed、foundation、weights、算力购买、officialtest4000或第三方消息。

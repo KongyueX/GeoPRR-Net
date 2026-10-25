@@ -1,0 +1,238 @@
+{
+  "initialization": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "ImageNet_pretrained": true,
+    "existing_cached_weights_only": true,
+    "retained_complete_encoder_state_tensors": 462,
+    "all_cached_encoder_state_tensors_retained": true,
+    "new_point_parameter_tensors": 2,
+    "point_initialization_std": 0.001,
+    "point_initialization_bias_zero": true,
+    "old_task_checkpoint_used": false
+  },
+  "model_metadata": {
+    "class": "experiments.geoprr_v2_semantic_direct.SemanticDirectReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "point_parameters": 1281,
+    "point_shape": [
+      1280,
+      1
+    ],
+    "parameters": 8435793,
+    "trainable_parameters": 8435793,
+    "parameter_tensors": 233,
+    "state_tensors": 464,
+    "input_contract": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "CNN_passes_per_image": 1
+  },
+  "preflight_saved_witness": {
+    "protocol": "geoprr_v2_cyclic_color_source_control_v1",
+    "status": "passed",
+    "model_metadata": {
+      "class": "experiments.geoprr_v2_semantic_direct.SemanticDirectReader",
+      "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+      "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "semantic_dim": 1280,
+      "encoder_reported_num_features": 960,
+      "semantic_conv_head_retained": true,
+      "semantic_norm_head_retained": true,
+      "encoder_parameters": 8434512,
+      "encoder_state_tensors": 462,
+      "point_parameters": 1281,
+      "point_shape": [
+        1280,
+        1
+      ],
+      "parameters": 8435793,
+      "trainable_parameters": 8435793,
+      "parameter_tensors": 233,
+      "state_tensors": 464,
+      "input_contract": {
+        "image_size": 512,
+        "output_size": 128
+      },
+      "CNN_passes_per_image": 1
+    },
+    "initialization": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "ImageNet_pretrained": true,
+      "existing_cached_weights_only": true,
+      "retained_complete_encoder_state_tensors": 462,
+      "all_cached_encoder_state_tensors_retained": true,
+      "new_point_parameter_tensors": 2,
+      "point_initialization_std": 0.001,
+      "point_initialization_bias_zero": true,
+      "old_task_checkpoint_used": false
+    },
+    "counts": {
+      "CNN_calls": 3,
+      "CNN_images": 8,
+      "RGB_unique_images": 8,
+      "point_calls": 3,
+      "point_examples": 8,
+      "CNN_backward_calls": 1,
+      "combined_backward_calls": 1,
+      "optimizer_updates": 0
+    },
+    "train_order_indices": [
+      0,
+      1,
+      2,
+      0
+    ],
+    "source_ID_pipeline_identity": true,
+    "operator_FP32_shapes_finite": true,
+    "heldout_operator_inverse_on_existing_train_CPU": true,
+    "heldout_operator_extra_RGB_reads": 0,
+    "heldout_operator_extra_CNN_calls": 0,
+    "observed_encoder_inputs": [
+      {
+        "shape": [
+          4,
+          3,
+          512,
+          512
+        ],
+        "dtype": "torch.float32"
+      },
+      {
+        "shape": [
+          2,
+          3,
+          512,
+          512
+        ],
+        "dtype": "torch.float32"
+      },
+      {
+        "shape": [
+          2,
+          3,
+          512,
+          512
+        ],
+        "dtype": "torch.float32"
+      }
+    ],
+    "observed_pool_shapes": [
+      {
+        "before": [
+          4,
+          960,
+          16,
+          16
+        ],
+        "after": [
+          4,
+          960,
+          1,
+          1
+        ]
+      },
+      {
+        "before": [
+          2,
+          960,
+          16,
+          16
+        ],
+        "after": [
+          2,
+          960,
+          1,
+          1
+        ]
+      },
+      {
+        "before": [
+          2,
+          960,
+          16,
+          16
+        ],
+        "after": [
+          2,
+          960,
+          1,
+          1
+        ]
+      }
+    ],
+    "observed_point_shapes_and_dtypes": [
+      {
+        "semantic_shape": [
+          4,
+          1280
+        ],
+        "point_logit_shape": [
+          4,
+          1
+        ],
+        "semantic_dtype": "torch.float16",
+        "point_logit_dtype": "torch.float16"
+      },
+      {
+        "semantic_shape": [
+          2,
+          1280
+        ],
+        "point_logit_shape": [
+          2,
+          1
+        ],
+        "semantic_dtype": "torch.float16",
+        "point_logit_dtype": "torch.float16"
+      },
+      {
+        "semantic_shape": [
+          2,
+          1280
+        ],
+        "point_logit_shape": [
+          2,
+          1
+        ],
+        "semantic_dtype": "torch.float16",
+        "point_logit_dtype": "torch.float16"
+      }
+    ],
+    "source_BN_counter_tensors_checked": 77,
+    "source_BN_counter_increment_training": 1,
+    "source_BN_counter_additional_increment_eval": 0,
+    "parameter_tensors_unchanged_without_optimizer": 233,
+    "strict_model_reload": true,
+    "full_state_tensors": 464,
+    "all_gradients_finite": true,
+    "gradient_groups_nonzero": {
+      "encoder": true,
+      "encoder_stem": true,
+      "semantic_conv_head": true,
+      "semantic_norm_head": true,
+      "point": true
+    },
+    "preflight_backward_loss_scale": 128.0,
+    "source_OOD_RGB_reads": 0,
+    "source_OOD_forward_calls": 0,
+    "external_images_calls_backward_updates": 0,
+    "formal_fresh_rebuild_required": true
+  },
+  "preflight_decode_scope": {
+    "isolated_operator_compute_seconds": null,
+    "individual_point_only_seconds": null,
+    "counts_are_CNN_presentations_not_RGB_decodes": true,
+    "preflight_additional_native_ID_identity_redecodes": 4,
+    "label_derivation_audit": "The only FAIL is an unavailable preexisting normalized-label-field check: all292 source-contract rows have no normalized_progress or y field and do have the physical label triplet. No inconsistent label value was observed. Native, archived directFT5 and CF saved targets align exactly on all292 IDs/groups. Physical-label normalization was not recomputed under this audit scope, so the original FAIL is retained and broader label derivation is not independently certified.",
+    "numeric_audit_recomputed_again": false
+  },
+  "witness_scope": "Cached462 initialization,233 zero-optimizer parameter preservation,464 strict reload and BN77 checks are saved witnesses plus frozen code/metadata, not new checkpoint or weights-content inspection."
+}

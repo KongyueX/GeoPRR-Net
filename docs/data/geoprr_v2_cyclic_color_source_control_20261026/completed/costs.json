@@ -1,0 +1,207 @@
+{
+  "formal_counts": {
+    "cnn_image_forwards": 83024,
+    "cnn_forward_calls": 1300,
+    "point_image_forwards": 83024,
+    "point_forward_calls": 1300,
+    "CNN_backward_calls": 1290,
+    "point_backward_calls": 1290,
+    "source_backward_calls": 1290,
+    "optimizer_updates": 1289,
+    "amp_skipped_updates": 1,
+    "source_OOD_RGB_images": 0,
+    "source_OOD_CNN_calls": 0,
+    "external_images": 0,
+    "external_CNN_calls": 0,
+    "external_point_calls": 0,
+    "external_backward_calls": 0,
+    "external_optimizer_updates": 0
+  },
+  "preflight_counts_separate": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "RGB_unique_images": 8,
+    "point_calls": 3,
+    "point_examples": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "runtime": {
+    "preflight": {
+      "process_seconds": 17.47307488322258,
+      "full_process_seconds": 18.654737155884504,
+      "prior_checkpointed_process_seconds": 0.0,
+      "full_process_boundary": "module entry before torch import through saved result artifacts; excludes final completion JSON and downtime",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 630110208,
+      "peak_cuda_reserved_bytes": 725614592,
+      "individual_point_forward_seconds": null,
+      "phases": {
+        "initialization": {
+          "seconds": 2.262585148215294,
+          "peak_cuda_memory_bytes": 93406208,
+          "peak_cuda_reserved_bytes": 113246208,
+          "individual_point_forward_seconds": null
+        },
+        "preflight": {
+          "seconds": 15.209917776286602,
+          "peak_cuda_memory_bytes": 630110208,
+          "peak_cuda_reserved_bytes": 725614592,
+          "individual_point_forward_seconds": null
+        }
+      },
+      "supervisor_wall_record": "runner screen_summary.json"
+    },
+    "formal": {
+      "process_seconds": 510.777282781899,
+      "full_process_seconds": 511.98799227178097,
+      "prior_checkpointed_process_seconds": 0.0,
+      "full_process_boundary": "module entry before torch import through saved result artifacts; excludes final completion JSON and downtime",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 8262538752,
+      "peak_cuda_reserved_bytes": 11345592320,
+      "individual_point_forward_seconds": null,
+      "phases": {
+        "initialization": {
+          "seconds": 1.444748129695654,
+          "peak_cuda_memory_bytes": 34099712,
+          "peak_cuda_reserved_bytes": 50331648,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_1": {
+          "seconds": 50.91723965853453,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_2": {
+          "seconds": 33.83324420452118,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_3": {
+          "seconds": 30.733188774436712,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_4": {
+          "seconds": 32.91983813792467,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_5": {
+          "seconds": 32.2922934666276,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_6": {
+          "seconds": 31.852263882756233,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_7": {
+          "seconds": 31.73112954199314,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_8": {
+          "seconds": 31.95196806639433,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_9": {
+          "seconds": 30.483639888465405,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_10": {
+          "seconds": 31.34582034498453,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_11": {
+          "seconds": 31.41864125803113,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_12": {
+          "seconds": 30.788118816912174,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_13": {
+          "seconds": 32.238909125328064,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_14": {
+          "seconds": 32.90839784219861,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_15": {
+          "seconds": 32.19064452499151,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "source_id": {
+          "seconds": 5.40179368853569,
+          "peak_cuda_memory_bytes": 1805331968,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "source_counterfactual": {
+          "seconds": 1.8823201321065426,
+          "peak_cuda_memory_bytes": 1805331968,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        }
+      },
+      "supervisor_wall_record": "runner screen_summary.json"
+    },
+    "supervisor_stage_seconds": {
+      "preflight": 19.630569249391556,
+      "source_control": 513.6203764081001
+    },
+    "supervisor_process_seconds": 534.3200810849667
+  },
+  "budget": {
+    "old_directFT5_epochs": 5,
+    "new_epochs": 15,
+    "raw_train_image_budget_ratio": 3,
+    "back_attempt_budget_ratio": 3,
+    "prior_saved_scalar_only_no_baseline_execution": true
+  },
+  "measurement_qualifications": {
+    "isolated_operator_compute_seconds": null,
+    "individual_point_only_seconds": null,
+    "counts_are_CNN_presentations_not_RGB_decodes": true,
+    "preflight_additional_native_ID_identity_redecodes": 4,
+    "label_derivation_audit": "The only FAIL is an unavailable preexisting normalized-label-field check: all292 source-contract rows have no normalized_progress or y field and do have the physical label triplet. No inconsistent label value was observed. Native, archived directFT5 and CF saved targets align exactly on all292 IDs/groups. Physical-label normalization was not recomputed under this audit scope, so the original FAIL is retained and broader label derivation is not independently certified.",
+    "numeric_audit_recomputed_again": false
+  },
+  "point_only_seconds": null,
+  "isolated_operator_compute_seconds": null,
+  "timing_scope": "Own entry begins before torch import; full process excludes final completion JSON and downtime, supervisor wall includes child execution and artifact writing. Per-phase peak is retained; point/operator-only compute was not isolated and remains null. CNN presentations are not RGB decode counts."
+}

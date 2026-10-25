@@ -1,0 +1,23 @@
+{
+  "scope": "Supplement existing metadata presence only; no scalar recomputation or second audit.",
+  "ID_row_count": 292,
+  "normalized_progress_present_rows": 0,
+  "y_present_rows": 0,
+  "physical_label_triplet_present_rows": 292,
+  "row_key_schemas": [
+    {
+      "keys": [
+        "ground_truth",
+        "group_id",
+        "image_path",
+        "metadata",
+        "sample_id",
+        "scale_end",
+        "scale_start"
+      ],
+      "rows": 292
+    }
+  ],
+  "physical_label_values_read_or_recomputed": false,
+  "source_contract_exported": false
+}

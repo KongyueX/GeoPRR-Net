@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "predicates": {
+    "mean": true,
+    "tail": true,
+    "maximum": true,
+    "counts_over_1_2_5": true
+  },
+  "limits": {
+    "baseline": "saved directFT5 source-ID292, no new baseline forward",
+    "mean_max": 0.06132800787729562,
+    "tail_strict_max": 0.25669996334860723,
+    "maximum_max": 0.5787063241004944,
+    "counts_over_1_2_5_max": [
+      245,
+      209,
+      114
+    ]
+  },
+  "mean": 0.02583311489025332,
+  "tail": 0.11098201560477415,
+  "maximum": 0.5509077310562134,
+  "counts_over_1_2_5": [
+    189,
+    120,
+    28
+  ],
+  "budget_qualification": "15 epochs is 3x directFT5 raw-image/update budget; no matched-budget causal augmentation claim"
+}

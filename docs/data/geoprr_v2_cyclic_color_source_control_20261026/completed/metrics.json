@@ -1,0 +1,508 @@
+{
+  "protocol": "geoprr_v2_cyclic_color_source_control_v1",
+  "scientific_verdict": "SOURCE_COLOR_CONTROL_PASSED",
+  "scientific_revision": "45de72cbd7f6c0ac1e507f0e357760e77e2a3933",
+  "public_runtime_revision": "e19d33184bc3504e4634752a2f9d07e74f56a9fa",
+  "metrics": {
+    "prior_directFT5_saved_only": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.06132800787729562,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.03886425029486418,
+      "p90_error": 0.12683204412460344,
+      "p95_error": 0.17504554670304057,
+      "tail10_nmae": 0.25669996334860723,
+      "maximum_error": 0.5787063241004944,
+      "nmae_percent_fs": 6.132800787729562,
+      "count_at_1_percent_fs": 47,
+      "acc_at_1": 0.16095890410958905,
+      "acc_at_1_percent": 16.095890410958905,
+      "errors_above_1_percent_fs": 245,
+      "count_at_2_percent_fs": 83,
+      "acc_at_2": 0.2842465753424658,
+      "acc_at_2_percent": 28.424657534246574,
+      "errors_above_2_percent_fs": 209,
+      "count_at_5_percent_fs": 178,
+      "acc_at_5": 0.6095890410958904,
+      "acc_at_5_percent": 60.95890410958904,
+      "errors_above_5_percent_fs": 114,
+      "median_error_percent_fs": 3.8864250294864178,
+      "p90_error_percent_fs": 12.683204412460345,
+      "p95_error_percent_fs": 17.504554670304056,
+      "tail10_nmae_percent_fs": 25.669996334860723,
+      "maximum_error_percent_fs": 57.87063241004944,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    },
+    "source_id": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.02583311489025332,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.016008764505386353,
+      "p90_error": 0.048340083658695236,
+      "p95_error": 0.06389944311231374,
+      "tail10_nmae": 0.11098201560477415,
+      "maximum_error": 0.5509077310562134,
+      "nmae_percent_fs": 2.583311489025332,
+      "count_at_1_percent_fs": 103,
+      "acc_at_1": 0.3527397260273973,
+      "acc_at_1_percent": 35.273972602739725,
+      "errors_above_1_percent_fs": 189,
+      "count_at_2_percent_fs": 172,
+      "acc_at_2": 0.589041095890411,
+      "acc_at_2_percent": 58.9041095890411,
+      "errors_above_2_percent_fs": 120,
+      "count_at_5_percent_fs": 264,
+      "acc_at_5": 0.9041095890410958,
+      "acc_at_5_percent": 90.41095890410959,
+      "errors_above_5_percent_fs": 28,
+      "median_error_percent_fs": 1.6008764505386353,
+      "p90_error_percent_fs": 4.834008365869524,
+      "p95_error_percent_fs": 6.389944311231374,
+      "tail10_nmae_percent_fs": 11.098201560477415,
+      "maximum_error_percent_fs": 55.09077310562134,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    },
+    "constant_source_id": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.2500892740609332,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.2489658147096634,
+      "p90_error": 0.4416848599910737,
+      "p95_error": 0.476235611923039,
+      "tail10_nmae": 0.4738441610573015,
+      "maximum_error": 0.4994222219684161,
+      "nmae_percent_fs": 25.008927406093317,
+      "count_at_1_percent_fs": 7,
+      "acc_at_1": 0.023972602739726026,
+      "acc_at_1_percent": 2.3972602739726026,
+      "errors_above_1_percent_fs": 285,
+      "count_at_2_percent_fs": 14,
+      "acc_at_2": 0.04794520547945205,
+      "acc_at_2_percent": 4.794520547945205,
+      "errors_above_2_percent_fs": 278,
+      "count_at_5_percent_fs": 24,
+      "acc_at_5": 0.0821917808219178,
+      "acc_at_5_percent": 8.219178082191782,
+      "errors_above_5_percent_fs": 268,
+      "median_error_percent_fs": 24.89658147096634,
+      "p90_error_percent_fs": 44.16848599910737,
+      "p95_error_percent_fs": 47.623561192303896,
+      "tail10_nmae_percent_fs": 47.384416105730146,
+      "maximum_error_percent_fs": 49.94222219684161,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    },
+    "source_counterfactual": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.02558655711628452,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.016060277819633484,
+      "p90_error": 0.05235375165939335,
+      "p95_error": 0.06280120760202407,
+      "tail10_nmae": 0.1071122961739699,
+      "maximum_error": 0.5359558463096619,
+      "nmae_percent_fs": 2.558655711628452,
+      "count_at_1_percent_fs": 100,
+      "acc_at_1": 0.3424657534246575,
+      "acc_at_1_percent": 34.24657534246575,
+      "errors_above_1_percent_fs": 192,
+      "count_at_2_percent_fs": 172,
+      "acc_at_2": 0.589041095890411,
+      "acc_at_2_percent": 58.9041095890411,
+      "errors_above_2_percent_fs": 120,
+      "count_at_5_percent_fs": 261,
+      "acc_at_5": 0.8938356164383562,
+      "acc_at_5_percent": 89.38356164383562,
+      "errors_above_5_percent_fs": 31,
+      "median_error_percent_fs": 1.6060277819633484,
+      "p90_error_percent_fs": 5.235375165939335,
+      "p95_error_percent_fs": 6.280120760202407,
+      "tail10_nmae_percent_fs": 10.71122961739699,
+      "maximum_error_percent_fs": 53.59558463096619,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    }
+  },
+  "native_learning_predicates": {
+    "mean": true,
+    "tail": true
+  },
+  "native_primary_predicates": {
+    "mean": true,
+    "tail": true,
+    "maximum": true,
+    "counts_over_1_2_5": true
+  },
+  "counterfactual_predicates": {
+    "mean": true,
+    "tail": true,
+    "mean_drift": true,
+    "tail_drift": true
+  },
+  "native_eligible_for_CF": true,
+  "CF_gate_recomputed": {
+    "passed": true,
+    "predicates": {
+      "mean": true,
+      "tail": true,
+      "mean_drift": true,
+      "tail_drift": true
+    },
+    "limits": {
+      "mean_max": 0.1250446370304666,
+      "tail_max": 0.23692208052865074,
+      "mean_absolute_scalar_drift_max": 0.01,
+      "tail30_absolute_scalar_drift_max": 0.05,
+      "failed_pair_drift": 1.0,
+      "condition": "native learning AND native primary pass; same last15 only"
+    },
+    "denominator": 292,
+    "tail_count": 30,
+    "mean_absolute_scalar_drift": 0.004645775858379026,
+    "tail30_absolute_scalar_drift": 0.025007127784192562,
+    "maximum_absolute_scalar_drift": 0.08187556266784668,
+    "paired_error_rescues": 154,
+    "paired_error_regressions": 133,
+    "paired_error_unchanged": 5,
+    "paired_thresholds_percent_fs": {
+      "1": {
+        "rescues": 9,
+        "regressions": 12
+      },
+      "2": {
+        "rescues": 11,
+        "regressions": 11
+      },
+      "5": {
+        "rescues": 4,
+        "regressions": 7
+      }
+    },
+    "failed_pairs": 0
+  },
+  "paired_prior_directFT5_to_native": {
+    "rows": 292,
+    "image_absolute_error": {
+      "improved": 215,
+      "worsened": 77,
+      "unchanged": 0
+    },
+    "group_mean_error": {
+      "improved": 68,
+      "worsened": 5,
+      "unchanged": 0
+    },
+    "group_maximum_error": {
+      "improved": 66,
+      "worsened": 7,
+      "unchanged": 0
+    },
+    "thresholds_percent_fs": {
+      "1": {
+        "rescues": 86,
+        "regressions": 30
+      },
+      "2": {
+        "rescues": 123,
+        "regressions": 34
+      },
+      "5": {
+        "rescues": 97,
+        "regressions": 11
+      }
+    },
+    "mean_delta": -0.0354948929870423,
+    "ceil30_tail_delta": -0.14571794774383307
+  },
+  "paired_native_to_CF": {
+    "rows": 292,
+    "image_absolute_error": {
+      "improved": 154,
+      "worsened": 133,
+      "unchanged": 5
+    },
+    "group_mean_error": {
+      "improved": 40,
+      "worsened": 33,
+      "unchanged": 0
+    },
+    "group_maximum_error": {
+      "improved": 39,
+      "worsened": 32,
+      "unchanged": 2
+    },
+    "thresholds_percent_fs": {
+      "1": {
+        "rescues": 9,
+        "regressions": 12
+      },
+      "2": {
+        "rescues": 11,
+        "regressions": 11
+      },
+      "5": {
+        "rescues": 4,
+        "regressions": 7
+      }
+    },
+    "mean_delta": -0.0002465577739688002,
+    "ceil30_tail_delta": -0.003869719430804247
+  },
+  "native_valid_exact_zero_or_one": 0,
+  "counts": {
+    "cnn_image_forwards": 83024,
+    "cnn_forward_calls": 1300,
+    "point_image_forwards": 83024,
+    "point_forward_calls": 1300,
+    "CNN_backward_calls": 1290,
+    "point_backward_calls": 1290,
+    "source_backward_calls": 1290,
+    "optimizer_updates": 1289,
+    "amp_skipped_updates": 1,
+    "source_OOD_RGB_images": 0,
+    "source_OOD_CNN_calls": 0,
+    "external_images": 0,
+    "external_CNN_calls": 0,
+    "external_point_calls": 0,
+    "external_backward_calls": 0,
+    "external_optimizer_updates": 0
+  },
+  "preflight_counts_separate": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "RGB_unique_images": 8,
+    "point_calls": 3,
+    "point_examples": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "runtime": {
+    "preflight": {
+      "process_seconds": 17.47307488322258,
+      "full_process_seconds": 18.654737155884504,
+      "prior_checkpointed_process_seconds": 0.0,
+      "full_process_boundary": "module entry before torch import through saved result artifacts; excludes final completion JSON and downtime",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 630110208,
+      "peak_cuda_reserved_bytes": 725614592,
+      "individual_point_forward_seconds": null,
+      "phases": {
+        "initialization": {
+          "seconds": 2.262585148215294,
+          "peak_cuda_memory_bytes": 93406208,
+          "peak_cuda_reserved_bytes": 113246208,
+          "individual_point_forward_seconds": null
+        },
+        "preflight": {
+          "seconds": 15.209917776286602,
+          "peak_cuda_memory_bytes": 630110208,
+          "peak_cuda_reserved_bytes": 725614592,
+          "individual_point_forward_seconds": null
+        }
+      },
+      "supervisor_wall_record": "runner screen_summary.json"
+    },
+    "formal": {
+      "process_seconds": 510.777282781899,
+      "full_process_seconds": 511.98799227178097,
+      "prior_checkpointed_process_seconds": 0.0,
+      "full_process_boundary": "module entry before torch import through saved result artifacts; excludes final completion JSON and downtime",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 8262538752,
+      "peak_cuda_reserved_bytes": 11345592320,
+      "individual_point_forward_seconds": null,
+      "phases": {
+        "initialization": {
+          "seconds": 1.444748129695654,
+          "peak_cuda_memory_bytes": 34099712,
+          "peak_cuda_reserved_bytes": 50331648,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_1": {
+          "seconds": 50.91723965853453,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_2": {
+          "seconds": 33.83324420452118,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_3": {
+          "seconds": 30.733188774436712,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_4": {
+          "seconds": 32.91983813792467,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_5": {
+          "seconds": 32.2922934666276,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_6": {
+          "seconds": 31.852263882756233,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_7": {
+          "seconds": 31.73112954199314,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_8": {
+          "seconds": 31.95196806639433,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_9": {
+          "seconds": 30.483639888465405,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_10": {
+          "seconds": 31.34582034498453,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_11": {
+          "seconds": 31.41864125803113,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_12": {
+          "seconds": 30.788118816912174,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_13": {
+          "seconds": 32.238909125328064,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_14": {
+          "seconds": 32.90839784219861,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_15": {
+          "seconds": 32.19064452499151,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "source_id": {
+          "seconds": 5.40179368853569,
+          "peak_cuda_memory_bytes": 1805331968,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "source_counterfactual": {
+          "seconds": 1.8823201321065426,
+          "peak_cuda_memory_bytes": 1805331968,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        }
+      },
+      "supervisor_wall_record": "runner screen_summary.json"
+    },
+    "supervisor_stage_seconds": {
+      "preflight": 19.630569249391556,
+      "source_control": 513.6203764081001
+    },
+    "supervisor_process_seconds": 534.3200810849667
+  },
+  "budget": {
+    "old_directFT5_epochs": 5,
+    "new_epochs": 15,
+    "raw_train_image_budget_ratio": 3,
+    "back_attempt_budget_ratio": 3,
+    "prior_saved_scalar_only_no_baseline_execution": true
+  },
+  "measurement_qualifications": {
+    "isolated_operator_compute_seconds": null,
+    "individual_point_only_seconds": null,
+    "counts_are_CNN_presentations_not_RGB_decodes": true,
+    "preflight_additional_native_ID_identity_redecodes": 4,
+    "label_derivation_audit": "The only FAIL is an unavailable preexisting normalized-label-field check: all292 source-contract rows have no normalized_progress or y field and do have the physical label triplet. No inconsistent label value was observed. Native, archived directFT5 and CF saved targets align exactly on all292 IDs/groups. Physical-label normalization was not recomputed under this audit scope, so the original FAIL is retained and broader label derivation is not independently certified.",
+    "numeric_audit_recomputed_again": false
+  },
+  "audit_status": "FAIL",
+  "audit_check_count": 149,
+  "audit_failed_check_count": 1,
+  "numeric_scalar_comparisons": 13617,
+  "maximum_absolute_numeric_difference": 1.4210854715202004e-14,
+  "audit_qualifications": [
+    "15E versus directFT5 5E is three times raw-image/back-attempt budget, not a matched-budget causal augmentation test.",
+    "One seed, 73 source-ID layouts with four states each; fixed artificial RG swap uses the same rows/labels/ROI and is not an independent new domain or blind test.",
+    "No formal V32 or generalized-model promotion; no automatic external evaluation, extension or new seed authorized.",
+    "Cached initialization, strictreload464, BN77 training+1/eval+0, unchanged233 parameter tensors and optimizer/defaultScaler evidence are saved witnesses plus frozen code, not a fresh weights-content inspection.",
+    "Each raw item each C3 order five times follows saved per-epoch1832 counts and frozen index/loader code; no RGB was read or private training identity list exported; private population equality was compared as metadata on the server.",
+    "Preflight eight unique RGBs/eight CNN presentations, three CNN/point calls, one backward and zero optimizer updates; four ID RGBs were independently decoded again for native identity, so total RGB decode count is not eight. No extra CNN call.",
+    "Own entry timers start before torch import; saved full_process excludes final completion JSON and downtime; supervisor walls include child process and artifact writing. Individual point-only and isolated operator compute time were not measured and remain null.",
+    "CPU14 tests and GPUempty are existing saved witnesses; audit executes neither those tests nor a GPU query. Raw checkpoints were statted only; no RGB, features, weights, model import/construction, forward, backward or training.",
+    "The only FAIL is an unavailable preexisting normalized-label-field check: all292 source-contract rows have no normalized_progress or y field and do have the physical label triplet. No inconsistent label value was observed. Native, archived directFT5 and CF saved targets align exactly on all292 IDs/groups. Physical-label normalization was not recomputed under this audit scope, so the original FAIL is retained and broader label derivation is not independently certified."
+  ],
+  "source_label_field_presence_supplement": {
+    "scope": "Supplement existing metadata presence only; no scalar recomputation or second audit.",
+    "ID_row_count": 292,
+    "normalized_progress_present_rows": 0,
+    "y_present_rows": 0,
+    "physical_label_triplet_present_rows": 292,
+    "row_key_schemas": [
+      {
+        "keys": [
+          "ground_truth",
+          "group_id",
+          "image_path",
+          "metadata",
+          "sample_id",
+          "scale_end",
+          "scale_start"
+        ],
+        "rows": 292
+      }
+    ],
+    "physical_label_values_read_or_recomputed": false,
+    "source_contract_exported": false
+  },
+  "public_scope": "Normalized saved scalar rows, scalar group summaries and metadata only; no full source contracts, training arrays, RGB, weights, features, geometry or private paths."
+}

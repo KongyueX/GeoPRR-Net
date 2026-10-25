@@ -1,0 +1,35 @@
+{
+  "protocol": "geoprr_v2_cyclic_color_source_control_v1",
+  "seeds": [
+    20262020
+  ],
+  "pipeline_pid": 420829,
+  "status": "complete",
+  "updated_at": "2026-10-25T17:51:05.540358+00:00",
+  "code_revision": "45de72cbd7f6c0ac1e507f0e357760e77e2a3933",
+  "automatic_resume": false,
+  "current_step": null,
+  "supervisor_stage_seconds": {
+    "preflight": 19.630569249391556,
+    "source_control": 513.6203764081001
+  },
+  "supervisor_process_seconds": 534.3200810849667,
+  "completion_reason": "counterfactual_observed",
+  "verdict": "SOURCE_COLOR_CONTROL_PASSED",
+  "steps": {
+    "preflight": {
+      "status": "complete",
+      "pid": 420832,
+      "exit_code": 0,
+      "started_at": "2026-10-25T17:42:11.564332+00:00",
+      "finished_at": "2026-10-25T17:42:31.193869+00:00"
+    },
+    "source_control": {
+      "status": "complete",
+      "pid": 420870,
+      "exit_code": 0,
+      "started_at": "2026-10-25T17:42:31.319008+00:00",
+      "finished_at": "2026-10-25T17:51:04.938140+00:00"
+    }
+  }
+}
