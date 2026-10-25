@@ -1,0 +1,258 @@
+{
+  "protocol": "geoprr_v2_matched_identity_source_control_v1",
+  "status": "passed",
+  "model_metadata": {
+    "class": "experiments.geoprr_v2_semantic_direct.SemanticDirectReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "point_parameters": 1281,
+    "point_shape": [
+      1280,
+      1
+    ],
+    "parameters": 8435793,
+    "trainable_parameters": 8435793,
+    "parameter_tensors": 233,
+    "state_tensors": 464,
+    "input_contract": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "CNN_passes_per_image": 1
+  },
+  "counts": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "RGB_unique_images": 8,
+    "point_calls": 3,
+    "point_examples": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "source_ID_pipeline_identity": true,
+  "operator_FP32_shapes_finite": true,
+  "heldout_operator_inverse_on_existing_train_CPU": true,
+  "heldout_operator_extra_RGB_reads": 0,
+  "heldout_operator_extra_CNN_calls": 0,
+  "observed_encoder_inputs": [
+    {
+      "shape": [
+        4,
+        3,
+        512,
+        512
+      ],
+      "dtype": "torch.float32"
+    },
+    {
+      "shape": [
+        2,
+        3,
+        512,
+        512
+      ],
+      "dtype": "torch.float32"
+    },
+    {
+      "shape": [
+        2,
+        3,
+        512,
+        512
+      ],
+      "dtype": "torch.float32"
+    }
+  ],
+  "observed_pool_shapes": [
+    {
+      "before": [
+        4,
+        960,
+        16,
+        16
+      ],
+      "after": [
+        4,
+        960,
+        1,
+        1
+      ]
+    },
+    {
+      "before": [
+        2,
+        960,
+        16,
+        16
+      ],
+      "after": [
+        2,
+        960,
+        1,
+        1
+      ]
+    },
+    {
+      "before": [
+        2,
+        960,
+        16,
+        16
+      ],
+      "after": [
+        2,
+        960,
+        1,
+        1
+      ]
+    }
+  ],
+  "observed_point_shapes_and_dtypes": [
+    {
+      "semantic_shape": [
+        4,
+        1280
+      ],
+      "point_logit_shape": [
+        4,
+        1
+      ],
+      "semantic_dtype": "torch.float16",
+      "point_logit_dtype": "torch.float16"
+    },
+    {
+      "semantic_shape": [
+        2,
+        1280
+      ],
+      "point_logit_shape": [
+        2,
+        1
+      ],
+      "semantic_dtype": "torch.float16",
+      "point_logit_dtype": "torch.float16"
+    },
+    {
+      "semantic_shape": [
+        2,
+        1280
+      ],
+      "point_logit_shape": [
+        2,
+        1
+      ],
+      "semantic_dtype": "torch.float16",
+      "point_logit_dtype": "torch.float16"
+    }
+  ],
+  "source_BN_counter_tensors_checked": 77,
+  "source_BN_counter_increment_training": 1,
+  "source_BN_counter_additional_increment_eval": 0,
+  "parameter_tensors_unchanged_without_optimizer": 233,
+  "strict_model_reload": true,
+  "full_state_tensors": 464,
+  "all_gradients_finite": true,
+  "gradient_groups_nonzero": {
+    "encoder": true,
+    "encoder_stem": true,
+    "semantic_conv_head": true,
+    "semantic_norm_head": true,
+    "point": true
+  },
+  "source_smooth_l1": 0.37707334756851196,
+  "preflight_backward_loss_scale": 128.0,
+  "source_OOD_RGB_reads": 0,
+  "source_OOD_forward_calls": 0,
+  "external_images_calls_backward_updates": 0,
+  "formal_fresh_rebuild_required": true,
+  "runtime": {
+    "process_seconds": 16.967864479869604,
+    "full_process_seconds": 18.396342489868402,
+    "prior_checkpointed_process_seconds": 0.0,
+    "full_process_boundary": "matched-identity module entry before torch import through saved metadata; excludes final result JSON",
+    "device": "cuda",
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "peak_cuda_memory_bytes": 630110208,
+    "peak_cuda_reserved_bytes": 725614592,
+    "individual_point_forward_seconds": null,
+    "phases": {
+      "initialization": {
+        "seconds": 2.179713934659958,
+        "peak_cuda_memory_bytes": 93406208,
+        "peak_cuda_reserved_bytes": 113246208,
+        "individual_point_forward_seconds": null
+      },
+      "preflight": {
+        "seconds": 14.78759378194809,
+        "peak_cuda_memory_bytes": 630110208,
+        "peak_cuda_reserved_bytes": 725614592,
+        "individual_point_forward_seconds": null
+      }
+    },
+    "supervisor_wall_record": "runner screen_summary.json",
+    "identity_metadata_seconds": 0.022546567022800446
+  },
+  "identity_actual_rgb": true,
+  "train_nominal_slots": [
+    0,
+    1,
+    2,
+    0
+  ],
+  "train_actual_orders": [
+    [
+      0,
+      1,
+      2
+    ],
+    [
+      0,
+      1,
+      2
+    ],
+    [
+      0,
+      1,
+      2
+    ],
+    [
+      0,
+      1,
+      2
+    ]
+  ],
+  "train_exposure_semantics": "slots0/1/2/0 all native RGB; no training color permutation",
+  "reference_qualification": {
+    "qualified": true,
+    "source_contract_equal": true,
+    "reference_science_revision": "45de72cbd7f6c0ac1e507f0e357760e77e2a3933",
+    "reference_relative": "runs/geoprr_generalization/source_cyclic_color_control_20261026/reader/completed.json",
+    "source_ID_rows": 292,
+    "CF_rows": 292,
+    "optimizer_updates": 1289,
+    "amp_skipped_updates": 1,
+    "audit_label_scope": "Provided-label saved-number comparison only. The prior C3 audit remains149checks148PASS1FAIL: the normalized_progress/y field check was unavailable in the physical-label-triplet source contract. This is inherited raw-label-derivation coverage, not a discovered label conflict; no old audit or labels are recomputed."
+  },
+  "initialization": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "ImageNet_pretrained": true,
+    "existing_cached_weights_only": true,
+    "retained_complete_encoder_state_tensors": 462,
+    "all_cached_encoder_state_tensors_retained": true,
+    "new_point_parameter_tensors": 2,
+    "point_initialization_std": 0.001,
+    "point_initialization_bias_zero": true,
+    "old_task_checkpoint_used": false
+  },
+  "evidence_scope": "Saved witness and unchanged factory/cache/seed code evidence; no fresh inspection of prior weights.",
+  "RGB_decode_qualification": "8unique source RGBs/8CNN presentations; same4ID images decoded again for identity verification; no additional unique images or CNN."
+}

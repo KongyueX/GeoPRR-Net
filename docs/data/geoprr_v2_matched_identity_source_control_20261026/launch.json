@@ -1,0 +1,26 @@
+{
+  "status": "launched_pending_zero_update_preflight",
+  "started_at_utc": "2026-10-25T18:38:15.629345+00:00",
+  "pipeline_pid": 424199,
+  "code_revision": "3e39174f36b342691f6ee96acdea2036ee5e8d30",
+  "module": "experiments.run_geoprr_v2_matched_identity_control",
+  "prior_C3_archive_revision": "78ae50613848d313063ae554ea0d54aa429daec8",
+  "prior_C3_archive_pushed": true,
+  "old_actual_commands_absent": true,
+  "prelaunch_GPU_compute_rows": [],
+  "source_control_epochs": 15,
+  "CNN_back_attempt_budget": 1290,
+  "actual_training_RGB_GBR_BRG_per_epoch": [
+    5496,
+    0,
+    0
+  ],
+  "nominal_schedule_slot_counts": [
+    1832,
+    1832,
+    1832
+  ],
+  "controller_log_outside_pristine_output": true,
+  "launch_log_relative": "diagnostics/geoprr_matched_identity_launch_20261026/controller.log",
+  "real_external_and_needle03_model_calls_authorized": 0
+}
