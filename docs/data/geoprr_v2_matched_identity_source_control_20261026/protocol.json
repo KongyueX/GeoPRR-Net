@@ -1,0 +1,211 @@
+{
+  "protocol_id": "geoprr_v2_matched_identity_source_control_v1",
+  "frozen_at_utc": "2026-10-25T18:23:28.137915+00:00",
+  "kind": "one fresh matched15E native-RGB deletion control; not extension/re-evaluation of an old model, formalV32 or generalized-model promotion",
+  "question": "Does the already-complete C3 control offer color-stress risk and prediction-stability benefit relative to a fresh identity-input reader with the same15E schedule/back-attempt budget, rather than merely benefiting from3x training versus directFT5?",
+  "source_basis": [
+    "C3 last15 passed its predeclared native+CF predicates, with native mean/tail2.583311489/11.098201560%FS versus directFT5 6.132800788/25.669996335;15vs5 is a known budget confound.",
+    "C3 still has native max55.090773106%FS and CF>5 error count31 versus native28, so a small matched control is preferred before considering a costly full-source run.",
+    "No causal augmentation or real-domain benefit is asserted. Current old C3 audit remains149checks148PASS1FAIL because the stored normalized-label-field check is unavailable; its13617 saved numeric comparisons agree, and all native/oldFT5/CF targets match. No old audit/GT/labels are recomputed."
+  ],
+  "literature": {
+    "primary": "https://arxiv.org/html/2311.13198v1",
+    "title": "DoubleAUG: Single-domain Generalized Object Detector in Urban via Color Perturbation and Dual-style Memory",
+    "section": "3.1 Color Perturbation",
+    "scope": "The paper randomly shuffles RGB channels for single-domain object detection. We use only a fixed C3 subset and a held-out transposition; no DSM, feature statistics/memory, teacher or paper replication claim. Object-detection results do not guarantee meter benefits.",
+    "secondary_context": "https://openreview.net/forum?id=BVSM0x3EDK6",
+    "not_used": "No random convolution or additional loss is implemented."
+  },
+  "model": "Exact fresh cached complete ImageNet MNV4 conv-medium num_classes0, GAP1/semantic1280/Linear1280->1 std.001 bias0, source BN, AMP encoder/point and FP32 sigmoid; same original scalar architecture, no head/pool/norm/teacher/adapter change.",
+  "data": {
+    "packet": "diagnostics/geoprr_source_needle_holdout_control_population_20261025",
+    "train": 5496,
+    "source_id": 292,
+    "train_parents": 687,
+    "source_id_layouts": 73,
+    "source_ood_needle03_RGB_and_model_calls": 0,
+    "real_industrial_RF_calls": 0,
+    "reuse": "Exact frozen scalar packet train and source-ID. No preparation or factor scan, no new source/label population. prepared validation may inspect existing metadata contracts server-side but no withheld RGB, model outputs or statistics enter training. All arrays/contracts remain server private.",
+    "input": "Existing native512 ROI/INTER_LINEAR/ImageNet and original train photo, no spatial transform or crop change; output128 remains API only."
+  },
+  "operator": {
+    "train_orders": [
+      [
+        0,
+        1,
+        2
+      ],
+      [
+        0,
+        1,
+        2
+      ],
+      [
+        0,
+        1,
+        2
+      ]
+    ],
+    "order_index": "Preserve the same nominal(index+epoch-1)%3 slot schedule only for loader/RNG coupling; all3 slots map to identityRGB. Slots are not distinct actual color orders.",
+    "exposure": "5496 raw RGBs once per epoch, actual RGB5496/GBR0/BRG0 per epoch, each rawRGB15 times. History order_exposures[1832,1832,1832] is nominal-slot accounting with all3 slot mappings RGB; never describe it as3 colors. No extra views/loss or RNG.",
+    "native_eval_order": [
+      0,
+      1,
+      2
+    ],
+    "counterfactual_eval_order": [
+      1,
+      0,
+      2
+    ],
+    "pipeline": "Training identity directly returns the existing normalizedFP32 RGB tensor without any affine/pixel change. Evaluation keeps the same native identity and fixed RGswap affine operator as the existing C3 control.",
+    "invariance_claim": "A permutation is invertible on the full three-channel array and keeps spatial coordinates and scalar r label fixed; it is an artificial color intervention, not a certified physical relighting/new domain or proof of readability. Actual source learnability gates remain required."
+  },
+  "training": {
+    "epochs": 15,
+    "checkpoint": "last15 only, no best selection",
+    "optimizer": "fresh AdamW lr3e-4 wd1e-4 clip5, SmoothL1beta.05, default fresh AMP GradScaler",
+    "seed": 20262020,
+    "batch_size": 64,
+    "workers": 4,
+    "loader_seed": "existing20262020+epoch",
+    "scheduler": null,
+    "intermediate_validation": false,
+    "continuation": "No extension, seed/restart/hyperparameter/augmentation-order scan. True fault preserves partial/history/code snapshot. If latest exists, only exact new protocol/config/data/optimizer/scaler/RNG/history/totals resume at next epoch; no fresh overwrite or restart counters.",
+    "why15": "Exactly the already-complete C3 scheduled15E/82440trainimages/1290backattempts; same freshcached factory/seed/photo/loader/optimizer/defaultScaler. Actual updates+AMPskip reported separately and may differ. This is a new fresh run, not continuing/retraining the old5E checkpoint."
+  },
+  "native_gate": {
+    "full_denominator": 292,
+    "failures": "error1, keep every row, valid saturation0/1 is not failure",
+    "learning_gate": "Existing constant0.5 half-mean and half-ceil30-tail rule unchanged. Mean<=.12504463703046659 and tail<=.23692208052865073 normalized FS.",
+    "primary": "In addition, native mean<=directFT5 .06132800787729562, tail<.25669996334860723, max<=.5787063241004944 and >1/2/5 counts<=245/209/114, all simultaneously.",
+    "baseline": "Same fixed olddirectFT5 native guard as C3, using saved reference constants only; no old baseline forward. Current matched native/CF results are not yet observed.",
+    "failure_action": "Normal native_learning_or_primary_failed; counterfactual source view0CNN and no result file. Do not extend, change gates or run source-needle03/real domains."
+  },
+  "counterfactual_gate": {
+    "condition": "native learning AND native primary pass, same last15 only",
+    "population": "Same all292 source-ID rows/labels/nativeROI and fixedRGswap, previously examined with C3; not a new blind test. Same native learning+primary eligibility as C3; if ineligible noCF and no matched color-risk conclusion.",
+    "backward_updates": 0,
+    "metrics": "Full-denominator mean/tail/max/Acc1/2/5/median/p90/p95, fail counts; paired error rescues/regressions and scalar prediction drift relative to new native condition.",
+    "accept": "counterfactual mean<=.12504463703046659 AND tail<=.23692208052865073 AND mean absolute scalar drift vs native<=.01 AND ceil30 mean absolute scalar drift<=.05. No threshold or operator search.",
+    "verdict": "Record identity observation predicates and the new preregistered C3-versus-identity matched decision separately. Do not call this identity-trained model C3-trained."
+  },
+  "necessary_new_CPU": "Only identity-deletion context/actual-vs-nominal exposure and unchangedCF routing, new strict protocol/config isolation, paired-risk/maximum/count/drift matched-decision toy branches. Reuse previously passed scalar channel affine tests; no repeated oldC3/operator/selector/gates/GT/teacher/tests or realmodel construction.",
+  "preflight": {
+    "CNN_calls": 3,
+    "CNN_images_and_unique_RGB": 8,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0,
+    "source": "Same8unique source images/same3CNN1back0opt as C3:4 fixed seen train with nominal slots0/1/2/0 ALL actual nativeRGB;4native source-ID. Keep cached464 initialization/BN/grad/strict/pipeline witnesses; sourceCFmodel0 before eligibility. Do not claim C3 train orders in identity witness.",
+    "checks": "cached462 encoder initialstates retained; model8435793params233tensors464states, source77BN+1/eval+0; new operator actual FP32 tensors and F16semantic/point/F32scalar; train3C3 shapes/finite, mandatory stem/neck/point gradients finite nonzero; all233parameters0optimizer unchanged;464 strictreload; native source-ID input identity; invert [1,0,2] only on already-read training tensors with0additionalCNN, not held-out model evaluation. Formal fresh reinitializes no prefBN/state carryover. Backward witness uses fixed loss*128 then grad/128 only for finite checks; formal defaultScaler unchanged."
+  },
+  "counts": {
+    "train_images": 82440,
+    "train_CNN_and_point_calls": 1290,
+    "back_attempts": 1290,
+    "updates_plus_AMPskip": 1290,
+    "native_images": 292,
+    "native_calls": 5,
+    "counterfactual_if_eligible_images": 292,
+    "counterfactual_if_eligible_calls": 5,
+    "formal_native_failure_images": 82732,
+    "formal_native_failure_CNN_and_point_calls": 1295,
+    "formal_counterfactual_done_images": 83024,
+    "formal_counterfactual_done_CNN_and_point_calls": 1300,
+    "pref_separate_CNN_images": 8,
+    "pref_separate_calls": 3
+  },
+  "execution": "After C3 qualified-result archive existingmain, root necessaryNEWCPU then code/protocol/config/CPU freeze+push, scoped3newcode/3metadata, actual priorparent+childrengoneGPUidle, only newpref->freshidentity15control. No oldoutput/checkpoint mutation or extraC3 evaluation. Same timing/privacy/strictpartial/fullstate resume requirements as C3.",
+  "completion": "Whole2stagecomplete/exit0 and actualparentsgoneGPUidle thenONEnewfresh independent nonauthor saved-number CPU audit on this matched contrast, not a second oldC3 audit. Explicitallowlist archive all mixed/failing results with the inherited raw-label coverage limitation. Current science is source-only, realdomains/needle03 all0.",
+  "privacy": "No RGB/weights/features/source train identity arrays/fullcontracts/g/c/XYZ/mesh/private absolute paths downloaded or public; server allowlist metadata before stdout. Only explicitly permitted saved scalar CSVs/groups and normalized contracts/metadata collected. No third-party messages, packages/newweights/system changes/GPU purchase/extra seeds/officialtest4000.",
+  "matched_comparison": {
+    "reference": "already-complete source_cyclic_color_control_20261026/reader/completed.json and its frozen saved scalar/group results; no new C3 model/forward/weights",
+    "reference_science_revision": "45de72cbd7f6c0ac1e507f0e357760e77e2a3933",
+    "reference_statistics": {
+      "source_id": {
+        "samples": 292,
+        "groups": 73,
+        "nmae": 0.02583311489025332,
+        "coverage": 1.0,
+        "failed": 0,
+        "input_failures": 0,
+        "median_error": 0.016008764505386353,
+        "p90_error": 0.048340083658695236,
+        "p95_error": 0.06389944311231374,
+        "tail10_nmae": 0.11098201560477415,
+        "maximum_error": 0.5509077310562134,
+        "nmae_percent_fs": 2.583311489025332,
+        "count_at_1_percent_fs": 103,
+        "acc_at_1": 0.3527397260273973,
+        "acc_at_1_percent": 35.273972602739725,
+        "errors_above_1_percent_fs": 189,
+        "count_at_2_percent_fs": 172,
+        "acc_at_2": 0.589041095890411,
+        "acc_at_2_percent": 58.9041095890411,
+        "errors_above_2_percent_fs": 120,
+        "count_at_5_percent_fs": 264,
+        "acc_at_5": 0.9041095890410958,
+        "acc_at_5_percent": 90.41095890410959,
+        "errors_above_5_percent_fs": 28,
+        "median_error_percent_fs": 1.6008764505386353,
+        "p90_error_percent_fs": 4.834008365869524,
+        "p95_error_percent_fs": 6.389944311231374,
+        "tail10_nmae_percent_fs": 11.098201560477415,
+        "maximum_error_percent_fs": 55.09077310562134,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null
+      },
+      "source_counterfactual": {
+        "samples": 292,
+        "groups": 73,
+        "nmae": 0.02558655711628452,
+        "coverage": 1.0,
+        "failed": 0,
+        "input_failures": 0,
+        "median_error": 0.016060277819633484,
+        "p90_error": 0.05235375165939335,
+        "p95_error": 0.06280120760202407,
+        "tail10_nmae": 0.1071122961739699,
+        "maximum_error": 0.5359558463096619,
+        "nmae_percent_fs": 2.558655711628452,
+        "count_at_1_percent_fs": 100,
+        "acc_at_1": 0.3424657534246575,
+        "acc_at_1_percent": 34.24657534246575,
+        "errors_above_1_percent_fs": 192,
+        "count_at_2_percent_fs": 172,
+        "acc_at_2": 0.589041095890411,
+        "acc_at_2_percent": 58.9041095890411,
+        "errors_above_2_percent_fs": 120,
+        "count_at_5_percent_fs": 261,
+        "acc_at_5": 0.8938356164383562,
+        "acc_at_5_percent": 89.38356164383562,
+        "errors_above_5_percent_fs": 31,
+        "median_error_percent_fs": 1.6060277819633484,
+        "p90_error_percent_fs": 5.235375165939335,
+        "p95_error_percent_fs": 6.280120760202407,
+        "tail10_nmae_percent_fs": 10.71122961739699,
+        "maximum_error_percent_fs": 53.59558463096619,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null
+      }
+    },
+    "reference_drift": {
+      "mean_absolute_scalar_drift": 0.004645775858379026,
+      "tail30_absolute_scalar_drift": 0.025007127784192562,
+      "maximum_absolute_scalar_drift": 0.08187556266784668
+    },
+    "commonality": "same packet/rowlabels/sourceROI/model/freshcachedseed/optimizer/photo/loader/CNN-backattempt budget. Same seed is code/provenance evidence, not fresh comparison of past weights. All source contracts remain server-private; explicit metadata equality only.",
+    "risk": "R_view=(native_mean+native_ceil30_tail+CF_mean+CF_ceil30_tail)/4, normalized FS, both fixed views equal-weight. Not independent samples or a real-domain mean.",
+    "eligible": "Both old C3 source predicates and new identity native learning+primary pass and both full292 CF observations exist. Otherwise MATCHED_CF_EVIDENCE_INCOMPLETE, no newCF/oldforward to fill missing result.",
+    "C3_supported": "All simultaneously: R_view(C3)<R_view(identity), total >5 counts(native+CF) forC3<=identity, max error across bothC3views<=max across bothidentityviews, C3 mean prediction drift<identity mean drift and C3 ceil30 drift<identity ceil30 drift.",
+    "failure": "Any supported predicate fails -> NO_MATCHED_SUPPORT_FOR_C3. Preserve native/CF tradeoffs, all pairednew/rescue>1/2/5 and budgets. Do not changeorder/epochs/seed/cohort/threshold or open a long C3 run from this comparison.",
+    "success": "MATCHED_SUPPORT_FOR_C3 permits root only to consider an independently frozen formal full-source model after archive. It does not promote either short-control checkpoint or certify Industrial/RF generalization."
+  },
+  "audit_label_scope": "Provided-label saved-number comparison only: compare new native/CF and priorC3/FT5 targets exactly on all292 IDs/groups, and compare existing metadata contracts server-side. Source packet provides physical label triplet rather than normalized_progress/y. Do not invent a required absent field, recompute physical labels or rerun the priorC3 audit; preserve its original1FAIL and raw-label-derivation limitation.",
+  "execution_locations": {
+    "output": "runs/geoprr_generalization/source_matched_identity_control_20261026",
+    "preflight": "diagnostics/geoprr_matched_identity_control_preflight_20261026/result.json",
+    "public_root": "docs/data/geoprr_v2_matched_identity_source_control_20261026/",
+    "public_protocol": "docs/GEOPRR_V2_MATCHED_IDENTITY_SOURCE_CONTROL_CN.md"
+  }
+}
