@@ -44,6 +44,16 @@ whole source＋I/R complete、四exit0、父子退出／GPU空闲后，才委派
 
 报告完整mean／Acc1/2/5／median/p90/p95／tail10／max、相对v16／旧GeoPRR／v24／v25／v26及保存参照的>1/2/5新增救回／逐图组改善恶化／zero非zero近zero／ordinary1495/1497/severe6／固定focus；roll512独立报告，不补评旧模型。V27没有外域结果，不能拼造参照。均值、尾部及新增大错共同判断，不源R或单域收益即称整体成功，不自动promotion；保留全部旧正负资产，归档后继续独立源域结构／表示研究。
 
+## 完成记录
+
+源68轮完整结束，earliest strict source R选best48，R=0.012041137719179768（1.204113771918%FS）；68−48=20，按min60／max160与patience20停止，无resume。LR在35／57／66轮后下降未重置counter。同一best48只在源结束后对两域各冻结一次，last68只源。四阶段complete／exit0，最终RF于2026-10-25T00:32:31.513390+00:00结束；父进程已退出，2026-10-25T00:40:41+00:00保存检查时GPU空闲。
+
+源best原1506 mean／tail／max为0.358444／1.481549／21.598810%FS，roll512为0.566393／2.410069／15.727669%FS。Industrial mean12.758458／tail44.068174／max71.893692%FS较V26三项均改善；mean仍弱于v16与旧GeoPRR，tail低于v16而略高于旧GeoPRR，max低于两者。相对v16，Industrial >1救回140／新增91、>2救回182／新增101，但>5救回158／新增173。RF100 mean10.831387／tail54.135926%FS弱于v16、旧GeoPRR、V24、V25与V26，Acc@2／5较v16改善，>5总数56对58（救回17／新增15），max68.525833%FS低于V25与V26。保留混合结果，不升级默认；V27无外域结果，不作为性能baseline。
+
+实际8439633参数／233参数tensor／464state、无参数无state的pool2×2与保留1280×2×2neck／NCHW flatten5120／5121参数point已由保存证据确认。cached462只在初始化保留，全部CNN／BN affine／point源训练、BN源更新／eval冻结。正式CNN／point各2517002图／39397调用，源backward尝试37196＝37182更新＋14AMPskip；pref3CNN／8图／1back／0optimizer单列。训练pipeline11355.169516秒、source full11874.171350秒，source peak allocated／reserved8262600192／11347689472bytes。单CNN不等于同成本，pool与读出维度／BN空间样本及训练历史同时变化，不作纯pool因果。
+
+唯一独立CPU保存数字／执行核对69045项通过、0失败、最大差1.4210854715202004e-14；未加载模型／weights／RGB／checkpoint或重跑GT／旧测试／外评。[完整报告](data/geoprr_v2_spatial_semantic_20261025/completed/report_cn.md)、[指标](data/geoprr_v2_spatial_semantic_20261025/completed/metrics.json)、[比较表](data/geoprr_v2_spatial_semantic_20261025/completed/comparison.csv)与[26项completed allowlist](data/geoprr_v2_spatial_semantic_20261025/completed/public_allowlist.json)已规范化归档；[总allowlist](data/geoprr_v2_spatial_semantic_20261025/public_allowlist.json)33项。两源best／last、完整I/R scalar／group／summary、focus与fixed cohorts保留；rawrun、fullcontracts、完整源数组／ID名单、delta maps、rawthreshold／rescue／new名单、RGB、weights、geometry、features、bbox、原BN值及privatepaths留私有。
+
 ## Limitations
 
 2×2只保留粗排列，不恢复更早特征或精细坐标，不保证旋转不变、几何正确、语义保持或外域收益。pool、point维度、BN空间样本与训练历史同时变化，不作单因素因果认证。单seed、已查看开发域、sharedHDR与历史seed缺失边界保持，不报SD、显著性、新盲测、普适性或新理论；旧GeoPRR历史pixel/fullweight链未重认证。RGB／weights／H/C/XYZ/U/M／bbox／features／rawrun／fullcontracts／源arrays／privatepaths私有，只公开必要规范化标量和执行metadata，不买算力／新foundation／新权重或额外seed，不碰officialtest4000或其他项目，不第三方消息。

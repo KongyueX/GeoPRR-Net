@@ -1,0 +1,683 @@
+{
+  "formal_counts": {
+    "cnn_image_forwards": 2517002,
+    "cnn_forward_calls": 39397,
+    "point_image_forwards": 2517002,
+    "point_forward_calls": 39397,
+    "source_backward_calls": 37196,
+    "source_optimizer_updates": 37182,
+    "source_amp_skipped_updates": 14,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  },
+  "actual_formal_costs": {
+    "industrial": {
+      "timing": {
+        "counts": {
+          "cnn_forward_calls": 22,
+          "cnn_image_forwards": 1395,
+          "backward_calls": 0,
+          "optimizer_updates": 0,
+          "failed_input_placeholder_forwards": 0
+        },
+        "pipeline_seconds": 10.90872898697853,
+        "forward_seconds": 8.143570680171251,
+        "batch_size": 64,
+        "workers": 4,
+        "point_counts": {
+          "point_forward_calls": 22,
+          "point_image_forwards": 1395
+        }
+      },
+      "runtime": {
+        "process_seconds": 12.52087627723813,
+        "full_process_seconds": 13.481727585196495,
+        "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+        "device": "cuda",
+        "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+        "torch": "2.11.0+cu128",
+        "cuda": "12.8",
+        "peak_cuda_memory_bytes": 1519030784,
+        "peak_cuda_reserved_bytes": 2235564032
+      },
+      "forward_counts": {
+        "cnn_forward_calls": 22,
+        "cnn_image_forwards": 1395,
+        "backward_calls": 0,
+        "optimizer_updates": 0,
+        "failed_input_placeholder_forwards": 0
+      }
+    },
+    "rf100": {
+      "timing": {
+        "counts": {
+          "cnn_forward_calls": 3,
+          "cnn_image_forwards": 151,
+          "backward_calls": 0,
+          "optimizer_updates": 0,
+          "failed_input_placeholder_forwards": 0
+        },
+        "pipeline_seconds": 8.4407963976264,
+        "forward_seconds": 7.293383818119764,
+        "batch_size": 64,
+        "workers": 4,
+        "point_counts": {
+          "point_forward_calls": 3,
+          "point_image_forwards": 151
+        }
+      },
+      "runtime": {
+        "process_seconds": 10.05137488245964,
+        "full_process_seconds": 10.99765495210886,
+        "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+        "device": "cuda",
+        "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+        "torch": "2.11.0+cu128",
+        "cuda": "12.8",
+        "peak_cuda_memory_bytes": 1519030784,
+        "peak_cuda_reserved_bytes": 2235564032
+      },
+      "forward_counts": {
+        "cnn_forward_calls": 3,
+        "cnn_image_forwards": 151,
+        "backward_calls": 0,
+        "optimizer_updates": 0,
+        "failed_input_placeholder_forwards": 0
+      }
+    },
+    "source_totals": {
+      "train_batches": 37196,
+      "train_cnn_image_forwards": 2378232,
+      "train_cnn_forward_calls": 37196,
+      "backward_calls": 37196,
+      "optimizer_updates": 37182,
+      "amp_skipped_updates": 14,
+      "validation_images": 137224,
+      "validation_cnn_forward_calls": 2176,
+      "train_point_forward_calls": 37196,
+      "train_point_image_forwards": 2378232,
+      "validation_point_forward_calls": 2176,
+      "validation_point_image_forwards": 137224,
+      "training_seconds": 11355.16951591894,
+      "validation_seconds": 467.1808344423771
+    },
+    "source_runtime": {
+      "process_seconds": 11873.210449688137,
+      "full_process_seconds": 11874.171350043267,
+      "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 8262600192,
+      "peak_cuda_reserved_bytes": 11347689472
+    },
+    "stage_wall_seconds": {
+      "preflight": 21.941874,
+      "train_source": 11875.250107,
+      "eval_industrial": 14.395055,
+      "eval_rf100": 11.739768
+    },
+    "controller_end_to_end_seconds": 11901.541209,
+    "preflight_through_external_wall_seconds": 11923.544268,
+    "completed_at_utc": "2026-10-25T00:32:31.513390+00:00",
+    "source_checkpointed_process_seconds": 11873.210689786822,
+    "controller_end_to_end_boundary": "train_source supervisor start through final frozen external exit; excludes preceding new preflight",
+    "preflight_record": "../runtime_preflight.json",
+    "reused_source_generation_record": "../../geoprr_v2_roll_source_20261024/source_completed.json",
+    "new_source_generation_cost": 0
+  },
+  "point_execution_evidence": {
+    "source_train": {
+      "calls": 37196,
+      "images": 2378232
+    },
+    "source_validation": {
+      "calls": 2176,
+      "images": 137224
+    },
+    "external": {
+      "industrial": {
+        "point_forward_calls": 22,
+        "point_image_forwards": 1395
+      },
+      "rf100": {
+        "point_forward_calls": 3,
+        "point_image_forwards": 151
+      }
+    },
+    "preflight": {
+      "point_forward_calls": 3,
+      "point_image_forwards": 8
+    },
+    "source_loss_backward_attempts": 37196,
+    "source_BN_update_preflight": 1,
+    "eval_additional_BN_update_preflight": 0
+  },
+  "spatial_semantic_execution_evidence": {
+    "encoder_input": [
+      {
+        "shape": [
+          4,
+          3,
+          512,
+          512
+        ],
+        "dtype": "torch.float32"
+      },
+      {
+        "shape": [
+          2,
+          3,
+          512,
+          512
+        ],
+        "dtype": "torch.float32"
+      },
+      {
+        "shape": [
+          2,
+          3,
+          512,
+          512
+        ],
+        "dtype": "torch.float32"
+      }
+    ],
+    "pool": [
+      {
+        "before": [
+          4,
+          960,
+          16,
+          16
+        ],
+        "after": [
+          4,
+          960,
+          2,
+          2
+        ]
+      },
+      {
+        "before": [
+          2,
+          960,
+          16,
+          16
+        ],
+        "after": [
+          2,
+          960,
+          2,
+          2
+        ]
+      },
+      {
+        "before": [
+          2,
+          960,
+          16,
+          16
+        ],
+        "after": [
+          2,
+          960,
+          2,
+          2
+        ]
+      }
+    ],
+    "semantic_neck": [
+      {
+        "shape": [
+          4,
+          1280,
+          2,
+          2
+        ],
+        "dtype": "torch.float16"
+      },
+      {
+        "shape": [
+          2,
+          1280,
+          2,
+          2
+        ],
+        "dtype": "torch.float16"
+      },
+      {
+        "shape": [
+          2,
+          1280,
+          2,
+          2
+        ],
+        "dtype": "torch.float16"
+      }
+    ],
+    "point": [
+      {
+        "semantic_shape": [
+          4,
+          5120
+        ],
+        "point_logit_shape": [
+          4,
+          1
+        ],
+        "semantic_dtype": "torch.float16",
+        "point_logit_dtype": "torch.float16"
+      },
+      {
+        "semantic_shape": [
+          2,
+          5120
+        ],
+        "point_logit_shape": [
+          2,
+          1
+        ],
+        "semantic_dtype": "torch.float16",
+        "point_logit_dtype": "torch.float16"
+      },
+      {
+        "semantic_shape": [
+          2,
+          5120
+        ],
+        "point_logit_shape": [
+          2,
+          1
+        ],
+        "semantic_dtype": "torch.float16",
+        "point_logit_dtype": "torch.float16"
+      }
+    ],
+    "all_gradients_finite": true,
+    "gradient_groups_nonzero": {
+      "encoder": true,
+      "encoder_stem": true,
+      "semantic_conv_head": true,
+      "semantic_norm_head": true,
+      "point": true
+    },
+    "strict_reload_saved_witness": true,
+    "checkpoint_contents_loaded_by_audit": false
+  },
+  "saved_reference_cost_comparisons": {
+    "v16": {
+      "source_training_seconds": {
+        "v28": 11355.16951591894,
+        "reference": 2761.0258493237197,
+        "difference": 8594.14366659522,
+        "ratio": 4.112663240259143
+      },
+      "source_validation_seconds": {
+        "v28": 467.1808344423771,
+        "reference": 183.3174392953515,
+        "difference": 283.8633951470256,
+        "ratio": 2.548480036804789
+      },
+      "source_process_seconds": {
+        "v28": 11873.210449688137,
+        "reference": 2972.2243499159813,
+        "difference": 8900.986099772155,
+        "ratio": 3.9947221514498956
+      },
+      "source_full_process_seconds": {
+        "v28": 11874.171350043267,
+        "reference": 2973.16363677755,
+        "difference": 8901.007713265717,
+        "ratio": 3.993783323313154
+      },
+      "queue_wall_seconds": {
+        "v28": 11901.541209,
+        "reference": 2997.258767,
+        "difference": 8904.282442000002,
+        "ratio": 3.970808706954731
+      },
+      "source_peak_allocated_bytes": {
+        "v28": 8262600192,
+        "reference": 2218448384,
+        "difference": 6044151808,
+        "ratio": 3.7244951253280996
+      },
+      "source_peak_reserved_bytes": {
+        "v28": 11347689472,
+        "reference": 2837446656,
+        "difference": 8510242816,
+        "ratio": 3.999260901699926
+      }
+    },
+    "v18": {
+      "source_training_seconds": {
+        "v28": 11355.16951591894,
+        "reference": 2816.7055361121893,
+        "difference": 8538.463979806751,
+        "ratio": 4.031365497861778
+      },
+      "source_validation_seconds": {
+        "v28": 467.1808344423771,
+        "reference": 173.22431213408709,
+        "difference": 293.95652230829,
+        "ratio": 2.6969703541425996
+      },
+      "source_process_seconds": {
+        "v28": 11873.210449688137,
+        "reference": 3059.7135350219905,
+        "difference": 8813.496914666146,
+        "ratio": 3.8804974105534367
+      },
+      "source_full_process_seconds": {
+        "v28": 11874.171350043267,
+        "reference": 3060.6456844322383,
+        "difference": 8813.525665611029,
+        "ratio": 3.87962952080354
+      },
+      "queue_wall_seconds": {
+        "v28": 11901.541209,
+        "reference": 3084.318233,
+        "difference": 8817.222976000001,
+        "ratio": 3.8587267298367656
+      },
+      "source_peak_allocated_bytes": {
+        "v28": 8262600192,
+        "reference": 2995077120,
+        "difference": 5267523072,
+        "ratio": 2.758727024698449
+      },
+      "source_peak_reserved_bytes": {
+        "v28": 11347689472,
+        "reference": 3435134976,
+        "difference": 7912554496,
+        "ratio": 3.3034188034188032
+      }
+    },
+    "v21": {
+      "source_training_seconds": {
+        "v28": 11355.16951591894,
+        "reference": 2773.254664938897,
+        "difference": 8581.914850980043,
+        "ratio": 4.094528230485868
+      },
+      "source_validation_seconds": {
+        "v28": 467.1808344423771,
+        "reference": 173.47069058939815,
+        "difference": 293.71014385297894,
+        "ratio": 2.693139877722545
+      },
+      "source_process_seconds": {
+        "v28": 11873.210449688137,
+        "reference": 3008.8445746041834,
+        "difference": 8864.365875083953,
+        "ratio": 3.946102949252561
+      },
+      "source_full_process_seconds": {
+        "v28": 11874.171350043267,
+        "reference": 3009.7728834301233,
+        "difference": 8864.398466613144,
+        "ratio": 3.9452051068088325
+      },
+      "queue_wall_seconds": {
+        "v28": 11901.541209,
+        "reference": 3035.589614,
+        "difference": 8865.951595,
+        "ratio": 3.920668707690473
+      },
+      "source_peak_allocated_bytes": {
+        "v28": 8262600192,
+        "reference": 3049633792,
+        "difference": 5212966400,
+        "ratio": 2.7093745529955093
+      },
+      "source_peak_reserved_bytes": {
+        "v28": 11347689472,
+        "reference": 3439329280,
+        "difference": 7908360192,
+        "ratio": 3.299390243902439
+      }
+    },
+    "v22": {
+      "source_training_seconds": {
+        "v28": 11355.16951591894,
+        "reference": 9585.050050370395,
+        "difference": 1770.1194655485451,
+        "ratio": 1.1846750362539988
+      },
+      "source_validation_seconds": {
+        "v28": 467.1808344423771,
+        "reference": 483.78070947155356,
+        "difference": -16.599875029176474,
+        "ratio": 0.9656871911091516
+      },
+      "source_process_seconds": {
+        "v28": 11873.210449688137,
+        "reference": 10146.579224005342,
+        "difference": 1726.631225682795,
+        "ratio": 1.1701688014811764
+      },
+      "source_full_process_seconds": {
+        "v28": 11874.171350043267,
+        "reference": 10147.539110802114,
+        "difference": 1726.632239241153,
+        "ratio": 1.1701528045753617
+      },
+      "queue_wall_seconds": {
+        "v28": 11901.541209,
+        "reference": 10171.255716,
+        "difference": 1730.2854930000012,
+        "ratio": 1.1701152287694583
+      },
+      "source_peak_allocated_bytes": {
+        "v28": 8262600192,
+        "reference": 2218448384,
+        "difference": 6044151808,
+        "ratio": 3.7244951253280996
+      },
+      "source_peak_reserved_bytes": {
+        "v28": 11347689472,
+        "reference": 2837446656,
+        "difference": 8510242816,
+        "ratio": 3.999260901699926
+      }
+    },
+    "v23": {
+      "source_training_seconds": {
+        "v28": 11355.16951591894,
+        "reference": 9784.711778588593,
+        "difference": 1570.4577373303473,
+        "ratio": 1.160501174982681
+      },
+      "source_validation_seconds": {
+        "v28": 467.1808344423771,
+        "reference": 503.0759307220578,
+        "difference": -35.89509627968073,
+        "ratio": 0.9286487504417852
+      },
+      "source_process_seconds": {
+        "v28": 11873.210449688137,
+        "reference": 10370.041267327964,
+        "difference": 1503.1691823601723,
+        "ratio": 1.144953056946464
+      },
+      "source_full_process_seconds": {
+        "v28": 11874.171350043267,
+        "reference": 10371.028453789651,
+        "difference": 1503.1428962536156,
+        "ratio": 1.1449367247376856
+      },
+      "queue_wall_seconds": {
+        "v28": 11901.541209,
+        "reference": 10394.404016,
+        "difference": 1507.1371930000005,
+        "ratio": 1.1449950560590179
+      },
+      "source_peak_allocated_bytes": {
+        "v28": 8262600192,
+        "reference": 2669980672,
+        "difference": 5592619520,
+        "ratio": 3.094629215353361
+      },
+      "source_peak_reserved_bytes": {
+        "v28": 11347689472,
+        "reference": 3158310912,
+        "difference": 8189378560,
+        "ratio": 3.592961487383798
+      }
+    },
+    "v24": {
+      "source_training_seconds": {
+        "v28": 11355.16951591894,
+        "reference": 8439.410359308124,
+        "difference": 2915.7591566108167,
+        "ratio": 1.34549323145484
+      },
+      "source_validation_seconds": {
+        "v28": 467.1808344423771,
+        "reference": 422.064306627959,
+        "difference": 45.11652781441808,
+        "ratio": 1.1068949141302
+      },
+      "source_process_seconds": {
+        "v28": 11873.210449688137,
+        "reference": 8926.789751820266,
+        "difference": 2946.4206978678703,
+        "ratio": 1.3300649819009196
+      },
+      "source_full_process_seconds": {
+        "v28": 11874.171350043267,
+        "reference": 8927.727020017803,
+        "difference": 2946.4443300254643,
+        "ratio": 1.3300329774217927
+      },
+      "queue_wall_seconds": {
+        "v28": 11901.541209,
+        "reference": 8951.11403,
+        "difference": 2950.4271790000003,
+        "ratio": 1.3296156399205206
+      },
+      "source_peak_allocated_bytes": {
+        "v28": 8262600192,
+        "reference": 664222720,
+        "difference": 7598377472,
+        "ratio": 12.439502509037933
+      },
+      "source_peak_reserved_bytes": {
+        "v28": 11347689472,
+        "reference": 815792128,
+        "difference": 10531897344,
+        "ratio": 13.910025706940875
+      }
+    },
+    "v25": {
+      "source_training_seconds": {
+        "v28": 11355.16951591894,
+        "reference": 4948.06887563318,
+        "difference": 6407.10064028576,
+        "ratio": 2.2948689279241035
+      },
+      "source_validation_seconds": {
+        "v28": 467.1808344423771,
+        "reference": 247.77300535142422,
+        "difference": 219.40782909095287,
+        "ratio": 1.8855195051606202
+      },
+      "source_process_seconds": {
+        "v28": 11873.210449688137,
+        "reference": 5237.863852690905,
+        "difference": 6635.346596997231,
+        "ratio": 2.266803945961364
+      },
+      "source_full_process_seconds": {
+        "v28": 11874.171350043267,
+        "reference": 5238.7860625088215,
+        "difference": 6635.3852875344455,
+        "ratio": 2.26658832950258
+      },
+      "queue_wall_seconds": {
+        "v28": 11901.541209,
+        "reference": 5262.123951,
+        "difference": 6639.417258000001,
+        "ratio": 2.2617371464118143
+      },
+      "source_peak_allocated_bytes": {
+        "v28": 8262600192,
+        "reference": 2224756224,
+        "difference": 6037843968,
+        "ratio": 3.713935083253418
+      },
+      "source_peak_reserved_bytes": {
+        "v28": 11347689472,
+        "reference": 2858418176,
+        "difference": 8489271296,
+        "ratio": 3.969919295671313
+      }
+    },
+    "v26": {
+      "source_training_seconds": {
+        "v28": 11355.16951591894,
+        "reference": 18503.923991907388,
+        "difference": -7148.754475988448,
+        "ratio": 0.613662784222691
+      },
+      "source_validation_seconds": {
+        "v28": 467.1808344423771,
+        "reference": 774.6288493834436,
+        "difference": -307.4480149410665,
+        "ratio": 0.6031028082858313
+      },
+      "source_process_seconds": {
+        "v28": 11873.210449688137,
+        "reference": 19354.278957866132,
+        "difference": -7481.068508177996,
+        "ratio": 0.6134669483443879
+      },
+      "source_full_process_seconds": {
+        "v28": 11874.171350043267,
+        "reference": 19355.291916746646,
+        "difference": -7481.120566703379,
+        "ratio": 0.6134844879177183
+      },
+      "queue_wall_seconds": {
+        "v28": 11901.541209,
+        "reference": 19382.631387,
+        "difference": -7481.090178,
+        "ratio": 0.6140312412370597
+      },
+      "source_peak_allocated_bytes": {
+        "v28": 8262600192,
+        "reference": 8262538752,
+        "difference": 61440,
+        "ratio": 1.000007435971176
+      },
+      "source_peak_reserved_bytes": {
+        "v28": 11347689472,
+        "reference": 11347689472,
+        "difference": 0,
+        "ratio": 1.0
+      }
+    }
+  },
+  "preflight_counts_separate": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "preflight_runtime": {
+    "process_seconds": 20.21834523230791,
+    "full_process_seconds": 21.147687066346407,
+    "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+    "device": "cuda",
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "peak_cuda_memory_bytes": 630156288,
+    "peak_cuda_reserved_bytes": 725614592
+  },
+  "backward_scope": "All CNN and new5120to1 scalar point parameters jointly trained with source-only SmoothL1. BN source training only, frozen for source validation and external inference. Parameterless2x2 pooling and four-cell retained semantic neck still incur measured computation.",
+  "new_source_generation_cost": 0
+}

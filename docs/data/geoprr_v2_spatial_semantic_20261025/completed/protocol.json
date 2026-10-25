@@ -1,0 +1,175 @@
+{
+  "protocol": "geoprr_v2_spatial_semantic_source_only_v1",
+  "code_revision": "e481b011a068efd06e8c26f93f6e8ab7c6ef5d78",
+  "config": {
+    "protocol": "geoprr_v2_spatial_semantic_source_only_v1",
+    "model": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "num_classes": 0,
+      "semantic_cell_dim": 1280,
+      "initialization": "fresh complete cached ImageNet encoder, including conv_head and norm_head; new scalar point",
+      "readout": "sigmoid(float(Linear5120to1(flatten four ordered1280 semantic cells)))",
+      "pool_output_size": [
+        2,
+        2
+      ],
+      "readout_dim": 5120,
+      "spatial_order": "channel-major, row-major2x2 within each semantic channel",
+      "point_initialization_std": 0.001,
+      "point_initialization_bias": 0.0,
+      "CNN_passes_per_image": 1,
+      "joint_encoder_training": true,
+      "source_training_BN_updates": true
+    },
+    "data": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "source": {
+      "old_unique": 18590,
+      "roll_unique": 4096,
+      "roll_repeat": 4,
+      "total_unique": 22686,
+      "train_presentations": 34974,
+      "original_validation": 1506,
+      "roll_validation": 512,
+      "require_geometry": false,
+      "pair_manifest": null,
+      "roll_validation_split": "independent layout/seed/ID/group; same available HDR background",
+      "population_policy": "same four manifest rows and order as retained V22 source; authoritative RGB512 input contract"
+    },
+    "training": {
+      "seed": 20262020,
+      "min_epochs": 60,
+      "max_epochs": 160,
+      "early_stopping_patience": 20,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "loss": "smooth_l1",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0,
+      "scheduler": {
+        "mode": "min",
+        "factor": 0.3,
+        "patience": 8,
+        "threshold": 0.0,
+        "threshold_mode": "abs",
+        "cooldown": 0,
+        "min_lr": 1e-06,
+        "eps": 1e-08
+      }
+    },
+    "checkpoint_selection": "earliest strict minimum R=(original1506 mean NMAE + roll512 mean NMAE + original1506 worst10percent NMAE + roll512 worst10percent NMAE)/4; each worst tail uses ceil(.1*N), including failed inputs/scalars at error1",
+    "external_checkpoint": "source-selected best only after source stopping rule completes",
+    "inference_input": "provided native ROI RGB, linear resize512, ImageNet normalization; one RGB forward, no GT geometry or target scalar input",
+    "external_training_or_adaptation": false
+  },
+  "RGB_input_contract": {
+    "data": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "native_ROI": "same provided roi_path or existing source dial_bbox; no new crop",
+    "resize": "OpenCV INTER_LINEAR to512x512",
+    "color": "BGR to RGB, float32 /255",
+    "normalization_mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "normalization_std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "source_photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "require_geometry": false,
+    "pair_manifest": null,
+    "failure_placeholder_shape": [
+      3,
+      512,
+      512
+    ]
+  },
+  "initialization": "fresh complete cached ImageNet encoder; fixed2x2 average pooling before retained1280 semantic neck; new5120to1 scalar point",
+  "old_task_checkpoint_or_teacher_used": false,
+  "new_weight_download_authorized": false,
+  "model_inputs": "provided native ROI RGB, linear resize512, ImageNet normalization; one RGB forward, no GT geometry or target scalar input",
+  "checkpoint_selection": "earliest strict minimum R=(original1506 mean NMAE + roll512 mean NMAE + original1506 worst10percent NMAE + roll512 worst10percent NMAE)/4; each worst tail uses ceil(.1*N), including failed inputs/scalars at error1",
+  "epoch_exposure": {
+    "unique_train_images": 22686,
+    "old_images_once": 18590,
+    "roll_images_four_times": 16384,
+    "train_images": 34974,
+    "train_CNN_calls": 547,
+    "validation_images": 2018,
+    "validation_CNN_calls": 32
+  },
+  "source_stopping": "complete epoch; >=60 and20 epochs without strict source score improvement, maximum160",
+  "expected_external": {
+    "images": 1546,
+    "CNN_calls": 25,
+    "backward_calls": 0,
+    "optimizer_updates": 0
+  },
+  "preflight_budget": {
+    "CNN_images": 8,
+    "CNN_calls": 3,
+    "backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "roll_validation_background_independent": false,
+  "original_source_validation_scene_guard_retained": true,
+  "external_scope": "viewed Industrial1395/52 and RF100151/35; source-selected best once each after complete source training",
+  "training_or_adaptation_on_target": false,
+  "automatic_promotion": false,
+  "status": "complete",
+  "completed_source_epochs": 68,
+  "source_selected_best_epoch": 48,
+  "source_selected_best_R": 0.012041137719179768,
+  "completion_reason": "source_score_patience",
+  "formal_complete_counts": {
+    "cnn_image_forwards": 2517002,
+    "cnn_forward_calls": 39397,
+    "point_image_forwards": 2517002,
+    "point_forward_calls": 39397,
+    "source_backward_calls": 37196,
+    "source_optimizer_updates": 37182,
+    "source_amp_skipped_updates": 14,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  },
+  "reused_source_generation_record": "../../geoprr_v2_roll_source_20261024/source_completed.json"
+}

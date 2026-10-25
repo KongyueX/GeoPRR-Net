@@ -1,0 +1,60 @@
+{
+  "status": "passed",
+  "checks": 69045,
+  "failed_checks": 0,
+  "failures": [],
+  "maximum_numeric_difference": 1.4210854715202004e-14,
+  "audited_at_utc": "2026-10-25T00:50:00.473984+00:00",
+  "scope": "one bounded fresh independent CPU saved-scalar and execution audit",
+  "collected_files": 20,
+  "source_saved_rows": 4036,
+  "external_saved_rows": 1546,
+  "full_source_epochs": 68,
+  "best_epoch": 48,
+  "best_score": 0.012041137719179768,
+  "completion_reason": "source_score_patience",
+  "counts": {
+    "cnn_image_forwards": 2517002,
+    "cnn_forward_calls": 39397,
+    "point_image_forwards": 2517002,
+    "point_forward_calls": 39397,
+    "source_backward_calls": 37196,
+    "source_optimizer_updates": 37182,
+    "source_amp_skipped_updates": 14,
+    "target_backward_calls": 0,
+    "target_optimizer_updates": 0
+  },
+  "raw_contract_or_geometry_downloaded": false,
+  "weights_RGB_or_checkpoint_loaded": false,
+  "model_forward_backward_or_update_calls": 0,
+  "target_training": 0,
+  "automatic_promotion": false,
+  "review_independence": "fresh independent task; no implementation role and no second reviewer",
+  "integrity_checks": {
+    "ground_truth_provenance": {
+      "status": "passed",
+      "industrial": "saved provided scalar labels",
+      "rf100": "saved offline scalars derived from four annotated points"
+    },
+    "score_normalization": {
+      "status": "passed",
+      "details": "absolute scalar error uses fixed normalized full scale; no model-output statistic is a denominator"
+    },
+    "result_existence_and_identity": {
+      "status": "passed",
+      "details": "all allowlisted rows exist once with exact IDs, groups, targets and full failure denominators"
+    },
+    "executed_path": {
+      "status": "passed",
+      "details": "executed snapshot booleans, saved counts and preflight witnesses agree on one RGB CNN and one5120to1 point"
+    },
+    "scope": {
+      "status": "qualified",
+      "details": "single seed and viewed development domains; V27 is not a performance baseline"
+    },
+    "evaluation_type": {
+      "industrial": "real_gt",
+      "rf100": "real_gt_offline_annotation_derived"
+    }
+  }
+}
