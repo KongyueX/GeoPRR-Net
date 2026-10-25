@@ -1,0 +1,408 @@
+{
+  "protocol": "geoprr_v2_source_stylemix_source_only_v1",
+  "status": "passed",
+  "config": {
+    "protocol": "geoprr_v2_source_stylemix_source_only_v1",
+    "model": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "num_classes": 0,
+      "semantic_dim": 1280,
+      "initialization": "fresh complete cached ImageNet encoder, including conv_head and norm_head; new scalar point",
+      "readout": "sigmoid(float(Linear1280to1(full semantic output)))",
+      "point_initialization_std": 0.001,
+      "point_initialization_bias": 0.0,
+      "CNN_passes_per_image": 1,
+      "joint_encoder_training": true,
+      "source_training_BN_updates": true,
+      "stylemix": {
+        "location": "after encoder.blocks[1]",
+        "source_training_probability": 1.0,
+        "beta_alpha": 0.1,
+        "epsilon": 1e-06,
+        "variance_unbiased": false,
+        "statistics_dtype": "float32",
+        "moments_detached": true,
+        "permutation": "current batch torch.randperm; self-permutation allowed",
+        "evaluation": "exact input identity before statistics or RNG",
+        "basis": "fixed MixStyle-inspired variant; not an exact reproduction"
+      }
+    },
+    "data": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "source": {
+      "old_unique": 18590,
+      "roll_unique": 4096,
+      "roll_repeat": 4,
+      "total_unique": 22686,
+      "train_presentations": 34974,
+      "original_validation": 1506,
+      "roll_validation": 512,
+      "require_geometry": false,
+      "pair_manifest": null,
+      "roll_validation_split": "independent layout/seed/ID/group; same available HDR background",
+      "population_policy": "same four manifest rows and order as retained V22 source; authoritative RGB512 input contract"
+    },
+    "training": {
+      "seed": 20262020,
+      "min_epochs": 60,
+      "max_epochs": 160,
+      "early_stopping_patience": 20,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "amp": true,
+      "optimizer": "AdamW",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "loss": "smooth_l1",
+      "smooth_l1_beta": 0.05,
+      "gradient_clip": 5.0,
+      "scheduler": {
+        "mode": "min",
+        "factor": 0.3,
+        "patience": 8,
+        "threshold": 0.0,
+        "threshold_mode": "abs",
+        "cooldown": 0,
+        "min_lr": 1e-06,
+        "eps": 1e-08
+      }
+    },
+    "checkpoint_selection": "earliest strict minimum R=(original1506 mean NMAE + roll512 mean NMAE + original1506 worst10percent NMAE + roll512 worst10percent NMAE)/4; each worst tail uses ceil(.1*N), including failed inputs/scalars at error1",
+    "external_checkpoint": "source-selected best only after source stopping rule completes",
+    "inference_input": "provided native ROI RGB, linear resize512, ImageNet normalization; one RGB forward, no GT geometry or target scalar input",
+    "external_training_or_adaptation": false
+  },
+  "model_metadata": {
+    "class": "__main__.SourceStyleMixReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "point_parameters": 1281,
+    "point_shape": [
+      1280,
+      1
+    ],
+    "parameters": 8435793,
+    "trainable_parameters": 8435793,
+    "parameter_tensors": 233,
+    "state_tensors": 464,
+    "trainable_parameter_tensors": 233,
+    "BN_modules": 77,
+    "stylemix_parameters": 0,
+    "stylemix_state_tensors": 0,
+    "stylemix_location": "encoder.blocks[1] output",
+    "input_contract": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "CNN_passes_per_image": 1
+  },
+  "RGB_input_contract": {
+    "data": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "native_ROI": "same provided roi_path or existing source dial_bbox; no new crop",
+    "resize": "OpenCV INTER_LINEAR to512x512",
+    "color": "BGR to RGB, float32 /255",
+    "normalization_mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "normalization_std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "source_photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ]
+    },
+    "require_geometry": false,
+    "pair_manifest": null,
+    "failure_placeholder_shape": [
+      3,
+      512,
+      512
+    ]
+  },
+  "initialization": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "ImageNet_pretrained": true,
+    "existing_cached_weights_only": true,
+    "retained_complete_encoder_state_tensors": 462,
+    "all_cached_encoder_state_tensors_retained": true,
+    "new_point_parameter_tensors": 2,
+    "point_initialization_std": 0.001,
+    "point_initialization_bias_zero": true,
+    "old_task_checkpoint_used": false
+  },
+  "counts": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "point_counts": {
+    "point_forward_calls": 3,
+    "point_image_forwards": 8
+  },
+  "observed_encoder_inputs": [
+    {
+      "shape": [
+        4,
+        3,
+        512,
+        512
+      ],
+      "dtype": "torch.float32"
+    },
+    {
+      "shape": [
+        2,
+        3,
+        512,
+        512
+      ],
+      "dtype": "torch.float32"
+    },
+    {
+      "shape": [
+        2,
+        3,
+        512,
+        512
+      ],
+      "dtype": "torch.float32"
+    }
+  ],
+  "observed_pool_shapes": [
+    {
+      "before": [
+        4,
+        960,
+        16,
+        16
+      ],
+      "after": [
+        4,
+        960,
+        1,
+        1
+      ]
+    },
+    {
+      "before": [
+        2,
+        960,
+        16,
+        16
+      ],
+      "after": [
+        2,
+        960,
+        1,
+        1
+      ]
+    },
+    {
+      "before": [
+        2,
+        960,
+        16,
+        16
+      ],
+      "after": [
+        2,
+        960,
+        1,
+        1
+      ]
+    }
+  ],
+  "observed_point_shapes_and_dtypes": [
+    {
+      "semantic_shape": [
+        4,
+        1280
+      ],
+      "point_logit_shape": [
+        4,
+        1
+      ],
+      "semantic_dtype": "torch.float16",
+      "point_logit_dtype": "torch.float16"
+    },
+    {
+      "semantic_shape": [
+        2,
+        1280
+      ],
+      "point_logit_shape": [
+        2,
+        1
+      ],
+      "semantic_dtype": "torch.float16",
+      "point_logit_dtype": "torch.float16"
+    },
+    {
+      "semantic_shape": [
+        2,
+        1280
+      ],
+      "point_logit_shape": [
+        2,
+        1
+      ],
+      "semantic_dtype": "torch.float16",
+      "point_logit_dtype": "torch.float16"
+    }
+  ],
+  "observed_style_shapes_and_dtypes": [
+    {
+      "shape": [
+        4,
+        80,
+        64,
+        64
+      ],
+      "input_dtype": "torch.float16",
+      "output_dtype": "torch.float16",
+      "active": true,
+      "exact_input_identity": false
+    },
+    {
+      "shape": [
+        2,
+        80,
+        64,
+        64
+      ],
+      "input_dtype": "torch.float16",
+      "output_dtype": "torch.float16",
+      "active": false,
+      "exact_input_identity": true
+    },
+    {
+      "shape": [
+        2,
+        80,
+        64,
+        64
+      ],
+      "input_dtype": "torch.float16",
+      "output_dtype": "torch.float16",
+      "active": false,
+      "exact_input_identity": true
+    }
+  ],
+  "observed_style_moments": [
+    {
+      "feature_shape": [
+        4,
+        80,
+        64,
+        64
+      ],
+      "feature_dtype": "torch.float32",
+      "mean_shape": [
+        4,
+        80,
+        1,
+        1
+      ],
+      "mean_dtype": "torch.float32",
+      "sigma_shape": [
+        4,
+        80,
+        1,
+        1
+      ],
+      "sigma_dtype": "torch.float32",
+      "mean_detached": true,
+      "sigma_detached": true
+    }
+  ],
+  "style_cost": {
+    "counts": {
+      "calls": 3,
+      "images": 8,
+      "active_calls": 1,
+      "active_images": 4,
+      "inactive_calls": 2,
+      "inactive_images": 4
+    },
+    "forward_seconds": 0.20117276168800893,
+    "timing": "CUDA event elapsed",
+    "boundary": "style operator entry through return; backward and full pipeline time recorded separately"
+  },
+  "all_gradients_finite": true,
+  "gradient_groups_nonzero": {
+    "encoder": true,
+    "encoder_stem": true,
+    "semantic_conv_head": true,
+    "semantic_norm_head": true,
+    "point": true
+  },
+  "strict_model_reload": true,
+  "full_state_tensors": 464,
+  "source_BN_counter_tensors_checked": 77,
+  "source_BN_counter_increment_training": 1,
+  "source_BN_counter_additional_increment_eval": 0,
+  "eval_model_buffers_unchanged": true,
+  "parameter_tensors_unchanged_without_optimizer": 233,
+  "validation_input_matches_declared512_pipeline": true,
+  "model_forward_inputs": [
+    "image"
+  ],
+  "target_datasets_used": false,
+  "target_statistics_used": false,
+  "autocast_dtype": "float16",
+  "preflight_backward_loss_scale": 128.0,
+  "runtime": {
+    "process_seconds": 20.50619124993682,
+    "full_process_seconds": 21.456849083304405,
+    "full_process_boundary": "module entry before torch import through saved predictions; excludes final completion JSON",
+    "device": "cuda",
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "peak_cuda_memory_bytes": 630113280,
+    "peak_cuda_reserved_bytes": 725614592
+  },
+  "scope": "source-training-only early feature moment mixing with complete semantic scalar source execution"
+}
