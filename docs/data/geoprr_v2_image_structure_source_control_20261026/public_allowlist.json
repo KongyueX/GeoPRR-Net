@@ -6,7 +6,37 @@
     "cpu_checks.json",
     "public_allowlist.json",
     "launch.json",
+    "runtime_preflight.json",
+    "completed/audit_result.json",
+    "completed/audit_report.md",
+    "completed/checks.csv.gz",
+    "completed/numeric_comparisons.csv.gz",
+    "completed/metric_comparisons.csv.gz",
+    "completed/native_paired_rows.csv.gz",
+    "completed/native_paired_groups.csv.gz",
+    "completed/native_threshold_comparisons.csv.gz",
+    "completed/collected_metadata.json",
+    "completed/current_source_id_predictions.csv.gz",
+    "completed/current_source_id_groups.csv.gz",
+    "completed/current_constant_source_id_predictions.csv.gz",
+    "completed/current_constant_source_id_groups.csv.gz",
+    "completed/reference_source_id_predictions.csv.gz",
+    "completed/reference_source_id_groups.csv.gz",
+    "completed/reference_source_counterfactual_predictions.csv.gz",
+    "completed/reference_source_counterfactual_groups.csv.gz"
+  ],
+  "scope": "normalized fixed image-structure source-control metadata and the explicit 17-file completed audit projection; raw research assets remain private",
+  "completion_status": "complete",
+  "scientific_verdict": "NOT_RETAINED",
+  "integrity_verdict": "PASS_WITH_QUALIFICATIONS",
+  "research_status": "ACTIVE",
+  "frozen_files_unchanged": [
+    "protocol.json",
+    "config.json",
+    "cpu_checks.json",
+    "launch.json",
     "runtime_preflight.json"
   ],
-  "scope": "normalized fixed measurement source-control metadata; rawdata private"
+  "csv_storage": "LF line endings inside lossless gzip; original numeric strings, IDs and groups retained",
+  "qualifications": "See README.md Known Issues and completed/audit_report.md; keep inherited last15 CF condition text and actual last30 execution disclosure together."
 }

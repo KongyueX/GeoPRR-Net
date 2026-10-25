@@ -1,0 +1,1395 @@
+{
+  "status": "complete",
+  "audit_kind": "one fresh independent non-author standard-library saved-number/execution CPU audit",
+  "review_independence": "same-family",
+  "acceptance_status": "provisional",
+  "protocol": "geoprr_v2_image_structure_source_control_v1",
+  "science_revision": "d6b2db442a1d89799dff4024cd6baa26c0f2d28c",
+  "runtime_revision": "3263eaf90c4b985f78c72ab7484e1dcac6e3c158",
+  "generated_at_utc": "2026-10-25T22:13:28.971032+00:00",
+  "integrity_verdict": "PASS_WITH_QUALIFICATIONS",
+  "scientific_verdict": "NOT_RETAINED",
+  "claim_supported": false,
+  "numeric_tolerance": {
+    "float_absolute": 1e-12,
+    "integer_ID_group": "exact"
+  },
+  "check_counts": {
+    "PASS": 81,
+    "FAIL": 7,
+    "integrity_FAIL": 0,
+    "scientific_FAIL": 7
+  },
+  "numeric_comparison_count": 11698,
+  "numeric_failure_count": 0,
+  "numeric_max_abs_diff": 1.4210854715202004e-14,
+  "summaries": {
+    "current_source_id": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.2318947974591251,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.19351458549499512,
+      "p90_error": 0.4863277435302736,
+      "p95_error": 0.5456794157624244,
+      "tail10_nmae": 0.557430449128151,
+      "maximum_error": 0.6863844096660614,
+      "nmae_percent_fs": 23.18947974591251,
+      "median_error_percent_fs": 19.35145854949951,
+      "p90_error_percent_fs": 48.63277435302736,
+      "p95_error_percent_fs": 54.56794157624244,
+      "tail10_nmae_percent_fs": 55.7430449128151,
+      "maximum_error_percent_fs": 68.63844096660614,
+      "count_at_1_percent_fs": 13,
+      "acc_at_1": 0.04452054794520548,
+      "acc_at_1_percent": 4.4520547945205475,
+      "errors_above_1_percent_fs": 279,
+      "count_at_2_percent_fs": 28,
+      "acc_at_2": 0.0958904109589041,
+      "acc_at_2_percent": 9.58904109589041,
+      "errors_above_2_percent_fs": 264,
+      "count_at_5_percent_fs": 53,
+      "acc_at_5": 0.1815068493150685,
+      "acc_at_5_percent": 18.15068493150685,
+      "errors_above_5_percent_fs": 239,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    },
+    "current_constant_source_id": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.2500892740609332,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.2489658147096634,
+      "p90_error": 0.4416848599910737,
+      "p95_error": 0.476235611923039,
+      "tail10_nmae": 0.4738441610573015,
+      "maximum_error": 0.4994222219684161,
+      "nmae_percent_fs": 25.008927406093317,
+      "median_error_percent_fs": 24.89658147096634,
+      "p90_error_percent_fs": 44.16848599910737,
+      "p95_error_percent_fs": 47.623561192303896,
+      "tail10_nmae_percent_fs": 47.384416105730146,
+      "maximum_error_percent_fs": 49.94222219684161,
+      "count_at_1_percent_fs": 7,
+      "acc_at_1": 0.023972602739726026,
+      "acc_at_1_percent": 2.3972602739726026,
+      "errors_above_1_percent_fs": 285,
+      "count_at_2_percent_fs": 14,
+      "acc_at_2": 0.04794520547945205,
+      "acc_at_2_percent": 4.794520547945205,
+      "errors_above_2_percent_fs": 278,
+      "count_at_5_percent_fs": 24,
+      "acc_at_5": 0.0821917808219178,
+      "acc_at_5_percent": 8.219178082191782,
+      "errors_above_5_percent_fs": 268,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    },
+    "reference_source_id": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.025431218243695233,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.015494510531425476,
+      "p90_error": 0.040915115177631405,
+      "p95_error": 0.05404334664344783,
+      "tail10_nmae": 0.11800955331418664,
+      "maximum_error": 0.5379703640937805,
+      "nmae_percent_fs": 2.543121824369523,
+      "median_error_percent_fs": 1.5494510531425476,
+      "p90_error_percent_fs": 4.0915115177631405,
+      "p95_error_percent_fs": 5.404334664344783,
+      "tail10_nmae_percent_fs": 11.800955331418663,
+      "maximum_error_percent_fs": 53.79703640937805,
+      "count_at_1_percent_fs": 102,
+      "acc_at_1": 0.3493150684931507,
+      "acc_at_1_percent": 34.93150684931507,
+      "errors_above_1_percent_fs": 190,
+      "count_at_2_percent_fs": 182,
+      "acc_at_2": 0.6232876712328768,
+      "acc_at_2_percent": 62.32876712328767,
+      "errors_above_2_percent_fs": 110,
+      "count_at_5_percent_fs": 276,
+      "acc_at_5": 0.9452054794520548,
+      "acc_at_5_percent": 94.52054794520548,
+      "errors_above_5_percent_fs": 16,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    },
+    "reference_source_counterfactual": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.026353762864682596,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.01438409835100174,
+      "p90_error": 0.04164543636143209,
+      "p95_error": 0.05768549442291258,
+      "tail10_nmae": 0.12945961876345488,
+      "maximum_error": 0.5424728989601135,
+      "nmae_percent_fs": 2.6353762864682597,
+      "median_error_percent_fs": 1.438409835100174,
+      "p90_error_percent_fs": 4.164543636143208,
+      "p95_error_percent_fs": 5.768549442291258,
+      "tail10_nmae_percent_fs": 12.945961876345487,
+      "maximum_error_percent_fs": 54.24728989601135,
+      "count_at_1_percent_fs": 104,
+      "acc_at_1": 0.3561643835616438,
+      "acc_at_1_percent": 35.61643835616438,
+      "errors_above_1_percent_fs": 188,
+      "count_at_2_percent_fs": 189,
+      "acc_at_2": 0.6472602739726028,
+      "acc_at_2_percent": 64.72602739726027,
+      "errors_above_2_percent_fs": 103,
+      "count_at_5_percent_fs": 275,
+      "acc_at_5": 0.9417808219178082,
+      "acc_at_5_percent": 94.17808219178082,
+      "errors_above_5_percent_fs": 17,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    }
+  },
+  "native_paired_counts": {
+    "improved": 26,
+    "worsened": 266,
+    "unchanged": 0,
+    "reference_accurate_at_1": 102,
+    "new_over5_on_reference_accurate": 83
+  },
+  "native_group_paired_counts": {
+    "improved": 0,
+    "worsened": 73,
+    "unchanged": 0
+  },
+  "threshold_comparisons": [
+    {
+      "threshold_percent_fs": 1,
+      "new_errors": 97,
+      "rescues": 8,
+      "reference_errors_above": 190,
+      "candidate_errors_above": 279
+    },
+    {
+      "threshold_percent_fs": 2,
+      "new_errors": 165,
+      "rescues": 11,
+      "reference_errors_above": 110,
+      "candidate_errors_above": 264
+    },
+    {
+      "threshold_percent_fs": 5,
+      "new_errors": 224,
+      "rescues": 1,
+      "reference_errors_above": 16,
+      "candidate_errors_above": 239
+    }
+  ],
+  "native_learning_predicates": {
+    "mean": false,
+    "tail": false
+  },
+  "native_joint_predicates": {
+    "mean": false,
+    "tail": false,
+    "maximum": false,
+    "errors_above_5_percent_fs": false,
+    "no_new_over5_on_reference_accurate": false
+  },
+  "counterfactual": {
+    "eligible": false,
+    "candidate_result": null,
+    "candidate_images": 0,
+    "candidate_calls": 0,
+    "candidate_files_present": false,
+    "reference_accurate_count": 104
+  },
+  "cost": {
+    "formal_counts": {
+      "cnn_image_forwards": 165172,
+      "cnn_forward_calls": 2585,
+      "point_image_forwards": 165172,
+      "point_forward_calls": 2585,
+      "CNN_backward_calls": 2580,
+      "point_backward_calls": 2580,
+      "optimizer_updates": 2577,
+      "amp_skipped_updates": 3,
+      "source_OOD_RGB_images": 0,
+      "external_backward_calls": 0,
+      "external_optimizer_updates": 0,
+      "fixed_filter_calls": 2585,
+      "fixed_filter_images": 165172,
+      "operator_forward_gpu_seconds": 16.58620217132568
+    },
+    "formal_totals": {
+      "train_batches": 2580,
+      "train_cnn_image_forwards": 164880,
+      "train_cnn_forward_calls": 2580,
+      "backward_calls": 2580,
+      "point_backward_calls": 2580,
+      "optimizer_updates": 2577,
+      "amp_skipped_updates": 3,
+      "train_point_forward_calls": 2580,
+      "train_point_image_forwards": 164880,
+      "validation_images": 292,
+      "validation_cnn_forward_calls": 5,
+      "validation_point_forward_calls": 5,
+      "validation_point_image_forwards": 292,
+      "training_seconds": 885.7437028512359,
+      "validation_seconds": 5.042726572602987,
+      "train_fixed_filter_calls": 2580,
+      "train_fixed_filter_images": 164880,
+      "train_operator_forward_gpu_seconds": 16.557331003189084,
+      "validation_fixed_filter_calls": 5,
+      "validation_fixed_filter_images": 292,
+      "validation_operator_forward_gpu_seconds": 0.02887116813659668
+    },
+    "formal_runtime": {
+      "process_seconds": 899.6294382065535,
+      "full_process_seconds": 900.8805287703872,
+      "prior_checkpointed_process_seconds": 0.0,
+      "full_process_boundary": "image-structure module entry before torch import through saved source metadata; excludes final completion JSON and downtime",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 8398941696,
+      "peak_cuda_reserved_bytes": 11058282496,
+      "individual_point_forward_seconds": null,
+      "phases": {
+        "initialization": {
+          "seconds": 1.3246657624840736,
+          "peak_cuda_memory_bytes": 34100224,
+          "peak_cuda_reserved_bytes": 50331648,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_1": {
+          "seconds": 46.552072785794735,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11056185344,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_2": {
+          "seconds": 29.156156077980995,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11056185344,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_3": {
+          "seconds": 29.296642143279314,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11056185344,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_4": {
+          "seconds": 29.118600197136402,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11056185344,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_5": {
+          "seconds": 28.330492191016674,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_6": {
+          "seconds": 29.452126804739237,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_7": {
+          "seconds": 28.7987112775445,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_8": {
+          "seconds": 29.387938547879457,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_9": {
+          "seconds": 29.245713349431753,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_10": {
+          "seconds": 28.821592681109905,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_11": {
+          "seconds": 28.8519977517426,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_12": {
+          "seconds": 29.44177246838808,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_13": {
+          "seconds": 28.934557806700468,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_14": {
+          "seconds": 29.487589970231056,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_15": {
+          "seconds": 29.01580037921667,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_16": {
+          "seconds": 29.12771610915661,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_17": {
+          "seconds": 29.121342208236456,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_18": {
+          "seconds": 29.202995646744967,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_19": {
+          "seconds": 29.382415402680635,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_20": {
+          "seconds": 28.98312209919095,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_21": {
+          "seconds": 28.499174941331148,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_22": {
+          "seconds": 28.615919820964336,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_23": {
+          "seconds": 28.258085168898106,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_24": {
+          "seconds": 28.27394215017557,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_25": {
+          "seconds": 28.450459729880095,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_26": {
+          "seconds": 28.926900874823332,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_27": {
+          "seconds": 28.63904322311282,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_28": {
+          "seconds": 28.789528742432594,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_29": {
+          "seconds": 29.042248740792274,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_30": {
+          "seconds": 28.539043560624123,
+          "peak_cuda_memory_bytes": 8398941696,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        },
+        "source_id": {
+          "seconds": 5.044544965028763,
+          "peak_cuda_memory_bytes": 2092644352,
+          "peak_cuda_reserved_bytes": 11058282496,
+          "individual_point_forward_seconds": null
+        }
+      },
+      "operator_timing_scope": "CUDA events per forward, summed after each phase sync; operator overhead included in full phase wall"
+    },
+    "preflight_counts": {
+      "CNN_calls": 3,
+      "CNN_images": 8,
+      "RGB_unique_images": 8,
+      "point_calls": 3,
+      "point_examples": 8,
+      "fixed_filter_calls": 3,
+      "fixed_filter_images": 8,
+      "CNN_backward_calls": 1,
+      "combined_backward_calls": 1,
+      "optimizer_updates": 0
+    },
+    "preflight_runtime": {
+      "process_seconds": 17.41104355826974,
+      "full_process_seconds": 18.66587210074067,
+      "prior_checkpointed_process_seconds": 0.0,
+      "full_process_boundary": "image-structure module entry before torch import through saved source metadata; excludes final completion JSON and downtime",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 631291392,
+      "peak_cuda_reserved_bytes": 734003200,
+      "individual_point_forward_seconds": null,
+      "phases": {
+        "initialization": {
+          "seconds": 2.170969609171152,
+          "peak_cuda_memory_bytes": 93407232,
+          "peak_cuda_reserved_bytes": 113246208,
+          "individual_point_forward_seconds": null
+        },
+        "preflight": {
+          "seconds": 15.239544782787561,
+          "peak_cuda_memory_bytes": 631291392,
+          "peak_cuda_reserved_bytes": 734003200,
+          "individual_point_forward_seconds": null
+        }
+      },
+      "operator_timing_scope": "CUDA events per forward, summed after each phase sync; operator overhead included in full phase wall"
+    },
+    "preflight_additional_ID_CPU_redecodes": 4,
+    "preflight_unique_RGB_images": 8,
+    "supervisor_stage_seconds": {
+      "preflight": 19.53347072377801,
+      "source_control": 902.0434688329697
+    },
+    "supervisor_process_seconds": 923.4988247640431,
+    "reference_counts": {
+      "cnn_image_forwards": 83024,
+      "cnn_forward_calls": 1300,
+      "point_image_forwards": 83024,
+      "point_forward_calls": 1300,
+      "CNN_backward_calls": 1290,
+      "point_backward_calls": 1290,
+      "optimizer_updates": 1289,
+      "amp_skipped_updates": 1,
+      "source_OOD_RGB_images": 0,
+      "external_backward_calls": 0,
+      "external_optimizer_updates": 0
+    },
+    "reference_totals": {
+      "train_batches": 1290,
+      "train_cnn_image_forwards": 82440,
+      "train_cnn_forward_calls": 1290,
+      "backward_calls": 1290,
+      "point_backward_calls": 1290,
+      "optimizer_updates": 1289,
+      "amp_skipped_updates": 1,
+      "train_point_forward_calls": 1290,
+      "train_point_image_forwards": 82440,
+      "validation_images": 584,
+      "validation_cnn_forward_calls": 10,
+      "validation_point_forward_calls": 10,
+      "validation_point_image_forwards": 584,
+      "training_seconds": 446.6801510453224,
+      "validation_seconds": 6.8708053305745125
+    },
+    "reference_runtime": {
+      "process_seconds": 458.9942101687193,
+      "full_process_seconds": 460.9875762797892,
+      "prior_checkpointed_process_seconds": 0.0,
+      "full_process_boundary": "matched-identity module entry before torch import through saved matched comparison; excludes final completion JSON and downtime",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 8262538752,
+      "peak_cuda_reserved_bytes": 11345592320,
+      "individual_point_forward_seconds": null,
+      "phases": {
+        "initialization": {
+          "seconds": 1.4163171537220478,
+          "peak_cuda_memory_bytes": 34099712,
+          "peak_cuda_reserved_bytes": 50331648,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_1": {
+          "seconds": 47.55256815627217,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_2": {
+          "seconds": 28.25058875977993,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_3": {
+          "seconds": 29.375273525714874,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_4": {
+          "seconds": 28.90862513333559,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_5": {
+          "seconds": 27.69901705905795,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_6": {
+          "seconds": 28.57713809981942,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_7": {
+          "seconds": 28.55992791429162,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_8": {
+          "seconds": 28.316045317798853,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_9": {
+          "seconds": 28.068572986871004,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_10": {
+          "seconds": 28.740526136010885,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_11": {
+          "seconds": 28.296047255396843,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_12": {
+          "seconds": 28.600440345704556,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_13": {
+          "seconds": 28.526464469730854,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_14": {
+          "seconds": 28.752411726862192,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_15": {
+          "seconds": 28.45650415867567,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "source_id": {
+          "seconds": 5.04036420583725,
+          "peak_cuda_memory_bytes": 1805331968,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "source_counterfactual": {
+          "seconds": 1.8333783559501171,
+          "peak_cuda_memory_bytes": 1805331968,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        }
+      }
+    },
+    "native_saved_cost": {
+      "counts": {
+        "cnn_forward_calls": 5,
+        "cnn_image_forwards": 292,
+        "backward_calls": 0,
+        "optimizer_updates": 0
+      },
+      "pipeline_seconds": 5.042726572602987,
+      "batch_size": 64,
+      "workers": 4,
+      "point_counts": {
+        "point_forward_calls": 5,
+        "point_image_forwards": 292
+      },
+      "phase_cost": {
+        "seconds": 5.044544965028763,
+        "peak_cuda_memory_bytes": 2092644352,
+        "peak_cuda_reserved_bytes": 11058282496,
+        "individual_point_forward_seconds": null
+      },
+      "operator": {
+        "fixed_filter_calls": 5,
+        "fixed_filter_images": 292,
+        "operator_forward_gpu_seconds": 0.02887116813659668,
+        "operator_timing_scope": "CUDA events per forward, after phase synchronization",
+        "input_shapes": [
+          [
+            36,
+            3,
+            512,
+            512
+          ],
+          [
+            64,
+            3,
+            512,
+            512
+          ]
+        ],
+        "shape_preserved": true,
+        "input_float32": true,
+        "measurement_and_encoder_input_float32": true,
+        "measurement_finite": true,
+        "measurement_bounded": true,
+        "encoder_input_finite": true
+      },
+      "forward_seconds": 3.5219172462821007
+    },
+    "new_CPU_saved_check_seconds_after_warm_imports": 0.19321708008646965
+  },
+  "known_issues": [
+    {
+      "status": "WARN",
+      "code": "inherited_CF_condition_last15_text",
+      "details": "Frozen public/runtime config counterfactual_gate.condition says same last15 only; top-level last30 contract and implementation use last30. Candidate CF was not executed, so this inherited diagnostic wording has no observed numeric effect. Keep the frozen config unchanged."
+    },
+    {
+      "status": "QUALIFICATION",
+      "code": "provided_label_scope",
+      "details": "Provided-label saved-number comparison only. The prior C3 audit remains149checks148PASS1FAIL: the normalized_progress/y field check was unavailable in the physical-label-triplet source contract. This is inherited raw-label-derivation coverage, not a discovered label conflict; no old audit or labels are recomputed."
+    },
+    {
+      "status": "QUALIFICATION",
+      "code": "saved_witness_scope",
+      "details": "Saved scalar/metadata and new-code static audit only; no model/torch/weights/RGB/GPU/old tests/raw-label derivation rerun. Historical pixel/full-weight provenance is not newly certified."
+    },
+    {
+      "status": "QUALIFICATION",
+      "code": "summary_column_scope",
+      "details": "Numeric/null summaries and collected numeric/null group columns are checked. Derived maximum-error row IDs come from retained rows; saved maximum_error_ids text and redundant groups column were excluded from collection."
+    },
+    {
+      "status": "QUALIFICATION",
+      "code": "budget_and_generalization",
+      "details": "One seed; source layouts and an artificial RG-swap reference view. 30E vs15E is a 2x scheduled training budget. No causal representation effect, significance, convergence, real-domain generalization or new blind-test claim."
+    }
+  ],
+  "checks": [
+    {
+      "check": "current_source_id_predictions.csv_state_row_ID_alignment",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Exact order and IDs before joining the actual valid/input_valid/failure fields."
+    },
+    {
+      "check": "current_constant_source_id_predictions.csv_state_row_ID_alignment",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Exact order and IDs before joining the actual valid/input_valid/failure fields."
+    },
+    {
+      "check": "reference_source_id_predictions.csv_state_row_ID_alignment",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Exact order and IDs before joining the actual valid/input_valid/failure fields."
+    },
+    {
+      "check": "reference_source_counterfactual_predictions.csv_state_row_ID_alignment",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Exact order and IDs before joining the actual valid/input_valid/failure fields."
+    },
+    {
+      "check": "current_source_id_292_unique_IDs",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Full source-ID denominator retained."
+    },
+    {
+      "check": "current_source_id_73_groups_four_rows",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Exact 73 saved layout groups, four rows per group."
+    },
+    {
+      "check": "current_source_id_four_state_schema",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Actual saved target/prediction/valid/input_valid/failure schema; no invented y or normalized_progress."
+    },
+    {
+      "check": "current_source_id_validity_and_failure_error",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Inclusive [0,1] is valid; invalid/input failure uses full error=1. Observed rows have zero failures. Endpoints are not rejected by the independent rule."
+    },
+    {
+      "check": "current_source_id_summary_numeric_match",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": 0,
+      "details": "All retained saved numeric/null summary fields; integer counts exact and float abs<=1e-12."
+    },
+    {
+      "check": "current_source_id_saved_group_IDs",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Exact saved group IDs and count."
+    },
+    {
+      "check": "current_source_id_group_numeric_match",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": 1.4210854715202004e-14,
+      "details": "Every collected numeric/null groups column recomputed from its own four scalar rows."
+    },
+    {
+      "check": "current_constant_source_id_292_unique_IDs",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Full source-ID denominator retained."
+    },
+    {
+      "check": "current_constant_source_id_73_groups_four_rows",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Exact 73 saved layout groups, four rows per group."
+    },
+    {
+      "check": "current_constant_source_id_four_state_schema",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Actual saved target/prediction/valid/input_valid/failure schema; no invented y or normalized_progress."
+    },
+    {
+      "check": "current_constant_source_id_validity_and_failure_error",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Inclusive [0,1] is valid; invalid/input failure uses full error=1. Observed rows have zero failures. Endpoints are not rejected by the independent rule."
+    },
+    {
+      "check": "current_constant_source_id_summary_numeric_match",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": 1.7763568394002505e-15,
+      "details": "All retained saved numeric/null summary fields; integer counts exact and float abs<=1e-12."
+    },
+    {
+      "check": "current_constant_source_id_saved_group_IDs",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Exact saved group IDs and count."
+    },
+    {
+      "check": "current_constant_source_id_group_numeric_match",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": 7.105427357601002e-15,
+      "details": "Every collected numeric/null groups column recomputed from its own four scalar rows."
+    },
+    {
+      "check": "reference_source_id_292_unique_IDs",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Full source-ID denominator retained."
+    },
+    {
+      "check": "reference_source_id_73_groups_four_rows",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Exact 73 saved layout groups, four rows per group."
+    },
+    {
+      "check": "reference_source_id_four_state_schema",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Actual saved target/prediction/valid/input_valid/failure schema; no invented y or normalized_progress."
+    },
+    {
+      "check": "reference_source_id_validity_and_failure_error",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Inclusive [0,1] is valid; invalid/input failure uses full error=1. Observed rows have zero failures. Endpoints are not rejected by the independent rule."
+    },
+    {
+      "check": "reference_source_id_summary_numeric_match",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": 7.105427357601002e-15,
+      "details": "All retained saved numeric/null summary fields; integer counts exact and float abs<=1e-12."
+    },
+    {
+      "check": "reference_source_id_saved_group_IDs",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Exact saved group IDs and count."
+    },
+    {
+      "check": "reference_source_id_group_numeric_match",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": 8.881784197001252e-16,
+      "details": "Every collected numeric/null groups column recomputed from its own four scalar rows."
+    },
+    {
+      "check": "reference_source_counterfactual_292_unique_IDs",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Full source-ID denominator retained."
+    },
+    {
+      "check": "reference_source_counterfactual_73_groups_four_rows",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Exact 73 saved layout groups, four rows per group."
+    },
+    {
+      "check": "reference_source_counterfactual_four_state_schema",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Actual saved target/prediction/valid/input_valid/failure schema; no invented y or normalized_progress."
+    },
+    {
+      "check": "reference_source_counterfactual_validity_and_failure_error",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Inclusive [0,1] is valid; invalid/input failure uses full error=1. Observed rows have zero failures. Endpoints are not rejected by the independent rule."
+    },
+    {
+      "check": "reference_source_counterfactual_summary_numeric_match",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": 1.4210854715202004e-14,
+      "details": "All retained saved numeric/null summary fields; integer counts exact and float abs<=1e-12."
+    },
+    {
+      "check": "reference_source_counterfactual_saved_group_IDs",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Exact saved group IDs and count."
+    },
+    {
+      "check": "reference_source_counterfactual_group_numeric_match",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": 1.7763568394002505e-15,
+      "details": "Every collected numeric/null groups column recomputed from its own four scalar rows."
+    },
+    {
+      "check": "current_source_id_ID_group_alignment",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Exact ordered source-ID and group alignment to identity native."
+    },
+    {
+      "check": "current_source_id_provided_label_alignment",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": 0.0,
+      "details": "Only existing saved targets compared; no raw physical-label transformation performed."
+    },
+    {
+      "check": "current_constant_source_id_ID_group_alignment",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Exact ordered source-ID and group alignment to identity native."
+    },
+    {
+      "check": "current_constant_source_id_provided_label_alignment",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": 0.0,
+      "details": "Only existing saved targets compared; no raw physical-label transformation performed."
+    },
+    {
+      "check": "reference_source_id_ID_group_alignment",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Exact ordered source-ID and group alignment to identity native."
+    },
+    {
+      "check": "reference_source_id_provided_label_alignment",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": 0.0,
+      "details": "Only existing saved targets compared; no raw physical-label transformation performed."
+    },
+    {
+      "check": "reference_source_counterfactual_ID_group_alignment",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Exact ordered source-ID and group alignment to identity native."
+    },
+    {
+      "check": "reference_source_counterfactual_provided_label_alignment",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": 0.0,
+      "details": "Only existing saved targets compared; no raw physical-label transformation performed."
+    },
+    {
+      "check": "constant_saved_prediction",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Saved zero-model constant baseline remains exactly 0.5."
+    },
+    {
+      "check": "server_all_source_contracts_equal_reference",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Server-side comparison returns only boolean; full contracts and population arrays remain private."
+    },
+    {
+      "check": "server_current_source_id_ordered_contract_IDs_equal",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Server-side comparison returns only boolean; full contracts and population arrays remain private."
+    },
+    {
+      "check": "server_current_source_id_provided_group_equal",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Server-side comparison returns only boolean; full contracts and population arrays remain private."
+    },
+    {
+      "check": "server_current_source_id_source_contract_equal",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Server-side comparison returns only boolean; full contracts and population arrays remain private."
+    },
+    {
+      "check": "server_reference_source_id_ordered_contract_IDs_equal",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Server-side comparison returns only boolean; full contracts and population arrays remain private."
+    },
+    {
+      "check": "server_reference_source_id_provided_group_equal",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Server-side comparison returns only boolean; full contracts and population arrays remain private."
+    },
+    {
+      "check": "server_reference_source_id_source_contract_equal",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Server-side comparison returns only boolean; full contracts and population arrays remain private."
+    },
+    {
+      "check": "server_reference_source_counterfactual_ordered_contract_IDs_equal",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Server-side comparison returns only boolean; full contracts and population arrays remain private."
+    },
+    {
+      "check": "server_reference_source_counterfactual_provided_group_equal",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Server-side comparison returns only boolean; full contracts and population arrays remain private."
+    },
+    {
+      "check": "server_reference_source_counterfactual_source_contract_equal",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Server-side comparison returns only boolean; full contracts and population arrays remain private."
+    },
+    {
+      "check": "server_config_equal_run_completed_parent_screen_preflight",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Server-side comparison returns only boolean; full contracts and population arrays remain private."
+    },
+    {
+      "check": "server_operator_equal_all_current_documents",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Server-side comparison returns only boolean; full contracts and population arrays remain private."
+    },
+    {
+      "check": "source_contract_actual_schema",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Physical triplet contract has neither normalized_progress nor y; inherited raw-label qualification remains."
+    },
+    {
+      "check": "reference_native_accurate_set_102",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Native guard uses its own 102 rows."
+    },
+    {
+      "check": "reference_CF_accurate_set_104",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Reference CF has its own 104 rows; it is not used as a candidate observation."
+    },
+    {
+      "check": "native_learning_saved_agreement",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Recomputed half-constant mean and ceil30-tail gate."
+    },
+    {
+      "check": "native_joint_saved_agreement",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Recomputed all five simultaneous native predicates."
+    },
+    {
+      "check": "scientific_native_learning_mean",
+      "status": "FAIL",
+      "category": "scientific",
+      "max_abs_diff": null,
+      "details": "Frozen learning threshold: model <= half constant."
+    },
+    {
+      "check": "scientific_native_learning_tail",
+      "status": "FAIL",
+      "category": "scientific",
+      "max_abs_diff": null,
+      "details": "Frozen learning threshold: model <= half constant."
+    },
+    {
+      "check": "scientific_native_joint_mean",
+      "status": "FAIL",
+      "category": "scientific",
+      "max_abs_diff": null,
+      "details": "Frozen simultaneous native predicate."
+    },
+    {
+      "check": "scientific_native_joint_tail",
+      "status": "FAIL",
+      "category": "scientific",
+      "max_abs_diff": null,
+      "details": "Frozen simultaneous native predicate."
+    },
+    {
+      "check": "scientific_native_joint_maximum",
+      "status": "FAIL",
+      "category": "scientific",
+      "max_abs_diff": null,
+      "details": "Frozen simultaneous native predicate."
+    },
+    {
+      "check": "scientific_native_joint_errors_above_5_percent_fs",
+      "status": "FAIL",
+      "category": "scientific",
+      "max_abs_diff": null,
+      "details": "Frozen simultaneous native predicate."
+    },
+    {
+      "check": "scientific_native_joint_no_new_over5_on_reference_accurate",
+      "status": "FAIL",
+      "category": "scientific",
+      "max_abs_diff": null,
+      "details": "Frozen simultaneous native predicate."
+    },
+    {
+      "check": "CF_conditional_stop",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Native failure: zero CF calls/images; null gate/result; no candidate CF files."
+    },
+    {
+      "check": "scientific_verdict_saved_agreement",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Frozen negative verdict matches independent predicates."
+    },
+    {
+      "check": "epochs_1_through_30",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Exactly 30 completed saved epochs; no extension."
+    },
+    {
+      "check": "each_epoch_schedule_and_operator",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "86 encoder/point/filter calls, 5496 images, 86 backward attempts, fixed LR, zero validation, valid F32 operator witness per epoch."
+    },
+    {
+      "check": "30E_original_loss_recipe",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Original mean SmoothL1 beta=.05, fixed 30E last30, frozen seed/data/optimizer, no scheduler or intermediate validation."
+    },
+    {
+      "check": "source_data_and_exposure",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Frozen source population/ROI input and fresh formal rebuild; no C3 presentation augmentation."
+    },
+    {
+      "check": "saved_checkpoint_boundaries",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Saved metadata plus file-presence witness only; no checkpoint opened. Static code validates strict full model/optimizer/scaler/RNG and complete-epoch resume."
+    },
+    {
+      "check": "model_initialization_saved_witness",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Saved initialization/strict reload witnesses only; no fresh cached-weight or full-weight certification."
+    },
+    {
+      "check": "preflight_separate_zero_update",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Preflight has 8 unique RGB images, 3 CNN/point/filter calls, 1 combined backward and zero updates; separate from formal totals."
+    },
+    {
+      "check": "preflight_saved_grad_BN_reload",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Saved 233-parameter/465-state/77-BN/gradient witness; four ID images were separately re-decoded in CPU identity check within initialization/full wall."
+    },
+    {
+      "check": "operator_scoped_F32_TF32_static",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Static code: F32 inverse normalization/filter/products/reductions, TF32 disabled only in restoring fixed-filter scope; one measurement before original reader AMP."
+    },
+    {
+      "check": "excluded_source03_Industrial_RF_zero",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Existing saved excluded-count witnesses are zero; no external/source03 RGB, forward, backward or update added by this audit."
+    },
+    {
+      "check": "unmeasured_point_time_null",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Unknown isolated point-forward time is null, never zero."
+    },
+    {
+      "check": "runtime_phase_cost_consistency",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Filter CUDA event time includes its F32/check scope; phase/full/supervisor walls and peaks reported separately; operator is not free."
+    },
+    {
+      "check": "30_vs_15_budget_disclosed",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "164880 vs 82440 train images and 2580 vs1290 attempts; accuracy comparison uses different training budgets."
+    },
+    {
+      "check": "two_stage_complete_exit0_idle",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Saved queue and root 2026-10-25 22:05:46 UTC completion/idle witness; no second process probe."
+    },
+    {
+      "check": "science_revision_consistent",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Scientific revision from freeze and execution metadata; runtime archive revision supplied by parent is 3263eaf90c4b985f78c72ab7484e1dcac6e3c158; no Git invoked."
+    },
+    {
+      "check": "new_CPU_saved_checks_only",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Saved new synthetic-only CPU check result; none rerun by this audit."
+    },
+    {
+      "check": "current_source_id_condition_order",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Native identity or reference fixed raw RG-swap condition."
+    },
+    {
+      "check": "reference_source_id_condition_order",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Native identity or reference fixed raw RG-swap condition."
+    },
+    {
+      "check": "reference_source_counterfactual_condition_order",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Native identity or reference fixed raw RG-swap condition."
+    },
+    {
+      "check": "current_last30_saved_observation",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": null,
+      "details": "Native saved scalar view is the fixed final epoch30."
+    },
+    {
+      "check": "all_numeric_comparisons",
+      "status": "PASS",
+      "category": "integrity",
+      "max_abs_diff": 1.4210854715202004e-14,
+      "details": "All row errors, provided targets, retained summaries/groups, pairs, reference limits and execution counts compared."
+    }
+  ],
+  "observed_saved_validity": {
+    "current_source_id": {
+      "valid": 292,
+      "input_valid": 292,
+      "failure_nonempty": 0,
+      "prediction_exact_zero": 0,
+      "prediction_exact_one": 0
+    },
+    "current_constant_source_id": {
+      "valid": 292,
+      "input_valid": 292,
+      "failure_nonempty": 0,
+      "prediction_exact_zero": 0,
+      "prediction_exact_one": 0
+    },
+    "reference_source_id": {
+      "valid": 292,
+      "input_valid": 292,
+      "failure_nonempty": 0,
+      "prediction_exact_zero": 0,
+      "prediction_exact_one": 0
+    },
+    "reference_source_counterfactual": {
+      "valid": 292,
+      "input_valid": 292,
+      "failure_nonempty": 0,
+      "prediction_exact_zero": 0,
+      "prediction_exact_one": 0
+    }
+  },
+  "last_training_epoch": {
+    "epoch": 30,
+    "learning_rate": 0.0003,
+    "source_training_smooth_l1": 0.006354563796670438,
+    "source_training_nmae": 0.01760571110543552,
+    "optimizer_updates": 86,
+    "amp_skipped_updates": 0
+  }
+}
