@@ -1,0 +1,34 @@
+{
+  "protocol": "geoprr_v2_bilinear_semantic_source_only_v1",
+  "status": "source_training_running",
+  "code_revision": "393beeaa16eacdaf8b12828ee83b345a59151782",
+  "started_at_utc": "2026-10-25T04:24:54.938043+00:00",
+  "started_at_beijing": "2026-10-25 12:24:54",
+  "entrypoint": "experiments.run_geoprr_v2_bilinear_semantic",
+  "pipeline_pid_at_launch": 353895,
+  "training_child_pid_at_verification": 353938,
+  "verification_at_utc": "2026-10-25T04:27:41.016654+00:00",
+  "parent_and_training_commands_verified": true,
+  "sole_GPU_compute_pid_at_verification": 353938,
+  "GPU_memory_MiB_at_verification": 11504,
+  "prelaunch_GPU_compute_processes": 0,
+  "prelaunch_free_disk_bytes": 3322494976,
+  "previous_V29_complete_all_four_stages_exit0": true,
+  "runtime_preflight_status": "passed",
+  "model_training_started": true,
+  "first_training_batch": {
+    "images": 64,
+    "loss": 0.2147267460823059,
+    "learning_rate": 0.0003,
+    "gradient_norm_finite": true
+  },
+  "actual_encoder_input": [
+    3,
+    512,
+    512
+  ],
+  "source_BN_update_policy": "source train only; evaluation frozen",
+  "head_precision": "FP32 projection/product/reduction/logit, encoder FP16",
+  "external_evaluation_started": false,
+  "scope": "newbilinear source execution only; no external generalization result"
+}
