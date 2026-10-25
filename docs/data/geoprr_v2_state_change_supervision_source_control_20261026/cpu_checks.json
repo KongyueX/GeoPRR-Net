@@ -1,0 +1,27 @@
+{
+  "protocol": "geoprr_v2_state_change_supervision_source_control_v1",
+  "status": "passed",
+  "unique_necessary_checks": 12,
+  "total_test_executions": 13,
+  "failures": 0,
+  "unresolved_errors": 0,
+  "targeted_toy_serialization_checks": 1,
+  "test_seconds_after_warm_library_imports": 0.36450088024139404,
+  "scope": "New synthetic q16/TV/cycle/KLF32-gradient/zeroaux-RNG/originalreader+ToyEncoder/localhook/train-eval/conditionalcounts/strictresume/partial guards only; no old variance/GT/G0/selector/tests.",
+  "operation_counts": {
+    "real_MNV4_construction_attempts": 0,
+    "RGB_read_attempts": 0,
+    "real_cached_weight_or_checkpoint_read_attempts": 0,
+    "synthetic_toy_state_reads": 1,
+    "CUDA_initialization_attempts": 0
+  },
+  "CUDA_available": false,
+  "CUDA_initialized": false,
+  "real_MNV4_constructions": 0,
+  "real_MNV4_forward_calls": 0,
+  "cached_weights_reads": 0,
+  "real_checkpoints_reads": 0,
+  "real_RGB_reads": 0,
+  "real_model_metadata_confirmed": false,
+  "scope_qualification": "Only synthetic toy-state serialization in an isolated temporary namespace; no real cached model/checkpoint/RGB or MNV4 construction/forward. Unique checks12/test executions13; previously successful checks were not repeated."
+}

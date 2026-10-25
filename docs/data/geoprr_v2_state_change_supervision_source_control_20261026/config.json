@@ -1,0 +1,140 @@
+{
+  "protocol": "geoprr_v2_state_change_supervision_source_control_v1",
+  "model": {
+    "factory": "experiments.geoprr_v2_state_change_supervision_control.create_model",
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "parameters": 8436753,
+    "parameter_tensors": 234,
+    "state_tensors": 465,
+    "readout": "GAP1/full neck/Linear1280to1 std.001 bias0/float32 sigmoid",
+    "all_encoder_and_point_trainable": true,
+    "source_training_BN_updates": true,
+    "auxiliary": "training-only zero parameter[1,960,1,1], no bias or initialization RNG"
+  },
+  "data": {
+    "image_size": 512,
+    "output_size": 128,
+    "require_geometry": false,
+    "pair_manifest": null
+  },
+  "photometric": {
+    "contrast": [
+      0.8,
+      1.2
+    ],
+    "saturation": [
+      0.8,
+      1.2
+    ],
+    "brightness": [
+      -0.1,
+      0.1
+    ]
+  },
+  "source": {
+    "heldout_pointer": "canonical_pointer_03",
+    "training_pointers": [
+      "canonical_pointer_01",
+      "canonical_pointer_02"
+    ],
+    "parent_layouts_train": 687,
+    "original_train_images": 2748,
+    "roll_train_images": 2748,
+    "train_unique_images": 5496,
+    "train_repeat": 1,
+    "train_calls_per_epoch": 86,
+    "last_train_batch": 56,
+    "ID_layouts": 73,
+    "ID_images": 292,
+    "ID_calls": 5,
+    "OOD_layouts": 55,
+    "OOD_images": 0,
+    "OOD_calls": 0,
+    "population_packet": "diagnostics/geoprr_source_needle_holdout_control_population_20261025",
+    "counterfactual_images": 292,
+    "counterfactual_calls": 5,
+    "target_quartets": 1374
+  },
+  "training": {
+    "seed": 20262020,
+    "epochs": 15,
+    "max_epochs": 15,
+    "batch_size": 64,
+    "validation_batch_size": 64,
+    "workers": 4,
+    "optimizer": "AdamW",
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0001,
+    "gradient_clip": 5.0,
+    "loss": "mean SmoothL1beta.05 + (.05/log256) mean KL(q_assigned || softmax(aux.float))",
+    "smooth_l1_beta": 0.05,
+    "amp": true,
+    "scheduler": null,
+    "validation_before_epoch5": false,
+    "resume": "same new protocol/config/source/aux-target and complete epoch full state only",
+    "intermediate_validation": false
+  },
+  "learning_gate": {
+    "constant_prediction": 0.5,
+    "ratio": 0.5,
+    "failure_error": 1.0,
+    "denominator": 292,
+    "tail_count": 30
+  },
+  "checkpoint": "last15 only; no intermediate validation, best, scheduler or extension",
+  "external_images_calls_backward_updates": 0,
+  "kind": "bounded source image-derived state-correspondence control",
+  "auxiliary_target": {
+    "input": "unchanged native ROI / INTER_LINEAR512 / BGRtoRGB / float64 divided by255; no photo or ImageNet normalization",
+    "D": "mean_c((I_s - mean_t(I_t))**2), float64",
+    "pool": "sum nonoverlapping32x32 blocks to16x16, then divide by all D_s mass",
+    "dtype": "float32",
+    "shape": [
+      5496,
+      16,
+      16
+    ],
+    "payload_bytes": 5627904,
+    "state_mean_strict_min": 1.5378700499807765e-05,
+    "sum_atol": 1e-06,
+    "next_slot_TV_min": 0.05,
+    "cyclic": "same(view,layout), assigned slot=(slot+1)%4; RGB/y/order unchanged",
+    "physical_geometry_or_teacher": false
+  },
+  "objective": {
+    "scalar_beta": 0.05,
+    "auxiliary_coefficient": 0.009016844005556022,
+    "KL": "mean over images of spatial sum q*(logq-logsoftmax(logits.float)); 0log0=0; float32",
+    "scalar_and_auxiliary_history_separate": true
+  },
+  "reference": {
+    "protocol": "geoprr_v2_matched_identity_source_control_v1",
+    "science_revision": "3e39174f36b342691f6ee96acdea2036ee5e8d30",
+    "relative_reader": "runs/geoprr_generalization/source_matched_identity_control_20261026/reader",
+    "statistics": {
+      "native": {
+        "nmae": 0.025431218243695233,
+        "tail10_nmae": 0.11800955331418664,
+        "maximum_error": 0.5379703640937805,
+        "errors_above_5_percent_fs": 16
+      },
+      "counterfactual": {
+        "nmae": 0.026353762864682596,
+        "tail10_nmae": 0.12945961876345488,
+        "maximum_error": 0.5424728989601135,
+        "errors_above_5_percent_fs": 17
+      }
+    },
+    "accurate1_native": 102,
+    "accurate1_counterfactual": 104,
+    "provided_label_scope": "Provided-label saved-number comparison only. The prior C3 audit remains149checks148PASS1FAIL: the normalized_progress/y field check was unavailable in the physical-label-triplet source contract. This is inherited raw-label-derivation coverage, not a discovered label conflict; no old audit or labels are recomputed."
+  },
+  "acceptance": {
+    "correct_native": "original constant0.5 half mean/tail learning gate AND identity native joint",
+    "correct_CF": "identity CF joint; drift thresholds diagnostic only",
+    "correspondence": "each view correct mean<=cyclic, tail<cyclic, max<=cyclic, over5<=cyclic, no new>5 on cyclic<=1%",
+    "cyclic_if_correct_fails": false,
+    "cyclic_CF_even_if_native_fails": true
+  }
+}

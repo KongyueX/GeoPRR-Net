@@ -1,0 +1,141 @@
+{
+  "protocol_id": "geoprr_v2_state_change_supervision_source_control_v1",
+  "frozen_at_utc": "2026-10-25T22:56:14.131719+00:00",
+  "kind": "prospective bounded source-only observation-supervision mechanism control, not formalV32 or a promoted reader",
+  "question": "Does correct state correspondence of image-derived spatial residual supervision improve original-RGB source reading and protect accurate cases, beyond both identity15 and an otherwise identical within-quartet cyclic-target control?",
+  "evidence": [
+    "source_state_change_observation_cpu_result.json: one fixed source train quartet has top10 variance mass .9880127957390384, global affine explained .000939758565226545, all6 RMSE>1/255. Necessary local-change evidence only, not population coverage/physical mask or model benefit.",
+    "V is shared across states; proposed supervision uses D_s, not V as a state-specific label.",
+    "Old C3/meanTail/fixedSobel representation controls and all physical-GT/G1/teacher/anchor/VDN/conservation results remain closed."
+  ],
+  "supervision_scope": {
+    "new_scope": "Additional source image-derived spatial observation targets from existing four-state source quartets. Not the original scalar-only contract, not physical/visible needle/scale/GT geometry, not a learned teacher.",
+    "inference": "Only existing single normalized nativeROI512 RGB; original full CNN/GAP1280/Linear1 scalar path. No partner/aux map/template/GT/photometric fit or auxiliary forward at inference.",
+    "target_caveat": "Squared residuals can include shadows/occlusions/JPEG/reflections/other-state ghosts. Do not assert material identity, needle localization or history pixel certification."
+  },
+  "source": {
+    "reuse_packet": "diagnostics/geoprr_source_needle_holdout_control_population_20261025",
+    "train_manifest": "manifests/train.jsonl",
+    "train_rows": 5496,
+    "seen_parents": 687,
+    "view_layout_quartets": 1374,
+    "views": [
+      "original",
+      "roll"
+    ],
+    "rows_per_quartet": 4,
+    "slots": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "ID_rows": 292,
+    "ID_layouts": 73,
+    "source03_ID_OOD_or_real_target_aux_labels": false,
+    "old14494_or_original1506_reads": false,
+    "order_ROI_scalar_labels": "Original packet exact order/IDs/native ROI/provided scalar y unchanged. Original and roll targets formed separately; same-parent closure retained. No drops/substitution/reweight/newseed/data/render."
+  },
+  "prepare": {
+    "CPU_only": true,
+    "maximum_wall_seconds": 900,
+    "maximum_train_RGB_decode_calls": 5496,
+    "decode_each_once": true,
+    "queries_or_factor_scene_annotations": false,
+    "manifest_reads": "one existing prepared train manifest; server-only row arrays/IDs. No old renderer replay or source-ID/OOD manifests for target generation.",
+    "alignment": "For every(view,layout), exactly4 distinct samples slots0..3 and one group; saved width/height and exact bbox/effective native crop equal; actual decoded uint8 RGB shape agrees. No GT H/keypoints/warp or format conversion. Any failure stops entire preparation; no dropping group.",
+    "native_pixels": "Existing crop_and_resize semantics: floor/ceil+image clamp crop, INTER_LINEAR512, BGRtoRGB, rawfloat64/255, no photo augmentation or ImageNet stats. Decode at most16777216 native pixels per image; stop before unsupported decode.",
+    "necessary_group_gates": "Same frozen first-observation predicates for each quartet: all6 pair RMSE>1/255, topceil(.1*512*512) V carries>=.5 total V, global per-channel affine explained fraction<.5, finite raw/variance bounds. Affine is diagnostic only; no corrected input or fit coefficient exported/used.",
+    "D_and_q": "D_s(p)=mean_RGB[(I_s(p)-mean_t I_t(p))^2] in F64. Require each state mean D_s>(1/255)^2. Sum-pool nonoverlapping32x32 pixel blocks ->16x16 mass (no interpolation/GT mapping); q_s=block_mass/sum_all_D_s. No clipping/epsilon smoothing or physical-y normalization. Finite nonnegative q; castF32 and require sum within1e-6 of1.",
+    "correspondence_contrast": "Every state must have total variation .5*sum(abs(q_s-q_(s+1 mod4)))>=.05 at16x16. If any group degenerates/fails, stop whole control before any model/weights/GPU; preserve partial, do not change threshold or parent to rescue.",
+    "cache": "Server-private float32 target array[5496,16,16],5627904 payload bytes, manifest-order mapping and exact target/data/formula contract. Complete marker only after all1374 pass. Arrays/IDs/targets never stdout/public. Partial artifact remains refused. No source-ID/OOD labels or new RGB files. Do not rerun prior4-image diagnostic; full-source label building is separately counted and necessarily includes those4 originals.",
+    "if_rejected": "Normal NOT_ADMITTED_SOURCE_OBSERVATION; no preflight/model or optimizer. Save first failing predicate/processed and accepted counts privately and explicit zero-model execution; whole run completeexit0 for scientific rejection, not a fabricated trained-model result."
+  },
+  "model": {
+    "base": "Fresh existing-cached full ImageNet MNV4 num_classes0/conv_head/norm_head/GAP1/semantic1280 + original newLinear1280to1 std.001bias0. Retain all462 encoder states. Original nativeRGB/photo/BN sourceupdates/encoder+pointAMP/scalarF32.",
+    "auxiliary": "One zero-initialized learnable tensor aux_weight[1,960,1,1], no bias,960 parameters; construct zeros without consuming RNG. During model.train only, a temporary local prehook on original encoder.global_pool captures its one input[batch,960,16,16] for F.conv2d. Original reader forward itself is untouched. Remove hook in finally, no across-forward feature attributes/cache. Eval calls original reader only, aux0calls.",
+    "expected": "Learned8436753 parameters,234 trainable tensors,465 full states (462encoder+2point+1aux). Expected counts/shapes must be confirmed in necessary CPU-toy/runtime witness, not claimed as observed yet.",
+    "precision": "Aux convolution follows original outerAMP; flattened256 logits castF32 for log_softmax and KL, qF32. ScalarF32; no mainCNN/BN/GradScaler precision changes, no new weights or seed."
+  },
+  "objective": {
+    "formula": "L=mean SmoothL1beta.05(pred,y) + (.05/log256)*mean KL(q_assigned || softmax(aux_logits.float)). Zero q terms use0log0 convention. Source y loss remains original unweighted batchmean; not old meanTail loss.",
+    "scale": "Fixed coefficient tied to existing beta=.05; zeroaux initialuniform makes normalized KL<=1 so initial aux term<=.05. This is one fixed scale, not evidence of optimal balance; no lambda/entropy/target-grid/budget scan.",
+    "correct": "Use q_s for source state s.",
+    "cyclic_control": "Use q_(s+1 mod4) of the same(view,layout); RGB/scalar y/row order/photo and all model/optimizer/seed/budget unchanged. Cyclic is an a priori correspondence falsifier, not an alternative model search. At zero uniform logits the two batch KL values may tie; do not demand a numeric initial-loss difference."
+  },
+  "training": {
+    "epochs_each": 15,
+    "checkpoint": "last15 only, no best/scheduler/intermediate validation/extension",
+    "recipe": "FreshAdamW3e-4 wd1e-4 clip5/defaultfreshGradScaler/seed20262020/batch64/workers4; loaderseed20262020+epoch;5496once/E; original contrast/saturation.8..1.2 brightness±.1 only, no spatial/C3/inputfilter changes. Photo does not move source target coordinates.",
+    "arms": "correct fresh15 then cyclic fresh15 only if correct native learning+nativejoint+CFjoint all pass. Same initial encoder/point/zeroaux, no RNG use by aux init; formal fresh excludes pref state. Each arm own new optimizer/scaler/RNG/history; no inheritance/weight stitching.",
+    "AMP": "Record normal skippedupdates; attempts=updates+skip. No scaler tuning or replacement updates.",
+    "resume": "Only same newprotocol/config/source/aux-target contract and complete-epoch model+aux/optimizer/scaler/RNG/history/totals/phase. Old464/otherprotocol incompatible. Preserve partial/latest; no fresh overwrite, no source CSV withoutsummary secondforward."
+  },
+  "sequence": [
+    "CPU prepare all1374 groups, stop beforemodel on failedsourcegate",
+    "one new source-only zero-updatepref shared by identical architecture/recipe, then freshformal correct15",
+    "lastcorrect native292, originalconstant learninggate + identity nativejoint",
+    "only correct nativeallpass -> lastcorrect CF292 rawRGswap[1,0,2] once; else STOP noCF/no cyclic",
+    "only correct native+CF allpass -> freshcyclic15",
+    "lastcyclic native292 AND CF292 each once even if cyclic nativegatefails: predeclared negative-control scoring needed for matched comparison, not checkpoint selection",
+    "wholecomplete/all actualparentsgoneGPUempty ->ONEnewfresh independentnonauthor saved-number/execution CPUaudit then explicitallowlist archive"
+  ],
+  "reference": {
+    "identity15_science": "3e39174f36b342691f6ee96acdea2036ee5e8d30",
+    "archive": "84a1dbc42968e6d71d66f5adae8dba80b383b424",
+    "server_reader": "runs/geoprr_generalization/source_matched_identity_control_20261026/reader",
+    "native": {
+      "mean": 0.025431218243695233,
+      "tail": 0.11800955331418664,
+      "maximum": 0.5379703640937805,
+      "over5": 16,
+      "accurate1": 102
+    },
+    "CF": {
+      "mean": 0.026353762864682596,
+      "tail": 0.12945961876345488,
+      "maximum": 0.5424728989601135,
+      "over5": 17,
+      "accurate1": 104
+    },
+    "scope": "Saved provided labels/row-target alignment and1e-12 numeric checks only. C3 original149/148/1 rawlabel derivation qualification unchanged; no new physical y/math/legacy pixel/fullweights certification."
+  },
+  "acceptance": {
+    "correct_native": "Originalconstant0.5 mean and ceil30tail eachhalf learninggate, then mean<=identity15, tail<identity15, max<=, over5<=16, no new>5 on identitynative<=1%102. All simultaneous.",
+    "correct_CF": "mean/tail/max<=identityCF, over5<=17, no new>5 on its own identityCF<=1%104. Invalid error/drift1/full292 denominator; legitimate0/1 saturation valid. Drift oldthresholds diagnostic only.",
+    "correspondence_comparison": "Correct must have mean<=cyclic, tail<cyclic, max<=cyclic, over5<=cyclic separately onnative andCF; additionally no new>5 on cyclic own<=1% accurate set in each view. Sets derived separately, counts/IDs retained. Do not combine checkpoints or choose a different winning arm.",
+    "final": "STATE_CHANGE_SOURCE_CONTROL_PASSED only if complete correct identityjoint and complete correct-vs-cyclic joint. Otherwise NOT_RETAINED or earlier NOT_ADMITTED_SOURCE_OBSERVATION. If cyclic not run because correctfails, its metrics null/calls0 and no mechanismclaim. No extension/tuning/drop/extra real eval/promotion."
+  },
+  "NEWCPU": {
+    "scope": "Only new synthetic q16 sum-pooling/normalization/contrast/invalidstop/cyclicassignment/KL-autocast-gradient, zeroaux RNG and unchanged originalreader forward using toyencoder/globalpool, trainaux vs eval0calls, new counts/conditionalstages/protocol strict save/resume. No old global-affine/variance/selector/gates/GT/teacher/tests rerun; no realMNV4 construction/forward/weights/RGB/GPU.",
+    "requirements": "Zero auxiliary bias, no duplicate/unused original point, grad aux and CNN through combinedtoy; initial uniform batch KL tie under targetcycle allowed. Check only real reachable failures of new target/phase/control contract."
+  },
+  "preflight": {
+    "requires": "CPU prep complete, necessaryNEWCPU passed, code/config/protocol/source/targetmetadata frozen existingmain and deployed, actualoldparentsgone/GPUidle.",
+    "images": "One train forward uses same fixed originalg0129 fourstates and newcache targets; then two eval batches of2 existingID images each from oldpref indices,8unique/8presentations. CPU nativeinput identity redecodes same4ID separately,12totaldecode operations; no extraCNN or source03.",
+    "counts": "3CNN/point calls8images;1auxforward4maps;1combinedback/1CNNback/pointback/auxback;0optimizer.",
+    "witness": "Cached462 initialized retained beforepref,234params andzeroaux unchanged0opt,465strictreload,77BNtrain+1eval0, finite/nonzero stem-neck-point-aux grads, poolinput960x16x16/F16, semantic1280/pointF16/scalarF32, KL/logsoftmaxF32/qvalid16, correct-vs-cyclecache addresses bind differenttargets. Strict reload/saved evidence only; formal eachfresh defaultscaler and no prefcarryover."
+  },
+  "cost_counts": {
+    "prepare": "<=5496 sourceRGB decodes/1374 quartet target operators,0CNN/point/model/back/update/GPU;targetcache5496*256*4bytes. Prior diagnostic4 decodes separate, includes repeated source identities, not5496newdata.",
+    "each_train": "82440RGB/1290CNN/point/auxcalls each;1290combinedCNN/point/auxbackattempt=updates+AMPskip;lastbatch56.",
+    "correct_nativefail": "82732CNN/pointimages1295calls each;aux82440images1290calls;back1290.",
+    "correct_CFdone": "83024CNN/pointimages1300calls each;aux82440/1290;back1290.",
+    "both_arms": "166048CNN/pointimages2600calls each;aux164880/2580;2580combinedbackattempt. Pref8/3/1aux/1back0opt separate, CPU prep separate.",
+    "measurement": "Record decode/targetbuild/auxloss/train/fullwall/peakmemory/storage and stagecounts. Auxconv/KL/hook/targetbuild cost notfree. Point-only time unknownnull unless actually measured; no hardware diagnostics/extraGPU just to fill timing."
+  },
+  "locations": {
+    "root_output": "runs/geoprr_generalization/source_state_change_supervision_control_20261026",
+    "preparation": "preparation",
+    "correct_reader": "matched_state",
+    "cyclic_reader": "cycled_state",
+    "pref": "diagnostics/geoprr_state_change_supervision_preflight_20261026/result.json",
+    "new_files": [
+      "experiments/geoprr_v2_state_change_supervision_control.py",
+      "experiments/run_geoprr_v2_state_change_supervision_control.py",
+      "experiments/test_geoprr_v2_state_change_supervision_control.py"
+    ]
+  },
+  "completion": "After normally complete sourceprep rejection OR completed executedpref/arms and actualparentsgoneGPUempty, exactlyONEfresh independentnonauthor stdlib savednumber/executionCPUaudit; no secondauditor/weights/RGB/GT recomputation. For preparerejection there is no trainedmodel result; audit savedcounts/reason only. Publish normalizedexplicitallowlist numeric summaries/groups/pairs/qualifications/cost and zero-unrun counts. Source/aux maps/contracts/trainarrays stayserverprivate.",
+  "boundaries": "No real external or source03 RGB/model/training/selection; no target unlabeledadapt/statfit/BNadapt/ROI/threshold/temp/epoch/LR choice; no newseed/weights/assets/render/GTphysicallabels/computepurchase/systemPythonCUDAconda/cleanup/officialtest4000/branch/thirdpartymessage. No kernel/inputmixture resurrection or closed G1/teacher/anchor/VDN/virtualQ/conservation. Single seed/repeatedsource+artificialCF not SD/significance/causal proof/newblindtest/theory. Correct-vs-cyclic supports only limited source correspondence at this budget."
+}

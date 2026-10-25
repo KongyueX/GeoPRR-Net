@@ -1,0 +1,10 @@
+{
+  "files": [
+    "README.md",
+    "protocol.json",
+    "config.json",
+    "cpu_checks.json",
+    "public_allowlist.json"
+  ],
+  "scope": "frozen source-observation-supervision contract/config/necessary synthetic CPU metadata only; no trainarrays/targets/RGB/weights/privatepaths"
+}
