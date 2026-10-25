@@ -1,0 +1,406 @@
+{
+  "protocol": "geoprr_v2_image_structure_source_control_v1",
+  "status": "passed",
+  "model_metadata": {
+    "class": "__main__.ImageStructureReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "point_parameters": 1281,
+    "point_shape": [
+      1280,
+      1
+    ],
+    "parameters": 8435793,
+    "trainable_parameters": 8435793,
+    "parameter_tensors": 233,
+    "state_tensors": 465,
+    "input_contract": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "CNN_passes_per_image": 1,
+    "operator_contract": {
+      "public_input": "existing normalized native-ROI RGB float32 NCHW; original photo/LINEAR512/ImageNet",
+      "encoder_input": "fixed RGB gradient second-moment measurement, then original ImageNet normalization",
+      "math": "I=X*std+mean; reflectpad1; groupedSobel; E=[sum(dx^2)/48,sum(dy^2)/48,.5+sum(dx*dy)/96]; (E-mean)/std",
+      "Kx": [
+        [
+          -1,
+          0,
+          1
+        ],
+        [
+          -2,
+          0,
+          2
+        ],
+        [
+          -1,
+          0,
+          1
+        ]
+      ],
+      "Ky": [
+        [
+          -1,
+          -2,
+          -1
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          2,
+          1
+        ]
+      ],
+      "kernel_shape": [
+        6,
+        1,
+        3,
+        3
+      ],
+      "groups": 3,
+      "gradient_order": [
+        "dxR",
+        "dyR",
+        "dxG",
+        "dyG",
+        "dxB",
+        "dyB"
+      ],
+      "padding": "one-pixel torch reflect; no duplicated border pixel; same H/W and ROI coordinates",
+      "precision": "inverse normalization, pad, grouped filter, products, sums and measurement normalization float32 with autocast disabled",
+      "fixed_filter_tf32": "disabled for the CUDA grouped convolution only via scoped cudnn.flags; original enabled/benchmark/benchmark_limit/deterministic preserved and flags restored",
+      "fixed_scales": [
+        48,
+        96
+      ],
+      "new_trainable_parameters": 0,
+      "persistent_kernel_buffers": 1,
+      "kernel_dtype": "torch.float32",
+      "mean_std_registered_buffers": false,
+      "bounds_verification_atol": 2e-06,
+      "clip_fit_rescale_cache": false,
+      "cached_weight_scope": "encoder cached weight/state values retained; input feature semantics change",
+      "timing": "CUDA start/end events for every operator forward, summed after phase synchronization; includes check/event overhead in full wall"
+    },
+    "operator_parameter_tensors": 0,
+    "operator_state_tensors": 1,
+    "operator_kernel_shape": [
+      6,
+      1,
+      3,
+      3
+    ],
+    "public_input_representation": "native normalized RGB",
+    "encoder_input_representation": "normalized fixed image structure measurement"
+  },
+  "counts": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "RGB_unique_images": 8,
+    "point_calls": 3,
+    "point_examples": 8,
+    "fixed_filter_calls": 3,
+    "fixed_filter_images": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "operator_contract": {
+    "public_input": "existing normalized native-ROI RGB float32 NCHW; original photo/LINEAR512/ImageNet",
+    "encoder_input": "fixed RGB gradient second-moment measurement, then original ImageNet normalization",
+    "math": "I=X*std+mean; reflectpad1; groupedSobel; E=[sum(dx^2)/48,sum(dy^2)/48,.5+sum(dx*dy)/96]; (E-mean)/std",
+    "Kx": [
+      [
+        -1,
+        0,
+        1
+      ],
+      [
+        -2,
+        0,
+        2
+      ],
+      [
+        -1,
+        0,
+        1
+      ]
+    ],
+    "Ky": [
+      [
+        -1,
+        -2,
+        -1
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        1
+      ]
+    ],
+    "kernel_shape": [
+      6,
+      1,
+      3,
+      3
+    ],
+    "groups": 3,
+    "gradient_order": [
+      "dxR",
+      "dyR",
+      "dxG",
+      "dyG",
+      "dxB",
+      "dyB"
+    ],
+    "padding": "one-pixel torch reflect; no duplicated border pixel; same H/W and ROI coordinates",
+    "precision": "inverse normalization, pad, grouped filter, products, sums and measurement normalization float32 with autocast disabled",
+    "fixed_filter_tf32": "disabled for the CUDA grouped convolution only via scoped cudnn.flags; original enabled/benchmark/benchmark_limit/deterministic preserved and flags restored",
+    "fixed_scales": [
+      48,
+      96
+    ],
+    "new_trainable_parameters": 0,
+    "persistent_kernel_buffers": 1,
+    "kernel_dtype": "torch.float32",
+    "mean_std_registered_buffers": false,
+    "bounds_verification_atol": 2e-06,
+    "clip_fit_rescale_cache": false,
+    "cached_weight_scope": "encoder cached weight/state values retained; input feature semantics change",
+    "timing": "CUDA start/end events for every operator forward, summed after phase synchronization; includes check/event overhead in full wall"
+  },
+  "operator": {
+    "fixed_filter_calls": 3,
+    "fixed_filter_images": 8,
+    "operator_forward_gpu_seconds": 0.10165136289596557,
+    "operator_timing_scope": "CUDA events per forward, after phase synchronization",
+    "input_shapes": [
+      [
+        2,
+        3,
+        512,
+        512
+      ],
+      [
+        4,
+        3,
+        512,
+        512
+      ]
+    ],
+    "shape_preserved": true,
+    "input_float32": true,
+    "measurement_and_encoder_input_float32": true,
+    "measurement_finite": true,
+    "measurement_bounded": true,
+    "encoder_input_finite": true
+  },
+  "source_dataset_native_RGB_identity": true,
+  "encoder_input_representation": "fixed measurement, intentionally distinct from raw normalized RGB",
+  "observed_encoder_inputs": [
+    {
+      "shape": [
+        4,
+        3,
+        512,
+        512
+      ],
+      "dtype": "torch.float32",
+      "representation": "image structure measurement"
+    },
+    {
+      "shape": [
+        2,
+        3,
+        512,
+        512
+      ],
+      "dtype": "torch.float32",
+      "representation": "image structure measurement"
+    },
+    {
+      "shape": [
+        2,
+        3,
+        512,
+        512
+      ],
+      "dtype": "torch.float32",
+      "representation": "image structure measurement"
+    }
+  ],
+  "observed_pool_shapes": [
+    {
+      "before": [
+        4,
+        960,
+        16,
+        16
+      ],
+      "after": [
+        4,
+        960,
+        1,
+        1
+      ]
+    },
+    {
+      "before": [
+        2,
+        960,
+        16,
+        16
+      ],
+      "after": [
+        2,
+        960,
+        1,
+        1
+      ]
+    },
+    {
+      "before": [
+        2,
+        960,
+        16,
+        16
+      ],
+      "after": [
+        2,
+        960,
+        1,
+        1
+      ]
+    }
+  ],
+  "observed_point_shapes_and_dtypes": [
+    {
+      "semantic_shape": [
+        4,
+        1280
+      ],
+      "point_logit_shape": [
+        4,
+        1
+      ],
+      "semantic_dtype": "torch.float16",
+      "point_logit_dtype": "torch.float16"
+    },
+    {
+      "semantic_shape": [
+        2,
+        1280
+      ],
+      "point_logit_shape": [
+        2,
+        1
+      ],
+      "semantic_dtype": "torch.float16",
+      "point_logit_dtype": "torch.float16"
+    },
+    {
+      "semantic_shape": [
+        2,
+        1280
+      ],
+      "point_logit_shape": [
+        2,
+        1
+      ],
+      "semantic_dtype": "torch.float16",
+      "point_logit_dtype": "torch.float16"
+    }
+  ],
+  "source_BN_counter_tensors_checked": 77,
+  "source_BN_counter_increment_training": 1,
+  "source_BN_counter_additional_increment_eval": 0,
+  "parameter_tensors_unchanged_without_optimizer": 233,
+  "strict_model_reload": true,
+  "kernel_unchanged": true,
+  "full_state_tensors": 465,
+  "all_gradients_finite": true,
+  "gradient_groups_nonzero": {
+    "encoder": true,
+    "encoder_stem": true,
+    "semantic_conv_head": true,
+    "semantic_norm_head": true,
+    "point": true
+  },
+  "source_OOD_RGB_reads": 0,
+  "source_OOD_forward_calls": 0,
+  "external_images_calls_backward_updates": 0,
+  "formal_fresh_rebuild_required": true,
+  "runtime": {
+    "process_seconds": 17.41104355826974,
+    "full_process_seconds": 18.66587210074067,
+    "prior_checkpointed_process_seconds": 0.0,
+    "full_process_boundary": "image-structure module entry before torch import through saved source metadata; excludes final completion JSON and downtime",
+    "device": "cuda",
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "peak_cuda_memory_bytes": 631291392,
+    "peak_cuda_reserved_bytes": 734003200,
+    "individual_point_forward_seconds": null,
+    "phases": {
+      "initialization": {
+        "seconds": 2.170969609171152,
+        "peak_cuda_memory_bytes": 93407232,
+        "peak_cuda_reserved_bytes": 113246208,
+        "individual_point_forward_seconds": null
+      },
+      "preflight": {
+        "seconds": 15.239544782787561,
+        "peak_cuda_memory_bytes": 631291392,
+        "peak_cuda_reserved_bytes": 734003200,
+        "individual_point_forward_seconds": null
+      }
+    },
+    "supervisor_wall_record": "runner screen_summary.json",
+    "operator_timing_scope": "CUDA events per forward, summed after each phase sync; operator overhead included in full phase wall"
+  },
+  "reference_qualification": {
+    "protocol": "geoprr_v2_matched_identity_source_control_v1",
+    "science_revision": "3e39174f36b342691f6ee96acdea2036ee5e8d30",
+    "source_contract_equal": true,
+    "native_rows": 292,
+    "counterfactual_rows": 292,
+    "reference_optimizer_updates": 1289,
+    "reference_amp_skipped_updates": 1,
+    "provided_label_scope": "Provided-label saved-number comparison only. The prior C3 audit remains149checks148PASS1FAIL: the normalized_progress/y field check was unavailable in the physical-label-triplet source contract. This is inherited raw-label-derivation coverage, not a discovered label conflict; no old audit or labels are recomputed.",
+    "native_accurate_count": 102,
+    "counterfactual_accurate_count": 104
+  },
+  "initialization": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "ImageNet_pretrained": true,
+    "existing_cached_weights_only": true,
+    "retained_complete_encoder_state_tensors": 462,
+    "all_cached_encoder_state_tensors_retained": true,
+    "new_point_parameter_tensors": 2,
+    "point_initialization_std": 0.001,
+    "point_initialization_bias_zero": true,
+    "old_task_checkpoint_used": false,
+    "fixed_measurement_kernel_states": 1,
+    "input_semantics": "fixed measurement; cached encoder state values retained"
+  },
+  "evidence_scope": "Saved runtime witness and frozen code; cached encoder values retained, feature semantics intentionally changed; no fresh priorweight inspection.",
+  "RGB_decode_qualification": "8uniqueRGB/8CNNpointfilterpresentations, plus repeatdecode of the same4nativeID for source input identity; noadditionalunique/CNN."
+}

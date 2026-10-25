@@ -1,0 +1,19 @@
+{
+  "status": "launched_pending_zero_update_measurement_preflight",
+  "started_at_utc": "2026-10-25T21:35:44.440196+00:00",
+  "pipeline_pid": 432369,
+  "code_revision": "d6b2db442a1d89799dff4024cd6baa26c0f2d28c",
+  "module": "experiments.run_geoprr_v2_image_structure_control",
+  "prior_mean_tail_archive_revision": "a77d270f54832b8b8b36275a0bb331e470204ef1",
+  "prior_mean_tail_archive_pushed": true,
+  "old_actual_commands_absent": true,
+  "prelaunch_GPU_compute_rows": [],
+  "source_control_epochs": 30,
+  "CNN_back_attempt_budget": 2580,
+  "measurement": "fixedRGBstructuretensorFP32;fixedfilterTF32disabled;encoderAMP unchanged",
+  "measurement_added_trainable_parameters": 0,
+  "expected_full_state_tensors": 465,
+  "controller_log_outside_pristine_output": true,
+  "launch_log_relative": "diagnostics/geoprr_image_structure_launch_20261026/controller.log",
+  "source03_Industrial_RF_all_model_calls_authorized": 0
+}

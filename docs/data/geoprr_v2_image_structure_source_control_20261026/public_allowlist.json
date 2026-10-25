@@ -4,7 +4,9 @@
     "protocol.json",
     "config.json",
     "cpu_checks.json",
-    "public_allowlist.json"
+    "public_allowlist.json",
+    "launch.json",
+    "runtime_preflight.json"
   ],
-  "scope": "explicit normalized source-measurement control metadata; no rawcontracts/trainarrays/RGB/weights/features"
+  "scope": "normalized fixed measurement source-control metadata; rawdata private"
 }
