@@ -1,0 +1,1143 @@
+{
+  "native": {
+    "guard": {
+      "denominator": 292,
+      "paired_thresholds_percent_fs": {
+        "1": {
+          "new_errors": 80,
+          "rescues": 29,
+          "reference_errors_above": 190,
+          "candidate_errors_above": 241
+        },
+        "2": {
+          "new_errors": 110,
+          "rescues": 30,
+          "reference_errors_above": 110,
+          "candidate_errors_above": 190
+        },
+        "5": {
+          "new_errors": 45,
+          "rescues": 6,
+          "reference_errors_above": 16,
+          "candidate_errors_above": 55
+        }
+      },
+      "reference_accurate_at_1_percent_count": 102,
+      "new_over5_on_reference_accurate_count": 15,
+      "group_differences": {
+        "geoprr_roll_v22_validation_g0001": {
+          "samples": 4,
+          "reference_error_sum": 0.03985877335071564,
+          "candidate_error_sum": 0.16326113045215607,
+          "reference_errors_above_1_2_5": [
+            1,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0002": {
+          "samples": 4,
+          "reference_error_sum": 0.1632321912329644,
+          "candidate_error_sum": 0.11762473732233047,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0004": {
+          "samples": 4,
+          "reference_error_sum": 0.08668945729732513,
+          "candidate_error_sum": 0.13276607543230057,
+          "reference_errors_above_1_2_5": [
+            4,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0005": {
+          "samples": 4,
+          "reference_error_sum": 0.06808985769748688,
+          "candidate_error_sum": 0.10188885033130646,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0006": {
+          "samples": 4,
+          "reference_error_sum": 0.17979127168655396,
+          "candidate_error_sum": 0.09542127698659897,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0008": {
+          "samples": 4,
+          "reference_error_sum": 0.10110434889793396,
+          "candidate_error_sum": 0.14709308743476868,
+          "reference_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0011": {
+          "samples": 4,
+          "reference_error_sum": 0.06654078885912895,
+          "candidate_error_sum": 0.07412751764059067,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0013": {
+          "samples": 4,
+          "reference_error_sum": 0.07412256300449371,
+          "candidate_error_sum": 0.11507906019687653,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0014": {
+          "samples": 4,
+          "reference_error_sum": 0.14755743741989136,
+          "candidate_error_sum": 0.19513336196541786,
+          "reference_errors_above_1_2_5": [
+            3,
+            3,
+            1
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0015": {
+          "samples": 4,
+          "reference_error_sum": 0.09313695132732391,
+          "candidate_error_sum": 0.25778791308403015,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0017": {
+          "samples": 4,
+          "reference_error_sum": 0.06232777237892151,
+          "candidate_error_sum": 0.16253647208213806,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0018": {
+          "samples": 4,
+          "reference_error_sum": 0.06939295679330826,
+          "candidate_error_sum": 0.10188796371221542,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0021": {
+          "samples": 4,
+          "reference_error_sum": 0.059866368770599365,
+          "candidate_error_sum": 0.06970538198947906,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0022": {
+          "samples": 4,
+          "reference_error_sum": 0.034756824374198914,
+          "candidate_error_sum": 0.07542802393436432,
+          "reference_errors_above_1_2_5": [
+            1,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0023": {
+          "samples": 4,
+          "reference_error_sum": 0.07591722905635834,
+          "candidate_error_sum": 0.14360392838716507,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0024": {
+          "samples": 4,
+          "reference_error_sum": 0.028806626796722412,
+          "candidate_error_sum": 0.16031423211097717,
+          "reference_errors_above_1_2_5": [
+            1,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0026": {
+          "samples": 4,
+          "reference_error_sum": 0.07600996078690514,
+          "candidate_error_sum": 0.10378559771925211,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0027": {
+          "samples": 4,
+          "reference_error_sum": 0.05974624305963516,
+          "candidate_error_sum": 0.18200084567070007,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0030": {
+          "samples": 4,
+          "reference_error_sum": 0.05756957828998566,
+          "candidate_error_sum": 0.0956895649433136,
+          "reference_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0032": {
+          "samples": 4,
+          "reference_error_sum": 0.07320494949817657,
+          "candidate_error_sum": 0.04660746455192566,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0033": {
+          "samples": 4,
+          "reference_error_sum": 0.07973377406597137,
+          "candidate_error_sum": 0.1379956752061844,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0035": {
+          "samples": 4,
+          "reference_error_sum": 0.06736674904823303,
+          "candidate_error_sum": 0.1787254363298416,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0036": {
+          "samples": 4,
+          "reference_error_sum": 0.05831564083928242,
+          "candidate_error_sum": 0.07499566074693576,
+          "reference_errors_above_1_2_5": [
+            1,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0039": {
+          "samples": 4,
+          "reference_error_sum": 0.012599706649780273,
+          "candidate_error_sum": 0.1565609872341156,
+          "reference_errors_above_1_2_5": [
+            0,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0043": {
+          "samples": 4,
+          "reference_error_sum": 0.04797874391078949,
+          "candidate_error_sum": 0.1025262326002121,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0044": {
+          "samples": 4,
+          "reference_error_sum": 0.11010763701051474,
+          "candidate_error_sum": 0.13018691539764404,
+          "reference_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0046": {
+          "samples": 4,
+          "reference_error_sum": 0.08313865959644318,
+          "candidate_error_sum": 0.05790644884109497,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0051": {
+          "samples": 4,
+          "reference_error_sum": 0.06781831383705139,
+          "candidate_error_sum": 0.12592576444149017,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0054": {
+          "samples": 4,
+          "reference_error_sum": 0.0703968033194542,
+          "candidate_error_sum": 0.12324802577495575,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0056": {
+          "samples": 4,
+          "reference_error_sum": 0.07942907512187958,
+          "candidate_error_sum": 0.10822784900665283,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0057": {
+          "samples": 4,
+          "reference_error_sum": 0.05435636278707534,
+          "candidate_error_sum": 0.08160949591547251,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0058": {
+          "samples": 4,
+          "reference_error_sum": 0.020968839526176453,
+          "candidate_error_sum": 0.17502932250499725,
+          "reference_errors_above_1_2_5": [
+            0,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0060": {
+          "samples": 4,
+          "reference_error_sum": 0.03958934545516968,
+          "candidate_error_sum": 0.11350423842668533,
+          "reference_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0061": {
+          "samples": 4,
+          "reference_error_sum": 1.0910764038562775,
+          "candidate_error_sum": 1.093877762556076,
+          "reference_errors_above_1_2_5": [
+            4,
+            4,
+            3
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            4
+          ]
+        },
+        "geoprr_roll_v22_validation_g0063": {
+          "samples": 4,
+          "reference_error_sum": 0.06823739409446716,
+          "candidate_error_sum": 0.17434445023536682,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0066": {
+          "samples": 4,
+          "reference_error_sum": 0.06226909160614014,
+          "candidate_error_sum": 0.1356176733970642,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0067": {
+          "samples": 4,
+          "reference_error_sum": 0.10106872022151947,
+          "candidate_error_sum": 0.11284033954143524,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0068": {
+          "samples": 4,
+          "reference_error_sum": 0.07197775691747665,
+          "candidate_error_sum": 0.1410297006368637,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0070": {
+          "samples": 4,
+          "reference_error_sum": 0.0656796908006072,
+          "candidate_error_sum": 0.048697805032134056,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0072": {
+          "samples": 4,
+          "reference_error_sum": 0.18254763074219227,
+          "candidate_error_sum": 0.0780241172760725,
+          "reference_errors_above_1_2_5": [
+            4,
+            3,
+            2
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0075": {
+          "samples": 4,
+          "reference_error_sum": 0.10957780294120312,
+          "candidate_error_sum": 0.16874290630221367,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            1
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0076": {
+          "samples": 4,
+          "reference_error_sum": 1.071182370185852,
+          "candidate_error_sum": 0.7875784933567047,
+          "reference_errors_above_1_2_5": [
+            4,
+            4,
+            4
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            3
+          ]
+        },
+        "geoprr_roll_v22_validation_g0077": {
+          "samples": 4,
+          "reference_error_sum": 0.10010983049869537,
+          "candidate_error_sum": 0.06122572720050812,
+          "reference_errors_above_1_2_5": [
+            4,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0078": {
+          "samples": 4,
+          "reference_error_sum": 0.040296152234077454,
+          "candidate_error_sum": 0.1145562082529068,
+          "reference_errors_above_1_2_5": [
+            1,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0079": {
+          "samples": 4,
+          "reference_error_sum": 0.061842575669288635,
+          "candidate_error_sum": 0.1723974645137787,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0080": {
+          "samples": 4,
+          "reference_error_sum": 0.11697801947593689,
+          "candidate_error_sum": 0.3026881366968155,
+          "reference_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            3
+          ]
+        },
+        "geoprr_roll_v22_validation_g0082": {
+          "samples": 4,
+          "reference_error_sum": 0.046254515647888184,
+          "candidate_error_sum": 0.06028766930103302,
+          "reference_errors_above_1_2_5": [
+            2,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0083": {
+          "samples": 4,
+          "reference_error_sum": 0.05245230160653591,
+          "candidate_error_sum": 0.18543296493589878,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0085": {
+          "samples": 4,
+          "reference_error_sum": 0.05728420615196228,
+          "candidate_error_sum": 0.0892987847328186,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            1,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0088": {
+          "samples": 4,
+          "reference_error_sum": 0.0284145325422287,
+          "candidate_error_sum": 0.0394151508808136,
+          "reference_errors_above_1_2_5": [
+            1,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0090": {
+          "samples": 4,
+          "reference_error_sum": 0.09064281731843948,
+          "candidate_error_sum": 0.12985864281654358,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            1
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0091": {
+          "samples": 4,
+          "reference_error_sum": 0.03252619132399559,
+          "candidate_error_sum": 0.09310867637395859,
+          "reference_errors_above_1_2_5": [
+            1,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0092": {
+          "samples": 4,
+          "reference_error_sum": 0.0799533260287717,
+          "candidate_error_sum": 0.047593641094863415,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0095": {
+          "samples": 4,
+          "reference_error_sum": 0.06237711012363434,
+          "candidate_error_sum": 0.10011734068393707,
+          "reference_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0096": {
+          "samples": 4,
+          "reference_error_sum": 0.035202398896217346,
+          "candidate_error_sum": 0.07469798624515533,
+          "reference_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0098": {
+          "samples": 4,
+          "reference_error_sum": 0.08332431595772505,
+          "candidate_error_sum": 0.14332303742412478,
+          "reference_errors_above_1_2_5": [
+            4,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0099": {
+          "samples": 4,
+          "reference_error_sum": 0.07553954422473907,
+          "candidate_error_sum": 0.12033309042453766,
+          "reference_errors_above_1_2_5": [
+            4,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0100": {
+          "samples": 4,
+          "reference_error_sum": 0.015947096049785614,
+          "candidate_error_sum": 0.05589664727449417,
+          "reference_errors_above_1_2_5": [
+            0,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0101": {
+          "samples": 4,
+          "reference_error_sum": 0.11475762724876404,
+          "candidate_error_sum": 0.10463014245033264,
+          "reference_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0103": {
+          "samples": 4,
+          "reference_error_sum": 0.11598531901836395,
+          "candidate_error_sum": 0.24929742515087128,
+          "reference_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            3
+          ]
+        },
+        "geoprr_roll_v22_validation_g0104": {
+          "samples": 4,
+          "reference_error_sum": 0.09439992904663086,
+          "candidate_error_sum": 0.11223431676626205,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0105": {
+          "samples": 4,
+          "reference_error_sum": 0.046795789152383804,
+          "candidate_error_sum": 0.11364143062382936,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0106": {
+          "samples": 4,
+          "reference_error_sum": 0.2614646255970001,
+          "candidate_error_sum": 0.3118077963590622,
+          "reference_errors_above_1_2_5": [
+            4,
+            4,
+            2
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0107": {
+          "samples": 4,
+          "reference_error_sum": 0.03118497133255005,
+          "candidate_error_sum": 0.07529360055923462,
+          "reference_errors_above_1_2_5": [
+            2,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0109": {
+          "samples": 4,
+          "reference_error_sum": 0.05203799554146826,
+          "candidate_error_sum": 0.14399200584739447,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0111": {
+          "samples": 4,
+          "reference_error_sum": 0.056960344314575195,
+          "candidate_error_sum": 0.2619996517896652,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0113": {
+          "samples": 4,
+          "reference_error_sum": 0.061900608241558075,
+          "candidate_error_sum": 0.11389341205358505,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0114": {
+          "samples": 4,
+          "reference_error_sum": 0.034763745963573456,
+          "candidate_error_sum": 0.10382533818483353,
+          "reference_errors_above_1_2_5": [
+            2,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0117": {
+          "samples": 4,
+          "reference_error_sum": 0.07243933901190758,
+          "candidate_error_sum": 0.14715590700507164,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0120": {
+          "samples": 4,
+          "reference_error_sum": 0.06354961544275284,
+          "candidate_error_sum": 0.08576617389917374,
+          "reference_errors_above_1_2_5": [
+            4,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0121": {
+          "samples": 4,
+          "reference_error_sum": 0.03834277391433716,
+          "candidate_error_sum": 0.10545755177736282,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0122": {
+          "samples": 4,
+          "reference_error_sum": 0.08629510272294283,
+          "candidate_error_sum": 0.0683592390269041,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0123": {
+          "samples": 4,
+          "reference_error_sum": 0.08275434374809265,
+          "candidate_error_sum": 0.621924102306366,
+          "reference_errors_above_1_2_5": [
+            4,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            3
+          ]
+        }
+      }
+    },
+    "changes": {
+      "image_absolute_error": {
+        "improved": 91,
+        "worsened": 201,
+        "unchanged": 0
+      },
+      "group_mean_error": {
+        "improved": 11,
+        "worsened": 62,
+        "unchanged": 0
+      },
+      "group_maximum_error": {
+        "improved": 16,
+        "worsened": 57,
+        "unchanged": 0
+      }
+    }
+  }
+}

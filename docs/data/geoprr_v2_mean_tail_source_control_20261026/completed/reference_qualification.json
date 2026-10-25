@@ -1,0 +1,10 @@
+{
+  "protocol": "geoprr_v2_matched_identity_source_control_v1",
+  "science_revision": "3e39174f36b342691f6ee96acdea2036ee5e8d30",
+  "source_contract_equal": true,
+  "native_rows": 292,
+  "counterfactual_rows": 292,
+  "reference_optimizer_updates": 1289,
+  "reference_amp_skipped_updates": 1,
+  "provided_label_scope": "Provided-label saved-number comparison only. The prior C3 audit remains149checks148PASS1FAIL: the normalized_progress/y field check was unavailable in the physical-label-triplet source contract. This is inherited raw-label-derivation coverage, not a discovered label conflict; no old audit or labels are recomputed."
+}

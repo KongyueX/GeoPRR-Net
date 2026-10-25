@@ -1,0 +1,25 @@
+{
+  "code_frozen_exact_all_snapshot_and_deployed": true,
+  "full_contracts_compared_on_server": true,
+  "checkpoint_stats_only": {
+    "latest.pt": {
+      "exists": true,
+      "bytes": 105037047,
+      "mtime": 1792958495.5910616,
+      "content_opened": false
+    },
+    "last.pt": {
+      "exists": true,
+      "bytes": 105017297,
+      "mtime": 1792958501.0670886,
+      "content_opened": false
+    }
+  },
+  "actual_parent_children_absent": true,
+  "saved_postcompletion_GPUempty": true,
+  "automatic_resume": false,
+  "actual_resume": false,
+  "resume_contract": "strict new protocol/config/complete epoch/full optimizer-scaler-RNG-history-totals; static code evidence, no checkpoint contents opened",
+  "pref_state_reused": false,
+  "audit_training_forward_backward_RGB_weights_feature_reads": 0
+}

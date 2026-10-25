@@ -1,0 +1,14 @@
+{
+  "protocol": "geoprr_v2_mean_tail_source_control_v1",
+  "status": "skipped_native_joint_failed",
+  "eligible": false,
+  "metrics": null,
+  "joint_result": null,
+  "drift_diagnostic": null,
+  "RGB_images": 0,
+  "CNN_calls": 0,
+  "point_calls": 0,
+  "candidate_result_files_created": false,
+  "reference_only_scalar_file": "reference_identity_source_counterfactual_predictions.csv.gz",
+  "scope": "The named reference file is the already-saved identity control CF, not a candidate mean-tail CF evaluation."
+}

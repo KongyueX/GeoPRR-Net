@@ -1,0 +1,715 @@
+{
+  "protocol": "geoprr_v2_mean_tail_source_control_v1",
+  "audit_status": "PASS",
+  "scientific_verdict": "NOT_RETAINED",
+  "generated_at_utc": "2026-10-25T20:24:18.730567+00:00",
+  "check_count": 171,
+  "passed_check_count": 171,
+  "failed_check_count": 0,
+  "numeric_scalar_comparisons": 12050,
+  "maximum_absolute_numeric_difference": 1.4210854715202004e-14,
+  "absolute_numeric_tolerance": 1e-12,
+  "integer_counts_and_ID_group_target_metadata_config_schema_exact": true,
+  "scientific_thresholds_unchanged": true,
+  "checks": [
+    {
+      "check": "all_private_source_contracts_equal_prepared",
+      "status": "PASS"
+    },
+    {
+      "check": "all_current_protocols_and_configs_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "source_train_ID_manifests_equal_private_contract",
+      "status": "PASS"
+    },
+    {
+      "check": "source292_ID_group_order_equal_private_contract",
+      "status": "PASS"
+    },
+    {
+      "check": "source73_complete_four_state_layouts",
+      "status": "PASS"
+    },
+    {
+      "check": "source_train5496_ID292_only_seen_pointer_metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "source_train_ID_disjoint_samples_and_groups",
+      "status": "PASS"
+    },
+    {
+      "check": "source_prepared_no_geometry_values",
+      "status": "PASS"
+    },
+    {
+      "check": "pref_saved_same_eight_selected_IDs_and_RGB_metadata_paths",
+      "status": "PASS"
+    },
+    {
+      "check": "reference_saved_contract_equal_no_label_rederivation",
+      "status": "PASS"
+    },
+    {
+      "check": "reference_saved_identity_qualified_last15_native_CF",
+      "status": "PASS"
+    },
+    {
+      "check": "reference_only292_native_CF_scalar_ID_group_target_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "source_scientific_revision_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "source_all_frozen_snapshot_and_deployed_code_equal",
+      "status": "PASS"
+    },
+    {
+      "check": "source_frozen_protocol_snapshot_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "saved_completed_screen_native_report_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "saved_completed_screen_CF_report_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "current_config_exact_frozen_config",
+      "status": "PASS"
+    },
+    {
+      "check": "run_protocol_config_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "completed_protocol_config_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "preflight_protocol_config_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "protocol_protocol_config_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "screen_protocol_config_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "declared_science_runtime_reference_archive",
+      "status": "PASS"
+    },
+    {
+      "check": "one_shot_collection_only_allowed_scalar_and_normalized_metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_complete292_unique73_four_each",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_valid_scalars_input_failures_error1_saturation_inclusive",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_nullable_masses_finite_if_saved",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_summary_all_fields_recomputed",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_by_group_all_fields_recomputed",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_groupsCSV73_unique",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_groupCSV_all_fields_recomputed",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_source_id_complete292_unique73_four_each",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_source_id_valid_scalars_input_failures_error1_saturation_inclusive",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_source_id_nullable_masses_finite_if_saved",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_source_id_summary_all_fields_recomputed",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_source_id_by_group_all_fields_recomputed",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_source_id_groupsCSV73_unique",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_source_id_groupCSV_all_fields_recomputed",
+      "status": "PASS"
+    },
+    {
+      "check": "native_constant_exact292_ID_group_provided_label_alignment",
+      "status": "PASS"
+    },
+    {
+      "check": "constant05_rows_valid_no_model_execution",
+      "status": "PASS"
+    },
+    {
+      "check": "native_learning_saved_gate_recomputed",
+      "status": "PASS"
+    },
+    {
+      "check": "reference292_native_CF_only_exact_ID_group_provided_target_alignment",
+      "status": "PASS"
+    },
+    {
+      "check": "reference_saved_source_id_summary_schema",
+      "status": "PASS"
+    },
+    {
+      "check": "reference_saved_source_id_frozen_constants_tolerance",
+      "status": "PASS"
+    },
+    {
+      "check": "reference_saved_source_counterfactual_summary_schema",
+      "status": "PASS"
+    },
+    {
+      "check": "reference_saved_source_counterfactual_frozen_constants_tolerance",
+      "status": "PASS"
+    },
+    {
+      "check": "fixed_native_and_CF_joint_reference_constants",
+      "status": "PASS"
+    },
+    {
+      "check": "native_joint_mean_tail_max_severe_and_accurate_guard",
+      "status": "PASS"
+    },
+    {
+      "check": "conditional_CF_eligibility_from_all_native_gates",
+      "status": "PASS"
+    },
+    {
+      "check": "ineligible_CF_null_zero_calls_no_result_or_gate_artifacts",
+      "status": "PASS"
+    },
+    {
+      "check": "completed_complete_reason_and_science_verdict",
+      "status": "PASS"
+    },
+    {
+      "check": "screen_complete_reason_and_science_verdict",
+      "status": "PASS"
+    },
+    {
+      "check": "queue_complete_reason_and_science_verdict",
+      "status": "PASS"
+    },
+    {
+      "check": "completed_saved_joint_gates_consistent",
+      "status": "PASS"
+    },
+    {
+      "check": "screen_saved_joint_gates_consistent",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_last15_fixed_order_protocol",
+      "status": "PASS"
+    },
+    {
+      "check": "history_exact15_epochs1to15",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch1_fixed_loader_exposures_calls_no_validation",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch1_attempts_updates_skips_finite_composite_and_unweighted_NMAE",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch2_fixed_loader_exposures_calls_no_validation",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch2_attempts_updates_skips_finite_composite_and_unweighted_NMAE",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch3_fixed_loader_exposures_calls_no_validation",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch3_attempts_updates_skips_finite_composite_and_unweighted_NMAE",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch4_fixed_loader_exposures_calls_no_validation",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch4_attempts_updates_skips_finite_composite_and_unweighted_NMAE",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch5_fixed_loader_exposures_calls_no_validation",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch5_attempts_updates_skips_finite_composite_and_unweighted_NMAE",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch6_fixed_loader_exposures_calls_no_validation",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch6_attempts_updates_skips_finite_composite_and_unweighted_NMAE",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch7_fixed_loader_exposures_calls_no_validation",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch7_attempts_updates_skips_finite_composite_and_unweighted_NMAE",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch8_fixed_loader_exposures_calls_no_validation",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch8_attempts_updates_skips_finite_composite_and_unweighted_NMAE",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch9_fixed_loader_exposures_calls_no_validation",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch9_attempts_updates_skips_finite_composite_and_unweighted_NMAE",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch10_fixed_loader_exposures_calls_no_validation",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch10_attempts_updates_skips_finite_composite_and_unweighted_NMAE",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch11_fixed_loader_exposures_calls_no_validation",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch11_attempts_updates_skips_finite_composite_and_unweighted_NMAE",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch12_fixed_loader_exposures_calls_no_validation",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch12_attempts_updates_skips_finite_composite_and_unweighted_NMAE",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch13_fixed_loader_exposures_calls_no_validation",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch13_attempts_updates_skips_finite_composite_and_unweighted_NMAE",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch14_fixed_loader_exposures_calls_no_validation",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch14_attempts_updates_skips_finite_composite_and_unweighted_NMAE",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch15_fixed_loader_exposures_calls_no_validation",
+      "status": "PASS"
+    },
+    {
+      "check": "epoch15_attempts_updates_skips_finite_composite_and_unweighted_NMAE",
+      "status": "PASS"
+    },
+    {
+      "check": "formal_totals_from15history_and_saved_eval_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "actual_updates1287_skips3_attempts1290",
+      "status": "PASS"
+    },
+    {
+      "check": "completed_formal_and_excluded_count_totals",
+      "status": "PASS"
+    },
+    {
+      "check": "screen_formal_and_excluded_count_totals",
+      "status": "PASS"
+    },
+    {
+      "check": "constant_no_CNN_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_five_calls292_no_back_or_update",
+      "status": "PASS"
+    },
+    {
+      "check": "source03_and_external_excluded_counts",
+      "status": "PASS"
+    },
+    {
+      "check": "protocol_source03_industrial_RF_all_zero",
+      "status": "PASS"
+    },
+    {
+      "check": "no_source03_or_external_reader_artifacts",
+      "status": "PASS"
+    },
+    {
+      "check": "pref_separate3calls8unique8presentations1back0opt",
+      "status": "PASS"
+    },
+    {
+      "check": "screen_pref_cost_same_separate_witness",
+      "status": "PASS"
+    },
+    {
+      "check": "saved_actual_pref_objective_grads_BN_reload_noopt_witness",
+      "status": "PASS"
+    },
+    {
+      "check": "pref_old_primitive_key_absent_and_new_objective_explicit",
+      "status": "PASS"
+    },
+    {
+      "check": "pref_saved_shapes_and_AMP_dtypes",
+      "status": "PASS"
+    },
+    {
+      "check": "preflight_saved_original_complete_model_metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "preflight_saved_cached_fresh_initialization",
+      "status": "PASS"
+    },
+    {
+      "check": "run_saved_original_complete_model_metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "run_saved_cached_fresh_initialization",
+      "status": "PASS"
+    },
+    {
+      "check": "completed_saved_original_complete_model_metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "completed_saved_cached_fresh_initialization",
+      "status": "PASS"
+    },
+    {
+      "check": "formal_fresh_defaultScaler_and_no_pref_state_carry",
+      "status": "PASS"
+    },
+    {
+      "check": "preflight_reference_qualification_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "completed_reference_qualification_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "prior_C3_149_148_1_raw_label_coverage_preserved_no_reaudit",
+      "status": "PASS"
+    },
+    {
+      "check": "saved11newCPU_only_no_real_model_RGB_weights_GPU",
+      "status": "PASS"
+    },
+    {
+      "check": "frozen_objective_constants_Bceil_and_allmean",
+      "status": "PASS"
+    },
+    {
+      "check": "preflight_objective_metadata_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "completed_objective_metadata_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "protocol_objective_metadata_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "screen_objective_metadata_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "history_loss_declared_composite_not_primitive_or_population_tail",
+      "status": "PASS"
+    },
+    {
+      "check": "actual_RGB_exposure_and_nominal_slot_history",
+      "status": "PASS"
+    },
+    {
+      "check": "all_three_nominal_slots_actual_RGB_no_multiview",
+      "status": "PASS"
+    },
+    {
+      "check": "identity_matched_model",
+      "status": "PASS"
+    },
+    {
+      "check": "identity_matched_data",
+      "status": "PASS"
+    },
+    {
+      "check": "identity_matched_photometric",
+      "status": "PASS"
+    },
+    {
+      "check": "identity_matched_source",
+      "status": "PASS"
+    },
+    {
+      "check": "identity_matched_operator",
+      "status": "PASS"
+    },
+    {
+      "check": "identity_matched_learning_gate",
+      "status": "PASS"
+    },
+    {
+      "check": "identity_matched_checkpoint",
+      "status": "PASS"
+    },
+    {
+      "check": "identity_matched_external_images_calls_backward_updates",
+      "status": "PASS"
+    },
+    {
+      "check": "identity_matched_preparation_protocol",
+      "status": "PASS"
+    },
+    {
+      "check": "identity_matched_training_except_loss",
+      "status": "PASS"
+    },
+    {
+      "check": "saved_same15E_budget_factory_cache_seed_model_no_prior_weights",
+      "status": "PASS"
+    },
+    {
+      "check": "fresh_execution_no_resume_phases_or_prior_time",
+      "status": "PASS"
+    },
+    {
+      "check": "last15_no_best_checkpoint_contents_never_opened",
+      "status": "PASS"
+    },
+    {
+      "check": "no_active_epoch_partial_marker",
+      "status": "PASS"
+    },
+    {
+      "check": "saved_logs_exact15_epoch_complete_no_restart",
+      "status": "PASS"
+    },
+    {
+      "check": "queue_serial2stages_complete_exit0_no_automatic_resume",
+      "status": "PASS"
+    },
+    {
+      "check": "actual_parent427975_and_children427978_428016_gone",
+      "status": "PASS"
+    },
+    {
+      "check": "saved_postcomplete_GPUempty_three_processes_gone",
+      "status": "PASS"
+    },
+    {
+      "check": "monitor_history_counts_agree",
+      "status": "PASS"
+    },
+    {
+      "check": "source_completion_time_exact_saved_monitor",
+      "status": "PASS"
+    },
+    {
+      "check": "supervisor_entry_timer_before_torch",
+      "status": "PASS"
+    },
+    {
+      "check": "preflight_entry_phase_wall_peak_and_unknown_isolated_times",
+      "status": "PASS"
+    },
+    {
+      "check": "formal_entry_phase_wall_peak_and_unknown_isolated_times",
+      "status": "PASS"
+    },
+    {
+      "check": "supervisor_stage_walls_consistent",
+      "status": "PASS"
+    },
+    {
+      "check": "supervisor_wall_contains_full_child_and_metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_epoch1_saved_history_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_epoch2_saved_history_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_epoch3_saved_history_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_epoch4_saved_history_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_epoch5_saved_history_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_epoch6_saved_history_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_epoch7_saved_history_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_epoch8_saved_history_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_epoch9_saved_history_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_epoch10_saved_history_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_epoch11_saved_history_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_epoch12_saved_history_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_epoch13_saved_history_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_epoch14_saved_history_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_train_epoch15_saved_history_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "source_id_runtime_phase_equal_saved_cost",
+      "status": "PASS"
+    },
+    {
+      "check": "static_mean_tail_and_runner_entry_timers_before_experiment_import",
+      "status": "PASS"
+    },
+    {
+      "check": "static_one_primitive_perimage_beta05_mean_plus_topceil10",
+      "status": "PASS"
+    },
+    {
+      "check": "static_context_overrides_identity_orders_gates_protocol_timer_then_restores",
+      "status": "PASS"
+    },
+    {
+      "check": "static_native_joint_controls_CF_and_previous_drift_is_diagnostic",
+      "status": "PASS"
+    },
+    {
+      "check": "static_defaultScaler_original_optimizer_clip_BN_and_unweighted_NMAE",
+      "status": "PASS"
+    },
+    {
+      "check": "static_training_input_error_raises_no_zero_image_continue",
+      "status": "PASS"
+    },
+    {
+      "check": "static_no_trim_drop_extra_view_and_native_identity",
+      "status": "PASS"
+    },
+    {
+      "check": "static_strict_new_resume_full_state_and_complete_epoch_only",
+      "status": "PASS"
+    },
+    {
+      "check": "static_new_reference_saved_scalar_only_no_checkpoint_reads",
+      "status": "PASS"
+    }
+  ],
+  "differences": [],
+  "collection_passes": 1,
+  "audit_execution_passes": 1,
+  "review_independence": "one fresh independent non-author same-family stdlib saved-number/execution auditor; no second auditor",
+  "limitations": [
+    "Provided-label saved-number comparison only. The same292 targets, IDs and groups align exactly with the existing identity native/CF scalar CSVs; full contracts/populations were compared only on server. No physical-label normalization or prior identity/C3 audit was repeated. Prior C3 coverage remains149checks148PASS1FAIL for the unavailable normalized_progress/y field in its physical-label-triplet contract, with no newly discovered label conflict.",
+    "One seed,73 source-ID layouts, four states each. Native and fixed RGswap are correlated artificial development views already seen during method development. This is not a new blind test, independent source views, standard deviation, significance, theory, or real Industrial/RF generalization.",
+    "The scheduled budget is matched at15E/82440 training RGB presentations/1290 CNN-point backward attempts. Actual mean-tail1287 updates+3 normal AMP skips differ from identity1289+1. No budget extension or skipped-update replacement was made. Factory/cache/seed/code and saved witnesses support initialization parity; prior weights were not reopened.",
+    "The objective uses batch-local top-ceil10% SmoothL1,601 upweighted slots per epoch, with all5496 images contributing through the mean. This is not the exact whole-population absolute-error tail and may amplify unknown label/input noise. History source_training_smooth_l1 is sample-count-weighted batch composite risk; training NMAE remains unweighted. Historical per-image training losses cannot be reconstructed from these metadata and were not claimed to be rederived.",
+    "Loss/gradient evidence is frozen code, the saved11 newCPU toys and the actual saved preflight composite0.424453467130661 atB4/k1 with finite nonzero stem/neck/point gradients. No new tests, preflight, training, model construction, experimental import, RGB/weights/features/checkpoint-content read, forward, backward or GPU compute occurred during this audit; checkpoints were statted only.",
+    "Fresh cached462-encoder/464-full-state strict reload,233 unchanged parameter tensors at0 optimizer updates,77BN training+1/eval+0, shapes/dtypes and source pipeline identity are saved witnesses. Training input errors use the existing augment=True raise path; no fresh RGB source/noise audit was performed.",
+    "Preflight is separate:8 unique RGB inputs,8 CNN presentations,3CNN-point calls,1 combined backward,0 optimizer updates. Its four ID images were decoded again for the CPU native identity check, and wall time includes that work; decode count is not asserted to be only8.",
+    "Own entry timers begin before torch import and include wrapper reference/metadata work. Full child time excludes final completion JSON and downtime; supervisor wall includes stage startup. Point-only, isolated operator, isolated loss-aggregation and monetary cost are unknown/null unless measured. These costs are not asserted to be zero.",
+    "Previous color-control drift thresholds are diagnostic only. Scientific acceptance requires the unchanged native learning gate and every native/CF mean, tail, maximum, >5 count and reference-accurate paired guard. A native failure keeps CFnull/0calls/no files. No checkpoint promotion, automatic long run, seed/loss sweep, source03, Industrial or RF evaluation follows."
+  ]
+}

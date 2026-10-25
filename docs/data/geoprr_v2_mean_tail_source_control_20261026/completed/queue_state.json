@@ -1,0 +1,35 @@
+{
+  "protocol": "geoprr_v2_mean_tail_source_control_v1",
+  "seeds": [
+    20262020
+  ],
+  "pipeline_pid": 427975,
+  "status": "complete",
+  "updated_at": "2026-10-25T20:01:43.170055+00:00",
+  "code_revision": "743acb16b486f1f494c3b1f49fa7c4a41848887d",
+  "automatic_resume": false,
+  "current_step": null,
+  "supervisor_stage_seconds": {
+    "preflight": 18.719613756984472,
+    "source_control": 469.0705287717283
+  },
+  "supervisor_process_seconds": 488.6285381503403,
+  "completion_reason": "native_learning_or_primary_failed",
+  "verdict": "NOT_RETAINED",
+  "steps": {
+    "preflight": {
+      "status": "complete",
+      "pid": 427978,
+      "exit_code": 0,
+      "started_at": "2026-10-25T19:53:34.879404+00:00",
+      "finished_at": "2026-10-25T19:53:53.597976+00:00"
+    },
+    "source_control": {
+      "status": "complete",
+      "pid": 428016,
+      "exit_code": 0,
+      "started_at": "2026-10-25T19:53:53.727164+00:00",
+      "finished_at": "2026-10-25T20:01:42.796408+00:00"
+    }
+  }
+}

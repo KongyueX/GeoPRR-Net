@@ -1,0 +1,17 @@
+{
+  "frozen_formula": "0.5 per-image SmoothL1 mean + 0.5 largest ceil(0.1 B) per-image SmoothL1 mean; beta .05",
+  "k_B1_B4_B56_B64": [
+    1,
+    1,
+    6,
+    7
+  ],
+  "upweighted_slots_per_epoch": 601,
+  "all_images_mean_contribute": true,
+  "history_semantics": "sample-count-weighted mean of batch composite risks; not primitive mean SmoothL1 or population tail",
+  "history_train_NMAE": "unchanged unweighted absolute error",
+  "pref_actual_objective": 0.424453467130661,
+  "pref_k": 1,
+  "saved_CPU_tests": 11,
+  "past_training_per_image_losses_reconstructed": false
+}

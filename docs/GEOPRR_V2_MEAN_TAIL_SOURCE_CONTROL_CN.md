@@ -50,6 +50,18 @@ pref另列，identity同4ID重复decode计CPUwall，不声称总decode8。每att
 
 先matched归档existingmain，再冻结本新3code/protocol/config/NEWCPU证据push existingmain、scoped部署3code+3snapshotmetadata、actual旧父子goneGPUidle后唯一pref→source15。活job只读不可改配方/再加GPU/提前CF。Whole2stageexit0且父子gone/GPUempty后ONEfresh独立nonauthor保存数字CPU审计，不重复旧审计/模型或GT，规范化explicitallowlist现有main归档所有正负。RGB/weights/features/fullcontracts/trainarrays/geometry/privatepaths留server，stdout先allowlist，仅metadata/bool及允许scalarCSV/groups。
 
+## 完成记录
+
+固定15E完整结束，科学NOT_RETAINED。Native mean3.855632551151／ceil30tail14.186078384519／max58.501848578453%FS，高于identity参考2.543121824370／11.800955331419／53.797036409378；>1／2／5为241／190／55对190／110／16。原constant最小学习gate通过，但native joint五项mean／tail／max／>5／accurate-reference guard全false，按冻结协议CFnull／0calls／无candidateCF文件，不延长或补CF。
+
+Identity→candidate图像改善91／恶化201，groupmean11／62、groupmax16／57；>1／2／5新增80／110／45、救回29／30／6。Identity source-ID error≤1%FS的102行中，candidate新增15个>5错误、涉及14groups；这只属于本292行provided-label source-ID，不冒充旧ordinary1495／1497。Reference identity native／CF仅保存scalar配对，无旧forward／weights；reference_identity_source_counterfactual_predictions.csv.gz不是本候选CF结果。
+
+Objective保持唯一`.5mean+.5topceil(.1B)`的per-image SmoothL1β.05聚合，B64k7／last56k6／pref4k1，每E601 upweighted slots，全部5496图仍在mean项。Rawhistory source_training_smooth_l1为sample-count-weighted composite batchrisk，不是primitive mean／wholepopulation tail；unweighted trainNMAE保持。每E实际全RGB5496／GBR0／BRG0，nominal1832×3只bookkeeping。实际1290attempt＝1287updates＋3AMPskip，对identity1289＋1，不补skip或延长；native292／5calls后正式82732图／1295 CNN-point，pref另8unique3CNN1back0opt，ID4重复decode CPUwall。
+
+Train455.614306495秒、nativepipeline5.047001932秒，formalentry467.752068713秒；pref／source supervisor18.719613757／469.070528772秒，whole488.628538150秒，peakallocated／reserved8262538752／11345592320bytes；point／isolatedloss／operator单独成本unknown／null，cached／BN／strictreload／context等仅savedwitness＋code。427975／427978／428016gone、20:15:16 UTC保存观察GPU空，两stageexit0，source03／Industrial／RF0RGB/model。
+
+最终唯一provided-label数字／执行审计171／171 PASS、0FAIL，12050numeric最大差1.4210854715202004e-14，既有abs1e-12。科学743acb16b486f1f494c3b1f49fa7c4a41848887d、runtime8e0bd5f806bd279751025b04b6ccc6e87520c7fd保留；rawlabel派生未新增认证，旧C3 149／148／1不变。[报告](data/geoprr_v2_mean_tail_source_control_20261026/completed/report_cn.md)、[指标](data/geoprr_v2_mean_tail_source_control_20261026/completed/metrics.json)、[objective evidence](data/geoprr_v2_mean_tail_source_control_20261026/completed/objective_saved_evidence.json)、[native gate](data/geoprr_v2_mean_tail_source_control_20261026/completed/native_primary.json)与完整native／constant／reference scalar CSV、pairdata／groups／summary／15E history规范化归档。根目录7项＋本独立协议1项＋[completed31项](data/geoprr_v2_mean_tail_source_control_20261026/completed/public_allowlist.json)，[总allowlist](data/geoprr_v2_mean_tail_source_control_20261026/public_allowlist.json)39项。完整合同／population／训练arrays／raw阈值或cohort名单／privatepaths／RGB／weights／features／geometry私有，旧控制目录不改，不因source risk替换gate或自动promotion。
+
 ## Limitations
 
 标准ATk风险聚合不构成新颖性认证；异常和不可约高loss可能被强化，普通准确性/新大错guard不能证明无labelnoise。单seed、source-ID和同布局人工视图不支持真实外域整体成功、SD、显著性、新blindtest或理论。原source标签派生和旧GeoPRR pixel/fullweight链未新认证。全部G1/teacher/anchor/65轮/配对守恒与其他旧结果保留，不复活主线；不新seed/weights/foundation、买算力、改系统环境、清资产、碰officialtest4000或第三方消息。

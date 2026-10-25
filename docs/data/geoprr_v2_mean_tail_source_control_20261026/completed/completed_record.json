@@ -1,0 +1,4637 @@
+{
+  "protocol": "geoprr_v2_mean_tail_source_control_v1",
+  "config": {
+    "protocol": "geoprr_v2_mean_tail_source_control_v1",
+    "model": {
+      "factory": "experiments.geoprr_v2_high_resolution_direct.create_model(pretrained=True)",
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "semantic_dim": 1280,
+      "parameters": 8435793,
+      "parameter_tensors": 233,
+      "state_tensors": 464,
+      "readout": "GAP1/full neck/Linear1280to1 std.001 bias0/float32 sigmoid",
+      "all_encoder_and_point_trainable": true,
+      "source_training_BN_updates": true
+    },
+    "data": {
+      "image_size": 512,
+      "output_size": 128,
+      "require_geometry": false,
+      "pair_manifest": null
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ]
+    },
+    "source": {
+      "heldout_pointer": "canonical_pointer_03",
+      "training_pointers": [
+        "canonical_pointer_01",
+        "canonical_pointer_02"
+      ],
+      "parent_layouts_train": 687,
+      "original_train_images": 2748,
+      "roll_train_images": 2748,
+      "train_unique_images": 5496,
+      "train_repeat": 1,
+      "train_calls_per_epoch": 86,
+      "last_train_batch": 56,
+      "ID_layouts": 73,
+      "ID_images": 292,
+      "ID_calls": 5,
+      "OOD_layouts": 55,
+      "OOD_images": 0,
+      "OOD_calls": 0,
+      "counterfactual_images": 292,
+      "counterfactual_calls": 5
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 15,
+      "max_epochs": 15,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "optimizer": "AdamW",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "gradient_clip": 5.0,
+      "loss": "fixed .5 mean + .5 top-ceil10-percent per-image SmoothL1",
+      "smooth_l1_beta": 0.05,
+      "amp": true,
+      "scheduler": null,
+      "validation_before_epoch5": false,
+      "resume": "exact new checkpoint at next complete epoch only",
+      "intermediate_validation": false
+    },
+    "learning_gate": {
+      "constant_prediction": 0.5,
+      "ratio": 0.5,
+      "failure_error": 1.0,
+      "denominator": 292,
+      "tail_count": 30
+    },
+    "checkpoint": "latest full state after each complete epoch; last15 only; no best or scheduler",
+    "external_images_calls_backward_updates": 0,
+    "preparation_protocol": "geoprr_v2_needle_holdout_source_control_v1",
+    "kind": "one matched15E source loss-aggregation control; not formalV32 or a new theory/generalization model",
+    "operator": {
+      "train_orders": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "order_index": "(dataset_index + epoch - 1) % 3; nominal slot only; all three slots map to identity RGB",
+      "native_order": [
+        0,
+        1,
+        2
+      ],
+      "counterfactual_order": [
+        1,
+        0,
+        2
+      ],
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "placement": "training identity returns the original normalizedFP32 RGB tensor; no affine or pixel change",
+      "normalized_affine": "zprime_c=(std_perm/std_c)*z_perm+(mean_perm-mean_c)/std_c",
+      "identity_returns_original_tensor": true,
+      "RNG_draws": 0,
+      "CNN_views_per_presentation": 1,
+      "extra_loss": null,
+      "clip_grayscale_resize_pixel_cache": false,
+      "nominal_slots_per_epoch": [
+        1832,
+        1832,
+        1832
+      ],
+      "nominal_slot_to_actual_RGB": [
+        "RGB",
+        "RGB",
+        "RGB"
+      ],
+      "history_order_exposures": "nominal slots only, never distinct actual colors",
+      "actual_RGB_GBR_BRG_per_epoch": [
+        5496,
+        0,
+        0
+      ],
+      "each_item_actual_RGB_exposure_15_epochs": 15
+    },
+    "native_primary": {
+      "reference": "saved matched identity15E native292; no prior model forward",
+      "reference_statistics": {
+        "nmae": 0.025431218243695233,
+        "tail10_nmae": 0.11800955331418664,
+        "maximum_error": 0.5379703640937805,
+        "errors_above_5_percent_fs": 16
+      },
+      "tail_comparison": "strictly smaller",
+      "ordinary_guard": "zero new >5-percent-FS errors among the aligned reference native error<=.01 rows",
+      "counts_at_1_and_2_percent_are_diagnostic_only": true
+    },
+    "counterfactual_gate": {
+      "mean_max": 0.1250446370304666,
+      "tail_max": 0.23692208052865074,
+      "mean_absolute_scalar_drift_max": 0.01,
+      "tail30_absolute_scalar_drift_max": 0.05,
+      "failed_pair_drift": 1.0,
+      "condition": "native learning AND native primary pass; same last15 only",
+      "role": "previous color-control diagnostic only; acceptance is joint_counterfactual_gate",
+      "thresholds_are_acceptance": false
+    },
+    "budget_qualification": "same identity15E scheduled82440 train images/1290 backward attempts; actual updates and AMP skips reported separately; only the fixed per-batch loss aggregation changes",
+    "objective": {
+      "per_image": "one scalar SmoothL1(prediction_i, y_i, beta=.05, reduction=none)",
+      "aggregation": "0.5 * per_image.mean() + 0.5 * per_image.topk(ceil(.1*actual_B)).mean()",
+      "mean_weight": 0.5,
+      "tail_weight": 0.5,
+      "tail_fraction": 0.1,
+      "smooth_l1_beta": 0.05,
+      "k_B1_B4_B56_B64": [
+        1,
+        1,
+        6,
+        7
+      ],
+      "upweighted_tail_slots_per_complete_epoch": 601,
+      "all_samples_have_mean_contribution": true,
+      "extra_forward_or_loss": false,
+      "history_source_training_smooth_l1": "sample-count-weighted mean of batch composite risks; not primitive mean SmoothL1 or population tail",
+      "source_training_nmae": "unchanged unweighted scalar absolute error",
+      "source_preflight_mean_tail_objective": "same composite aggregation for the existing four training predictions, k1",
+      "qualification": "batch-local SmoothL1 tail differs from full-population absolute-error tail; no trimming or deletion"
+    },
+    "joint_counterfactual_gate": {
+      "reference_statistics": {
+        "nmae": 0.026353762864682596,
+        "tail10_nmae": 0.12945961876345488,
+        "maximum_error": 0.5424728989601135,
+        "errors_above_5_percent_fs": 17
+      },
+      "tail_comparison": "no larger",
+      "ordinary_guard": "zero new >5-percent-FS errors among aligned reference CF error<=.01 rows",
+      "previous_color_drift_thresholds": "diagnostic only; not acceptance"
+    },
+    "reference": {
+      "protocol": "geoprr_v2_matched_identity_source_control_v1",
+      "science_revision": "3e39174f36b342691f6ee96acdea2036ee5e8d30",
+      "relative_reader": "runs/geoprr_generalization/source_matched_identity_control_20261026/reader",
+      "statistics": {
+        "native": {
+          "nmae": 0.025431218243695233,
+          "tail10_nmae": 0.11800955331418664,
+          "maximum_error": 0.5379703640937805,
+          "errors_above_5_percent_fs": 16
+        },
+        "counterfactual": {
+          "nmae": 0.026353762864682596,
+          "tail10_nmae": 0.12945961876345488,
+          "maximum_error": 0.5424728989601135,
+          "errors_above_5_percent_fs": 17
+        }
+      },
+      "provided_label_scope": "Provided-label saved-number comparison only. The prior C3 audit remains149checks148PASS1FAIL: the normalized_progress/y field check was unavailable in the physical-label-triplet source contract. This is inherited raw-label-derivation coverage, not a discovered label conflict; no old audit or labels are recomputed."
+    }
+  },
+  "status": "complete",
+  "epochs": 15,
+  "completion_reason": "native_learning_or_primary_failed",
+  "native_learning_gate": {
+    "passed": true,
+    "denominator": 292,
+    "tail_count": 30,
+    "constant_prediction": 0.5,
+    "ratio": 0.5,
+    "model": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.03855632551150773,
+      "nmae_percent_fs": 3.855632551150773,
+      "acc_at_1": 0.17465753424657535,
+      "acc_at_2": 0.3493150684931507,
+      "acc_at_5": 0.8116438356164384,
+      "coverage": 1.0,
+      "failed": 0,
+      "median_error": 0.02838931605219841,
+      "p90_error": 0.0680651616305113,
+      "p95_error": 0.08725114092230796,
+      "tail10_nmae": 0.14186078384518624,
+      "maximum_error": 0.5850184857845306,
+      "errors_above_2_percent_fs": 190,
+      "errors_above_5_percent_fs": 55,
+      "input_failures": 0,
+      "errors_above_1_percent_fs": 241,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null,
+      "maximum_error_ids": [
+        "geoprr_roll_v22_validation_g0061_s03"
+      ],
+      "median_error_percent_fs": 2.838931605219841,
+      "p90_error_percent_fs": 6.806516163051129,
+      "p95_error_percent_fs": 8.725114092230795,
+      "tail10_nmae_percent_fs": 14.186078384518625,
+      "maximum_error_percent_fs": 58.501848578453064,
+      "acc_at_1_percent": 17.465753424657535,
+      "count_at_1_percent_fs": 51,
+      "acc_at_2_percent": 34.93150684931507,
+      "count_at_2_percent_fs": 102,
+      "acc_at_5_percent": 81.16438356164383,
+      "count_at_5_percent_fs": 237
+    },
+    "constant": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.2500892740609332,
+      "nmae_percent_fs": 25.008927406093317,
+      "acc_at_1": 0.023972602739726026,
+      "acc_at_2": 0.04794520547945205,
+      "acc_at_5": 0.0821917808219178,
+      "coverage": 1.0,
+      "failed": 0,
+      "median_error": 0.2489658147096634,
+      "p90_error": 0.4416848599910737,
+      "p95_error": 0.476235611923039,
+      "tail10_nmae": 0.4738441610573015,
+      "maximum_error": 0.4994222219684161,
+      "errors_above_2_percent_fs": 278,
+      "errors_above_5_percent_fs": 268,
+      "input_failures": 0,
+      "errors_above_1_percent_fs": 285,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null,
+      "maximum_error_ids": [
+        "geoprr_roll_v22_validation_g0036_s00"
+      ],
+      "median_error_percent_fs": 24.89658147096634,
+      "p90_error_percent_fs": 44.16848599910737,
+      "p95_error_percent_fs": 47.623561192303896,
+      "tail10_nmae_percent_fs": 47.384416105730146,
+      "maximum_error_percent_fs": 49.94222219684161,
+      "acc_at_1_percent": 2.3972602739726026,
+      "count_at_1_percent_fs": 7,
+      "acc_at_2_percent": 4.794520547945205,
+      "count_at_2_percent_fs": 14,
+      "acc_at_5_percent": 8.21917808219178,
+      "count_at_5_percent_fs": 24
+    },
+    "criteria": "model mean and tail10 each <= one half of constant0.5 on the same saved labels"
+  },
+  "native_primary": {
+    "passed": false,
+    "view": "native",
+    "predicates": {
+      "mean": false,
+      "tail": false,
+      "maximum": false,
+      "errors_above_5_percent_fs": false,
+      "no_new_over5_on_reference_accurate": false
+    },
+    "limits": {
+      "nmae": 0.025431218243695233,
+      "tail10_nmae": 0.11800955331418664,
+      "maximum_error": 0.5379703640937805,
+      "errors_above_5_percent_fs": 16
+    },
+    "mean": 0.03855632551150773,
+    "tail": 0.14186078384518624,
+    "maximum": 0.5850184857845306,
+    "counts_over_1_2_5": [
+      241,
+      190,
+      55
+    ],
+    "paired_reference": {
+      "denominator": 292,
+      "paired_thresholds_percent_fs": {
+        "1": {
+          "new_errors": 80,
+          "rescues": 29,
+          "reference_errors_above": 190,
+          "candidate_errors_above": 241
+        },
+        "2": {
+          "new_errors": 110,
+          "rescues": 30,
+          "reference_errors_above": 110,
+          "candidate_errors_above": 190
+        },
+        "5": {
+          "new_errors": 45,
+          "rescues": 6,
+          "reference_errors_above": 16,
+          "candidate_errors_above": 55
+        }
+      },
+      "reference_accurate_at_1_percent_count": 102,
+      "new_over5_on_reference_accurate_count": 15,
+      "group_differences": {
+        "geoprr_roll_v22_validation_g0001": {
+          "samples": 4,
+          "reference_error_sum": 0.03985877335071564,
+          "candidate_error_sum": 0.16326113045215607,
+          "reference_errors_above_1_2_5": [
+            1,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0002": {
+          "samples": 4,
+          "reference_error_sum": 0.1632321912329644,
+          "candidate_error_sum": 0.11762473732233047,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0004": {
+          "samples": 4,
+          "reference_error_sum": 0.08668945729732513,
+          "candidate_error_sum": 0.13276607543230057,
+          "reference_errors_above_1_2_5": [
+            4,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0005": {
+          "samples": 4,
+          "reference_error_sum": 0.06808985769748688,
+          "candidate_error_sum": 0.10188885033130646,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0006": {
+          "samples": 4,
+          "reference_error_sum": 0.17979127168655396,
+          "candidate_error_sum": 0.09542127698659897,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0008": {
+          "samples": 4,
+          "reference_error_sum": 0.10110434889793396,
+          "candidate_error_sum": 0.14709308743476868,
+          "reference_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0011": {
+          "samples": 4,
+          "reference_error_sum": 0.06654078885912895,
+          "candidate_error_sum": 0.07412751764059067,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0013": {
+          "samples": 4,
+          "reference_error_sum": 0.07412256300449371,
+          "candidate_error_sum": 0.11507906019687653,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0014": {
+          "samples": 4,
+          "reference_error_sum": 0.14755743741989136,
+          "candidate_error_sum": 0.19513336196541786,
+          "reference_errors_above_1_2_5": [
+            3,
+            3,
+            1
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0015": {
+          "samples": 4,
+          "reference_error_sum": 0.09313695132732391,
+          "candidate_error_sum": 0.25778791308403015,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0017": {
+          "samples": 4,
+          "reference_error_sum": 0.06232777237892151,
+          "candidate_error_sum": 0.16253647208213806,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0018": {
+          "samples": 4,
+          "reference_error_sum": 0.06939295679330826,
+          "candidate_error_sum": 0.10188796371221542,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0021": {
+          "samples": 4,
+          "reference_error_sum": 0.059866368770599365,
+          "candidate_error_sum": 0.06970538198947906,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0022": {
+          "samples": 4,
+          "reference_error_sum": 0.034756824374198914,
+          "candidate_error_sum": 0.07542802393436432,
+          "reference_errors_above_1_2_5": [
+            1,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0023": {
+          "samples": 4,
+          "reference_error_sum": 0.07591722905635834,
+          "candidate_error_sum": 0.14360392838716507,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0024": {
+          "samples": 4,
+          "reference_error_sum": 0.028806626796722412,
+          "candidate_error_sum": 0.16031423211097717,
+          "reference_errors_above_1_2_5": [
+            1,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0026": {
+          "samples": 4,
+          "reference_error_sum": 0.07600996078690514,
+          "candidate_error_sum": 0.10378559771925211,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0027": {
+          "samples": 4,
+          "reference_error_sum": 0.05974624305963516,
+          "candidate_error_sum": 0.18200084567070007,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0030": {
+          "samples": 4,
+          "reference_error_sum": 0.05756957828998566,
+          "candidate_error_sum": 0.0956895649433136,
+          "reference_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0032": {
+          "samples": 4,
+          "reference_error_sum": 0.07320494949817657,
+          "candidate_error_sum": 0.04660746455192566,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0033": {
+          "samples": 4,
+          "reference_error_sum": 0.07973377406597137,
+          "candidate_error_sum": 0.1379956752061844,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0035": {
+          "samples": 4,
+          "reference_error_sum": 0.06736674904823303,
+          "candidate_error_sum": 0.1787254363298416,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0036": {
+          "samples": 4,
+          "reference_error_sum": 0.05831564083928242,
+          "candidate_error_sum": 0.07499566074693576,
+          "reference_errors_above_1_2_5": [
+            1,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0039": {
+          "samples": 4,
+          "reference_error_sum": 0.012599706649780273,
+          "candidate_error_sum": 0.1565609872341156,
+          "reference_errors_above_1_2_5": [
+            0,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0043": {
+          "samples": 4,
+          "reference_error_sum": 0.04797874391078949,
+          "candidate_error_sum": 0.1025262326002121,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0044": {
+          "samples": 4,
+          "reference_error_sum": 0.11010763701051474,
+          "candidate_error_sum": 0.13018691539764404,
+          "reference_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0046": {
+          "samples": 4,
+          "reference_error_sum": 0.08313865959644318,
+          "candidate_error_sum": 0.05790644884109497,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0051": {
+          "samples": 4,
+          "reference_error_sum": 0.06781831383705139,
+          "candidate_error_sum": 0.12592576444149017,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0054": {
+          "samples": 4,
+          "reference_error_sum": 0.0703968033194542,
+          "candidate_error_sum": 0.12324802577495575,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0056": {
+          "samples": 4,
+          "reference_error_sum": 0.07942907512187958,
+          "candidate_error_sum": 0.10822784900665283,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0057": {
+          "samples": 4,
+          "reference_error_sum": 0.05435636278707534,
+          "candidate_error_sum": 0.08160949591547251,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0058": {
+          "samples": 4,
+          "reference_error_sum": 0.020968839526176453,
+          "candidate_error_sum": 0.17502932250499725,
+          "reference_errors_above_1_2_5": [
+            0,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0060": {
+          "samples": 4,
+          "reference_error_sum": 0.03958934545516968,
+          "candidate_error_sum": 0.11350423842668533,
+          "reference_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0061": {
+          "samples": 4,
+          "reference_error_sum": 1.0910764038562775,
+          "candidate_error_sum": 1.093877762556076,
+          "reference_errors_above_1_2_5": [
+            4,
+            4,
+            3
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            4
+          ]
+        },
+        "geoprr_roll_v22_validation_g0063": {
+          "samples": 4,
+          "reference_error_sum": 0.06823739409446716,
+          "candidate_error_sum": 0.17434445023536682,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0066": {
+          "samples": 4,
+          "reference_error_sum": 0.06226909160614014,
+          "candidate_error_sum": 0.1356176733970642,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0067": {
+          "samples": 4,
+          "reference_error_sum": 0.10106872022151947,
+          "candidate_error_sum": 0.11284033954143524,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0068": {
+          "samples": 4,
+          "reference_error_sum": 0.07197775691747665,
+          "candidate_error_sum": 0.1410297006368637,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0070": {
+          "samples": 4,
+          "reference_error_sum": 0.0656796908006072,
+          "candidate_error_sum": 0.048697805032134056,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0072": {
+          "samples": 4,
+          "reference_error_sum": 0.18254763074219227,
+          "candidate_error_sum": 0.0780241172760725,
+          "reference_errors_above_1_2_5": [
+            4,
+            3,
+            2
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0075": {
+          "samples": 4,
+          "reference_error_sum": 0.10957780294120312,
+          "candidate_error_sum": 0.16874290630221367,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            1
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0076": {
+          "samples": 4,
+          "reference_error_sum": 1.071182370185852,
+          "candidate_error_sum": 0.7875784933567047,
+          "reference_errors_above_1_2_5": [
+            4,
+            4,
+            4
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            3
+          ]
+        },
+        "geoprr_roll_v22_validation_g0077": {
+          "samples": 4,
+          "reference_error_sum": 0.10010983049869537,
+          "candidate_error_sum": 0.06122572720050812,
+          "reference_errors_above_1_2_5": [
+            4,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0078": {
+          "samples": 4,
+          "reference_error_sum": 0.040296152234077454,
+          "candidate_error_sum": 0.1145562082529068,
+          "reference_errors_above_1_2_5": [
+            1,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0079": {
+          "samples": 4,
+          "reference_error_sum": 0.061842575669288635,
+          "candidate_error_sum": 0.1723974645137787,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0080": {
+          "samples": 4,
+          "reference_error_sum": 0.11697801947593689,
+          "candidate_error_sum": 0.3026881366968155,
+          "reference_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            3
+          ]
+        },
+        "geoprr_roll_v22_validation_g0082": {
+          "samples": 4,
+          "reference_error_sum": 0.046254515647888184,
+          "candidate_error_sum": 0.06028766930103302,
+          "reference_errors_above_1_2_5": [
+            2,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0083": {
+          "samples": 4,
+          "reference_error_sum": 0.05245230160653591,
+          "candidate_error_sum": 0.18543296493589878,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0085": {
+          "samples": 4,
+          "reference_error_sum": 0.05728420615196228,
+          "candidate_error_sum": 0.0892987847328186,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            1,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0088": {
+          "samples": 4,
+          "reference_error_sum": 0.0284145325422287,
+          "candidate_error_sum": 0.0394151508808136,
+          "reference_errors_above_1_2_5": [
+            1,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0090": {
+          "samples": 4,
+          "reference_error_sum": 0.09064281731843948,
+          "candidate_error_sum": 0.12985864281654358,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            1
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0091": {
+          "samples": 4,
+          "reference_error_sum": 0.03252619132399559,
+          "candidate_error_sum": 0.09310867637395859,
+          "reference_errors_above_1_2_5": [
+            1,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0092": {
+          "samples": 4,
+          "reference_error_sum": 0.0799533260287717,
+          "candidate_error_sum": 0.047593641094863415,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0095": {
+          "samples": 4,
+          "reference_error_sum": 0.06237711012363434,
+          "candidate_error_sum": 0.10011734068393707,
+          "reference_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0096": {
+          "samples": 4,
+          "reference_error_sum": 0.035202398896217346,
+          "candidate_error_sum": 0.07469798624515533,
+          "reference_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0098": {
+          "samples": 4,
+          "reference_error_sum": 0.08332431595772505,
+          "candidate_error_sum": 0.14332303742412478,
+          "reference_errors_above_1_2_5": [
+            4,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0099": {
+          "samples": 4,
+          "reference_error_sum": 0.07553954422473907,
+          "candidate_error_sum": 0.12033309042453766,
+          "reference_errors_above_1_2_5": [
+            4,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0100": {
+          "samples": 4,
+          "reference_error_sum": 0.015947096049785614,
+          "candidate_error_sum": 0.05589664727449417,
+          "reference_errors_above_1_2_5": [
+            0,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0101": {
+          "samples": 4,
+          "reference_error_sum": 0.11475762724876404,
+          "candidate_error_sum": 0.10463014245033264,
+          "reference_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0103": {
+          "samples": 4,
+          "reference_error_sum": 0.11598531901836395,
+          "candidate_error_sum": 0.24929742515087128,
+          "reference_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            3
+          ]
+        },
+        "geoprr_roll_v22_validation_g0104": {
+          "samples": 4,
+          "reference_error_sum": 0.09439992904663086,
+          "candidate_error_sum": 0.11223431676626205,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0105": {
+          "samples": 4,
+          "reference_error_sum": 0.046795789152383804,
+          "candidate_error_sum": 0.11364143062382936,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0106": {
+          "samples": 4,
+          "reference_error_sum": 0.2614646255970001,
+          "candidate_error_sum": 0.3118077963590622,
+          "reference_errors_above_1_2_5": [
+            4,
+            4,
+            2
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0107": {
+          "samples": 4,
+          "reference_error_sum": 0.03118497133255005,
+          "candidate_error_sum": 0.07529360055923462,
+          "reference_errors_above_1_2_5": [
+            2,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0109": {
+          "samples": 4,
+          "reference_error_sum": 0.05203799554146826,
+          "candidate_error_sum": 0.14399200584739447,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0111": {
+          "samples": 4,
+          "reference_error_sum": 0.056960344314575195,
+          "candidate_error_sum": 0.2619996517896652,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0113": {
+          "samples": 4,
+          "reference_error_sum": 0.061900608241558075,
+          "candidate_error_sum": 0.11389341205358505,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0114": {
+          "samples": 4,
+          "reference_error_sum": 0.034763745963573456,
+          "candidate_error_sum": 0.10382533818483353,
+          "reference_errors_above_1_2_5": [
+            2,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0117": {
+          "samples": 4,
+          "reference_error_sum": 0.07243933901190758,
+          "candidate_error_sum": 0.14715590700507164,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0120": {
+          "samples": 4,
+          "reference_error_sum": 0.06354961544275284,
+          "candidate_error_sum": 0.08576617389917374,
+          "reference_errors_above_1_2_5": [
+            4,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0121": {
+          "samples": 4,
+          "reference_error_sum": 0.03834277391433716,
+          "candidate_error_sum": 0.10545755177736282,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0122": {
+          "samples": 4,
+          "reference_error_sum": 0.08629510272294283,
+          "candidate_error_sum": 0.0683592390269041,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0123": {
+          "samples": 4,
+          "reference_error_sum": 0.08275434374809265,
+          "candidate_error_sum": 0.621924102306366,
+          "reference_errors_above_1_2_5": [
+            4,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            3
+          ]
+        }
+      }
+    },
+    "reference_science_revision": "3e39174f36b342691f6ee96acdea2036ee5e8d30",
+    "counts_at_1_and_2_percent_are_diagnostic_only": true
+  },
+  "counterfactual_eligible": false,
+  "counterfactual_gate": null,
+  "verdict": "NOT_RETAINED",
+  "totals": {
+    "train_batches": 1290,
+    "train_cnn_image_forwards": 82440,
+    "train_cnn_forward_calls": 1290,
+    "backward_calls": 1290,
+    "point_backward_calls": 1290,
+    "optimizer_updates": 1287,
+    "amp_skipped_updates": 3,
+    "train_point_forward_calls": 1290,
+    "train_point_image_forwards": 82440,
+    "validation_images": 292,
+    "validation_cnn_forward_calls": 5,
+    "validation_point_forward_calls": 5,
+    "validation_point_image_forwards": 292,
+    "training_seconds": 455.6143064945936,
+    "validation_seconds": 5.0470019318163395
+  },
+  "counts": {
+    "cnn_image_forwards": 82732,
+    "cnn_forward_calls": 1295,
+    "point_image_forwards": 82732,
+    "point_forward_calls": 1295,
+    "CNN_backward_calls": 1290,
+    "point_backward_calls": 1290,
+    "source_backward_calls": 1290,
+    "optimizer_updates": 1287,
+    "amp_skipped_updates": 3,
+    "source_OOD_RGB_images": 0,
+    "source_OOD_CNN_calls": 0,
+    "external_images": 0,
+    "external_CNN_calls": 0,
+    "external_point_calls": 0,
+    "external_backward_calls": 0,
+    "external_optimizer_updates": 0
+  },
+  "model_metadata": {
+    "class": "experiments.geoprr_v2_semantic_direct.SemanticDirectReader",
+    "encoder_class": "timm.models.mobilenetv3.MobileNetV3",
+    "encoder_name": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "semantic_dim": 1280,
+    "encoder_reported_num_features": 960,
+    "semantic_conv_head_retained": true,
+    "semantic_norm_head_retained": true,
+    "encoder_parameters": 8434512,
+    "encoder_state_tensors": 462,
+    "point_parameters": 1281,
+    "point_shape": [
+      1280,
+      1
+    ],
+    "parameters": 8435793,
+    "trainable_parameters": 8435793,
+    "parameter_tensors": 233,
+    "state_tensors": 464,
+    "input_contract": {
+      "image_size": 512,
+      "output_size": 128
+    },
+    "CNN_passes_per_image": 1
+  },
+  "initialization": {
+    "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+    "ImageNet_pretrained": true,
+    "existing_cached_weights_only": true,
+    "retained_complete_encoder_state_tensors": 462,
+    "all_cached_encoder_state_tensors_retained": true,
+    "new_point_parameter_tensors": 2,
+    "point_initialization_std": 0.001,
+    "point_initialization_bias_zero": true,
+    "old_task_checkpoint_used": false
+  },
+  "checkpoint": "last.pt",
+  "source_OOD_RGB_images": 0,
+  "source_OOD_forward_calls": 0,
+  "external_counts": {
+    "images": 0,
+    "CNN_calls": 0,
+    "point_calls": 0,
+    "backward_calls": 0,
+    "optimizer_updates": 0
+  },
+  "budget_qualification": "same identity15E scheduled82440 train images/1290 backward attempts; actual updates and AMP skips reported separately; only the fixed per-batch loss aggregation changes",
+  "runtime": {
+    "process_seconds": 465.9640595316887,
+    "full_process_seconds": 467.7520687133074,
+    "prior_checkpointed_process_seconds": 0.0,
+    "full_process_boundary": "mean-tail module entry before torch import through saved joint metadata; excludes final completion JSON and downtime",
+    "device": "cuda",
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "peak_cuda_memory_bytes": 8262538752,
+    "peak_cuda_reserved_bytes": 11345592320,
+    "individual_point_forward_seconds": null,
+    "phases": {
+      "initialization": {
+        "seconds": 1.3907788172364235,
+        "peak_cuda_memory_bytes": 34099712,
+        "peak_cuda_reserved_bytes": 50331648,
+        "individual_point_forward_seconds": null
+      },
+      "train_epoch_1": {
+        "seconds": 45.97274869680405,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "train_epoch_2": {
+        "seconds": 29.288538184016943,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "train_epoch_3": {
+        "seconds": 28.65554042905569,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "train_epoch_4": {
+        "seconds": 29.3840512894094,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "train_epoch_5": {
+        "seconds": 29.022322665899992,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "train_epoch_6": {
+        "seconds": 29.77822344005108,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "train_epoch_7": {
+        "seconds": 29.203098636120558,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "train_epoch_8": {
+        "seconds": 29.193397983908653,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "train_epoch_9": {
+        "seconds": 29.623694747686386,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "train_epoch_10": {
+        "seconds": 29.015080887824297,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "train_epoch_11": {
+        "seconds": 29.79177562147379,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "train_epoch_12": {
+        "seconds": 29.289463758468628,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "train_epoch_13": {
+        "seconds": 28.68504874035716,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "train_epoch_14": {
+        "seconds": 29.615789834409952,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "train_epoch_15": {
+        "seconds": 29.095531579107046,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "source_id": {
+        "seconds": 5.04847314953804,
+        "peak_cuda_memory_bytes": 1805331968,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      }
+    },
+    "supervisor_wall_record": "runner screen_summary.json",
+    "mean_tail_metadata_seconds": 0.1306949183344841,
+    "individual_operator_seconds": null,
+    "individual_loss_aggregation_seconds": null
+  },
+  "identity_actual_rgb": true,
+  "objective_config": {
+    "per_image": "one scalar SmoothL1(prediction_i, y_i, beta=.05, reduction=none)",
+    "aggregation": "0.5 * per_image.mean() + 0.5 * per_image.topk(ceil(.1*actual_B)).mean()",
+    "mean_weight": 0.5,
+    "tail_weight": 0.5,
+    "tail_fraction": 0.1,
+    "smooth_l1_beta": 0.05,
+    "k_B1_B4_B56_B64": [
+      1,
+      1,
+      6,
+      7
+    ],
+    "upweighted_tail_slots_per_complete_epoch": 601,
+    "all_samples_have_mean_contribution": true,
+    "extra_forward_or_loss": false,
+    "history_source_training_smooth_l1": "sample-count-weighted mean of batch composite risks; not primitive mean SmoothL1 or population tail",
+    "source_training_nmae": "unchanged unweighted scalar absolute error",
+    "source_preflight_mean_tail_objective": "same composite aggregation for the existing four training predictions, k1",
+    "qualification": "batch-local SmoothL1 tail differs from full-population absolute-error tail; no trimming or deletion"
+  },
+  "reference_qualification": {
+    "protocol": "geoprr_v2_matched_identity_source_control_v1",
+    "science_revision": "3e39174f36b342691f6ee96acdea2036ee5e8d30",
+    "source_contract_equal": true,
+    "native_rows": 292,
+    "counterfactual_rows": 292,
+    "reference_optimizer_updates": 1289,
+    "reference_amp_skipped_updates": 1,
+    "provided_label_scope": "Provided-label saved-number comparison only. The prior C3 audit remains149checks148PASS1FAIL: the normalized_progress/y field check was unavailable in the physical-label-triplet source contract. This is inherited raw-label-derivation coverage, not a discovered label conflict; no old audit or labels are recomputed."
+  },
+  "actual_RGB_GBR_BRG_per_epoch": [
+    5496,
+    0,
+    0
+  ],
+  "actual_RGB_GBR_BRG_total": [
+    82440,
+    0,
+    0
+  ],
+  "each_item_actual_RGB_exposure_15_epochs": 15,
+  "history_order_exposures_semantics": "[1832,1832,1832] counts nominal slots, all mapped to native RGB",
+  "source_training_smooth_l1_semantics": "sample-count-weighted mean of batch composite risks; not primitive mean SmoothL1 or population tail",
+  "drift_thresholds_are_acceptance": false,
+  "provided_label_scope": "Provided-label saved-number comparison only. The prior C3 audit remains149checks148PASS1FAIL: the normalized_progress/y field check was unavailable in the physical-label-triplet source contract. This is inherited raw-label-derivation coverage, not a discovered label conflict; no old audit or labels are recomputed.",
+  "source_id": {
+    "summary": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.03855632551150773,
+      "nmae_percent_fs": 3.855632551150773,
+      "acc_at_1": 0.17465753424657535,
+      "acc_at_2": 0.3493150684931507,
+      "acc_at_5": 0.8116438356164384,
+      "coverage": 1.0,
+      "failed": 0,
+      "median_error": 0.02838931605219841,
+      "p90_error": 0.0680651616305113,
+      "p95_error": 0.08725114092230796,
+      "tail10_nmae": 0.14186078384518624,
+      "maximum_error": 0.5850184857845306,
+      "errors_above_2_percent_fs": 190,
+      "errors_above_5_percent_fs": 55,
+      "input_failures": 0,
+      "errors_above_1_percent_fs": 241,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null,
+      "maximum_error_ids": [
+        "geoprr_roll_v22_validation_g0061_s03"
+      ],
+      "median_error_percent_fs": 2.838931605219841,
+      "p90_error_percent_fs": 6.806516163051129,
+      "p95_error_percent_fs": 8.725114092230795,
+      "tail10_nmae_percent_fs": 14.186078384518625,
+      "maximum_error_percent_fs": 58.501848578453064,
+      "acc_at_1_percent": 17.465753424657535,
+      "count_at_1_percent_fs": 51,
+      "acc_at_2_percent": 34.93150684931507,
+      "count_at_2_percent_fs": 102,
+      "acc_at_5_percent": 81.16438356164383,
+      "count_at_5_percent_fs": 237
+    },
+    "by_group": {
+      "geoprr_roll_v22_validation_g0001": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.04081528261303902,
+        "nmae_percent_fs": 4.081528261303902,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.0,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.0371372252702713,
+        "p90_error": 0.050942821800708776,
+        "p95_error": 0.05360363349318504,
+        "tail10_nmae": 0.056264445185661316,
+        "maximum_error": 0.056264445185661316,
+        "errors_above_2_percent_fs": 4,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0001_s00"
+        ],
+        "median_error_percent_fs": 3.71372252702713,
+        "p90_error_percent_fs": 5.094282180070878,
+        "p95_error_percent_fs": 5.360363349318504,
+        "tail10_nmae_percent_fs": 5.626444518566132,
+        "maximum_error_percent_fs": 5.626444518566132,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 0.0,
+        "count_at_2_percent_fs": 0,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0002": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.02940618433058262,
+        "nmae_percent_fs": 2.940618433058262,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.5,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.019312262535095215,
+        "p90_error": 0.05984044894576074,
+        "p95_error": 0.06783702261745927,
+        "tail10_nmae": 0.07583359628915787,
+        "maximum_error": 0.07583359628915787,
+        "errors_above_2_percent_fs": 2,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0002_s00"
+        ],
+        "median_error_percent_fs": 1.9312262535095215,
+        "p90_error_percent_fs": 5.984044894576074,
+        "p95_error_percent_fs": 6.783702261745928,
+        "tail10_nmae_percent_fs": 7.583359628915787,
+        "maximum_error_percent_fs": 7.583359628915787,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 50.0,
+        "count_at_2_percent_fs": 2,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0004": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.03319151885807514,
+        "nmae_percent_fs": 3.319151885807514,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.25,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.03660525381565094,
+        "p90_error": 0.04316845238208771,
+        "p95_error": 0.044010205566883086,
+        "tail10_nmae": 0.04485195875167847,
+        "maximum_error": 0.04485195875167847,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0004_s03"
+        ],
+        "median_error_percent_fs": 3.660525381565094,
+        "p90_error_percent_fs": 4.316845238208771,
+        "p95_error_percent_fs": 4.401020556688309,
+        "tail10_nmae_percent_fs": 4.485195875167847,
+        "maximum_error_percent_fs": 4.485195875167847,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0005": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.025472212582826614,
+        "nmae_percent_fs": 2.5472212582826614,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.25,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.026967421174049377,
+        "p90_error": 0.03789283484220505,
+        "p95_error": 0.039767146855592725,
+        "tail10_nmae": 0.04164145886898041,
+        "maximum_error": 0.04164145886898041,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0005_s00"
+        ],
+        "median_error_percent_fs": 2.6967421174049377,
+        "p90_error_percent_fs": 3.7892834842205048,
+        "p95_error_percent_fs": 3.9767146855592723,
+        "tail10_nmae_percent_fs": 4.164145886898041,
+        "maximum_error_percent_fs": 4.164145886898041,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0006": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.023855319246649742,
+        "nmae_percent_fs": 2.385531924664974,
+        "acc_at_1": 0.5,
+        "acc_at_2": 0.5,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.014223899692296982,
+        "p90_error": 0.05082695484161377,
+        "p95_error": 0.05679937601089476,
+        "tail10_nmae": 0.06277179718017578,
+        "maximum_error": 0.06277179718017578,
+        "errors_above_2_percent_fs": 2,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 2,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0006_s03"
+        ],
+        "median_error_percent_fs": 1.4223899692296982,
+        "p90_error_percent_fs": 5.082695484161377,
+        "p95_error_percent_fs": 5.679937601089477,
+        "tail10_nmae_percent_fs": 6.277179718017578,
+        "maximum_error_percent_fs": 6.277179718017578,
+        "acc_at_1_percent": 50.0,
+        "count_at_1_percent_fs": 2,
+        "acc_at_2_percent": 50.0,
+        "count_at_2_percent_fs": 2,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0008": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.03677327185869217,
+        "nmae_percent_fs": 3.677327185869217,
+        "acc_at_1": 0.5,
+        "acc_at_2": 0.5,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.023970723152160645,
+        "p90_error": 0.08083545863628389,
+        "p95_error": 0.08894152790307996,
+        "tail10_nmae": 0.0970475971698761,
+        "maximum_error": 0.0970475971698761,
+        "errors_above_2_percent_fs": 2,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 2,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0008_s00"
+        ],
+        "median_error_percent_fs": 2.3970723152160645,
+        "p90_error_percent_fs": 8.08354586362839,
+        "p95_error_percent_fs": 8.894152790307997,
+        "tail10_nmae_percent_fs": 9.70475971698761,
+        "maximum_error_percent_fs": 9.70475971698761,
+        "acc_at_1_percent": 50.0,
+        "count_at_1_percent_fs": 2,
+        "acc_at_2_percent": 50.0,
+        "count_at_2_percent_fs": 2,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0011": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.018531879410147667,
+        "nmae_percent_fs": 1.8531879410147667,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.75,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.015244930982589722,
+        "p90_error": 0.028845576196908952,
+        "p95_error": 0.03129010908305645,
+        "tail10_nmae": 0.03373464196920395,
+        "maximum_error": 0.03373464196920395,
+        "errors_above_2_percent_fs": 1,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0011_s00"
+        ],
+        "median_error_percent_fs": 1.5244930982589722,
+        "p90_error_percent_fs": 2.884557619690895,
+        "p95_error_percent_fs": 3.1290109083056445,
+        "tail10_nmae_percent_fs": 3.373464196920395,
+        "maximum_error_percent_fs": 3.373464196920395,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 75.0,
+        "count_at_2_percent_fs": 3,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0013": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.02876976504921913,
+        "nmae_percent_fs": 2.876976504921913,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.25,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.025625988841056824,
+        "p90_error": 0.04280917197465897,
+        "p95_error": 0.04551844224333763,
+        "tail10_nmae": 0.048227712512016296,
+        "maximum_error": 0.048227712512016296,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0013_s00"
+        ],
+        "median_error_percent_fs": 2.5625988841056824,
+        "p90_error_percent_fs": 4.2809171974658975,
+        "p95_error_percent_fs": 4.551844224333763,
+        "tail10_nmae_percent_fs": 4.82277125120163,
+        "maximum_error_percent_fs": 4.82277125120163,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0014": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.048783340491354465,
+        "nmae_percent_fs": 4.8783340491354465,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.25,
+        "acc_at_5": 0.5,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.05294996500015259,
+        "p90_error": 0.07784584760665894,
+        "p95_error": 0.07866962552070618,
+        "tail10_nmae": 0.07949340343475342,
+        "maximum_error": 0.07949340343475342,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 2,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0014_s02"
+        ],
+        "median_error_percent_fs": 5.294996500015259,
+        "p90_error_percent_fs": 7.784584760665894,
+        "p95_error_percent_fs": 7.866962552070618,
+        "tail10_nmae_percent_fs": 7.949340343475342,
+        "maximum_error_percent_fs": 7.949340343475342,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 50.0,
+        "count_at_5_percent_fs": 2
+      },
+      "geoprr_roll_v22_validation_g0015": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.06444697827100754,
+        "nmae_percent_fs": 6.444697827100754,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.0,
+        "acc_at_5": 0.5,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.06630340218544006,
+        "p90_error": 0.09552813172340394,
+        "p95_error": 0.0979210466146469,
+        "tail10_nmae": 0.10031396150588989,
+        "maximum_error": 0.10031396150588989,
+        "errors_above_2_percent_fs": 4,
+        "errors_above_5_percent_fs": 2,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0015_s03"
+        ],
+        "median_error_percent_fs": 6.630340218544006,
+        "p90_error_percent_fs": 9.552813172340393,
+        "p95_error_percent_fs": 9.79210466146469,
+        "tail10_nmae_percent_fs": 10.03139615058899,
+        "maximum_error_percent_fs": 10.03139615058899,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 0.0,
+        "count_at_2_percent_fs": 0,
+        "acc_at_5_percent": 50.0,
+        "count_at_5_percent_fs": 2
+      },
+      "geoprr_roll_v22_validation_g0017": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.040634118020534515,
+        "nmae_percent_fs": 4.0634118020534515,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.0,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.0402102917432785,
+        "p90_error": 0.04691925048828125,
+        "p95_error": 0.04767913818359375,
+        "tail10_nmae": 0.04843902587890625,
+        "maximum_error": 0.04843902587890625,
+        "errors_above_2_percent_fs": 4,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0017_s02"
+        ],
+        "median_error_percent_fs": 4.02102917432785,
+        "p90_error_percent_fs": 4.691925048828125,
+        "p95_error_percent_fs": 4.767913818359375,
+        "tail10_nmae_percent_fs": 4.843902587890625,
+        "maximum_error_percent_fs": 4.843902587890625,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 0.0,
+        "count_at_2_percent_fs": 0,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0018": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.025471990928053856,
+        "nmae_percent_fs": 2.5471990928053856,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.25,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.03067442774772644,
+        "p90_error": 0.031654433161020276,
+        "p95_error": 0.03179051391780376,
+        "tail10_nmae": 0.03192659467458725,
+        "maximum_error": 0.03192659467458725,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0018_s00"
+        ],
+        "median_error_percent_fs": 3.067442774772644,
+        "p90_error_percent_fs": 3.1654433161020274,
+        "p95_error_percent_fs": 3.1790513917803764,
+        "tail10_nmae_percent_fs": 3.192659467458725,
+        "maximum_error_percent_fs": 3.192659467458725,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0021": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.017426345497369766,
+        "nmae_percent_fs": 1.7426345497369766,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.75,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.011648386716842651,
+        "p90_error": 0.030213175714015966,
+        "p95_error": 0.03397018387913703,
+        "tail10_nmae": 0.03772719204425812,
+        "maximum_error": 0.03772719204425812,
+        "errors_above_2_percent_fs": 1,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0021_s00"
+        ],
+        "median_error_percent_fs": 1.1648386716842651,
+        "p90_error_percent_fs": 3.0213175714015965,
+        "p95_error_percent_fs": 3.397018387913703,
+        "tail10_nmae_percent_fs": 3.7727192044258118,
+        "maximum_error_percent_fs": 3.7727192044258118,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 75.0,
+        "count_at_2_percent_fs": 3,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0022": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.01885700598359108,
+        "nmae_percent_fs": 1.885700598359108,
+        "acc_at_1": 0.5,
+        "acc_at_2": 0.5,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.017065539956092834,
+        "p90_error": 0.03199658244848252,
+        "p95_error": 0.03333390727639198,
+        "tail10_nmae": 0.03467123210430145,
+        "maximum_error": 0.03467123210430145,
+        "errors_above_2_percent_fs": 2,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 2,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0022_s00"
+        ],
+        "median_error_percent_fs": 1.7065539956092834,
+        "p90_error_percent_fs": 3.199658244848252,
+        "p95_error_percent_fs": 3.3333907276391983,
+        "tail10_nmae_percent_fs": 3.4671232104301453,
+        "maximum_error_percent_fs": 3.4671232104301453,
+        "acc_at_1_percent": 50.0,
+        "count_at_1_percent_fs": 2,
+        "acc_at_2_percent": 50.0,
+        "count_at_2_percent_fs": 2,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0023": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.03590098209679127,
+        "nmae_percent_fs": 3.5900982096791267,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.25,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.040805160999298096,
+        "p90_error": 0.05386025309562684,
+        "p95_error": 0.05568623840808868,
+        "tail10_nmae": 0.05751222372055054,
+        "maximum_error": 0.05751222372055054,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0023_s02"
+        ],
+        "median_error_percent_fs": 4.08051609992981,
+        "p90_error_percent_fs": 5.386025309562684,
+        "p95_error_percent_fs": 5.568623840808868,
+        "tail10_nmae_percent_fs": 5.751222372055054,
+        "maximum_error_percent_fs": 5.751222372055054,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0024": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.04007855802774429,
+        "nmae_percent_fs": 4.007855802774429,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.25,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.04702077805995941,
+        "p90_error": 0.048755872249603274,
+        "p95_error": 0.048977994918823244,
+        "tail10_nmae": 0.04920011758804321,
+        "maximum_error": 0.04920011758804321,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0024_s00"
+        ],
+        "median_error_percent_fs": 4.702077805995941,
+        "p90_error_percent_fs": 4.875587224960327,
+        "p95_error_percent_fs": 4.897799491882324,
+        "tail10_nmae_percent_fs": 4.920011758804321,
+        "maximum_error_percent_fs": 4.920011758804321,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0026": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.025946399429813027,
+        "nmae_percent_fs": 2.5946399429813027,
+        "acc_at_1": 0.5,
+        "acc_at_2": 0.5,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.020750820636749268,
+        "p90_error": 0.050436630845069885,
+        "p95_error": 0.05369111150503158,
+        "tail10_nmae": 0.056945592164993286,
+        "maximum_error": 0.056945592164993286,
+        "errors_above_2_percent_fs": 2,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 2,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0026_s01"
+        ],
+        "median_error_percent_fs": 2.0750820636749268,
+        "p90_error_percent_fs": 5.0436630845069885,
+        "p95_error_percent_fs": 5.369111150503158,
+        "tail10_nmae_percent_fs": 5.694559216499329,
+        "maximum_error_percent_fs": 5.694559216499329,
+        "acc_at_1_percent": 50.0,
+        "count_at_1_percent_fs": 2,
+        "acc_at_2_percent": 50.0,
+        "count_at_2_percent_fs": 2,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0027": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.04550021141767502,
+        "nmae_percent_fs": 4.550021141767502,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.25,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.03200092911720276,
+        "p90_error": 0.09263677299022675,
+        "p95_error": 0.10310744196176526,
+        "tail10_nmae": 0.11357811093330383,
+        "maximum_error": 0.11357811093330383,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0027_s01"
+        ],
+        "median_error_percent_fs": 3.200092911720276,
+        "p90_error_percent_fs": 9.263677299022675,
+        "p95_error_percent_fs": 10.310744196176525,
+        "tail10_nmae_percent_fs": 11.357811093330383,
+        "maximum_error_percent_fs": 11.357811093330383,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0030": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.0239223912358284,
+        "nmae_percent_fs": 2.39223912358284,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.25,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.023225203156471252,
+        "p90_error": 0.0352346956729889,
+        "p95_error": 0.03747007548809051,
+        "tail10_nmae": 0.03970545530319214,
+        "maximum_error": 0.03970545530319214,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0030_s00"
+        ],
+        "median_error_percent_fs": 2.3225203156471252,
+        "p90_error_percent_fs": 3.5234695672988896,
+        "p95_error_percent_fs": 3.747007548809051,
+        "tail10_nmae_percent_fs": 3.970545530319214,
+        "maximum_error_percent_fs": 3.970545530319214,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0032": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.011651866137981415,
+        "nmae_percent_fs": 1.1651866137981415,
+        "acc_at_1": 0.25,
+        "acc_at_2": 1.0,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.013569444417953491,
+        "p90_error": 0.015977063775062562,
+        "p95_error": 0.01614183634519577,
+        "tail10_nmae": 0.01630660891532898,
+        "maximum_error": 0.01630660891532898,
+        "errors_above_2_percent_fs": 0,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0032_s00"
+        ],
+        "median_error_percent_fs": 1.3569444417953491,
+        "p90_error_percent_fs": 1.5977063775062563,
+        "p95_error_percent_fs": 1.614183634519577,
+        "tail10_nmae_percent_fs": 1.630660891532898,
+        "maximum_error_percent_fs": 1.630660891532898,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 100.0,
+        "count_at_2_percent_fs": 4,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0033": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.0344989188015461,
+        "nmae_percent_fs": 3.4498918801546097,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.25,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.03417442739009857,
+        "p90_error": 0.0586762472987175,
+        "p95_error": 0.06273900941014289,
+        "tail10_nmae": 0.0668017715215683,
+        "maximum_error": 0.0668017715215683,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0033_s00"
+        ],
+        "median_error_percent_fs": 3.417442739009857,
+        "p90_error_percent_fs": 5.86762472987175,
+        "p95_error_percent_fs": 6.273900941014289,
+        "tail10_nmae_percent_fs": 6.68017715215683,
+        "maximum_error_percent_fs": 6.68017715215683,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0035": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.0446813590824604,
+        "nmae_percent_fs": 4.46813590824604,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.0,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.044323600828647614,
+        "p90_error": 0.050648760795593266,
+        "p95_error": 0.05186403393745422,
+        "tail10_nmae": 0.053079307079315186,
+        "maximum_error": 0.053079307079315186,
+        "errors_above_2_percent_fs": 4,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0035_s01"
+        ],
+        "median_error_percent_fs": 4.432360082864761,
+        "p90_error_percent_fs": 5.064876079559326,
+        "p95_error_percent_fs": 5.186403393745422,
+        "tail10_nmae_percent_fs": 5.3079307079315186,
+        "maximum_error_percent_fs": 5.3079307079315186,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 0.0,
+        "count_at_2_percent_fs": 0,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0036": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.01874891518673394,
+        "nmae_percent_fs": 1.8748915186733939,
+        "acc_at_1": 0.5,
+        "acc_at_2": 0.5,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.01852322815102525,
+        "p90_error": 0.03299171924591064,
+        "p95_error": 0.03319401144981384,
+        "tail10_nmae": 0.03339630365371704,
+        "maximum_error": 0.03339630365371704,
+        "errors_above_2_percent_fs": 2,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 2,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0036_s03"
+        ],
+        "median_error_percent_fs": 1.852322815102525,
+        "p90_error_percent_fs": 3.299171924591064,
+        "p95_error_percent_fs": 3.3194011449813843,
+        "tail10_nmae_percent_fs": 3.339630365371704,
+        "maximum_error_percent_fs": 3.339630365371704,
+        "acc_at_1_percent": 50.0,
+        "count_at_1_percent_fs": 2,
+        "acc_at_2_percent": 50.0,
+        "count_at_2_percent_fs": 2,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0039": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.0391402468085289,
+        "nmae_percent_fs": 3.91402468085289,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.25,
+        "acc_at_5": 0.5,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.046295762062072754,
+        "p90_error": 0.05883992612361908,
+        "p95_error": 0.05919956117868423,
+        "tail10_nmae": 0.05955919623374939,
+        "maximum_error": 0.05955919623374939,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 2,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0039_s00"
+        ],
+        "median_error_percent_fs": 4.629576206207275,
+        "p90_error_percent_fs": 5.883992612361908,
+        "p95_error_percent_fs": 5.9199561178684235,
+        "tail10_nmae_percent_fs": 5.955919623374939,
+        "maximum_error_percent_fs": 5.955919623374939,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 50.0,
+        "count_at_5_percent_fs": 2
+      },
+      "geoprr_roll_v22_validation_g0043": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.025631558150053024,
+        "nmae_percent_fs": 2.5631558150053024,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.5,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.026973433792591095,
+        "p90_error": 0.04410523027181626,
+        "p95_error": 0.04602333828806877,
+        "tail10_nmae": 0.04794144630432129,
+        "maximum_error": 0.04794144630432129,
+        "errors_above_2_percent_fs": 2,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0043_s02"
+        ],
+        "median_error_percent_fs": 2.6973433792591095,
+        "p90_error_percent_fs": 4.410523027181626,
+        "p95_error_percent_fs": 4.602333828806877,
+        "tail10_nmae_percent_fs": 4.794144630432129,
+        "maximum_error_percent_fs": 4.794144630432129,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 50.0,
+        "count_at_2_percent_fs": 2,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0044": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.03254672884941101,
+        "nmae_percent_fs": 3.254672884941101,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.0,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.030447468161582947,
+        "p90_error": 0.04038769006729126,
+        "p95_error": 0.04222889244556426,
+        "tail10_nmae": 0.04407009482383728,
+        "maximum_error": 0.04407009482383728,
+        "errors_above_2_percent_fs": 4,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0044_s01"
+        ],
+        "median_error_percent_fs": 3.0447468161582947,
+        "p90_error_percent_fs": 4.038769006729126,
+        "p95_error_percent_fs": 4.222889244556426,
+        "tail10_nmae_percent_fs": 4.407009482383728,
+        "maximum_error_percent_fs": 4.407009482383728,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 0.0,
+        "count_at_2_percent_fs": 0,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0046": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.014476612210273743,
+        "nmae_percent_fs": 1.4476612210273743,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.75,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.011374488472938538,
+        "p90_error": 0.027480044960975652,
+        "p95_error": 0.030916129052638998,
+        "tail10_nmae": 0.03435221314430237,
+        "maximum_error": 0.03435221314430237,
+        "errors_above_2_percent_fs": 1,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0046_s00"
+        ],
+        "median_error_percent_fs": 1.1374488472938538,
+        "p90_error_percent_fs": 2.748004496097565,
+        "p95_error_percent_fs": 3.0916129052639,
+        "tail10_nmae_percent_fs": 3.435221314430237,
+        "maximum_error_percent_fs": 3.435221314430237,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 75.0,
+        "count_at_2_percent_fs": 3,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0051": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.03148144111037254,
+        "nmae_percent_fs": 3.1481441110372543,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.0,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.03345079720020294,
+        "p90_error": 0.03701171725988388,
+        "p95_error": 0.037575627118349074,
+        "tail10_nmae": 0.03813953697681427,
+        "maximum_error": 0.03813953697681427,
+        "errors_above_2_percent_fs": 4,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0051_s00"
+        ],
+        "median_error_percent_fs": 3.345079720020294,
+        "p90_error_percent_fs": 3.7011717259883876,
+        "p95_error_percent_fs": 3.7575627118349075,
+        "tail10_nmae_percent_fs": 3.813953697681427,
+        "maximum_error_percent_fs": 3.813953697681427,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 0.0,
+        "count_at_2_percent_fs": 0,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0054": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.030812006443738937,
+        "nmae_percent_fs": 3.0812006443738937,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.25,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.03347919136285782,
+        "p90_error": 0.042006088793277746,
+        "p95_error": 0.043735078722238536,
+        "tail10_nmae": 0.04546406865119934,
+        "maximum_error": 0.04546406865119934,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0054_s01"
+        ],
+        "median_error_percent_fs": 3.347919136285782,
+        "p90_error_percent_fs": 4.200608879327775,
+        "p95_error_percent_fs": 4.373507872223854,
+        "tail10_nmae_percent_fs": 4.546406865119934,
+        "maximum_error_percent_fs": 4.546406865119934,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0056": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.027056962251663208,
+        "nmae_percent_fs": 2.705696225166321,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.5,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.018604904413223267,
+        "p90_error": 0.051952987909317024,
+        "p95_error": 0.05852381885051726,
+        "tail10_nmae": 0.06509464979171753,
+        "maximum_error": 0.06509464979171753,
+        "errors_above_2_percent_fs": 2,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0056_s00"
+        ],
+        "median_error_percent_fs": 1.8604904413223267,
+        "p90_error_percent_fs": 5.1952987909317025,
+        "p95_error_percent_fs": 5.8523818850517255,
+        "tail10_nmae_percent_fs": 6.509464979171753,
+        "maximum_error_percent_fs": 6.509464979171753,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 50.0,
+        "count_at_2_percent_fs": 2,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0057": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.020402373978868127,
+        "nmae_percent_fs": 2.0402373978868127,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.5,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.021046508569270372,
+        "p90_error": 0.02349432958289981,
+        "p95_error": 0.023729352420195936,
+        "tail10_nmae": 0.023964375257492065,
+        "maximum_error": 0.023964375257492065,
+        "errors_above_2_percent_fs": 2,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0057_s01"
+        ],
+        "median_error_percent_fs": 2.1046508569270372,
+        "p90_error_percent_fs": 2.349432958289981,
+        "p95_error_percent_fs": 2.3729352420195937,
+        "tail10_nmae_percent_fs": 2.3964375257492065,
+        "maximum_error_percent_fs": 2.3964375257492065,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 50.0,
+        "count_at_2_percent_fs": 2,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0058": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.04375733062624931,
+        "nmae_percent_fs": 4.375733062624931,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.0,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.04107540100812912,
+        "p90_error": 0.05027827024459839,
+        "p95_error": 0.05217076539993286,
+        "tail10_nmae": 0.054063260555267334,
+        "maximum_error": 0.054063260555267334,
+        "errors_above_2_percent_fs": 4,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0058_s01"
+        ],
+        "median_error_percent_fs": 4.107540100812912,
+        "p90_error_percent_fs": 5.027827024459839,
+        "p95_error_percent_fs": 5.217076539993286,
+        "tail10_nmae_percent_fs": 5.406326055526733,
+        "maximum_error_percent_fs": 5.406326055526733,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 0.0,
+        "count_at_2_percent_fs": 0,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0060": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.028376059606671333,
+        "nmae_percent_fs": 2.8376059606671333,
+        "acc_at_1": 0.5,
+        "acc_at_2": 0.5,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.015494123101234436,
+        "p90_error": 0.06171695813536645,
+        "p95_error": 0.06961445100605486,
+        "tail10_nmae": 0.07751194387674332,
+        "maximum_error": 0.07751194387674332,
+        "errors_above_2_percent_fs": 2,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 2,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0060_s00"
+        ],
+        "median_error_percent_fs": 1.5494123101234436,
+        "p90_error_percent_fs": 6.171695813536645,
+        "p95_error_percent_fs": 6.961445100605486,
+        "tail10_nmae_percent_fs": 7.751194387674332,
+        "maximum_error_percent_fs": 7.751194387674332,
+        "acc_at_1_percent": 50.0,
+        "count_at_1_percent_fs": 2,
+        "acc_at_2_percent": 50.0,
+        "count_at_2_percent_fs": 2,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0061": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.273469440639019,
+        "nmae_percent_fs": 27.3469440639019,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.0,
+        "acc_at_5": 0.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.22659826278686523,
+        "p90_error": 0.5145743429660797,
+        "p95_error": 0.5497964143753051,
+        "tail10_nmae": 0.5850184857845306,
+        "maximum_error": 0.5850184857845306,
+        "errors_above_2_percent_fs": 4,
+        "errors_above_5_percent_fs": 4,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0061_s03"
+        ],
+        "median_error_percent_fs": 22.659826278686523,
+        "p90_error_percent_fs": 51.45743429660797,
+        "p95_error_percent_fs": 54.97964143753051,
+        "tail10_nmae_percent_fs": 58.501848578453064,
+        "maximum_error_percent_fs": 58.501848578453064,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 0.0,
+        "count_at_2_percent_fs": 0,
+        "acc_at_5_percent": 0.0,
+        "count_at_5_percent_fs": 0
+      },
+      "geoprr_roll_v22_validation_g0063": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.043586112558841705,
+        "nmae_percent_fs": 4.3586112558841705,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.25,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.047712042927742004,
+        "p90_error": 0.06325374841690064,
+        "p95_error": 0.06650408506393432,
+        "tail10_nmae": 0.06975442171096802,
+        "maximum_error": 0.06975442171096802,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0063_s02"
+        ],
+        "median_error_percent_fs": 4.7712042927742,
+        "p90_error_percent_fs": 6.3253748416900635,
+        "p95_error_percent_fs": 6.650408506393432,
+        "tail10_nmae_percent_fs": 6.975442171096802,
+        "maximum_error_percent_fs": 6.975442171096802,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0066": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.03390441834926605,
+        "nmae_percent_fs": 3.3904418349266052,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.25,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.033829495310783386,
+        "p90_error": 0.0496733844280243,
+        "p95_error": 0.05222982466220855,
+        "tail10_nmae": 0.05478626489639282,
+        "maximum_error": 0.05478626489639282,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0066_s02"
+        ],
+        "median_error_percent_fs": 3.3829495310783386,
+        "p90_error_percent_fs": 4.96733844280243,
+        "p95_error_percent_fs": 5.222982466220856,
+        "tail10_nmae_percent_fs": 5.478626489639282,
+        "maximum_error_percent_fs": 5.478626489639282,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0067": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.02821008488535881,
+        "nmae_percent_fs": 2.821008488535881,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.25,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.02201949805021286,
+        "p90_error": 0.04348533302545548,
+        "p95_error": 0.047659898549318305,
+        "tail10_nmae": 0.05183446407318115,
+        "maximum_error": 0.05183446407318115,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0067_s01"
+        ],
+        "median_error_percent_fs": 2.201949805021286,
+        "p90_error_percent_fs": 4.3485333025455475,
+        "p95_error_percent_fs": 4.7659898549318305,
+        "tail10_nmae_percent_fs": 5.183446407318115,
+        "maximum_error_percent_fs": 5.183446407318115,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0068": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.03525742515921593,
+        "nmae_percent_fs": 3.5257425159215927,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.0,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.03653530031442642,
+        "p90_error": 0.04529910236597061,
+        "p95_error": 0.045515934377908705,
+        "tail10_nmae": 0.0457327663898468,
+        "maximum_error": 0.0457327663898468,
+        "errors_above_2_percent_fs": 4,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0068_s01"
+        ],
+        "median_error_percent_fs": 3.653530031442642,
+        "p90_error_percent_fs": 4.529910236597061,
+        "p95_error_percent_fs": 4.551593437790871,
+        "tail10_nmae_percent_fs": 4.57327663898468,
+        "maximum_error_percent_fs": 4.57327663898468,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 0.0,
+        "count_at_2_percent_fs": 0,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0070": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.012174451258033514,
+        "nmae_percent_fs": 1.2174451258033514,
+        "acc_at_1": 0.25,
+        "acc_at_2": 1.0,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.014995160512626171,
+        "p90_error": 0.017827822454273702,
+        "p95_error": 0.018082685116678477,
+        "tail10_nmae": 0.018337547779083252,
+        "maximum_error": 0.018337547779083252,
+        "errors_above_2_percent_fs": 0,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0070_s02"
+        ],
+        "median_error_percent_fs": 1.4995160512626171,
+        "p90_error_percent_fs": 1.7827822454273703,
+        "p95_error_percent_fs": 1.8082685116678476,
+        "tail10_nmae_percent_fs": 1.8337547779083252,
+        "maximum_error_percent_fs": 1.8337547779083252,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 100.0,
+        "count_at_2_percent_fs": 4,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0072": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.019506029319018126,
+        "nmae_percent_fs": 1.9506029319018126,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.5,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.020324035547673702,
+        "p90_error": 0.026373394764959812,
+        "p95_error": 0.027240101713687178,
+        "tail10_nmae": 0.02810680866241455,
+        "maximum_error": 0.02810680866241455,
+        "errors_above_2_percent_fs": 2,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0072_s01"
+        ],
+        "median_error_percent_fs": 2.0324035547673702,
+        "p90_error_percent_fs": 2.637339476495981,
+        "p95_error_percent_fs": 2.7240101713687177,
+        "tail10_nmae_percent_fs": 2.810680866241455,
+        "maximum_error_percent_fs": 2.810680866241455,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 50.0,
+        "count_at_2_percent_fs": 2,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0075": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.04218572657555342,
+        "nmae_percent_fs": 4.218572657555342,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.25,
+        "acc_at_5": 0.5,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.047042882069945335,
+        "p90_error": 0.0716286275535822,
+        "p95_error": 0.0724617825821042,
+        "tail10_nmae": 0.07329493761062622,
+        "maximum_error": 0.07329493761062622,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 2,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0075_s03"
+        ],
+        "median_error_percent_fs": 4.7042882069945335,
+        "p90_error_percent_fs": 7.162862755358219,
+        "p95_error_percent_fs": 7.24617825821042,
+        "tail10_nmae_percent_fs": 7.329493761062622,
+        "maximum_error_percent_fs": 7.329493761062622,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 50.0,
+        "count_at_5_percent_fs": 2
+      },
+      "geoprr_roll_v22_validation_g0076": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.19689462333917618,
+        "nmae_percent_fs": 19.689462333917618,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.0,
+        "acc_at_5": 0.25,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.22439764440059662,
+        "p90_error": 0.28105299472808837,
+        "p95_error": 0.28719081878662106,
+        "tail10_nmae": 0.2933286428451538,
+        "maximum_error": 0.2933286428451538,
+        "errors_above_2_percent_fs": 4,
+        "errors_above_5_percent_fs": 3,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0076_s03"
+        ],
+        "median_error_percent_fs": 22.439764440059662,
+        "p90_error_percent_fs": 28.105299472808838,
+        "p95_error_percent_fs": 28.719081878662106,
+        "tail10_nmae_percent_fs": 29.33286428451538,
+        "maximum_error_percent_fs": 29.33286428451538,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 0.0,
+        "count_at_2_percent_fs": 0,
+        "acc_at_5_percent": 25.0,
+        "count_at_5_percent_fs": 1
+      },
+      "geoprr_roll_v22_validation_g0077": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.01530643180012703,
+        "nmae_percent_fs": 1.530643180012703,
+        "acc_at_1": 0.5,
+        "acc_at_2": 0.5,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.014081932604312897,
+        "p90_error": 0.030934308469295502,
+        "p95_error": 0.03181527778506279,
+        "tail10_nmae": 0.03269624710083008,
+        "maximum_error": 0.03269624710083008,
+        "errors_above_2_percent_fs": 2,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 2,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0077_s02"
+        ],
+        "median_error_percent_fs": 1.4081932604312897,
+        "p90_error_percent_fs": 3.09343084692955,
+        "p95_error_percent_fs": 3.181527778506279,
+        "tail10_nmae_percent_fs": 3.269624710083008,
+        "maximum_error_percent_fs": 3.269624710083008,
+        "acc_at_1_percent": 50.0,
+        "count_at_1_percent_fs": 2,
+        "acc_at_2_percent": 50.0,
+        "count_at_2_percent_fs": 2,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0078": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.0286390520632267,
+        "nmae_percent_fs": 2.86390520632267,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.25,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.02973131835460663,
+        "p90_error": 0.03906415700912476,
+        "p95_error": 0.03996586203575134,
+        "tail10_nmae": 0.04086756706237793,
+        "maximum_error": 0.04086756706237793,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0078_s02"
+        ],
+        "median_error_percent_fs": 2.973131835460663,
+        "p90_error_percent_fs": 3.906415700912476,
+        "p95_error_percent_fs": 3.996586203575134,
+        "tail10_nmae_percent_fs": 4.086756706237793,
+        "maximum_error_percent_fs": 4.086756706237793,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0079": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.04309936612844467,
+        "nmae_percent_fs": 4.309936612844467,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.0,
+        "acc_at_5": 0.5,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.044736623764038086,
+        "p90_error": 0.05124095380306244,
+        "p95_error": 0.05146944671869278,
+        "tail10_nmae": 0.05169793963432312,
+        "maximum_error": 0.05169793963432312,
+        "errors_above_2_percent_fs": 4,
+        "errors_above_5_percent_fs": 2,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0079_s00"
+        ],
+        "median_error_percent_fs": 4.473662376403809,
+        "p90_error_percent_fs": 5.124095380306244,
+        "p95_error_percent_fs": 5.146944671869278,
+        "tail10_nmae_percent_fs": 5.169793963432312,
+        "maximum_error_percent_fs": 5.169793963432312,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 0.0,
+        "count_at_2_percent_fs": 0,
+        "acc_at_5_percent": 50.0,
+        "count_at_5_percent_fs": 2
+      },
+      "geoprr_roll_v22_validation_g0080": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.07567203417420387,
+        "nmae_percent_fs": 7.567203417420387,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.0,
+        "acc_at_5": 0.25,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.07811110466718674,
+        "p90_error": 0.10723957866430284,
+        "p95_error": 0.11134577021002769,
+        "tail10_nmae": 0.11545196175575256,
+        "maximum_error": 0.11545196175575256,
+        "errors_above_2_percent_fs": 4,
+        "errors_above_5_percent_fs": 3,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0080_s01"
+        ],
+        "median_error_percent_fs": 7.811110466718674,
+        "p90_error_percent_fs": 10.723957866430284,
+        "p95_error_percent_fs": 11.13457702100277,
+        "tail10_nmae_percent_fs": 11.545196175575256,
+        "maximum_error_percent_fs": 11.545196175575256,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 0.0,
+        "count_at_2_percent_fs": 0,
+        "acc_at_5_percent": 25.0,
+        "count_at_5_percent_fs": 1
+      },
+      "geoprr_roll_v22_validation_g0082": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.015071917325258255,
+        "nmae_percent_fs": 1.5071917325258255,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.75,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.014207012951374054,
+        "p90_error": 0.02356560379266739,
+        "p95_error": 0.0250748760998249,
+        "tail10_nmae": 0.026584148406982422,
+        "maximum_error": 0.026584148406982422,
+        "errors_above_2_percent_fs": 1,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0082_s02"
+        ],
+        "median_error_percent_fs": 1.4207012951374054,
+        "p90_error_percent_fs": 2.356560379266739,
+        "p95_error_percent_fs": 2.50748760998249,
+        "tail10_nmae_percent_fs": 2.658414840698242,
+        "maximum_error_percent_fs": 2.658414840698242,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 75.0,
+        "count_at_2_percent_fs": 3,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0083": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.046358241233974695,
+        "nmae_percent_fs": 4.6358241233974695,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.0,
+        "acc_at_5": 0.5,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.04490554332733154,
+        "p90_error": 0.06804925799369813,
+        "p95_error": 0.06939789950847626,
+        "tail10_nmae": 0.0707465410232544,
+        "maximum_error": 0.0707465410232544,
+        "errors_above_2_percent_fs": 4,
+        "errors_above_5_percent_fs": 2,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0083_s02"
+        ],
+        "median_error_percent_fs": 4.490554332733154,
+        "p90_error_percent_fs": 6.804925799369813,
+        "p95_error_percent_fs": 6.939789950847626,
+        "tail10_nmae_percent_fs": 7.0746541023254395,
+        "maximum_error_percent_fs": 7.0746541023254395,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 0.0,
+        "count_at_2_percent_fs": 0,
+        "acc_at_5_percent": 50.0,
+        "count_at_5_percent_fs": 2
+      },
+      "geoprr_roll_v22_validation_g0085": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.02232469618320465,
+        "nmae_percent_fs": 2.232469618320465,
+        "acc_at_1": 0.5,
+        "acc_at_2": 0.75,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.009362280368804932,
+        "p90_error": 0.049860781431198126,
+        "p95_error": 0.058085623383522016,
+        "tail10_nmae": 0.06631046533584595,
+        "maximum_error": 0.06631046533584595,
+        "errors_above_2_percent_fs": 1,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 2,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0085_s00"
+        ],
+        "median_error_percent_fs": 0.9362280368804932,
+        "p90_error_percent_fs": 4.986078143119813,
+        "p95_error_percent_fs": 5.808562338352202,
+        "tail10_nmae_percent_fs": 6.631046533584595,
+        "maximum_error_percent_fs": 6.631046533584595,
+        "acc_at_1_percent": 50.0,
+        "count_at_1_percent_fs": 2,
+        "acc_at_2_percent": 75.0,
+        "count_at_2_percent_fs": 3,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0088": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.0098537877202034,
+        "nmae_percent_fs": 0.98537877202034,
+        "acc_at_1": 0.5,
+        "acc_at_2": 0.75,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.007551506161689758,
+        "p90_error": 0.018314406275749207,
+        "p95_error": 0.01986926048994064,
+        "tail10_nmae": 0.02142411470413208,
+        "maximum_error": 0.02142411470413208,
+        "errors_above_2_percent_fs": 1,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 2,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0088_s00"
+        ],
+        "median_error_percent_fs": 0.7551506161689758,
+        "p90_error_percent_fs": 1.8314406275749207,
+        "p95_error_percent_fs": 1.9869260489940639,
+        "tail10_nmae_percent_fs": 2.142411470413208,
+        "maximum_error_percent_fs": 2.142411470413208,
+        "acc_at_1_percent": 50.0,
+        "count_at_1_percent_fs": 2,
+        "acc_at_2_percent": 75.0,
+        "count_at_2_percent_fs": 3,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0090": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.032464660704135895,
+        "nmae_percent_fs": 3.2464660704135895,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.0,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.03090745210647583,
+        "p90_error": 0.03982471227645874,
+        "p95_error": 0.04101144671440124,
+        "tail10_nmae": 0.04219818115234375,
+        "maximum_error": 0.04219818115234375,
+        "errors_above_2_percent_fs": 4,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0090_s01"
+        ],
+        "median_error_percent_fs": 3.090745210647583,
+        "p90_error_percent_fs": 3.9824712276458745,
+        "p95_error_percent_fs": 4.101144671440124,
+        "tail10_nmae_percent_fs": 4.219818115234375,
+        "maximum_error_percent_fs": 4.219818115234375,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 0.0,
+        "count_at_2_percent_fs": 0,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0091": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.023277169093489647,
+        "nmae_percent_fs": 2.3277169093489647,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.25,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.02448059245944023,
+        "p90_error": 0.03602380231022835,
+        "p95_error": 0.03762534596025943,
+        "tail10_nmae": 0.03922688961029053,
+        "maximum_error": 0.03922688961029053,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0091_s02"
+        ],
+        "median_error_percent_fs": 2.448059245944023,
+        "p90_error_percent_fs": 3.602380231022835,
+        "p95_error_percent_fs": 3.7625345960259433,
+        "tail10_nmae_percent_fs": 3.9226889610290527,
+        "maximum_error_percent_fs": 3.9226889610290527,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0092": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.011898410273715854,
+        "nmae_percent_fs": 1.1898410273715854,
+        "acc_at_1": 0.5,
+        "acc_at_2": 0.75,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.00902872672304511,
+        "p90_error": 0.024380606412887577,
+        "p95_error": 0.026304653286933894,
+        "tail10_nmae": 0.028228700160980225,
+        "maximum_error": 0.028228700160980225,
+        "errors_above_2_percent_fs": 1,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 2,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0092_s02"
+        ],
+        "median_error_percent_fs": 0.9028726723045111,
+        "p90_error_percent_fs": 2.4380606412887578,
+        "p95_error_percent_fs": 2.6304653286933894,
+        "tail10_nmae_percent_fs": 2.8228700160980225,
+        "maximum_error_percent_fs": 2.8228700160980225,
+        "acc_at_1_percent": 50.0,
+        "count_at_1_percent_fs": 2,
+        "acc_at_2_percent": 75.0,
+        "count_at_2_percent_fs": 3,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0095": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.025029335170984268,
+        "nmae_percent_fs": 2.502933517098427,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.25,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.026679903268814087,
+        "p90_error": 0.03517581075429917,
+        "p95_error": 0.035990846902132036,
+        "tail10_nmae": 0.036805883049964905,
+        "maximum_error": 0.036805883049964905,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0095_s00"
+        ],
+        "median_error_percent_fs": 2.6679903268814087,
+        "p90_error_percent_fs": 3.517581075429917,
+        "p95_error_percent_fs": 3.5990846902132034,
+        "tail10_nmae_percent_fs": 3.6805883049964905,
+        "maximum_error_percent_fs": 3.6805883049964905,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0096": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.018674496561288834,
+        "nmae_percent_fs": 1.8674496561288834,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.75,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.017573297023773193,
+        "p90_error": 0.03029860705137253,
+        "p95_error": 0.032752678543329236,
+        "tail10_nmae": 0.03520675003528595,
+        "maximum_error": 0.03520675003528595,
+        "errors_above_2_percent_fs": 1,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0096_s00"
+        ],
+        "median_error_percent_fs": 1.7573297023773193,
+        "p90_error_percent_fs": 3.029860705137253,
+        "p95_error_percent_fs": 3.2752678543329234,
+        "tail10_nmae_percent_fs": 3.520675003528595,
+        "maximum_error_percent_fs": 3.520675003528595,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 75.0,
+        "count_at_2_percent_fs": 3,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0098": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.035830759356031194,
+        "nmae_percent_fs": 3.5830759356031194,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.5,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.03193707764148712,
+        "p90_error": 0.056486484408378605,
+        "p95_error": 0.05899581164121627,
+        "tail10_nmae": 0.061505138874053955,
+        "maximum_error": 0.061505138874053955,
+        "errors_above_2_percent_fs": 2,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0098_s02"
+        ],
+        "median_error_percent_fs": 3.193707764148712,
+        "p90_error_percent_fs": 5.64864844083786,
+        "p95_error_percent_fs": 5.899581164121627,
+        "tail10_nmae_percent_fs": 6.1505138874053955,
+        "maximum_error_percent_fs": 6.1505138874053955,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 50.0,
+        "count_at_2_percent_fs": 2,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0099": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.030083272606134415,
+        "nmae_percent_fs": 3.0083272606134415,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.25,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.029480166733264923,
+        "p90_error": 0.04919131398200989,
+        "p95_error": 0.052778044342994684,
+        "tail10_nmae": 0.05636477470397949,
+        "maximum_error": 0.05636477470397949,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0099_s02"
+        ],
+        "median_error_percent_fs": 2.9480166733264923,
+        "p90_error_percent_fs": 4.919131398200989,
+        "p95_error_percent_fs": 5.277804434299468,
+        "tail10_nmae_percent_fs": 5.636477470397949,
+        "maximum_error_percent_fs": 5.636477470397949,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0100": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.013974161818623543,
+        "nmae_percent_fs": 1.3974161818623543,
+        "acc_at_1": 0.25,
+        "acc_at_2": 1.0,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.015218794345855713,
+        "p90_error": 0.017435967177152633,
+        "p95_error": 0.017724636569619177,
+        "tail10_nmae": 0.018013305962085724,
+        "maximum_error": 0.018013305962085724,
+        "errors_above_2_percent_fs": 0,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0100_s00"
+        ],
+        "median_error_percent_fs": 1.5218794345855713,
+        "p90_error_percent_fs": 1.7435967177152634,
+        "p95_error_percent_fs": 1.7724636569619177,
+        "tail10_nmae_percent_fs": 1.8013305962085724,
+        "maximum_error_percent_fs": 1.8013305962085724,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 100.0,
+        "count_at_2_percent_fs": 4,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0101": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.02615753561258316,
+        "nmae_percent_fs": 2.615753561258316,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.25,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.02519497275352478,
+        "p90_error": 0.03230162560939789,
+        "p95_error": 0.03361975699663162,
+        "tail10_nmae": 0.034937888383865356,
+        "maximum_error": 0.034937888383865356,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0101_s00"
+        ],
+        "median_error_percent_fs": 2.519497275352478,
+        "p90_error_percent_fs": 3.230162560939789,
+        "p95_error_percent_fs": 3.361975699663162,
+        "tail10_nmae_percent_fs": 3.4937888383865356,
+        "maximum_error_percent_fs": 3.4937888383865356,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0103": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.06232435628771782,
+        "nmae_percent_fs": 6.232435628771782,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.0,
+        "acc_at_5": 0.25,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.06434772908687592,
+        "p90_error": 0.07858488559722901,
+        "p95_error": 0.08154307603836058,
+        "tail10_nmae": 0.08450126647949219,
+        "maximum_error": 0.08450126647949219,
+        "errors_above_2_percent_fs": 4,
+        "errors_above_5_percent_fs": 3,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0103_s02"
+        ],
+        "median_error_percent_fs": 6.4347729086875916,
+        "p90_error_percent_fs": 7.858488559722901,
+        "p95_error_percent_fs": 8.154307603836058,
+        "tail10_nmae_percent_fs": 8.450126647949219,
+        "maximum_error_percent_fs": 8.450126647949219,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 0.0,
+        "count_at_2_percent_fs": 0,
+        "acc_at_5_percent": 25.0,
+        "count_at_5_percent_fs": 1
+      },
+      "geoprr_roll_v22_validation_g0104": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.028058579191565514,
+        "nmae_percent_fs": 2.8058579191565514,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.5,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.018758714199066162,
+        "p90_error": 0.05530403926968575,
+        "p95_error": 0.062072565779089914,
+        "tail10_nmae": 0.06884109228849411,
+        "maximum_error": 0.06884109228849411,
+        "errors_above_2_percent_fs": 2,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0104_s00"
+        ],
+        "median_error_percent_fs": 1.8758714199066162,
+        "p90_error_percent_fs": 5.530403926968575,
+        "p95_error_percent_fs": 6.207256577908991,
+        "tail10_nmae_percent_fs": 6.884109228849411,
+        "maximum_error_percent_fs": 6.884109228849411,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 50.0,
+        "count_at_2_percent_fs": 2,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0105": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.02841035765595734,
+        "nmae_percent_fs": 2.841035765595734,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.5,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.02694934094324708,
+        "p90_error": 0.04574119448661804,
+        "p95_error": 0.04797437489032745,
+        "tail10_nmae": 0.050207555294036865,
+        "maximum_error": 0.050207555294036865,
+        "errors_above_2_percent_fs": 2,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0105_s01"
+        ],
+        "median_error_percent_fs": 2.694934094324708,
+        "p90_error_percent_fs": 4.574119448661804,
+        "p95_error_percent_fs": 4.797437489032745,
+        "tail10_nmae_percent_fs": 5.0207555294036865,
+        "maximum_error_percent_fs": 5.0207555294036865,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 50.0,
+        "count_at_2_percent_fs": 2,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0106": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.07795194908976555,
+        "nmae_percent_fs": 7.795194908976555,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.25,
+        "acc_at_5": 0.5,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.0635591372847557,
+        "p90_error": 0.15050647258758545,
+        "p95_error": 0.1606295585632324,
+        "tail10_nmae": 0.1707526445388794,
+        "maximum_error": 0.1707526445388794,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 2,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0106_s02"
+        ],
+        "median_error_percent_fs": 6.355913728475571,
+        "p90_error_percent_fs": 15.050647258758545,
+        "p95_error_percent_fs": 16.062955856323242,
+        "tail10_nmae_percent_fs": 17.07526445388794,
+        "maximum_error_percent_fs": 17.07526445388794,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 50.0,
+        "count_at_5_percent_fs": 2
+      },
+      "geoprr_roll_v22_validation_g0107": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.018823400139808655,
+        "nmae_percent_fs": 1.8823400139808655,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.75,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.01566387712955475,
+        "p90_error": 0.030504348874092105,
+        "p95_error": 0.03336972147226333,
+        "tail10_nmae": 0.03623509407043457,
+        "maximum_error": 0.03623509407043457,
+        "errors_above_2_percent_fs": 1,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0107_s02"
+        ],
+        "median_error_percent_fs": 1.5663877129554749,
+        "p90_error_percent_fs": 3.0504348874092106,
+        "p95_error_percent_fs": 3.336972147226333,
+        "tail10_nmae_percent_fs": 3.623509407043457,
+        "maximum_error_percent_fs": 3.623509407043457,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 75.0,
+        "count_at_2_percent_fs": 3,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0109": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.03599800146184862,
+        "nmae_percent_fs": 3.5998001461848617,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.0,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.03453195095062256,
+        "p90_error": 0.04876812035217881,
+        "p95_error": 0.05132827977649867,
+        "tail10_nmae": 0.05388843920081854,
+        "maximum_error": 0.05388843920081854,
+        "errors_above_2_percent_fs": 4,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0109_s00"
+        ],
+        "median_error_percent_fs": 3.453195095062256,
+        "p90_error_percent_fs": 4.876812035217881,
+        "p95_error_percent_fs": 5.132827977649867,
+        "tail10_nmae_percent_fs": 5.388843920081854,
+        "maximum_error_percent_fs": 5.388843920081854,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 0.0,
+        "count_at_2_percent_fs": 0,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0111": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.0654999129474163,
+        "nmae_percent_fs": 6.5499912947416306,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.25,
+        "acc_at_5": 0.5,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.06361270695924759,
+        "p90_error": 0.10832809805870057,
+        "p95_error": 0.11382740437984465,
+        "tail10_nmae": 0.11932671070098877,
+        "maximum_error": 0.11932671070098877,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 2,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0111_s02"
+        ],
+        "median_error_percent_fs": 6.361270695924759,
+        "p90_error_percent_fs": 10.832809805870056,
+        "p95_error_percent_fs": 11.382740437984465,
+        "tail10_nmae_percent_fs": 11.932671070098877,
+        "maximum_error_percent_fs": 11.932671070098877,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 50.0,
+        "count_at_5_percent_fs": 2
+      },
+      "geoprr_roll_v22_validation_g0113": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.028473353013396263,
+        "nmae_percent_fs": 2.8473353013396263,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.5,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.02378043159842491,
+        "p90_error": 0.05035415664315224,
+        "p95_error": 0.05362715013325214,
+        "tail10_nmae": 0.05690014362335205,
+        "maximum_error": 0.05690014362335205,
+        "errors_above_2_percent_fs": 2,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0113_s02"
+        ],
+        "median_error_percent_fs": 2.378043159842491,
+        "p90_error_percent_fs": 5.035415664315224,
+        "p95_error_percent_fs": 5.3627150133252135,
+        "tail10_nmae_percent_fs": 5.690014362335205,
+        "maximum_error_percent_fs": 5.690014362335205,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 50.0,
+        "count_at_2_percent_fs": 2,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0114": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.02595633454620838,
+        "nmae_percent_fs": 2.595633454620838,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.5,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.02760283648967743,
+        "p90_error": 0.04523651525378227,
+        "p95_error": 0.04660932458937168,
+        "tail10_nmae": 0.04798213392496109,
+        "maximum_error": 0.04798213392496109,
+        "errors_above_2_percent_fs": 2,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0114_s00"
+        ],
+        "median_error_percent_fs": 2.760283648967743,
+        "p90_error_percent_fs": 4.523651525378227,
+        "p95_error_percent_fs": 4.660932458937168,
+        "tail10_nmae_percent_fs": 4.798213392496109,
+        "maximum_error_percent_fs": 4.798213392496109,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 50.0,
+        "count_at_2_percent_fs": 2,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0117": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.03678897675126791,
+        "nmae_percent_fs": 3.678897675126791,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.25,
+        "acc_at_5": 0.75,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.03427217714488506,
+        "p90_error": 0.06102820634841919,
+        "p95_error": 0.06456471681594848,
+        "tail10_nmae": 0.06810122728347778,
+        "maximum_error": 0.06810122728347778,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 1,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0117_s01"
+        ],
+        "median_error_percent_fs": 3.4272177144885063,
+        "p90_error_percent_fs": 6.102820634841919,
+        "p95_error_percent_fs": 6.456471681594849,
+        "tail10_nmae_percent_fs": 6.810122728347778,
+        "maximum_error_percent_fs": 6.810122728347778,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 75.0,
+        "count_at_5_percent_fs": 3
+      },
+      "geoprr_roll_v22_validation_g0120": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.021441543474793434,
+        "nmae_percent_fs": 2.1441543474793434,
+        "acc_at_1": 0.25,
+        "acc_at_2": 0.25,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.024059325456619263,
+        "p90_error": 0.028876640647649766,
+        "p95_error": 0.029245324805378912,
+        "tail10_nmae": 0.029614008963108063,
+        "maximum_error": 0.029614008963108063,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 3,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0120_s00"
+        ],
+        "median_error_percent_fs": 2.4059325456619263,
+        "p90_error_percent_fs": 2.8876640647649765,
+        "p95_error_percent_fs": 2.9245324805378914,
+        "tail10_nmae_percent_fs": 2.9614008963108063,
+        "maximum_error_percent_fs": 2.9614008963108063,
+        "acc_at_1_percent": 25.0,
+        "count_at_1_percent_fs": 1,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0121": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.026364387944340706,
+        "nmae_percent_fs": 2.6364387944340706,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.25,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.024634230881929398,
+        "p90_error": 0.03782248497009277,
+        "p95_error": 0.04000195860862731,
+        "tail10_nmae": 0.042181432247161865,
+        "maximum_error": 0.042181432247161865,
+        "errors_above_2_percent_fs": 3,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0121_s02"
+        ],
+        "median_error_percent_fs": 2.4634230881929398,
+        "p90_error_percent_fs": 3.7822484970092773,
+        "p95_error_percent_fs": 4.000195860862731,
+        "tail10_nmae_percent_fs": 4.2181432247161865,
+        "maximum_error_percent_fs": 4.2181432247161865,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 25.0,
+        "count_at_2_percent_fs": 1,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0122": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.017089809756726027,
+        "nmae_percent_fs": 1.7089809756726027,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.75,
+        "acc_at_5": 1.0,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.016888126730918884,
+        "p90_error": 0.021672219224274158,
+        "p95_error": 0.02210991745814681,
+        "tail10_nmae": 0.022547615692019463,
+        "maximum_error": 0.022547615692019463,
+        "errors_above_2_percent_fs": 1,
+        "errors_above_5_percent_fs": 0,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0122_s00"
+        ],
+        "median_error_percent_fs": 1.6888126730918884,
+        "p90_error_percent_fs": 2.167221922427416,
+        "p95_error_percent_fs": 2.210991745814681,
+        "tail10_nmae_percent_fs": 2.2547615692019463,
+        "maximum_error_percent_fs": 2.2547615692019463,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 75.0,
+        "count_at_2_percent_fs": 3,
+        "acc_at_5_percent": 100.0,
+        "count_at_5_percent_fs": 4
+      },
+      "geoprr_roll_v22_validation_g0123": {
+        "samples": 4,
+        "groups": 1,
+        "nmae": 0.1554810255765915,
+        "nmae_percent_fs": 15.54810255765915,
+        "acc_at_1": 0.0,
+        "acc_at_2": 0.0,
+        "acc_at_5": 0.25,
+        "coverage": 1.0,
+        "failed": 0,
+        "median_error": 0.08177018165588379,
+        "p90_error": 0.3247883796691895,
+        "p95_error": 0.3758340716361998,
+        "tail10_nmae": 0.42687976360321045,
+        "maximum_error": 0.42687976360321045,
+        "errors_above_2_percent_fs": 4,
+        "errors_above_5_percent_fs": 3,
+        "input_failures": 0,
+        "errors_above_1_percent_fs": 4,
+        "mean_invalid_mass": null,
+        "mean_outside_arc_mass": null,
+        "maximum_error_ids": [
+          "geoprr_roll_v22_validation_g0123_s03"
+        ],
+        "median_error_percent_fs": 8.177018165588379,
+        "p90_error_percent_fs": 32.47883796691895,
+        "p95_error_percent_fs": 37.58340716361998,
+        "tail10_nmae_percent_fs": 42.687976360321045,
+        "maximum_error_percent_fs": 42.687976360321045,
+        "acc_at_1_percent": 0.0,
+        "count_at_1_percent_fs": 0,
+        "acc_at_2_percent": 0.0,
+        "count_at_2_percent_fs": 0,
+        "acc_at_5_percent": 25.0,
+        "count_at_5_percent_fs": 1
+      }
+    },
+    "cost": {
+      "counts": {
+        "cnn_forward_calls": 5,
+        "cnn_image_forwards": 292,
+        "backward_calls": 0,
+        "optimizer_updates": 0,
+        "failed_input_placeholder_forwards": 0
+      },
+      "pipeline_seconds": 5.0470019318163395,
+      "forward_seconds": 3.5432151816785336,
+      "batch_size": 64,
+      "workers": 4,
+      "point_counts": {
+        "point_forward_calls": 5,
+        "point_image_forwards": 292
+      },
+      "phase_cost": {
+        "seconds": 5.04847314953804,
+        "peak_cuda_memory_bytes": 1805331968,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      }
+    },
+    "protocol": "geoprr_v2_mean_tail_source_control_v1",
+    "config": {
+      "protocol": "geoprr_v2_mean_tail_source_control_v1",
+      "model": {
+        "factory": "experiments.geoprr_v2_high_resolution_direct.create_model(pretrained=True)",
+        "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+        "semantic_dim": 1280,
+        "parameters": 8435793,
+        "parameter_tensors": 233,
+        "state_tensors": 464,
+        "readout": "GAP1/full neck/Linear1280to1 std.001 bias0/float32 sigmoid",
+        "all_encoder_and_point_trainable": true,
+        "source_training_BN_updates": true
+      },
+      "data": {
+        "image_size": 512,
+        "output_size": 128,
+        "require_geometry": false,
+        "pair_manifest": null
+      },
+      "photometric": {
+        "contrast": [
+          0.8,
+          1.2
+        ],
+        "saturation": [
+          0.8,
+          1.2
+        ],
+        "brightness": [
+          -0.1,
+          0.1
+        ]
+      },
+      "source": {
+        "heldout_pointer": "canonical_pointer_03",
+        "training_pointers": [
+          "canonical_pointer_01",
+          "canonical_pointer_02"
+        ],
+        "parent_layouts_train": 687,
+        "original_train_images": 2748,
+        "roll_train_images": 2748,
+        "train_unique_images": 5496,
+        "train_repeat": 1,
+        "train_calls_per_epoch": 86,
+        "last_train_batch": 56,
+        "ID_layouts": 73,
+        "ID_images": 292,
+        "ID_calls": 5,
+        "OOD_layouts": 55,
+        "OOD_images": 0,
+        "OOD_calls": 0,
+        "counterfactual_images": 292,
+        "counterfactual_calls": 5
+      },
+      "training": {
+        "seed": 20262020,
+        "epochs": 15,
+        "max_epochs": 15,
+        "batch_size": 64,
+        "validation_batch_size": 64,
+        "workers": 4,
+        "optimizer": "AdamW",
+        "learning_rate": 0.0003,
+        "weight_decay": 0.0001,
+        "gradient_clip": 5.0,
+        "loss": "fixed .5 mean + .5 top-ceil10-percent per-image SmoothL1",
+        "smooth_l1_beta": 0.05,
+        "amp": true,
+        "scheduler": null,
+        "validation_before_epoch5": false,
+        "resume": "exact new checkpoint at next complete epoch only",
+        "intermediate_validation": false
+      },
+      "learning_gate": {
+        "constant_prediction": 0.5,
+        "ratio": 0.5,
+        "failure_error": 1.0,
+        "denominator": 292,
+        "tail_count": 30
+      },
+      "checkpoint": "latest full state after each complete epoch; last15 only; no best or scheduler",
+      "external_images_calls_backward_updates": 0,
+      "preparation_protocol": "geoprr_v2_needle_holdout_source_control_v1",
+      "kind": "one matched15E source loss-aggregation control; not formalV32 or a new theory/generalization model",
+      "operator": {
+        "train_orders": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "order_index": "(dataset_index + epoch - 1) % 3; nominal slot only; all three slots map to identity RGB",
+        "native_order": [
+          0,
+          1,
+          2
+        ],
+        "counterfactual_order": [
+          1,
+          0,
+          2
+        ],
+        "mean": [
+          0.485,
+          0.456,
+          0.406
+        ],
+        "std": [
+          0.229,
+          0.224,
+          0.225
+        ],
+        "placement": "training identity returns the original normalizedFP32 RGB tensor; no affine or pixel change",
+        "normalized_affine": "zprime_c=(std_perm/std_c)*z_perm+(mean_perm-mean_c)/std_c",
+        "identity_returns_original_tensor": true,
+        "RNG_draws": 0,
+        "CNN_views_per_presentation": 1,
+        "extra_loss": null,
+        "clip_grayscale_resize_pixel_cache": false,
+        "nominal_slots_per_epoch": [
+          1832,
+          1832,
+          1832
+        ],
+        "nominal_slot_to_actual_RGB": [
+          "RGB",
+          "RGB",
+          "RGB"
+        ],
+        "history_order_exposures": "nominal slots only, never distinct actual colors",
+        "actual_RGB_GBR_BRG_per_epoch": [
+          5496,
+          0,
+          0
+        ],
+        "each_item_actual_RGB_exposure_15_epochs": 15
+      },
+      "native_primary": {
+        "reference": "saved matched identity15E native292; no prior model forward",
+        "reference_statistics": {
+          "nmae": 0.025431218243695233,
+          "tail10_nmae": 0.11800955331418664,
+          "maximum_error": 0.5379703640937805,
+          "errors_above_5_percent_fs": 16
+        },
+        "tail_comparison": "strictly smaller",
+        "ordinary_guard": "zero new >5-percent-FS errors among the aligned reference native error<=.01 rows",
+        "counts_at_1_and_2_percent_are_diagnostic_only": true
+      },
+      "counterfactual_gate": {
+        "mean_max": 0.1250446370304666,
+        "tail_max": 0.23692208052865074,
+        "mean_absolute_scalar_drift_max": 0.01,
+        "tail30_absolute_scalar_drift_max": 0.05,
+        "failed_pair_drift": 1.0,
+        "condition": "native learning AND native primary pass; same last15 only",
+        "role": "previous color-control diagnostic only; acceptance is joint_counterfactual_gate",
+        "thresholds_are_acceptance": false
+      },
+      "budget_qualification": "same identity15E scheduled82440 train images/1290 backward attempts; actual updates and AMP skips reported separately; only the fixed per-batch loss aggregation changes",
+      "objective": {
+        "per_image": "one scalar SmoothL1(prediction_i, y_i, beta=.05, reduction=none)",
+        "aggregation": "0.5 * per_image.mean() + 0.5 * per_image.topk(ceil(.1*actual_B)).mean()",
+        "mean_weight": 0.5,
+        "tail_weight": 0.5,
+        "tail_fraction": 0.1,
+        "smooth_l1_beta": 0.05,
+        "k_B1_B4_B56_B64": [
+          1,
+          1,
+          6,
+          7
+        ],
+        "upweighted_tail_slots_per_complete_epoch": 601,
+        "all_samples_have_mean_contribution": true,
+        "extra_forward_or_loss": false,
+        "history_source_training_smooth_l1": "sample-count-weighted mean of batch composite risks; not primitive mean SmoothL1 or population tail",
+        "source_training_nmae": "unchanged unweighted scalar absolute error",
+        "source_preflight_mean_tail_objective": "same composite aggregation for the existing four training predictions, k1",
+        "qualification": "batch-local SmoothL1 tail differs from full-population absolute-error tail; no trimming or deletion"
+      },
+      "joint_counterfactual_gate": {
+        "reference_statistics": {
+          "nmae": 0.026353762864682596,
+          "tail10_nmae": 0.12945961876345488,
+          "maximum_error": 0.5424728989601135,
+          "errors_above_5_percent_fs": 17
+        },
+        "tail_comparison": "no larger",
+        "ordinary_guard": "zero new >5-percent-FS errors among aligned reference CF error<=.01 rows",
+        "previous_color_drift_thresholds": "diagnostic only; not acceptance"
+      },
+      "reference": {
+        "protocol": "geoprr_v2_matched_identity_source_control_v1",
+        "science_revision": "3e39174f36b342691f6ee96acdea2036ee5e8d30",
+        "relative_reader": "runs/geoprr_generalization/source_matched_identity_control_20261026/reader",
+        "statistics": {
+          "native": {
+            "nmae": 0.025431218243695233,
+            "tail10_nmae": 0.11800955331418664,
+            "maximum_error": 0.5379703640937805,
+            "errors_above_5_percent_fs": 16
+          },
+          "counterfactual": {
+            "nmae": 0.026353762864682596,
+            "tail10_nmae": 0.12945961876345488,
+            "maximum_error": 0.5424728989601135,
+            "errors_above_5_percent_fs": 17
+          }
+        },
+        "provided_label_scope": "Provided-label saved-number comparison only. The prior C3 audit remains149checks148PASS1FAIL: the normalized_progress/y field check was unavailable in the physical-label-triplet source contract. This is inherited raw-label-derivation coverage, not a discovered label conflict; no old audit or labels are recomputed."
+      }
+    },
+    "condition_order": [
+      0,
+      1,
+      2
+    ],
+    "epoch": 15
+  },
+  "source_counterfactual": null
+}

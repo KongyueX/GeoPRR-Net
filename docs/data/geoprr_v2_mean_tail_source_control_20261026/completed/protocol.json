@@ -1,0 +1,299 @@
+{
+  "protocol": "geoprr_v2_mean_tail_source_control_v1",
+  "code_revision": "743acb16b486f1f494c3b1f49fa7c4a41848887d",
+  "config": {
+    "protocol": "geoprr_v2_mean_tail_source_control_v1",
+    "model": {
+      "factory": "experiments.geoprr_v2_high_resolution_direct.create_model(pretrained=True)",
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "semantic_dim": 1280,
+      "parameters": 8435793,
+      "parameter_tensors": 233,
+      "state_tensors": 464,
+      "readout": "GAP1/full neck/Linear1280to1 std.001 bias0/float32 sigmoid",
+      "all_encoder_and_point_trainable": true,
+      "source_training_BN_updates": true
+    },
+    "data": {
+      "image_size": 512,
+      "output_size": 128,
+      "require_geometry": false,
+      "pair_manifest": null
+    },
+    "photometric": {
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ],
+      "brightness": [
+        -0.1,
+        0.1
+      ]
+    },
+    "source": {
+      "heldout_pointer": "canonical_pointer_03",
+      "training_pointers": [
+        "canonical_pointer_01",
+        "canonical_pointer_02"
+      ],
+      "parent_layouts_train": 687,
+      "original_train_images": 2748,
+      "roll_train_images": 2748,
+      "train_unique_images": 5496,
+      "train_repeat": 1,
+      "train_calls_per_epoch": 86,
+      "last_train_batch": 56,
+      "ID_layouts": 73,
+      "ID_images": 292,
+      "ID_calls": 5,
+      "OOD_layouts": 55,
+      "OOD_images": 0,
+      "OOD_calls": 0,
+      "counterfactual_images": 292,
+      "counterfactual_calls": 5
+    },
+    "training": {
+      "seed": 20262020,
+      "epochs": 15,
+      "max_epochs": 15,
+      "batch_size": 64,
+      "validation_batch_size": 64,
+      "workers": 4,
+      "optimizer": "AdamW",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "gradient_clip": 5.0,
+      "loss": "fixed .5 mean + .5 top-ceil10-percent per-image SmoothL1",
+      "smooth_l1_beta": 0.05,
+      "amp": true,
+      "scheduler": null,
+      "validation_before_epoch5": false,
+      "resume": "exact new checkpoint at next complete epoch only",
+      "intermediate_validation": false
+    },
+    "learning_gate": {
+      "constant_prediction": 0.5,
+      "ratio": 0.5,
+      "failure_error": 1.0,
+      "denominator": 292,
+      "tail_count": 30
+    },
+    "checkpoint": "latest full state after each complete epoch; last15 only; no best or scheduler",
+    "external_images_calls_backward_updates": 0,
+    "preparation_protocol": "geoprr_v2_needle_holdout_source_control_v1",
+    "kind": "one matched15E source loss-aggregation control; not formalV32 or a new theory/generalization model",
+    "operator": {
+      "train_orders": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "order_index": "(dataset_index + epoch - 1) % 3; nominal slot only; all three slots map to identity RGB",
+      "native_order": [
+        0,
+        1,
+        2
+      ],
+      "counterfactual_order": [
+        1,
+        0,
+        2
+      ],
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "placement": "training identity returns the original normalizedFP32 RGB tensor; no affine or pixel change",
+      "normalized_affine": "zprime_c=(std_perm/std_c)*z_perm+(mean_perm-mean_c)/std_c",
+      "identity_returns_original_tensor": true,
+      "RNG_draws": 0,
+      "CNN_views_per_presentation": 1,
+      "extra_loss": null,
+      "clip_grayscale_resize_pixel_cache": false,
+      "nominal_slots_per_epoch": [
+        1832,
+        1832,
+        1832
+      ],
+      "nominal_slot_to_actual_RGB": [
+        "RGB",
+        "RGB",
+        "RGB"
+      ],
+      "history_order_exposures": "nominal slots only, never distinct actual colors",
+      "actual_RGB_GBR_BRG_per_epoch": [
+        5496,
+        0,
+        0
+      ],
+      "each_item_actual_RGB_exposure_15_epochs": 15
+    },
+    "native_primary": {
+      "reference": "saved matched identity15E native292; no prior model forward",
+      "reference_statistics": {
+        "nmae": 0.025431218243695233,
+        "tail10_nmae": 0.11800955331418664,
+        "maximum_error": 0.5379703640937805,
+        "errors_above_5_percent_fs": 16
+      },
+      "tail_comparison": "strictly smaller",
+      "ordinary_guard": "zero new >5-percent-FS errors among the aligned reference native error<=.01 rows",
+      "counts_at_1_and_2_percent_are_diagnostic_only": true
+    },
+    "counterfactual_gate": {
+      "mean_max": 0.1250446370304666,
+      "tail_max": 0.23692208052865074,
+      "mean_absolute_scalar_drift_max": 0.01,
+      "tail30_absolute_scalar_drift_max": 0.05,
+      "failed_pair_drift": 1.0,
+      "condition": "native learning AND native primary pass; same last15 only",
+      "role": "previous color-control diagnostic only; acceptance is joint_counterfactual_gate",
+      "thresholds_are_acceptance": false
+    },
+    "budget_qualification": "same identity15E scheduled82440 train images/1290 backward attempts; actual updates and AMP skips reported separately; only the fixed per-batch loss aggregation changes",
+    "objective": {
+      "per_image": "one scalar SmoothL1(prediction_i, y_i, beta=.05, reduction=none)",
+      "aggregation": "0.5 * per_image.mean() + 0.5 * per_image.topk(ceil(.1*actual_B)).mean()",
+      "mean_weight": 0.5,
+      "tail_weight": 0.5,
+      "tail_fraction": 0.1,
+      "smooth_l1_beta": 0.05,
+      "k_B1_B4_B56_B64": [
+        1,
+        1,
+        6,
+        7
+      ],
+      "upweighted_tail_slots_per_complete_epoch": 601,
+      "all_samples_have_mean_contribution": true,
+      "extra_forward_or_loss": false,
+      "history_source_training_smooth_l1": "sample-count-weighted mean of batch composite risks; not primitive mean SmoothL1 or population tail",
+      "source_training_nmae": "unchanged unweighted scalar absolute error",
+      "source_preflight_mean_tail_objective": "same composite aggregation for the existing four training predictions, k1",
+      "qualification": "batch-local SmoothL1 tail differs from full-population absolute-error tail; no trimming or deletion"
+    },
+    "joint_counterfactual_gate": {
+      "reference_statistics": {
+        "nmae": 0.026353762864682596,
+        "tail10_nmae": 0.12945961876345488,
+        "maximum_error": 0.5424728989601135,
+        "errors_above_5_percent_fs": 17
+      },
+      "tail_comparison": "no larger",
+      "ordinary_guard": "zero new >5-percent-FS errors among aligned reference CF error<=.01 rows",
+      "previous_color_drift_thresholds": "diagnostic only; not acceptance"
+    },
+    "reference": {
+      "protocol": "geoprr_v2_matched_identity_source_control_v1",
+      "science_revision": "3e39174f36b342691f6ee96acdea2036ee5e8d30",
+      "relative_reader": "runs/geoprr_generalization/source_matched_identity_control_20261026/reader",
+      "statistics": {
+        "native": {
+          "nmae": 0.025431218243695233,
+          "tail10_nmae": 0.11800955331418664,
+          "maximum_error": 0.5379703640937805,
+          "errors_above_5_percent_fs": 16
+        },
+        "counterfactual": {
+          "nmae": 0.026353762864682596,
+          "tail10_nmae": 0.12945961876345488,
+          "maximum_error": 0.5424728989601135,
+          "errors_above_5_percent_fs": 17
+        }
+      },
+      "provided_label_scope": "Provided-label saved-number comparison only. The prior C3 audit remains149checks148PASS1FAIL: the normalized_progress/y field check was unavailable in the physical-label-triplet source contract. This is inherited raw-label-derivation coverage, not a discovered label conflict; no old audit or labels are recomputed."
+    }
+  },
+  "preparation_protocol": "geoprr_v2_needle_holdout_source_control_v1",
+  "kind": "one matched fifteen-epoch source loss-aggregation control; not formal V32",
+  "stages": [
+    "preflight",
+    "control"
+  ],
+  "automatic_resume": false,
+  "preflight_budget": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "RGB_unique_images": 8,
+    "point_calls": 3,
+    "point_examples": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "objective_config": {
+    "per_image": "one scalar SmoothL1(prediction_i, y_i, beta=.05, reduction=none)",
+    "aggregation": "0.5 * per_image.mean() + 0.5 * per_image.topk(ceil(.1*actual_B)).mean()",
+    "mean_weight": 0.5,
+    "tail_weight": 0.5,
+    "tail_fraction": 0.1,
+    "smooth_l1_beta": 0.05,
+    "k_B1_B4_B56_B64": [
+      1,
+      1,
+      6,
+      7
+    ],
+    "upweighted_tail_slots_per_complete_epoch": 601,
+    "all_samples_have_mean_contribution": true,
+    "extra_forward_or_loss": false,
+    "history_source_training_smooth_l1": "sample-count-weighted mean of batch composite risks; not primitive mean SmoothL1 or population tail",
+    "source_training_nmae": "unchanged unweighted scalar absolute error",
+    "source_preflight_mean_tail_objective": "same composite aggregation for the existing four training predictions, k1",
+    "qualification": "batch-local SmoothL1 tail differs from full-population absolute-error tail; no trimming or deletion"
+  },
+  "formal_budget": {
+    "epochs": 15,
+    "train_images": 82440,
+    "train_CNN_calls": 1290,
+    "train_point_calls": 1290,
+    "backward_attempts": 1290,
+    "updates_plus_AMP_skips": 1290,
+    "native_images": 292,
+    "native_CNN_calls": 5,
+    "native_point_calls": 5,
+    "counterfactual_if_eligible_images": 292,
+    "counterfactual_if_eligible_CNN_calls": 5,
+    "counterfactual_if_eligible_point_calls": 5,
+    "native_failure_CNN_images": 82732,
+    "native_failure_CNN_calls": 1295,
+    "counterfactual_done_CNN_images": 83024,
+    "counterfactual_done_CNN_calls": 1300,
+    "preflight_counts_separate": true,
+    "budget_qualification": "same identity-reference fifteen-epoch scheduled train images and backward attempts; actual AMP skips may differ"
+  },
+  "excluded_counts": {
+    "source_ood_needle03_RGB_images": 0,
+    "source_ood_needle03_CNN_calls": 0,
+    "industrial_RGB_images": 0,
+    "industrial_CNN_calls": 0,
+    "RF_RGB_images": 0,
+    "RF_CNN_calls": 0,
+    "external_backward_calls": 0,
+    "external_optimizer_updates": 0
+  },
+  "supervisor_process_started_before_torch_import": true,
+  "supervisor_seconds_at_protocol": 0.11485607549548149
+}

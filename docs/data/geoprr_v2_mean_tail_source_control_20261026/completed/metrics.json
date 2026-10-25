@@ -1,0 +1,3154 @@
+{
+  "protocol": "geoprr_v2_mean_tail_source_control_v1",
+  "scientific_revision": "743acb16b486f1f494c3b1f49fa7c4a41848887d",
+  "runtime_revision": "8e0bd5f806bd279751025b04b6ccc6e87520c7fd",
+  "reference_scientific_revision": "3e39174f36b342691f6ee96acdea2036ee5e8d30",
+  "reference_archive_revision": "84a1dbc42968e6d71d66f5adae8dba80b383b424",
+  "scientific_verdict": "NOT_RETAINED",
+  "metrics": {
+    "identity_reference_native": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.025431218243695233,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.015494510531425476,
+      "p90_error": 0.040915115177631405,
+      "p95_error": 0.05404334664344783,
+      "tail10_nmae": 0.11800955331418664,
+      "maximum_error": 0.5379703640937805,
+      "nmae_percent_fs": 2.543121824369523,
+      "count_at_1_percent_fs": 102,
+      "acc_at_1": 0.3493150684931507,
+      "acc_at_1_percent": 34.93150684931507,
+      "errors_above_1_percent_fs": 190,
+      "count_at_2_percent_fs": 182,
+      "acc_at_2": 0.6232876712328768,
+      "acc_at_2_percent": 62.32876712328767,
+      "errors_above_2_percent_fs": 110,
+      "count_at_5_percent_fs": 276,
+      "acc_at_5": 0.9452054794520548,
+      "acc_at_5_percent": 94.52054794520548,
+      "errors_above_5_percent_fs": 16,
+      "median_error_percent_fs": 1.5494510531425476,
+      "p90_error_percent_fs": 4.0915115177631405,
+      "p95_error_percent_fs": 5.404334664344783,
+      "tail10_nmae_percent_fs": 11.800955331418663,
+      "maximum_error_percent_fs": 53.79703640937805,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    },
+    "identity_reference_counterfactual": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.026353762864682596,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.01438409835100174,
+      "p90_error": 0.04164543636143209,
+      "p95_error": 0.05768549442291258,
+      "tail10_nmae": 0.12945961876345488,
+      "maximum_error": 0.5424728989601135,
+      "nmae_percent_fs": 2.6353762864682597,
+      "count_at_1_percent_fs": 104,
+      "acc_at_1": 0.3561643835616438,
+      "acc_at_1_percent": 35.61643835616438,
+      "errors_above_1_percent_fs": 188,
+      "count_at_2_percent_fs": 189,
+      "acc_at_2": 0.6472602739726028,
+      "acc_at_2_percent": 64.72602739726027,
+      "errors_above_2_percent_fs": 103,
+      "count_at_5_percent_fs": 275,
+      "acc_at_5": 0.9417808219178082,
+      "acc_at_5_percent": 94.17808219178082,
+      "errors_above_5_percent_fs": 17,
+      "median_error_percent_fs": 1.438409835100174,
+      "p90_error_percent_fs": 4.164543636143208,
+      "p95_error_percent_fs": 5.768549442291258,
+      "tail10_nmae_percent_fs": 12.945961876345487,
+      "maximum_error_percent_fs": 54.24728989601135,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    },
+    "source_id": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.03855632551150773,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.02838931605219841,
+      "p90_error": 0.0680651616305113,
+      "p95_error": 0.08725114092230796,
+      "tail10_nmae": 0.14186078384518624,
+      "maximum_error": 0.5850184857845306,
+      "nmae_percent_fs": 3.855632551150773,
+      "maximum_error_ids": [
+        "geoprr_roll_v22_validation_g0061_s03"
+      ],
+      "count_at_1_percent_fs": 51,
+      "acc_at_1": 0.17465753424657535,
+      "acc_at_1_percent": 17.465753424657535,
+      "errors_above_1_percent_fs": 241,
+      "count_at_2_percent_fs": 102,
+      "acc_at_2": 0.3493150684931507,
+      "acc_at_2_percent": 34.93150684931507,
+      "errors_above_2_percent_fs": 190,
+      "count_at_5_percent_fs": 237,
+      "acc_at_5": 0.8116438356164384,
+      "acc_at_5_percent": 81.16438356164383,
+      "errors_above_5_percent_fs": 55,
+      "median_error_percent_fs": 2.838931605219841,
+      "p90_error_percent_fs": 6.806516163051129,
+      "p95_error_percent_fs": 8.725114092230795,
+      "tail10_nmae_percent_fs": 14.186078384518625,
+      "maximum_error_percent_fs": 58.501848578453064,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    },
+    "constant_source_id": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.2500892740609332,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.2489658147096634,
+      "p90_error": 0.4416848599910737,
+      "p95_error": 0.476235611923039,
+      "tail10_nmae": 0.4738441610573015,
+      "maximum_error": 0.4994222219684161,
+      "nmae_percent_fs": 25.008927406093317,
+      "maximum_error_ids": [
+        "geoprr_roll_v22_validation_g0036_s00"
+      ],
+      "count_at_1_percent_fs": 7,
+      "acc_at_1": 0.023972602739726026,
+      "acc_at_1_percent": 2.3972602739726026,
+      "errors_above_1_percent_fs": 285,
+      "count_at_2_percent_fs": 14,
+      "acc_at_2": 0.04794520547945205,
+      "acc_at_2_percent": 4.794520547945205,
+      "errors_above_2_percent_fs": 278,
+      "count_at_5_percent_fs": 24,
+      "acc_at_5": 0.0821917808219178,
+      "acc_at_5_percent": 8.219178082191782,
+      "errors_above_5_percent_fs": 268,
+      "median_error_percent_fs": 24.89658147096634,
+      "p90_error_percent_fs": 44.16848599910737,
+      "p95_error_percent_fs": 47.623561192303896,
+      "tail10_nmae_percent_fs": 47.384416105730146,
+      "maximum_error_percent_fs": 49.94222219684161,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    }
+  },
+  "native_learning_predicates": {
+    "mean": true,
+    "tail": true
+  },
+  "native_joint_recomputed": {
+    "passed": false,
+    "view": "native",
+    "predicates": {
+      "mean": false,
+      "tail": false,
+      "maximum": false,
+      "errors_above_5_percent_fs": false,
+      "no_new_over5_on_reference_accurate": false
+    },
+    "limits": {
+      "nmae": 0.025431218243695233,
+      "tail10_nmae": 0.11800955331418664,
+      "maximum_error": 0.5379703640937805,
+      "errors_above_5_percent_fs": 16
+    },
+    "mean": 0.03855632551150773,
+    "tail": 0.14186078384518624,
+    "maximum": 0.5850184857845306,
+    "counts_over_1_2_5": [
+      241,
+      190,
+      55
+    ],
+    "paired_reference": {
+      "denominator": 292,
+      "paired_thresholds_percent_fs": {
+        "1": {
+          "new_errors": 80,
+          "rescues": 29,
+          "reference_errors_above": 190,
+          "candidate_errors_above": 241
+        },
+        "2": {
+          "new_errors": 110,
+          "rescues": 30,
+          "reference_errors_above": 110,
+          "candidate_errors_above": 190
+        },
+        "5": {
+          "new_errors": 45,
+          "rescues": 6,
+          "reference_errors_above": 16,
+          "candidate_errors_above": 55
+        }
+      },
+      "reference_accurate_at_1_percent_count": 102,
+      "new_over5_on_reference_accurate_count": 15,
+      "group_differences": {
+        "geoprr_roll_v22_validation_g0001": {
+          "samples": 4,
+          "reference_error_sum": 0.03985877335071564,
+          "candidate_error_sum": 0.16326113045215607,
+          "reference_errors_above_1_2_5": [
+            1,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0002": {
+          "samples": 4,
+          "reference_error_sum": 0.1632321912329644,
+          "candidate_error_sum": 0.11762473732233047,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0004": {
+          "samples": 4,
+          "reference_error_sum": 0.08668945729732513,
+          "candidate_error_sum": 0.13276607543230057,
+          "reference_errors_above_1_2_5": [
+            4,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0005": {
+          "samples": 4,
+          "reference_error_sum": 0.06808985769748688,
+          "candidate_error_sum": 0.10188885033130646,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0006": {
+          "samples": 4,
+          "reference_error_sum": 0.17979127168655396,
+          "candidate_error_sum": 0.09542127698659897,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0008": {
+          "samples": 4,
+          "reference_error_sum": 0.10110434889793396,
+          "candidate_error_sum": 0.14709308743476868,
+          "reference_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0011": {
+          "samples": 4,
+          "reference_error_sum": 0.06654078885912895,
+          "candidate_error_sum": 0.07412751764059067,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0013": {
+          "samples": 4,
+          "reference_error_sum": 0.07412256300449371,
+          "candidate_error_sum": 0.11507906019687653,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0014": {
+          "samples": 4,
+          "reference_error_sum": 0.14755743741989136,
+          "candidate_error_sum": 0.19513336196541786,
+          "reference_errors_above_1_2_5": [
+            3,
+            3,
+            1
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0015": {
+          "samples": 4,
+          "reference_error_sum": 0.09313695132732391,
+          "candidate_error_sum": 0.25778791308403015,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0017": {
+          "samples": 4,
+          "reference_error_sum": 0.06232777237892151,
+          "candidate_error_sum": 0.16253647208213806,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0018": {
+          "samples": 4,
+          "reference_error_sum": 0.06939295679330826,
+          "candidate_error_sum": 0.10188796371221542,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0021": {
+          "samples": 4,
+          "reference_error_sum": 0.059866368770599365,
+          "candidate_error_sum": 0.06970538198947906,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0022": {
+          "samples": 4,
+          "reference_error_sum": 0.034756824374198914,
+          "candidate_error_sum": 0.07542802393436432,
+          "reference_errors_above_1_2_5": [
+            1,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0023": {
+          "samples": 4,
+          "reference_error_sum": 0.07591722905635834,
+          "candidate_error_sum": 0.14360392838716507,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0024": {
+          "samples": 4,
+          "reference_error_sum": 0.028806626796722412,
+          "candidate_error_sum": 0.16031423211097717,
+          "reference_errors_above_1_2_5": [
+            1,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0026": {
+          "samples": 4,
+          "reference_error_sum": 0.07600996078690514,
+          "candidate_error_sum": 0.10378559771925211,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0027": {
+          "samples": 4,
+          "reference_error_sum": 0.05974624305963516,
+          "candidate_error_sum": 0.18200084567070007,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0030": {
+          "samples": 4,
+          "reference_error_sum": 0.05756957828998566,
+          "candidate_error_sum": 0.0956895649433136,
+          "reference_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0032": {
+          "samples": 4,
+          "reference_error_sum": 0.07320494949817657,
+          "candidate_error_sum": 0.04660746455192566,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0033": {
+          "samples": 4,
+          "reference_error_sum": 0.07973377406597137,
+          "candidate_error_sum": 0.1379956752061844,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0035": {
+          "samples": 4,
+          "reference_error_sum": 0.06736674904823303,
+          "candidate_error_sum": 0.1787254363298416,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0036": {
+          "samples": 4,
+          "reference_error_sum": 0.05831564083928242,
+          "candidate_error_sum": 0.07499566074693576,
+          "reference_errors_above_1_2_5": [
+            1,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0039": {
+          "samples": 4,
+          "reference_error_sum": 0.012599706649780273,
+          "candidate_error_sum": 0.1565609872341156,
+          "reference_errors_above_1_2_5": [
+            0,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0043": {
+          "samples": 4,
+          "reference_error_sum": 0.04797874391078949,
+          "candidate_error_sum": 0.1025262326002121,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0044": {
+          "samples": 4,
+          "reference_error_sum": 0.11010763701051474,
+          "candidate_error_sum": 0.13018691539764404,
+          "reference_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0046": {
+          "samples": 4,
+          "reference_error_sum": 0.08313865959644318,
+          "candidate_error_sum": 0.05790644884109497,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0051": {
+          "samples": 4,
+          "reference_error_sum": 0.06781831383705139,
+          "candidate_error_sum": 0.12592576444149017,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0054": {
+          "samples": 4,
+          "reference_error_sum": 0.0703968033194542,
+          "candidate_error_sum": 0.12324802577495575,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0056": {
+          "samples": 4,
+          "reference_error_sum": 0.07942907512187958,
+          "candidate_error_sum": 0.10822784900665283,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0057": {
+          "samples": 4,
+          "reference_error_sum": 0.05435636278707534,
+          "candidate_error_sum": 0.08160949591547251,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0058": {
+          "samples": 4,
+          "reference_error_sum": 0.020968839526176453,
+          "candidate_error_sum": 0.17502932250499725,
+          "reference_errors_above_1_2_5": [
+            0,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0060": {
+          "samples": 4,
+          "reference_error_sum": 0.03958934545516968,
+          "candidate_error_sum": 0.11350423842668533,
+          "reference_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0061": {
+          "samples": 4,
+          "reference_error_sum": 1.0910764038562775,
+          "candidate_error_sum": 1.093877762556076,
+          "reference_errors_above_1_2_5": [
+            4,
+            4,
+            3
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            4
+          ]
+        },
+        "geoprr_roll_v22_validation_g0063": {
+          "samples": 4,
+          "reference_error_sum": 0.06823739409446716,
+          "candidate_error_sum": 0.17434445023536682,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0066": {
+          "samples": 4,
+          "reference_error_sum": 0.06226909160614014,
+          "candidate_error_sum": 0.1356176733970642,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0067": {
+          "samples": 4,
+          "reference_error_sum": 0.10106872022151947,
+          "candidate_error_sum": 0.11284033954143524,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0068": {
+          "samples": 4,
+          "reference_error_sum": 0.07197775691747665,
+          "candidate_error_sum": 0.1410297006368637,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0070": {
+          "samples": 4,
+          "reference_error_sum": 0.0656796908006072,
+          "candidate_error_sum": 0.048697805032134056,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0072": {
+          "samples": 4,
+          "reference_error_sum": 0.18254763074219227,
+          "candidate_error_sum": 0.0780241172760725,
+          "reference_errors_above_1_2_5": [
+            4,
+            3,
+            2
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0075": {
+          "samples": 4,
+          "reference_error_sum": 0.10957780294120312,
+          "candidate_error_sum": 0.16874290630221367,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            1
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0076": {
+          "samples": 4,
+          "reference_error_sum": 1.071182370185852,
+          "candidate_error_sum": 0.7875784933567047,
+          "reference_errors_above_1_2_5": [
+            4,
+            4,
+            4
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            3
+          ]
+        },
+        "geoprr_roll_v22_validation_g0077": {
+          "samples": 4,
+          "reference_error_sum": 0.10010983049869537,
+          "candidate_error_sum": 0.06122572720050812,
+          "reference_errors_above_1_2_5": [
+            4,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0078": {
+          "samples": 4,
+          "reference_error_sum": 0.040296152234077454,
+          "candidate_error_sum": 0.1145562082529068,
+          "reference_errors_above_1_2_5": [
+            1,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0079": {
+          "samples": 4,
+          "reference_error_sum": 0.061842575669288635,
+          "candidate_error_sum": 0.1723974645137787,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0080": {
+          "samples": 4,
+          "reference_error_sum": 0.11697801947593689,
+          "candidate_error_sum": 0.3026881366968155,
+          "reference_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            3
+          ]
+        },
+        "geoprr_roll_v22_validation_g0082": {
+          "samples": 4,
+          "reference_error_sum": 0.046254515647888184,
+          "candidate_error_sum": 0.06028766930103302,
+          "reference_errors_above_1_2_5": [
+            2,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0083": {
+          "samples": 4,
+          "reference_error_sum": 0.05245230160653591,
+          "candidate_error_sum": 0.18543296493589878,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0085": {
+          "samples": 4,
+          "reference_error_sum": 0.05728420615196228,
+          "candidate_error_sum": 0.0892987847328186,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            1,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0088": {
+          "samples": 4,
+          "reference_error_sum": 0.0284145325422287,
+          "candidate_error_sum": 0.0394151508808136,
+          "reference_errors_above_1_2_5": [
+            1,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0090": {
+          "samples": 4,
+          "reference_error_sum": 0.09064281731843948,
+          "candidate_error_sum": 0.12985864281654358,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            1
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0091": {
+          "samples": 4,
+          "reference_error_sum": 0.03252619132399559,
+          "candidate_error_sum": 0.09310867637395859,
+          "reference_errors_above_1_2_5": [
+            1,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0092": {
+          "samples": 4,
+          "reference_error_sum": 0.0799533260287717,
+          "candidate_error_sum": 0.047593641094863415,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0095": {
+          "samples": 4,
+          "reference_error_sum": 0.06237711012363434,
+          "candidate_error_sum": 0.10011734068393707,
+          "reference_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0096": {
+          "samples": 4,
+          "reference_error_sum": 0.035202398896217346,
+          "candidate_error_sum": 0.07469798624515533,
+          "reference_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0098": {
+          "samples": 4,
+          "reference_error_sum": 0.08332431595772505,
+          "candidate_error_sum": 0.14332303742412478,
+          "reference_errors_above_1_2_5": [
+            4,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0099": {
+          "samples": 4,
+          "reference_error_sum": 0.07553954422473907,
+          "candidate_error_sum": 0.12033309042453766,
+          "reference_errors_above_1_2_5": [
+            4,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0100": {
+          "samples": 4,
+          "reference_error_sum": 0.015947096049785614,
+          "candidate_error_sum": 0.05589664727449417,
+          "reference_errors_above_1_2_5": [
+            0,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            0,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0101": {
+          "samples": 4,
+          "reference_error_sum": 0.11475762724876404,
+          "candidate_error_sum": 0.10463014245033264,
+          "reference_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0103": {
+          "samples": 4,
+          "reference_error_sum": 0.11598531901836395,
+          "candidate_error_sum": 0.24929742515087128,
+          "reference_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            3
+          ]
+        },
+        "geoprr_roll_v22_validation_g0104": {
+          "samples": 4,
+          "reference_error_sum": 0.09439992904663086,
+          "candidate_error_sum": 0.11223431676626205,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0105": {
+          "samples": 4,
+          "reference_error_sum": 0.046795789152383804,
+          "candidate_error_sum": 0.11364143062382936,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0106": {
+          "samples": 4,
+          "reference_error_sum": 0.2614646255970001,
+          "candidate_error_sum": 0.3118077963590622,
+          "reference_errors_above_1_2_5": [
+            4,
+            4,
+            2
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0107": {
+          "samples": 4,
+          "reference_error_sum": 0.03118497133255005,
+          "candidate_error_sum": 0.07529360055923462,
+          "reference_errors_above_1_2_5": [
+            2,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0109": {
+          "samples": 4,
+          "reference_error_sum": 0.05203799554146826,
+          "candidate_error_sum": 0.14399200584739447,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0111": {
+          "samples": 4,
+          "reference_error_sum": 0.056960344314575195,
+          "candidate_error_sum": 0.2619996517896652,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            2
+          ]
+        },
+        "geoprr_roll_v22_validation_g0113": {
+          "samples": 4,
+          "reference_error_sum": 0.061900608241558075,
+          "candidate_error_sum": 0.11389341205358505,
+          "reference_errors_above_1_2_5": [
+            3,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0114": {
+          "samples": 4,
+          "reference_error_sum": 0.034763745963573456,
+          "candidate_error_sum": 0.10382533818483353,
+          "reference_errors_above_1_2_5": [
+            2,
+            0,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0117": {
+          "samples": 4,
+          "reference_error_sum": 0.07243933901190758,
+          "candidate_error_sum": 0.14715590700507164,
+          "reference_errors_above_1_2_5": [
+            3,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            1
+          ]
+        },
+        "geoprr_roll_v22_validation_g0120": {
+          "samples": 4,
+          "reference_error_sum": 0.06354961544275284,
+          "candidate_error_sum": 0.08576617389917374,
+          "reference_errors_above_1_2_5": [
+            4,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            3,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0121": {
+          "samples": 4,
+          "reference_error_sum": 0.03834277391433716,
+          "candidate_error_sum": 0.10545755177736282,
+          "reference_errors_above_1_2_5": [
+            2,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            3,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0122": {
+          "samples": 4,
+          "reference_error_sum": 0.08629510272294283,
+          "candidate_error_sum": 0.0683592390269041,
+          "reference_errors_above_1_2_5": [
+            2,
+            2,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            1,
+            0
+          ]
+        },
+        "geoprr_roll_v22_validation_g0123": {
+          "samples": 4,
+          "reference_error_sum": 0.08275434374809265,
+          "candidate_error_sum": 0.621924102306366,
+          "reference_errors_above_1_2_5": [
+            4,
+            1,
+            0
+          ],
+          "candidate_errors_above_1_2_5": [
+            4,
+            4,
+            3
+          ]
+        }
+      }
+    },
+    "reference_science_revision": "3e39174f36b342691f6ee96acdea2036ee5e8d30",
+    "counts_at_1_and_2_percent_are_diagnostic_only": true
+  },
+  "native_eligible_for_CF": false,
+  "CF_joint_recomputed": null,
+  "drift_diagnostic_only": null,
+  "paired_identity_to_mean_tail": {
+    "native": {
+      "guard": {
+        "denominator": 292,
+        "paired_thresholds_percent_fs": {
+          "1": {
+            "new_errors": 80,
+            "rescues": 29,
+            "reference_errors_above": 190,
+            "candidate_errors_above": 241
+          },
+          "2": {
+            "new_errors": 110,
+            "rescues": 30,
+            "reference_errors_above": 110,
+            "candidate_errors_above": 190
+          },
+          "5": {
+            "new_errors": 45,
+            "rescues": 6,
+            "reference_errors_above": 16,
+            "candidate_errors_above": 55
+          }
+        },
+        "reference_accurate_at_1_percent_count": 102,
+        "new_over5_on_reference_accurate_count": 15,
+        "group_differences": {
+          "geoprr_roll_v22_validation_g0001": {
+            "samples": 4,
+            "reference_error_sum": 0.03985877335071564,
+            "candidate_error_sum": 0.16326113045215607,
+            "reference_errors_above_1_2_5": [
+              1,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              4,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0002": {
+            "samples": 4,
+            "reference_error_sum": 0.1632321912329644,
+            "candidate_error_sum": 0.11762473732233047,
+            "reference_errors_above_1_2_5": [
+              3,
+              2,
+              1
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              2,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0004": {
+            "samples": 4,
+            "reference_error_sum": 0.08668945729732513,
+            "candidate_error_sum": 0.13276607543230057,
+            "reference_errors_above_1_2_5": [
+              4,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              3,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0005": {
+            "samples": 4,
+            "reference_error_sum": 0.06808985769748688,
+            "candidate_error_sum": 0.10188885033130646,
+            "reference_errors_above_1_2_5": [
+              3,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              3,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0006": {
+            "samples": 4,
+            "reference_error_sum": 0.17979127168655396,
+            "candidate_error_sum": 0.09542127698659897,
+            "reference_errors_above_1_2_5": [
+              3,
+              2,
+              1
+            ],
+            "candidate_errors_above_1_2_5": [
+              2,
+              2,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0008": {
+            "samples": 4,
+            "reference_error_sum": 0.10110434889793396,
+            "candidate_error_sum": 0.14709308743476868,
+            "reference_errors_above_1_2_5": [
+              4,
+              3,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              2,
+              2,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0011": {
+            "samples": 4,
+            "reference_error_sum": 0.06654078885912895,
+            "candidate_error_sum": 0.07412751764059067,
+            "reference_errors_above_1_2_5": [
+              2,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              1,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0013": {
+            "samples": 4,
+            "reference_error_sum": 0.07412256300449371,
+            "candidate_error_sum": 0.11507906019687653,
+            "reference_errors_above_1_2_5": [
+              3,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              3,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0014": {
+            "samples": 4,
+            "reference_error_sum": 0.14755743741989136,
+            "candidate_error_sum": 0.19513336196541786,
+            "reference_errors_above_1_2_5": [
+              3,
+              3,
+              1
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              3,
+              2
+            ]
+          },
+          "geoprr_roll_v22_validation_g0015": {
+            "samples": 4,
+            "reference_error_sum": 0.09313695132732391,
+            "candidate_error_sum": 0.25778791308403015,
+            "reference_errors_above_1_2_5": [
+              3,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              4,
+              2
+            ]
+          },
+          "geoprr_roll_v22_validation_g0017": {
+            "samples": 4,
+            "reference_error_sum": 0.06232777237892151,
+            "candidate_error_sum": 0.16253647208213806,
+            "reference_errors_above_1_2_5": [
+              3,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              4,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0018": {
+            "samples": 4,
+            "reference_error_sum": 0.06939295679330826,
+            "candidate_error_sum": 0.10188796371221542,
+            "reference_errors_above_1_2_5": [
+              3,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              3,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0021": {
+            "samples": 4,
+            "reference_error_sum": 0.059866368770599365,
+            "candidate_error_sum": 0.06970538198947906,
+            "reference_errors_above_1_2_5": [
+              2,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              1,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0022": {
+            "samples": 4,
+            "reference_error_sum": 0.034756824374198914,
+            "candidate_error_sum": 0.07542802393436432,
+            "reference_errors_above_1_2_5": [
+              1,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              2,
+              2,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0023": {
+            "samples": 4,
+            "reference_error_sum": 0.07591722905635834,
+            "candidate_error_sum": 0.14360392838716507,
+            "reference_errors_above_1_2_5": [
+              2,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              3,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0024": {
+            "samples": 4,
+            "reference_error_sum": 0.028806626796722412,
+            "candidate_error_sum": 0.16031423211097717,
+            "reference_errors_above_1_2_5": [
+              1,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              3,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0026": {
+            "samples": 4,
+            "reference_error_sum": 0.07600996078690514,
+            "candidate_error_sum": 0.10378559771925211,
+            "reference_errors_above_1_2_5": [
+              3,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              2,
+              2,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0027": {
+            "samples": 4,
+            "reference_error_sum": 0.05974624305963516,
+            "candidate_error_sum": 0.18200084567070007,
+            "reference_errors_above_1_2_5": [
+              2,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              3,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0030": {
+            "samples": 4,
+            "reference_error_sum": 0.05756957828998566,
+            "candidate_error_sum": 0.0956895649433136,
+            "reference_errors_above_1_2_5": [
+              3,
+              0,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              3,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0032": {
+            "samples": 4,
+            "reference_error_sum": 0.07320494949817657,
+            "candidate_error_sum": 0.04660746455192566,
+            "reference_errors_above_1_2_5": [
+              3,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              0,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0033": {
+            "samples": 4,
+            "reference_error_sum": 0.07973377406597137,
+            "candidate_error_sum": 0.1379956752061844,
+            "reference_errors_above_1_2_5": [
+              3,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              3,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0035": {
+            "samples": 4,
+            "reference_error_sum": 0.06736674904823303,
+            "candidate_error_sum": 0.1787254363298416,
+            "reference_errors_above_1_2_5": [
+              3,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              4,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0036": {
+            "samples": 4,
+            "reference_error_sum": 0.05831564083928242,
+            "candidate_error_sum": 0.07499566074693576,
+            "reference_errors_above_1_2_5": [
+              1,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              2,
+              2,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0039": {
+            "samples": 4,
+            "reference_error_sum": 0.012599706649780273,
+            "candidate_error_sum": 0.1565609872341156,
+            "reference_errors_above_1_2_5": [
+              0,
+              0,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              3,
+              2
+            ]
+          },
+          "geoprr_roll_v22_validation_g0043": {
+            "samples": 4,
+            "reference_error_sum": 0.04797874391078949,
+            "candidate_error_sum": 0.1025262326002121,
+            "reference_errors_above_1_2_5": [
+              2,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              2,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0044": {
+            "samples": 4,
+            "reference_error_sum": 0.11010763701051474,
+            "candidate_error_sum": 0.13018691539764404,
+            "reference_errors_above_1_2_5": [
+              4,
+              4,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              4,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0046": {
+            "samples": 4,
+            "reference_error_sum": 0.08313865959644318,
+            "candidate_error_sum": 0.05790644884109497,
+            "reference_errors_above_1_2_5": [
+              3,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              1,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0051": {
+            "samples": 4,
+            "reference_error_sum": 0.06781831383705139,
+            "candidate_error_sum": 0.12592576444149017,
+            "reference_errors_above_1_2_5": [
+              3,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              4,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0054": {
+            "samples": 4,
+            "reference_error_sum": 0.0703968033194542,
+            "candidate_error_sum": 0.12324802577495575,
+            "reference_errors_above_1_2_5": [
+              2,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              3,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0056": {
+            "samples": 4,
+            "reference_error_sum": 0.07942907512187958,
+            "candidate_error_sum": 0.10822784900665283,
+            "reference_errors_above_1_2_5": [
+              3,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              2,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0057": {
+            "samples": 4,
+            "reference_error_sum": 0.05435636278707534,
+            "candidate_error_sum": 0.08160949591547251,
+            "reference_errors_above_1_2_5": [
+              3,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              2,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0058": {
+            "samples": 4,
+            "reference_error_sum": 0.020968839526176453,
+            "candidate_error_sum": 0.17502932250499725,
+            "reference_errors_above_1_2_5": [
+              0,
+              0,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              4,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0060": {
+            "samples": 4,
+            "reference_error_sum": 0.03958934545516968,
+            "candidate_error_sum": 0.11350423842668533,
+            "reference_errors_above_1_2_5": [
+              3,
+              0,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              2,
+              2,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0061": {
+            "samples": 4,
+            "reference_error_sum": 1.0910764038562775,
+            "candidate_error_sum": 1.093877762556076,
+            "reference_errors_above_1_2_5": [
+              4,
+              4,
+              3
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              4,
+              4
+            ]
+          },
+          "geoprr_roll_v22_validation_g0063": {
+            "samples": 4,
+            "reference_error_sum": 0.06823739409446716,
+            "candidate_error_sum": 0.17434445023536682,
+            "reference_errors_above_1_2_5": [
+              2,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              3,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0066": {
+            "samples": 4,
+            "reference_error_sum": 0.06226909160614014,
+            "candidate_error_sum": 0.1356176733970642,
+            "reference_errors_above_1_2_5": [
+              2,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              3,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0067": {
+            "samples": 4,
+            "reference_error_sum": 0.10106872022151947,
+            "candidate_error_sum": 0.11284033954143524,
+            "reference_errors_above_1_2_5": [
+              3,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              3,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0068": {
+            "samples": 4,
+            "reference_error_sum": 0.07197775691747665,
+            "candidate_error_sum": 0.1410297006368637,
+            "reference_errors_above_1_2_5": [
+              2,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              4,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0070": {
+            "samples": 4,
+            "reference_error_sum": 0.0656796908006072,
+            "candidate_error_sum": 0.048697805032134056,
+            "reference_errors_above_1_2_5": [
+              2,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              0,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0072": {
+            "samples": 4,
+            "reference_error_sum": 0.18254763074219227,
+            "candidate_error_sum": 0.0780241172760725,
+            "reference_errors_above_1_2_5": [
+              4,
+              3,
+              2
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              2,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0075": {
+            "samples": 4,
+            "reference_error_sum": 0.10957780294120312,
+            "candidate_error_sum": 0.16874290630221367,
+            "reference_errors_above_1_2_5": [
+              2,
+              2,
+              1
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              3,
+              2
+            ]
+          },
+          "geoprr_roll_v22_validation_g0076": {
+            "samples": 4,
+            "reference_error_sum": 1.071182370185852,
+            "candidate_error_sum": 0.7875784933567047,
+            "reference_errors_above_1_2_5": [
+              4,
+              4,
+              4
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              4,
+              3
+            ]
+          },
+          "geoprr_roll_v22_validation_g0077": {
+            "samples": 4,
+            "reference_error_sum": 0.10010983049869537,
+            "candidate_error_sum": 0.06122572720050812,
+            "reference_errors_above_1_2_5": [
+              4,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              2,
+              2,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0078": {
+            "samples": 4,
+            "reference_error_sum": 0.040296152234077454,
+            "candidate_error_sum": 0.1145562082529068,
+            "reference_errors_above_1_2_5": [
+              1,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              3,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0079": {
+            "samples": 4,
+            "reference_error_sum": 0.061842575669288635,
+            "candidate_error_sum": 0.1723974645137787,
+            "reference_errors_above_1_2_5": [
+              3,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              4,
+              2
+            ]
+          },
+          "geoprr_roll_v22_validation_g0080": {
+            "samples": 4,
+            "reference_error_sum": 0.11697801947593689,
+            "candidate_error_sum": 0.3026881366968155,
+            "reference_errors_above_1_2_5": [
+              4,
+              4,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              4,
+              3
+            ]
+          },
+          "geoprr_roll_v22_validation_g0082": {
+            "samples": 4,
+            "reference_error_sum": 0.046254515647888184,
+            "candidate_error_sum": 0.06028766930103302,
+            "reference_errors_above_1_2_5": [
+              2,
+              0,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              1,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0083": {
+            "samples": 4,
+            "reference_error_sum": 0.05245230160653591,
+            "candidate_error_sum": 0.18543296493589878,
+            "reference_errors_above_1_2_5": [
+              2,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              4,
+              2
+            ]
+          },
+          "geoprr_roll_v22_validation_g0085": {
+            "samples": 4,
+            "reference_error_sum": 0.05728420615196228,
+            "candidate_error_sum": 0.0892987847328186,
+            "reference_errors_above_1_2_5": [
+              3,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              2,
+              1,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0088": {
+            "samples": 4,
+            "reference_error_sum": 0.0284145325422287,
+            "candidate_error_sum": 0.0394151508808136,
+            "reference_errors_above_1_2_5": [
+              1,
+              0,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              2,
+              1,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0090": {
+            "samples": 4,
+            "reference_error_sum": 0.09064281731843948,
+            "candidate_error_sum": 0.12985864281654358,
+            "reference_errors_above_1_2_5": [
+              3,
+              1,
+              1
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              4,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0091": {
+            "samples": 4,
+            "reference_error_sum": 0.03252619132399559,
+            "candidate_error_sum": 0.09310867637395859,
+            "reference_errors_above_1_2_5": [
+              1,
+              0,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              3,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0092": {
+            "samples": 4,
+            "reference_error_sum": 0.0799533260287717,
+            "candidate_error_sum": 0.047593641094863415,
+            "reference_errors_above_1_2_5": [
+              3,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              2,
+              1,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0095": {
+            "samples": 4,
+            "reference_error_sum": 0.06237711012363434,
+            "candidate_error_sum": 0.10011734068393707,
+            "reference_errors_above_1_2_5": [
+              3,
+              0,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              3,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0096": {
+            "samples": 4,
+            "reference_error_sum": 0.035202398896217346,
+            "candidate_error_sum": 0.07469798624515533,
+            "reference_errors_above_1_2_5": [
+              3,
+              0,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              1,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0098": {
+            "samples": 4,
+            "reference_error_sum": 0.08332431595772505,
+            "candidate_error_sum": 0.14332303742412478,
+            "reference_errors_above_1_2_5": [
+              4,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              2,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0099": {
+            "samples": 4,
+            "reference_error_sum": 0.07553954422473907,
+            "candidate_error_sum": 0.12033309042453766,
+            "reference_errors_above_1_2_5": [
+              4,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              3,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0100": {
+            "samples": 4,
+            "reference_error_sum": 0.015947096049785614,
+            "candidate_error_sum": 0.05589664727449417,
+            "reference_errors_above_1_2_5": [
+              0,
+              0,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              0,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0101": {
+            "samples": 4,
+            "reference_error_sum": 0.11475762724876404,
+            "candidate_error_sum": 0.10463014245033264,
+            "reference_errors_above_1_2_5": [
+              3,
+              3,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              3,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0103": {
+            "samples": 4,
+            "reference_error_sum": 0.11598531901836395,
+            "candidate_error_sum": 0.24929742515087128,
+            "reference_errors_above_1_2_5": [
+              4,
+              3,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              4,
+              3
+            ]
+          },
+          "geoprr_roll_v22_validation_g0104": {
+            "samples": 4,
+            "reference_error_sum": 0.09439992904663086,
+            "candidate_error_sum": 0.11223431676626205,
+            "reference_errors_above_1_2_5": [
+              3,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              2,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0105": {
+            "samples": 4,
+            "reference_error_sum": 0.046795789152383804,
+            "candidate_error_sum": 0.11364143062382936,
+            "reference_errors_above_1_2_5": [
+              2,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              2,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0106": {
+            "samples": 4,
+            "reference_error_sum": 0.2614646255970001,
+            "candidate_error_sum": 0.3118077963590622,
+            "reference_errors_above_1_2_5": [
+              4,
+              4,
+              2
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              3,
+              2
+            ]
+          },
+          "geoprr_roll_v22_validation_g0107": {
+            "samples": 4,
+            "reference_error_sum": 0.03118497133255005,
+            "candidate_error_sum": 0.07529360055923462,
+            "reference_errors_above_1_2_5": [
+              2,
+              0,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              1,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0109": {
+            "samples": 4,
+            "reference_error_sum": 0.05203799554146826,
+            "candidate_error_sum": 0.14399200584739447,
+            "reference_errors_above_1_2_5": [
+              2,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              4,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0111": {
+            "samples": 4,
+            "reference_error_sum": 0.056960344314575195,
+            "candidate_error_sum": 0.2619996517896652,
+            "reference_errors_above_1_2_5": [
+              2,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              3,
+              2
+            ]
+          },
+          "geoprr_roll_v22_validation_g0113": {
+            "samples": 4,
+            "reference_error_sum": 0.061900608241558075,
+            "candidate_error_sum": 0.11389341205358505,
+            "reference_errors_above_1_2_5": [
+              3,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              2,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0114": {
+            "samples": 4,
+            "reference_error_sum": 0.034763745963573456,
+            "candidate_error_sum": 0.10382533818483353,
+            "reference_errors_above_1_2_5": [
+              2,
+              0,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              2,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0117": {
+            "samples": 4,
+            "reference_error_sum": 0.07243933901190758,
+            "candidate_error_sum": 0.14715590700507164,
+            "reference_errors_above_1_2_5": [
+              3,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              3,
+              1
+            ]
+          },
+          "geoprr_roll_v22_validation_g0120": {
+            "samples": 4,
+            "reference_error_sum": 0.06354961544275284,
+            "candidate_error_sum": 0.08576617389917374,
+            "reference_errors_above_1_2_5": [
+              4,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              3,
+              3,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0121": {
+            "samples": 4,
+            "reference_error_sum": 0.03834277391433716,
+            "candidate_error_sum": 0.10545755177736282,
+            "reference_errors_above_1_2_5": [
+              2,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              3,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0122": {
+            "samples": 4,
+            "reference_error_sum": 0.08629510272294283,
+            "candidate_error_sum": 0.0683592390269041,
+            "reference_errors_above_1_2_5": [
+              2,
+              2,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              1,
+              0
+            ]
+          },
+          "geoprr_roll_v22_validation_g0123": {
+            "samples": 4,
+            "reference_error_sum": 0.08275434374809265,
+            "candidate_error_sum": 0.621924102306366,
+            "reference_errors_above_1_2_5": [
+              4,
+              1,
+              0
+            ],
+            "candidate_errors_above_1_2_5": [
+              4,
+              4,
+              3
+            ]
+          }
+        }
+      },
+      "changes": {
+        "image_absolute_error": {
+          "improved": 91,
+          "worsened": 201,
+          "unchanged": 0
+        },
+        "group_mean_error": {
+          "improved": 11,
+          "worsened": 62,
+          "unchanged": 0
+        },
+        "group_maximum_error": {
+          "improved": 16,
+          "worsened": 57,
+          "unchanged": 0
+        }
+      }
+    }
+  },
+  "native_to_CF_changes": null,
+  "native_to_CF_thresholds": null,
+  "valid_native_saturation0_or1_count": 0,
+  "counts": {
+    "cnn_image_forwards": 82732,
+    "cnn_forward_calls": 1295,
+    "point_image_forwards": 82732,
+    "point_forward_calls": 1295,
+    "CNN_backward_calls": 1290,
+    "point_backward_calls": 1290,
+    "source_backward_calls": 1290,
+    "optimizer_updates": 1287,
+    "amp_skipped_updates": 3,
+    "source_OOD_RGB_images": 0,
+    "source_OOD_CNN_calls": 0,
+    "external_images": 0,
+    "external_CNN_calls": 0,
+    "external_point_calls": 0,
+    "external_backward_calls": 0,
+    "external_optimizer_updates": 0
+  },
+  "preflight_counts_separate": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "RGB_unique_images": 8,
+    "point_calls": 3,
+    "point_examples": 8,
+    "CNN_backward_calls": 1,
+    "combined_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.36521091367480013,
+      "source_training_nmae": 0.27925328916857856,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "CNN_backward_calls": 86,
+      "point_backward_calls": 86,
+      "optimizer_updates": 85,
+      "amp_skipped_updates": 1,
+      "last_batch_size": 56,
+      "order_exposures": [
+        1832,
+        1832,
+        1832
+      ],
+      "cost": {
+        "seconds": 45.97274869680405,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "validation_calls": 0
+    },
+    {
+      "epoch": 2,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.35029845653315994,
+      "source_training_nmae": 0.2510452088310208,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "CNN_backward_calls": 86,
+      "point_backward_calls": 86,
+      "optimizer_updates": 86,
+      "amp_skipped_updates": 0,
+      "last_batch_size": 56,
+      "order_exposures": [
+        1832,
+        1832,
+        1832
+      ],
+      "cost": {
+        "seconds": 29.288538184016943,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "validation_calls": 0
+    },
+    {
+      "epoch": 3,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.3074006795275853,
+      "source_training_nmae": 0.18522751053694902,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "CNN_backward_calls": 86,
+      "point_backward_calls": 86,
+      "optimizer_updates": 86,
+      "amp_skipped_updates": 0,
+      "last_batch_size": 56,
+      "order_exposures": [
+        1832,
+        1832,
+        1832
+      ],
+      "cost": {
+        "seconds": 28.65554042905569,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "validation_calls": 0
+    },
+    {
+      "epoch": 4,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.2603698406677579,
+      "source_training_nmae": 0.14327128788963328,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "CNN_backward_calls": 86,
+      "point_backward_calls": 86,
+      "optimizer_updates": 85,
+      "amp_skipped_updates": 1,
+      "last_batch_size": 56,
+      "order_exposures": [
+        1832,
+        1832,
+        1832
+      ],
+      "cost": {
+        "seconds": 29.3840512894094,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "validation_calls": 0
+    },
+    {
+      "epoch": 5,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.1950743389485358,
+      "source_training_nmae": 0.10465849209387056,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "CNN_backward_calls": 86,
+      "point_backward_calls": 86,
+      "optimizer_updates": 86,
+      "amp_skipped_updates": 0,
+      "last_batch_size": 56,
+      "order_exposures": [
+        1832,
+        1832,
+        1832
+      ],
+      "cost": {
+        "seconds": 29.022322665899992,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "validation_calls": 0
+    },
+    {
+      "epoch": 6,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.11742526524885946,
+      "source_training_nmae": 0.0667699768466894,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "CNN_backward_calls": 86,
+      "point_backward_calls": 86,
+      "optimizer_updates": 86,
+      "amp_skipped_updates": 0,
+      "last_batch_size": 56,
+      "order_exposures": [
+        1832,
+        1832,
+        1832
+      ],
+      "cost": {
+        "seconds": 29.77822344005108,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "validation_calls": 0
+    },
+    {
+      "epoch": 7,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.09400976619519175,
+      "source_training_nmae": 0.05590021371667909,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "CNN_backward_calls": 86,
+      "point_backward_calls": 86,
+      "optimizer_updates": 86,
+      "amp_skipped_updates": 0,
+      "last_batch_size": 56,
+      "order_exposures": [
+        1832,
+        1832,
+        1832
+      ],
+      "cost": {
+        "seconds": 29.203098636120558,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "validation_calls": 0
+    },
+    {
+      "epoch": 8,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.07115003592951502,
+      "source_training_nmae": 0.04675666000992277,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "CNN_backward_calls": 86,
+      "point_backward_calls": 86,
+      "optimizer_updates": 85,
+      "amp_skipped_updates": 1,
+      "last_batch_size": 56,
+      "order_exposures": [
+        1832,
+        1832,
+        1832
+      ],
+      "cost": {
+        "seconds": 29.193397983908653,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "validation_calls": 0
+    },
+    {
+      "epoch": 9,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.059523936659314575,
+      "source_training_nmae": 0.04124910324768555,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "CNN_backward_calls": 86,
+      "point_backward_calls": 86,
+      "optimizer_updates": 86,
+      "amp_skipped_updates": 0,
+      "last_batch_size": 56,
+      "order_exposures": [
+        1832,
+        1832,
+        1832
+      ],
+      "cost": {
+        "seconds": 29.623694747686386,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "validation_calls": 0
+    },
+    {
+      "epoch": 10,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.05484303849406291,
+      "source_training_nmae": 0.038406367840725264,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "CNN_backward_calls": 86,
+      "point_backward_calls": 86,
+      "optimizer_updates": 86,
+      "amp_skipped_updates": 0,
+      "last_batch_size": 56,
+      "order_exposures": [
+        1832,
+        1832,
+        1832
+      ],
+      "cost": {
+        "seconds": 29.015080887824297,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "validation_calls": 0
+    },
+    {
+      "epoch": 11,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.04867602214000284,
+      "source_training_nmae": 0.03528927613640803,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "CNN_backward_calls": 86,
+      "point_backward_calls": 86,
+      "optimizer_updates": 86,
+      "amp_skipped_updates": 0,
+      "last_batch_size": 56,
+      "order_exposures": [
+        1832,
+        1832,
+        1832
+      ],
+      "cost": {
+        "seconds": 29.79177562147379,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "validation_calls": 0
+    },
+    {
+      "epoch": 12,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.04573688433224978,
+      "source_training_nmae": 0.033798597698822465,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "CNN_backward_calls": 86,
+      "point_backward_calls": 86,
+      "optimizer_updates": 86,
+      "amp_skipped_updates": 0,
+      "last_batch_size": 56,
+      "order_exposures": [
+        1832,
+        1832,
+        1832
+      ],
+      "cost": {
+        "seconds": 29.289463758468628,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "validation_calls": 0
+    },
+    {
+      "epoch": 13,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.04566535091209273,
+      "source_training_nmae": 0.033219970101178824,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "CNN_backward_calls": 86,
+      "point_backward_calls": 86,
+      "optimizer_updates": 86,
+      "amp_skipped_updates": 0,
+      "last_batch_size": 56,
+      "order_exposures": [
+        1832,
+        1832,
+        1832
+      ],
+      "cost": {
+        "seconds": 28.68504874035716,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "validation_calls": 0
+    },
+    {
+      "epoch": 14,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.037624649855333994,
+      "source_training_nmae": 0.02950544956816683,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "CNN_backward_calls": 86,
+      "point_backward_calls": 86,
+      "optimizer_updates": 86,
+      "amp_skipped_updates": 0,
+      "last_batch_size": 56,
+      "order_exposures": [
+        1832,
+        1832,
+        1832
+      ],
+      "cost": {
+        "seconds": 29.615789834409952,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "validation_calls": 0
+    },
+    {
+      "epoch": 15,
+      "learning_rate": 0.0003,
+      "source_training_smooth_l1": 0.03382130211227325,
+      "source_training_nmae": 0.02902196024529625,
+      "train_counts": {
+        "cnn_forward_calls": 86,
+        "cnn_image_forwards": 5496
+      },
+      "train_point_counts": {
+        "point_forward_calls": 86,
+        "point_image_forwards": 5496
+      },
+      "CNN_backward_calls": 86,
+      "point_backward_calls": 86,
+      "optimizer_updates": 86,
+      "amp_skipped_updates": 0,
+      "last_batch_size": 56,
+      "order_exposures": [
+        1832,
+        1832,
+        1832
+      ],
+      "cost": {
+        "seconds": 29.095531579107046,
+        "peak_cuda_memory_bytes": 8262538752,
+        "peak_cuda_reserved_bytes": 11345592320,
+        "individual_point_forward_seconds": null
+      },
+      "validation_calls": 0
+    }
+  ],
+  "runtime": {
+    "preflight": {
+      "process_seconds": 16.389463894069195,
+      "full_process_seconds": 17.890132773667574,
+      "prior_checkpointed_process_seconds": 0.0,
+      "full_process_boundary": "mean-tail module entry before torch import through saved metadata; excludes final result JSON",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 630110208,
+      "peak_cuda_reserved_bytes": 725614592,
+      "individual_point_forward_seconds": null,
+      "phases": {
+        "initialization": {
+          "seconds": 2.184190772473812,
+          "peak_cuda_memory_bytes": 93406208,
+          "peak_cuda_reserved_bytes": 113246208,
+          "individual_point_forward_seconds": null
+        },
+        "preflight": {
+          "seconds": 14.204709600657225,
+          "peak_cuda_memory_bytes": 630110208,
+          "peak_cuda_reserved_bytes": 725614592,
+          "individual_point_forward_seconds": null
+        }
+      },
+      "supervisor_wall_record": "runner screen_summary.json",
+      "mean_tail_metadata_seconds": 0.023487932980060577,
+      "individual_operator_seconds": null,
+      "individual_loss_aggregation_seconds": null
+    },
+    "formal": {
+      "process_seconds": 465.9640595316887,
+      "full_process_seconds": 467.7520687133074,
+      "prior_checkpointed_process_seconds": 0.0,
+      "full_process_boundary": "mean-tail module entry before torch import through saved joint metadata; excludes final completion JSON and downtime",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 8262538752,
+      "peak_cuda_reserved_bytes": 11345592320,
+      "individual_point_forward_seconds": null,
+      "phases": {
+        "initialization": {
+          "seconds": 1.3907788172364235,
+          "peak_cuda_memory_bytes": 34099712,
+          "peak_cuda_reserved_bytes": 50331648,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_1": {
+          "seconds": 45.97274869680405,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_2": {
+          "seconds": 29.288538184016943,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_3": {
+          "seconds": 28.65554042905569,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_4": {
+          "seconds": 29.3840512894094,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_5": {
+          "seconds": 29.022322665899992,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_6": {
+          "seconds": 29.77822344005108,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_7": {
+          "seconds": 29.203098636120558,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_8": {
+          "seconds": 29.193397983908653,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_9": {
+          "seconds": 29.623694747686386,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_10": {
+          "seconds": 29.015080887824297,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_11": {
+          "seconds": 29.79177562147379,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_12": {
+          "seconds": 29.289463758468628,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_13": {
+          "seconds": 28.68504874035716,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_14": {
+          "seconds": 29.615789834409952,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "train_epoch_15": {
+          "seconds": 29.095531579107046,
+          "peak_cuda_memory_bytes": 8262538752,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        },
+        "source_id": {
+          "seconds": 5.04847314953804,
+          "peak_cuda_memory_bytes": 1805331968,
+          "peak_cuda_reserved_bytes": 11345592320,
+          "individual_point_forward_seconds": null
+        }
+      },
+      "supervisor_wall_record": "runner screen_summary.json",
+      "mean_tail_metadata_seconds": 0.1306949183344841,
+      "individual_operator_seconds": null,
+      "individual_loss_aggregation_seconds": null
+    },
+    "supervisor_stage_seconds": {
+      "preflight": 18.719613756984472,
+      "source_control": 469.0705287717283
+    },
+    "supervisor_process_seconds": 488.6285381503403,
+    "train_seconds": 455.6143064945936,
+    "validation_seconds": 5.0470019318163395
+  },
+  "budget": {
+    "epochs_each": 15,
+    "train_presentations_each": 82440,
+    "backward_attempts_each": 1290,
+    "identity_optimizer_updates": 1289,
+    "identity_AMP_skips": 1,
+    "mean_tail_optimizer_updates": 1287,
+    "mean_tail_AMP_skips": 3,
+    "same_scheduled_budget": true,
+    "actual_updates_equal": false,
+    "initialization_parity_evidence": "frozen factory/cache/seed/code and saved witnesses only; no prior weights reopened"
+  },
+  "training_objective_evidence": {
+    "frozen_formula": "0.5 per-image SmoothL1 mean + 0.5 largest ceil(0.1 B) per-image SmoothL1 mean; beta .05",
+    "k_B1_B4_B56_B64": [
+      1,
+      1,
+      6,
+      7
+    ],
+    "upweighted_slots_per_epoch": 601,
+    "all_images_mean_contribute": true,
+    "history_semantics": "sample-count-weighted mean of batch composite risks; not primitive mean SmoothL1 or population tail",
+    "history_train_NMAE": "unchanged unweighted absolute error",
+    "pref_actual_objective": 0.424453467130661,
+    "pref_k": 1,
+    "saved_CPU_tests": 11,
+    "past_training_per_image_losses_reconstructed": false
+  },
+  "audit_status": "PASS",
+  "audit_check_count": 171,
+  "audit_passed_check_count": 171,
+  "audit_failed_check_count": 0,
+  "numeric_scalar_comparisons": 12050,
+  "maximum_absolute_numeric_difference": 1.4210854715202004e-14,
+  "absolute_numeric_tolerance": 1e-12,
+  "audit_limitations": [
+    "Provided-label saved-number comparison only. The same292 targets, IDs and groups align exactly with the existing identity native/CF scalar CSVs; full contracts/populations were compared only on server. No physical-label normalization or prior identity/C3 audit was repeated. Prior C3 coverage remains149checks148PASS1FAIL for the unavailable normalized_progress/y field in its physical-label-triplet contract, with no newly discovered label conflict.",
+    "One seed,73 source-ID layouts, four states each. Native and fixed RGswap are correlated artificial development views already seen during method development. This is not a new blind test, independent source views, standard deviation, significance, theory, or real Industrial/RF generalization.",
+    "The scheduled budget is matched at15E/82440 training RGB presentations/1290 CNN-point backward attempts. Actual mean-tail1287 updates+3 normal AMP skips differ from identity1289+1. No budget extension or skipped-update replacement was made. Factory/cache/seed/code and saved witnesses support initialization parity; prior weights were not reopened.",
+    "The objective uses batch-local top-ceil10% SmoothL1,601 upweighted slots per epoch, with all5496 images contributing through the mean. This is not the exact whole-population absolute-error tail and may amplify unknown label/input noise. History source_training_smooth_l1 is sample-count-weighted batch composite risk; training NMAE remains unweighted. Historical per-image training losses cannot be reconstructed from these metadata and were not claimed to be rederived.",
+    "Loss/gradient evidence is frozen code, the saved11 newCPU toys and the actual saved preflight composite0.424453467130661 atB4/k1 with finite nonzero stem/neck/point gradients. No new tests, preflight, training, model construction, experimental import, RGB/weights/features/checkpoint-content read, forward, backward or GPU compute occurred during this audit; checkpoints were statted only.",
+    "Fresh cached462-encoder/464-full-state strict reload,233 unchanged parameter tensors at0 optimizer updates,77BN training+1/eval+0, shapes/dtypes and source pipeline identity are saved witnesses. Training input errors use the existing augment=True raise path; no fresh RGB source/noise audit was performed.",
+    "Preflight is separate:8 unique RGB inputs,8 CNN presentations,3CNN-point calls,1 combined backward,0 optimizer updates. Its four ID images were decoded again for the CPU native identity check, and wall time includes that work; decode count is not asserted to be only8.",
+    "Own entry timers begin before torch import and include wrapper reference/metadata work. Full child time excludes final completion JSON and downtime; supervisor wall includes stage startup. Point-only, isolated operator, isolated loss-aggregation and monetary cost are unknown/null unless measured. These costs are not asserted to be zero.",
+    "Previous color-control drift thresholds are diagnostic only. Scientific acceptance requires the unchanged native learning gate and every native/CF mean, tail, maximum, >5 count and reference-accurate paired guard. A native failure keeps CFnull/0calls/no files. No checkpoint promotion, automatic long run, seed/loss sweep, source03, Industrial or RF evaluation follows."
+  ],
+  "public_scope": "Normalized saved scalar rows/pairs/groups/summaries, aggregate history/objective/gates and metadata only. Raw threshold/accurate-cohort identity arrays are omitted; full292 candidate/reference scalar rows remain available. No candidate CF result exists."
+}
