@@ -1,0 +1,66 @@
+{
+  "protocol": "geoprr_head_warmstart_source_control_completed_public_allowlist_v1",
+  "status": "complete_not_retained_mean_criterion_failed",
+  "audit": {
+    "verdict": "PASS_WITH_QUALIFICATIONS",
+    "check_count": 64,
+    "passed_checks": 64,
+    "failed_checks": 0
+  },
+  "files": [
+    "config.json",
+    "protocol.json",
+    "run_metadata.json",
+    "completed_record.json",
+    "queue_state.json",
+    "screen_summary.json",
+    "initialization_record.json",
+    "bootstrap_recovery_record.json",
+    "LP_aggregate.json",
+    "history_FT5.jsonl",
+    "learning_gate.json",
+    "primary_comparison.json",
+    "source_id_predictions.csv.gz",
+    "constant_source_id_predictions.csv.gz",
+    "source_ood_predictions.csv.gz",
+    "source_id_groups.csv",
+    "constant_source_id_groups.csv",
+    "source_ood_groups.csv",
+    "source_id_summary.json",
+    "constant_source_id_summary.json",
+    "source_ood_summary.json",
+    "costs.json",
+    "numeric_execution_audit.json",
+    "metrics.json",
+    "report_cn.md",
+    "public_allowlist.json"
+  ],
+  "scientific_primary": "NOT_RETAINED_MEAN_CRITERION_FAILED",
+  "original_learning_gate_passed": true,
+  "retain_this_warmstart_candidate": false,
+  "scalar_scope": "292 source-ID model rows + same292 constant rows +220 source-OOD rows; scalar groups73/73/55; LP100 aggregate losses; FT5 history; no Industrial/RF result",
+  "public_scope": "This public archive contains normalized saved scalar rows, saved scalar group summaries,100 per-update aggregate LP losses and execution metadata only. Full5496 source rosters/contracts, cache feature values, RGB, weights, geometry, private paths, commands and raw traceback are excluded. Source-ID292/constant292/source-OOD220 scalar rows are complete.",
+  "normalization": "Saved scalar fields copied with LF CSV line endings; group CSVs expand already-saved scalar by_group fields without metric recalculation. Public startup failure/recovery contains necessary normalized zero-stage metadata only, no raw traceback or private absolute paths.",
+  "qualifications": [
+    {
+      "item": "saved_state_witness_and_static_execution_boundary",
+      "status": "QUALIFIED",
+      "reason": "Architecture, cached initialization, strict reload and LP encoder-state equality are saved witnesses checked against code. Same-head inheritance, RNG-only restoration, fresh optimizer/scaler and absence of feature serialization are supported by the frozen source and metadata; this auditor never opens model checkpoints, weights or feature values."
+    },
+    {
+      "item": "source_metadata_only",
+      "status": "QUALIFIED",
+      "reason": "Population identity, closure and exclusion use frozen server metadata and equality booleans. No new labels, RGB, geometry, rendering or factor scans are inspected."
+    },
+    {
+      "item": "runtime_and_completion_observation",
+      "status": "QUALIFIED",
+      "reason": "Own module-entry timing now precedes project/torch import. Saved child timing excludes final completion JSON; supervisor stage wall covers child exit. GPU-empty at 15:49:27 UTC and prelaunch empty state are parent-saved observations, while this audit directly checks owned /proc commands are gone. Individual point times remain null."
+    },
+    {
+      "item": "one_bounded_candidate",
+      "status": "QUALIFIED",
+      "reason": "Original source learning gate passes, but the primary retention rule fails because ID mean is slightly higher despite lower tail. This does not reject all LP-FT. One fixed seed/cohort, prior use of source ID and extra LP computation preclude significance, equal-total-compute or overall-generalization claims. DirectFT5 has no saved source-OOD score; no retrospective evaluation is added."
+    }
+  ]
+}

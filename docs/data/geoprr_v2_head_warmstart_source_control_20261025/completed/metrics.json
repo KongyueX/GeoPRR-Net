@@ -1,0 +1,406 @@
+{
+  "protocol": "geoprr_v2_head_warmstart_source_control_v1",
+  "code_revision": "95ed5da343391cfe512a8b5aaed2fbd335316bf5",
+  "audit_verdict": "PASS_WITH_QUALIFICATIONS",
+  "scientific_primary": "NOT_RETAINED_MEAN_CRITERION_FAILED",
+  "metrics": {
+    "source_id": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.06155632265021368,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.044103287160396576,
+      "p90_error": 0.12719745039939886,
+      "p95_error": 0.17075672447681406,
+      "tail10_nmae": 0.21965393548210463,
+      "maximum_error": 0.4849035143852234,
+      "nmae_percent_fs": 6.155632265021368,
+      "count_at_1_percent_fs": 42,
+      "acc_at_1": 0.14383561643835616,
+      "acc_at_1_percent": 14.383561643835616,
+      "errors_above_1_percent_fs": 250,
+      "count_at_2_percent_fs": 77,
+      "acc_at_2": 0.2636986301369863,
+      "acc_at_2_percent": 26.36986301369863,
+      "errors_above_2_percent_fs": 215,
+      "count_at_5_percent_fs": 158,
+      "acc_at_5": 0.541095890410959,
+      "acc_at_5_percent": 54.10958904109589,
+      "errors_above_5_percent_fs": 134,
+      "median_error_percent_fs": 4.410328716039658,
+      "p90_error_percent_fs": 12.719745039939886,
+      "p95_error_percent_fs": 17.075672447681406,
+      "tail10_nmae_percent_fs": 21.965393548210464,
+      "maximum_error_percent_fs": 48.49035143852234,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    },
+    "constant_source_id": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.2500892740609332,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.2489658147096634,
+      "p90_error": 0.4416848599910737,
+      "p95_error": 0.476235611923039,
+      "tail10_nmae": 0.4738441610573015,
+      "maximum_error": 0.4994222219684161,
+      "nmae_percent_fs": 25.008927406093317,
+      "count_at_1_percent_fs": 7,
+      "acc_at_1": 0.023972602739726026,
+      "acc_at_1_percent": 2.3972602739726026,
+      "errors_above_1_percent_fs": 285,
+      "count_at_2_percent_fs": 14,
+      "acc_at_2": 0.04794520547945205,
+      "acc_at_2_percent": 4.794520547945205,
+      "errors_above_2_percent_fs": 278,
+      "count_at_5_percent_fs": 24,
+      "acc_at_5": 0.0821917808219178,
+      "acc_at_5_percent": 8.219178082191782,
+      "errors_above_5_percent_fs": 268,
+      "median_error_percent_fs": 24.89658147096634,
+      "p90_error_percent_fs": 44.16848599910737,
+      "p95_error_percent_fs": 47.623561192303896,
+      "tail10_nmae_percent_fs": 47.384416105730146,
+      "maximum_error_percent_fs": 49.94222219684161,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    },
+    "source_ood": {
+      "samples": 220,
+      "groups": 55,
+      "nmae": 0.08930389222434976,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.07279267907142639,
+      "p90_error": 0.19239607825875277,
+      "p95_error": 0.24001024663448328,
+      "tail10_nmae": 0.25628879734060983,
+      "maximum_error": 0.45643216371536255,
+      "nmae_percent_fs": 8.930389222434975,
+      "count_at_1_percent_fs": 25,
+      "acc_at_1": 0.11363636363636363,
+      "acc_at_1_percent": 11.363636363636363,
+      "errors_above_1_percent_fs": 195,
+      "count_at_2_percent_fs": 43,
+      "acc_at_2": 0.19545454545454546,
+      "acc_at_2_percent": 19.545454545454547,
+      "errors_above_2_percent_fs": 177,
+      "count_at_5_percent_fs": 83,
+      "acc_at_5": 0.37727272727272726,
+      "acc_at_5_percent": 37.72727272727273,
+      "errors_above_5_percent_fs": 137,
+      "median_error_percent_fs": 7.279267907142639,
+      "p90_error_percent_fs": 19.239607825875275,
+      "p95_error_percent_fs": 24.001024663448327,
+      "tail10_nmae_percent_fs": 25.628879734060984,
+      "maximum_error_percent_fs": 45.643216371536255,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    },
+    "gate": {
+      "denominator": 292,
+      "tail_count": 30,
+      "mean_threshold_percent_fs": 12.504463703046659,
+      "tail_threshold_percent_fs": 23.692208052865073,
+      "mean_passed": true,
+      "tail_passed": true,
+      "passed": true
+    },
+    "valid_boundary_saturation_counts": {
+      "source_id": {
+        "prediction_zero": 0,
+        "prediction_one": 0
+      },
+      "constant_source_id": {
+        "prediction_zero": 0,
+        "prediction_one": 0
+      },
+      "source_ood": {
+        "prediction_zero": 0,
+        "prediction_one": 0
+      }
+    },
+    "external_counts": {
+      "images": 0,
+      "CNN_calls": 0,
+      "point_calls": 0,
+      "backward_calls": 0,
+      "optimizer_updates": 0
+    },
+    "directFT5_ID_baseline": {
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.06132800787729562,
+      "coverage": 1.0,
+      "failed": 0,
+      "input_failures": 0,
+      "median_error": 0.03886425029486418,
+      "p90_error": 0.12683204412460344,
+      "p95_error": 0.17504554670304057,
+      "tail10_nmae": 0.25669996334860723,
+      "maximum_error": 0.5787063241004944,
+      "nmae_percent_fs": 6.132800787729562,
+      "count_at_1_percent_fs": 47,
+      "acc_at_1": 0.16095890410958905,
+      "acc_at_1_percent": 16.095890410958905,
+      "errors_above_1_percent_fs": 245,
+      "count_at_2_percent_fs": 83,
+      "acc_at_2": 0.2842465753424658,
+      "acc_at_2_percent": 28.424657534246574,
+      "errors_above_2_percent_fs": 209,
+      "count_at_5_percent_fs": 178,
+      "acc_at_5": 0.6095890410958904,
+      "acc_at_5_percent": 60.95890410958904,
+      "errors_above_5_percent_fs": 114,
+      "median_error_percent_fs": 3.8864250294864178,
+      "p90_error_percent_fs": 12.683204412460345,
+      "p95_error_percent_fs": 17.504554670304056,
+      "tail10_nmae_percent_fs": 25.669996334860723,
+      "maximum_error_percent_fs": 57.87063241004944,
+      "mean_invalid_mass": null,
+      "mean_outside_arc_mass": null
+    },
+    "paired_ID_comparison": {
+      "rows": 292,
+      "error_improved": 149,
+      "error_worsened": 143,
+      "error_unchanged": 0,
+      "thresholds": {
+        "1": {
+          "baseline_errors_above": 245,
+          "warmstart_errors_above": 250,
+          "rescued_to_at_or_below": 34,
+          "newly_above": 39,
+          "net_errors_above_change": 5
+        },
+        "2": {
+          "baseline_errors_above": 209,
+          "warmstart_errors_above": 215,
+          "rescued_to_at_or_below": 50,
+          "newly_above": 56,
+          "net_errors_above_change": 6
+        },
+        "5": {
+          "baseline_errors_above": 114,
+          "warmstart_errors_above": 134,
+          "rescued_to_at_or_below": 54,
+          "newly_above": 74,
+          "net_errors_above_change": 20
+        }
+      }
+    },
+    "primary": {
+      "original_learning_gate_passed": true,
+      "mean_not_worse_than_directFT5": false,
+      "tail_strictly_better_than_directFT5": true,
+      "retain_this_warmstart_candidate": false,
+      "automatic_full_training": false,
+      "mean_change_percent_fs": 0.022831477291806124,
+      "tail_change_percent_fs": -3.704602786650259
+    },
+    "baseline_source_OOD": {
+      "observed": false,
+      "paired_comparison_available": false,
+      "additional_forward_performed": false
+    }
+  },
+  "formal_totals": {
+    "cache_cnn_image_forwards": 5496,
+    "cache_cnn_forward_calls": 86,
+    "cache_point_forward_calls": 0,
+    "cache_CNN_backward_calls": 0,
+    "lp_point_forward_calls": 100,
+    "lp_point_image_forwards": 549600,
+    "lp_point_backward_calls": 100,
+    "lp_CNN_backward_calls": 0,
+    "lp_optimizer_updates": 100,
+    "lp_amp_skipped_updates": 0,
+    "train_batches": 430,
+    "train_cnn_image_forwards": 27480,
+    "train_cnn_forward_calls": 430,
+    "backward_calls": 430,
+    "optimizer_updates": 426,
+    "amp_skipped_updates": 4,
+    "train_point_forward_calls": 430,
+    "train_point_image_forwards": 27480,
+    "validation_images": 512,
+    "validation_cnn_forward_calls": 9,
+    "validation_point_forward_calls": 9,
+    "validation_point_image_forwards": 512,
+    "cache_seconds": 38.42132114619017,
+    "lp_seconds": 0.3627817891538143,
+    "training_seconds": 163.15291342884302,
+    "validation_seconds": 10.068578880280256
+  },
+  "summary_counts": {
+    "cnn_image_forwards": 33488,
+    "cnn_forward_calls": 525,
+    "point_image_forwards": 577592,
+    "point_forward_calls": 539,
+    "source_backward_calls": 530,
+    "CNN_backward_calls": 430,
+    "point_only_backward_calls": 100,
+    "LP_optimizer_updates": 100,
+    "LP_amp_skipped_updates": 0,
+    "FT_optimizer_updates": 426,
+    "FT_amp_skipped_updates": 4,
+    "external_images": 0,
+    "external_CNN_calls": 0,
+    "external_point_calls": 0,
+    "external_backward_calls": 0,
+    "external_optimizer_updates": 0
+  },
+  "preflight_counts_separate": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "RGB_unique_images": 8,
+    "point_calls": 3,
+    "point_examples": 8,
+    "point_backward_calls": 2,
+    "CNN_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "cost": {
+    "formal_recorded_runtime": {
+      "process_seconds": 215.22197838127613,
+      "full_process_seconds": 216.3771603293717,
+      "full_process_boundary": "this module entry before any torch import through saved result artifacts; excludes final completion JSON",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 8262538240,
+      "peak_cuda_reserved_bytes": 11370758144,
+      "phases": {
+        "initialization": {
+          "seconds": 1.698614701628685,
+          "peak_cuda_memory_bytes": 68199424,
+          "peak_cuda_reserved_bytes": 79691776,
+          "individual_point_forward_seconds": null
+        },
+        "LP_cache": {
+          "seconds": 38.42132114619017,
+          "peak_cuda_memory_bytes": 1558400512,
+          "peak_cuda_reserved_bytes": 2279604224,
+          "individual_point_forward_seconds": null
+        },
+        "LP_point": {
+          "seconds": 0.3627817891538143,
+          "peak_cuda_memory_bytes": 99433984,
+          "peak_cuda_reserved_bytes": 2279604224,
+          "individual_point_forward_seconds": null
+        },
+        "FT_epoch_1": {
+          "seconds": 41.64865384995937,
+          "peak_cuda_memory_bytes": 8262538240,
+          "peak_cuda_reserved_bytes": 11370758144,
+          "individual_point_forward_seconds": null
+        },
+        "FT_epoch_2": {
+          "seconds": 31.23741941526532,
+          "peak_cuda_memory_bytes": 8262538240,
+          "peak_cuda_reserved_bytes": 11370758144,
+          "individual_point_forward_seconds": null
+        },
+        "FT_epoch_3": {
+          "seconds": 29.618203561753035,
+          "peak_cuda_memory_bytes": 8262538240,
+          "peak_cuda_reserved_bytes": 11370758144,
+          "individual_point_forward_seconds": null
+        },
+        "FT_epoch_4": {
+          "seconds": 29.840540681034327,
+          "peak_cuda_memory_bytes": 8262538240,
+          "peak_cuda_reserved_bytes": 11370758144,
+          "individual_point_forward_seconds": null
+        },
+        "FT_epoch_5": {
+          "seconds": 30.808095920830965,
+          "peak_cuda_memory_bytes": 8262538240,
+          "peak_cuda_reserved_bytes": 11370758144,
+          "individual_point_forward_seconds": null
+        },
+        "source_id": {
+          "seconds": 5.286944840103388,
+          "peak_cuda_memory_bytes": 1805003776,
+          "peak_cuda_reserved_bytes": 11370758144,
+          "individual_point_forward_seconds": null
+        },
+        "source_ood": {
+          "seconds": 4.784400802105665,
+          "peak_cuda_memory_bytes": 1805003776,
+          "peak_cuda_reserved_bytes": 11370758144,
+          "individual_point_forward_seconds": null
+        }
+      },
+      "supervisor_wall_record": "runner screen_summary.json"
+    },
+    "preflight_recorded_runtime": {
+      "process_seconds": 19.201840937137604,
+      "full_process_seconds": 20.34757260605693,
+      "full_process_boundary": "this module entry before any torch import through saved result artifacts; excludes final completion JSON",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 663647744,
+      "peak_cuda_reserved_bytes": 805306368,
+      "phases": {
+        "initialization": {
+          "seconds": 2.626250009983778,
+          "peak_cuda_memory_bytes": 127500288,
+          "peak_cuda_reserved_bytes": 150994944,
+          "individual_point_forward_seconds": null
+        },
+        "preflight": {
+          "seconds": 16.574517961591482,
+          "peak_cuda_memory_bytes": 663647744,
+          "peak_cuda_reserved_bytes": 805306368,
+          "individual_point_forward_seconds": null
+        }
+      },
+      "supervisor_wall_record": "runner screen_summary.json"
+    },
+    "supervisor_stage_wall_seconds_from_timestamps": {
+      "preflight": 21.366896,
+      "source_control": 217.467166
+    },
+    "supervisor_stage_measured_seconds": {
+      "preflight": 21.36789969354868,
+      "source_control": 217.4681979380548
+    },
+    "recovered_supervisor_process_seconds": 239.49075182899833,
+    "failed_bootstrap_wall_seconds": 0.27761025354266167,
+    "point_seconds": null,
+    "first_pref_start_through_control_finish_seconds": 238.931568
+  },
+  "qualifications": [
+    {
+      "item": "saved_state_witness_and_static_execution_boundary",
+      "status": "QUALIFIED",
+      "reason": "Architecture, cached initialization, strict reload and LP encoder-state equality are saved witnesses checked against code. Same-head inheritance, RNG-only restoration, fresh optimizer/scaler and absence of feature serialization are supported by the frozen source and metadata; this auditor never opens model checkpoints, weights or feature values."
+    },
+    {
+      "item": "source_metadata_only",
+      "status": "QUALIFIED",
+      "reason": "Population identity, closure and exclusion use frozen server metadata and equality booleans. No new labels, RGB, geometry, rendering or factor scans are inspected."
+    },
+    {
+      "item": "runtime_and_completion_observation",
+      "status": "QUALIFIED",
+      "reason": "Own module-entry timing now precedes project/torch import. Saved child timing excludes final completion JSON; supervisor stage wall covers child exit. GPU-empty at 15:49:27 UTC and prelaunch empty state are parent-saved observations, while this audit directly checks owned /proc commands are gone. Individual point times remain null."
+    },
+    {
+      "item": "one_bounded_candidate",
+      "status": "QUALIFIED",
+      "reason": "Original source learning gate passes, but the primary retention rule fails because ID mean is slightly higher despite lower tail. This does not reject all LP-FT. One fixed seed/cohort, prior use of source ID and extra LP computation preclude significance, equal-total-compute or overall-generalization claims. DirectFT5 has no saved source-OOD score; no retrospective evaluation is added."
+    }
+  ],
+  "public_scope": "Normalized saved scalar rows, scalar group summaries, LP aggregate losses and metadata only; no5496-source roster, cache feature values, weights, RGB, geometry, private paths or raw traceback."
+}

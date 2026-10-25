@@ -1,0 +1,67 @@
+{
+  "protocol": "geoprr_v2_head_warmstart_source_control_v1",
+  "initial_failure": {
+    "queue": {
+      "steps": {},
+      "protocol": "geoprr_v2_head_warmstart_source_control_v1",
+      "seeds": [
+        20262020
+      ],
+      "pipeline_pid": 416345,
+      "status": "failed",
+      "updated_at": "2026-10-25T15:28:01.484392+00:00",
+      "code_revision": "207642cca0f4545ec7181bcbdd2dec0ea148c7b9",
+      "automatic_resume": false,
+      "supervisor_process_seconds": 0.27761025354266167
+    },
+    "error_type": "FileNotFoundError",
+    "recovery": {
+      "code_revision": "207642cca0f4545ec7181bcbdd2dec0ea148c7b9",
+      "pipeline_pid": 416345,
+      "preserved_relative": "bootstrap_failure",
+      "training_resume": false
+    },
+    "failed_bootstrap_wall_seconds": 0.27761025354266167,
+    "zero_stage_failure": true,
+    "same_scientific_config_contract_and_code": true,
+    "preserved_snapshot_file_count": 19
+  },
+  "cause": "Required frozen-snapshot metadata was not deployed; FileNotFoundError occurred during bootstrap before any source model stage.",
+  "initial_execution": {
+    "code_revision": "207642cca0f4545ec7181bcbdd2dec0ea148c7b9",
+    "pipeline_pid": 416345,
+    "steps": {},
+    "source_model_stages_started": 0,
+    "model_GPU_weights_RGB_calls": 0,
+    "reader_or_preflight_started": false
+  },
+  "recovery": {
+    "status": "explicit_zero_stage_bootstrap_recovery_launched",
+    "started_at_utc": "2026-10-25T15:44:20.270774+00:00",
+    "pipeline_pid": 416885,
+    "code_revision": "95ed5da343391cfe512a8b5aaed2fbd335316bf5",
+    "recovered_from_revision": "207642cca0f4545ec7181bcbdd2dec0ea148c7b9",
+    "old_steps": {},
+    "no_reader_or_pref_ever_started": true,
+    "prelaunch_GPU_compute_processes": [],
+    "scientific_config_seed_source_budget_changed": false,
+    "training_resume": false,
+    "original_failure_preservation": "same output/bootstrap_failure; handler strictly checks and preserves originals",
+    "source_model_stages_started_before_recovery": 0
+  },
+  "repair_scope": "runner and bootstrap tests only; model/scientific config/source data/seed/budget unchanged",
+  "root_explicit_recovery_option": "--recover-unstarted",
+  "training_resume": false,
+  "failure_preservation": "Original failed queue/protocol/config/PID and partial snapshot retained under bootstrap_failure in the same output; no model checkpoint was overwritten.",
+  "additional_bootstrap_CPU_checks": {
+    "status": "passed",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "seconds": 0.008637923747301102,
+    "scope": "only3 new zero-stage bootstrap recovery toy tests; original10 phase tests not rerun",
+    "model_RGB_weights_GPU_calls": 0,
+    "CUDA_available": false
+  },
+  "original10_phase_checks_rerun": false
+}

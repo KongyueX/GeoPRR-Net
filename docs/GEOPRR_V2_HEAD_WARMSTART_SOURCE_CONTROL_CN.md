@@ -24,6 +24,18 @@ lastFT5只评同292行ID一次。原constant0.5双门槛完全保持：mean和ce
 
 代码/协议/config/NEWCPU证据先existingmain冻结push、实际旧父子退出且GPU空后才唯一pref→LP100→FT5→IDgate→条件源OOD；不改live、不额外GPU或两个真实外域。自身module-entry计时器必须早于torch import，supervisor wall与实际phase time/peak分开，未知point-only时间不填0。完整source合同/训练arrays/特征值/RGB/weights/geometry/privatepaths留server private，公开仅规范化保存标量及metadata。失败保留partial不fresh覆盖或自动延长，完成后唯一新鲜独立CPU保存数字核对归档。
 
+## 完成记录
+
+LP100＋FT5完整结束，原constant0.5半mean／半tail学习gate通过，但预注册primary为NOT_RETAINED_MEAN_CRITERION_FAILED、retain=false。ID mean6.155632265021%FS略高于directFT5的6.132800787730%FS，tail21.965393548210%FS低于25.669996334861%FS；>1／2／5救回34／50／54、新增39／56／74，净新增5／6／20。保留tail收益、mean代价和阈值退化，不只报tail，不调整mean门槛或LP100次数再试。
+
+同一lastFT5在原gate通过后只评源OOD220一次，mean8.930389222435／tail25.628879734061／max45.643216371536%FS。旧directbaseline没有源OOD结果，不补造或补评；Industrial／RF所有images／calls／backward／updates0。LP100更新／0skip、462encoderstate保持且head改变；FT430 fullCNN backward尝试＝426更新＋4正常AMPskip。正式CNN33488图／525calls，point577592 cached feature／raw图呈现、539calls，backward530＝100 point-only＋430CNN；pref另3CNN8不同图、2pointback1CNNback0opt。cache只server device memory，不落盘／导出；同头、RNG-only恢复、fresh optimizer／scaler与state见证只由保存code／metadata支持，不增加fresh checkpoint内容核实。
+
+初始207642cca0f4545ec7181bcbdd2dec0ea148c7b9在snapshot metadata部署阶段FileNotFound，old parent416345／steps空，0model／GPU／weights／RGB，原queue／config／protocol／PID及partial snapshot保留。实际修复95ed5da343391cfe512a8b5aaed2fbd335316bf5只改runner／bootstrap tests；root显式--recover-unstarted在同合同、无reader／pref／模型stage、旧PID退出／GPU空时恢复未开始的启动，主模型／科学配置／数据／seed／budget不变，不是训练resume。额外3项bootstrap tests通过，原10项phase tests未重跑。
+
+正常parent416885／pref416890／control416928，两stage complete／exit0；control结束2026-10-25T15:48:19.612562+00:00（北京时间23:48:19），15:49:27.095919 UTC保存观察中父子gone／GPU空。自身module-entry计时早于torch／project imports，正式child full216.377160329秒计至保存工件、最终completed.json之前；正常supervisor pipeline239.490751829秒，pref起点至control结束238.931568秒。LP cache38.421321146秒／LP100完整优化phase0.362781789秒均为额外计算，point独立计时null，phase／pipeline／peak分别保留；failed bootstrap0.277610254秒单列，等待间隔不算GPU训练。
+
+唯一独立保存数字／执行核对64／64 PASS、0失败，总PASS_WITH_QUALIFICATIONS，四项qualification在[审计](data/geoprr_v2_head_warmstart_source_control_20261025/completed/numeric_execution_audit.json)完整保留。[报告](data/geoprr_v2_head_warmstart_source_control_20261025/completed/report_cn.md)、[指标](data/geoprr_v2_head_warmstart_source_control_20261025/completed/metrics.json)、[primary](data/geoprr_v2_head_warmstart_source_control_20261025/completed/primary_comparison.json)、三份完整scalar CSV（ID292／constant292／OOD220）及各组summary／CSV、LP100aggregate loss／FT5 history规范化归档。根7入口＋[completed26项](data/geoprr_v2_head_warmstart_source_control_20261025/completed/public_allowlist.json)，[总allowlist](data/geoprr_v2_head_warmstart_source_control_20261025/public_allowlist.json)33项。本次公开只保存规范化scalar／metadata，source5496 arrays、cachefeatures、RGB／weights／geometry／privatepaths／raw traceback留私有；全部旧资产保留，不自动扩大训练或升级模型。
+
 ## Limitations
 
 预训练特征适合本任务的程度仍未知；额外LP数据处理及优化是本控制的一部分，不是同总成本比较。source-ID已用于上一控制与诊断，不能称新盲测或显著性；source-OOD只是三个合成needle中的一个固定bank成员，其他layout因素混杂。源ID改善或单域结果不等于整体泛化成功，不自动升级模型、拼checkpoint或开长训练。

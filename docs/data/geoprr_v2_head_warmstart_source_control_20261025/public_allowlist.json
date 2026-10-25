@@ -1,18 +1,61 @@
 {
   "protocol": "geoprr_head_warmstart_source_control_public_allowlist_v1",
-  "status": "new_CPU_passed_sourcepacket_reused_runtime_pending",
+  "status": "complete_not_retained_mean_criterion_failed",
   "files": [
     "../../GEOPRR_V2_HEAD_WARMSTART_SOURCE_CONTROL_CN.md",
     "README.md",
     "config.json",
     "cpu_checks.json",
-    "public_allowlist.json"
+    "public_allowlist.json",
+    "runtime_preflight.json",
+    "launch_verification.json",
+    "completed/config.json",
+    "completed/protocol.json",
+    "completed/run_metadata.json",
+    "completed/completed_record.json",
+    "completed/queue_state.json",
+    "completed/screen_summary.json",
+    "completed/initialization_record.json",
+    "completed/bootstrap_recovery_record.json",
+    "completed/LP_aggregate.json",
+    "completed/history_FT5.jsonl",
+    "completed/learning_gate.json",
+    "completed/primary_comparison.json",
+    "completed/source_id_predictions.csv.gz",
+    "completed/constant_source_id_predictions.csv.gz",
+    "completed/source_ood_predictions.csv.gz",
+    "completed/source_id_groups.csv",
+    "completed/constant_source_id_groups.csv",
+    "completed/source_ood_groups.csv",
+    "completed/source_id_summary.json",
+    "completed/constant_source_id_summary.json",
+    "completed/source_ood_summary.json",
+    "completed/costs.json",
+    "completed/numeric_execution_audit.json",
+    "completed/metrics.json",
+    "completed/report_cn.md",
+    "completed/public_allowlist.json"
   ],
   "training_protocol": "geoprr_v2_head_warmstart_source_control_v1",
   "Industrial_RF_model_calls": 0,
   "automatic_promotion": false,
   "excluded": [
-    "fullsourcecontracts/rosters/cachefeatures/privatepaths",
-    "RGB/weights/checkpoints/geometry"
-  ]
+    "full source contracts/5496 rosters/source arrays/cache feature values",
+    "RGB/checkpoints/weights/features/geometry",
+    "private paths/commands/raw bootstrap traceback"
+  ],
+  "root_entry_files": 7,
+  "completed_artifact_files": 26,
+  "audit": {
+    "verdict": "PASS_WITH_QUALIFICATIONS",
+    "check_count": 64,
+    "passed_checks": 64,
+    "failed_checks": 0
+  },
+  "code_revision": "95ed5da343391cfe512a8b5aaed2fbd335316bf5",
+  "scientific_primary": "NOT_RETAINED_MEAN_CRITERION_FAILED",
+  "original_learning_gate_passed": true,
+  "retain_this_warmstart_candidate": false,
+  "current_evidence": "LP100 then FT5 complete; original constant-half ID gate passed and same lastFT5 source-OOD220 evaluated once. ID mean slightly worse than directFT5 despite lower tail; primary NOT_RETAINED_MEAN_CRITERION_FAILED. Independent64/64 PASS_WITH_QUALIFICATIONS; no automatic full training or promotion.",
+  "public_scope": "This public archive contains normalized saved scalar rows, saved scalar group summaries,100 per-update aggregate LP losses and execution metadata only. Full5496 source rosters/contracts, cache feature values, RGB, weights, geometry, private paths, commands and raw traceback are excluded. Source-ID292/constant292/source-OOD220 scalar rows are complete."
 }

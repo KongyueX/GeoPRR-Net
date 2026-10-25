@@ -1,0 +1,47 @@
+{
+  "protocol": "geoprr_v2_head_warmstart_source_control_v1",
+  "status": "complete_not_retained_mean_criterion_failed",
+  "code_revision": "95ed5da343391cfe512a8b5aaed2fbd335316bf5",
+  "recovered_launch": {
+    "status": "explicit_zero_stage_bootstrap_recovery_launched",
+    "started_at_utc": "2026-10-25T15:44:20.270774+00:00",
+    "pipeline_pid": 416885,
+    "code_revision": "95ed5da343391cfe512a8b5aaed2fbd335316bf5",
+    "recovered_from_revision": "207642cca0f4545ec7181bcbdd2dec0ea148c7b9",
+    "old_steps": {},
+    "no_reader_or_pref_ever_started": true,
+    "prelaunch_GPU_compute_processes": [],
+    "scientific_config_seed_source_budget_changed": false,
+    "training_resume": false,
+    "original_failure_preservation": "same output/bootstrap_failure; handler strictly checks and preserves originals",
+    "source_model_stages_started_before_recovery": 0
+  },
+  "zero_stage_bootstrap_record": "completed/bootstrap_recovery_record.json",
+  "completed_stages": {
+    "preflight": {
+      "status": "complete",
+      "started_at": "2026-10-25T15:44:20.680994+00:00",
+      "pid": 416890,
+      "exit_code": 0,
+      "finished_at": "2026-10-25T15:44:42.047890+00:00"
+    },
+    "source_control": {
+      "status": "complete",
+      "started_at": "2026-10-25T15:44:42.145396+00:00",
+      "pid": 416928,
+      "exit_code": 0,
+      "finished_at": "2026-10-25T15:48:19.612562+00:00"
+    }
+  },
+  "completion_reason": "source_ood_observed",
+  "scientific_primary": "NOT_RETAINED_MEAN_CRITERION_FAILED",
+  "original_learning_gate_passed": true,
+  "termination_observation": "parent supplied read-only completion observation 2026-10-25T15:49:27+00:00",
+  "external_counts": {
+    "images": 0,
+    "CNN_calls": 0,
+    "point_calls": 0,
+    "backward_calls": 0,
+    "optimizer_updates": 0
+  }
+}

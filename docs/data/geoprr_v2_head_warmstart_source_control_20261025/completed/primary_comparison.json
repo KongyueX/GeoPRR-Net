@@ -1,0 +1,58 @@
+{
+  "protocol": "geoprr_v2_head_warmstart_source_control_v1",
+  "scientific_primary": "NOT_RETAINED_MEAN_CRITERION_FAILED",
+  "saved_primary_comparison": {
+    "baseline": "completed directFT5 on the same292 source-ID rows",
+    "baseline_mean": 0.06132800787729562,
+    "baseline_tail": 0.25669996334860723,
+    "ID_mean": 0.06155632265021368,
+    "ID_tail": 0.21965393548210463,
+    "original_learning_gate_passed": true,
+    "retain_this_warmstart_candidate": false,
+    "automatic_full_training": false,
+    "extra_LP_compute_included": true
+  },
+  "audited_primary": {
+    "original_learning_gate_passed": true,
+    "mean_not_worse_than_directFT5": false,
+    "tail_strictly_better_than_directFT5": true,
+    "retain_this_warmstart_candidate": false,
+    "automatic_full_training": false,
+    "mean_change_percent_fs": 0.022831477291806124,
+    "tail_change_percent_fs": -3.704602786650259
+  },
+  "paired_source_ID": {
+    "rows": 292,
+    "error_improved": 149,
+    "error_worsened": 143,
+    "error_unchanged": 0,
+    "thresholds": {
+      "1": {
+        "baseline_errors_above": 245,
+        "warmstart_errors_above": 250,
+        "rescued_to_at_or_below": 34,
+        "newly_above": 39,
+        "net_errors_above_change": 5
+      },
+      "2": {
+        "baseline_errors_above": 209,
+        "warmstart_errors_above": 215,
+        "rescued_to_at_or_below": 50,
+        "newly_above": 56,
+        "net_errors_above_change": 6
+      },
+      "5": {
+        "baseline_errors_above": 114,
+        "warmstart_errors_above": 134,
+        "rescued_to_at_or_below": 54,
+        "newly_above": 74,
+        "net_errors_above_change": 20
+      }
+    }
+  },
+  "baseline_source_OOD": {
+    "observed": false,
+    "paired_comparison_available": false,
+    "additional_forward_performed": false
+  }
+}

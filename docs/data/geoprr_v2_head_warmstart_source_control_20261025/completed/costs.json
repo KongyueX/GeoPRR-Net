@@ -1,0 +1,196 @@
+{
+  "formal_totals": {
+    "cache_cnn_image_forwards": 5496,
+    "cache_cnn_forward_calls": 86,
+    "cache_point_forward_calls": 0,
+    "cache_CNN_backward_calls": 0,
+    "lp_point_forward_calls": 100,
+    "lp_point_image_forwards": 549600,
+    "lp_point_backward_calls": 100,
+    "lp_CNN_backward_calls": 0,
+    "lp_optimizer_updates": 100,
+    "lp_amp_skipped_updates": 0,
+    "train_batches": 430,
+    "train_cnn_image_forwards": 27480,
+    "train_cnn_forward_calls": 430,
+    "backward_calls": 430,
+    "optimizer_updates": 426,
+    "amp_skipped_updates": 4,
+    "train_point_forward_calls": 430,
+    "train_point_image_forwards": 27480,
+    "validation_images": 512,
+    "validation_cnn_forward_calls": 9,
+    "validation_point_forward_calls": 9,
+    "validation_point_image_forwards": 512,
+    "cache_seconds": 38.42132114619017,
+    "lp_seconds": 0.3627817891538143,
+    "training_seconds": 163.15291342884302,
+    "validation_seconds": 10.068578880280256
+  },
+  "formal_summary_counts": {
+    "cnn_image_forwards": 33488,
+    "cnn_forward_calls": 525,
+    "point_image_forwards": 577592,
+    "point_forward_calls": 539,
+    "source_backward_calls": 530,
+    "CNN_backward_calls": 430,
+    "point_only_backward_calls": 100,
+    "LP_optimizer_updates": 100,
+    "LP_amp_skipped_updates": 0,
+    "FT_optimizer_updates": 426,
+    "FT_amp_skipped_updates": 4,
+    "external_images": 0,
+    "external_CNN_calls": 0,
+    "external_point_calls": 0,
+    "external_backward_calls": 0,
+    "external_optimizer_updates": 0
+  },
+  "preflight_counts_separate": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "RGB_unique_images": 8,
+    "point_calls": 3,
+    "point_examples": 8,
+    "point_backward_calls": 2,
+    "CNN_backward_calls": 1,
+    "optimizer_updates": 0
+  },
+  "actual_saved_costs": {
+    "formal_recorded_runtime": {
+      "process_seconds": 215.22197838127613,
+      "full_process_seconds": 216.3771603293717,
+      "full_process_boundary": "this module entry before any torch import through saved result artifacts; excludes final completion JSON",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 8262538240,
+      "peak_cuda_reserved_bytes": 11370758144,
+      "phases": {
+        "initialization": {
+          "seconds": 1.698614701628685,
+          "peak_cuda_memory_bytes": 68199424,
+          "peak_cuda_reserved_bytes": 79691776,
+          "individual_point_forward_seconds": null
+        },
+        "LP_cache": {
+          "seconds": 38.42132114619017,
+          "peak_cuda_memory_bytes": 1558400512,
+          "peak_cuda_reserved_bytes": 2279604224,
+          "individual_point_forward_seconds": null
+        },
+        "LP_point": {
+          "seconds": 0.3627817891538143,
+          "peak_cuda_memory_bytes": 99433984,
+          "peak_cuda_reserved_bytes": 2279604224,
+          "individual_point_forward_seconds": null
+        },
+        "FT_epoch_1": {
+          "seconds": 41.64865384995937,
+          "peak_cuda_memory_bytes": 8262538240,
+          "peak_cuda_reserved_bytes": 11370758144,
+          "individual_point_forward_seconds": null
+        },
+        "FT_epoch_2": {
+          "seconds": 31.23741941526532,
+          "peak_cuda_memory_bytes": 8262538240,
+          "peak_cuda_reserved_bytes": 11370758144,
+          "individual_point_forward_seconds": null
+        },
+        "FT_epoch_3": {
+          "seconds": 29.618203561753035,
+          "peak_cuda_memory_bytes": 8262538240,
+          "peak_cuda_reserved_bytes": 11370758144,
+          "individual_point_forward_seconds": null
+        },
+        "FT_epoch_4": {
+          "seconds": 29.840540681034327,
+          "peak_cuda_memory_bytes": 8262538240,
+          "peak_cuda_reserved_bytes": 11370758144,
+          "individual_point_forward_seconds": null
+        },
+        "FT_epoch_5": {
+          "seconds": 30.808095920830965,
+          "peak_cuda_memory_bytes": 8262538240,
+          "peak_cuda_reserved_bytes": 11370758144,
+          "individual_point_forward_seconds": null
+        },
+        "source_id": {
+          "seconds": 5.286944840103388,
+          "peak_cuda_memory_bytes": 1805003776,
+          "peak_cuda_reserved_bytes": 11370758144,
+          "individual_point_forward_seconds": null
+        },
+        "source_ood": {
+          "seconds": 4.784400802105665,
+          "peak_cuda_memory_bytes": 1805003776,
+          "peak_cuda_reserved_bytes": 11370758144,
+          "individual_point_forward_seconds": null
+        }
+      },
+      "supervisor_wall_record": "runner screen_summary.json"
+    },
+    "preflight_recorded_runtime": {
+      "process_seconds": 19.201840937137604,
+      "full_process_seconds": 20.34757260605693,
+      "full_process_boundary": "this module entry before any torch import through saved result artifacts; excludes final completion JSON",
+      "device": "cuda",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "peak_cuda_memory_bytes": 663647744,
+      "peak_cuda_reserved_bytes": 805306368,
+      "phases": {
+        "initialization": {
+          "seconds": 2.626250009983778,
+          "peak_cuda_memory_bytes": 127500288,
+          "peak_cuda_reserved_bytes": 150994944,
+          "individual_point_forward_seconds": null
+        },
+        "preflight": {
+          "seconds": 16.574517961591482,
+          "peak_cuda_memory_bytes": 663647744,
+          "peak_cuda_reserved_bytes": 805306368,
+          "individual_point_forward_seconds": null
+        }
+      },
+      "supervisor_wall_record": "runner screen_summary.json"
+    },
+    "supervisor_stage_wall_seconds_from_timestamps": {
+      "preflight": 21.366896,
+      "source_control": 217.467166
+    },
+    "supervisor_stage_measured_seconds": {
+      "preflight": 21.36789969354868,
+      "source_control": 217.4681979380548
+    },
+    "recovered_supervisor_process_seconds": 239.49075182899833,
+    "failed_bootstrap_wall_seconds": 0.27761025354266167,
+    "point_seconds": null,
+    "first_pref_start_through_control_finish_seconds": 238.931568
+  },
+  "point_seconds": null,
+  "qualifications": [
+    {
+      "item": "saved_state_witness_and_static_execution_boundary",
+      "status": "QUALIFIED",
+      "reason": "Architecture, cached initialization, strict reload and LP encoder-state equality are saved witnesses checked against code. Same-head inheritance, RNG-only restoration, fresh optimizer/scaler and absence of feature serialization are supported by the frozen source and metadata; this auditor never opens model checkpoints, weights or feature values."
+    },
+    {
+      "item": "source_metadata_only",
+      "status": "QUALIFIED",
+      "reason": "Population identity, closure and exclusion use frozen server metadata and equality booleans. No new labels, RGB, geometry, rendering or factor scans are inspected."
+    },
+    {
+      "item": "runtime_and_completion_observation",
+      "status": "QUALIFIED",
+      "reason": "Own module-entry timing now precedes project/torch import. Saved child timing excludes final completion JSON; supervisor stage wall covers child exit. GPU-empty at 15:49:27 UTC and prelaunch empty state are parent-saved observations, while this audit directly checks owned /proc commands are gone. Individual point times remain null."
+    },
+    {
+      "item": "one_bounded_candidate",
+      "status": "QUALIFIED",
+      "reason": "Original source learning gate passes, but the primary retention rule fails because ID mean is slightly higher despite lower tail. This does not reject all LP-FT. One fixed seed/cohort, prior use of source ID and extra LP computation preclude significance, equal-total-compute or overall-generalization claims. DirectFT5 has no saved source-OOD score; no retrospective evaluation is added."
+    }
+  ],
+  "cost_scope": "Own module-entry timer precedes torch/project imports and excludes final completed JSON; supervisor wall covers child exit. LP cache extraction and100 point updates are extra computation. Point-only time is unmeasured/null, not zero. The failed zero-stage bootstrap0.277610s is separate; the waiting interval before recovery is not GPU training time."
+}
