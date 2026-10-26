@@ -1,0 +1,270 @@
+{
+  "schema": "geoprr_device_migration_public_inventory_v1",
+  "prepared_at_utc": "2026-10-26T01:53:06.467459+00:00",
+  "status": "static_path_inventory_remote_verification_unavailable",
+  "research_and_new_training_paused": true,
+  "remote_metadata_verified": false,
+  "python_version": null,
+  "package_versions": {
+    "torch": null,
+    "torchvision": null,
+    "timm": null,
+    "numpy": null,
+    "opencv-python": null,
+    "opencv-python-headless": null,
+    "Pillow": null,
+    "safetensors": null,
+    "huggingface-hub": null
+  },
+  "nvidia_version_metadata": null,
+  "runtime": {
+    "actual_idle": null,
+    "project_process_count": null,
+    "gpu_compute_process_count": null,
+    "ps_query_succeeded": false,
+    "nvidia_query_succeeded": false
+  },
+  "assets": [
+    {
+      "relative_path": "code",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "datasets",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "rendering/compositional_source_v1",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "rendering/generalization_endpoints_v11_20261023",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "rendering/generalization_roll_v22_20261024",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "rendering/vendor/SyncG-337b868f0f5495b31acc383433cac44040247bf2",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "rendering/tools/blender-4.5.14-linux-x64",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "diagnostics/geoprr_source_needle_holdout_control_population_20261025",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "runs",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "runs/geoprr_generalization",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "cache/huggingface",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "cache/torch",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "runs/geoprr_generalization/source_needle_holdout_control_20261025",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "runs/geoprr_generalization/source_head_warmstart_control_20261025",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "runs/geoprr_generalization/source_cyclic_color_control_20261026",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "runs/geoprr_generalization/source_matched_identity_control_20261026",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "runs/geoprr_generalization/source_mean_tail_control_20261026",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "runs/geoprr_generalization/source_image_structure_control_20261026",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "runs/geoprr_generalization/source_state_change_supervision_control_20261026",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "runs/geoprr_generalization/source_conditional_view_adversary_control_20261026",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "runs/geoprr_generalization/iteration_v16_full_semantic_direct_20261023",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "runs/geoprr_generalization/iteration_v26_high_resolution_direct_20261024",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "runs/geoprr_generalization/iteration_v28_spatial_semantic_20261025",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "runs/geoprr_generalization/iteration_v29_source_stylemix_20261025",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "runs/geoprr_generalization/iteration_v30_bilinear_semantic_20261025",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    },
+    {
+      "relative_path": "runs/geoprr_generalization/iteration_v31_groupnorm_semantic_20261025",
+      "present": null,
+      "allocated_bytes": null,
+      "size_status": "remote_metadata_unavailable"
+    }
+  ],
+  "private_file_metadata": [
+    {
+      "relative_path": "code/experiments/geoprr_v2_env.sh",
+      "present": null,
+      "size_bytes": null
+    },
+    {
+      "relative_path": "runs/geoprr_v2/manifests/validation.jsonl",
+      "present": null,
+      "size_bytes": null
+    },
+    {
+      "relative_path": "rendering/generalization_endpoints_v11_20261023/manifests/train.jsonl",
+      "present": null,
+      "size_bytes": null
+    },
+    {
+      "relative_path": "rendering/generalization_endpoints_v11_20261023/prepared.json",
+      "present": null,
+      "size_bytes": null
+    },
+    {
+      "relative_path": "rendering/generalization_roll_v22_20261024/manifests/train_roll.jsonl",
+      "present": null,
+      "size_bytes": null
+    },
+    {
+      "relative_path": "rendering/generalization_roll_v22_20261024/manifests/train_combined.jsonl",
+      "present": null,
+      "size_bytes": null
+    },
+    {
+      "relative_path": "rendering/generalization_roll_v22_20261024/manifests/validation_roll.jsonl",
+      "present": null,
+      "size_bytes": null
+    },
+    {
+      "relative_path": "rendering/generalization_roll_v22_20261024/prepared.json",
+      "present": null,
+      "size_bytes": null
+    },
+    {
+      "relative_path": "diagnostics/geoprr_source_needle_holdout_control_population_20261025/prepared.json",
+      "present": null,
+      "size_bytes": null
+    },
+    {
+      "relative_path": "diagnostics/geoprr_source_needle_holdout_control_population_20261025/manifests/train.jsonl",
+      "present": null,
+      "size_bytes": null
+    },
+    {
+      "relative_path": "diagnostics/geoprr_source_needle_holdout_control_population_20261025/manifests/source_id.jsonl",
+      "present": null,
+      "size_bytes": null
+    },
+    {
+      "relative_path": "diagnostics/geoprr_source_needle_holdout_control_population_20261025/manifests/source_ood.jsonl",
+      "present": null,
+      "size_bytes": null
+    }
+  ],
+  "checkpoint_metadata": null,
+  "existing_imagenet_cache": {
+    "repository_relative_path": "cache/huggingface/hub/models--timm--mobilenetv4_conv_medium.e500_r224_in1k",
+    "repository_present": null,
+    "cached_weight_file_count": null,
+    "cached_weight_total_bytes": null
+  },
+  "measurement": {
+    "remote_model_or_RGB_content_read": false,
+    "remote_checkpoint_or_cache_weight_content_read": false,
+    "source_contract_or_roster_content_read": false,
+    "training_or_render_or_inference_started": false,
+    "new_downloads": false,
+    "checksums_created": false,
+    "files_transferred": false,
+    "deletions_performed": false
+  },
+  "limitations": [
+    "Remote existence, size, checkpoints, process/GPU idle and environment versions are unverified because the single metadata connection did not return a result.",
+    "Paths were extracted from current local code and frozen protocol records; a path in this inventory is not evidence of remote presence.",
+    "Source data packets can embed old absolute paths; preserve frozen originals and establish an explicit mapping for the destination.",
+    "No data decoding, model load/inference, contract equivalence or destination capacity was verified."
+  ]
+}

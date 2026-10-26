@@ -1,0 +1,21 @@
+{
+  "supervisor_process_seconds": 996.8495061174035,
+  "sum_parent_child_lifetimes_seconds": 995.7585619427264,
+  "sum_child_module_entry_seconds": 987.8305095508695,
+  "launch_receipt_to_supervisor_finish_UTC_seconds": 996.861378,
+  "queue_last_elapsed_seconds": 996.8517815582454,
+  "training_seconds_both_arms": 926.0679816864431,
+  "critic_FP32_region_CUDA_event_seconds_both_arms": 0.30189404548704624,
+  "hook_host_seconds_both_arms": 0.09653088822960854,
+  "peak_CPU_memory_bytes_observed": 5662527488,
+  "peak_CUDA_allocated_bytes_observed": 8264907776,
+  "peak_CUDA_reserved_bytes_observed": 11349786624,
+  "current_checkpoint_files_stat_bytes_total": 440096720,
+  "checkpoint_IO_seconds": null,
+  "point_only_seconds": null,
+  "total_GPU_compute_seconds": null,
+  "screen_queue_final_write_seconds": null,
+  "NEWCPU_after_warm_import_seconds": 0.9023926854133606,
+  "cold_model_load_only_seconds": null,
+  "CPU_peak_scope": "maximum observed per-stage process RUSAGE_SELF RSS, not summed loader workers or whole-host RSS"
+}

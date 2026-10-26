@@ -1,0 +1,661 @@
+{
+  "audit_id": "conditional_view_saved_scalar_execution_audit_20261026",
+  "auditor_role": "one fresh independent nonauthor stdlib CPU auditor",
+  "scope": "saved scalar values, source execution receipts and static new-code review; no experiment code import or execution",
+  "collection_successful_passes": 1,
+  "integrity_status": "PASS",
+  "integrity_checks": 42230,
+  "integrity_failed_checks": 0,
+  "scientific_verdict": "NOT_RETAINED",
+  "completion_reason": "source_reading_joint_failed",
+  "science_revision": "03981213603beea957989547690af73004617844",
+  "runtime_receipt_revision_parent_attested": "5e8a0da6c7ef0970068d5abcd704b29bcd636604",
+  "native_reading_joint": {
+    "identity": {
+      "passed": false,
+      "predicates": {
+        "mean": false,
+        "tail": false,
+        "maximum": false,
+        "over5": false,
+        "accurate1_protected": false
+      },
+      "strict_tail": true,
+      "paired": {
+        "paired_images": 292,
+        "paired_groups": 73,
+        "error_rescues": 139,
+        "error_regressions": 153,
+        "error_unchanged": 0,
+        "protected_accurate1_count": 102,
+        "new_over5_on_protected": 11,
+        "thresholds_percent_fs": {
+          "1": {
+            "rescues": 50,
+            "new_errors": 66
+          },
+          "2": {
+            "rescues": 62,
+            "new_errors": 78
+          },
+          "5": {
+            "rescues": 9,
+            "new_errors": 31
+          }
+        }
+      }
+    },
+    "detached_control": {
+      "passed": false,
+      "predicates": {
+        "mean": false,
+        "tail": false,
+        "maximum": false,
+        "over5": false,
+        "accurate1_protected": false
+      },
+      "strict_tail": true,
+      "paired": {
+        "paired_images": 292,
+        "paired_groups": 73,
+        "error_rescues": 142,
+        "error_regressions": 150,
+        "error_unchanged": 0,
+        "protected_accurate1_count": 92,
+        "new_over5_on_protected": 6,
+        "thresholds_percent_fs": {
+          "1": {
+            "rescues": 47,
+            "new_errors": 53
+          },
+          "2": {
+            "rescues": 70,
+            "new_errors": 71
+          },
+          "5": {
+            "rescues": 16,
+            "new_errors": 29
+          }
+        }
+      }
+    }
+  },
+  "learning_gates": {
+    "detached_control": {
+      "passed": true,
+      "model_mean": 0.02675953861931977,
+      "model_tail": 0.1168409009774526,
+      "half_constant_mean": 0.1250446370304666,
+      "half_constant_tail": 0.23692208052865074
+    },
+    "reversal": {
+      "passed": true,
+      "model_mean": 0.0332230668449583,
+      "model_tail": 0.1609713640064001,
+      "half_constant_mean": 0.1250446370304666,
+      "half_constant_tail": 0.23692208052865074
+    }
+  },
+  "critic_effect": {
+    "passed": true,
+    "predicates": {
+      "reversal_accuracy_interval": true,
+      "distance_reduction": true
+    },
+    "control_online_accuracy": 0.8260553129548762,
+    "reversal_online_accuracy": 0.4659752547307133,
+    "absolute_distance_reduction": 0.2920305676855895,
+    "scope": "last-epoch source online operational critic effect; not conditional independence or causality"
+  },
+  "training": {
+    "detached_control": {
+      "epochs": 15,
+      "train_images": 82440,
+      "backward_attempts": 1290,
+      "optimizer_updates": 1290,
+      "amp_skipped_updates": 0,
+      "skip_epochs": [],
+      "last_epoch_critic": {
+        "critic_correct": 4540,
+        "critic_total": 5496,
+        "critic_online_accuracy": 0.8260553129548762,
+        "Z_counts": [
+          2748,
+          2748
+        ],
+        "critic_BCE": 0.439878170797398
+      },
+      "last_epoch_primitive": 0.007626395906407109,
+      "last_epoch_forward_numerical_sum": 0.44750456652960574,
+      "max_FP32_forward_sum_vs_sum_of_saved_averages_residual": 3.1884580531382767e-09
+    },
+    "reversal": {
+      "epochs": 15,
+      "train_images": 82440,
+      "backward_attempts": 1290,
+      "optimizer_updates": 1289,
+      "amp_skipped_updates": 1,
+      "skip_epochs": [
+        1
+      ],
+      "last_epoch_critic": {
+        "critic_correct": 2561,
+        "critic_total": 5496,
+        "critic_online_accuracy": 0.4659752547307133,
+        "Z_counts": [
+          2748,
+          2748
+        ],
+        "critic_BCE": 0.7247891306356572
+      },
+      "last_epoch_primitive": 0.0076219572365728615,
+      "last_epoch_forward_numerical_sum": 0.732411088641554,
+      "max_FP32_forward_sum_vs_sum_of_saved_averages_residual": 7.298749271633653e-09
+    }
+  },
+  "formal_counts": {
+    "CNN_images": 165756,
+    "CNN_calls": 2595,
+    "point_examples": 165756,
+    "point_calls": 2595,
+    "critic_examples": 164880,
+    "critic_calls": 2580,
+    "combined_backward_attempts": 2580,
+    "optimizer_updates": 2579,
+    "amp_skipped_updates": 1,
+    "source03_calls": 0,
+    "external_calls": 0
+  },
+  "preflight_counts_separate": {
+    "CNN_calls": 3,
+    "CNN_images": 8,
+    "point_calls": 3,
+    "point_examples": 8,
+    "critic_calls": 1,
+    "critic_examples": 4,
+    "combined_backward_calls": 1,
+    "CNN_backward_calls": 1,
+    "point_backward_calls": 1,
+    "critic_backward_calls": 1,
+    "optimizer_updates": 0,
+    "unique_RGB_images": 8,
+    "RGB_decode_operations": 12,
+    "source_ID_CPU_redecodes": 4
+  },
+  "metadata_aggregate": {
+    "train_rows": 5496,
+    "Z_counts": [
+      2748,
+      2748
+    ],
+    "parents": 687,
+    "view_quartets": 1374,
+    "paired_examples": 2748,
+    "max_paired_consumed_target_difference": 0.0,
+    "paired_target_tolerance": 1e-06,
+    "production_target_reader": "experiments.geoprr_v2_data.normalized_target then float32",
+    "prepared_parse_scope": "private nested train/ID/OOD metadata parsed; only train drives this stage",
+    "ID_OOD_manifests_opened": 0,
+    "RGB_reads": 0,
+    "model_constructions": 0,
+    "GPU_calls": 0,
+    "CNN_calls": 0,
+    "point_calls": 0,
+    "critic_calls": 0,
+    "backward_calls": 0,
+    "optimizer_updates": 0
+  },
+  "metrics": [
+    {
+      "arm": "identity",
+      "view": "native",
+      "executed": true,
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.025431218243695233,
+      "acc_at_1": 0.3493150684931507,
+      "acc_at_2": 0.6232876712328768,
+      "acc_at_5": 0.9452054794520548,
+      "median_error": 0.015494510531425476,
+      "p90_error": 0.040915115177631405,
+      "p95_error": 0.05404334664344783,
+      "tail10_nmae": 0.11800955331418664,
+      "maximum_error": 0.5379703640937805,
+      "errors_above_1_percent_fs": 190,
+      "errors_above_2_percent_fs": 110,
+      "errors_above_5_percent_fs": 16,
+      "count_at_1_percent_fs": 102,
+      "count_at_2_percent_fs": 182,
+      "count_at_5_percent_fs": 276,
+      "failed": 0,
+      "input_failures": 0,
+      "tail_count": 30,
+      "valid_zero_predictions": 0,
+      "valid_one_predictions": 0
+    },
+    {
+      "arm": "identity",
+      "view": "CF",
+      "executed": true,
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.026353762864682596,
+      "acc_at_1": 0.3561643835616438,
+      "acc_at_2": 0.6472602739726028,
+      "acc_at_5": 0.9417808219178082,
+      "median_error": 0.01438409835100174,
+      "p90_error": 0.04164543636143209,
+      "p95_error": 0.05768549442291258,
+      "tail10_nmae": 0.12945961876345488,
+      "maximum_error": 0.5424728989601135,
+      "errors_above_1_percent_fs": 188,
+      "errors_above_2_percent_fs": 103,
+      "errors_above_5_percent_fs": 17,
+      "count_at_1_percent_fs": 104,
+      "count_at_2_percent_fs": 189,
+      "count_at_5_percent_fs": 275,
+      "failed": 0,
+      "input_failures": 0,
+      "tail_count": 30,
+      "valid_zero_predictions": 0,
+      "valid_one_predictions": 0
+    },
+    {
+      "arm": "detached_control",
+      "view": "native",
+      "executed": true,
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.02675953861931977,
+      "acc_at_1": 0.3150684931506849,
+      "acc_at_2": 0.571917808219178,
+      "acc_at_5": 0.9143835616438356,
+      "median_error": 0.017107360064983368,
+      "p90_error": 0.044575661420822185,
+      "p95_error": 0.07012334614992126,
+      "tail10_nmae": 0.1168409009774526,
+      "maximum_error": 0.468278169631958,
+      "errors_above_1_percent_fs": 200,
+      "errors_above_2_percent_fs": 125,
+      "errors_above_5_percent_fs": 25,
+      "count_at_1_percent_fs": 92,
+      "count_at_2_percent_fs": 167,
+      "count_at_5_percent_fs": 267,
+      "failed": 0,
+      "input_failures": 0,
+      "tail_count": 30,
+      "valid_zero_predictions": 0,
+      "valid_one_predictions": 0
+    },
+    {
+      "arm": "detached_control",
+      "view": "CF",
+      "executed": true,
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.028617163082297913,
+      "acc_at_1": 0.3424657534246575,
+      "acc_at_2": 0.5547945205479452,
+      "acc_at_5": 0.9075342465753424,
+      "median_error": 0.016120150685310364,
+      "p90_error": 0.048130086064338724,
+      "p95_error": 0.06844986975193017,
+      "tail10_nmae": 0.12870538172622523,
+      "maximum_error": 0.5006657838821411,
+      "errors_above_1_percent_fs": 192,
+      "errors_above_2_percent_fs": 130,
+      "errors_above_5_percent_fs": 27,
+      "count_at_1_percent_fs": 100,
+      "count_at_2_percent_fs": 162,
+      "count_at_5_percent_fs": 265,
+      "failed": 0,
+      "input_failures": 0,
+      "tail_count": 30,
+      "valid_zero_predictions": 0,
+      "valid_one_predictions": 0
+    },
+    {
+      "arm": "reversal",
+      "view": "native",
+      "executed": true,
+      "samples": 292,
+      "groups": 73,
+      "nmae": 0.0332230668449583,
+      "acc_at_1": 0.2945205479452055,
+      "acc_at_2": 0.5684931506849316,
+      "acc_at_5": 0.8698630136986302,
+      "median_error": 0.01777220517396927,
+      "p90_error": 0.058395713567733834,
+      "p95_error": 0.07791639622300861,
+      "tail10_nmae": 0.1609713640064001,
+      "maximum_error": 0.8118392527103424,
+      "errors_above_1_percent_fs": 206,
+      "errors_above_2_percent_fs": 126,
+      "errors_above_5_percent_fs": 38,
+      "count_at_1_percent_fs": 86,
+      "count_at_2_percent_fs": 166,
+      "count_at_5_percent_fs": 254,
+      "failed": 0,
+      "input_failures": 0,
+      "tail_count": 30,
+      "valid_zero_predictions": 0,
+      "valid_one_predictions": 0
+    },
+    {
+      "arm": "reversal",
+      "view": "CF",
+      "executed": false,
+      "samples": null,
+      "groups": null,
+      "nmae": null,
+      "acc_at_1": null,
+      "acc_at_2": null,
+      "acc_at_5": null,
+      "median_error": null,
+      "p90_error": null,
+      "p95_error": null,
+      "tail10_nmae": null,
+      "maximum_error": null,
+      "errors_above_1_percent_fs": null,
+      "errors_above_2_percent_fs": null,
+      "errors_above_5_percent_fs": null,
+      "count_at_1_percent_fs": null,
+      "count_at_2_percent_fs": null,
+      "count_at_5_percent_fs": null,
+      "failed": null,
+      "input_failures": null,
+      "tail_count": null,
+      "valid_zero_predictions": null,
+      "valid_one_predictions": null
+    }
+  ],
+  "pair_comparisons": {
+    "control_native_vs_identity_native": {
+      "paired_images": 292,
+      "paired_groups": 73,
+      "error_rescues": 135,
+      "error_regressions": 156,
+      "error_unchanged": 1,
+      "protected_accurate1_count": 102,
+      "new_over5_on_protected": 3,
+      "thresholds_percent_fs": {
+        "1": {
+          "rescues": 51,
+          "new_errors": 61
+        },
+        "2": {
+          "rescues": 41,
+          "new_errors": 56
+        },
+        "5": {
+          "rescues": 4,
+          "new_errors": 13
+        }
+      },
+      "group_comparisons": {
+        "nmae": {
+          "improved": 34,
+          "regressed": 39,
+          "unchanged": 0
+        },
+        "tail10_nmae": {
+          "improved": 29,
+          "regressed": 44,
+          "unchanged": 0
+        },
+        "maximum_error": {
+          "improved": 29,
+          "regressed": 44,
+          "unchanged": 0
+        }
+      }
+    },
+    "control_CF_vs_identity_CF": {
+      "paired_images": 292,
+      "paired_groups": 73,
+      "error_rescues": 127,
+      "error_regressions": 165,
+      "error_unchanged": 0,
+      "protected_accurate1_count": 104,
+      "new_over5_on_protected": 5,
+      "thresholds_percent_fs": {
+        "1": {
+          "rescues": 54,
+          "new_errors": 58
+        },
+        "2": {
+          "rescues": 41,
+          "new_errors": 68
+        },
+        "5": {
+          "rescues": 4,
+          "new_errors": 14
+        }
+      },
+      "group_comparisons": {
+        "nmae": {
+          "improved": 27,
+          "regressed": 46,
+          "unchanged": 0
+        },
+        "tail10_nmae": {
+          "improved": 25,
+          "regressed": 48,
+          "unchanged": 0
+        },
+        "maximum_error": {
+          "improved": 25,
+          "regressed": 48,
+          "unchanged": 0
+        }
+      }
+    },
+    "reversal_native_vs_identity_native": {
+      "paired_images": 292,
+      "paired_groups": 73,
+      "error_rescues": 139,
+      "error_regressions": 153,
+      "error_unchanged": 0,
+      "protected_accurate1_count": 102,
+      "new_over5_on_protected": 11,
+      "thresholds_percent_fs": {
+        "1": {
+          "rescues": 50,
+          "new_errors": 66
+        },
+        "2": {
+          "rescues": 62,
+          "new_errors": 78
+        },
+        "5": {
+          "rescues": 9,
+          "new_errors": 31
+        }
+      },
+      "group_comparisons": {
+        "nmae": {
+          "improved": 30,
+          "regressed": 43,
+          "unchanged": 0
+        },
+        "tail10_nmae": {
+          "improved": 28,
+          "regressed": 45,
+          "unchanged": 0
+        },
+        "maximum_error": {
+          "improved": 28,
+          "regressed": 45,
+          "unchanged": 0
+        }
+      }
+    },
+    "reversal_native_vs_control_native": {
+      "paired_images": 292,
+      "paired_groups": 73,
+      "error_rescues": 142,
+      "error_regressions": 150,
+      "error_unchanged": 0,
+      "protected_accurate1_count": 92,
+      "new_over5_on_protected": 6,
+      "thresholds_percent_fs": {
+        "1": {
+          "rescues": 47,
+          "new_errors": 53
+        },
+        "2": {
+          "rescues": 70,
+          "new_errors": 71
+        },
+        "5": {
+          "rescues": 16,
+          "new_errors": 29
+        }
+      },
+      "group_comparisons": {
+        "nmae": {
+          "improved": 37,
+          "regressed": 36,
+          "unchanged": 0
+        },
+        "tail10_nmae": {
+          "improved": 33,
+          "regressed": 40,
+          "unchanged": 0
+        },
+        "maximum_error": {
+          "improved": 33,
+          "regressed": 40,
+          "unchanged": 0
+        }
+      }
+    },
+    "identity_CF_vs_native": {
+      "paired_images": 292,
+      "paired_groups": 73,
+      "error_rescues": 137,
+      "error_regressions": 152,
+      "error_unchanged": 3,
+      "protected_accurate1_count": 102,
+      "new_over5_on_protected": 0,
+      "thresholds_percent_fs": {
+        "1": {
+          "rescues": 24,
+          "new_errors": 22
+        },
+        "2": {
+          "rescues": 23,
+          "new_errors": 16
+        },
+        "5": {
+          "rescues": 4,
+          "new_errors": 5
+        }
+      },
+      "group_comparisons": {
+        "nmae": {
+          "improved": 33,
+          "regressed": 40,
+          "unchanged": 0
+        },
+        "tail10_nmae": {
+          "improved": 38,
+          "regressed": 35,
+          "unchanged": 0
+        },
+        "maximum_error": {
+          "improved": 38,
+          "regressed": 35,
+          "unchanged": 0
+        }
+      }
+    },
+    "control_CF_vs_native": {
+      "paired_images": 292,
+      "paired_groups": 73,
+      "error_rescues": 126,
+      "error_regressions": 164,
+      "error_unchanged": 2,
+      "protected_accurate1_count": 92,
+      "new_over5_on_protected": 0,
+      "thresholds_percent_fs": {
+        "1": {
+          "rescues": 26,
+          "new_errors": 18
+        },
+        "2": {
+          "rescues": 12,
+          "new_errors": 17
+        },
+        "5": {
+          "rescues": 4,
+          "new_errors": 6
+        }
+      },
+      "group_comparisons": {
+        "nmae": {
+          "improved": 31,
+          "regressed": 42,
+          "unchanged": 0
+        },
+        "tail10_nmae": {
+          "improved": 32,
+          "regressed": 41,
+          "unchanged": 0
+        },
+        "maximum_error": {
+          "improved": 32,
+          "regressed": 41,
+          "unchanged": 0
+        }
+      }
+    }
+  },
+  "cost": {
+    "supervisor_process_seconds": 996.8495061174035,
+    "sum_parent_child_lifetimes_seconds": 995.7585619427264,
+    "sum_child_module_entry_seconds": 987.8305095508695,
+    "launch_receipt_to_supervisor_finish_UTC_seconds": 996.861378,
+    "queue_last_elapsed_seconds": 996.8517815582454,
+    "training_seconds_both_arms": 926.0679816864431,
+    "critic_FP32_region_CUDA_event_seconds_both_arms": 0.30189404548704624,
+    "hook_host_seconds_both_arms": 0.09653088822960854,
+    "peak_CPU_memory_bytes_observed": 5662527488,
+    "peak_CUDA_allocated_bytes_observed": 8264907776,
+    "peak_CUDA_reserved_bytes_observed": 11349786624,
+    "current_checkpoint_files_stat_bytes_total": 440096720,
+    "checkpoint_IO_seconds": null,
+    "point_only_seconds": null,
+    "total_GPU_compute_seconds": null,
+    "screen_queue_final_write_seconds": null,
+    "NEWCPU_after_warm_import_seconds": 0.9023926854133606,
+    "cold_model_load_only_seconds": null,
+    "CPU_peak_scope": "maximum observed per-stage process RUSAGE_SELF RSS, not summed loader workers or whole-host RSS"
+  },
+  "failures": [],
+  "max_absolute_saved_numeric_difference": 1.4210854715202004e-14,
+  "saved_numeric_float_comparisons": 15780,
+  "reversal_CF": {
+    "executed": false,
+    "CNN_calls": 0,
+    "point_calls": 0,
+    "critic_calls": 0,
+    "results": null,
+    "reason": "native_joint_failed"
+  },
+  "qualifications": [
+    "Provided-label saved-value audit. Production normalized_target to FP32 consumer binding and paired difference0 are saved witnesses; no new physical label derivation. C3 original149/148/1 raw-derivation qualification remains unresolved and is not upgraded to PASS.",
+    "Prepared metadata contains nested train/ID/OOD contracts and was privately parsed/copied; only training fields drive y/Z. No ID/OOD manifest or pixels were opened during metadata preparation.",
+    "One seed, 15 scheduled epochs and1290 backward attempts each. Effective optimizer updates differ1290 vs1289 because reversal epoch1 had one normal AMP skip; no compensation or scaler adjustment.",
+    "Online source critic counts include all attempted5496 presentations per epoch, including AMP skip; these are co-trained statistics, not held-out or frozen-feature probe accuracy. The critic effect does not prove conditional mutual information zero, causality, significance, a new blind test, convergence or real-domain generalization.",
+    "Joint gradient clipping includes critic in both arms; detached control does not establish exact historical identity weight trajectory. Same formal initialization is supported by fresh seed/order and forked-RNG code plus saved initialization metadata, not a fresh cross-arm initial-tensor comparison.",
+    "Pref witnesses cached462 initial states,237 parameters unchanged at0opt,468 strict self-reload and BN77 train+1/eval0. This audit did not reopen historical pixels or full weights and does not upgrade their certification.",
+    "Float comparison uses absolute1e-12; IDs, groups, row order and counts use exact equality. Forward numerical sum is computed in FP32 per batch, so its averaged saved value need not equal the sum of separately averaged primitives at1e-12; the observed residuals are reported without rewriting numbers.",
+    "Child module timers begin before torch import but exclude final JSON/down-time; supervisor includes child process lifetime through finalization and excludes screen/queue final writes and caller lifetime. Finalize1.991769660s is not whole-pipeline time. Phase and forward wall timings are not total GPU compute.",
+    "CUDA event scope includes concat, critic, primitive, BCE and forward sum; it is not pure critic cost. Hook host time is separate. Checkpoint I/O, point-only and total GPU compute times are unmeasured null. Current checkpoint files were statted only; neither their bytes nor state were loaded. Cold model-load-only time is not isolated. CPU peaks use per-stage process RUSAGE_SELF RSS and do not sum loader worker memory or whole-host memory.",
+    "Post-exit readiness uses the already saved00:57:52.503437UTC parent monitor witness. Final-child flags were written before parent exit and remain false; they are not a later liveness failure. This auditor made no new process/GPU query.",
+    "ReversalCF was not run because native joint failed; all its results remain null and0calls. Neither controlCF nor identityCF is substituted. Source03 and actual Industrial/RF calls remain0; no model is promoted.",
+    "The local recomputation script depends on private collected validation rows and is excluded from the public archive. Public normalized results report this one audit; the public bundle is not advertised as independently rerunnable from hidden context."
+  ],
+  "completed_at_utc": "2026-10-26T01:07:37.042401+00:00"
+}

@@ -26,6 +26,16 @@ data audit, training, controls, and evaluation commands are documented in
 [Lightweight reader training](docs/GEOPRR_V2_TRAINING_CN.md). It has a separate
 checkpoint identity and does not replace the publication model or its results.
 
+## Current research handoff
+
+The independent source-only robustness iteration is paused for a device migration
+because the previous server budget is insufficient. No new candidate has been promoted.
+See [current research progress](docs/GEOPRR_CURRENT_PROGRESS_CN.md),
+[device migration handoff](docs/GEOPRR_DEVICE_MIGRATION_HANDOFF_CN.md),
+[copyable continuation prompt](docs/GEOPRR_CONTINUE_ON_NEW_DEVICE_PROMPT_CN.md),
+and [staged budgets and early stopping](docs/GEOPRR_EFFICIENT_ITERATION_RULES_CN.md).
+These continuation records are separate from the publication results below.
+
 ## Scope
 
 GeoPRR-Net estimates normalized pointer progress in <code>[0, 1]</code> from a

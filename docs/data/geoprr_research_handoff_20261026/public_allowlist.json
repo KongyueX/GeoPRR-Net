@@ -1,0 +1,10 @@
+{
+  "files": [
+    "README.md",
+    "progress.json",
+    "saved_external_comparison.csv",
+    "private_asset_inventory_status.json",
+    "public_allowlist.json"
+  ],
+  "scope": "public migration state, saved aggregate benchmarkcopy and unverified staticrelative assetinventory only; no rawdata/weights/features/contracts/trainingidentity arrays/privatepaths"
+}

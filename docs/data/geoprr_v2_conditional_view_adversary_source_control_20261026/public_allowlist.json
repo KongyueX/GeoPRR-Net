@@ -6,7 +6,31 @@
     "cpu_checks.json",
     "public_allowlist.json",
     "launch.json",
+    "runtime_preflight.json",
+    "completed/audit_result.json",
+    "completed/audit_checks_summary.json",
+    "completed/metrics.csv",
+    "completed/pair_comparisons.csv",
+    "completed/execution_cost.csv",
+    "completed/cost_boundaries.json",
+    "completed/audit_report.md",
+    "completed/execution_evidence.json",
+    "completed/training_history.csv",
+    "completed/archive_allowlist.json"
+  ],
+  "scope": "normalized frozen conditional source-view contract/config/NEWCPU/launch/preflight metadata and the ten approved aggregate completed audit files; no validation rows/IDs/targets, source arrays, full contracts, features, weights, RGB or private absolute paths",
+  "completion_status": "complete",
+  "scientific_verdict": "NOT_RETAINED",
+  "completion_reason": "source_reading_joint_failed",
+  "integrity_status": "PASS",
+  "research_status": "ACTIVE",
+  "frozen_files_unchanged": [
+    "protocol.json",
+    "config.json",
+    "cpu_checks.json",
+    "launch.json",
     "runtime_preflight.json"
   ],
-  "scope": "normalized frozen source-only conditional-gradient contract/config/NEWCPU/launch and sourcepreflightmetadata; no source arrays/labels/features/RGB/weights/privatepaths"
+  "csv_storage": "plain CSV with LF line endings; original numeric strings retained",
+  "verification_scope": "One completed saved-number/execution audit; private verifier and validation context excluded; public bundle not independently rerunnable."
 }

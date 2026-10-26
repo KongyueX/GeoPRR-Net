@@ -1,0 +1,21 @@
+{
+  "integrity_status": "PASS",
+  "checks": 42230,
+  "failed": 0,
+  "saved_numeric_float_comparisons": 15780,
+  "absolute_tolerance": 1e-12,
+  "maximum_absolute_difference": 1.4210854715202004e-14,
+  "categories": [
+    "source validation row schema/order/target/error",
+    "all five observation summaries and73groups each",
+    "six saved-value paired comparisons and thresholds",
+    "native private paired subset",
+    "frozen references and constant/native joint gates",
+    "history counts, labels and optimizer/AMP accounting",
+    "metadata/pref/NEWCPU saved witnesses",
+    "conditional stage ordering and no unauthorized CF",
+    "formal counts and separately scoped costs",
+    "static new-code boundaries"
+  ],
+  "failures": []
+}

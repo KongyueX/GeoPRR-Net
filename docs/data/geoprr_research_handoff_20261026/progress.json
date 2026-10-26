@@ -1,0 +1,220 @@
+{
+  "schema": "geoprr_research_handoff_v1",
+  "updated_at_utc": "2026-10-26T01:58:01.810635+00:00",
+  "execution_status": "paused_for_device_migration",
+  "pause_reason": "Human reports insufficient old-server budget and requests GitHub progress plus continuation on another device.",
+  "automation": {
+    "id": "geoprr-v23-zero-shot",
+    "status": "PAUSED",
+    "old_host_autostart_allowed": false,
+    "resume_requires": "Human identifies the new device and requests resumption; inspect this handoff before any new job."
+  },
+  "objective_achieved": false,
+  "promoted_new_model": null,
+  "interrupted_training_to_resume": false,
+  "latest_completed_protocol": "geoprr_v2_conditional_view_adversary_source_control_v1",
+  "latest_science_revision": "03981213603beea957989547690af73004617844",
+  "latest_runtime_revision": "5e8a0da6c7ef0970068d5abcd704b29bcd636604",
+  "latest_completed_archive": "docs/data/geoprr_v2_conditional_view_adversary_source_control_20261026/completed/",
+  "latest_scientific_verdict": "NOT_RETAINED",
+  "latest_integrity_audit": {
+    "status": "PASS",
+    "checks": 42230,
+    "failed": 0,
+    "floating_comparisons": 15780,
+    "maximum_absolute_difference": 1.4210854715202004e-14,
+    "absolute_tolerance": 1e-12,
+    "fresh_auditor_count": 1
+  },
+  "last_verified_old_host": {
+    "at_utc": "2026-10-26T00:57:52.503437+00:00",
+    "research_pipeline_complete": true,
+    "all_research_parent_children_absent": true,
+    "GPU_compute_process_count": 0
+  },
+  "migration_time_remote_recheck": {
+    "status": "SSH_connection_unavailable",
+    "ssh_exit_code": 255,
+    "current_project_process_count": null,
+    "current_GPU_compute_count": null,
+    "current_asset_presence_and_size_verified": false,
+    "server_shutdown_performed_by_this_task": false,
+    "private_asset_transfer_performed_by_this_task": false,
+    "destination_verified": false
+  },
+  "latest_source_control": {
+    "population": "5496 source training presentations per epoch;292 sourceID/73groups; no real-domain scoring",
+    "detached_native": {
+      "mean_percent_fs": "2.6759538619",
+      "tail30_percent_fs": "11.6840900977",
+      "maximum_percent_fs": "46.8278169632",
+      "over5": 25
+    },
+    "reversal_native": {
+      "mean_percent_fs": "3.3223066845",
+      "tail30_percent_fs": "16.0971364006",
+      "maximum_percent_fs": "81.1839252710",
+      "over5": 38
+    },
+    "identity15_native": {
+      "mean_percent_fs": "2.5431218244",
+      "tail30_percent_fs": "11.8009553314",
+      "maximum_percent_fs": "53.7970364094",
+      "over5": 16
+    },
+    "new_over5_on_identity_accurate_102": 11,
+    "new_over5_on_control_accurate_92": 6,
+    "reversal_CF": null,
+    "reversal_CF_calls": 0,
+    "critic_online_accuracy_control": "0.8260553129548762",
+    "critic_online_accuracy_reversal": "0.4659752547307133",
+    "critic_operational_effect_passed": true,
+    "reading_joint_passed": false,
+    "actual_CNN_point_images": 165756,
+    "actual_CNN_point_calls": 2595,
+    "actual_critic_examples": 164880,
+    "actual_critic_calls": 2580,
+    "backward_attempts": 2580,
+    "optimizer_updates": 2579,
+    "AMP_skips": 1,
+    "whole_supervisor_seconds": 996.8495061174035,
+    "real_Industrial_RF_calls": 0
+  },
+  "external_benchmark_source": "docs/data/geoprr_v2_groupnorm_semantic_20261025/completed/comparison.csv",
+  "external_saved_values_are_decimal_strings_not_new_evaluations": true,
+  "selected_external_saved_benchmarks": [
+    {
+      "label": "旧GeoPRR历史clean",
+      "saved_row_key": "historical_old_geoprr_clean_source_only_saved_source_selected",
+      "industrial": {
+        "mean_percent_fs": "11.643617857033954",
+        "tail10_percent_fs": "43.950870134202496",
+        "maximum_percent_fs": "75.32466650009155"
+      },
+      "rf151": {
+        "mean_percent_fs": "6.6070791714191",
+        "tail10_percent_fs": "32.7486453083111",
+        "maximum_percent_fs": "60.50456464290619"
+      },
+      "scope": "saved same-population source-selected checkpoint; different architecture, normalization, supervision, input contract and training history; historical GeoPRR pixels/full weight chain not recertified"
+    },
+    {
+      "label": "V16",
+      "saved_row_key": "v16_saved_source_selected",
+      "industrial": {
+        "mean_percent_fs": "11.686054081188708",
+        "tail10_percent_fs": "45.734072767996366",
+        "maximum_percent_fs": "86.48196458816528"
+      },
+      "rf151": {
+        "mean_percent_fs": "10.16477580956686",
+        "tail10_percent_fs": "44.210095796734095",
+        "maximum_percent_fs": "54.413069784641266"
+      },
+      "scope": "saved same-population source-selected checkpoint; different architecture, normalization, supervision, input contract and training history; historical GeoPRR pixels/full weight chain not recertified"
+    },
+    {
+      "label": "V24",
+      "saved_row_key": "v24_saved_source_selected",
+      "industrial": {
+        "mean_percent_fs": "23.9808451304526",
+        "tail10_percent_fs": "65.66480901225337",
+        "maximum_percent_fs": "95.86586952209473"
+      },
+      "rf151": {
+        "mean_percent_fs": "7.72681952069054",
+        "tail10_percent_fs": "25.32527537932765",
+        "maximum_percent_fs": "50.89256074279547"
+      },
+      "scope": "saved same-population source-selected checkpoint; different architecture, normalization, supervision, input contract and training history; historical GeoPRR pixels/full weight chain not recertified"
+    },
+    {
+      "label": "V26",
+      "saved_row_key": "v26_saved_source_selected",
+      "industrial": {
+        "mean_percent_fs": "22.86104738630528",
+        "tail10_percent_fs": "64.45689931378833",
+        "maximum_percent_fs": "86.01835370063782"
+      },
+      "rf151": {
+        "mean_percent_fs": "9.059528507610679",
+        "tail10_percent_fs": "51.67071184550878",
+        "maximum_percent_fs": "70.40584087371826"
+      },
+      "scope": "saved same-population source-selected checkpoint; different architecture, normalization, supervision, input contract and training history; historical GeoPRR pixels/full weight chain not recertified"
+    },
+    {
+      "label": "V28",
+      "saved_row_key": "v28_saved_source_selected",
+      "industrial": {
+        "mean_percent_fs": "12.758457612921642",
+        "tail10_percent_fs": "44.06817355991474",
+        "maximum_percent_fs": "71.89369201660156"
+      },
+      "rf151": {
+        "mean_percent_fs": "10.831386624123834",
+        "tail10_percent_fs": "54.13592598051764",
+        "maximum_percent_fs": "68.52583289146423"
+      },
+      "scope": "saved same-population source-selected checkpoint; different architecture, normalization, supervision, input contract and training history; historical GeoPRR pixels/full weight chain not recertified"
+    },
+    {
+      "label": "V29",
+      "saved_row_key": "v29_saved_source_selected",
+      "industrial": {
+        "mean_percent_fs": "22.354575703621553",
+        "tail10_percent_fs": "78.7904091857906",
+        "maximum_percent_fs": "97.78834581375122"
+      },
+      "rf151": {
+        "mean_percent_fs": "11.80528177371301",
+        "tail10_percent_fs": "51.893965344061144",
+        "maximum_percent_fs": "72.90503988042474"
+      },
+      "scope": "saved same-population source-selected checkpoint; different architecture, normalization, supervision, input contract and training history; historical GeoPRR pixels/full weight chain not recertified"
+    },
+    {
+      "label": "V30",
+      "saved_row_key": "v30_saved_source_selected",
+      "industrial": {
+        "mean_percent_fs": "15.41873483910262",
+        "tail10_percent_fs": "56.54400204707469",
+        "maximum_percent_fs": "80.65176010131836"
+      },
+      "rf151": {
+        "mean_percent_fs": "12.09589133375642",
+        "tail10_percent_fs": "50.74978625634685",
+        "maximum_percent_fs": "68.49140524864197"
+      },
+      "scope": "saved same-population source-selected checkpoint; different architecture, normalization, supervision, input contract and training history; historical GeoPRR pixels/full weight chain not recertified"
+    },
+    {
+      "label": "V31",
+      "saved_row_key": "v31_source_best1",
+      "industrial": {
+        "mean_percent_fs": "37.24929515799795",
+        "tail10_percent_fs": "50.42227506637573",
+        "maximum_percent_fs": "50.42227506637573"
+      },
+      "rf151": {
+        "mean_percent_fs": "23.39531971576904",
+        "tail10_percent_fs": "49.616267530109326",
+        "maximum_percent_fs": "50.42227506637573"
+      },
+      "scope": "60 source epochs; earliest strict source R best1; near-constant saved source predictions; RGB512/output128;77 GN8 with FP32 norm then featureFP16/drop-act,BN0/buffers0;GAPsemantic1280/point1280to1;8435793 parameters/all233 trainable tensors/233 states;no automatic promotion"
+    }
+  ],
+  "references_to_preserve": [
+    "V16 as recent lightweight source-selected reference; no new candidate promoted",
+    "historical clean GeoPRR as qualified historical reference; not a universal winner across all metrics"
+  ],
+  "next_execution_rule": "Do not resume completed experiments. On the new device first verify required private assets and environment, then define one source-supported new method and prospective staged learning/early-stop gates; never default to60minimumepochs.",
+  "next_direction": "No new method is approved or running. The closed gradient-reversal setting must not be retuned or promoted because critic accuracy approachedchance.",
+  "private_assets_in_git": false,
+  "external_training_adaptation_or_hyperparameter_selection_allowed": false,
+  "official_test4000_use_allowed": false,
+  "new_git_branch_allowed": false,
+  "efficiency_policy": "docs/GEOPRR_EFFICIENT_ITERATION_RULES_CN.md",
+  "continuation_prompt": "docs/GEOPRR_CONTINUE_ON_NEW_DEVICE_PROMPT_CN.md",
+  "migration_guide": "docs/GEOPRR_DEVICE_MIGRATION_HANDOFF_CN.md"
+}

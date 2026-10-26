@@ -1,0 +1,16 @@
+{
+  "files": [
+    "audit_result.json",
+    "audit_checks_summary.json",
+    "metrics.csv",
+    "pair_comparisons.csv",
+    "execution_cost.csv",
+    "cost_boundaries.json",
+    "audit_report.md",
+    "execution_evidence.json",
+    "training_history.csv",
+    "archive_allowlist.json"
+  ],
+  "scope": "Normalized aggregate results, execution/cost metadata and scalar training history from the one completed independent audit. No validation rows/IDs/targets, training IDs/y/Z bindings, source contracts, features, weights, RGB or private absolute paths.",
+  "verification": "One completed stdlib saved-number audit; the verifier and its private validation context are excluded. This public bundle is not advertised as independently rerunnable."
+}
