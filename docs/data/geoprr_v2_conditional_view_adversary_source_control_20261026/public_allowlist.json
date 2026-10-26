@@ -1,0 +1,10 @@
+{
+  "files": [
+    "README.md",
+    "protocol.json",
+    "config.json",
+    "cpu_checks.json",
+    "public_allowlist.json"
+  ],
+  "scope": "frozen source-only conditional-gradient contract/config/syntheticCPU metadata; no source arrays/labels/features/RGB/weights/privatepaths"
+}

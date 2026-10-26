@@ -1,0 +1,101 @@
+{
+  "protocol": "geoprr_v2_conditional_view_adversary_source_control_v1",
+  "preparation_protocol": "geoprr_v2_needle_holdout_source_control_v1",
+  "source": {
+    "train_rows": 5496,
+    "Z_counts": [
+      2748,
+      2748
+    ],
+    "parents": 687,
+    "view_quartets": 1374,
+    "pairs": 2748,
+    "source_ID_rows": 292,
+    "source_ID_groups": 73,
+    "source03_calls": 0,
+    "external_calls": 0,
+    "metadata_pair_y_tolerance": 1e-06
+  },
+  "model": {
+    "reader": "unchanged fresh cached MNV4/full GAP1280/Linear1/scalarF32",
+    "critic": [
+      1281,
+      64,
+      1
+    ],
+    "critic_precision": "float32",
+    "critic_bias": true,
+    "critic_BN_dropout": false,
+    "critic_parameters": 82113,
+    "critic_parameter_tensors": 4,
+    "expected_total_parameters": 8517906,
+    "expected_parameter_tensors": 237,
+    "expected_state_tensors": 468,
+    "expected_source_BN_tensors": 77,
+    "critic_initialization": "standard Linear within fork_rng(devices=[]); restore main CPU RNG"
+  },
+  "arms": {
+    "detached_control": 0.0,
+    "reversal": 0.05
+  },
+  "data": {
+    "image_size": 512,
+    "output_size": 128,
+    "geometry": false,
+    "pair_manifest": null
+  },
+  "photometric": {
+    "contrast": [
+      0.8,
+      1.2
+    ],
+    "saturation": [
+      0.8,
+      1.2
+    ],
+    "brightness": [
+      -0.1,
+      0.1
+    ]
+  },
+  "training": {
+    "seed": 20262020,
+    "epochs": 15,
+    "batch_size": 64,
+    "last_batch_size": 56,
+    "workers": 4,
+    "loader_seed": "20262020+epoch",
+    "optimizer": "AdamW",
+    "lr": 0.0003,
+    "weight_decay": 0.0001,
+    "joint_clip": 5.0,
+    "fresh_default_GradScaler": true,
+    "smooth_l1_beta": 0.05,
+    "loss_values": "primitive mean SmoothL1 + mean BCEWithLogits",
+    "encoder_gradient": "primitive gradient minus alpha times BCE feature gradient",
+    "critic_gradient": "unscaled BCE descent",
+    "scheduler": null,
+    "intermediate_validation": false,
+    "checkpoint": "last15 only; strict complete-epoch full new state resume"
+  },
+  "reference": {
+    "source_id": {
+      "nmae": 0.025431218243695233,
+      "tail10_nmae": 0.11800955331418664,
+      "maximum_error": 0.5379703640937805,
+      "over5": 16,
+      "accurate1": 102
+    },
+    "source_counterfactual": {
+      "nmae": 0.026353762864682596,
+      "tail10_nmae": 0.12945961876345488,
+      "maximum_error": 0.5424728989601135,
+      "over5": 17,
+      "accurate1": 104
+    }
+  },
+  "inference_inputs": [
+    "image"
+  ],
+  "scope": "one-seed source procedure control; no independence, causality or real-domain claim"
+}

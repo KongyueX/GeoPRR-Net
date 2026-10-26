@@ -1,0 +1,21 @@
+{
+  "protocol": "geoprr_v2_conditional_view_adversary_source_control_v1",
+  "status": "passed",
+  "tests": 7,
+  "failures": 0,
+  "errors": 0,
+  "test_execution_seconds_after_warm_library_imports": 0.9023926854133606,
+  "operation_counts": {
+    "real_MNV4_construction_attempts": 0,
+    "RGB_read_attempts": 0,
+    "real_cached_weight_or_checkpoint_read_attempts": 0,
+    "synthetic_toy_state_reads": 1,
+    "CUDA_initialization_attempts": 0
+  },
+  "CUDA_available": false,
+  "CUDA_initialized": false,
+  "real_MNV4_constructions": 0,
+  "real_MNV4_forward_calls": 0,
+  "real_model_metadata_confirmed": false,
+  "scope": "Only new synthetic GRLsign/criticgradient/y-stopgrad/F32autocast/forkRNG/toy-original-forward/localpointHook/evalcritic0/mock-source-metadata-consumer/newconditionalcounts/resume/partial. No oldGT/q/variance/selector/tests, realweights/RGB/MNV4/GPU."
+}
