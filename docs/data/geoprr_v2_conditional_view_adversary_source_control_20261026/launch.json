@@ -1,0 +1,26 @@
+{
+  "protocol": "geoprr_v2_conditional_view_adversary_source_control_v1",
+  "scientific_revision": "03981213603beea957989547690af73004617844",
+  "observed_at_utc": "2026-10-26T00:39:57.344726+00:00",
+  "checks": {
+    "new_module_processes_absent": true,
+    "GPU_idle": true,
+    "output_absent": true,
+    "pref_absent_or_empty": true,
+    "sufficient_full_scheduled_storage": true,
+    "previous_snapshot_precheck_passed": true,
+    "necessary_NEWCPU7_passed": true
+  },
+  "GPU_compute_rows": [],
+  "new_module_process_count": 0,
+  "free_bytes": 804773888,
+  "estimated_max_new_pipeline_storage_bytes": 558444548,
+  "storage_estimate_scope": "reused prior comparable checkpoint stat from completed launch metadata; four checkpoints plus82113 extra parameters*12bytes and16MiB metadata each,64MiB headroom; no oldweights/file recheck",
+  "status": "launched_metadata_then_conditional_GPU",
+  "data_or_model_started_before_launch": false,
+  "pipeline_pid": 440513,
+  "started_at_utc": "2026-10-26T00:39:57.345731+00:00",
+  "launch_log_relative": "diagnostics/geoprr_conditional_view_adversary_launch_20261026/controller.log",
+  "launch_receipt_relative": "diagnostics/geoprr_conditional_view_adversary_launch_20261026/launch_receipt.json",
+  "sequence": "metadataCPU->ONEpref->detached15/native->ifreadingANDcriticpasscontrolCF->freshreversal15/native->conditionalCF->finalize"
+}

@@ -1,0 +1,283 @@
+{
+  "protocol": "geoprr_v2_conditional_view_adversary_source_control_v1",
+  "observed_at_utc": "2026-10-26T00:43:42.066454+00:00",
+  "science_revision": "03981213603beea957989547690af73004617844",
+  "source_metadata": {
+    "status": "complete",
+    "admitted": true,
+    "verdict": "SOURCE_VIEW_METADATA_ADMITTED",
+    "reason": null,
+    "aggregate": {
+      "train_rows": 5496,
+      "Z_counts": [
+        2748,
+        2748
+      ],
+      "parents": 687,
+      "view_quartets": 1374,
+      "paired_examples": 2748,
+      "max_paired_consumed_target_difference": 0.0,
+      "paired_target_tolerance": 1e-06,
+      "production_target_reader": "experiments.geoprr_v2_data.normalized_target then float32",
+      "prepared_parse_scope": "private nested train/ID/OOD metadata parsed; only train drives this stage",
+      "ID_OOD_manifests_opened": 0,
+      "RGB_reads": 0,
+      "model_constructions": 0,
+      "GPU_calls": 0,
+      "CNN_calls": 0,
+      "point_calls": 0,
+      "critic_calls": 0,
+      "backward_calls": 0,
+      "optimizer_updates": 0
+    },
+    "module_entry_seconds": 1.1921897009015083,
+    "peak_cpu_memory_bytes": 587419648,
+    "counts": {
+      "RGB_reads": 0,
+      "CNN_calls": 0,
+      "point_calls": 0,
+      "critic_calls": 0,
+      "backward_calls": 0,
+      "optimizer_updates": 0,
+      "GPU_calls": 0
+    }
+  },
+  "preflight": {
+    "status": "passed",
+    "alpha": 0.05,
+    "counts": {
+      "CNN_calls": 3,
+      "CNN_images": 8,
+      "point_calls": 3,
+      "point_examples": 8,
+      "critic_calls": 1,
+      "critic_examples": 4,
+      "combined_backward_calls": 1,
+      "CNN_backward_calls": 1,
+      "point_backward_calls": 1,
+      "critic_backward_calls": 1,
+      "optimizer_updates": 0,
+      "unique_RGB_images": 8,
+      "RGB_decode_operations": 12,
+      "source_ID_CPU_redecodes": 4
+    },
+    "source_BN_counter_tensors_checked": 77,
+    "training_BN_increment": 1,
+    "eval_BN_increment": 0,
+    "parameter_tensors_unchanged_without_optimizer": 237,
+    "strict_model_reload": true,
+    "full_state_tensors": 468,
+    "all_reader_gradients_finite": true,
+    "reader_gradient_groups_nonzero": {
+      "encoder": true,
+      "encoder_stem": true,
+      "semantic_conv_head": true,
+      "semantic_norm_head": true,
+      "point": true
+    },
+    "critic_gradients_finite": true,
+    "critic_first_last_weight_gradients_nonzero": {
+      "0": true,
+      "2": true
+    },
+    "conditioning_detached": true,
+    "observed_encoder_inputs": [
+      {
+        "shape": [
+          4,
+          3,
+          512,
+          512
+        ],
+        "dtype": "torch.float32"
+      },
+      {
+        "shape": [
+          2,
+          3,
+          512,
+          512
+        ],
+        "dtype": "torch.float32"
+      },
+      {
+        "shape": [
+          2,
+          3,
+          512,
+          512
+        ],
+        "dtype": "torch.float32"
+      }
+    ],
+    "observed_pool": [
+      {
+        "before": [
+          4,
+          960,
+          16,
+          16
+        ],
+        "after": [
+          4,
+          960,
+          1,
+          1
+        ]
+      },
+      {
+        "before": [
+          2,
+          960,
+          16,
+          16
+        ],
+        "after": [
+          2,
+          960,
+          1,
+          1
+        ]
+      },
+      {
+        "before": [
+          2,
+          960,
+          16,
+          16
+        ],
+        "after": [
+          2,
+          960,
+          1,
+          1
+        ]
+      }
+    ],
+    "observed_point": [
+      {
+        "h": [
+          4,
+          1280
+        ],
+        "h_dtype": "torch.float16",
+        "point": [
+          4,
+          1
+        ],
+        "point_dtype": "torch.float16"
+      },
+      {
+        "h": [
+          2,
+          1280
+        ],
+        "h_dtype": "torch.float16",
+        "point": [
+          2,
+          1
+        ],
+        "point_dtype": "torch.float16"
+      },
+      {
+        "h": [
+          2,
+          1280
+        ],
+        "h_dtype": "torch.float16",
+        "point": [
+          2,
+          1
+        ],
+        "point_dtype": "torch.float16"
+      }
+    ],
+    "observed_critic": [
+      {
+        "input": [
+          4,
+          1281
+        ],
+        "input_dtype": "torch.float32",
+        "logits": [
+          4,
+          1
+        ],
+        "logits_dtype": "torch.float32"
+      }
+    ],
+    "source_ID_pipeline_identity": true,
+    "fixed_backward_loss_scale": 128.0,
+    "primitive_smooth_l1": 0.37707334756851196,
+    "critic_BCE": 0.6867098808288574,
+    "forward_numerical_sum": 1.0637831687927246,
+    "formal_fresh_rebuild_required": true,
+    "formal_fresh_default_GradScaler_required": true,
+    "runtime": {
+      "module_entry_seconds": 17.48125486075878,
+      "checkpointed_module_process_seconds": 17.481255248188972,
+      "prior_checkpointed_module_seconds": 0.0,
+      "boundary": "this child module entry before torch import; excludes final JSON and downtime; not whole pipeline",
+      "device": "cuda",
+      "GPU": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "phases": {
+        "initialization": {
+          "seconds": 1.6062817834317684,
+          "peak_cuda_memory_bytes": 128164864,
+          "peak_cuda_reserved_bytes": 144703488,
+          "peak_cpu_memory_bytes": 1000280064,
+          "individual_point_forward_seconds": null
+        },
+        "preflight": {
+          "seconds": 14.653662957251072,
+          "peak_cuda_memory_bytes": 631818752,
+          "peak_cuda_reserved_bytes": 727711744,
+          "peak_cpu_memory_bytes": 2564968448,
+          "individual_point_forward_seconds": null
+        }
+      },
+      "peak_cpu_memory_bytes": 2564968448,
+      "individual_point_forward_seconds": null,
+      "parent_supervisor_boundary": "runner screen_summary.json"
+    },
+    "model_metadata": {
+      "parameters": 8517906,
+      "parameter_tensors": 237,
+      "state_tensors": 468,
+      "critic_parameters": 82113,
+      "critic_parameter_tensors": 4,
+      "critic_state_tensors": 4,
+      "BN_counter_tensors": 77,
+      "public_forward_inputs": [
+        "image"
+      ],
+      "alpha_state_tensors": 0,
+      "reader": {
+        "semantic_dim": 1280,
+        "encoder_reported_num_features": 960,
+        "semantic_conv_head_retained": true,
+        "semantic_norm_head_retained": true,
+        "encoder_parameters": 8434512,
+        "encoder_state_tensors": 462,
+        "point_parameters": 1281,
+        "parameters": 8435793,
+        "parameter_tensors": 233,
+        "state_tensors": 464
+      }
+    },
+    "initialization": {
+      "encoder": "mobilenetv4_conv_medium.e500_r224_in1k",
+      "ImageNet_pretrained": true,
+      "existing_cached_weights_only": true,
+      "retained_complete_encoder_state_tensors": 462,
+      "all_cached_encoder_state_tensors_retained": true,
+      "new_point_parameter_tensors": 2,
+      "point_initialization_std": 0.001,
+      "point_initialization_bias_zero": true,
+      "old_task_checkpoint_used": false
+    }
+  },
+  "scope": "Saved initialization/dtype/gradient/input/execution witness only, not source validation or real-domain performance; whole source-control independent audit still pending."
+}

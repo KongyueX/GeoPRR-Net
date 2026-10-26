@@ -4,7 +4,9 @@
     "protocol.json",
     "config.json",
     "cpu_checks.json",
-    "public_allowlist.json"
+    "public_allowlist.json",
+    "launch.json",
+    "runtime_preflight.json"
   ],
-  "scope": "frozen source-only conditional-gradient contract/config/syntheticCPU metadata; no source arrays/labels/features/RGB/weights/privatepaths"
+  "scope": "normalized frozen source-only conditional-gradient contract/config/NEWCPU/launch and sourcepreflightmetadata; no source arrays/labels/features/RGB/weights/privatepaths"
 }
